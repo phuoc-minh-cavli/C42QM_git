@@ -1,0 +1,63 @@
+#===============================================================================
+#
+# RF NV Published APIs
+#
+# GENERAL DESCRIPTION
+#
+# Copyright (c) 2011-2021 Qualcomm Technologies Incorporated. All Rights Reserved
+#
+# Qualcomm Proprietary
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/rfnv.mpss/1.0/build/rfa_rf_rfnv.api#15 $
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 12/17/20   JC      New clientapi for DE & beyond external components
+# 11/09/12   jfc     Updates for no-modem-folder change
+# 01/24/10   bmg     Created
+#===============================================================================
+
+Import('env')
+
+if env.PathExists('${INC_ROOT}/rfnv'):
+    env.Replace(RFNV_ROOT = '${INC_ROOT}/rfnv')
+elif env.PathExists('${INC_ROOT}/rf/rfnv'):
+    env.Replace(RFNV_ROOT = '${INC_ROOT}/rf/rfnv')
+else:    
+    env.Replace(RFNV_ROOT = '${INC_ROOT}/modem/rfnv')
+
+#external component API, not for internal use
+if env['PRODUCT_LINE'].startswith(("MPSS.DE","MPSS.CY",)):
+    env.PublishPublicApi('CLIENTAPI', [
+        '${RFNV_ROOT}/api'
+        ], area='RF')
+
+env.PublishPublicApi('RFNV',[
+   "${RFNV_ROOT}/api",
+   "${RFNV_ROOT}/protected",   
+])
+
+
+env.PublishRestrictedApi('RFA',[
+	"${INC_ROOT}/modem/rfnv/api",
+])
+

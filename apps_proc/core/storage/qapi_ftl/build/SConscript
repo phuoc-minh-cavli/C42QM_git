@@ -1,0 +1,73 @@
+#===============================================================================
+#
+# qapi_ftl Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017, 2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who  what, where, why
+# ----------  ---  -------------------------------------------------------------
+# 2019-07-24  sl   Restrict customers to remove/Modify QAPI
+# 2017-06-11  svl  Handle MMU enablement
+# 2017-03-10  svl  Create
+#===============================================================================
+
+# Import methods to get compile time configuration.
+import sys
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/storage/qapi_ftl/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'STORAGE',
+   'SERVICES',
+   'QAPI',
+
+   # needs to be last as it may contain wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+QAPI_FTL_DEST_IMAGES = [
+  'CORE_APPS',
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_FTL_SOURCES = [
+    '${BUILDPATH}/qapi_ftl.c',
+]
+env.AddLibrary(QAPI_FTL_DEST_IMAGES,'${BUILDPATH}/qapi_ftl', QAPI_FTL_SOURCES)
+
+

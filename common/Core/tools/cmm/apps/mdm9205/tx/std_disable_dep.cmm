@@ -1,0 +1,172 @@
+LOCAL &ttb
+;LOCAL &base_addr
+LOCAL &L2_base_addr
+LOCAL &L2_end_addr
+LOCAL &end_addr
+;LOCAL &size
+LOCAL &L1_descriptor_addr
+LOCAL &L1_descriptor
+LOCAL &L2_descriptor_addr
+LOCAL &L2_descriptor
+LOCAL &ttb_mask
+;LOCAL &disable
+LOCAL &virt_phys_offset
+
+ENTRY &platform &disable &base_addr &size
+
+IF ("&platform"=="")
+(
+  print "MUST SPECIFY PLATFORM!!"
+  enddo
+)
+ELSE IF ("&platform"=="9x15")
+(
+  &virt_phys_offset=0xFF000000-0x40800000
+)
+ELSE IF ("&platform"=="9x25")
+(
+  &virt_phys_offset=0xFF000000-0x00200000
+)
+ELSE IF ("&platform"=="9x35")
+(
+  &virt_phys_offset=0xFF000000-0x0
+)
+ELSE IF ("&platform"=="8064")
+(
+  &virt_phys_offset=0xFF000000-0x89000000
+)
+ELSE IF ("&platform"=="9x45")
+(
+  &virt_phys_offset=0xFF000000-0x80000000
+)
+ELSE IF ("&platform"=="9x06")
+(
+  &virt_phys_offset=0xFF000000-0x80000000
+)
+
+ELSE
+(
+  print "INVALID PLATFORM"
+  enddo
+)
+IF ("&disable"=="")
+(
+  &disable=1
+)
+IF ("&base_addr"=="")
+(
+  &base_addr=0x0
+)
+IF ("&size"=="")
+(
+  &size=0xFFF
+)
+
+&end_addr=&base_addr+(0x100000*&size)
+
+&ttb=data.long(_mmu_initial_pgtable_phys-&virt_phys_offset)
+&ttb_mask=&ttb&0xFFFFC000
+
+print "Translation Table Base is at: 0x" &ttb
+print "TTB mask = 0x" &ttb_mask
+print "Base address = 0x" &base_addr
+print "Size(MB) = 0x" &size
+print "End address = 0x" &end_addr
+
+LOCAL &L2_addr_incr
+
+; Outer Loop for L1 Entries
+WHILE (&base_addr<=&end_addr)
+(
+  print "Current Base Addr = 0x" &base_addr
+  &L1_descriptor_addr=&ttb_mask+((&base_addr>>0x14)<<0x2)
+  &L1_descriptor=data.long(A:0x0+&L1_descriptor_addr)
+  print "L1 Descriptor Address= 0x" &L1_descriptor_addr
+  print "L1 Descriptor = 0x" &L1_descriptor
+
+  IF (&L1_descriptor!=0x0)
+  (
+    ; There's an entry, check if L1 or L2
+    IF ((&L1_descriptor&0x2)==0x2)
+    (    
+      ; We have a L1 descriptor, check XN bit
+      IF ((&L1_descriptor&0x10)==0x0)
+      (
+         ; XN bit is not set, update permissions
+         IF (&disable!=0x0)
+         (
+            ; ~~~~~~~~~~~~~~DISABLE DEP~~~~~~~~~~~~~
+            d.s ANSD:&L1_descriptor_addr %LE %LONG (&L1_descriptor&0xFFFF7FFF)
+         )
+         ELSE
+         (  
+            ; ~~~~~~~~~~~~~~ENABLE DEP~~~~~~~~~~~~~
+            d.s ANSD:&L1_descriptor_addr %LE %LONG (&L1_descriptor|0x00008000)
+         )
+      )
+    )
+    ELSE
+    (
+      ; It's an L2 descriptor, get the address and set end addr
+      &L2_descriptor_addr=&L1_descriptor&0xFFFFFC00
+      &L2_end_addr=&L2_descriptor_addr+0xD00
+      
+      WHILE (&L2_descriptor_addr<&L2_end_addr)
+      (
+        ; get L2 descriptor
+        &L2_descriptor=data.long(A:0x0+&L2_descriptor_addr) 
+        &L2_addr_incr=0x4
+         
+        IF (&L2_descriptor!=0x0)
+        (
+           ; Check if Large or Small page in L2
+           IF ((&L2_descriptor&0x2)==0x0)
+           (
+              ; Large page, check large page XN bit
+              IF ((&L2_descriptor&0x8000)==0x0)
+              (
+                 ; XN bit is not set, update permissions
+                 IF (&disable!=0x0)
+                 (
+                   ; ~~~~~~~~~~~~~~DISABLE DEP~~~~~~~~~~~~~
+                   d.s ANSD:&L2_descriptor_addr %LE %LONG (&L2_descriptor&0xFFFFFDFF)
+                 )
+                 ELSE
+                 (
+                   ; ~~~~~~~~~~~~~~ENABLE DEP~~~~~~~~~~~~~
+                   d.s ANSD:&L2_descriptor_addr %LE %LONG (&L2_descriptor|0x00000200)
+                 )
+              ); END L2 large XN check
+	      ; Since this was large page, just increment to next 64K page entry
+           )
+           ELSE
+           (
+              ; Small Page, check small page XN bit
+              IF ((&L2_descriptor&0x1)==0x0)
+              (
+                 ; XN bit is not set, update permissions
+                 IF (&disable!=0x0)
+                 (
+                   ; ~~~~~~~~~~~~~~DISABLE DEP~~~~~~~~~~~~~
+                   d.s ANSD:&L2_descriptor_addr %LE %LONG (&L2_descriptor&0xFFFFFDFF)
+                 )
+                 ELSE
+                 (
+                   ; ~~~~~~~~~~~~~~ENABLE DEP~~~~~~~~~~~~~
+                   d.s ANSD:&L2_descriptor_addr %LE %LONG (&L2_descriptor|0x00000200)
+                 )
+              ); END L2 small XN check
+
+           )
+        
+        ); END L2_DESCRIPTOR != 0
+        
+        &L2_descriptor_addr=&L2_descriptor_addr+&L2_addr_incr
+      ); END L2 WHILE LOOP
+    ); END IF L1 DESCRIPTOR ELSE L2 DESCRIPTOR
+  ); END L1_DESCRIPTOR != 0
+
+
+  &base_addr=&base_addr+0x100000
+)
+

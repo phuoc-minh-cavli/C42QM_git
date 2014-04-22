@@ -1,0 +1,103 @@
+#=============================================================================
+# 
+# Target:    All
+# Processor: All
+#
+#=============================================================================
+# $Header: //components/rel/core.tx/6.0/products/qapi_utils/build/qapi_utils.scons#1 $
+#=============================================================================
+#  Copyright 2022 Qualcomm Technologies Incorporated.
+#  All Rights Reserved.
+#  QUALCOMM Proprietary/GTDR
+#=============================================================================
+from glob import glob
+from os.path import join, basename, exists
+
+import subprocess
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Static Configuration
+#-------------------------------------------------------------------------------
+# Set to true if the QAPI Flash UTILS are required
+QAPI_FLASH_UTIL = False
+
+if env['MSM_ID'] in ['9205']:
+    QAPI_FLASH_UTIL = True
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/products/qapi_utils"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'DEBUGTRACE',
+   'HAL',
+   'HWENGINES',
+   'MPROC',
+   'MEMORY',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'PRODUCTS',
+   'PRODUCTS_UTILS',
+   'THERMAL-INC',
+   'WIREDCONNECTIVITY',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',   
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.RequirePublicApi(['SAP','UTIL','COMMON'], area='API')
+
+
+env.PublishProtectedApi('CORE_API_KERNEL', [
+  "${INC_ROOT}/core/api/kernel/qurt",
+  ])
+env.RequireProtectedApi(['CORE_API_KERNEL'])
+env.RequireProtectedApi(['POWER_UTILS'])
+
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+QAPI_UTILS_SOURCES = [
+   '${BUILDPATH}/src/qapi_utils.c',
+   '${BUILDPATH}/src/qmi_utils_client.c'
+]
+
+#-------------------------------------------------------------------------------
+# Define objects
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Libraries
+#------------------------------------------------------------------------------- 
+qapi_utils_object = env.Object(QAPI_UTILS_SOURCES)
+qapi_utils_lib = env.Library('${BUILDPATH}', qapi_utils_object)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if QAPI_FLASH_UTIL == True:
+	env.AddLibsToImage(['CBSP_APPS_IMAGE', 'APPS_IMAGE'], qapi_utils_lib)
+
+RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+
+

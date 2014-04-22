@@ -1,0 +1,290 @@
+#===============================================================================
+#
+# ADC Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+#   Copyright (c) 2009-2016 Qualcomm Technologies, Inc.
+#   All Rights Reserved.
+#   Qualcomm Technologies Proprietary and Confidential.
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+if env['MSM_ID'] not in ['9205']:
+   Return();
+
+env.Append(CFLAGS = "--diag_error=warning --c99")
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('HWENGINES_ADC', [
+   "${INC_ROOT}/core/hwengines/adc/dal/src",
+   "${INC_ROOT}/core/hwengines/adc/devices/common/protected",
+   "${INC_ROOT}/core/hwengines/adc/devices/vadc/src",
+   "${INC_ROOT}/core/hwengines/adc/diag/protected",
+   "${INC_ROOT}/core/hwengines/adc/log/src"
+   "${INC_ROOT}/core/hwengines/adc/qapi/src"
+])
+
+#-------------------------------------------------------------------------------
+# SRC PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/hwengines/adc"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+    'DAL',
+    'BUSES',
+    'HWENGINES',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'POWER',
+    'KERNEL',
+    'PRODUCTS_DSR',
+    'QAPI'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Configuration
+#-------------------------------------------------------------------------------
+
+# Default settings
+ADC_DIAG_SUPPORT = 'NO'
+ADC_TEST_SUPPORT = 'NO'
+ADC_QAPI_SUPPORT = 'YES'
+ADC_PLATFORM = env['HAL_PLATFORM']
+
+#-------------------------------------------------------------------------------
+# Features
+#-------------------------------------------------------------------------------
+
+if ADC_DIAG_SUPPORT in ['YES']:
+   env.Append(CPPDEFINES = [
+      "FEATURE_ADC_DIAG"
+   ])
+
+#Below may be redandent 
+if ADC_QAPI_SUPPORT in ['YES']:
+   env.Append(CPPDEFINES = [
+      "FEATURE_QAPI_SUPPORT", "QAPI_USE_ADC"
+   ])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',                # Domain(REX + TN)
+]
+
+ADC_DAL_SOURCES = [
+   '${BUILDPATH}/dal/src/DalAdc.c',
+   '${BUILDPATH}/dal/src/DalAdcFwk.c',
+   '${BUILDPATH}/dal/src/DalAdcInfo.c'
+]
+
+ADC_QAPI_SOURCES = [
+   '${BUILDPATH}/qapi/src/qapi_adc.c'
+]
+
+ADC_TEST_SOURCES = [
+   '${BUILDPATH}/test/src/AdcTest.c'
+]
+
+if ADC_DIAG_SUPPORT in ['YES']:
+   ADC_INIT_SOURCES = [
+      '${BUILDPATH}/dal/src/AdcInit.c'
+   ]
+
+VADC_DAL_SOURCES = [
+   '${BUILDPATH}/devices/vadc/src/DalVAdc.c',
+   '${BUILDPATH}/devices/vadc/src/DalVAdcFwk.c',
+   '${BUILDPATH}/devices/vadc/src/DalVAdcInfo.c',
+   '${BUILDPATH}/devices/vadc/src/VAdcDiag.c',
+   '${BUILDPATH}/devices/vadc/src/VAdcHal.c',
+   '${BUILDPATH}/devices/vadc/src/VAdcLog.c'
+]
+
+ADC_DEVICES_COMMON_SOURCES = [
+   '${BUILDPATH}/devices/common/src/AdcScalingUtil.c'
+]
+
+if ADC_DIAG_SUPPORT in ['YES']:
+   ADC_DIAG_SOURCES = [
+      '${BUILDPATH}/diag/src/AdcDiagDal.c'
+   ]
+
+ADC_BSP_SOURCES = [
+   '${BUILDPATH}/config/' + env['MSM_ID'] + '/AdcBsp.c',
+   '${BUILDPATH}/config/' + env['MSM_ID'] + '/VAdcBsp.c'
+]
+
+adc_obj = env.Object([
+   ADC_DAL_SOURCES,
+   ADC_DEVICES_COMMON_SOURCES,
+   VADC_DAL_SOURCES])
+adc_lib = env.Library('${BUILDPATH}/adc', adc_obj)
+
+if ADC_DIAG_SUPPORT in ['YES']:
+   adc_diag_obj = env.Object([
+      ADC_DIAG_SOURCES,
+      ADC_INIT_SOURCES])
+   adc_diag_lib = env.Library('${BUILDPATH}/adc_diag', adc_diag_obj)
+
+if ADC_TEST_SUPPORT in ['YES']:
+   adc_test_obj = env.Object([ADC_TEST_SOURCES])
+   adc_test_lib = env.Library('${BUILDPATH}/adc_test', adc_test_obj)
+
+if ADC_QAPI_SUPPORT in ['YES']:
+   adc_QAPI_lib = env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', ADC_QAPI_SOURCES)
+
+#-------------------------------------------------------------------------------
+# XML files
+#-------------------------------------------------------------------------------
+
+ADC_CONFIG_FILE_XML = '${BUILD_ROOT}/core/hwengines/adc/config/${MSM_ID}/adc_props.xml'
+#env.AddLibrary(['DAL_DEVCFG_IMG'], '${BUILDPATH}/adc_bsp_lib', ADC_BSP_SOURCES)
+
+if env['MSM_ID'] in ['9205']:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG, 
+   {
+      'devcfg_xml'    : ['${BUILD_ROOT}/core/hwengines/adc/config/${MSM_ID}/adc_props.xml',
+                         '${BUILDPATH}/config/${MSM_ID}/AdcBsp.c',
+                         '${BUILDPATH}/config/${MSM_ID}/VAdcBsp.c']
+   })
+
+#if ADC_CONFIG_FILE_XML:
+#   if 'USES_DEVCFG' in env:
+#      env.AddDevCfgInfo(['DAL_DEVCFG_IMG'],
+#      {
+#          'devcfg_xml'    : ADC_CONFIG_FILE_XML
+#      })
+
+#-------------------------------------------------------------------------------
+# RCINIT
+#-------------------------------------------------------------------------------
+
+RCINIT_IMAGES = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'] # modem, core
+
+RCINIT_INIT_FUNC_1 = { #TMC_RCINIT_INIT_ADC_INIT
+   'sequence_group'             : 'RCINIT_GROUP_2',             # required
+   'init_name'                  : 'adc',                        # required
+   'init_function'              : 'adc_init',
+   'dependencies'               :  ['pm','npa', 'diag'],
+}
+
+RCINIT_INIT_FUNC_2 = { #TMC_RCINIT_INIT_ADC_INIT
+   'sequence_group'             : 'RCINIT_GROUP_2',             # required
+   'init_name'                  : 'adc_test',                   # required
+   'init_function'              : 'AdcTest',
+   'dependencies'               :  ['adc'],
+}
+
+if 'USES_RCINIT' in env: # RCINIT Startup Paramaters
+   # function descriptor : add to specific build products
+   if ADC_DIAG_SUPPORT in ['YES']:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_1)
+   if ADC_TEST_SUPPORT in ['YES']:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_2)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage (
+   ['SINGLE_IMAGE',
+   'CBSP_SINGLE_IMAGE',
+   'MODEM_IMAGE',
+   'CBSP_MODEM_IMAGE',
+   'QDSP6_SW_IMAGE',
+   'CBSP_QDSP6_SW_IMAGE',
+   'APPS_IMAGE',
+   'CBSP_APPS_IMAGE'],
+     adc_lib)
+
+if ADC_DIAG_SUPPORT in ['YES']:
+   env.AddLibsToImage (
+      ['SINGLE_IMAGE',
+      'CBSP_SINGLE_IMAGE',
+      'MODEM_IMAGE',
+      'CBSP_MODEM_IMAGE',
+      'QDSP6_SW_IMAGE',
+      'CBSP_QDSP6_SW_IMAGE',
+      'APPS_IMAGE',
+      'CBSP_APPS_IMAGE'],
+        adc_diag_lib)
+
+if ADC_TEST_SUPPORT in ['YES']:
+   env.AddLibsToImage (
+     ['SINGLE_IMAGE',
+     'CBSP_SINGLE_IMAGE',
+     'MODEM_IMAGE',
+     'CBSP_MODEM_IMAGE',
+     'QDSP6_SW_IMAGE',
+     'CBSP_QDSP6_SW_IMAGE',
+     'APPS_IMAGE',
+     'CBSP_APPS_IMAGE'],
+       adc_test_lib)
+
+if ADC_QAPI_SUPPORT in ['YES']:
+   env.AddLibsToImage (
+     ['SINGLE_IMAGE',
+     'CBSP_SINGLE_IMAGE',
+     'MODEM_IMAGE',
+     'CBSP_MODEM_IMAGE',
+     'QDSP6_SW_IMAGE',
+     'CBSP_QDSP6_SW_IMAGE',
+     'APPS_IMAGE',
+     'CBSP_APPS_IMAGE'],
+       adc_QAPI_lib)
+
+#-------------------------------------------------------------------------------
+# Pack files (files to remove)
+#-------------------------------------------------------------------------------
+
+# Remove BSP files
+BSP_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/adc/config/')
+
+BSP_FILES = filter(lambda BSP_FILES: env['MSM_ID'] not in BSP_FILES[:], BSP_FILES)
+
+env.CleanPack(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'ADC_BOOT_DRIVER'],
+    BSP_FILES)
+
+# Remove test files
+env.CleanPack(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'ADC_BOOT_DRIVER'],
+    ADC_TEST_SOURCES)
+

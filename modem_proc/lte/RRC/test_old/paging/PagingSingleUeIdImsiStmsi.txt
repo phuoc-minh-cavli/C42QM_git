@@ -1,0 +1,35 @@
+PagingImsiStmsi:value PCCH-Message ::= 
+{
+  message c1 : paging : 
+      {
+        pagingRecordList 
+        {
+          {
+            ue-Identity imsi : 
+              {
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                0
+              },
+            cn-Domain ps,
+            pagingCause causeValue
+          },
+          {
+            ue-Identity s-TMSI : 
+              {
+                mmec '00010010'B,
+                m-TMSI '00110100 01010110 01111000 10010000'B
+              },
+            cn-Domain ps,
+            pagingCause causeValue
+          }
+        }
+      }
+}

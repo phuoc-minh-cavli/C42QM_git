@@ -1,0 +1,141 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+
+#turn off debug if requested  
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2") 
+    env.Replace(HEXAGON_DBG = "-g")  
+    env.Replace(GCC_DBG = "-g")
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'STORAGE',
+    'SECUREMSM',
+    'BUSES',
+	'MEMORY'
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+env.RequirePublicApi(['MCFG'], area='mcfg_fwk')
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_PUBLIC_APIS = [
+    'DATAMODEM',
+    ]
+
+env.RequirePublicApi(MODEM_PUBLIC_APIS)
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'MODEM_DATA',
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#code shipped as source
+
+PDNMGR_SRC_FILES = [
+  '${BUILDPATH}/src/ds_3gpp_api.c',
+  '${BUILDPATH}/src/ds_3gpp_network_override_hdlr.c',
+  '${BUILDPATH}/src/ds_3gpp_pdn_limit_hdlr.c',
+  '${BUILDPATH}/src/ds_3gpp_pdn_throt_config.c',
+  '${BUILDPATH}/src/ds_3gpp_srv_req_throt_config.c',
+  '${BUILDPATH}/src/ds_3gpp_throttle_sm.c',
+  '${BUILDPATH}/src/ds_bearer_flow_manager.c',
+  '${BUILDPATH}/src/ds_bearer_manager.c',
+  '${BUILDPATH}/src/ds_eps_bearer_manager.c',
+  '${BUILDPATH}/src/ds_eps_pdn_manager.c',
+  '${BUILDPATH}/src/ds_flow.c',
+  '${BUILDPATH}/src/ds_gprs_bearer_manager.c',
+  '${BUILDPATH}/src/ds_pdn_apm.c',
+  '${BUILDPATH}/src/ds_pdn_apm_dsc.c',
+  '${BUILDPATH}/src/ds_pdn_apm_efs_parser.c',
+  '${BUILDPATH}/src/ds_pdn_apn_switch_mgr.c',
+  '${BUILDPATH}/src/ds_pdn_apn_table.c',
+  '${BUILDPATH}/src/ds_pdn_auth_mgr.c',
+  '${BUILDPATH}/src/ds_pdn_flow_manager.c',
+  '${BUILDPATH}/src/ds_pdn_hdlr.c',
+  '${BUILDPATH}/src/ds_pdn_manager.c',
+  '${BUILDPATH}/src/ds_pdn_nv_manager.c',
+  '${BUILDPATH}/src/ds_pdn_pco.c',
+  '${BUILDPATH}/src/ds_pdn_profile_validator.c',
+  '${BUILDPATH}/src/ds_pdn_redial_hdlr.c',
+  '${BUILDPATH}/src/ds_pdn_roaming_hdlr.c',
+  '${BUILDPATH}/src/ds_pdn_tft.c',
+  '${BUILDPATH}/src/ds_pdn_v6_hdlr.c',
+  '${BUILDPATH}/src/ds_3gpp_rab_reestab_sm_hdlr.c',
+ ]
+
+PDNMGR_SOURCES = []
+
+PDNMGR_SOURCES += PDNMGR_SRC_FILES
+
+env.AddLibrary(['MODEM_MODEM' , 'MOB_DATAMODEM'], '${BUILDPATH}/pdnmgr',[PDNMGR_SOURCES, ])
+
+#code shipped as binary library
+LIB_PDNMGR_SOURCE = [
+   '${BUILDPATH}/src/ds_3gpp_dam.c',
+   '${BUILDPATH}/src/ds_3gpp_data_retry.c',
+   '${BUILDPATH}/src/ds_3gpp_global_throt_hdlr.c',
+   '${BUILDPATH}/src/ds_3gpp_pdn_throt_rules.c',
+   '${BUILDPATH}/src/ds_3gpp_pdn_throt_spec.c',
+   '${BUILDPATH}/src/ds_3gpp_pdn_throttle_sm.c',
+   '${BUILDPATH}/src/ds_3gpp_rpm.c',
+   '${BUILDPATH}/src/ds_3gpp_srv_req_throt_sm.c',
+   '${BUILDPATH}/src/ds_eps_attach_hdlr.c',
+   '${BUILDPATH}/src/ds_pdn_apn_rate_ctrl.c',
+   '${BUILDPATH}/src/ds_pdn_call_hdlr.c',
+   '${BUILDPATH}/src/ds_pdn_cp_data_hdlr.c',
+   '${BUILDPATH}/src/ds_pdn_cp_data_rohc.c',
+   '${BUILDPATH}/src/ds_pdn_pco_epco_hdlr.c',
+   '${BUILDPATH}/src/ds_pdn_psm_hdlr.c',
+   '${BUILDPATH}/src/ds_eps_tlb.c',
+   '${BUILDPATH}/src/ds_pdn_rate_ctrl_common.c',
+   '${BUILDPATH}/src/ds_pdn_clat_hdlr.c',
+   '${BUILDPATH}/src/ds_3gpp_cc_sp_throt_sm.c'
+]
+
+env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_DATAMODEM',], '${BUILDPATH}/lib_pdnmgr',[LIB_PDNMGR_SOURCE, ])
+
+env.LoadSoftwareUnits()

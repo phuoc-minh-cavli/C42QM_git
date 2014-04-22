@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="lte.0.0" type="1"/>
+    <NvEfsFile name="lte_connection_control" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte_connection_control" buildPath="modem_proc/lte/configs/efs_files/att/lte_connection_control"/>
+	<NvEfsFile name="conn_control_param_cfg" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cep/conn_control_param_cfg" buildPath="modem_proc/lte/configs/efs_files/att/conn_control_param_cfg"/>
+	<NvEfsFile name="conn_control_barring_optmz_enable" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cep/conn_control_barring_optmz_enable" buildPath="modem_proc/lte/configs/efs_files/att/conn_control_barring_optmz_enable"/>
+    <NvEfsFile name="fgi_tdd" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi_tdd" buildPath="modem_proc/lte/configs/efs_files/att/fgi_tdd"/>
+    <NvEfsFile name="fgi" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi" buildPath="modem_proc/lte/configs/efs_files/att/fgi"/>
+	<NvEfsFile name="conn_control_v2_enable" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/nb1/rrc/cep/conn_control_v2_enable" buildPath="modem_proc/lte/configs/efs_files/att/conn_control_v2_enable"/>
+	<NvEfsFile name="nb1_connection_control" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/nb1_connection_control" buildPath="modem_proc/lte/configs/efs_files/att/nb1_connection_control"/>
+</NvData>

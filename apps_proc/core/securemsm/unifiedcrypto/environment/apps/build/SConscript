@@ -1,0 +1,76 @@
+#===============================================================================
+#
+# cryptoLibs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/unifiedcrypto/environment/apps/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 02/23/11   jl	     Removed debug/nodebug from build path.
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/unifiedcrypto/environment"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SECUREMSM',
+   'SERVICES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('SECUREMSM', [
+   '${BUILD_ROOT}/core/securemsm/unifiedcrypto/environment/apps/inc', 
+   '${BUILD_ROOT}/core/securemsm/unifiedcrypto/environment/inc',
+   '${INC_ROOT}/core/securemsm/unifiedcrypto/core/sha/inc', 
+   '${INC_ROOT}/core/securemsm/unifiedcrypto/shared/sha/inc',
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+UFCRYPTO_ENV_LIB_SOURCES = [
+        '${BUILDPATH}/src/uc_env.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+#ADSP library
+env.AddBinaryLibrary(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 
+                      'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+                      'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 
+                      'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 
+                      'WCN_IMAGE'], '${BUILDPATH}/ufcrypto', UFCRYPTO_ENV_LIB_SOURCES)

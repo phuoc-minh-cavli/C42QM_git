@@ -1,0 +1,234 @@
+#===============================================================================
+#
+# VCS DRIVER SHARED LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright 2016 QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/vcs/build/vcs.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#
+#===============================================================================
+
+import os
+Import('env')
+#Return()
+env = env.Clone()
+#-------------------------------------------------------------------------------
+# Add API folders
+#-------------------------------------------------------------------------------
+
+VCS_BUILD_ROOT = os.getcwd();
+
+env.PublishPrivateApi('SYSTEMDRIVERS_VCS', [
+   VCS_BUILD_ROOT + "/../src",
+   "${BUILD_ROOT}/core/systemdrivers/hal/ldo/inc",
+   "${BUILD_ROOT}/core/systemdrivers/vcs/config/${CHIPSET}",
+   "${BUILD_ROOT}/core/systemdrivers/vcs/hw/${CHIPSET}/apcs/inc"
+])
+
+#-------------------------------------------------------------------------------
+# Define paths
+#-------------------------------------------------------------------------------
+
+SRCPATH = "../"
+SRCPATHSCRIPTS = env['BUILD_ROOT'] + '/core/systemdrivers/vcs/scripts/'
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors - do not remove this flag!
+#-------------------------------------------------------------------------------
+
+env.Append(CFLAGS = "--diag_error=warning")
+
+#-------------------------------------------------------------------------------
+# Define any features or compiler flags
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'POWER',
+   'KERNEL',
+   'DEBUGTRACE',
+   'DEBUGTOOLS'
+]
+ 	 
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+VCS_SOURCES = [
+   '${BUILDPATH}/src/VCSDriver.c',
+   '${BUILDPATH}/src/VCSFwk.c',
+   '${BUILDPATH}/src/VCSCPU.c',
+   '${BUILDPATH}/src/VCSNPA.c',
+   '${BUILDPATH}/src/VCSRails.c',
+]
+#-------------------------------------------------------------------------------
+# DEVCFG - VCS BSP
+#-------------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env:
+  VCS_BSP_SOURCES = [
+     '${BUILDPATH}/config/${CHIPSET}/VCSBSP.c',
+   ]
+	  
+#-------------------------------------------------------------------------------
+# Add libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+  ['CORE_APPS'],
+  '${BUILDPATH}/VCS',
+  VCS_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Pack out files
+#-------------------------------------------------------------------------------
+
+# Remove documentation source files
+DOCSRC_FILES = env.FindFiles(
+  ['*'],
+  '${BUILD_ROOT}/core/api/systemdrivers/docsrc/vcs/')
+env.CleanPack(['CORE_APPS'], DOCSRC_FILES)
+
+# Remove target config files
+ALL_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../config/')
+SHARED_CONFIG_FILES = env.FindFiles(
+  ['DalVCS.cfg', 'DalVCS.xml', 'DDIVCS.ddi'],
+  '../config/')
+MY_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../config/${CHIPSET}')
+PACK_CONFIG_FILES = list(set(ALL_CONFIG_FILES) - set(SHARED_CONFIG_FILES) - set(MY_CONFIG_FILES))
+env.CleanPack(['CORE_APPS'], PACK_CONFIG_FILES)
+
+# Remove target hw files
+ALL_HW_FILES = env.FindFiles(
+  ['*'],
+  '../hw/')
+MY_HW_FILES = env.FindFiles(
+  ['*'],
+  '../hw/${CHIPSET}')
+PACK_HW_FILES = list(set(ALL_HW_FILES) - set(MY_HW_FILES))
+env.CleanPack(['CORE_APPS'], PACK_HW_FILES)
+
+#-------------------------------------------------------------------------------
+# Register initialization function and dependencies.
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CORE_APPS']
+  env.AddRCInitFunc( 
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_0',                     # required
+      'init_name'      : 'vcs',                                # required
+      'init_function'  : 'vcs_init',                           # required
+      'dependencies'   : ['busywait','dalsys','npa','pm']
+    })
+  env.AddRCInitFunc( 
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_0',                     # required
+      'init_name'      : 'vcs_cpr',                            # required
+      'init_function'  : 'vcs_cpr_init',                       # required
+      'dependencies'   : ['cpr','vcs']
+    })  
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_1',                     # required
+      'init_name'      : 'vcs_thermal',                        # required
+      'init_function'  : 'vcs_init_thermal',                   # required
+      'dependencies'   : ['thermal']
+    })
+
+#-------------------------------------------------------------------------------
+# Invoke chipset build file
+#-------------------------------------------------------------------------------
+
+env.SConscript('${BUILDPATH}/hw/${CHIPSET}/build/vcs_chipset.scons', exports='env')
+
+#-------------------------------------------------------------------------------
+# Invoke document generation SConscript
+#-------------------------------------------------------------------------------
+
+if os.path.exists(env['BUILD_ROOT'] + '/core/api/systemdrivers/docsrc/vcs/SConscript') :
+  env.SConscript(
+    '${BUILD_ROOT}/core/api/systemdrivers/docsrc/vcs/SConscript',
+    exports='env')
+
+#-------------------------------------------------------------------------------
+# DEVCFG - VCS XML
+#-------------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG, 
+   {
+      'devcfg_xml' : ['${BUILD_ROOT}/core/systemdrivers/vcs/config/DalVCS.xml',
+                      '${BUILDPATH}/config/${CHIPSET}/VCSBSP.c',
+					  '${BUILDPATH}/config/${CHIPSET}/VCSAPCSBSP.c']
+   })
+
+#-------------------------------------------------------------------------------
+# SWEvent processing
+#-------------------------------------------------------------------------------
+
+if 'USES_QDSS_SWE' in env:
+  env.Append(CPPDEFINES = ["VCS_TRACER_SWEVT"])
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [
+    ['VCS_EVENT_INIT_START',                   'VCS Initialization Start'],
+    ['VCS_EVENT_INIT_COMPLETE',                'VCS Initialization Complete'],
+    ['VCS_EVENT_RAIL_CORNER_VOTE_RECEIVED',    'VCS Vote Received for Rail = %d, Corner = %d, NAS = %d'],
+    ['VCS_EVENT_RAIL_CORNER_VOTE_COMPLETE',    'VCS Vote Complete for Rail = %d, Corner = %d, NAS = %d'],
+    ['VCS_EVENT_RAIL_CPU_CORNER_VOTE_RECEIVED','VCS Vote Received for CPU = %d, Corner = %d, Rail = %d'],    
+    ['VCS_EVENT_RAIL_VOLTAGE_SET',             'VCS Voltage Set for Rail = %d, Corner = %d, Voltage = %d, NAS = %d'],
+    ['VCS_EVENT_RAIL_NAS_WAKEUP',              'VCS NAS Wakeup for Rail = %d, Corner = %d'],
+    ['VCS_EVENT_RAIL_NAS_COMPLETE',            'VCS NAS Complete for Rail = %d, Corner = %d'],
+    ['VCS_EVENT_LDO_STATE_SET',                'VCS LDO State Set for LDO = %d, State = %d (1 = Enable / 0 = Disable)'],
+    ['VCS_EVENT_LDO_VOLTAGE_SET',              'VCS LDO Voltage Set for LDO = %d, Corner = %d, Voltage = %d'],
+    ['VCS_EVENT_LDO_RESTRICTION',              'VCS LDO Restrictions for LDO = %d, Num of Restrictions = %d'],
+    ['VCS_EVENT_CPR_STATE_REQUEST',            'VCS CPR State Request for Rail = %d, State = %d (1 = Enable / 0 = Disable)'],
+    ['VCS_EVENT_RAIL_MODE_CHANGE',             'VCS Mode Change for Rail = %d, Mode = %d, Data = %d']
+  ]
+  env.AddSWEInfo(QDSS_IMG, events)
+
+if 'QDSS_TRACER_SWE' in env:
+  env.SWEBuilder(['${BUILD_ROOT}/core/systemdrivers/vcs/build/${BUILDPATH}/src/VCSSWEventId.h'], None)
+  env.Append(CPPPATH = ['${BUILD_ROOT}/core/systemdrivers/vcs/build/${BUILDPATH}/src'])
+  
+#-------------------------------------------------------------------------------
+# Add CMM scripts to T32 menu
+#-------------------------------------------------------------------------------
+
+CMM_ARGUMENT = env['CHIPSET']
+
+try:
+  env.AddCMMScripts ('APPS', [SRCPATHSCRIPTS], { 'VCS.cmm' : 'VCS' }, 'SystemDrivers')
+except:
+  pass
+

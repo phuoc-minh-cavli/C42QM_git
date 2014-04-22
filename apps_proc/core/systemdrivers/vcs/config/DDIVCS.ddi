@@ -1,0 +1,32 @@
+
+/* ---------- VCS APIs ---------- */
+
+DALResult DALVCS_SetRailMode
+(
+  DalDeviceHandle *h,
+  VCSRailType      eRail,
+  VCSRailModeType  eMode,
+  const void      *pModeData
+)
+
+
+DALResult DALVCS_SetRailVoltage
+(
+  DalDeviceHandle *h,
+  VCSRailType      eRail,
+  uint32           nVoltageUV
+)
+
+
+DALResult DALVCS_AddLDORestriction
+(
+  DalDeviceHandle *h,
+  ClockCPUType     eCPU
+)
+
+
+DALResult DALVCS_RemoveLDORestriction
+(
+  DalDeviceHandle *h,
+  ClockCPUType     eCPU
+)

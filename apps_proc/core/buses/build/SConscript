@@ -1,0 +1,60 @@
+#===============================================================================
+#
+# Buses Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2016 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/buses/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/20/16   DPK     Added support for SPI driver
+# 09/02/16   PR      Added support for MDM9x07
+# 03/06/12   PS      Added change for converting all warnings to error
+# 01/12/12   PS      Initial release
+#
+#===============================================================================
+Import('env')
+#if 'ARMTOOLS' in env:
+   #-------------------------------------------------------------------------------
+   # Convert warnings to errors in all Buses components
+   #-------------------------------------------------------------------------------
+#   env.Append(CFLAGS = "--diag_error=warning ")
+
+if 'HEXAGON_TOOLS' in env:
+   #-------------------------------------------------------------------------------
+   # Convert warnings to errors in all buses components
+   #-------------------------------------------------------------------------------
+   env.Append(CFLAGS = "-Werror ")
+
+env.LoadSoftwareUnits(0,"../spmi/build")
+env.LoadSoftwareUnits(0,"../i2c/build")
+env.LoadSoftwareUnits(0,"../qup/build")
+env.LoadSoftwareUnits(0,"../sio/build")
+env.LoadSoftwareUnits(0,"../rdevmap/build")
+env.LoadSoftwareUnits(0,"../uart/build")
+env.LoadSoftwareUnits(0,"../spi/build")
+#env.LoadSoftwareUnits(0,"../buspm/build")
+#env.LoadSoftwareUnits(0,"../uart_lite/build")
+
+#-------------------------------------------------------------------------------
+# Pack instruction 
+#-------------------------------------------------------------------------------
+BUSPM_PACK_FILES  = env.FindFiles(['*.h', '*.xml', '*.c', 'SConscript'], '${BUILD_ROOT}/core/buses/buspm') 
+BUSPM_PACK_FILES += env.FindFiles(['*.h'], '${BUILD_ROOT}/core/buses/api/buspm') 
+env.CleanPack(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], BUSPM_PACK_FILES)
+

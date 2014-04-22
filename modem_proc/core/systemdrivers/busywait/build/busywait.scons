@@ -1,0 +1,68 @@
+#===============================================================================
+#
+# BUSYWAIT
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/busywait/build/busywait.scons#4 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     -----------------------------------------------------------
+# 12/12/18   shm     Adding page-only image support
+# 09/11/18   shm     First version for 9205 codebase
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/busywait/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+  'HAL',
+  'DAL',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+
+  # Must be last due to comdef.h issues
+  'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+BUSYWAIT_SOURCES = [
+  '${BUILDPATH}/busywait_hw_qtimer.c'
+]
+
+env.AddLibrary(
+  ['CORE_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY'],
+  '${BUILDPATH}/busywait',
+  BUSYWAIT_SOURCES)

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="MMCP.0.0" type="1"/>
+<NvItemData name="DTM Feature Support" id="3628" description="Flag indicating DTM support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="dtm_feature_support" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvItemData>
+	<NvItemData name="DTM Multislot Class" id="3629" description="DTM multislot class" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="dtm_multislot_class" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvItemData>
+	<NvItemData name="Analog Mode Preference" id="10" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x39" mcfgVariant="1">
+		<Member name="nam" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="mode" description="" comment="" sizeOf="1" type="uint16">34 </Member>
+	</NvItemData>
+	<NvEfsFile name="rat_acq_order" id="none" description="" comment="" category="MMODE" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/sd/rat_acq_order" buildPath="modem_proc/mmcp/config/EFS_files/cmcc/Rat_acq_order"/>
+	<NvEfsFile name="preferred_plmn_list" id="73556" description="The list of preferred PLMNs" comment="" category="NAS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/nas/preferred_plmn_list" buildPath="modem_proc/mmcp/config/EFS_files/cmcc/preferred_plmn_list"/>
+	<NvItemData name="1xEV Forward Statistics Summary" id="4228" description="boolean stating if SMS should be sent on access channel" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="channel_preference" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvEfsItemData name="tdscdma_op_plmn_list" id="70189" description="List of TDSCDMA PLMNs" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/tdscdma_op_plmn_list">
+        <Member name="tdscdma_op_plmn_list" description="List of TDSCDMA PLMNs" comment="" sizeOf="61" type="int8">5 100 240 0 100 240 32 100 240 112 100 240 128 100 240 64 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Member>
+    </NvEfsItemData>
+	<NvEfsItemData name="ehplmn" id="65602" description="The List of Equivalent HPLMN " comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/ehplmn">
+		<Member name="ehplmn" description="" comment="" sizeOf="61" type="int8">5 100 240 0 100 240 32 100 240 112 100 240 128 100 240 64 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="lte_bandpref" id="65633" description="" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/lte_bandpref">
+		<Member name="LTE Band Pref" description="" comment="" sizeOf="8" type="int8">69 0 1 0 224 1 0 0 </Member>
+	</NvEfsItemData>
+	<NvEfsFile name="lte_nas_ue_sec_capability" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/nas/lte_nas_ue_sec_capability" buildPath="modem_proc/mmcp/config/EFS_files/lte_nas_ue_sec_capability_china"/>
+	<NvEfsItemData name="ue_usage_setting" id="65777" description="UE usage setting" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/ue_usage_setting">
+		<Member name="ue_usage_setting" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="forced_irat" id="69734" description="" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/forced_irat">
+		<Member name="forced_irat" description="Indicates if the feature that allows NAS to force IRAT to LTE is enabled" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="max_validate_sim_counter" id="72510" description="Indicates max recovery attempts for SIM invalidation" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/max_validate_sim_counter">
+		<Member name="max_validate_sim_counter" description="" comment="" sizeOf="1" type="uint8">10 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="t3245_timer" id="70330" description="Default value of T3245" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/t3245_timer">
+		<Member name="nas_t3245_timer" description="" comment="" sizeOf="1" type="uint32">5 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="reg_nv_items" id="72509" description="This NV item will be used by REG to take care of all future NV items." comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/reg_nv_items">
+		<Member name="version" description="This NV item will be used by REG to take care of all future NV items." comment="" sizeOf="1" type="uint8">4 </Member>
+		<Member name="is_hplmn_has_to_be_selected" description="Thsi field will tell, if HPLMN is to be selected or not" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="is_roaming_on_in_eplmn" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="is_sim_invalid_recovery_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="is_camp_on_2g_if_reg_failure" description="This field is to tell if UE should camp only on TIM2G and not redirect to 3G/4G of TIM." comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="is_pseudo_reselection_allowed" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="ReservedBytes" description="Bytes reserved for future versions" comment="" sizeOf="1" type="uint168"> </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="sms_mandatory" id="66473" description="SMS mandatory for device" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/sms_mandatory">
+		<Member name="sms_mandatory" description="SMS mandatory for device" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="operator_name" id="70302" description="Operator Name for enabling QRD features" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/operator_name">
+		<Member name="operator_name" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="ue_based_cw" id="73538" description="UE based call wating" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/ue_based_cw">
+		<Member name="use_ue_based_cw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="is_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	</NvData>

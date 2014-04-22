@@ -1,0 +1,110 @@
+#=================================================================
+# VADAPTER SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+VADAPTER_SRCPATH = ".."
+env.VariantDir('${BUILDPATH}', VADAPTER_SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('VADAPTER', [
+   "${AVS_ROOT}/vsd/vadapter/inc/private",
+   "${AVS_ROOT}/vsd/vadapter/inc/CT/private"
+   ])
+
+VADAPTER_SRCPATH = [
+   '${BUILDPATH}/src/gva_module.c',
+   '${BUILDPATH}/src/wva_module.c',
+   '${BUILDPATH}/src/tva_module.c',
+   '${BUILDPATH}/src/cva_module.c',
+   ]
+
+if 'AVS_MPSS_TEST' not in env:
+
+   if (not env.PathExists("${AVS_ROOT}/../geran")) or ('USES_FEATURE_VS_MEMORY_OPTIMISED' in env) or ('USES_EXCLUDE_GERAN_FW' in env):
+      VADAPTER_SRCPATH[0] = '${BUILDPATH}/stubs/gva_module.c'
+      print 'Compiling stubs for GVA'
+
+   if (env['PRODUCT_LINE'].startswith("MPSS.CT") and ('USES_GSM' in env)):
+      VADAPTER_SRCPATH[0] = '${BUILDPATH}/src/CT/gva_module.c'
+      print 'Compiling GVA for CT/9205'
+
+   if (not env.PathExists("${AVS_ROOT}/../wcdma")) or ('USES_FEATURE_VS_MEMORY_OPTIMISED' in env):
+      VADAPTER_SRCPATH[1] = '${BUILDPATH}/stubs/wva_module.c'
+      print 'Compiling stubs for WVA'
+
+   if (not env.PathExists("${AVS_ROOT}/../tdscdma")) or ('USES_FEATURE_VS_MEMORY_OPTIMISED' in env) or (not ('USES_TDSCDMA' in env)):
+      VADAPTER_SRCPATH[2] = '${BUILDPATH}/stubs/tva_module.c'
+      print 'Compiling stubs for TVA'
+  
+   if (not env.PathExists("${AVS_ROOT}/../1x")) or ('USES_FEATURE_VS_MEMORY_OPTIMISED' in env):
+      VADAPTER_SRCPATH[3] = '${BUILDPATH}/stubs/cva_module.c'
+      print 'Compiling stubs for CVA' 
+
+
+if 'AVS_MPSS_TEST' in env:
+   IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+   IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/vadapter/vadapter'), VADAPTER_SRCPATH)
+
+#-------------------------------------------------------------------------------
+# RCINIT_GROUP_6 is only for logging purpose. It does not dictate the actual start sequence.
+# RCINIT_TASK_QURTTASK is also only for logging purpose.
+
+if 'AVS_MPSS_TEST' in env or 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env or env['PRODUCT_LINE'].startswith("MPSS.BO"):
+  print "Skipping RCINIT Registration of G/W/C/T - VADAPTER Tasks"
+else:
+  print "RCINIT Registration of VADAPTER Tasks"
+  if 'USES_RCINIT' in env:
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'CVA',
+            'thread_entry'               : 'RCINIT_NULL',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+        }
+    )
+
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'GVA',
+            'thread_entry'               : 'RCINIT_NULL',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+        }
+    )
+
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'WVA',
+            'thread_entry'               : 'RCINIT_NULL',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+        }
+    )
+
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'TVA',
+            'thread_entry'               : 'RCINIT_NULL',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+        }
+    )
+#end of if 'AVS_MPSS_TEST' in env or 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env or env['PRODUCT_LINE'].startswith("MPSS.BO"):
+

@@ -1,0 +1,102 @@
+#===============================================================================
+#
+# MARB Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcs.mpss/5.1/marb/build/marb.scons#5 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 10/09/18    su     Initial version.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Exit immediately for PLT builds
+#-------------------------------------------------------------------------------
+if 'USES_PLT' in env:
+    Return()
+
+#-------------------------------------------------------------------------------
+# Skip Compilation on PAGE_ONLY builds
+#-------------------------------------------------------------------------------
+if 'USES_BUILD_PAGEONLY_IMAGE' in env:
+    Return()
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+MARB_LIB_SRC = [
+    '${BUILDPATH}/marb_interface.cpp',
+    '${BUILDPATH}/marb_core.cpp',
+	'${BUILDPATH}/marb_unloaded_state.cpp',
+	'${BUILDPATH}/marb_loaded_state.cpp',
+	'${BUILDPATH}/marb_pending_state.cpp',
+	'${BUILDPATH}/marb_log.cpp',
+]
+
+# Add our library to the Modem Modem image
+#env.AddLibrary(['MODEM_MODEM','MOB_MCS_MARB'], '${BUILDPATH}', MARB_LIB_SRC)
+
+if 'USES_CUST_1' in env:
+	# Compile the marb source and convert to a binary library
+	env.AddBinaryLibrary(['MODEM_MODEM','MOB_MCS_MARB'],
+						'${BUILDPATH}/marb',
+						MARB_LIB_SRC,
+						pack_exception=['USES_CUSTOMER_GENERATE_LIBS', 'USES_COMPILE_L1_OPT_AC_PROTECTED_LIBS'])
+
+else:
+	# Compile the marb source and convert to a binary library
+	env.AddBinaryLibrary(['MODEM_MODEM','MOB_MCS_MARB'],
+						  '${BUILDPATH}/marb',
+						  MARB_LIB_SRC,
+						  pack_exception=['USES_CUSTOMER_GENERATE_LIBS', 'USES_COMPILE_L1_OPT_AC_PROTECTED_LIBS'])
+
+# Load test units
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+
+RCINIT_MARB_INIT = {
+ 'sequence_group'             : env.subst('$MODEM_PROTOCOL'),    # required
+ 'init_name'                  : 'marb_taskinit',                 # required
+ 'init_function'              : 'marb_taskinit',                 # opt
+ 'policy_optin'               : ['default',],
+}
+
+if 'USES_MODEM_RCINIT' in env:
+   RCINIT_MARB = ['MODEM_MODEM','MOB_MCS_MARB', 'CORE_QDSP6_SW']
+   env.AddRCInitFunc(RCINIT_MARB, RCINIT_MARB_INIT)  

@@ -1,0 +1,38 @@
+#===============================================================================
+#
+# ADSPPM INC PATHs
+#
+# GENERAL DESCRIPTION
+#    Build Script
+#
+# Copyright (c) 2014 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Qualcomm Technologies, Inc. Confidential and Proprietary.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/power/adsppm/build/adsppm.api#1 $
+#  $DateTime: 2018/06/26 03:18:17 $
+#  $Author: pwbldsvc $
+#  $Change: 16502877 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who          what, where, why
+# --------   ---     ---------------------------------------------------------
+# 13/04/29   yrusakov     Initial version.
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Publish Restricted APIs
+# these are accessible only within CoreBSP
+#-------------------------------------------------------------------------------
+env.PublishRestrictedApi('ADSPPM', [
+   '${INC_ROOT}/core/power/adsppm/inc', 
+   '${INC_ROOT}/core/power/adsppm/src/common/core/inc', 
+])
+

@@ -1,0 +1,12 @@
+/*========================================================================
+  TCM overlay checks.
+  Validate that required overlay combinations can be loaded together.
+  ========================================================================*/
+
+__tcm_overlay_available__ =  __tcm_max_size__ - __tcm_static_max_size__ ; 
+
+__assert_sink__ = ASSERT( (__tcm_lte_traffic_overlay_size__ + __tcm_lte_paging_overlay_size__)  <= __tcm_overlay_available__ , "Failed overlay check LTE");
+__assert_sink__ = ASSERT( (__tcm_nb1fw_common_overlay_size__ + __tcm_nb1fw_srch_overlay_size__ + __tcm_nb1fw_dl_overlay_size__)  <= __tcm_overlay_available__ , "Failed overlay check NB Common+Srch+DL");
+__assert_sink__ = ASSERT( (__tcm_nb1fw_common_overlay_size__ + __tcm_nb1fw_ul_overlay_size__ + __tcm_nb1fw_dl_overlay_size__)  <= __tcm_overlay_available__ , "Failed overlay check NB Common+UL+DL");
+__assert_sink__ = ASSERT( (__tcm_nb1fw_hcorr_overlay_size__)  <= __tcm_overlay_available__ , "Failed overlay check NB Hcorr");
+

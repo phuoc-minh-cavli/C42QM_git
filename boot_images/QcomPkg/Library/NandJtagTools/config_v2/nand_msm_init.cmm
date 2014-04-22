@@ -1,0 +1,119 @@
+;============================================================================
+;  Name:
+;    NAND_MSM_INIT.CMM
+;
+;  Description:
+;    MSM specific hardware init script for flash programming
+;
+;  Copyright (c) 2018-2019 Qualcomm Technologies Incorporated.
+;  All Rights Reserved.
+;  Qualcomm Confidential and Proprietary
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+;
+; when       who     what, where, why
+; -------    ---     --------------------------------------------------------
+; 01/03/19   sl      Added clk script support
+; 12/04/18   sl      Added TLMM changes for 9205
+; 08/24/18   sb      Update support for 9x05 
+;============================================================================;
+
+global &VirtioPlatform
+
+;============================================================================
+; Get the arguments passed in.
+;============================================================================
+
+LOCAL &CurDir
+
+&CurDir=os.pwd()
+
+;------------------------------------------------------------
+;                   DEBUGGER SYSTEM SETUP
+;------------------------------------------------------------
+; Turbo mode of debug state accesses - CPU makes no checks of
+; memory access in debug mode.
+
+;System.Option TURBO off
+
+; Usage of TRST in system - Must be off if reset tied to trst.
+SYStem.Option.TRST on
+SYStem.Option.CFLUSH on
+SYStem.Option.ENRESET on
+SYStem.Option.WAITRESET off
+;SYStem.Option.ResBreak off
+
+if "&NandTargetFamily"=="FLASH_QCS405_CORTEXA53_CFG"
+(
+;Set for virtio testing
+&VirtioPlatform="no"
+
+;SYStem.CPU CORTEXA7
+system.cpu CortexA53
+sys.u
+D.S ZSD:0x8CA0000--0x8CA003F %LE %Long 0
+)
+
+if "&NandTargetFamily"=="FLASH_9K05_CORTEXA7_CFG"
+(
+  ;Set for virtio testing
+  &VirtioPlatform="no"
+  
+  SYStem.CPU CORTEXA7
+  sys.u
+  D.S ZSD:0x08C3FFC0--0x8C3FFFF %LE %Long 0
+)
+
+; Disassembler selection - Automatically selects correct one.
+SYStem.Option DisMode Auto
+
+
+;------------------------------------------------------------
+;  MSM configuration
+;------------------------------------------------------------
+
+; Generate a reset
+r.reset
+
+if "&NandTargetFamily"=="FLASH_QCS405_CORTEXA53_CFG"
+(
+  cd &NandSrcRoot/QcomPkg/Qcs405Pkg/Tools/hwio/scripts
+  do hwio.cmm
+  ;clock script to enable qpic clocks  
+  cd &CurDir
+  do clk_init_qcs405.cmm
+
+  ;updating MPM timer register for DALSYS_BusyWait timer
+  D.S A:0x4a1000 %LE %LONG 0x1
+
+  ;Set bit[1]: EBI2_BOOT_SELECT in TLMM_EBI2_EMMC_GPIO_CFG
+  D.S A:0x010C1000 %LE %LONG 0x10000000
+)
+
+if "&NandTargetFamily"=="FLASH_9K05_CORTEXA7_CFG"
+(
+  cd &NandSrcRoot/QcomPkg/Mdm9x05Pkg/Tools/hwio/scripts
+  do hwio.cmm
+  ;clock script to enable qpic clocks  
+  cd &CurDir
+  do clk_init_9205.cmm
+
+  ;updating MPM timer register for DALSYS_BusyWait timer
+  D.S A:0x4a1000 %LE %LONG 0x1
+
+  ; Set bit[1]: EBI2_BOOT_SELECT in TLMM_EBI2_EMMC_GPIO_CFG
+  ; For TLMM_EBI2_EMMC_GPIO_CFG to work for Parallel NAND we should program it to 0x1C210841.
+  ; Even though this value configures CS Hdrv and QSPI Clocks to 10mA instead of 8mA, it should also work for SPI NAND as well.
+  ; So we can keep same value for SPI/Parallel NAND
+  ; (bit_field_val+1)*2=mA_val
+  D.S A:0x01111000 %LE %LONG 0x1C210841
+
+  ; TLMM_EBI2_HDRV_PULL_CTL has default value 0x0000001B which works for SPI NAND.
+  ; To make it work for Parallel NAND we need to change TLMM_EBI2_HDRV_PULL_CTL[9:7] viz. EBI2_DATA_HDRV to 0x4 (binary value 100).
+  ; Also if we keep TLMM_EBI2_HDRV_PULL_CTL value to 0x21B, it will work for both Parallel and SPI NAND. So we should have this config in our code
+  D.S A:0x0110A000 %LE %LONG 0x21B
+)
+
+enddo

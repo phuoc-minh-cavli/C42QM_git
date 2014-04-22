@@ -1,0 +1,219 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+
+#turn off debug if requested  
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2") 
+    env.Replace(HEXAGON_DBG = "-g")  
+    env.Replace(GCC_DBG = "-g")
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'STORAGE',
+    'SECUREMSM',
+    'BUSES',
+    'MEMORY'
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+env.RequirePublicApi(['MCFG'], area='mcfg_fwk')
+#-------------------------------------------------------------------------------
+# Necessary Multimedia Public API's
+#-------------------------------------------------------------------------------
+MM_PUBLIC_APIS = [
+    'AUDIO',
+    'MVS',
+    ]
+
+env.RequirePublicApi(MM_PUBLIC_APIS, area='multimedia')
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_PUBLIC_APIS = [
+    'MMODE',
+    'DATAMODEM',
+    'DATAIOT',
+    'UIM',
+    'MCS',
+    'ONEX',
+    'DATA',
+    'HDR',
+    'WMS',
+    'PBM',
+    'GERAN',
+    'NAS',
+    'UTILS',
+    'WCDMA',
+    'RFA',
+    'GPS',
+    'ECALL',
+    ]
+
+env.RequirePublicApi(MODEM_PUBLIC_APIS)
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'MODEM_DATA',
+    'MODEM_DATACOMMON',
+    'MODEM_DATAMODEM',
+    'DATAMODEM',
+    'DATAIOT',
+    'MCS',
+    'ONEX',
+    'NAS',
+    'HDR',
+    'MMODE',
+    'RFA',
+    'GERAN',
+    'UIM',
+    'WCDMA',
+    'MDSP',
+    'UTILS',
+    'FW',
+    'GPS',
+	'DATAMODEM_QTF_OFT',
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+#MODEM_PROTECTED_APIS = [
+#    'DATA_ATCOP',
+#    ]
+#env.RequireProtectedApi(MODEM_PROTECTED_APIS)
+
+#-------------------------------------------------------------------------------
+# Required external APIs not built with SCons (if any)
+# e.g. ['BREW',]
+#-------------------------------------------------------------------------------
+REQUIRED_NON_SCONS_APIS = [
+    'WCONNECT', 
+    'BREW',
+    ]
+
+if REQUIRED_NON_SCONS_APIS != []:
+  env.RequireExternalApi(REQUIRED_NON_SCONS_APIS)
+
+#-------------------------------------------------------------------------------
+# Non-compliant Private Header Include Paths (Must be removed for CRM builds)
+#-------------------------------------------------------------------------------
+#if ARGUMENTS.get('SCONS_VIOLATIONS_LEVEL',0) > 99:
+#		print "SCONS VIOLATIONS enabled" 
+#		
+#		env.PublishPrivateApi('VIOLATIONS',[
+#			'${INC_ROOT}/modem/data/1x/707/src',
+#			])
+#		
+#		env.RequirePrivateApi('VIOLATIONS')
+
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+DSMGR_FILES = glob(SRCPATH + '/src/*.c')
+DSMGR_SOURCES = []
+
+for filename in DSMGR_FILES:
+  DSMGR_SOURCES.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+env.AddLibrary(['MODEM_MODEM' , 'MOB_DATAMODEM'], '${BUILDPATH}/dsmgr',[DSMGR_SOURCES, ])
+
+env.LoadSoftwareUnits()
+
+
+# Build image for which this task belongs
+RCINIT_DS  = ['MODEM_MODEM', 'MOB_DATAMODEM']
+
+# RC Init Function Dictionary
+RCINIT_INIT_DS = {
+            'sequence_group'      : env.subst('$MODEM_UPPERLAYER'),
+            'init_name'           : 'ds_init',
+            'init_function'       : 'ds_powerup_init',
+            'policy_optin'        : ['default', 'ftm', ],
+            # 'dependencies'      : ['cfm']
+    }
+
+# RC Init Task Dictionary
+RCINIT_TASK_DS = {
+            'thread_name'         : 'DS',
+            'sequence_group'      : env.subst('$MODEM_UPPERLAYER'),
+            'stack_size_bytes'    : '16384',
+            'priority_amss_order' : 'DS_PRI_ORDER',
+            'stack_name'          : 'ds_stack',
+            'thread_entry'        : 'ds_task',
+            'tcb_name'            : 'ds_tcb',
+            'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+            'policy_optin'        : ['default', 'ftm', ],
+    }
+    
+# Add init function to RCInit
+if 'USES_MODEM_RCINIT' in env:
+	    env.AddRCInitFunc(RCINIT_DS, RCINIT_INIT_DS)
+	    env.AddRCInitTask(RCINIT_DS, RCINIT_TASK_DS)
+
+# Build image for which this task belongs
+RCINIT_COMP  = ['MODEM_MODEM', 'MOB_DATAMODEM']
+
+# RC Init Function Dictionary
+RCINIT_INIT_COMP = {
+	    'sequence_group'      : env.subst('$MODEM_UPPERLAYER'),
+	    'init_name'           : 'comp_init',
+	    'init_function'       : 'comp_task_init',
+	    # 'dependencies'      : ['cfm']
+    }
+
+# RC Init Task Dictionary
+RCINIT_TASK_COMP = {
+	    'thread_name'         : 'COMP',
+	    'sequence_group'      : env.subst('$MODEM_UPPERLAYER'),
+	    'stack_size_bytes'    : env.subst('$COMP_STKSZ'),
+	    'priority_amss_order' : 'COMP_PRI_ORDER',
+	    'stack_name'          : 'comp_stack',
+	    'thread_entry'        : 'comp_task',
+	    'tcb_name'            : 'comp_tcb',
+            'cpu_affinity'	  : env.subst('$MODEM_CPU_AFFINITY')
+    }
+    
+# Add init function to RCInit
+if 'USES_MODEM_RCINIT' in env:
+	    env.AddRCInitTask(RCINIT_COMP, RCINIT_TASK_COMP)

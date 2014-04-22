@@ -1,0 +1,592 @@
+//============================================================================
+//  Name:                                                                     
+//    deviceprogrammer.cmm 
+//
+//  Description:                                                              
+//    Wrapper script to device programmer python and executables
+//                                                                            
+// Copyright (c) 2012 - 2015 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who             what, where, why
+// --------   ---             ---------------------------------------------------------
+// 03/26/2015 JBILLING        Creation
+
+
+
+////////////////////////////////////////////////////
+//                  Arguments Passed 
+////////////////////////////////////////////////////
+
+        LOCAL &ArgumentLine
+        ENTRY %LINE &ArgumentLine
+
+////////////////////////////////////////////////////
+//                  Declarations 
+////////////////////////////////////////////////////
+        LOCAL &DevProgrammerPythonScript &LogFile &LogFileDirectory &DeviceProgrammerStepDoneFile &SaharaLog
+        &DevProgrammerPythonScript="&METASCRIPTSDIR/../deviceprogrammer/edl_qsahara_fh_loader.py"
+        
+        &LogFileDirectory=OS.ENV(TEMP)
+        &LogFile="&LogFileDirectory\port_trace.txt"
+
+        &SaharaLog="&LogFileDirectory\saharalog.txt"
+        &DeviceProgrammerStepDoneFile="&LogFileDirectory\fh_load_script_done.txt"
+        
+        
+        
+        
+        LOCAL &BINARIESDIR &BOOT_BINARIESDIR &LOADER_BINARY_PATH &DevProgrammerPath
+        
+        IF OS.DIR("&BOOT_BUILDROOT/QcomPkg")
+        (
+
+            &BINARIESDIR="QcomPkg/Msm8996Pkg/Bin64"
+            &LOADER_BINARY_PATH="&BOOT_BUILDROOT"+"\QcomPkg\Tools\storage\fh_loader\fh_loader.exe"
+        )
+        ELSE
+        (
+	
+            &BINARIESDIR="boot_images/QcomPkg/Msm8996Pkg/Bin64"
+            &LOADER_BINARY_PATH="&BOOT_BUILDROOT"+"\boot_images\QcomPkg\Tools\storage\fh_loader\fh_loader.exe"
+        
+        )
+        
+
+        IF !FILE.EXIST("&LOADER_BINARY_PATH")
+        (
+            PRINT "Please point to path to deviceprogrammer binaries (e.g. fh_loader.exe)"
+            IF (OS.DIR("&BOOT_BUILDROOT\&BINARIESDIR"))
+            (
+                DIALOG.FILE "&BOOT_BUILDROOT\&BINARIESDIR\*.exe"
+            )
+            ELSE IF (OS.DIR("BOOT_BUILDROOT"))
+            (
+                DIALOG.FILE "&BOOT_BUILDROOT\*.exe"
+            )
+            ELSE
+            (
+                DIALOG.FILE "*.exe"
+            )
+            ENTRY &LOADER_BINARY_PATH
+        )
+        
+        &BOOT_BINARIESDIR=OS.FILE.PATH("&LOADER_BINARY_PATH")
+        &DevProgrammerPath=OS.FILE.PATH("&LOADER_BINARY_PATH")
+        IF !(FILE.EXIST("&BOOT_BINARIESDIR\fh_loader.exe")&&(FILE.EXIST("&BOOT_BINARIESDIR\QSaharaServer.exe"))&&(FILE.EXIST("&BOOT_BINARIESDIR\lsusb.exe")))
+        (
+            PRINT %ERROR "Error! Deviceprogrammer: Could not find fh_loader.exe, QSaharaServer.exe or lsusb.exe. Exiting"
+            ENDDO FAIL
+        )
+        
+        
+        
+        
+        
+        LOCAL &NotFiles &NotFilesCmd &MemoryNameCmd &FileListCmd
+        &NotFiles="apdp.mbn,msadpfs.bin"
+        IF ("&NotFiles"=="")
+            &NotFilesCmd=""
+        ELSE
+            &NotFilesCmd=" --notfiles=&NotFiles"
+
+            
+        LOCAL &FH_End_Waittime &FH_Begin_Waittime
+        &FH_Begin_Waittime=3.
+        &FH_End_Waittime=20.
+        
+        
+        
+
+
+////////////////////////////////////////////////////
+//                 
+//      Function: Main
+//
+//      Description: Main deviceprogrammer logic
+//
+//      //Arguments: Inherits arguments from above
+//
+////////////////////////////////////////////////////
+MAIN:
+
+        ///////////////////Make sure needed files present////////////////////////
+        IF (!FILE.EXIST("&DevProgrammerPythonScript"))
+        (
+            PRINT %ERROR "deviceprogrammer.cmm error! File &DevProgrammerPythonScript not found!"
+            ENDDO NOFILE
+        )
+
+        
+        GOSUB GET_SEARCH_PATHS
+        LOCAL &searchpathscommand
+        ENTRY %LINE &searchpathscommand
+
+        
+        
+        /////////////////////////////////////////////
+        //
+        //  Set up device 
+        //
+        /////////////////////////////////////////////
+        
+        
+        //Reset the device, expect it to get to EDL due to no cookies
+        DO std_reset NOPMIC,SETEDLCOOKIE
+        
+        //Prompt to close QPST server
+        DIALOG.OK "Please stop QPST server and connect USB to device"
+
+        
+        //////////////////////////////////////////
+        //
+        //  Detect Storage type
+        //
+        //////////////////////////////////////////
+        
+        do hwio
+        do std_utils HWIO_INF BOOT_CONFIG FAST_BOOT
+        ENTRY &STORAGE_OPTION
+        &FileListCmd=""
+        IF (&STORAGE_OPTION==0x4) //0x4 UFS
+        (
+            &MemoryNameCmd="--memoryname=ufs" //UFS
+            IF ("&LOAD_OPT"=="LOADCOMMON")
+            (
+               &FileListCmd="--files=xbl.elf,tz.mbn,emmc_appsboot.mbn,hyp.mbn,rpm.mbn,pmic.elf,devcfg.mbn,gpt_main0.bin,gpt_backup0.bin,gpt_main1.bin,gpt_backup1.bin,gpt_main2.bin,gpt_backup2.bin,gpt_main3.bin,gpt_backup3.bin,gpt_main4.bin,gpt_backup4.bin,gpt_main5.bin,gpt_backup5.bin"
+            )
+        )
+        ELSE //else EMMC 
+        (
+            &MemoryNameCmd="--memoryname=emmc" 
+            IF ("&LOAD_OPT"=="LOADCOMMON")
+           (
+               &FileListCmd="--files=gpt_main0.bin,gpt_backup0.bin,xbl.elf,tz.mbn,emmc_appsboot.mbn,hyp.mbn,rpm.mbn,pmic.elf,devcfg.mbn"
+           )
+        )
+        
+        
+        GO
+        
+        /////////////////////////////////////////////
+        //
+        //  Run DeviceProgrammer
+        //
+        /////////////////////////////////////////////
+        LOCAL &BaseCMD &SaharaCMD &FirehoseCMD
+
+        &BaseCMD="python &DevProgrammerPythonScript &ArgumentLine --loaderpaths=&DevProgrammerPath --pathtodeviceprogrammer=&BOOT_BUILDROOT\&BINARIESDIR --logdirectory=&LogFileDirectory &searchpathscommand --notfiles=&NotFiles &MemoryNameCmd &FileListCmd --porttracename=&LogFileDirectory/port_trace.txt"
+        &SaharaCMD="&BaseCMD --skipfh"
+        //&FirehoseCMD="&BaseCMD --verify_programming --skipqsahara" 
+        &FirehoseCMD="&BaseCMD --skipqsahara" 
+    
+        WINPOS 1. 1. 150. 4.
+        AREA.CLEAR
+        AREA
+        PRINT "Calling device programmer:"
+        PRINT "Device Programmer: &DevProgrammerPythonScript"
+        PRINT "Log File: &LogFileDirectory/port_trace.txt"
+        PRINT "Memory Name: &MemoryNameCmd"
+        PRINT "Log Directory: &LogFileDirectory"
+        PRINT "Loader Path: &DevProgrammerPath"
+        PRINT "Search paths command: &searchpathscommand"
+        PRINT "Argument Line = &ArgumentLine"
+        
+        PRINT "Full command: "
+        PRINT "&SaharaCMD"
+        
+
+        PRINT "Querying Device for Sahara Protocol"
+        //////////////Run Python-Sahara Script//////////////////
+
+        //Delete the file that indicates success or fail.
+        GOSUB DELETEFILE_FH_BEGIN &DeviceProgrammerStepDoneFile
+        // Execute the command to send Deviceprogrammer using QSaharaServer
+        GOSUB OS_EXECUTE_CMD &SaharaCMD
+        
+        
+        //////////////////////////////////////////
+        //  Wait for firehose command to appear.
+        //  Wait max of 3 minutes
+        //////////////////////////////////////////
+        GOSUB WAITFORFILE_FH_BEGIN &DeviceProgrammerStepDoneFile
+        
+        //Read firehose command from log file. Fail if null
+        GOSUB READ_RESULT_FILE &DeviceProgrammerStepDoneFile
+        ENTRY &sahararesult
+        
+
+            
+        IF ("&sahararesult"=="SUCCESS")
+        (
+            PRINT "Sahara Communication Successful. Now loading build via FireHose"
+        )
+        ELSE
+        (
+            PRINT "Error Ocurred with Sahara Log. See &SaharaLog for details"
+            ENDDO FAIL
+        )
+        //////////////////////////////////////////
+        // Load build via firehose, and wait for result. 
+        // Add '--verifyprogramming' to check that all binaries are loaded successfully
+        //  Wait max of 20 minutes
+        //////////////////////////////////////////
+        
+        //Delete the file that indicates success or fail.
+        GOSUB DELETEFILE_FH_BEGIN &DeviceProgrammerStepDoneFile
+
+        //Program the device
+        GOSUB OS_EXECUTE_CMD &FirehoseCMD
+        
+        GOSUB WAITFORFILE_FH_BEGIN &DeviceProgrammerStepDoneFile
+
+        GOSUB READ_RESULT_FILE &DeviceProgrammerStepDoneFile
+            ENTRY &RVALUE
+            
+
+            
+        ////////////Finish//////////////
+        PRINT "Firehose complete with &RVALUE. See &LogFile for details"
+        ENDDO &RVALUE
+        
+        
+////////////////////////////////////////////////////
+//                 
+//      Function: OS_EXECUTE_CMD
+//
+//      Description: OS.COMMAND wrapper
+//
+//      Arguments: &cmd
+//
+////////////////////////////////////////////////////
+OS_EXECUTE_CMD:
+        LOCAL &cmd &temp_path &original_path
+        ENTRY %LINE &cmd
+        
+        &original_path=OS.PWD()
+        &temp_path=OS.FILE.PATH("&LogFile")
+        CD "&temp_path"
+        OS.COMMAND &cmd
+        CD "&original_path"
+        
+        RETURN
+////////////////////////////////////////////////////
+//                 
+//      Function: DELETEFILE_FH_BEGIN
+//
+//      Description: Deletes file
+//
+//      Arguments: &file
+//
+////////////////////////////////////////////////////
+DELETEFILE_FH_BEGIN:
+        LOCAL &file 
+        ENTRY %LINE &file
+        IF (FILE.EXIST("&file"))
+        (
+            GOSUB OS_EXECUTE_CMD "del &file"
+        )
+        WAIT.1s
+        RETURN
+        
+////////////////////////////////////////////////////
+//                 
+//      Function: WAITFORFILE_FH_BEGIN
+//
+//      Description: searches for new file: &file
+//
+//      Arguments: &file
+//
+//      Notes: Only difference between WAITFORFILE_FH_BEGIN and 
+//              WAITFORFILE_FH_END is waittime variable, and _BEGIN saves
+//              sahara log
+//
+////////////////////////////////////////////////////
+WAITFORFILE_FH_BEGIN:
+        LOCAL &file 
+        ENTRY %LINE &file 
+        
+        &waittime=&FH_Begin_Waittime
+        
+        
+        //If log file is present, save it off to sahara file
+        IF (FILE.EXIST("&LogFile"))
+        (
+            PRINT "Sahara file saved to &SaharaLog"
+            GOSUB OS_EXECUTE_CMD "copy &LogFile &SaharaLog"
+        )
+        
+        LOCAL &ctr &timelimit
+        &ctr=0
+        &timelimit=10*60*&waittime 
+        WHILE (!FILE.EXIST("&file")&&(&ctr<&timelimit))
+        (
+            WAIT.100ms
+            &ctr=&ctr+1
+        )
+        
+        WAIT.2s
+        RETURN
+////////////////////////////////////////////////////
+//                 
+//      Function: READ_RESULT_FILE
+//
+//      Description: Reads result file
+//
+//      Arguments: None
+//
+//      Returns: Success or fail depending on output of file
+//
+////////////////////////////////////////////////////
+READ_RESULT_FILE:
+    LOCAL &EOF_Flag &line
+    &EOF_Flag=0.
+    &line=""
+    LOCAL &success_searchstring
+    &success_searchstring="SUCCESS"
+    
+    &file="&DeviceProgrammerStepDoneFile"
+    
+    IF (!FILE.EXIST("&file"))
+    (
+    	PRINT %ERROR "Error! Deviceprogrammer couldn't find result file &file. Exiting"
+	&result="FAIL"
+	RETURN &result
+    )
+    
+    OPEN #1 &file /Read
+    WHILE ((STRING.SCAN("&line","&success_searchstring",0)==-1)&&(&EOF_Flag!=1.))
+    (
+        READ #1 %LINE &line
+        
+        IF EOF()
+            &EOF_Flag=1.
+        
+        &line=STRING.TRIM("&line")
+            
+    )
+    
+    //If we didn't find success string, something went wrong
+    IF (&EOF_Flag!=1.)
+        &result="SUCCESS"
+    ELSE
+        &result="FAIL"
+    
+    CLOSE #1
+    
+    
+    RETURN &result
+    
+
+    
+////////////////////////////////////////////////////
+//                 
+//      Function: WAITFORFILE_FH_END
+//
+//      Description: searches for new file: &file
+//
+//      Arguments: &file
+//
+//      Notes: Only difference between WAITFORFILE_FH_BEGIN and 
+//              WAITFORFILE_FH_END is waittime variable
+//
+////////////////////////////////////////////////////
+WAITFORFILE_FH_END:
+        LOCAL &file &waittime
+        ENTRY %LINE &file 
+        
+        &waittime=&FH_End_Waittime
+        
+        IF (FILE.EXIST("&file"))
+        (
+            GOSUB OS_EXECUTE_CMD "del &file"
+        )
+        WAIT.1s
+        LOCAL &ctr &timelimit
+        
+        &ctr=0
+        &timelimit=10*60*&waittime 
+        WHILE (!FILE.EXIST("&file")&&(&ctr<&timelimit))
+        (
+            WAIT.100ms
+            &ctr=&ctr+1
+        )
+        
+        WAIT.2s
+        RETURN
+
+        
+////////////////////////////////////////////////////
+//                 
+//      Function: READ_FIREHOSE_COMMAND
+//
+//      Description: searches in file for firehose command. returns it
+//
+//      Arguments: &file
+//
+////////////////////////////////////////////////////
+READ_FIREHOSE_COMMAND:
+    LOCAL &file &firehosecommand
+    ENTRY %LINE &file
+    
+    //FIXME - save file off to known good location
+    
+    LOCAL &EOF_Flag &line
+    &EOF_Flag=0.
+    
+    LOCAL &firehose_searchstring
+    &firehose_searchstring="FirehoseCommand:"
+    &line=""
+    OPEN #1 &file /Read
+    WHILE ("&line"!="&firehose_searchstring")&&(&EOF_Flag!=1.)
+    (
+        READ #1 %LINE &line
+        
+        IF EOF()
+            &EOF_Flag=1.
+        
+        &line=STRING.TRIM("&line")
+            
+    )
+    
+    IF (&EOF_Flag!=1.)
+        READ #1 %LINE &firehosecommand
+    ELSE
+        &firehosecommand="NULL"
+    
+    CLOSE #1
+    
+    
+    IF (STRING.TRIM("&firehosecommand")=="NULL")
+    (
+        PRINT "Something wrong with Sahara communication. See Log file:  &LogFile"
+        ENDDO FAIL
+    )
+    //Assumed successful firehose command here
+    RETURN &firehosecommand 
+
+    
+////////////////////////////////////////////////////
+//                 
+//      Function: GET_SEARCH_PATHS
+//
+//      Description: builds searchpaths command from available paths 
+//
+//      Arguments: None.
+//
+//      Returns: searchpathscommand: Command to be given to deviceprogrammer script
+//
+////////////////////////////////////////////////////
+GET_SEARCH_PATHS:
+        LOCAL &searchpathscommand
+        &searchpathscommand=" --searchpath="
+        //Create searchpaths
+        
+        //Require boot binary
+        IF FILE.EXIST("&BOOT_BUILDROOT/&BOOT_BINARY")
+        (
+            //Don't put comma in first command
+            &tempdir=OS.FILE.PATH("&BOOT_BUILDROOT/&BOOT_BINARY")
+            &searchpathscommand="&searchpathscommand"+"&tempdir"
+        )
+        ELSE
+        (
+            PRINT %ERROR "Error! Deviceprogammer needs boot binary path. Given: &BOOT_BUILDROOT/&BOOT_BINARY"
+            ENDDO FAIL
+        )
+        
+        IF FILE.EXIST("&BOOT_BUILDROOT/&PMIC_BINARY")
+        (
+            &tempdir=OS.FILE.PATH("&BOOT_BUILDROOT/&PMIC_BINARY")
+            &searchpathscommand="&searchpathscommand,&tempdir"
+        )
+        
+        IF FILE.EXIST("&RPM_BUILDROOT/&RPM_BINARY")
+        (
+            &tempdir=OS.FILE.PATH("&RPM_BUILDROOT/&RPM_BINARY")
+            &searchpathscommand="&searchpathscommand,&tempdir"
+        )
+        
+        IF FILE.EXIST("&TZ_BUILDROOT/&TZ_BINARY")
+        (
+            &tempdir=OS.FILE.PATH("&TZ_BUILDROOT/&TZ_BINARY")
+            &searchpathscommand="&searchpathscommand,&tempdir"
+        )
+        IF FILE.EXIST("&TZ_BUILDROOT/&HYP_BINARY")
+        (
+            &tempdir=OS.FILE.PATH("&TZ_BUILDROOT/&HYP_BINARY")
+            &searchpathscommand="&searchpathscommand,&tempdir"
+        )
+        
+        //HLOS specifics
+        IF ("&HLOS"=="LA")
+        (
+            IF FILE.EXIST("&APPS_BUILDROOT/&APPSBOOT_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&APPSBOOT_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+            IF FILE.EXIST("&TZ_BUILDROOT/&TZDEVCFG_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&TZ_BUILDROOT/&TZDEVCFG_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+        )
+        ELSE IF ("&HLOS"=="WP")
+        (
+        
+            IF FILE.EXIST("&APPS_BUILDROOT/&TZDEVCFG_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&TZDEVCFG_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+            IF FILE.EXIST("&APPS_BUILDROOT/&WINSECAPP_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&WINSECAPP_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+            IF FILE.EXIST("&APPS_BUILDROOT/&UEFISEC_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&UEFISEC_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+            IF FILE.EXIST("&APPS_BUILDROOT/&APPSCONFIG_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&APPSCONFIG_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+            IF FILE.EXIST("&APPS_BUILDROOT/&EFIESP_BINARY")
+            (
+                &tempdir=OS.FILE.PATH("&APPS_BUILDROOT/&EFIESP_BINARY")
+                &searchpathscommand="&searchpathscommand,&tempdir"
+            )
+        )
+        ELSE
+        (
+            PRINT %ERROR "Error! Deviceprogrammer: HLOS not specified: &HLOS"
+            ENDDO FAIL
+        )
+        
+        RETURN &searchpathscommand
+
+    
+////////////////////////////////////////////////////
+//                 
+//      Function: EXIT & FATALEXIT
+//
+//      Description: Exit functions
+//
+////////////////////////////////////////////////////
+EXIT:
+    ENDDO
+FATALEXIT:
+    END
+    
+    
+    

@@ -1,0 +1,97 @@
+#===============================================================================
+#
+# NanoPB encode/decode library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2020 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.api/2.0/nanopb/build/nanopb.scons#8 $
+#  $DateTime: 2020/07/28 19:06:25 $
+#  $Change: 25159752 $
+#
+#===============================================================================
+Import('env')
+import os, inspect
+
+ME = inspect.getfile(inspect.currentframe())
+MY_ROOT = os.path.dirname(os.path.dirname(ME))
+MY_NAME = os.path.basename(MY_ROOT)
+
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+if 'SSC_TARGET_HEXAGON' in env['CPPDEFINES']:
+  CBSP_API = [
+    'DEBUGTOOLS', # Required for debug log messages
+    'KERNEL',     # Required for debug log messages
+    ]
+  env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi(['SNS_API_INCLUDES'], area='ssc_api')
+
+#-------------------------------------------------------------------------------
+# Source Path
+#-------------------------------------------------------------------------------
+SRCPATH = os.path.join(MY_ROOT, 'src')
+if not os.path.isdir(SRCPATH):
+  if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+    SRCPATH = os.path.join(MY_ROOT, 'x86')
+  elif 'SSC_TARGET_HEXAGON' in env['CPPDEFINES']:
+    SRCPATH = os.path.join(MY_ROOT, 'hexagon')
+
+env.VariantDir('${BUILDPATH}', MY_ROOT, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Source files
+#-------------------------------------------------------------------------------
+SRCFILES  =  env.FindFiles(['*.c'], SRCPATH)
+VARIANT_SRCFILES = [f.replace(MY_ROOT,'${BUILDPATH}') for f in SRCFILES]
+
+#-------------------------------------------------------------------------------
+# Protocol Buffer API files
+#-------------------------------------------------------------------------------
+PB_PATH = os.path.join(MY_ROOT, 'pb')
+if 'USES_SSC_PBGEN' in env:
+  for proto_file in env.FindFiles(['*.proto'], PB_PATH):
+    output = env.PBGen(str(proto_file))
+    VARIANT_SRCFILES += [output[1]]   # Just include the .c file
+
+#-------------------------------------------------------------------------------
+# Add Libraries to Image
+#-------------------------------------------------------------------------------
+MY_LIB = os.path.join('${BUILDPATH}', MY_NAME)
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  lib = env.AddLibrary(['SSC_SIM'], MY_LIB, VARIANT_SRCFILES)
+elif 'SENSORS_DD_DEV_FLAG' not in env:
+  lib = env.AddLibrary(env['SSC_API_BUILD_TAGS'], MY_LIB, VARIANT_SRCFILES)
+else:
+  lib = env.AddBinaryLibrary(env['SSC_API_BUILD_TAGS'], MY_LIB, VARIANT_SRCFILES)
+env.Depends(lib, VARIANT_SRCFILES)
+
+REMOVE_FILES = []
+if env.GetOption('cleanpack'):
+  REMOVE_FILES += env.FindFiles(['*.c'], os.path.join(MY_ROOT, 'src'))
+  REMOVE_FILES += env.FindFiles(['*.h', '*.txt'], os.path.join(MY_ROOT, 'inc'))
+  REMOVE_FILES += env.FindFiles(['*.pb.h'], os.path.join(MY_ROOT, 'build', "${BUILDPATH}", 'pb'))
+  REMOVE_FILES += env.FindFiles(['*'], os.path.join(MY_ROOT, 'generator'))
+  REMOVE_FILES += env.FindFiles(['*'], os.path.join(MY_ROOT, 'generator-win'))
+  REMOVE_FILES += env.FindFiles(['*.proto'], os.path.join(MY_ROOT, 'pb'))
+
+#-------------------------------------------------------------------------------
+#island mode
+#-------------------------------------------------------------------------------
+if 'USES_MEMSEG' in env:
+  env.TagLibraryForMemorySegment(env['SSC_API_BUILD_TAGS'], 'ssc', lib)
+elif 'USES_ISLAND' in env:
+  env.AddIslandLibrary(env['SSC_API_BUILD_TAGS'], lib)
+
+#-------------------------------------------------------------------------------
+# Remove source files
+#-------------------------------------------------------------------------------
+
+env.CleanPack(env['SSC_API_BUILD_TAGS'], REMOVE_FILES, pack_exception=["USES_NO_SHIP_NANOPB"])

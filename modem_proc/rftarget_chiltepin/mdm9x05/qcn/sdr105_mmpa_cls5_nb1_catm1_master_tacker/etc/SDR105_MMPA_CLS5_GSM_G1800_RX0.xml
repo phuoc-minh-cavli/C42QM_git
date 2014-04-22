@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NvSource>
+<!-- WTR2965_CATM_V2_GSM_G1800_RX0.xml -->
+	<NvItem id="24998" name="RFNV_GSM_C0_GSM1800_LNA_SWPT_I" mapping="direct" encoding="dec">-34,-46,-37,-37,-22,-45,-30,-28</NvItem>
+	<NvItem id="27984" name="RFNV_GSM_C0_GSM1800_HL_RX_LNA_SWPT_I" mapping="direct" encoding="dec">-34,-46,-37,-37,-22,-45,-30,-28</NvItem>
+	<NvItem id="28000" name="RFNV_GSM_C0_GSM1800_LNA_ENH_SWPT_I" mapping="direct" encoding="dec">-67,-67,127,127,127,127,127,127</NvItem>
+</NvSource>

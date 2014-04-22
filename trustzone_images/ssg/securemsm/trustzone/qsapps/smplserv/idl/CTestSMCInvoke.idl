@@ -1,0 +1,7 @@
+// Copyright (c) 2019 Qualcomm Technologies, Inc.  All Rights Reserved.
+// Qualcomm Technologies Proprietary and Confidential.
+
+// This class provides an object for SMCInvoke testing.
+//
+
+const uint32 CTestSMCInvoke_UID = 0x00FF0017;

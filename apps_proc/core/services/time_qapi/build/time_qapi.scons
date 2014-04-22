@@ -1,0 +1,51 @@
+#===============================================================================
+#
+# timer lib scons script for threadx qapi dam user space
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/core.tx/6.0/services/time_qapi/build/time_qapi.scons#2 $
+#  $DateTime: 2021/03/18 05:50:42 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# import pdb; pdb.set_trace()
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES')
+env.RequirePublicApi('QAPI')
+
+if 'USES_ARM' in env:
+	env.Append(CCFLAGS = " --arm_only --apcs=/interwork ")
+	env.Append(ASMFLAGS = " --arm_only --apcs=/interwork ")
+else:
+    env.Append(CCFLAGS = "-mno-thumb ")
+    env.Append(ASMFLAGS = "-mno-thumb ")
+	
+SRCPATH = '${BUILD_ROOT}/core/services/time_qapi'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+TIMER_DAM_LIB_SOURCES = [
+	'${BUILDPATH}/src/qapi_timer_user.c',
+]
+
+if 'USES_ARM' in env:
+    env.AddBinaryLibrary(['TXM_MODULES'],'${BUILD_ROOT}/core/services/time_qapi/build/timer_dam_lib',TIMER_DAM_LIB_SOURCES)
+else:
+    env.AddBinaryLibrary(['TXM_MODULES_LLVM'],'${BUILD_ROOT}/core/services/time_qapi/build/LLVM/timer_dam_lib',TIMER_DAM_LIB_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+#env.LoadSoftwareUnits()

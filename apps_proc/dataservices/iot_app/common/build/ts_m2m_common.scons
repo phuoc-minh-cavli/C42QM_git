@@ -1,0 +1,186 @@
+
+Import('env')
+
+env = env.Clone()
+SRCPATH = '${BUILD_ROOT}/dataservices/iot_app/common'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+   
+# Setting compilation flags and macros
+#-DENABLE_COMMON_ERR_LOG - enables error logs
+#-DENABLE_COMMON_INFO_LOG - enables info logs
+#-DLWM2M_CARRIER_ENHANCEMENTS - enables LWM2M carrier enhancements
+
+env.Append(CFLAGS = ['-DENABLE_COMMON_ERR_LOG', '-DENABLE_COMMON_INFO_LOG'])
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('QAPI_STUB')
+	env.RequirePublicApi('SYSTEMDRIVERS', area ='core')
+	env.RequirePublicApi('SERVICES')
+	env.RequirePublicApi('DMS', area='qmimsgs')
+	env.RequirePublicApi('PSM', area='qmimsgs')
+	env.RequirePublicApi('NAS', area='qmimsgs')
+	env.RequirePublicApi('UIM', area='qmimsgs')
+	env.RequirePublicApi('DSD', area='qmimsgs')
+	env.RequirePublicApi('WMS', area='qmimsgs')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+	env.RequirePublicApi('COMMON', area='qmimsgs')
+	env.RequirePublicApi('IMS_IOT', area='qmimsgs')
+	env.RequirePublicApi('VOICE', area='qmimsgs')
+	env.RequirePublicApi(['LOCATION_API'], area='offtarget')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('DMS', area='api')
+env.RequirePublicApi('NAS', area='api')
+env.RequirePublicApi('UIM', area='api')
+env.RequirePublicApi('DSD', area='api')
+env.RequirePublicApi('WMS', area='api')
+env.RequirePublicApi('WDS', area='api')
+env.RequirePublicApi('PSM', area='api')
+env.RequirePublicApi('IMS_IOT', area='api')
+env.RequirePublicApi('VOICE', area='api')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('PDC', area='api')
+env.RequirePublicApi(['DSS_NET'],area='dataservices')
+env.RequirePublicApi(['UTILS'], area='dataservices')
+env.RequirePublicApi(['QAPI'])
+DATASERVICES_RESTRICTED_APIS = [
+    'DS_UTILS',
+    ]
+	
+env.RequireRestrictedApi(DATASERVICES_RESTRICTED_APIS)
+env.RequirePublicApi(['PSM_CLIENT'], area='ril')
+env.RequirePublicApi(['QAPI'], area='ril')
+
+env.RequireRestrictedApi(['TS_M2M_COMMON','LWM2M'])
+env.RequireRestrictedApi(['TS'])
+env.RequireRestrictedApi(['M2M_CORE'])
+env.RequireRestrictedApi(['NET_UTILS'])
+env.RequireRestrictedApi(['NETMGR'])
+env.RequirePublicApi(['NICHESTACK'])
+env.RequirePublicApi(['DATASERVICES_NET_IPSTACK'])
+env.RequirePublicApi('UTILS_EXT')
+
+#===============================================================================
+#-DWMS_SMS_SUPPORT - Macro will enable support to recevie MT SMS
+#===============================================================================
+env.Append(CFLAGS = ['-DWMS_SMS_SUPPORT'])
+
+SRC_SOURCES = [
+    '${BUILDPATH}/src/iotapp_dam_app_load.c',
+]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+if 'USES_MOB' not in env:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/common'), SRC_SOURCES)
+
+APP_SOURCES = [
+	'${BUILDPATH}/src/iotapp_qmi_dms.c',
+	'${BUILDPATH}/src/iotapp_qmi_dins.c',
+	'${BUILDPATH}/src/iotapp_qmi_psm.c',
+	'${BUILDPATH}/src/iotapp_qmi_nas.c',
+	'${BUILDPATH}/src/iotapp_qmi_uim.c',
+	'${BUILDPATH}/src/iotapp_qmi_dsd.c',
+	'${BUILDPATH}/src/iotapp_qmi_wms.c',
+	'${BUILDPATH}/src/iotapp_qmi_ims_iot.c',
+	'${BUILDPATH}/src/iotapp_qmi_voice.c',
+  '${BUILDPATH}/src/iotapp_dss_util.c',
+  '${BUILDPATH}/src/qapi_device_info.c',
+  '${BUILDPATH}/src/iotapp_qmi_wds.c',
+  '${BUILDPATH}/src/iotapp_log_util.c',  
+]
+
+APP_SOURCES_TXM = [
+  '${BUILDPATH}/src/qapi_device_info_txm.c',
+]
+
+if 'USES_MOB' not in env:
+	APP_SOURCES = APP_SOURCES + APP_SOURCES_TXM
+
+if 'USES_TRACKER_APP' in env:
+	TRACKER_SOURCES = [
+		'${BUILDPATH}/src/iotapp_qmi_dms.c',
+		'${BUILDPATH}/src/iotapp_qmi_dins.c',
+		'${BUILDPATH}/src/iotapp_qmi_psm.c',
+		'${BUILDPATH}/src/iotapp_qmi_nas.c',
+		'${BUILDPATH}/src/iotapp_qmi_uim.c',
+		'${BUILDPATH}/src/iotapp_qmi_dsd.c',
+		'${BUILDPATH}/src/iotapp_qmi_wms.c',
+		'${BUILDPATH}/src/iotapp_qmi_ims_iot.c',
+		'${BUILDPATH}/src/iotapp_qmi_voice.c',
+		'${BUILDPATH}/src/iotapp_dss_util.c',
+		'${BUILDPATH}/src/qapi_device_info.c',
+		'${BUILDPATH}/src/qapi_device_info_txm.c',
+		'${BUILDPATH}/src/iotapp_qmi_wds.c',
+		'${BUILDPATH}/src/qapi_sensor_mgr.c',
+		'${BUILDPATH}/src/qapi_sensor_mgr_txm.c',
+		'${BUILDPATH}/src/iotapp_log_util.c',
+	]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+
+if 'USES_TRACKER_APP' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/common_lib'), TRACKER_SOURCES)
+else:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/common_lib'), APP_SOURCES)
+
+RCINIT_INIT_QTI_TASK_INIT1 = {
+  'sequence_group'             : 'RCINIT_GROUP_7',        # required
+  'init_name'                  : 'oem_app_load',          # required
+  'init_function'              : 'oem_app_load',          # required
+}
+
+RCINIT_INIT_QTI_TASK_INIT2 = {
+  'sequence_group'             : 'RCINIT_GROUP_4',        # required
+  'init_name'                  : 'register_qapi_device_info_txm',          # required
+  'init_function'              : 'register_qapi_device_info_txm',          # required
+}
+RCINIT_INIT_QTI_TASK_INIT2 = {
+  'sequence_group'             : 'RCINIT_GROUP_4',        # required
+  'init_name'                  : 'register_qapi_device_info_txm2',          # required
+  'init_function'              : 'register_qapi_device_info_txm2',          # required
+}
+if 'USES_TRACKER_APP' in env:
+	RCINIT_INIT_QTI_TASK_INIT3 = {
+		'sequence_group'             : 'RCINIT_GROUP_4',        # required
+		'init_name'                  : 'register_qapi_sensor_mgr_txm',          # required
+		'init_function'              : 'register_qapi_sensor_mgr_txm',          # required
+	}
+
+RCINIT_INIT_DEVICE_INFO_SERVICES_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_3',          # required
+  'thread_name'                : 'init_device_info_services_task',                 # required
+  'thread_entry'               : 'init_device_info_services',           
+  'stack_size_bytes'           : '4096',
+  'priority_amss_order'        : '149'
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT1 )
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT2 )
+  if 'USES_TRACKER_APP' in env:
+	env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT3 )
+  env.AddRCInitTask( RCINIT_IMG+['MOB_DATASERVICES'], RCINIT_INIT_DEVICE_INFO_SERVICES_TASK )
+  
+  

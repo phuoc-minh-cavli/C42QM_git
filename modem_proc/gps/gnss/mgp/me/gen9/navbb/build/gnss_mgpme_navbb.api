@@ -1,0 +1,85 @@
+#===============================================================================
+#
+# GNSS MGP ME GEN9 NavBB wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to declare the GNSS MGP ME GEN9 NavBB APIs to the rest of GPS
+#
+#  Copyright (c) 2017 Qualcomm Technologies, Inc.
+#  Qualcomm Technologies Confidential and Proprietary. All Rights Reserved. 
+#
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By anavbbepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+# ---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/mgp/me/gen9/navbb/build/gnss_mgpme_navbb.api#1 $
+#  $DateTime: 2020/07/21 21:23:44 $
+#
+#===============================================================================
+Import('env') # gps_env does not exist at this point
+
+currentChipset = env['CHIPSET']
+navbbAPIPath = "${GPS_ROOT}/gnss/mgp/me/gen9/navbb/api/"+currentChipset
+
+#--------------------------------------------------------------------------------
+# Check if GPS actually supports the specified chipset, but only on internal
+# builds where the source actually exists
+#--------------------------------------------------------------------------------
+if 'test' in env['BUILD_ID'] and not env.PathExists(navbbAPIPath):
+    env.PrintError("GPS does not support " + currentChipset)
+    env.PrintError("  Ping gps.int for support")
+    exit(-100)
+
+#--------------------------------------------------------------------------------
+# This will automatically provide the necessary GNSS HW flag and API folder based
+# on Chipset
+#--------------------------------------------------------------------------------
+env.PublishPublicApi('NAVBB', ["${GPS_ROOT}/gnss/mgp/me/gen9/navbb/api",
+                            navbbAPIPath])
+hwFeatureDefine = " FEATURE_GNSS_" + currentChipset.upper() + "_HW "
+env.Append(CPPDEFINES = hwFeatureDefine)
+
+#--------------------------------------------------------------------------------
+# Helper GNSS HW flag to denote HT or VTv1 targets
+#--------------------------------------------------------------------------------
+if currentChipset in ['mdm9x55',
+                      'mdm9x65',
+                      'msm8998',
+                      'sdm845',
+                      'sdm670',
+                      'sdm660',
+                      'sdm640',
+                      'sdm710',
+                      ]:
+    env.Append(CPPDEFINES = " FEATURE_GNSS_NAVBB_HT_VTV1_HW ")
+    env.AddUsesFlags('USES_FEATURE_GNSS_NAVBB_HT_VTV1_HW')
+elif currentChipset in ['sdx24',
+                        'sdm855',
+                        'sdm1000',
+                       ]:
+    env.Append(CPPDEFINES = " FEATURE_GNSS_NAVBB_VTV2_HW ")
+    env.AddUsesFlags('USES_FEATURE_GNSS_NAVBB_VTV2_HW')
+elif currentChipset in ['mdm9205',
+						'mdm9607',
+                       ]:   
+                       
+    env.Append(CPPDEFINES = " FEATURE_GNSS_NAVBB_VTV3_HW ")
+    env.AddUsesFlags('USES_FEATURE_GNSS_NAVBB_VTV3_HW')
+else:  
+    # All future targets should be VTv4
+    env.Append(CPPDEFINES = " FEATURE_GNSS_NAVBB_VTV4_HW ")
+    env.AddUsesFlags('USES_FEATURE_GNSS_NAVBB_VTV4_HW')
+
+# Please push chipset specific flags to the appropriate lower level build file
+
+env.LoadAPIUnits()

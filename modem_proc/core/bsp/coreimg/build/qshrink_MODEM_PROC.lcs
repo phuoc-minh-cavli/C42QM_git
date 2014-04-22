@@ -1,0 +1,899 @@
+/*======================================================================== 
+     QShrink linker script 
+ 
+     Copyright (c) 2015 - 2020 by QUALCOMM INCORPORATED. All Rights Reserved. 
+     Export of this technology or software is regulated by the U.S. Government.  
+     Diversion contrary to U.S. law prohibited.  
+ 
+     Start address for this segment could be different for each image 
+     Typical start address used :             
+     <modem> : 0xf8000000 
+ 
+     <author>:<Jsumit>                                 
+========================================================================*/ 
+
+   __QSR_4_START__ = 0xf8000000; 
+  . = __QSR_4_START__; 
+  QSR_4_0_MSG (0xf8000000): 
+  { 
+      _MSG_BASE_ = .;
+        . =  ALIGN(0x2000);   
+        PROVIDE(__QSR_4_0_MSG_ALIGNED_START__ = .);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.((0x00000004))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.((0x00000008))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.0.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.2.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.2.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.2.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.2.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.7.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.7.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.7.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(((0x00000010) & (~1)))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000020)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000040)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000080)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.14.(0x00000100)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.15.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.15.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.16.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.17.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.17.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.17.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.17.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.18.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.18.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.19.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.19.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.19.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.19.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.20.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.20.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.21.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.21.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.21.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.23.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.25.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.25.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.25.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.32.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.32.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.32.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.32.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.43.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.46.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.46.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.46.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000020)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000040)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000080)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000100)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000200)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00000400)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00001000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00002000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00004000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00008000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00010000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00020000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00040000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00080000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00100000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00200000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00400000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.47.(0x00800000)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.48.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.48.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.48.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.49.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.49.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.49.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.49.(0x00000040)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.50.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.50.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.50.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.51.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.51.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.51.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.64.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.64.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.72.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.72.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.72.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.80.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.80.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.80.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.81.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.81.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.81.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.82.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.82.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.82.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.83.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.83.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.83.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.84.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.84.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.84.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.85.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.85.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.85.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.85.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.86.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.86.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.86.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.86.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.89.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.89.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.89.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.90.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.90.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.90.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.91.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.91.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.91.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.92.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.92.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.92.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.93.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.93.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.94.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.94.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.94.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.94.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.97.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.97.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.97.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.99.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.99.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.99.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.100.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.100.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.100.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.103.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.112.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.113.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.118.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.118.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.500.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.500.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.500.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3006.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3006.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3006.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3006.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3006.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3007.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3008.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3009.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3009.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3009.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3010.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3010.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3010.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3010.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(((0x00000008) & (~1)) | (((0x00000010) & (~1))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(((0x00000001) & (~1)) | (((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1)))))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.3011.(((0x00000002) & (~1)) | (((0x00000004) & (~1)) | (((0x00000008) & (~1)) | (((0x00000010) & (~1))))))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4001.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4001.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4001.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4001.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4002.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4002.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4004.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4004.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4004.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4004.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4005.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4005.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4005.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4006.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4006.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4006.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4008.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4008.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4008.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4009.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4009.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4009.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4009.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4010.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4010.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4010.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4600.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4600.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4601.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4601.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4602.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4602.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4604.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4604.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4604.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4606.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4606.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4613.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4613.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4613.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4613.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4614.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4614.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4615.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4615.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4615.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.4615.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5000.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5000.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5000.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5000.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5005.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5005.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5012.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5012.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5012.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5018.((0x00000002))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5018.((0x00000004))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5018.((0x00000008))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5023.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5023.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5500.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5500.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5500.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5500.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5501.((0x00000002))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5501.((0x00000004))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5501.((0x00000008))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5501.((0x00000010))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5504.((0x00000002))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5504.((0x00000004))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5504.((0x00000008))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5513.((0x00000002))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5513.((0x00000004))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.5513.((0x00000008))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8500.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8500.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8500.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.8500.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9500.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9500.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9500.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((0x00000002))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((0x00000004))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((0x00000008))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000100) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000100) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000100) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000100) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000200) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000200) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000200) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000200) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000400) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00000400) | (0x00000002))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000400) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00000400) | (0x00000004))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000400) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00000400) | (0x00000008))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000400) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000800) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000800) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00000800) | (0x00000004))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00000800) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00001000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00001000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00001000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00002000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00002000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00002000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00002000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00004000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00004000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00004000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00004000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00008000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00008000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00008000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00008000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00010000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00010000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00010000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00010000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00020000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00020000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00020000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00020000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00040000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00040000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00040000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00040000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00080000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00080000) | (0x00000004))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00080000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.((((0x00080000) | (0x00000008))))*"))
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00080000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00100000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00100000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00100000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00100000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00200000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00400000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00400000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00400000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00400000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00800000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00800000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00800000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x00800000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x01000000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x01000000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x02000000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x02000000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x04000000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x04000000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x04000000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x10000000) | (0x00000001)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x10000000) | (0x00000002)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x10000000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x10000000) | (0x00000008)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9501.(((0x20000000) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9502.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9502.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9502.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9502.(0x00000020)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9503.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9503.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9504.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9504.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9504.(0x00000040)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9505.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9505.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9505.(((0x00000020) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9506.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9506.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9506.(((0x00000020) | (0x00000004)))*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9507.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9507.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9507.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9508.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9508.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9508.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.(0x00000002)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.(0x00000004)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.(0x00000008)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.(0x00000010)*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000020) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000020) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000020) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000020) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000040) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000040) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000040) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000080) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000080) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000080) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000080) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000200) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000200) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000200) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000400) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000400) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000400) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00000400) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00001000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00001000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00001000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00001000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00002000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00002000) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00002000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00002000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00002000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00004000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00004000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00004000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00004000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00008000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00008000) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00008000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00008000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00008000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00010000) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00010000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00010000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00010000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00020000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00020000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00020000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00100000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00100000) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00100000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00100000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00100000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00200000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00200000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00400000) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00400000) | (0x00000001) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00400000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00400000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x00400000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x02000000) | (0x00000002) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x02000000) | (0x00000004) )*"))
+        . =  ALIGN(0x2000);  
+        KEEP(*("QSR_4_0_MSG.fmt.rodata.9509.( (0x02000000) | (0x00000008) )*"))
+        . =  ALIGN(0x2000);  
+        PROVIDE(__QSR_4_0_MSG_UNALIGNED_START__ = .); 
+        KEEP(*(SORT("QSR_4_0_MSG.fmt.rodata.*"))); 
+        PROVIDE(__QSR_4_0_MSG_END__ = .); 
+        . =  ALIGN(0x2000); 
+       KEEP(*("QSR_4_0_STR.fmt.rodata*"))  
+  } : qsr_4_0_msg=0xaaaa  
+ 

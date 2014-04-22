@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="lte.0.0" type="1"/>
+	<NvEfsFile name="band_priority_list" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/csp/band_priority_list" buildPath="modem_proc/lte/configs/efs_files/ct/band_priority_list"/>
+    <NvEfsFile name="pref_freq_list" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/csp/pref_freq_list" buildPath="modem_proc/lte/configs/efs_files/ct/pref_freq_list"/>
+</NvData>

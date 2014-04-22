@@ -1,0 +1,38 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for HAL QDSS-ETM Library.
+#
+# Copyright (c) 2011 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtrace/etm/hal/build/etmhal.scons#1 $
+
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(['HAL','DAL','SERVICES','SYSTEMDRIVERS' , 'KERNEL'])
+
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+ETM_HAL_SRC = [
+   '${BUILDPATH}/halqdss_etm_arm.c',
+   '${BUILDPATH}/qdss_etm_arm.c',
+]
+
+env.AddLibrary(['APPS_PROC'],
+   '${BUILDPATH}/etm_hal',ETM_HAL_SRC)
+

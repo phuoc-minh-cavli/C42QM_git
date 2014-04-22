@@ -1,0 +1,136 @@
+#===============================================================================
+#
+# Audio Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/multimedia2/Audio/AudSA/msm7x30/main/latest/multimedia/audio/build/SConscript#1 $
+#  $DateTime: 2009/11/12 20:44:32 $
+#  $Author: dfrancis $
+#  $Change: 1084171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/07/13   unni     Bfamily - common code merge restructuring
+# 09/24/12   unni     Removed from build 
+#                     -${BUILDPATH}/common/src/csd_dev_manager_lb.c
+#                     -${BUILDPATH}/target/src/csd_dev_tgt_codec_adie.c
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all csd device module
+#-------------------------------------------------------------------------------
+
+env.Append(CFLAGS = "--diag_error=warning ")
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd/dev"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('CSD_COMMON')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('CSD_DEV')
+env.RequireRestrictedApi('CSD_UTILS')
+env.RequireRestrictedApi('APR')
+
+env.RequirePublicApi('MMUTILS')
+env.RequirePublicApi('APR')
+env.RequirePublicApi('AUDIO')
+
+env.RequireRestrictedApi('ACDB')
+env.RequireRestrictedApi('ACDBDATA')
+env.RequireRestrictedApi('ACPH')
+env.RequireRestrictedApi('AUDIOTESTSERVICES')
+env.RequireRestrictedApi('ADIECODEC')
+env.RequireRestrictedApi('AUDIOHWSERVICESINIT')
+env.RequireRestrictedApi('ADIECODECDB')
+env.RequireExternalApi('MODEM_API')
+
+
+# csd_dev.lib 
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+csd_dev_SOURCES = [
+      '${BUILDPATH}/common/src/csd_dev_debug.c',
+      '${BUILDPATH}/common/src/csd_dev_main.c',
+      '${BUILDPATH}/common/src/csd_dev_manager_rx.c',
+      '${BUILDPATH}/common/src/csd_dev_manager_tx.c',
+      '${BUILDPATH}/common/src/csd_dev_manager.c',
+      '${BUILDPATH}/common/src/csd_dev_suspend_restore.c',
+      '${BUILDPATH}/common/src/csd_dev_tgt.c',
+      '${BUILDPATH}/common/src/csd_dev_speaker_protection.c',
+      '${BUILDPATH}/family/b-family/src/csd_dev_acdb.c',
+      '${BUILDPATH}/family/b-family/src/csd_dev_afe.c',
+      '${BUILDPATH}/family/b-family/src/csd_dev_codec.c',
+      '${BUILDPATH}/family/b-family/src/csd_dev_port_manager.c',
+      '${BUILDPATH}/target/mdm/src/csd_dev_clk.c',
+      '${BUILDPATH}/target/mdm/src/csd_dev_pmic.c',
+      '${BUILDPATH}/target/mdm/src/csd_dev_mbhc.c',
+      '${BUILDPATH}/target/mdm/src/csd_dev_tlmm.c'
+   ]
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+
+csd_dev_obj = env.Object(csd_dev_SOURCES)
+csd_dev_lib = env.Library('${BUILDPATH}/csd_dev', csd_dev_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   csd_dev_lib)
+
+
+
+env.LoadSoftwareUnits()
+

@@ -1,0 +1,33 @@
+#===============================================================================
+#
+# RIL QAPIs Include paths
+#
+# GENERAL DESCRIPTION
+#    API script for RIL exposed QAPIs
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ril.tx/1.1/api/build/ril_api.api#1 $
+#  $DateTime: 2018/08/19 22:39:13 $
+#  $Author: pwbldsvc $
+#  $Change: 16910814 $
+# 
+#  EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 17/03/17   rkr      Initial PSM QAPI
+
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('QAPI', ["${INC_ROOT}/ril/api"])
+
+env.LoadAPIUnits()

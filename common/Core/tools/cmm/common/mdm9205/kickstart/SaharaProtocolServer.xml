@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<configuration>
+  <options>
+    <!-- NOTE: Defaults are shown here -->
+    VERBOSE_FEEDBACK    = true
+    SEARCH_CWD_LAST     = false
+    PATHTOIMAGES        = c:\temp\PATHTOIMAGES
+    PATHFORMDMUPLOADS   = c:\temp\PATHFORMDMUPLOADS
+    EFSRAW1             = /dev/block/mmcblk0p19
+    EFSRAW2             = /dev/block/mmcblk0p20
+    EFSRAW3             = /dev/block/mmcblk0p21
+    RX_Timeout          = 5
+    Header1             = efs1.mbn
+    Header2             = efs2.mbn
+    Header3             = efs3.mbn
+    serial_number       = 50b40f00
+    hw_id               = 8466393abcd
+
+  </options>
+
+  <search_paths>
+    <!-- NOTE: Search paths IN ORDER, as in first look here, then there, then there etc -->
+    <!-- NOTE: CWD is an implied search path, and it is always last -->
+    <!--\\harv-ahughes\Builds\BOOT_AU07\boot_images\core\storage
+    \\harv-ahughes\Builds\BOOT_AU07\boot_images\build\ms\bin\EMMCBLD-->
+    <!--\\harv-vkgupta\DROPBOX\HEX_IMAGE-->
+  </search_paths>
+</configuration>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvItemData name="Global UDP Stats" id="4922" description="RUIM ID" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="ruim_id" description="" comment="" sizeOf="1" type="int32">4294967295 </Member>
+	</NvItemData>
+	<NvItemData name="Toolkit CS PS Parallel" id="5770" description="supports BIP and Voice call in parallel" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="toolkit_cs_ps_parallel_is_enabled" description="supports BIP and Voice call in parallel" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvItemData>
+	<NvEfsItemData name="refresh_vote_ok" id="67328" description="Vote OK for refresh" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/refresh_vote_ok">
+		<Member name="refresh_vote_ok" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="uim_jcdma_mode" id="69687" description="UIM specific JCDMA NV item" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/jcdma/uim_jcdma_mode">
+		<Member name="UIM_JCDMA" description="UIM specific JCDMA NV item" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+<NvItemData name="RTRE Configuration" id="855" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="rtre_config" description="" comment="" sizeOf="1" type="uint16">0 </Member>
+	</NvItemData>
+	</NvData>

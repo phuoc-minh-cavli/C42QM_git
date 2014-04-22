@@ -1,0 +1,85 @@
+#===============================================================================
+#
+# RIL APSS TX
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/data_at/data_atfwd/build/data_atfwd.scons#3 $
+#  $DateTime: 2021/02/26 00:27:11 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 8/8/16   srafeeqh Baseline
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('ATFWD_EXT')
+env.RequirePublicApi('DATA_ATFWD')
+env.RequirePublicApi('QAPI')
+env.RequirePublicApi('UTILS_EXT')
+env.RequireRestrictedApi('DS_UTILS')
+env.RequireRestrictedApi(['NET_UTILS'])
+
+RIL_PORT_RESTRICTED_APIS = [
+    'DATA_RIL_PORT',
+	  'LWM2M_ATHDL',
+       'DATA_ATHDL',
+        'DATA_ATFWD'
+    ]
+
+env.RequireRestrictedApi(RIL_PORT_RESTRICTED_APIS)	
+	
+SRCPATH = '${BUILD_ROOT}/dataservices/data_at/data_atfwd/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+DATA_RIL_PORT_SOURCES = [
+	'${BUILDPATH}/data_atfwd.c',
+	'${BUILDPATH}/access_terminal_service_ex_v01.c',
+	'${BUILDPATH}/data_atfwd_cmdq.c'
+]
+env.AddBinaryLibrary(['APPS_PROC','MOB_DATASERVICES'], ('${BUILDPATH}/data_atfwd'), DATA_RIL_PORT_SOURCES,pack_exception=['USES_RSRC_RIL'])
+env.Append(CPPDEFINES = ["AT_LOG_LEVEL_LOW"])
+
+if 'USES_RCINIT' in env:
+	RCINIT_IMG = ['APPS_PROC','MOB_DATASERVICES']
+	env.AddRCInitTask(
+	   RCINIT_IMG,
+		 {
+			'sequence_group'            : 'RCINIT_GROUP_2',              # required
+			'thread_name'               : 'atfwd_daemon',                # required
+			'stack_size_bytes'          : '8192',                        # required
+			'thread_entry'              : 'atfwd_task_entry',            # opt
+			'priority_amss_order'       : 'ATFWD_PRI_ORDER',
+			'cpu_affinity'              : 'REX_ANY_SMT_MASK',
+			'thread_type'                : 'RCINIT_TASK_QURTTASK',            # required
+		 }
+	)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

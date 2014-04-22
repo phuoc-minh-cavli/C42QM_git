@@ -1,0 +1,70 @@
+	#===============================================================================
+#
+# QMIMSGS APSS TN
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/utils/build/dataservices_utils.scons#1 $
+#  $DateTime: 2021/06/04 06:45:16 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# June21    shanu     Baseline
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('QAPI')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+	env.RequirePublicApi('NIPD', area='qmimsgs')
+
+#env.Append(CPPDEFINES=["MHI_TEST_VIRTIO_ENV"])
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('WDS', area='api')
+env.RequirePublicApi('NIPD', area='api')
+DATASERVICES_RESTRICTED_APIS = [
+    'UTILS',
+    ]
+
+env.RequireRestrictedApi(DATASERVICES_RESTRICTED_APIS)
+
+env.RequirePublicApi(['UTILS'], area='dataservices')
+env.RequirePublicApi('NICHESTACK_PORT')
+
+SRCPATH = '${BUILD_ROOT}/dataservices/utils/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+UTIL_SOURCES = [
+	'${BUILDPATH}/ds_log.c',
+]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/utils'), UTIL_SOURCES)
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

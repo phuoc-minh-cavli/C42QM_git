@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for HAL TLMM Library.
+#
+# Copyright (c) 2013 Qualcomm Technologies, Inc.
+# All rights reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtrace/tlmm/hal/build/tlmmhal.scons#1 $
+#
+#-------------------------------------------------------------------------------
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(['HAL','DAL','SERVICES','SYSTEMDRIVERS','POWER','BUSES', 'KERNEL'])
+
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+TLMM_HAL_SRC = [
+   '${BUILDPATH}/halqdss_tlmm.c',
+   '${BUILDPATH}/qdss_tlmm.c',
+   ]
+
+env.AddLibrary(['APPS_PROC'],
+   '${BUILDPATH}/tlmm_hal',TLMM_HAL_SRC)
+

@@ -1,0 +1,60 @@
+#===============================================================================
+#
+# HWENGINES Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009,2022 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/products/build/paths.sconscript#2 $
+#  $DateTime: 2022/05/25 23:42:24 $
+#  $Author: pwbldsvc $
+#  $Change: 37440081 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/05/22   sn      api utils are added for 9x25
+# 09/13/12   gps     Updated for 9x25
+#===============================================================================
+Import('env')
+
+
+# Public APIs these are accecible by anyone internal or external to CoreBSP
+env.PublishPublicApi('PRODUCTS', [
+   "${INC_ROOT}/core/api/products",
+])
+
+# Restricted APIs these are accessible by anyone within CoreBSP
+env.PublishRestrictedApi('PRODUCTS_DSR_PRIVATE', [
+	"${INC_ROOT}/core/products/dsr/inc",
+])
+
+# Public APIs of UTILS driver which are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('PRODUCTS_UTILS', [
+        "${INC_ROOT}/core/api/products/utils",
+])
+    
+# Public APIs these are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('PRODUCTS_DSR', [
+	"${INC_ROOT}/core/api/products/dsr",
+])
+
+# Public APIs of SCM driver which are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('PRODUCTS_SCM', [
+	"${INC_ROOT}/core/api/products/scm",
+])
+
+# Restricted APIs these are accessible by anyone within CoreBSP
+env.PublishRestrictedApi('PRODUCTS_GPIO_PRIVATE', [
+	"${INC_ROOT}/core/products/gpio/inc",
+])
+

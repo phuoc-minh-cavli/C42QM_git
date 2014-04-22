@@ -1,0 +1,14 @@
+local &para1 &para2
+entry &para1 &para2
+
+if (cpu()=="CortexA7")
+(
+  do ~~~~\menu\hwio_Tesla\menu.cmm &para1 &para2
+)
+if (cpu()=="CortexM3")
+(
+  do ~~~~\menu\hwio_Tesla-RPM\menu.cmm &para1 &para2
+)
+
+
+enddo

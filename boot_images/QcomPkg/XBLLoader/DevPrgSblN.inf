@@ -1,0 +1,56 @@
+#/** @file DevPrgSblN.inf
+#
+#  DevPrg Image SBLN
+#  
+#  Copyright (c) 2019 Qualcomm Technologies, Inc.
+#  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who      what, where, why
+# --------   ---      ---------------------------------------------------------
+# 06-19-19   as       Initial Revision
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DevPrgSblN
+  FILE_GUID                      = 3535e3dc-5515-4d17-9695-1fac80f66119
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+
+[Sources.common]
+  XBLLoader.c
+  ModuleEntryPoint.S | GCC
+
+[BuildOptions]
+  RVCT:*_*_*_CC_FLAGS = --diag_error=warning
+  RVCT:*_*_*_DLINK_FLAGS = --first=XBLLoader.lib(ModuleEntryPoint) --scatter $(WORKSPACE)/QcomPkg/$(TARGETPKG)/xbl_$(BUILDFLAVOR).scl
+  GCC:*_*_*_DLINK_FLAGS = --script=$(BUILD_DIR)/$(ARCH)/$(MODULE_NAME).ld
+    
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  PrintLib
+  XBLLoaderLib
+  XBLCommonLib
+  DevPrgLLib
+  DevPrgDLib
+  DevPrgSblNLib
+  ClockTargetLib
+
+[FixedPcd]
+  gQcomTokenSpaceGuid.PcdBuildType
+

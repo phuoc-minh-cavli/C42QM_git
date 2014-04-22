@@ -1,0 +1,124 @@
+#===============================================================================
+#
+# Location GtpWwan Module
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/location.tx/3.0/gtpwwan/build/SConscript#3 $
+#  $DateTime: 2023/03/09 00:26:01 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+if 'USES_FEATURE_TEST_DECODE' in env:
+  env.Append(CPPDEFINES = ["FEATURE_TEST_DECODE"])
+#-------------------------------------------------------------------------------
+# CORE BSP APIs
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DLFWK',
+   'RTLD',
+   'QAPI',
+   'COAP_QAPI',
+   'KERNEL',
+   'SECUREMSM',
+   'QTEE_INVOKE_QAPI',
+   'USEFULBUF_QAPI',
+   'QCBOR_QAPI',
+   'MINK',
+   'STORAGE'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi(['QAPI'], area='ril')
+#env.RequireRestrictedApi(CBSP_API)
+
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+DS_API = [
+    'QAPI',
+    'SHARKSSL',
+    'DSS_NET'
+]
+env.RequirePublicApi(DS_API, area='dataservices')
+
+env.RequirePublicApi('DATASERVICES_NET_IPSTACK', area='dataservices')
+env.RequirePublicApi([
+        'SHARKSSL',
+        ])
+env.RequirePublicApi('HTTPC',area='dataservices')
+env.RequirePublicApi('UTILS_EXT',area='dataservices')
+#-------------------------------------------------------------------------------
+# LIBRARIES
+#-------------------------------------------------------------------------------
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/flp/inc',
+   '${INC_ROOT}/location/geofence/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/pcid/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/location/server_protocol_uri_v4/inc',   
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/xtra/inc',
+   '${INC_ROOT}/location/gtpwwan/inc',
+   '${INC_ROOT}/location/wifipositioning/positioningEngine/inc',
+   '${INC_ROOT}/location/api/qapi',
+   '${INC_ROOT}/location/locationwifiinterface/inc',
+   '${INC_ROOT}/kingfisherhost/api/inc',
+   '${INC_ROOT}/kingfisherhost/core/inc',
+   '${INC_ROOT}/api/common/api',
+   '${INC_ROOT}/core/api/services'
+]
+env.PublishPrivateApi('LOCATION_GTPWWAN', INC_DIRS)
+
+#-------------------------------------------------------------------------------
+# SOURCES
+#-------------------------------------------------------------------------------
+SRCPATH = '${BUILD_ROOT}/location/gtpwwan/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Source files 
+LOC_GTPWWAN_SOURCES = [
+	'${BUILDPATH}/GtpWwanClient.cpp',
+	'${BUILDPATH}/GtpWwanIzatAdapter.cpp',
+	'${BUILDPATH}/GtpWwanConfig.cpp',
+	'${BUILDPATH}/GtpWwanTimer.cpp',
+	'${BUILDPATH}/GtpWwanDataRequest.cpp',
+	'${BUILDPATH}/GtpWwanNvItems.cpp',
+	'${BUILDPATH}/GtpProtocolUtil.cpp',
+	'${BUILDPATH}/GtpProtocol.cpp',
+    '${BUILDPATH}/GtpQSPProtocol.cpp'
+]
+
+if 'USES_FEATURE_CGPS_APPS_GTP_MCS' in env:
+	LOC_GTPWWAN_SOURCES.append(['${BUILDPATH}/CSManager.cpp'])
+
+
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILDPATH}/gtpwwan'), LOC_GTPWWAN_SOURCES)

@@ -1,0 +1,146 @@
+#===============================================================================
+# AVS (AU Level)
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Qualcomm Technologies, Inc. Confidential and Proprietary.
+#===============================================================================
+Import('env')
+
+# Copy the CFLAGS list to a new environment for us.
+# Somehow the list is a reference when cloned, so use deepcopy.
+
+import copy
+orig_env = env
+env = env.Clone()
+env['CFLAGS'] = copy.deepcopy(orig_env['CFLAGS'])
+
+if env.PathExists("${AVS_ROOT}/avs_mpss"):
+    env.AddUsesFlags('AVS_MPSS_TEST',  True)
+    
+if 'AVS_MPSS_TEST' in env:
+ env.Append(CFLAGS='-Dassert=ASSERT')
+ env['PRODUCT_LINE'] = ''
+ env.Replace(AVS_ROOT = '${INC_ROOT}/avs/main/avs_mpss')
+ env.Append(CFLAGS = '-DMSG_BT_SSID_DFLT=MSG_SSID_AVS')
+else:
+ env.Replace(AVS_ROOT = '${INC_ROOT}/avs')
+ env.Append(CFLAGS = '-DMSG_BT_SSID_DFLT=MSG_SSID_VS')
+#end of if 'AVS_MPSS_TEST' in env:
+ 
+# Set -Werror compiler flag to treat warnings as errors
+if env['PRODUCT_LINE'].startswith("MPSS.BO"):
+  print "Disabling -Werror flags (low, medium, high and error) for avs.mpss"
+else:
+  print "Enabling -Werror flags (low, medium, high and error) for avs.mpss"
+  if env['CFLAGS'].count('-Wno-low') > 0:
+    env['CFLAGS'].remove('-Wno-low')
+
+  if env['CFLAGS'].count('-Wno-medium') > 0:
+    env['CFLAGS'].remove('-Wno-medium')
+
+  if env['CFLAGS'].count('-Wno-high') > 0:
+    env['CFLAGS'].remove('-Wno-high')
+
+  if env['CFLAGS'].count('-Wno-error') > 0:
+    env['CFLAGS'].remove('-Wno-error')
+
+  env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror") 
+  env = env.Clone(HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+
+ 
+###############################################################################
+# AVS/AUDIO AU
+# Required public APIs published by different AUs shall be included at AU level
+################################################################################
+
+env.RequirePublicApi([
+  'DEBUGTOOLS',
+  'KERNEL',
+  'MEMORY',
+  'DAL',
+  'STORAGE',
+  'SERVICES',
+  'MPROC',
+  'SYSTEMDRIVERS',
+  'WIREDCONNECTIVITY'
+  ], area='CORE')
+
+env.RequirePublicApi([
+  'APR',
+  ], area='APR')
+
+env.RequirePublicApi([
+  'AVS_MPSS',
+  ], area='AVS')
+
+if 'AVS_MPSS_TEST' not in env:
+
+ #'UIM' is dependency for CM hence added, Audio has no functional dependency on UIM.
+ env.RequirePublicApi([
+   'PUBLIC',
+   ], area='UIM')
+
+ env.RequirePublicApi([
+   'UIM',
+   ], area='UIM')
+   
+ env.RequirePublicApi([
+   'PUBLIC',
+   ], area='MMCP')
+
+ env.RequirePublicApi([
+   'PUBLIC',
+   ], area='WCDMA')
+
+ env.RequirePublicApi([
+   'PUBLIC',
+   'GERAN'
+   ], area='GERAN')
+
+ env.RequirePublicApi([
+   'PUBLIC',
+   ], area='TDSCDMA')
+
+ env.RequirePublicApi([  
+   'PUBLIC',
+   'ONEX',   
+   ], area='ONEX')
+   
+ env.RequirePublicApi([
+   'MCS'
+   ], area='MCS')
+ 
+ # MCFG is required for segment loading support in WCDMA/TDSCDMA Adapter.#
+ env.RequirePublicApi([
+   'PUBLIC',
+   ], area='MCFG')
+   
+ env.RequirePublicApi([
+  'PUBLIC',
+  'DATAMODEM'
+  ], area='DATAMODEM')
+
+ env.RequirePublicApi([
+  'PUBLIC',
+  'DATAMODEM'
+  ], area='dataipa') 
+
+ env.RequirePublicApi([
+   'LSM',
+   'PUBLIC'
+   ], area='UTILS')
+
+else:
+  env.RequirePublicApi([
+    'VOICETEST',
+    ], area='AVS')
+
+  env.RequireRestrictedApi('AVS')
+
+#end else of if 'AVS_MPSS_TEST' not in env:
+
+env.LoadSoftwareUnits()

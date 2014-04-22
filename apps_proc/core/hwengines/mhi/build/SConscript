@@ -1,0 +1,246 @@
+#===============================================================================
+#                Copyright (c) 2010 QUALCOMM Incorporated.
+#                All Rights Reserved.
+#                Qualcomm Confidential and Proprietary
+#===============================================================================
+import os;
+Import('env')
+env = env.Clone()
+
+#Set debug log level
+env.Append(CPPDEFINES=["MHI_OSAL_DEBUG_MSG_LEVEL=MSG_MEDIUM"])
+
+#Set profiling log level
+#env.Append(CPPDEFINES=["MHI_OSAL_PROFILING_MSG_LEVEL=MSG_HIGH"])
+
+if env.has_key('BUILD_BOOT_CHAIN'):
+   env.Append(CPPDEFINES=["NOINTERRUPTS"])
+   env.Append(CPPDEFINES=["MHI_BOOT"])
+   env.Append(CPPDEFINES=["MHI_DMA"])
+   #disable IPA in boot
+   IPA=0
+   #disable test
+   TEST=0
+   #Disable debug for boot due to size, can be enabled for engineering
+   #env.Append(CPPDEFINES=["MHI_DEBUG"])
+else:
+   #enable IPA
+   IPA=1
+   #Enable test harness
+   TEST=1
+   #enable debug
+   env.Append(CPPDEFINES=["MHI_DEBUG"])
+   env.Append(CPPDEFINES=["MHI_DMA"])
+
+#if IPA is enabled set the flags
+if IPA==1:
+   env.Append(CPPDEFINES=["MHIIPA"])
+   env.Append(CPPDEFINES=["MHI_SIO_USES_PORTMAPPER"])
+   env.PublishPrivateApi('IPA',["${INC_ROOT}/data/ipa/api"])
+   env.PublishPrivateApi('PORT_MAPPER',["${INC_ROOT}/data/port_mapper/api"])
+
+if TEST==1:
+   env.Append(CPPDEFINES=["MHI_TEST"])
+   
+   #LOOPBACK MODE ------------------------------------------------------
+   #By default loopback is over SIO, if core loopback is desired set loopback
+   #to appropriate mode. Set to null if LOOPBACK is not desired at all, useful for debug.
+   LOOPBACK='SIO'
+   #LOOPBACK='CORE'
+   #LOOPBACK=''
+   #---------------------------------------------------------------------
+
+   #For core loopback set an additional feature flag 
+   if LOOPBACK=='CORE':
+      env.Append(CPPDEFINES=["MHI_CORE_LOOPBACK"])
+
+   #PM TEST --------------------------------------------------------------
+   #Enable power management test
+   #PM TEST has not been tested with loopback yet. Use  LOOPBACK='' to disable loopback. 
+   PM_EXERCISE=0
+   #Enable manual mode for power management test
+   PM_TEST_MANUAL=0
+   #Enable test for SW Link inactivity
+   PM_TEST_SW_INACT=0
+   #---------------------------------------------------------------------
+
+   #Set power management test feature flags if applicable 
+   if PM_EXERCISE==1:   
+     env.Append(CPPDEFINES=["MHI_PM_STATE_TEST"])
+     if PM_TEST_MANUAL==1:
+       env.Append(CPPDEFINES=["PM_TEST_MANUAL"])
+     if PM_TEST_SW_INACT==1:
+       env.Append(CPPDEFINES=["MHI_SW_LINK_INACTIVITY"])
+
+#----------------------------------------------------
+#  Misc features 
+#----------------------------------------------------
+
+env.Append(CPPDEFINES=[
+       #'VIRTIO',                               #For any virtio customization set this flag
+       #'MHI_CHECK_HW_ENABLED',                 #Turn on agressive link hardware/clock state checking
+       #'MHI_MULTI_LOOBPACK',                   #Multi channel loopback for testing 
+       #'SW_LOOPBACK_IS_CRITICAL',              #SW Loopback is a critical channel. Used for testing
+       #'MHI_TRANSLATE_HOST_ADDR',              #MHI should use translated address instead of using host address directly
+       #'MHI_SUPPORT_IPABAM'                    #MHI supports IPA BAM instead of default DMA engine 
+       #'MHI_ENABLE_HIGH_PRIORITY_MSG',         #Enable priority for link requests
+       #'COMPLETIONS_THROTTLE_COUNT=5',         #Throttle completion procesing after a number of completions are processed back to back
+      'MHI_HOST_REVD_COMPATIBLE',               #Activate MHI features introduced in MHI Spec REVD that are not backwards compatible
+      'MHI_FATAL_ON_SYSERR',                    #Error fatal when SYSERROR happens
+      'MHI_DEVICEWAKE_DB',                      #Inband device wake
+      'MHI_PM_DEVICE_WAKE_DB_NUM=127',          #Define DB to use for in band device wake
+      'MHI_PM_DEVICE_WAKE_DB_MASK=0x80000000',  #Define mask for in band device wake
+      'M3_WAKE_THRESHOLD=5',                    #Wake treshold for stalled inbound rings
+      'MHI_XML_PROPS',                          #Enable separation of MHI configuration data for binary compatibility
+      ])
+	  
+if env['MSM_ID']=='9x55':
+  if 'MHI_SUPPORT_IPABAM' in env['CPPDEFINES']:
+    env.Append(CPPDEFINES=['MHI_TRANSLATE_HOST_ADDR'])
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('HWENGINES_MHI', [
+   "${INC_ROOT}/core/hwengines/mhi"
+])
+
+env.PublishPrivateApi('HWENGINES_PCIE',["${INC_ROOT}/core/hwengines/pcie"])
+
+#-------------------------------------------------------------------------------
+# SRC PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/hwengines/mhi"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'KERNEL',
+    'BOOT',
+    'SERVICES',
+    'MEMORY',
+    'DAL',
+    'WIREDCONNECTIVITY',
+    'SYSTEMDRIVERS',
+    'POWER',
+    'DEBUGTOOLS',
+    'HWENGINES',
+    'MPROC', #needed for portmapper
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi('IPA', area='data') #ipa
+env.RequirePublicApi('DPM', area='api')  #portmapper
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+MHI_CORE_SOURCES = [
+   '${BUILDPATH}/mhi.c',
+   '${BUILDPATH}/mhi_osal.c',
+   '${BUILDPATH}/mhi_mmio.c',
+   '${BUILDPATH}/mhi_link.c',
+   '${BUILDPATH}/mhi_pm.c',
+   '${BUILDPATH}/mhi_hwacc.c',   
+   '${BUILDPATH}/mhi_sm.c', 
+   '${BUILDPATH}/mhi_ring.c',
+   '${BUILDPATH}/mhi_core.c',
+   '${BUILDPATH}/mhi_util.c',
+   '${BUILDPATH}/mhi_tgt.c',   
+]
+
+MHI_SIO_SOURCES = [
+   '${BUILDPATH}/mhi_sio_reg.c',
+   '${BUILDPATH}/mhi_sio_ser.c',
+   '${BUILDPATH}/mhi_sio_ecm.c',
+   '${BUILDPATH}/mhi_sio_util.c',
+   '${BUILDPATH}/mhi_test.c',
+   '${BUILDPATH}/mhi_ctrl.c',
+]
+
+MHI_BOOT_SOURCES = [
+   '${BUILDPATH}/mhi_boot.c',
+
+]
+mhi_core_obj   = env.Object(MHI_CORE_SOURCES)
+mhi_core_lib   = env.Library('${BUILDPATH}/mhi_core', mhi_core_obj)
+
+mhi_sio_obj   = env.Object(MHI_SIO_SOURCES)
+mhi_sio_lib   = env.Library('${BUILDPATH}/mhi_sio', mhi_sio_obj)
+
+mhi_boot_obj   = env.Object(MHI_BOOT_SOURCES)
+mhi_boot_lib   = env.Library('${BUILDPATH}/mhi_boot', mhi_boot_obj)
+
+if env['MSM_ID'] in ['9x35','9x45','9x55']:
+  env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE' ], [mhi_core_lib, mhi_sio_lib])
+  env.AddLibsToImage(['MHI_BOOT_DRIVER'], [mhi_core_lib, mhi_boot_lib])
+
+if env['MSM_ID'] in ['9x35','9x45','9x55']:
+  RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+if env['MSM_ID'] in ['9x35','9x45','9x55']:
+  if 'USES_RCINIT' in env: # RCINIT Startup Paramaters
+     env.AddRCInitFunc(           
+        RCINIT_IMG,                 
+        {
+      'sequence_group'               : 'RCINIT_GROUP_2',
+        'init_name'                  : 'mhi',
+        'init_function'              : 'mhi_init',
+        'dependencies'               : ['smem','dalsys','npa', 'ipa_init', 'time_init_config_function', 'pcie_drv']
+        }
+        )
+     if(TEST==1 and LOOPBACK=='SIO'):
+       env.AddRCInitFunc(           
+              RCINIT_IMG,                 
+              {
+              'sequence_group'             : 'RCINIT_GROUP_3',
+              'init_name'                  : 'mhi_sio_test',
+              'init_function'              : 'mhi_sio_test',
+              'dependencies'               : ['mhi', 'mhi_sio']
+              }
+              )
+     env.AddRCInitFunc(           
+        RCINIT_IMG,                 
+        {
+        'sequence_group'             : 'RCINIT_GROUP_2',
+        'init_name'                  : 'mhi_sio',
+        'init_function'              : 'mhi_sio_ser_init',
+        'dependencies'               : ['mhi']
+        }
+        )
+
+#-------------------------------------------------------------------------------
+# Set the path to the MHI target config file.
+#-------------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env and env['MSM_ID'] in ['9x55']:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   #  If there is a processor specific .xml file use that.  
+   #  Otherwise, use the generic .xml file for the MSM.
+   config_dir = "%s/core/hwengines/mhi" % ( env['BUILD_ROOT']  )
+   msm_xml    = "%s/mhi_config.xml"    % ( config_dir ) 
+   print "msm_xml = %s" % msm_xml
+   if( os.path.exists( msm_xml )):
+      devcfg_xml = msm_xml
+   else:
+      devcfg_xml = '';
+   env.AddDevCfgInfo( DEVCFG_IMG, 
+   {
+    'devcfg_xml': ['${BUILDPATH}/mhi_config.xml',
+                   '${BUILDPATH}/mhi_tgt_config.c']
+   })
+   print "devcfg_xml = %s" % ( devcfg_xml )
+
+if env['MSM_ID'] in ['9x55']:
+    MHI_CONFIG_SOURCES = ['${BUILDPATH}/mhi_tgt_config.c']
+    mhi_cfg_obj = env.Object([MHI_CONFIG_SOURCES])
+    mhi_cfg_lib = env.Library('${BUILDPATH}/mhi_cfg',mhi_cfg_obj)
+    env.AddLibsToImage(['DAL_DEVCFG_IMG', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'CORE_APPS'], [mhi_cfg_lib])
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+#env.LoadSoftwareUnits(level=1)

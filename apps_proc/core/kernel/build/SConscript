@@ -1,0 +1,124 @@
+#===============================================================================
+#
+# Kernel Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009, 2023 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/kernel/build/SConscript#3 $
+#  $DateTime: 2023/03/27 05:15:39 $
+#  $Author: pwbldsvc $
+#  $Change: 45110493 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+SRCPATH = "${BUILD_ROOT}/core/kernel"
+SDKPATH = "${BUILD_ROOT}/core/kernel/sdk/kernel/cortex-a7_r0p0/okl4extras-debug/object"
+IMAGE_SOURCES   = ['APPS_IMAGE','CBSP_APPS_IMAGE','CORE_GSS','CORE_VPU']
+
+env.LoadSoftwareUnits()
+
+#===============================================================================
+# Rules to pack out unnecessary tools/ files.
+#===============================================================================
+
+PACK_TOOLS = env.FindFiles(['*'], (SRCPATH + '/tools/autogen'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/build_scripts'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/cheetah'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/linkscripts'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pexpect'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/dtd'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/okl4types/okl4nano'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/okl4types/okl4pico'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/okl4types/okl4smp'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/okl4types/okl4smpaffinity'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/pyelf/parsers'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/SCons'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/serial'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/sim_config'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/vulcan'))
+PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/tools/wcet'))
+
+if env['MSM_ID'] not in ['9x45']:
+    PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/src/platform/9x45'))
+    PACK_TOOLS.extend([
+        (SRCPATH + '/src/make_9x45_sdk'),
+        (SDKPATH + '/9x45.o'),
+    ])
+
+PACK_TOOLS.extend([
+    (SRCPATH + '/tools/pyelf/MANIFEST'),
+    (SRCPATH + '/tools/pyelf/MANIFEST.in'),
+    (SRCPATH + '/tools/pyelf/REQUIREMENTS'),
+    (SRCPATH + '/tools/pyelf/SConscript'),
+    (SRCPATH + '/tools/pyelf/TODO'),
+    (SRCPATH + '/tools/pyelf/build-static.sh'),
+    (SRCPATH + '/tools/pyelf/pylintrc'),
+    (SRCPATH + '/tools/pyelf/run_pylint.sh'),
+    (SRCPATH + '/tools/pyelf/zelf'),
+    (SRCPATH + '/tools/__init__.py'),
+    (SRCPATH + '/tools/aem_wrapper.py'),
+    (SRCPATH + '/tools/analyse.py'),
+    (SRCPATH + '/tools/analyse_arm.py'),
+    (SRCPATH + '/tools/au-misra1.lnt'),
+    (SRCPATH + '/tools/au-misra2.lnt'),
+    (SRCPATH + '/tools/build.py'),
+    (SRCPATH + '/tools/check_whitespace.py'),
+    (SRCPATH + '/tools/create_library.sh'),
+    (SRCPATH + '/tools/dd_dsl.py'),
+    (SRCPATH + '/tools/dd_dsl_2.py'),
+    (SRCPATH + '/tools/debugsymschecker.py'),
+    (SRCPATH + '/tools/di_dsl.py'),
+    (SRCPATH + '/tools/excludemisra.lnt'),
+    (SRCPATH + '/tools/ezxml.py'),
+    (SRCPATH + '/tools/kenge.py'),
+    (SRCPATH + '/tools/linux_config.py'),
+    (SRCPATH + '/tools/machines.py'),
+    (SRCPATH + '/tools/memoize.py'),
+    (SRCPATH + '/tools/misra1.lnt'),
+    (SRCPATH + '/tools/misra2.lnt'),
+    (SRCPATH + '/tools/okl4pico-stack-analysis.py'),
+    (SRCPATH + '/tools/olimex_boot.py'),
+    (SRCPATH + '/tools/olimex_run.sh'),
+    (SRCPATH + '/tools/opts.py'),
+    (SRCPATH + '/tools/python_structs.py'),
+    (SRCPATH + '/tools/qemu_wrapper.sh'),
+    (SRCPATH + '/tools/scons.py'),
+    (SRCPATH + '/tools/settings-kernel.lnt'),
+    (SRCPATH + '/tools/settings.lnt'),
+    (SRCPATH + '/tools/simulators.py'),
+    (SRCPATH + '/tools/splint.rc'),
+    (SRCPATH + '/tools/temp'),
+    (SRCPATH + '/tools/toolchains.py'),
+    (SRCPATH + '/tools/util.py'),
+    (SRCPATH + '/tools/wae_tok.py')
+    ])
+    
+PACK_RAND = ([
+    (SRCPATH + '/src/libs/c/src/rand.c'),
+    (SRCPATH + '/src/libs/c/src/rand_r.c'),
+])
+
+PACK_SRC = env.FindFiles(['*.h','*.c','*.S','*.s'], (SRCPATH + '/qurt/platform'))
+PACK_SRC += env.FindFiles(['*.h','*.c','*.S','*.s'], (SRCPATH + '/qurt/threadx'))
+PACK_SRC += env.FindFiles(['*.h','*.c','*.S','*.s'], (SRCPATH + '/qurt/lldb'))
+PACK_SRC += env.FindFiles(['*.h','*.c','*.S','*.s'], (SRCPATH + '/rtos/threadx'))
+PACK_SRC += env.FindFiles(['*.h','*.c','*.S','*.s'], (SRCPATH + '/rtos/ExpressLogic'))
+
+env.CleanPack(IMAGE_SOURCES, PACK_TOOLS)
+env.CleanPack(IMAGE_SOURCES, PACK_RAND)
+env.CleanPack(IMAGE_SOURCES, PACK_SRC)

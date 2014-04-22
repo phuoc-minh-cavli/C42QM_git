@@ -1,0 +1,19 @@
+
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 02/25/2016 c_akaki		Created for 9x07
+// 02/08/2012 AJCheriyan	Fixed issue with buttons
+// 07/19/2012 AJCheriyan    Created for B-family 
+LOCAL &QDSS_APB_DEC_CS_QDSSCSR_QDSSPWRREQIGNORE
+LOCAL &QDSS_APB_DEC_CS_QDSSCSR_LOCKACCESS
+
+&QDSS_APB_DEC_CS_QDSSCSR_QDSSPWRREQIGNORE=0x6001060
+&QDSS_APB_DEC_CS_QDSSCSR_LOCKACCESS=0x6001FB0
+TrOnchip.Set RESET OFF
+SYSTEM.option SYSPWRUPREQ OFF
+SYSTEM.option PWRDWN ON
+d.s EZAXI:&QDSS_APB_DEC_CS_QDSSCSR_LOCKACCESS %LE %LONG 0xc5acce55
+d.s EZAXI:&QDSS_APB_DEC_CS_QDSSCSR_QDSSPWRREQIGNORE %LE %LONG 0x2
+d.s EZAXI:&QDSS_APB_DEC_CS_QDSSCSR_LOCKACCESS %LE %LONG 0xa5a5a5a5	
+ENDDO
+

@@ -1,0 +1,24 @@
+Logging to Z:\b\apps_proc\build\bsp\txm_demo_llvm_app_img\build\ACFNAADZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api
+Installed "Z:\b\apps_proc\build\bsp\txm_demo_llvm_app_img\build\ACFNAADZ\sign\default\dam_mod\llvm_dam_app.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed\llvm_dam.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\build\bsp\txm_demo_llvm_app_img\build\ACFNAADZ\sign\default\dam_mod\llvm_dam_app.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\llvm_dam.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\build\bsp\txm_demo_llvm_app_img\build\ACFNAADZ\sign_and_encrypt\default\dam_mod\llvm_dam_app.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed_encrypted\llvm_dam.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed\qcli_dam_lwm2m_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\qcli_dam_lwm2m_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign\default\dam_mod\qcli_dam_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed\qcli_dam_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign\default\dam_mod\qcli_dam_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\qcli_dam_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed_encrypted\qcli_dam_lwm2m_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAADZ\sign_and_encrypt\default\dam_mod\qcli_dam_demo_module.mbn" to "Z:\b\apps_proc\build\ms\bin\ACFNAADZ\signed_encrypted\qcli_dam_demo.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided

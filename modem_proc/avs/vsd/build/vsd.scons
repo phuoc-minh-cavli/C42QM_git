@@ -1,0 +1,72 @@
+#===============================================================================
+#
+# Voice Software Driver Libs - SU Level
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (C) 2009 - 2013, 2015-2017 QUALCOMM Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/avs.mpss/8.0.c12/vsd/build/vsd.scons#1 $
+#  $DateTime: 2019/07/09 12:00:19 $
+#  $Author: pwbldsvc $
+#  $Change: 19792082 $
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+
+if env['PRODUCT_LINE'].startswith("MPSS.JO"):
+  env.Append(CFLAGS = '-DAVS_MPSS_JO ')
+
+if env.get('CHIPSET').startswith('mdm9607') or env.get('CHIPSET').startswith('msm8909'):
+  env.Append(CFLAGS = '-DAVS_BEAR_FAMILY ')
+###############################################################################
+# VSD/VOICE SU
+# Protected API's - Should be available only within a SU.
+# All protected APIs need to be published & included at SU level.
+###############################################################################
+
+env.PublishProtectedApi('VOICEINIT',[
+	'${AVS_ROOT}/vsd/voiceinit/inc/protected',
+])
+
+env.PublishProtectedApi('VS',[
+	'${AVS_ROOT}/vsd/vs/inc/protected',
+])
+
+env.PublishProtectedApi('VADAPTER',[
+	'${AVS_ROOT}/vsd/vadapter/inc/protected',
+	'${AVS_ROOT}/vsd/vadapter/inc/CT/protected',
+])
+
+env.PublishProtectedApi('VAGENT',[
+	'${AVS_ROOT}/vsd/vagent/inc/protected',
+])
+
+env.PublishProtectedApi('VOICELOG',[
+	'${AVS_ROOT}/vsd/voicelog/inc/protected',
+])
+
+env.PublishProtectedApi('UTILS',[
+	'${AVS_ROOT}/vsd/utils/inc/protected',
+])
+
+env.PublishProtectedApi('TEST',[
+	'${AVS_ROOT}/vsd/test/inc/protected',
+])
+
+env.RequireProtectedApi(['VOICEINIT'])
+env.RequireProtectedApi(['VS'])
+env.RequireProtectedApi(['VAGENT'])
+env.RequireProtectedApi(['VADAPTER'])
+env.RequireProtectedApi(['VOICELOG'])
+env.RequireProtectedApi(['UTILS'])
+env.RequireProtectedApi(['TEST'])
+
+env.LoadSoftwareUnits()

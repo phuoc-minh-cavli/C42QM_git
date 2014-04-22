@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# Core AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/fotatools/2.0/online/clade1/build/fota.scons#1 $
+#  $DateTime: 2020/12/17 01:25:12 $
+#  $Author: pwbldsvc $
+#  $Change: 27826750 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+SRCPATH = "${BUILD_ROOT}/fotatools"
+
+IMAGE_SOURCES   = ['APPS_IMAGE','CBSP_APPS_IMAGE','CORE_GSS','CORE_VPU']
+
+PACK_SRC = env.FindFiles(['*.h','*.c'], (SRCPATH + '/online/clade1/clade1compress/inc'))
+PACK_SRC += env.FindFiles(['*.h','*.c'], (SRCPATH + '/online/clade1/clade1decompress/inc'))
+PACK_SRC += env.FindFiles(['*.h','*.c'], (SRCPATH + '/online/clade2/inc'))
+PACK_SRC += env.FindFiles(['*.h','*.c'], (SRCPATH + '/online/clade2/src'))
+
+env.CleanPack(IMAGE_SOURCES, PACK_SRC)
+
+env.LoadSoftwareUnits()

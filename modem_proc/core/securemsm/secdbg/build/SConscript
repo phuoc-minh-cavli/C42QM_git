@@ -1,0 +1,124 @@
+#===============================================================================
+#
+# secdbg auth Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2011 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/securemsm/secdbg/build/SConscript#1 $
+#  $DateTime: 2018/11/08 03:29:06 $
+#  $Author: pwbldsvc $
+#  $Change: 17573518 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+# 07/07/10   mm      Initial Version
+#===============================================================================#===============================================================================
+#
+# secboot auth Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2011 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/securemsm/secdbg/build/SConscript#1 $
+#  $DateTime: 2018/11/08 03:29:06 $
+#  $Author: pwbldsvc $
+#  $Change: 17573518 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+# 07/07/10   mm      Initial Version
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/secdbg"
+
+env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secdbg/inc")
+env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secdbg/oem")
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SECUREMSM',
+   'SERVICES', 	
+   'SYSTEMDRIVERS',
+   'BOOT',
+   'BOOT_TOOLS',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+   'DAL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Generates secdbg_hwio.h
+#-------------------------------------------------------------------------------
+if env.has_key('HWIO_IMAGE'):
+
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${INC_ROOT}/core/securemsm/secdbg/src/8998/secdbg_hwio.h',
+	  'modules': ['CRYPTO.*','PERIPH.*','SECURITY.*','MSS_PERPH','TCSR_TCSR_REGS','TLMM.*',
+				  'BIMC.*', 'CLK_CTL.*','USB3.*','PMIC.*','RPM.*','SYSTEM_NOC.*','CORE_TOP_CSR.*',
+				  'UFS.*','HMSS_QLL.*','HMSS.*','MODEM_TOP.*','MMSS.*','MPM.*'],
+	  'output-phys': True,
+    }
+  ]
+)
+
+INC_PATH = [
+      "${BUILDPATH}/inc",
+]
+env.Append(CPPPATH = INC_PATH)
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in ['9205','9607']:
+	SECDEBUG_OEM_SOURCES = [
+#	    '${BUILDPATH}/oem/SecDbg_oem.c',
+		'${BUILDPATH}/oem/SecDbg_fuse.c',
+	]
+	
+if env['MSM_ID'] in ['9205','9607']:
+	env.AddObject(['CORE_QDSP6_SW','MODEM_MODEM'], SECDEBUG_OEM_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to MBA Image
+#-------------------------------------------------------------------------------

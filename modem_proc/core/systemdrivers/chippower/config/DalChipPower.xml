@@ -1,0 +1,4 @@
+<driver name="ChipPower">
+  <device id=DALDEVICEID_CHIPPOWER>
+  </device>
+</driver>

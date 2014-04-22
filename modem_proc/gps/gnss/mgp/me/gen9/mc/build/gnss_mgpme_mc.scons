@@ -1,0 +1,198 @@
+# -------------------------------------------------------------------------------- #
+#                    G N S S _ M G P M E _ M C . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the GNSS MGP ME MC subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+# Copyright (c) 2010-2013,2015 Qualcomm Atheros, Inc. 
+# All Rights Reserved. 
+# Qualcomm Atheros Confidential and Proprietary.  
+#
+# Copyright (c) 2015-2016 Qualcomm Technologies, Inc. 
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+# --------------------------------------------------------------------------------- #
+
+# --------------------------------------------------------------------------------- #
+#
+#                      EDIT HISTORY FOR FILE
+#
+# This section contains comments describing changes made to this file.
+# Notice that changes are listed in reverse chronological order.
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/mgp/me/gen9/mc/build/gnss_mgpme_mc.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# $Author: pwbldsvc $ 
+# 
+# when         who     what, where, why
+# ---------    ---     ------------------------------------------------------------
+# 07/15/15     al      Conditionally compile mc_logprescdwell_V51, V53 based on GAL
+# 01/08/15     am      Added stubs file for SBAS data demodulation
+# 10/06/10     ah      Initial Version
+#
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+from glob import glob
+from os.path import join, basename, abspath
+
+#--------------------------------------------------------------------------------
+# Check USES flags and return if library isn't needed
+#--------------------------------------------------------------------------------
+if 'USES_CGPS' not in gps_env:
+   Return()
+
+gps_env.Append(CFLAGS="-D_NO_CPP_INLINES ")
+
+#-------------------------------------------------------------------------------
+# Enable Default XO Compensation values for all targets
+#-------------------------------------------------------------------------------
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_DEFAULT_XO_COMPENSATION ")  # Modem level
+gps_env.PrintInfo("Default XO Compensation Values Enabled")
+
+#--------------------------------------------------------------------------------
+# Setup source PATH
+#--------------------------------------------------------------------------------
+SRCPATH = '../src'
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#--------------------------------------------------------------------------------
+# Name of the subsystem to which this unit belongs
+#--------------------------------------------------------------------------------
+LIB_TARGET = '${BUILDPATH}/' + 'gnss_mgpme_mc'
+
+#--------------------------------------------------------------------------------
+# Images that this VU is added
+#--------------------------------------------------------------------------------
+IMAGES = ['MODEM_MODEM']
+
+#--------------------------------------------------------------------------------
+# Generate the library and add to an image
+#--------------------------------------------------------------------------------
+BINARY_LIB_SOURCES = gps_env.GenerateCompileList(SRCPATH, '*.c')
+BINARY_LIB_CPP_SOURCES = gps_env.GenerateCompileList(SRCPATH, '*.cpp')
+
+# If TCXO is still being managed by MCS, remove mc_freqest.c and use mc_freqest_stubs.c
+# Else TCXO is managed by GPS, so use mc_freqest.c and remove mc_freqest_stubs.c. 
+if 'USES_FEATURE_MCS_TCXO_REFACTORED' not in gps_env:
+    gps_env.RemoveCompileFile(BINARY_LIB_CPP_SOURCES, 'mc_freqest.cpp')
+else:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_freqest_stubs.c')
+
+#--------------------------------------------------------------------------------
+# GNSS specific conditional compilation
+#--------------------------------------------------------------------------------
+
+if 'USES_GNSS_GAL' in gps_env:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, ['mc_galstubs.c',
+                                                   'mc_galdemod_stubs.c',
+                                                   'mc_logprescdwell_v51.c',
+                                                  ])
+    # If pilot signal (E1-C) support is not enabled.  Alternative implementations:
+    #  E1-C enabled           |  E1-C disabled
+    #  -----------------------+------------------------
+    #  mc_galplldemod.c       |  mc_galcostasdemod.c
+    #  mc_galpagesearch_e1c.c |  mc_galpagesearch_e1b.c
+    #
+    if 'USES_GNSS_GAL_E1C' not in gps_env:
+        gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, ['mc_galpagesearch_e1c.c',
+                                                       'mc_galplldemod.c',
+                                                      ])
+    else:
+        gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, ['mc_galpagesearch_e1b.c',
+                                                       'mc_galcostasdemod.c',
+                                                      ])
+else:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, ['mc_galcostasdemod.c',
+                                                   'mc_galdemod.c',
+                                                   'mc_galpage.c',
+                                                   'mc_galpagesearch_e1b.c',
+                                                   'mc_galpagesearch_e1c.c',
+                                                   'mc_galplldemod.c',
+                                                   'mc_viterbicrc.c',
+                                                   'mc_gal.c',
+                                                   'mc_galtimedecode.c',
+                                                   'mc_logprescdwell_v53.c',
+                                                  ])
+
+if 'USES_GNSS_GLO' in gps_env:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_glostubs.c')
+else:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_glo.c')
+
+if 'USES_GNSS_BDS' in gps_env:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_bdsstubs.c')
+else:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_bds.c')
+
+if 'USES_GNSS_SBAS' in gps_env:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_sbasdemod_stubs.c')
+else:
+    gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_sbasdemod.c')
+
+if 'rmtefs' in gps_env['BUILD_ID']:
+    gps_env.PrintInfo("Enable DPO NV Power Test Control")
+    gps_env.Append(CPPDEFINES = " FEATURE_GNSS_DPO_NV_CTRL_POWER_TEST")  # Modem level
+#--------------------------------------------------------------------------------
+# Remove the MGP Resident Task Loop
+#--------------------------------------------------------------------------------
+gps_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'mc_task_resident.c')
+
+#--------------------------------------------------------------------------------
+# Ship our code as binary library and add it to the Modem image
+#--------------------------------------------------------------------------------
+
+if 'USES_FEATURE_DYNAMIC_LOADING_GNSS' in gps_env:
+  if 'USES_MODEM_DYNAMIC_LOADING' in gps_env:
+    output = BINARY_LIB_SOURCES
+    
+    # Need to replace '${BUILDPATH}' with '${GPS_ROOT}'
+    output = [w.replace('${BUILDPATH}', abspath(gps_env.subst(SRCPATH))) for w in output]
+    
+    # This expects a string with the variable name to pass back
+    Return('output')
+    #End of Dynamic Module
+    #gps_env.PrintInfo("Dynamic loading FW is ready in GNSS")
+    
+  elif 'USES_FEATURE_EXTERNAL_PAGING' in gps_env:
+    gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt_dmm'), BINARY_LIB_SOURCES + BINARY_LIB_CPP_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+    
+  else:
+    gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES + BINARY_LIB_CPP_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+else:
+  gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES + BINARY_LIB_CPP_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+  
+#--------------------------------------------------------------------------------
+# Initialize MGP_MC Task through RCINIT
+#--------------------------------------------------------------------------------
+RCINIT_TASK_FN = {
+    'thread_name'         : 'mgpmc',
+    'thread_entry'        : 'mgpmc_task',
+    'stack_size_bytes'    : gps_env.subst('$MGPMC_STKSZ'),
+    'sequence_group'      : gps_env.subst('$MODEM_UPPERLAYER'),
+    'priority_amss_order' : 'MGPMC_PRI_ORDER',
+    'cpu_affinity'        : 'REX_ANY_CPU_AFFINITY_MASK',
+    'policy_optin'        : ['default', 'ftm', ],
+}
+gps_env.AddRCInitTask (IMAGES, RCINIT_TASK_FN)
+

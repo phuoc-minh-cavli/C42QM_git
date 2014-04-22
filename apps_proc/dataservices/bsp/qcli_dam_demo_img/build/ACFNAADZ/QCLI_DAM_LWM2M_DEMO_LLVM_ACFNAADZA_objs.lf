@@ -1,0 +1,15 @@
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/txm_module_preamble_llvm.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/qcli/pal_lwm2m_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/qcli/qcli_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/net/netutils_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/net/multi_app_lwm2m_cmdq_1_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/net/multi_app_lwm2m_cmdq_2_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/net/multi_app_lwm2m_test_module.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/ext_object_test_app_module_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/device_stub_app_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/devicecap_app_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/software_mgnt_app_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/lwm2m_main_module_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/utils_app_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/apn_info_app_v2.o
+../../dataservices/demo/QCLI_DAM_demo/build/qcli_dam_lwm2m_demo_llvm/cortex-a7/ACFNAADZ/lwm2m/cell_con_app_v2.o

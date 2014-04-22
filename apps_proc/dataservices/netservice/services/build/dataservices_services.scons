@@ -1,0 +1,20 @@
+#===============================================================================
+#
+# Network Service AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+#===============================================================================
+# TODO: Once we have multiple versions of NicheStack available, select the
+# appropriate version.
+#===============================================================================
+env.LoadSoftwareUnits()

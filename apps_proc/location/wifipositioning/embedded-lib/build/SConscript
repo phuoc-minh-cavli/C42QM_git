@@ -1,0 +1,48 @@
+#===============================================================================
+#
+# Libel Module
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019-2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/location.tx/3.0/wifipositioning/embedded-lib/build/SConscript#3 $
+#  $DateTime: 2021/03/01 23:53:42 $
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# LIBRARIES
+#-------------------------------------------------------------------------------
+INC_DIRS = [
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/libel',
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/libel/protocol',
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/.submodules/tiny-AES128-C',
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/.submodules/nanopb/'
+
+]
+env.PublishPrivateApi('LIBEL_POSITIONING', INC_DIRS)
+GIT_VERSION = "2.1.3"
+#-------------------------------------------------------------------------------
+# SOURCES
+#-------------------------------------------------------------------------------
+LIBEL_POSITIONING_SOURCES = env.FindFiles(
+  ['*.c', '*.h'], '../')
+
+env.Append(CCFLAGS = " -Ospace --c99")
+#env.Append(CPPDEFINES = [('VERSION','\\"1.1.0\\"')])
+env.Append(CPPDEFINES = [('VERSION', '\\\"' + GIT_VERSION +'\\\"' )])
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILDPATH}/libel'), LIBEL_POSITIONING_SOURCES)

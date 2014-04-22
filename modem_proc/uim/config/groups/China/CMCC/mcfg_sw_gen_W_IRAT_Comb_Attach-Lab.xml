@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsFile name="pbm_features_status_list" id="71535" description="index" comment="" category="PBM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/pbm/features_status_list" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_features_status_list"/>
+<NvEfsFile name="pbm_nv_ecc_list_per_sub" id="73755" description="PBM ECC number list per SUB" comment="" category="PBM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" targetPath="/nv/item_files/pbm/pbm_nv_ecc_list_per_sub" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_nv_ecc_list_per_sub"/>
+<NvEfsFile name="features_status_list" id="67211" description="To enable/disable MMGSDI Features" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/mmgsdi/features_status_list" buildPath="modem_proc/uim/config/efs_files/cmcc/features_status_list"/>
+	</NvData>

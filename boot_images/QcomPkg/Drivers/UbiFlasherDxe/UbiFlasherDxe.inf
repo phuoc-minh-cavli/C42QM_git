@@ -1,0 +1,63 @@
+#/** @file
+#
+#  UbiFlasher build file.
+#
+#  Copyright (c) 2017, Qualcomm Technologies, Inc. All rights reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# --------     ---     ----------------------------------------------------------
+# 2017-09-08   rp      Created.
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UbiFlasher
+  FILE_GUID                      = c3195695-e4ba-4d8e-b304-0f23802a160b
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UbiFlasherEntryPoint
+
+[BuildOptions.AARCH64]
+  GCC:*_*_*_CC_FLAGS = -Wno-missing-field-initializers
+  MSFT:*_*_*_CC_FLAGS =
+
+[Sources.common]
+  ubi_crc.c
+  ubi_flasher.c
+  ubi_flasher_protocol.c
+  ubi_nand.c
+  ubi_util.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  QcomPkg/QcomPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiRuntimeServicesTableLib
+  UefiLib
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  UefiDriverEntryPoint
+  IoLib
+  UefiCfgLib
+  BootConfigLib
+
+[Guids]
+
+
+[Protocols]
+ gEfiNandIoProtocolGuid
+ gEfiUbiFlasherProtocolGuid
+
+[Depex]
+ gEfiNandIoProtocolGuid

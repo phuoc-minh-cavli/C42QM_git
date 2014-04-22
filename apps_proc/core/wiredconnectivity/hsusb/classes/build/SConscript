@@ -1,0 +1,281 @@
+#===============================================================================
+#
+# HSUSB Classes Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: 
+#  $DateTime: 
+#  $Author: smalichi $
+#  $Change: 
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+if env.has_key('USES_HSU_OTG'):
+    env['USES_HSU_HOST']='yes'
+elif env.has_key('USES_HSU_UICC'):
+    env['USES_HSU_UICC_HOST']='yes'
+    env['USES_HSU_HOST']='yes'
+# Additional defines
+env.Append(CPPDEFINES = ["FEATURE_HS_USB_HAL"])
+
+# Do not define JDEBUG for EHOSTDL image due to memory constraint.
+if not env.has_key('EHOSTDL_IMAGE') and not env.has_key('DBL_BOOT_IMAGE'):
+   env.Append(CPPDEFINES = ['JDEBUG'])
+
+if env.has_key('USES_HSU_MS_FD_BOOT'):
+   if env.has_key('OSBL_BOOT_IMAGE') or env.has_key('SBL3_BOOT_IMAGE'):
+      env.Append(CPPDEFINES = ['FEATURE_HS_USB_MS_FD_BOOT'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/wiredconnectivity/hsusb/classes/src/"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'WCONNECT',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'MEMORY',
+   'SYSTEMDRIVERS',
+   'HWENGINES',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('HSUSB_CLASSES', [
+   "${BUILD_ROOT}/core/wiredconnectivity/hsusb/classes/src/port/include",
+   "${BUILD_ROOT}/core/wiredconnectivity/hsusb/classes/src/port/include/host",
+   "${BUILD_ROOT}/core/wiredconnectivity/hsusb/classes/src/port/include/os",
+])
+
+#-------------------------------------------------------------------------------
+# Source Code and LIBs
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# High Speed USB stack files
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# jslave ###
+#-------------------------------------------------------------------------------
+HSU_CLASSES_JSLAVE_BASIC_C_SOURCES = [
+   '${BUILDPATH}/jslave/fd/cdc/cdc_fd.c',
+   '${BUILDPATH}/jslave/fd/cdc/obex_fd.c',
+]
+
+if env.has_key('USES_HSU_MS_FD_BOOT'):
+   if env.has_key('OSBL_BOOT_IMAGE') or env.has_key('SBL3_BOOT_IMAGE'):
+      HSU_CLASSES_JSLAVE_BASIC_C_SOURCES += [
+         '${BUILDPATH}/jslave/fd/fd_storage_scsi.c',
+         '${BUILDPATH}/jslave/fd/fd_storage_usb.c',
+         '${BUILDPATH}/jslave/fd/fd_storage_statistics_stub.c',
+      ]
+
+HSU_CLASSES_JSLAVE_COMMON_SOURCES = [
+   '${BUILDPATH}/jslave/fd/cdc/acm_fd.c',
+   '${BUILDPATH}/jslave/fd/cdc/cdc_fd.c',
+   '${BUILDPATH}/jslave/fd/cdc/obex_fd.c',
+]
+
+HSU_CLASSES_JSLAVE_ECM_SOURCES = [
+   '${BUILDPATH}/jslave/fd/cdc/ecm_fd.c',
+]
+
+HSU_CLASSES_JSLAVE_PICT_BRIDGE_SOURCES = [
+   '${BUILDPATH}/jslave/fd/sicd/sicd_fd.c',
+   '${BUILDPATH}/protocols/dps/dps.c',
+   '${BUILDPATH}/protocols/ptp/ptp_responder.c',
+   '${BUILDPATH}/protocols/ptp/ptp_utils.c',
+   '${BUILDPATH}/protocols/ptp/ptp_data_packing.c',
+   '${BUILDPATH}/pkg/expat/expat_port.c',
+   '${BUILDPATH}/pkg/expat/xmlparse.c',
+   '${BUILDPATH}/pkg/expat/xmlrole.c',
+   '${BUILDPATH}/pkg/expat/xmltok.c',
+   '${BUILDPATH}/pkg/xml/xml.c',
+]
+
+HSU_CLASSES_JSLAVE_MS_FD_SOURCES = [
+   '${BUILDPATH}/jslave/fd/fd_storage_scsi.c',
+   '${BUILDPATH}/jslave/fd/fd_storage_usb.c',
+   '${BUILDPATH}/jslave/fd/fd_storage_statistics.c',
+]
+
+hsu_jslave_basic_obj = env.Object(HSU_CLASSES_JSLAVE_BASIC_C_SOURCES)
+hsu_jslave_basic_lib = env.Library('${BUILDPATH}/hsu_classes_jslave_basic', hsu_jslave_basic_obj)
+
+hsu_jslave_obj = env.Object(HSU_CLASSES_JSLAVE_COMMON_SOURCES)
+hsu_jslave_lib = env.Library('${BUILDPATH}/hsu_classes_jslave', hsu_jslave_obj)
+
+hsu_jslave_ecm_obj = env.Object(HSU_CLASSES_JSLAVE_ECM_SOURCES)
+hsu_jslave_ecm_lib = env.Library('${BUILDPATH}/hsu_classes_jslave_ecm', hsu_jslave_ecm_obj)
+
+hsu_jslave_pict_bridge_obj = env.Object(HSU_CLASSES_JSLAVE_PICT_BRIDGE_SOURCES)
+hsu_jslave_pict_bridge_lib = env.Library('${BUILDPATH}/hsu_classes_jslave_pict_bridge', hsu_jslave_pict_bridge_obj)
+
+hsu_jslave_ms_fd_obj = env.Object(HSU_CLASSES_JSLAVE_MS_FD_SOURCES)
+hsu_jslave_ms_fd_lib = env.Library('${BUILDPATH}/hsu_classes_jslave_ms_fd', hsu_jslave_ms_fd_obj)
+
+hsu_calsses_jslave_libs = [hsu_jslave_lib]
+
+if env.has_key('USES_HSU_ECM'):
+   hsu_calsses_jslave_libs += hsu_jslave_ecm_lib
+   
+if env.has_key('USES_PICT_BRIDGE'):
+   hsu_calsses_jslave_libs += hsu_jslave_pict_bridge_lib
+
+if env.has_key('USES_HSU_MS_FD'):
+   hsu_calsses_jslave_libs += hsu_jslave_ms_fd_lib
+   
+#-------------------------------------------------------------------------------
+# jclass ###
+#-------------------------------------------------------------------------------
+HSU_CLASSES_JCLASS_C_SOURCES = [
+   '${BUILDPATH}/jclass/jmass/jms_async.c',
+   '${BUILDPATH}/jclass/jmass/jms_device.c',
+   '${BUILDPATH}/jclass/jmass/jms_devmgr.c',
+   '${BUILDPATH}/jclass/jmass/jms_disk.c',
+   '${BUILDPATH}/jclass/jmass/jms_scsi.c',
+   '${BUILDPATH}/jclass/jmass/jms_transport.c',
+   '${BUILDPATH}/jclass/jmass/umass.c',
+   '${BUILDPATH}/jclass/jetest/jetest.c',
+]
+
+if not env.has_key('USES_HSU_UICC_HOST'):
+    HSU_CLASSES_JCLASS_C_SOURCES += [  
+      '${BUILDPATH}/jclass/jhid/jhid_general.c',
+      '${BUILDPATH}/jclass/jhid/jhid_parser.c',
+      '${BUILDPATH}/jclass/jhid/jhid_util.c',
+      '${BUILDPATH}/port/common/host/hid/joystick_app.c',
+      '${BUILDPATH}/port/common/host/hid/keyboard_app.c',
+      '${BUILDPATH}/port/common/host/hid/mouse_app.c',
+      '${BUILDPATH}/port/common/host/hid/xbox360_app.c',
+    ]
+
+hsu_jclass_obj = env.Object(HSU_CLASSES_JCLASS_C_SOURCES)
+hsu_jclass_lib = env.Library('${BUILDPATH}/hsu_classes_jclass', hsu_jclass_obj)
+
+hsu_classes_jclass_libs = [hsu_jclass_lib]
+
+#-------------------------------------------------------------------------------
+# ICCD and EEM ###
+#-------------------------------------------------------------------------------
+HSU_CLASSES_EEM_C_SOURCES = [
+   '${BUILDPATH}/jclass/jcdc/jcdc_eem.c',
+   '${BUILDPATH}/jclass/jcdc/jcdc_general.c',
+]
+
+HSU_CLASSES_ICCD_C_SOURCES = [
+   '${BUILDPATH}/jclass/jiccd/jiccd.c',
+   '${BUILDPATH}/jclass/jiccd/jiccd_iface.c',
+]
+
+hsu_eem_obj = env.Object(HSU_CLASSES_EEM_C_SOURCES)
+hsu_eem_lib = env.Library('${BUILDPATH}/hsu_classes_eem', hsu_eem_obj)
+
+hsu_iccd_obj = env.Object(HSU_CLASSES_ICCD_C_SOURCES)
+hsu_iccd_lib = env.Library('${BUILDPATH}/hsu_classes_iccd', hsu_iccd_obj)
+
+#-------------------------------------------------------------------------------
+# ECM CD ###
+#-------------------------------------------------------------------------------
+HSU_CLASSES_ECM_C_SOURCES = [
+   '${BUILDPATH}/jclass/jcdc/jcdc_general.c',
+]
+
+hsu_ecm_obj = env.Object(HSU_CLASSES_ECM_C_SOURCES)
+hsu_ecm_lib = env.Library('${BUILDPATH}/hsu_classes_ecm', hsu_ecm_obj)
+
+#-------------------------------------------------------------------------------
+# the stack ###
+#-------------------------------------------------------------------------------
+usb_classes_lib = []
+
+if not env.has_key('USES_HSU_TESTS'):
+   usb_classes_lib += hsu_calsses_jslave_libs
+   
+   if env.has_key('USES_HSU_HOST'):
+      usb_classes_lib += hsu_classes_jclass_libs
+      
+      if env.has_key('USES_HSU_UICC'):
+         usb_classes_lib += hsu_eem_lib
+         usb_classes_lib += hsu_iccd_lib
+      else:
+         if env.has_key('USES_HSU_ECM_CD'):
+            usb_classes_lib += hsu_ecm_lib
+
+#-------------------------------------------------------------------------------
+# the basic stack ###
+#-------------------------------------------------------------------------------
+usb_classes_basic_lib = [hsu_jslave_basic_lib]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+if env.has_key('USES_HSU'):
+   # Check if the HS-USB should run in the Modem Processor
+   if env.has_key('USES_HS_USB_ON_MODEM_PROC'):
+      if env.has_key('USES_HS_USB_ON_DUAL_PROC'):
+         env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], usb_classes_lib)
+         env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], usb_classes_lib)
+      else:
+        env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], usb_classes_lib)
+   else:
+      env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], usb_classes_lib)
+   
+   # For single images
+   env.AddLibsToImage(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE'], usb_classes_lib)
+   
+   env.AddLibsToImage(['OSBL_BOOT_IMAGE', 'HOSTDL_IMAGE', 'EHOSTDL_IMAGE', 
+     'EMMCBLD_IMAGE', 'SBL3_BOOT_IMAGE'],
+     usb_classes_basic_lib)
+   
+   if env.has_key('USES_SAHARA_BOOT'):
+      env.AddLibsToImage(['DBL_BOOT_IMAGE'], usb_classes_basic_lib)
+
+

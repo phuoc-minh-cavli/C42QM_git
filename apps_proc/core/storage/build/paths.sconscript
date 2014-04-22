@@ -1,0 +1,72 @@
+#===============================================================================
+#
+# Storage INC PATHs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2010, 2016-2017, 2019 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 2019-07-24 sl      Include internal FTL QAPI header files.
+# 2017-02-22 as      Include filesystem QAPI header files.
+# 2016-11-17 as      Include efs_scrub header files.
+# 2016-09-23 svl     Including FTL header files
+# 2010-04-29 vj      Changed SDCC folders from drivers to core/storage.
+# 2010-03-09 rp      Changed EFS folders from services to core/storage.
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Publish Public APIs
+# these are accecible internal or external to CoreBSP
+#-------------------------------------------------------------------------------
+env.PublishPublicApi('STORAGE', [
+   "${INC_ROOT}/core/api/storage",
+])
+
+#-------------------------------------------------------------------------------
+# Publish Restricted APIs
+# these are accecible only within CoreBSP
+#-------------------------------------------------------------------------------
+env.PublishRestrictedApi('STORAGE', [
+   "${INC_ROOT}/core/storage/flash/inc",
+   "${INC_ROOT}/core/storage/flash/src/dal",
+   "${INC_ROOT}/core/storage/flash/src/hal",
+   "${INC_ROOT}/core/storage/flash/tools/inc",
+   "${INC_ROOT}/core/storage/flash/tools/src/nand",
+   "${INC_ROOT}/core/storage/sdcc/src",
+   "${INC_ROOT}/core/storage/sdcc/src/hal",
+   "${INC_ROOT}/core/storage/sdcc/src/bsp",
+   "${INC_ROOT}/core/storage/sdioc/hal",
+   "${INC_ROOT}/core/storage/sdioc/dal/inc",
+   "${INC_ROOT}/core/storage/sdioc/sio",
+   "${INC_ROOT}/core/storage/efs/inc",
+   "${INC_ROOT}/core/storage/efs_scrub/inc",
+   "${INC_ROOT}/core/storage/ftl/inc",
+   "${INC_ROOT}/core/storage/hfat/inc",
+   "${INC_ROOT}/core/storage/hotplug/inc",
+   "${INC_ROOT}/core/storage/rfs/inc",
+   "${INC_ROOT}/core/storage/remotefs/src",
+   "${INC_ROOT}/core/storage/fs_hwio/inc",
+   "${INC_ROOT}/core/storage/tftp/common/inc",
+   "${INC_ROOT}/core/storage/tftp/client/inc",
+   "${INC_ROOT}/core/storage/tftp/os/inc",
+   "${INC_ROOT}/core/storage/tftp/server/inc",
+   "${INC_ROOT}/core/storage/storage_diag/inc",
+   "${INC_ROOT}/core/storage/efs_qmi_put_get/common/inc",
+   "${INC_ROOT}/core/storage/fs_osal/inc",
+   "${INC_ROOT}/core/storage/qapi_fs/inc",
+   "${INC_ROOT}/core/storage/qapi_ftl/inc",
+])

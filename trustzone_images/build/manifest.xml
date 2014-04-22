@@ -1,0 +1,10 @@
+<config>
+  <image_tree>
+    <name>TZ.XF.5.1.3</name>
+    <build_id>TZ.XF.5.1.3-00193-M9205AAAAANAZT-3</build_id>
+    <branch_point_revision>None</branch_point_revision>
+    <revision>00193</revision>
+    <spin>3</spin>
+    <client>M9205AAAAANAZT</client>
+  </image_tree>
+</config>

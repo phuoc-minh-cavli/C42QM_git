@@ -1,0 +1,62 @@
+#===============================================================================
+#
+# PSM TEST app scons script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  
+#  
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#The following flag is globally defined when compiling a module
+env.Append(CPPDEFINES = [
+   "TXM_MODULE",
+   "QAPI_TXM_MODULE",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('NAS', area='api')
+env.RequirePublicApi('DSS_NET', area='dataservices')
+env.RequirePublicApi('QAPI', area='dataservices')
+env.RequirePublicApi('LOCATION_API', area='location')
+env.RequirePublicApi('PSM_CLIENT', area='ril')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+
+SRCPATH = '${BUILD_ROOT}/ril/psm/dam_psmtest/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_ARM' in env:
+	DAM_PSMTEST_SOURCES = [
+		'${BUILDPATH}/txm_module_preamble.S',
+	    '${BUILDPATH}/psm_test.c',
+	]
+	env.AddObject(['DAM_PSMTEST'], DAM_PSMTEST_SOURCES)
+	env.AddLibrary(['DAM_PSMTEST'], '${BUILDPATH}/dam_psmtest', [DAM_PSMTEST_SOURCES])
+else:
+	DAM_PSMTEST_SOURCES = [
+		'${BUILDPATH}/txm_module_preamble_llvm.S',
+	    '${BUILDPATH}/psm_test.c',
+	]
+	env.AddObject(['DAM_PSMTEST_LLVM'], DAM_PSMTEST_SOURCES)
+	env.AddLibrary(['DAM_PSMTEST_LLVM'], '${BUILDPATH}/dam_psmtest', [DAM_PSMTEST_SOURCES])
+
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

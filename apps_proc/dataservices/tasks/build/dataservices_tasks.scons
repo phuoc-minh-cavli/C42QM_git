@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# QMIMSGS APSS TN
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2011-2012 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/tasks/build/dataservices_tasks.scons#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 3/28/12   sdt     Baseline
+#===============================================================================
+Import('env')
+
+#env.Append(CPPDEFINES=["MHI_TEST_VIRTIO_ENV"])
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

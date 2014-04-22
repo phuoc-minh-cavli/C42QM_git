@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsFile name="pbm_features_status_list" id="71535" description="index" comment="" category="PBM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/pbm/features_status_list" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_features_status_list"/>
+<NvEfsItemData name="feature_bmsk" id="65674" description="" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gstk/feature_bmsk">
+		<Member name="gstk_feature_bmask" description="" comment="" sizeOf="1" type="uint32">8390 </Member>
+	</NvEfsItemData>
+	<NvEfsFile name="pbm_nv_ecc_list_per_sub" id="73755" description="PBM ECC number list per SUB" comment="" category="PBM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" targetPath="/nv/item_files/pbm/pbm_nv_ecc_list_per_sub" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_nv_ecc_list_per_sub"/>
+	<NvEfsFile name="pbm_ecc_nums" id="67221" description="NV ECC numbers" comment="" category="PBM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/pbm/pbm_ecc_nums" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_ecc_nums"/>
+	<NvEfsFile name="pbm_nv_ecc_config" id="70242" description="To choose from where to read the NV ECC numbers " comment="" category="PBM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/pbm/pbm_nv_ecc_config" buildPath="modem_proc/uim/config/efs_files/cmcc/pbm_nv_ecc_config"/>
+	<NvItemData name="Toolkit Envelope Retry Flag" id="5593" description="Flag specifies whether envelope retry should be attempted or not" comment="" category="Factory" mcfgAttributes="0x09" mcfgVariant="1">
+		<Member name="toolkit_env_retry_flag" description="Flag specifies whether envelope retry should be attempted or not" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	</NvData>

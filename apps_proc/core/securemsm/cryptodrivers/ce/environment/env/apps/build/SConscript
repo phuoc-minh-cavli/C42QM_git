@@ -1,0 +1,92 @@
+#===============================================================================
+#
+# Crypto Driver Environment Library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/cryptodrivers/ce/environment/env/apps/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/31/12    nk     Boot version
+# 07/04/12    nk     Initial version
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+Return()
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('CEEL', [
+   '${INC_ROOT}/core/securemsm/cryptodrivers/ce/environment/env/apps/inc',
+   '${INC_ROOT}/core/securemsm/cryptodrivers/ce/environment/inc', 
+])
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/cryptodrivers/ce/environment"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'BREW',
+   'CS',
+   'DSM',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'SECUREMSM',
+   'SERVICES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+CEEL_LIB_SOURCES = [
+        '${BUILDPATH}/src/CeEL.c',
+        '${BUILDPATH}/src/CeEL_Env.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddBinaryLibrary(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 
+                      'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+                      'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 
+                      'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 
+                      'WCN_IMAGE'], '${BUILDPATH}/CeEL', CEEL_LIB_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+

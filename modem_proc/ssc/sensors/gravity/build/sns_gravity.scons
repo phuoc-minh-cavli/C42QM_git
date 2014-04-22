@@ -1,0 +1,41 @@
+#===============================================================================
+#
+# Gravity
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/gravity/build/sns_gravity.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+island = False
+gravity_sensor_cnt = 1
+
+if 'USES_MULTIPLE_SENSORS' in env:
+  gravity_sensor_cnt = 2
+
+if "SNS_ISLAND_INCLUDE_GRAVITY" in env:
+  island = True
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+    env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+        clean_pack_list = ['*.c','*.h','*.proto'],
+        cflags = ['-Wno-sign-compare'],
+        register_func_name = "sns_gravity_register",
+        binary_lib = True,
+        add_island_files = island, 
+        registration_cnt = gravity_sensor_cnt)

@@ -1,0 +1,80 @@
+#include "ACOEMNand.h"
+
+<driver name="NULL">
+
+  <global_def>
+  </global_def>
+
+  <device id="/ac/oem_nand_config">
+    <props name="partition_maps" type=ACOEMNandPartition array="True">
+    <!-- Array of partition name (string) to resource group (NAND_MPU_RG0~NAND_MPU_RG7) mapping -->
+    <![CDATA[
+    {
+        /* partition name, resource group to map */
+		
+	{"sbl",             NAND_MPU_RG0},
+		
+        {"mibib",           NAND_MPU_RG1},
+        {"qdsp_swap",       NAND_MPU_RG1},
+        {"efs2",            NAND_MPU_RG1},
+		
+        {"tz",              NAND_MPU_RG2},
+        {"tz_devcfg",       NAND_MPU_RG2},
+        {"apdp",            NAND_MPU_RG2},
+        {"acdb",            NAND_MPU_RG2},
+        {"rpm",             NAND_MPU_RG2},
+        {"qdsp",            NAND_MPU_RG2},
+        {"qdsp_paging",     NAND_MPU_RG2},
+        {"qdsp_tiny",       NAND_MPU_RG2},
+        {"multi_image_qti", NAND_MPU_RG2},
+        {"multi_image",     NAND_MPU_RG2},
+        {"apps",            NAND_MPU_RG2},
+        {"loader_sti",            NAND_MPU_RG2},
+        {"scrub",           NAND_MPU_RG2},
+		
+
+        {"secdata",         NAND_MPU_RG3},
+
+#ifdef USES_AWARE_OVERRIDES
+        {"tracker_db",      NAND_MPU_RG4},
+
+        {"cache",           NAND_MPU_RG5},
+        {"misc",            NAND_MPU_RG5},
+        {"fota_cookie",     NAND_MPU_RG5},
+        {"efs2apps",        NAND_MPU_RG5},
+#else
+        {"cache",           NAND_MPU_RG4},
+        {"misc",            NAND_MPU_RG4},
+        {"fota_cookie",     NAND_MPU_RG4},
+        {"efs2apps",        NAND_MPU_RG4},
+#endif
+    }
+    ]]>
+    </props>
+    <props name="rg_permissions" type=ACOEMNandPermission array="True">
+    <!-- Array of resource group (NAND_MPU_RG0~NAND_MPU_RG7) to [read/write] permission mapping -->
+    <!-- permission should be one of [NAND_PERM_NONE, NAND_PERM_ALL, NAND_PERM_APPS, NAND_PERM_MSS, NAND_PERM_APPS_MSS] -->
+    <![CDATA[
+    {
+        /* read permission, write permission */
+
+        /* NAND_MPU_RG0 */ {NAND_PERM_APPS, NAND_PERM_NONE},
+        /* NAND_MPU_RG1 */ {NAND_PERM_MSS, NAND_PERM_MSS},
+#ifdef USES_FOTA_OVERRIDES
+        /* NAND_MPU_RG2 */ {NAND_PERM_APPS_MSS, NAND_PERM_APPS},
+#else
+        /* NAND_MPU_RG2 */ {NAND_PERM_APPS_MSS, NAND_PERM_NONE},
+#endif
+        /* NAND_MPU_RG3 */ {NAND_PERM_NONE, NAND_PERM_NONE},
+#ifdef USES_AWARE_OVERRIDES
+        /* NAND_MPU_RG4 */ {NAND_PERM_APPS_MSS, NAND_PERM_MSS},
+        /* NAND_MPU_RG5 */ {NAND_PERM_APPS, NAND_PERM_APPS},
+#else
+        /* NAND_MPU_RG4 */ {NAND_PERM_APPS, NAND_PERM_APPS},
+        /* NAND_MPU_RG5 */ {NAND_PERM_NONE, NAND_PERM_NONE},
+#endif
+    }
+    ]]>
+    </props>
+  </device>
+</driver>

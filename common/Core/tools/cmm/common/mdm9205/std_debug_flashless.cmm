@@ -1,0 +1,39 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_flashless.cmm 
+//
+//  Description:                                                              
+//		Top level reset script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------------------
+// 09/10/2013 Rssridha        First cut for 9x45 Flashless boot
+//
+
+
+
+MAIN:
+	
+    wait 2.s
+    os.command C: && cd C:\images\ && python SaharaProtocolServer.py -x SaharaProtocolServer.xml --skipserial	
+    GOTO EXIT
+
+
+
+FATALEXIT:
+	END
+
+EXIT:
+	ENDDO
+
+
+

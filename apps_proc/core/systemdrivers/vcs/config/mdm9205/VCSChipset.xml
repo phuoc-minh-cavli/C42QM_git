@@ -1,0 +1,14 @@
+    <!-- VCS Log Defaults -->
+    <props name="VCSLogDefaults" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      VCS_LogDefaultConfig
+    </props>
+
+    <!-- Rails -->
+    <props name="VCSBSPConfig" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      VCS_BSPConfig
+    </props>
+
+    <!-- VCS Stub Config -->
+    <props name="VCSStubConfig" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      VCSStubConfig
+    </props>

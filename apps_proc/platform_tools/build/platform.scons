@@ -1,0 +1,56 @@
+#===============================================================================
+#
+# tx_platform AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021-2022 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/platform_tools.tx/1.0/build/platform.scons#4 $
+#  $DateTime: 2022/07/12 14:13:27 $
+#  $Author: pwbldsvc $
+#  $Change: 38400173 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+#Clean all files available in platform_tools/features
+CLEAN_SDK_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/platform_tools/features")
+env.CleanPack(['APPS_IMAGES','CBSP_APPS_IMAGE'],CLEAN_SDK_SOURCES)
+
+#
+#BUILD_ROOT    = apps_proc 
+#BUILD_MS_ROOT = apps_proc/build/ms
+TARGET_FILES = [
+	'${BUILD_ROOT}/build/ms/target.builds',
+	'${BUILD_ROOT}/core/bsp/build/tbc_core.builds',
+	'${BUILD_ROOT}/build/ms/cleanpack.txt',
+	'${BUILD_ROOT}/build/ms/pack_file.xml',
+	'${BUILD_ROOT}/build/ms/build_9x45.cmd'
+	'${BUILD_ROOT}/build/ms/build_9x45.sh'
+	'${BUILD_ROOT}/build/ms/9x45_L4_APPS_PROC_DDROnly_rom.scl'
+	'${BUILD_ROOT}/build/ms/build_products.sh',
+]
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all CoreBSP code
+#-------------------------------------------------------------------------------
+
+if 'USES_ARM' in env:
+	env.Append(CFLAGS = "--diag_error=warning ")
+else:
+    "do nothing"
+
+env.LoadSoftwareUnits()

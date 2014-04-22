@@ -1,0 +1,27 @@
+#===============================================================================
+#
+# QUARTZ NET APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('DATASERVICES_NET_IPSTACK', [
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/port",
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/socket/include",
+   '${INC_ROOT}/dataservices/netservice/net/ssl/port',
+   '${INC_ROOT}/dataservices/netservice/net/ssl/src',
+   ])
+env.PublishRestrictedApi('NET_UTILS',[
+   '${INC_ROOT}/dataservices/netservice/net/net_utils/inc',
+])
+
+env.PublishPublicApi('UTILS_EXT', ["${INC_ROOT}/dataservices/netservice/net/utils_ext/inc"])
+env.LoadAPIUnits()

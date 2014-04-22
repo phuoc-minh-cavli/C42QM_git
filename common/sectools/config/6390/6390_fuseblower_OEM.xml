@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower.xsd">
+
+    <metadata>
+        <chipset>6390</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <module id="QFPROM_RAW_FUSE_MAP_BASE_CORE">
+        <base_address>0x01e20000</base_address>
+        <description></description>
+
+        <fuse_region id="QFPROM_RAW_OEM_SECURE">
+            <description></description>
+             <fuse ignore="false" n="0">
+                <address>0x01e20010</address>
+                <operation>BLOW</operation>
+                <field id="SECURE_BOOT0_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>0</bits>
+                </field>
+                <field id="SECURE_BOOT0_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>1</bits>
+                </field>
+                <field id="SECURE_BOOT1_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>4</bits>
+                </field>
+                <field id="SECURE_BOOT1_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>5</bits>
+                </field>
+                <field id="SECURE_BOOT2_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>8</bits>
+                </field>
+                <field id="SECURE_BOOT2_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>9</bits>
+                </field>
+                <field id="SECURE_BOOT3_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>12</bits>
+                </field>
+                <field id="SECURE_BOOT3_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>13</bits>
+                </field>
+                <field id="SECURE_BOOT4_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>16</bits>
+                </field>
+                <field id="SECURE_BOOT4_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>17</bits>
+                </field>
+                <field id="SECURE_BOOT5_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>20</bits>
+                </field>
+                <field id="SECURE_BOOT5_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>21</bits>
+                </field>
+                <field id="SECURE_BOOT6_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>24</bits>
+                </field>
+                <field id="SECURE_BOOT6_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>25</bits>
+                </field>
+                <field id="SECURE_BOOT7_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>28</bits>
+                </field>
+                <field id="SECURE_BOOT7_USE_SERIAL_NUM">
+                    <value>0x0</value>
+                    <bits>29</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x01e20018</address>
+                <operation>BLOW</operation>
+                <field id="OEM_HW_ID">
+                    <value>0x0000</value>
+                    <bits>15:0</bits>
+                </field>
+                <field id="OEM_PRODUCT_ID">
+                    <value>0x0000</value>
+                    <bits>31:16</bits>
+                </field>
+                <field id="WDOG_EN">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>38</bits>
+                </field>
+                <field id="ANTI_ROLLBACK_FEATURE_ENABLE">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>41</bits>
+                </field>
+                <field id="RAM_DUMP_USE_SN">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>42</bits>
+                </field>
+                <field id="TOTAL_ROT_NUM">
+                    <value>0x0</value>
+                    <bits>45:44</bits>
+                </field>
+                <field id="ROT_REVOCATION">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>49:46</bits>
+                </field>
+                <field id="ROT_ACTIVATION">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>53:50</bits>
+                </field>
+                <field id="ACMT_BYPASS_DISABLE">
+                    <description></description>
+                    <value>0x0</value>
+                    <bits>54</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+        <fuse_region id="QFPROM_RAW_OEM_PK_HASH">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x01e20060</address>
+                <operation>BLOW</operation>
+                <field id="HASH_DATA_ROW0">
+                    <description></description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x01e20068</address>
+                <operation>BLOW</operation>
+                <field id="HASH_DATA_ROW1">
+                    <description></description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x01e20070</address>
+                <operation>BLOW</operation>
+                <field id="HASH_DATA_ROW2">
+                    <description></description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="3">
+                <address>0x01e20078</address>
+                <operation>BLOW</operation>
+                <field id="HASH_DATA_ROW3">
+                    <description></description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="4">
+                <address>0x01e20080</address>
+                <operation>BLOW</operation>
+                <field id="HASH_DATA_ROW4">
+                    <description></description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+        <fuse_region id="QFPROM_RAW_FEC_EN">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x01e20088</address>
+                <operation>BLOW</operation>
+                <field id="REGION5_FEC_EN">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>5</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+    </module>
+</tns:fuseblower>

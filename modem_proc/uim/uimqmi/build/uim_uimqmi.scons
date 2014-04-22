@@ -1,0 +1,229 @@
+##===============================================================================
+# UIM UIMQMI Subsystem build script
+# GENERAL DESCRIPTION
+#    build script for modem/uim/uimqmi
+#
+#                       COPYRIGHT INFORMATION
+#
+# Copyright (c) 2010 - 2019 QUALCOMM Technologies, Inc (QTI) and its licensors.
+# All Rights Reserved.  QUALCOMM Technologies Proprietary.
+# Export of this technology or software
+# is regulated by the U.S. Government. Diversion contrary to U.S. law prohibited.
+
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/uim/uimqmi/build/main/latest/uim_uimqmi.scons#4 $ $DateTime: 2008/20/15 23:58:06 $ $Author: amitp $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 10/23/19   dt      Migration of QMICAT to QCSI/QCCI
+# 10/15/18   tq      QMI UIM migration to QCCI_-QCSI 
+# 11/01/17   ku      Swapping IOE flag for encryption mechanism
+# 09/18/17   shr     Compile GBA based on USES_UIM_IOE_GBA for IOE targets
+# 09/10/17   rps     Build flag for Simlock in IOE devices
+# 06/27/17   ku      Build flag for remote feature
+# 05/08/17   ks      Seperate sub manager related QMI UIM functionality
+# 06/23/16   sp      Seperate ERA-GLONASS and SAP related QMI UIM functionality
+# 06/22/16   vdc     Split QMI UIM parsing files for supporting IOE
+# 06/23/16   shr     Deprecate QMI SIM Internal
+# 06/21/16   ar      Stubbing the user_identity_module_impl_v01.c for IoE
+# 05/20/16   ar      Stub out UIM supply voltage indication for IOE flavour
+# 05/19/16   vdc     Split QMI UIM files for supporting IOE
+# 05/16/16   bcho    Disable encrypt/decrypt pin functionality for IOE devices
+# 03/08/16   vr      Memory optimization for IOT devices
+# 11/25/15   sp      Updated copyright
+# 02/03/15   at      Added qmi_uim_encryption.c
+# 11/26/14   av      Changes to make sure task opts for inclusion in FTM mode
+# 09/29/14   kr      removing compiler warnings
+# 03/19/14   kb      Added QTF CRM MOB support
+# 12/11/13   vs      Addition of UIMQMI task and QMI UIM REMOTE
+# 09/23/13   vr      qtf-crm MOB migration
+# 09/18/12   nk      Changes to support modem folder removal
+# 05/14/12   tkl     Add QMI_SIM service
+# 02/23/12   tkl     MPSS/QMI support interfaces logging
+# 06/13/11   at      Added 'SECUREMSM' under CORE_APIS
+# 04/20/11   adp     Moving UIMQMI logging under UIM
+# 04/18/11   nk      Updated for Data Compilation
+# 10/22/10   nk      Moved USES_RUIM check after env.Clone()
+# 10/11/10   nk      Updated with header and UESES Flag Check
+#
+#===============================================================================
+
+
+#-----------------------------------------
+# Import and clone the SCons environment
+#-----------------------------------------
+Import('env')
+env = env.Clone()
+
+# Verify that USES_RUIM is set, otherwise bail out now
+if 'USES_RUIM' not in env:
+    Return()
+
+#-----------------------------------------
+# Setup source PATH
+#-----------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-----------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-----------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_RUIM",
+])
+
+#-----------------------------------------
+# Necessary Public API's
+#-----------------------------------------
+CORE_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    #'POWER',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'DAL',
+    'SECUREMSM',
+    'MPROC',
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+QMI_PUBLIC_APIS = [
+    'UIM',
+    'CAT',
+    'COMMON',
+    'UIMRMT',
+    ]
+
+# We need the Core BSP API's
+env.RequirePublicApi(CORE_APIS, area="CORE")
+
+# We need the QMI API's
+env.RequirePublicApi(QMI_PUBLIC_APIS, area="API")
+
+# We need the UIM API's
+env.RequirePublicApi(['UIM', 'MCS', 'MMODE', 'DATACOMMON', 'WMS', 'PBM', 'DATA', 'GPS'])
+
+# We need the UIM "inc" dirs
+env.RequireRestrictedApi(['UIM'])
+
+# We need DataCommon QMI Restricted APIs
+env.RequireRestrictedApi(['DATACOMMON', 'MMODE', 'PBM', 'DATA', 'UIM', 'MCS', 'GPS'])
+
+
+#-----------------------------------------
+# Generate the library and add to an image
+#-----------------------------------------
+UIMQMI_C_SOURCES = [
+    '${BUILDPATH}/qmi_uim.c',
+    '${BUILDPATH}/qmi_uim_parsing.c',
+    '${BUILDPATH}/qmi_uim_cat_common.c',
+    '${BUILDPATH}/qmi_uim_util.c',
+    '${BUILDPATH}/qmi_uim_simlock.c'
+]
+
+if 'USES_SUB_MANAGER' in env:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_uim_sub_mgr.c',
+        '${BUILDPATH}/qmi_uim_sub_mgr_parsing.c'
+    ]
+else:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_uim_sub_mgr_stubs.c'
+    ]
+
+if 'USES_UIM_IOE' in env and 'USES_UIM_IOE_GBA' not in env:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_uim_gba_stubs.c'
+    ]
+else:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_uim_gba.c'
+    ]
+
+if 'USES_UIM_IOE' in env:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_cat.c',
+        '${BUILDPATH}/qmi_cat_decoded.c',
+        '${BUILDPATH}/qmi_uim_recovery_stubs.c',
+        '${BUILDPATH}/qmi_uim_supply_voltage_stubs.c',
+        '${BUILDPATH}/user_identity_module_impl_v01_stubs.c',
+        '${BUILDPATH}/qmi_uim_sap_stubs.c',
+        '${BUILDPATH}/qmi_uim_multi_profile_stubs.c'
+    ]
+    if 'USES_UIM_IOE_SIMLOCK' in env:
+         UIMQMI_C_SOURCES += [
+             '${BUILDPATH}/qmi_uim_simlock_parsing.c'
+         ]
+    if 'USES_REMOTE_SIM' in env:
+         UIMQMI_C_SOURCES += [
+             '${BUILDPATH}/qmi_uim_encryption.c'
+         ]
+    else:
+        UIMQMI_C_SOURCES += [
+            '${BUILDPATH}/qmi_uim_encryption_stubs.c'
+        ]
+else:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/qmi_cat_without_ui.c',
+        '${BUILDPATH}/qmi_uim_encryption.c',
+        '${BUILDPATH}/qmi_uim_recovery.c',
+        '${BUILDPATH}/qmi_uim_supply_voltage.c',
+        '${BUILDPATH}/user_identity_module_impl_v01.c',
+        '${BUILDPATH}/card_application_toolkit_impl_v02.c',
+        '${BUILDPATH}/qmi_uim_simlock_parsing.c',
+        '${BUILDPATH}/qmi_uim_sap.c',
+        '${BUILDPATH}/qmi_uim_multi_profile.c'
+    ]
+
+if 'USES_REMOTE_SIM' in env:
+    UIMQMI_C_SOURCES += [
+        '${BUILDPATH}/uimqmi_task.c',
+        '${BUILDPATH}/qmi_uim_remote.c',
+        '${BUILDPATH}/user_identity_module_remote_impl_v01.c'
+    ]
+
+# Add our library to the MODEM_AMSS image
+env.AddLibrary(['MODEM_MODEM','MOB_UIM'], '${BUILDPATH}/uim_uimqmi', UIMQMI_C_SOURCES)
+
+# Load test units
+env.LoadSoftwareUnits()
+
+if 'USES_REMOTE_SIM' in env:
+# Build image for which this task belongs
+    # Build image for which this task belongs
+    RCINIT_UIMQMI = ['MODEM_MODEM', 'MOB_UIM']
+
+    # RC Init Function Dictionary
+    RCINIT_INIT_UIMQMI = {
+                'sequence_group'      : 'RCINIT_GROUP_4',
+                'init_name'           : 'uimqmi_init',
+                'init_function'       : 'uimqmi_task_init',
+                'dependencies'        : [],
+                'policy_optin'        : ['default', 'ftm', ]
+        }
+
+    # RC Init Task Dictionary
+    RCINIT_TASK_UIMQMI= {
+                'thread_name'         : 'uimqmi',
+                'sequence_group'      : 'RCINIT_GROUP_4',
+                'stack_size_bytes'    : '4096',
+                'priority_amss_order' : 'GSDI_PRI_ORDER',
+                'stack_name'          : 'uimqmi_task_stack',
+                'thread_entry'        : 'uimqmi_task',
+                'tcb_name'            : 'uimqmi_task_tcb',
+                'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+                'policy_optin'        : ['default', 'ftm', ]
+        }
+
+    env.AddRCInitTask(RCINIT_UIMQMI, RCINIT_TASK_UIMQMI)
+    env.AddRCInitFunc(RCINIT_UIMQMI, RCINIT_INIT_UIMQMI)

@@ -1,0 +1,65 @@
+/* List of files to compress for CLADE2 */
+
+/* RODATA */
+. = ALIGN(64);
+__clade2_rodata_start__ = .;
+*modem_proc/core/services/nv*: (.rodata .rodata.*)
+*modem_proc/rftech_lte/rf/nv*: (.rodata .rodata.*)
+*modem_proc/rftech_lte/rf/rfc*: (.rodata .rodata.*)
+*modem_proc/rfa*: (.rodata .rodata.*)
+*modem_proc/uim*: (.rodata .rodata.*)
+*modem_proc/dataiot*: (.rodata .rodata.*)
+*modem_proc/utils/common*: (.rodata .rodata.*)
+*modem_proc/utils/osys*: (.rodata .rodata.*)
+*modem_proc/utils/qsh*: (.rodata .rodata.*)
+*modem_proc/mcs*: (.rodata .rodata.* )
+*modem_proc/dataimsiot*: (.rodata .rodata.* )
+*modem_proc/gps*: (.rodata .rodata.* )
+*modem_proc/mmcp*: (.rodata .rodata.* )
+*audio_avs*: (.rodata .rodata.* )
+*modem_proc/avs*: (.rodata .rodata.* )
+*modem_proc/rflm/meas*: (.rodata .rodata.* )
+*modem_proc/rflm/rftech*: (.rodata .rodata.* )
+*modem_proc/rflm/rxagc*: (.rodata .rodata.* )
+*modem_proc/rflm/txagc*: (.rodata .rodata.* )
+
+. = ALIGN(64);
+__clade2_rodata_end__ = .;
+
+
+/* DATA */
+. = ALIGN(64);
+__clade2_data_start__ = .;
+*modem_proc/core/services/nv*: (.data .data.*)
+*modem_proc/rftech_lte/rf/nv*: (.data .data.*)
+*modem_proc/rftech_lte/rf/rfc*: (.data .data.*)
+*modem_proc/rfa*: (.data .data.*)
+*modem_proc/uim*: (.data .data.*)
+*modem_proc/dataiot*: (.data .data.*)
+*modem_proc/utils/common*: (.data .data.*)
+*modem_proc/utils/osys*: (.data .data.*)
+*modem_proc/utils/qsh*: (.data .data.*)
+*modem_proc/mcs*: (.data .data.* )
+*modem_proc/dataimsiot*: (.data .data.* )
+*modem_proc/gps*: (.data .data.* )
+*modem_proc/mmcp*: (.data .data.* )
+*audio_avs*: (.data .data.* )
+*modem_proc/avs*: (.data .data.* )
+*modem_proc/rflm/meas*: (.data .data.* )
+*modem_proc/rflm/rftech*: (.data .data.* )
+*modem_proc/rflm/rxagc*: (.data .data.* )
+*modem_proc/rflm/txagc*: (.data .data.* )
+
+. = ALIGN(64);
+__clade2_data_end__ = .;
+
+/* BSS */
+. = ALIGN(64);
+__clade2_bss_start__ = .;
+. = ALIGN(64);
+__clade2_bss_end__ = .;
+
+/* cache line aligned */
+. = ALIGN(64);
+
+

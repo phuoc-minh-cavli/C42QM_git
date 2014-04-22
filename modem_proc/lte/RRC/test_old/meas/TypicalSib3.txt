@@ -1,0 +1,55 @@
+TypicalSIB3:value BCCH-DL-SCH-Message ::= 
+{
+  message c1 : systemInformation : 
+      {
+        criticalExtensions systemInformation-r8 : 
+          {
+            sib-TypeAndInfo 
+            {
+              sib3 : 
+                {
+                  cellReselectionInfoCommon 
+                  {
+                    q-Hyst dB1,
+                    speedStateReselectionPars 
+                    {
+                      mobilityStateParameters 
+                      {
+                        t-Evaluation s60,
+                        t-HystNormal s60,
+                        n-CellChangeMedium 5,
+                        n-CellChangeHigh 5
+                      },
+                      q-HystSF 
+                      {
+                        sf-Medium dB-6,
+                        sf-High dB-2
+                      }
+                    }
+                  },
+                  cellReselectionServingFreqInfo 
+                  {
+                    s-NonIntraSearch 5,
+                    threshServingLow 6,
+                    cellReselectionPriority 7
+                  },
+                  intraFreqCellReselectionInfo 
+                  {
+                    q-RxLevMin -23,
+                    p-Max 26,
+                    s-IntraSearch 8,
+                    allowedMeasBandwidth mbw15,
+                    presenceAntennaPort1 FALSE,
+                    neighCellConfig '10'B,
+                    t-ReselectionEUTRA 2,
+                    t-ReselectionEUTRA-SF 
+                    {
+                      sf-Medium oDot5,
+                      sf-High oDot5
+                    }
+                  }
+                }
+            }
+          }
+      }
+}

@@ -1,0 +1,59 @@
+#===============================================================================
+#
+# Utils Mutils Dsm
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2014 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/utils.mpss/2.3.4/mutils_dsm/build/utils_mutils_dsm.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/26/18    qf     Added MCFG APIs due to new inclusion
+# 06/09/16    cx     Initial version.
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi(['MUTILS_DSM'], area='utils')
+env.RequirePublicApi(['MEMORY'], area='core')
+env.RequirePublicApi(['MCFG'], area='MCFG')
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Construct the list of source files by looking for *.c
+UTILS_MUTILS_DSM_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                   for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the UTILS CAFI source and convert to a binary library
+env.AddBinaryLibrary(['MODEM_MODEM','MOB_UTILS'], '${BUILDPATH}/utils_mutils_dsm', UTILS_MUTILS_DSM_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+
+
+

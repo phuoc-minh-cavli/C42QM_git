@@ -1,0 +1,92 @@
+#===============================================================================
+#
+# MODEM_CFG_SEGMENT_LOADING Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2013 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcfg_fwk.mpss/7.10.1.1/mcfg_segment/build/mcfg_segment.scons#1 $
+#  $DateTime: 2020/02/19 23:07:19 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 11/17/14   skotalwa CR 756513
+# 06/10/14   hzhi    CR 670990: removing unnecessary dependency of mmu update on segment loading feature. 
+# 09/26/13   hzhi    Updated public api list and private api list. 
+# 02/15/13   ngeng   Created module
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+if 'USES_GNSS_SA' not in env:
+  mcfg_segment_public_api_list = [
+          ('CORE',                'STORAGE'),
+          ('CORE',                'KERNEL'),
+          ('CORE',                'DAL'),
+          ('CORE',                'DEBUGTOOLS'),
+          ('CORE',                'SERVICES'),
+          ('CORE',                'MEMORY'),
+          ('CORE',                'SYSTEMDRIVERS'),
+          ('CORE',                'SECUREMSM'),
+          ('MCFG',                'MCFG'),
+          ('MMCP',                'MMCP'),
+          ('MMCP',                'PUBLIC'),
+          ]
+
+  for api_area,api_name in mcfg_segment_public_api_list:
+      env.RequirePublicApi([api_name], area=api_area)
+          
+  env.RequireRestrictedApi([
+      'MCFG',
+      ])
+
+  SRCPATH = '../src'
+
+  env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+  #-------------------------------------------------------------------------------
+  # Enable heap borrowing from HLOST only for  MSM's
+  #-------------------------------------------------------------------------------
+  if env['PRODUCT_LINE'].startswith("MPSS.JO"):
+     env.Append(CPPDEFINES = ['FEATURE_BORROW_FROM_HLOS'])
+
+  if env['PRODUCT_LINE'].startswith("MPSS.BO.2.1"):
+     env.Append(CPPDEFINES = ['FEATURE_LOAD_ALL_DEFAULT_CONFIG'])
+     
+  if env.has_key('USES_FEATURE_SEGMENT_LOADING'):
+    MCFG_SEGMENT_SOURCES = [
+      '${BUILDPATH}/mcfg_seg_load.c',
+      '${BUILDPATH}/mcfg_mmu.c',
+    ]
+
+  else:
+    MCFG_SEGMENT_SOURCES = [
+      '${BUILDPATH}/mcfg_mmu.c',
+    ]
+
+  # Add our library to the MODEM_AMSS image
+  #if env.has_key('USES_FEATURE_SEGMENT_LOADING'):
+  env.AddLibrary(['MODEM_MODEM','MODEM_PAGEONLY'], '${BUILDPATH}/mcfg_segment', MCFG_SEGMENT_SOURCES)
+
+env.LoadSoftwareUnits()
+
+RCINIT_MCFG_POI = ['MODEM_PAGEONLY']
+if 'USES_BUILD_PAGEONLY_IMAGE' in env:
+  RCINIT_INIT_MCFG = {
+              'sequence_group'      : 'RCINIT_GROUP_2',
+              'init_name'           : 'mcfg_mmu_update_init',
+              'init_function'       : 'mcfg_mmu_update_init'
+      }
+  env.AddRCInitFunc(RCINIT_MCFG_POI, RCINIT_INIT_MCFG)      

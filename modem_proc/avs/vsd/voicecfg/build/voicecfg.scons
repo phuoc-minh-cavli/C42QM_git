@@ -1,0 +1,20 @@
+#=================================================================
+# VOICECFG SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+VOICECFGSRCPATH = "${AVS_ROOT}/vsd/voicecfg"
+env.VariantDir('${BUILDPATH}', VOICECFGSRCPATH, duplicate=0)
+
+VOICECFG_SOURCES = [   
+  '${BUILDPATH}/src/voicecfg.c',
+]
+
+if 'AVS_MPSS_TEST' in env:
+ IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+ IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/voice/voicecfg'), VOICECFG_SOURCES)

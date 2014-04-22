@@ -1,0 +1,273 @@
+#===============================================================================
+#
+# UART Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2015,2017,2019,2020 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/buses/uart/build/uart.scons#2 $
+#  $DateTime: 2020/03/26 03:04:15 $
+#  $Author: pwbldsvc $
+#  $Change: 23122341 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/04/19   ss      Added support for qapi registration in a common place.
+# 01/16/19   ss      Added support for MDM9205
+#===============================================================================
+import os.path
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+#  Publish protected APIs
+#-------------------------------------------------------------------------------
+
+#  There are none.
+
+#-------------------------------------------------------------------------------
+#  Figure out UART_ROOT dynamically.  Look at the usual suspects.
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/buses/uart"
+
+env.Replace( UART_ROOT = SRCPATH )
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+#  Publish Private APIs
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('buses_UART_API', [
+   "${UART_ROOT}/hal/inc",
+   "${UART_ROOT}/dal/src",
+   "${UART_ROOT}/mdd/inc",
+   "${UART_ROOT}/tal/src",
+])
+
+#-------------------------------------------------------------------------------
+#  CPP defines needed for some old legacy code
+#-------------------------------------------------------------------------------
+
+#env.Append(CPPDEFINES = [
+"FEATURE_FIRST_UART",
+"FEATURE_SECOND_UART",
+"FEATURE_THIRD_UART",
+ #  "FEATURE_CXM_UART"
+#])
+
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireExternalApi([
+    'DSM',
+    'CS',
+    'BREW',
+    'MODEM_API',
+    'MODEM_MMODE',
+    'MODEM_PMIC',
+    'MODEM_DATA',
+    'MODEM_HDR',
+    'MODEM_1X',
+    'MODEM_RF',
+    'MODEM_SERVICES',
+    'MODEM_NAS',
+    'MODEM_WCDMA',
+    'MODEM_UIM',
+    'MULTIMEDIA_AUDIO',
+    'WCONNECT',
+])
+ 
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_APIS = [
+   'DAL',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MEMORY',
+   'MPROC',
+   'POWER',
+   'SYSTEMDRIVERS',
+   'SERVICES',
+   'STORAGE',   
+   'KERNEL',   
+   'PRODUCTS_DSR',
+   'QAPI',
+]
+
+env.RequirePublicApi( CBSP_APIS )
+env.RequireRestrictedApi( CBSP_APIS )
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+UART_SOURCES = [
+   '${BUILDPATH}/dal/src/DalUart.c',
+   '${BUILDPATH}/dal/src/DalUartDma.c',
+   '${BUILDPATH}/hal/src/HALuart_bam.c',
+   '${BUILDPATH}/mdd/src/uart_circ_buffer.c',
+   '${BUILDPATH}/mdd/src/uart_compat.c',
+   '${BUILDPATH}/mdd/src/uart_debug.c',
+   '${BUILDPATH}/mdd/src/uart_event_queue.c',
+   '${BUILDPATH}/mdd/src/uart_init.c',
+   '${BUILDPATH}/mdd/src/uart_log.c',
+   '${BUILDPATH}/mdd/src/uart_device_props.c',
+   '${BUILDPATH}/mdd/src/siors232_mdd.c',
+   '${BUILDPATH}/mdd/src/siors232_mdd_data.c',
+   '${BUILDPATH}/mdd/src/siors232_mdd_ioctl.c',
+   '${BUILDPATH}/mdd/src/qapi_uart_dam.c',   
+   '${BUILDPATH}/tal/src/tal_clock.c',
+   '${BUILDPATH}/tal/src/tal_dma_bam.c',
+   '${BUILDPATH}/tal/src/tal_tlmm.c',
+   '${BUILDPATH}/tal/src/tal_interrupt.c',
+   '${BUILDPATH}/tal/src/tal_os.c',
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+
+uart_obj = env.Object(UART_SOURCES)
+uart_lib = env.Library('${BUILDPATH}/uart', uart_obj) 
+env.AddLibsToImage( IMAGES, uart_lib )
+#-------------------------------------------------------------------------------
+#  Test code initialization
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   if 0:
+      # Enable the UART tx-source test on the first UART port
+      env.AddRCInitFunc(
+       RCINIT_IMG,
+       {
+    'sequence_group'             : 'RCINIT_GROUP_7',
+    'init_name'                  : 'uart_test_txsource',
+    'init_function'              : 'uart_test_tx_source_start',
+    'dependencies'               : ['sio',]
+       })
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   if env.has_key('MODEM_PROC') or env.has_key('ADSP_PROC'):
+      env.AddDevCfgInfo(DEVCFG_IMG,
+      {
+               '9645_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_9x45.xml'],
+               '8996_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_8996.xml'],
+               '9655_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_9x55.xml'],
+               '8998_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_8998.xml'],
+			   '9x06_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_9x06.xml'],
+			   '9205_xml' : ['${BUILD_ROOT}/core/buses/uart/config/uart_9x05.xml'],
+      })
+   
+   elif env.has_key('APPS_PROC'):
+
+      #  If there is a processor specific .xml file use that.  
+      #  Otherwise, use the generic .xml file for the MSM.
+
+      msm        = env['MSM_ID']
+      proc_name  = env['PROC_NAME'].lower()
+      config_dir = "%s/core/buses/uart/config" % ( env['BUILD_ROOT'] )
+
+      print "PROC_NAME = %s" % (env['PROC_NAME'])
+
+      proc_xml   = "%s/uart_%s_%s.xml" % ( config_dir, msm, proc_name )
+      msm_xml    = "%s/uart_%s.xml"    % ( config_dir, msm ) 
+
+      print "proc_name = %s" % proc_name
+      print "prox_xml = %s" % proc_xml
+      print "msm_xml = %s" % msm_xml
+
+      if( os.path.exists( proc_xml )):
+         devcfg_xml = proc_xml
+      elif( os.path.exists( msm_xml )):
+         devcfg_xml = msm_xml
+      else:
+         devcfg_xml = '';
+
+      env.AddDevCfgInfo( DEVCFG_IMG, {'devcfg_xml': devcfg_xml })
+
+      print "devcfg_xml = %s" % ( devcfg_xml )
+
+
+#-------------------------------------------------------------------------------
+# Script to extract all the log lines from source files.
+#-------------------------------------------------------------------------------
+import re
+import os
+
+# Change to the UART main directory.
+os.chdir("..")
+root_dir = os.getcwd()
+
+output_csv_contents = []
+
+for root, sub_folders, files in os.walk(root_dir):
+    if len(files) is not 0:
+        for file_name in files:
+            if re.search(".c",file_name):
+                file_id = 0
+                file_path = os.path.join(root, file_name)
+                source_file = open(file_path,"r")
+
+                lines = source_file.read().split('\n')
+                line_num = 1
+
+                for line in lines:
+                    # Extract the file ID using the definition.
+                    if re.search(r".*UART_TRACE_BUFFER_FILE_ID\s*(\d+)",line):
+                        file_id = re.search(r".*UART_TRACE_BUFFER_FILE_ID\s*(\d+)",line).group(1)
+                        
+                    # If the file has a valid file ID, extract all the log messages and store them in the 
+                    # format "file Id,,file name,,line number,,line content"
+
+                    # Double comma (,,) separated to avoid parsing confusion on delimiter comma and the 
+                    # argument separation comma on the log line.
+                    if file_id is not 0:
+                        if re.search(r"\s*(UART_.*LOG(_\d)*(\s*)\(.*)",line):
+                            log_message = re.search(r"\s*(UART_.*LOG(_\d)*(\s*)\(.*)",line).group(1)
+                            msg = str(file_id) + ',,' + file_name + ',,' + str(line_num) + ',,' + log_message
+                            output_csv_contents.append(msg)
+                     
+                    line_num = line_num + 1
+
+                source_file.close()
+
+# csv_file = open(root_dir + os.path.normpath('/mdd/src/log_messages.csv'),"w")
+# for msg in output_csv_contents:
+    # csv_file.write(msg + "\n")
+# csv_file.close()
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',               
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_SOURCES = [
+    '${BUILDPATH}/mdd/src/qapi_uart.c',
+]
+env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', QAPI_SOURCES)
+   
+      
+env.LoadSoftwareUnits()

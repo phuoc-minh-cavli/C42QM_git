@@ -1,0 +1,49 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This file needs to be modified for
+;; every target as part of porting till
+;; we find a way to generate it automatically.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+global &NorTargetFamily
+&NorTargetFamily="FLASH_9K05_CORTEXA7_CFG"
+global &NorMsmId
+&NorMsmId="9x05"
+global &NorCodeAddr
+&NorCodeAddr=0x08C00000
+global &NorParamAddr
+; TODO: add good comment should be same as LD file
+&NorParamAddr=0x08C77FE0
+global &NorBootRomBegin
+&NorBootRomBegin=
+global &NorBootRomEnd
+&NorBootRomEnd=
+global &NorCodeRomBegin
+&NorCodeRomBegin=0x00000000
+global &NorCodeRomEnd
+&NorCodeRomEnd=0xFFFFFFFF
+global &NorConfigDir
+&NorConfigDir="config_v1"
+global &NorSrcRoot
+&NorSrcRoot="../../../../../.."
+global &NorJtagToolsDirDebug
+&NorJtagToolsDirDebug="../../Mdm9x05Pkg/Bin/9x05/LA/DEBUG"
+global &NorJtagToolsDirRelease
+&NorJtagToolsDirRelease="../../Mdm9x05Pkg/Bin/9x05/LA/RELEASE"
+global &NorJtagToolsDir
+global &UseTerm
+&UseTerm="YES"
+
+winclear
+area.reset
+area.create NOR_OUT 200. 1000.
+winpos 49% 0 49% 98% , , , NOR_OUT
+area.view NOR_OUT
+area.clear NOR_OUT
+winpos 0% 0% 49% 98% , , , NOR
+area.create NOR 200. 1000.
+area.view NOR
+area.clear NOR
+
+area.select NOR
+wintop NOR
+screen.display

@@ -1,0 +1,8 @@
+Dictionary Debug:image:RPM
+ 
+scripts:{'../systemdrivers/pmic/scripts/MDM9206/PMICDashBoard.cmm': 'PMIC Dashboard', '../systemdrivers/pmic/scripts/PMICDashBoard.cmm': 'PMIC Dashboard', '../systemdrivers/pmic/scripts/MDM9206/PMICDump.cmm': 'PMIC Dump', '../systemdrivers/pmic/scripts/PMICRegisters.cmm': 'Registers - PMIC', '../systemdrivers/pmic/scripts/swevent_log_dump.cmm': 'PMIC SW Event Dump', '../systemdrivers/pmic/scripts/PMICPeek.cmm': 'PMIC Peek/Poke', '../systemdrivers/pmic/scripts/MDM9206/swevent_log_dump.cmm': 'PMIC SW Event Dump', '../systemdrivers/pmic/scripts/MDM9206/PMICPeek.cmm': 'PMIC Peek/Poke', '../systemdrivers/pmic/scripts/PMICDump.cmm': 'PMIC Dump'}
+ 
+Arguments:[]
+ 
+area:Systemdrivers
+ 

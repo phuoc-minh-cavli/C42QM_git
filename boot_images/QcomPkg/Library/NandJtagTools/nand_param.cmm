@@ -1,0 +1,61 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This file needs to be modified for
+;; every target as part of porting till
+;; we find a way to generate it automatically.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+global &NandTargetFamily
+&NandTargetFamily="FLASH_9K05_CORTEXA7_CFG"
+global &NandMsmId
+&NandMsmId="9x05"
+global &NandCodeAddr
+;; OCIMEM start adress
+&NandCodeAddr=0x08600000
+global &NandParamAddr
+;  NOTE: match this with LD file
+;    0x21020 = sizeof(flash_prog_param)
+;    Total size of BOOT IMEM: SIZE_512KB
+;    Keep NAND PARAM data at last of BOOT IMEM
+;    So to calculate starting offset of nand param we subtract
+;    sizeof(flash_prog_param) from BOOT IMEM size i.e.
+;    SIZE_512KB - 0x21020 = 0x5EFE0
+;                                   _______________________
+;    Boot Imem Start (0x08C00000)  |                       |
+;                                  |        Stack,         |
+;                                  |        RW area        |
+;                                  |                       |
+;                                  |_______________________|
+;    NAND PARAM Start (0x08C5EFE0) |                       |
+;                                  |                       |
+;    Boot Imem End  (0x08C80000)   |_______________________|
+;
+&NandParamAddr=0x08C5EFE0
+global &NandCodeRomBegin
+&NandCodeRomBegin=0x00000000
+global &NandCodeRomEnd
+&NandCodeRomEnd=0xFFFFFFFF
+global &NandConfigDir
+&NandConfigDir="config_v2"
+global &NandSrcRoot
+&NandSrcRoot="../../.."
+global &NandJtagToolsDirDebug
+&NandJtagToolsDirDebug="../../Mdm9x05Pkg/Bin/9x05/LA/DEBUG"
+global &NandJtagToolsDirRelease
+&NandJtagToolsDirRelease="../../Mdm9x05Pkg/Bin/9x05/LA/RELEASE"
+global &UseTerm
+&UseTerm="YES"
+
+winclear
+area.reset
+area.create NAND_OUT 200. 1000.
+winpos 49% 0 49% 98% , , , NAND_OUT
+area.view NAND_OUT
+area.clear NAND_OUT
+winpos 0% 0% 49% 98% , , , NAND
+area.create NAND 200. 1000.
+area.view NAND
+area.clear NAND
+
+area.select NAND
+wintop NAND
+screen.display

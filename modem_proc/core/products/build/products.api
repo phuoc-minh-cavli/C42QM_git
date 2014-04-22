@@ -1,0 +1,51 @@
+#===============================================================================
+#
+# products INC PATHs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 by QUALCOMM Technologies, Inc. (QTI)
+# All Rights Reserved.
+# QUALCOMM Technologies Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/products/build/products.api#2 $
+#  $DateTime: 2019/07/01 22:35:02 $
+#  $Author: pwbldsvc $
+#  $Change: 19721793 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 1/28/19   Hema  Intial version for Tiny modem
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Publish Public APIs
+# these are accecible internal or external to CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Publish Restricted APIs
+# these are accecible only within CoreBSP
+#-------------------------------------------------------------------------------
+
+products_restricted_apis = [
+   "${INC_ROOT}/core/products/",
+   
+]
+
+env.PublishRestrictedApi('PRODUCTS', products_restricted_apis)
+
+
+# Public APIs these are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('PRODUCTS_UTILITY', [
+	"${INC_ROOT}/core/api/products",
+])

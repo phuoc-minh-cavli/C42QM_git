@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+<head>
+<title> Release Notes</title><link rel="stylesheet" type="text/css" href="../../QDART.css"/>
+<style type="text/css">
+.auto-style1 {
+text-indent: -.25in;
+line-height: 107%;
+font-size: 11.0pt;
+font-family: Calibri, sans-serif;
+margin-left: .5in;
+margin-right: 0in;
+margin-top: 0in;
+margin-bottom: .0001pt; }
+.auto-style2 {
+text-indent: -.25in;
+line-height: 107%;
+font-size: 11.0pt;
+font-family: Calibri, sans-serif;
+margin-left: .5in;
+margin-right: 0in;
+margin-top: 0in;
+margin-bottom: 8.0pt; }
+</style>
+</head>
+<body>
+<div class="Section1">
+<div style="BORDER-RIGHT: medium none;PADDING-RIGHT: 0in;BORDER-TOP: medium none;PADDING-LEFT: 0in;PADDING-BOTTOM: 4pt;BORDER-LEFT: medium none;PADDING-TOP: 0in;BORDER-BOTTOM: windowtext 2.25pt solid;">
+<h1>QDART.SBSY_VFS.2.0  <a name="_Toc130007464"></a>Release Notes</h1>
+</div>
+</div>
+<hr />
+<p><i>Date: </i>10/23/2018</p>
+<p><i>Version: </i><b>2.0-00055</b></p>
+<p><i>Changes: </i></p>
+<ul>
+<h4><i> New Features </i></h4>
+<li CR="2333068">[QSEQ]Fix strip file for VFS_Cellular and VFS_Connectivity</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2294575"> [RFtools][QSEQ] fix TDD band for rx measurement freq adjust</li>
+<li CR="2335339">[RFVFS]Add LTE_HANDOFF in RFVFS module to force to restart a call.</li>
+</ul>
+<hr />
+<p><i>Date: </i>10/09/2018</p>
+<p><i>Version: </i><b>2.0-00053</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2310749">Update to get Unified RF path for HE</li>
+<li CR="2316573">SEM and OBW self-test support to SubSysVFS for LTE, WCDMA and TDSCDMA</li>
+<li CR="2316584">SEM and OBW self-test support to SubSysVFS for LTE</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2305989">[RFVFS]Find out all associated label in all sequences when overwriting the RF configuration.</li>
+<li CR="2306729">NSVFS ILPC Fail at -50dbm</li>
+<li CR="2307946">[QSEQ]Fix B46 displaying issue and add SubBand information for BC28</li>
+<li CR="2308418">[RF Utilities][RFVFS] Fix the LTE ERS error on HE targets </li>
+<li CR="2308597">[RFVFS]Remove Tx control command from DL only (Rx Trigger) test</li>
+<li CR="2308609">[TestRecord] Skip Tx path index output if the processing path is DL only.</li>
+<li CR="2316534">[TestRecord]Update RF path response structure based on embedded side update.</li>
+<li CR="2317370">[TestRecord]Find out all path configurations based on band and sub-band information.</li>
+<li CR="2317521">Calculate the UL channel for B66 when sub-band is added in the sequence </li>
+</ul>
+<hr />
+<p><i>Date: </i>09/04/2018</p>
+<p><i>Version: </i><b>2.0-00042</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2296303"> [SubSysVFS]New feature: Comprehensive error reporting for VSWR/selftest</li>
+<li CR="2297866"> [X-functional]New feature: Comprehensive error reporting for VSWR/selftest</li>
+<li CR="2305606">QSEQ: LP driver: WCDMA: RFVFS ACLR Fix remove double check</li>
+<li CR="2305616">QSEQ: LP: TDSCDMA, RFVFS RFCal verification RxAGC retrigger introduction</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2283369">Add B42/B43/B48/B66/B71 in NSVFS/RFVFS default legacy test trees.</li>
+<li CR="2282271">[RFVFS]Fix the time padding calculation for legacy estimated sensitivity</li>
+<li CR="2286357">[NSVFS]Optimize EDGE Rx Cal. Ver. displaying header</li>
+<li CR="2292379"> [RFtools][QSEQ] fix TDD band for rx measurement freq adjust</li>
+<li CR="2296516">[VFS]Fix LTE BC48 displaying issue</li>
+<li CR="2300414">Fix the incorrect displaying issue in QDART CDMA NSVFS test tree</li>
+<li CR="2304481">[VFS_Core]Remove PS control from VFS Core</li>
+</ul>
+<hr />
+<p><i>Date: </i>07/17/2018</p>
+<p><i>Version: </i><b>2.0-00038</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2278657">Adding Check Phone Communication and Power Supply control to VFS DLL</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2269184">[RFVFS]Tune back to the right system mode after legacy Est. Sen. is done.</li>
+</ul>
+<hr />
+<p><i>Date: </i>07/10/2018</p>
+<p><i>Version: </i><b>2.0-00035</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2256300">[RF Utilities][SubSysVFS] FR 50490: Add ILPC test in FTM RF mode - VFS part</li>
+<li CR="2257892">Add frequency correction by Rx measurement</li>
+<li CR="2265787"> [New Feature][SubSysVFS]Support RFVFS(QSEQ) All Paths in Test Record</li>
+<li CR="2268385">[New Feature] [Utilities]Support RFVFS(QSEQ) All Paths in Test Record</li>
+<li CR="2268430">[New Feature] [VFS_CORE]Support RFVFS(QSEQ) All Paths in Test Record</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2269301">[RFVFS]Remove the empty header for legacy estimated sensitivity table and delete invalid outputs</li>
+<li CR="2269463">[RFVFS]add processing logic for LTE legacy estimated sensitivity attributes in Cell Data copying functions.</li>
+<li CR="2273321">[NSVFS]Overwrite the duplexing mode to FDD when running DL only test.</li>
+<li CR="2259381">PCDE measurements on the 8870 and 8820 would add more measurements than necessary</li>
+</ul>
+<hr />
+<p><i>Date: </i>06/08/2018</p>
+<p><i>Version: </i><b>2.0-00034</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2256303">[RF Utilities][SubSysVFS] FR 50490: Add ILPC test in FTM RF mode - X-Function part</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2228660">[X-functional_Drivers_Bojay_Positioner] : Adding motor status query</li>
+<li CR="2251508">[NSVFS][TDSCDMA]Fix TDSCDMA Rx output typo and add Rx_level in xml report</li>
+<li CR="2245263">[RF Utilities][SubSysVFS] Add the RxChain in Est. Sens log for QMINE parsing</li>
+</ul>
+<hr />
+<p><i>Date: </i>05/31/2018</p>
+<p><i>Version: </i><b>2.0-00033</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2236977">[SubSysVFS]Add support for embedded averaging to FTM RF Test RX_MEASURE for all cellular technologies</li>
+<li CR="2243454">IQxstream changes for measurement support</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2246960">[NSVFS]Add RF FTM TEST phone detect attributes so that the phone detection band can be configured flexibly</li>
+<li CR="2247843"> [X-functional]Fix ARA populate conditional logic for QSEQ all path test </li>
+<li CR="2247863">[SubSysVFS]Optimize the band number input for ARA command</li>
+<li CR="2236972">[RFVFS]CDMA Freq adjust failed when selected chain is configured to Rx0 and Rx1(Dual Chain)</li>
+<li CR="2237114">[SubSysVFS]Correct input parameter for FTM_LTE_SET_TX_MODULATION_TYPE</li>
+<li CR="2238060">[New Test Record] Fix LTE SubBand configuration.</li>
+<li CR="2238749">[RFVFS] Fix 'RF Mode exit ' exceptions for LTE/TDS/WCDMA RFVFS test</li>
+<li CR="2239445">[RFVFS]Fix Rx Chain logic and add more Rx secondary chain settings in the call flow.</li>
+<li CR="2240317">[SubSysVFS][TDSCDMA]Apply TDSCDMA Rx chain configuration in Pre-altas targets</li>
+<li CR="2241953">[RF Utilities][SubSysVFS] Fix the stability issue in NB-IoT NSVFS test</li>
+<li CR="2242850">[VFS_Core]Add protection code for releasing device manager </li>
+<li CR="2242916">[NSVFS][GSM] optimize EDGE NSVFS output code and fix final Pass/Fail logic.</li>
+<li CR="2248669">Now reporting the measurement count on 8870 RFVFS</li>
+</ul>
+<hr />
+<p><i>Date: </i>05/01/2018</p>
+<p><i>Version: </i><b>2.0-00032</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2227483">[X-functional]Add support for embedded averaging to FTM RF Test RX_MEASURE for all cellular technologies</li>
+<li CR="2234184">Consolidating the NSVFS and RFVFS device config files into one file</li>
+<li CR="2222012">[Core] Merging to common pathloss manager</li>
+</ul>
+<hr />
+<p><i>Date: </i>04/20/2018</p>
+<p><i>Version: </i><b>2.0-00031</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2222025">[VFS] Merging to common pathloss manager</li>
+<li CR="2222199">[Connectivity] Merging to common pathloss manager</li>
+<li CR="2227483">[X-functional]Add support for embedded averaging to FTM RF Test RX_MEASURE for all cellular technologies</li>
+<li CR="2216563">[SubSysVFS2.0]: Print out the initial Freq.error before freq. adjust</li>
+<li CR="2188001">[SubSysVFS2.0]: Kill QSPR process when disconnectPhoneServer is False at Stop</li>
+</ul>
+<hr />
+<p><i>Date: </i>04/10/2018</p>
+<p><i>Version: </i><b>2.0-00028</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2218630">Combining TechAbstract config and BandAbstractConfig into a single AbstractConfig</li>
+<li CR="2210723">[New requirement]Add ARA command in WCDMA/TDSCDMA if All Path is enabled.</li>
+<li CR="2210889">[New requirement]Add ARA command for CDMA/EDGE NSVFS call flow and optimize the path filtering logic.</li>
+<li CR="2213008">Adding order to the GSM estimated sensitivity time execution table</li>
+<li CR="2214773">Adding new attribute to relax/tighten LTE SEM limits</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2209723">[NSVFS][NBIOT]Fix NBIoT equipment data processing issue</li>
+<li CR="2209747">[NSVFS][AllPath]Opimize the filtering function so that multi Tx Paths in a single band can be handled.</li>
+</ul>
+<hr />
+<p><i>Date: </i>03/19/2018</p>
+<p><i>Version: </i><b>2.0-00026</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2193684">MPR updates for 3ULCA</li>
+<li CR="2199725"> [New feature] support NSVFS All Path test for WCDMA/TDSCDMA/EDGE/CDMA</li>
+<li CR="2202539">New functions to be able to pass in XML string in addition to XML file path</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2199984"> [NSVFS][AllPath] Change algorithm  and attribute names in ARA configuration section based on current technology</li>
+<li CR="2198154">pply LTE_MEAS_UL_POWER_UPPER_DELTA/LTE_MEAS_UL_POWER_LOWER_DELTA to self-test power limit calculation</li>
+<li CR="2198824">[RF Utilities][SubSysVFS] Fix the error when loading the sequence file with new test record interface</li>
+<li CR="2204114">MultiplexManager with R&S CMW native driver issue: Port routing and path loss table incorrect </li>
+<li CR="2207133">[NSVFS][LTE]Remove Enable_SCC2 flag from start call section.</li>
+</ul>
+<hr />
+<p><i>Date: </i>03/01/2018</p>
+<p><i>Version: </i><b>2.0-00024</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2187943">[RF Utilities][SubSysVFS] Enable QSEQ selective sample feature for NSVFS and RFVFS - Cellular part</li>
+<li CR="2187944">[RF Utilities][SubSysVFS] Enable QSEQ selective sample feature for NSVFS and RFVFS - Core part</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2196486">[NSVFS][NBIoT]Configure different segment lengths in 15K and 3.75K </li>
+</ul>
+<hr />
+<p><i>Date: </i>03/01/2018</p>
+<p><i>Version: </i><b>2.0-00023</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2194507">Adding [TECH]_NUM_RX_CHAIN attribute</li>
+</ul>
+<hr />
+<p><i>Date: </i>02/20/2018</p>
+<p><i>Version: </i><b>2.0-00019</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2190099">[Core]Adding new vendor files to VFS and QSEQ solution</li>
+<li CR="2190097">[VFS]Adding new vendor files to VFS and QSEQ solution</li>
+<li CR="2191751">Support for Estimated Sensitivty on 8870A</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2188028">[NSVFS]deduct carrier back off in 2ULCA inter-band limits.</li>
+<li CR="2185348">Add  Rx1 using flag enable function in Core part.</li>
+<li CR="2185371">Add  Rx1 using flag settings for legacy targets.</li>
+<li CR="2186189">Add GMSK TimeAlign attributes to configure the upper/lower limits according to user's need.</li>
+<li CR="2186235">Apply LTE_MEAS_UL_POWER_UPPER_DELTA/LTE_MEAS_UL_POWER_LOWER_DELTA to max power limit calculation</li>
+</ul>
+<hr />
+<p><i>Date: </i>02/08/2018</p>
+<p><i>Version: </i><b>2.0-00018</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2176336">[RFtools][QSEQ] QSEQ FTM command time, add time delta</li>
+<li CR="2177916">[RFtools][QSEQ]QSEQ time, store radio configure data of multiple times </li>
+<li CR="2179388">[New feature] support ALL Path test for FTM NSVFS(common definition)</li>
+<li CR="2179401">[New feature] support ALL Path test for FTM NSVFS(VFS_Core)</li>
+<li CR="2179403">[New feature] support ALL Path test for FTM NSVFS(x-function)</li>
+<li CR="2179408">[New feature] Initial version for ALL Path test for FTM NSVFS.</li>
+<li CR="2181279">Removing Starpoint from the shipped VFS DLLs</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2177611">[RFVFS]Add Cal. verification Tx error passing flag into overall check </li>
+<li CR="2180990">Use QLIB_FTM_LTE_NS_START_DP_ENH if HORxD is capable.</li>
+<li CR="2182332">Add LTE_MEAS_UL_POWER_MPR_REL11 for ULCA MPR computation.</li>
+<li CR="2179432">Support LTE B71 standalone test for FTM NSVFS</li>
+</ul>
+<hr />
+<p><i>Date: </i>01/23/2018</p>
+<p><i>Version: </i><b>2.0-00015</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2177019">[NSVFS]New feature: support Downlink-only acquisition in NSVFS</li>
+<li CR="2177269">Adding ability to have multiple estimated sensitivity measurements for CDMA and EDGE</li>
+<li CR="2177271">Adding subBand attribute to the test record object</li>
+</ul>
+<hr />
+<p><i>Date: </i>01/12/2018</p>
+<p><i>Version: </i><b>2.0-00014</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="2156715">Add Magnitude error in NSVFS EDGE Verification.</li>
+<li CR="2157254">[New Requirement]Add Magnitude error results in RFVFS test.</li>
+<li CR="2160814">Expanding the OPT_CHANNEL attribute to use channel number as well</li>
+<li CR="2161610">[NSVFS][LTE]CAT-M1 NS Tx Measurement to align to MPSS scheduling</li>
+<li CR="2164216">[MT8870A][NSVFS] New changes for MT8870A according to new requests.</li>
+<li CR="2164242">[RFtools][QSEQ] Log time of FTM RF commands in each segment</li>
+<li CR="2164245">[RFtools][QSEQ] Log time of FTM RF commands in each segment</li>
+<li CR="2168773">[Cellular]Moving Response Payload configuration values from the sequence attributes to the DeviceConfig XML</li>
+<li CR="2168776">[Core]Moving Response Payload configuration values from the sequence attributes to the DeviceConfig XML</li>
+<li CR="2166267">[RFtools][QSEQ]LSE logging in FTM VSWR</li>
+<li CR="2163589">[RFtools][QSEQ] GSM frame sweep: add port set and FTM RF device, signal path and antenna path to log</li>
+<li CR="2155596">Setting the selected rx chains to measure when setting rx chains to tune</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="2155089">Skip PvT test in RFVFS continuous mode.</li>
+<li CR="2166730">[Bugfix] add TDSCDMA Rx chain configuration after DCH is set up to avoid Rx errors.</li>
+<li CR="2164958">New feature:  Dynamic RxD control in EDGE NSVFS</li>
+</ul>
+</body>
+</html>

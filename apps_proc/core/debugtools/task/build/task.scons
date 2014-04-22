@@ -1,0 +1,84 @@
+#===============================================================================
+#
+# Task Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2011 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtools/task/build/task.scons#1 $
+#
+#===============================================================================
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/debugtools/task/src"
+env.VariantDir('${BUILDPATH}', "${BUILD_ROOT}/core/debugtools/task/src", duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+#env.RequireExternalApi([
+#   'CS',
+#   'DSM',
+#   'MODEM_API',
+#   'MODEM_1X',
+#   'MODEM_DATA',
+#   'MODEM_HDR',
+#   'MODEM_MDSP',
+#   'MODEM_NAS',
+#   'MODEM_PMIC',
+#   'MODEM_RF',
+#   'MODEM_SERVICES',
+#   'MODEM_WCDMA',
+#])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'HAL',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'KERNEL', # needs to be last also contains wrong comdef.h
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+TASK_SOURCES =  [
+   '${BUILDPATH}/coremain.c',
+   '${BUILDPATH}/mobile.c',
+   # '${BUILDPATH}/timer_test.c', # use for kernel bringup only
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+ ['CORE_MODEM', 'CORE_QDSP6_SW', 'CORE_APPS', 'CORE_GSS',],
+ '${BUILDPATH}/task',
+ TASK_SOURCES)

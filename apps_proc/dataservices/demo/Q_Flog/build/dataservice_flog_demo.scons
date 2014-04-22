@@ -1,0 +1,89 @@
+#===============================================================================
+#
+# Dataservices QFLOG_DEMO
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018-2021 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+# Enable QFLOG_ENABLE to include QFLOG Support
+env.Append(CFLAGS = ['-DQFLOG_ENABLE'])
+
+
+env.Append(CPPDEFINES = 'FX_FILEX_PRESENT')
+
+SRCPATH = '${BUILD_ROOT}/dataservices/demo/Q_Flog'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Configure for high space optimizations
+#env.Replace(ARMCC_OPT="-Ospace -O3")
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi('UTILS_EXT')
+env.RequirePublicApi(['UTILS'], area='dataservices')
+
+DATASERVICES_RESTRICTED_APIS = [
+    'DS_UTILS',
+    ]
+env.RequirePublicApi('QFLOG_EXT')
+env.RequireRestrictedApi(DATASERVICES_RESTRICTED_APIS)
+
+env.RequireRestrictedApi(['NET_UTILS'])
+
+env.RequirePublicApi([
+        'NICHESTACK',
+        'SHARKSSL',
+        'MISC_NETSERVICES',
+        ])
+
+CLI_SOURCES = [
+    '${BUILDPATH}/src/qflog/flog.c',
+    '${BUILDPATH}/src/qflog/qflog.c',
+	'${BUILDPATH}/src/qflog/qflog_utils.c'
+]
+			
+IMAGES = ['DATA_TN', 'APPS_PROC']
+
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/Q_flog'), CLI_SOURCES)
+
+# Treat compiler warnings as errors!
+#env.Append(CCFLAGS = "--diag_error=warning")
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_3',           # required
+  'init_name'                  : 'qflog_app_start',           # required
+  'init_function'              : 'qflog_app_start',          # required
+  'dependencies'               : ['pal']
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )
+
+env.LoadSoftwareUnits()

@@ -1,0 +1,104 @@
+#===============================================================================
+#
+# QWES Agent Lib
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# Import SCons Environment
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = '${BUILD_ROOT}/core/securemsm/qwes/agent'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Dependency paths for include files
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'QCBOR_QAPI',
+    'USEFULBUF_QAPI',
+    'QTEE_INVOKE_QAPI',
+    'QAPI',
+    'QWES_QAPI',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QTEE_INVOKE_DRIVER_API',
+    'SECUREMSM_DRIVER_OBJECT_API',
+    'QWES_COMMON',
+    'QWES_OS_ABSTRACTION',
+]
+
+QWES_API = [
+    'QWES_AGENT',
+    'QWES_DAEMON',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.RequireProtectedApi(QWES_API)
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS=" --c99 --gnu")
+
+#-------------------------------------------------------------------------------
+# Sources, library
+#-------------------------------------------------------------------------------
+QWES_AGENT_SOURCES_KERNEL = [
+    '${BUILDPATH}/common/src/qwes_net_params.c',
+    '${BUILDPATH}/common/src/qwes.c',
+    '${BUILDPATH}/threadx/src/qwes_tx.c',
+]
+
+QWES_AGENT_SOURCES_USER = [
+    '${BUILDPATH}/common/src/qwes_net_params.c',
+    '${BUILDPATH}/threadx/src/qwes_tx.c',
+]
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+]
+
+USER_IMAGES = [
+    'CORE_TXM_LIBS',
+]
+
+env.AddBinaryLibrary(
+    IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/agent/build/qwes_kernel',
+    QWES_AGENT_SOURCES_KERNEL
+)
+
+env.AddBinaryLibrary(
+    USER_IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/agent/build/qwes_user',
+    QWES_AGENT_SOURCES_USER
+)
+
+# import pdb; pdb.set_trace()
+QWES_AGENT_SRC_FILES = env.FindFiles(
+  ['*.c', '*.cpp', '*.h'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWES_AGENT_SRC_FILES)
+  

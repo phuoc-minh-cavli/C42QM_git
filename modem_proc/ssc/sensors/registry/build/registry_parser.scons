@@ -1,0 +1,85 @@
+#===============================================================================
+#
+# Registry Sensors Parser
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/registry/build/registry_parser.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+
+#-------------------------------------------------------------------------------
+# Skip registry compilation in standalone SLPI mode
+#-------------------------------------------------------------------------------
+
+if 'SNS_DISABLE_REGISTRY' in env:
+   Return()
+
+#-------------------------------------------------------------------------------
+#Publish protected APIs
+#-------------------------------------------------------------------------------
+
+env.PublishProtectedApi('SNS_REGISTRY_INCLUDES', [
+   "${SSC_ROOT}/sensors/registry/inc",
+])
+
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([ 'COMMON', 'QDSSC' ], area='QMIMSGS')
+
+CBSP_API = [
+   'MPROC',
+   'SERVICES',
+   'POWER',
+   'DAL',
+   'DEBUGTOOLS',
+   'KERNEL',
+   'SYSTEMDRIVERS',
+]
+
+PLATFORM_API = [
+   'STDDEF',
+   'REMOTE'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi(PLATFORM_API, area='platform')
+env.RequireRestrictedApi(CBSP_API)
+
+SENSORS_API = [
+  'SNS_FRAMEWORK',
+  'SNS_INTERNAL_INCLUDES',
+  ]
+env.RequireProtectedApi(SENSORS_API)
+
+if 'SENSORS_DD_DEV_FLAG' in env:
+  reg_clean_pack_list = ['*.c','*.h']
+  binlib=True
+else:
+  reg_clean_pack_list = ['*.pb.c']
+  binlib=False
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             core_public_api = ['MPROC'],
+             ssc_protected_api = ['SNS_FRAMEWORK', 'SNS_INTERNAL_INCLUDES', 'SNS_REGISTRY_INCLUDES'],
+             clean_pack_list = reg_clean_pack_list,
+             binary_lib = binlib,
+             cflags = ['-Wno-sign-compare'],
+             register_func_name = "sns_register_registry_sensor")
+
+env.LoadSoftwareUnits()

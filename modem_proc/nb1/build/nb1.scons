@@ -1,0 +1,570 @@
+#===============================================================================
+#
+# TCXOMGR Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/build/nb1.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 11/10/2016    sk      Initial Version
+#===============================================================================
+Import('env')
+
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+# Copy the CFLAGS list to a new environment for us
+# (the list is a reference when cloned, so use deepcopy)
+import copy
+orig_env = env
+env = env.Clone()
+env['CFLAGS'] = copy.deepcopy(orig_env['CFLAGS'])
+
+# Remove any "disables" from top-level
+if env['CFLAGS'].count('-Wno-low') > 0:
+  env['CFLAGS'].remove('-Wno-low')
+
+if env['CFLAGS'].count('-Wno-medium') > 0:
+  env['CFLAGS'].remove('-Wno-medium')
+
+if env['CFLAGS'].count('-Wno-high') > 0:
+  env['CFLAGS'].remove('-Wno-high')
+
+if env['CFLAGS'].count('-Wno-error') > 0:
+  env['CFLAGS'].remove('-Wno-error')
+# Enable -Werror
+env.Append(HEXAGONCC_WARN = ' -Werror ')
+env.Append(HEXAGONCXX_WARN = ' -Werror ')
+
+# Set -Wdeclaration-after-statement to disallow C99 style variable declarations
+# Required for QTF development
+env.Append(HEXAGONCC_WARN = ' -Wdeclaration-after-statement ')
+							
+if env.PathExists('${BUILD_ROOT}/nb1'):
+    env.Replace(NB1_ROOT = '${INC_ROOT}/nb1')
+else:    
+    env.Replace(NB1_ROOT = '${INC_ROOT}/modem/nb1')
+
+#CHIPSET = env.get('CHIPSET')
+#if (CHIPSET == "mdm9607"):
+#    env.Append(CFLAGS = "-DLTE_MDM9607")
+
+# Load cleanpack script:
+import os
+if os.path.exists(env.subst('${NB1_ROOT}/pack/nb1_cleanpack.py')):
+   env.LoadToolScript('${NB1_ROOT}/pack/nb1_cleanpack.py')
+
+env.RequirePublicApi([
+        'KERNEL',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'LTE',
+        ],
+        area='LTE')
+
+env.RequirePublicApi([
+        'LTE',
+        ],
+        area='FW')
+		
+env.RequirePublicApi([
+        'FW_LTE',
+        ],
+        area='FW_LTE')
+        
+env.RequirePublicApi([
+        'NB1',
+        ],
+        area='FW')
+
+env.RequirePublicApi([
+        'FW_NB1',
+        ],
+        area='FW_NB1')
+
+env.RequirePublicApi([
+        'NB1',
+        ],
+        area='NB1')
+
+env.RequirePublicApi([
+        'MCS',
+        ],
+        area='MCS')
+
+env.RequirePublicApi([
+        'COMMON',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'DAL',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'MEAS',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='MMCP')
+
+env.RequirePublicApi([
+        'CDMA',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'MMCP',
+        ],
+        area='MMCP')
+
+env.RequirePublicApi([
+        'SERVICES',
+        'SYSTEMDRIVERS',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'GSM',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'RF',
+        ],
+        area='FW')
+
+env.RequirePublicApi([
+        'FW_CCS',
+        ],
+        area='FW_CCS')
+
+env.RequirePublicApi([
+        'FW_COMMON',
+        ],
+        area='FW_COMMON')
+
+env.RequirePublicApi([
+        'MEMORY',
+        'MPROC',
+        'POWER',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'WCDMA',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'GERAN',
+        ],
+        area='FW')
+
+env.RequirePublicApi([
+        'FW_GERAN',
+        ],
+        area='FW_GERAN')
+
+env.RequirePublicApi([
+        'DEBUGTOOLS',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'GERAN',
+        ],
+        area='GERAN')
+
+env.RequirePublicApi([
+      'LTE',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'NB1',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'OSYS',
+        'RTXSRC',
+        'RTPERSRC',
+        ],
+        area='UTILS')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='ONEX')
+
+env.RequirePublicApi([
+        'GNSS',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'WCDMA',
+        ],
+        area='WCDMA')
+
+env.RequirePublicApi([
+        'STORAGE',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'HDR',
+        ],
+        area='HDR')
+
+env.RequirePublicApi([
+        'LM',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'TDSCDMA',
+        ],
+        area='TDSCDMA')
+
+env.RequirePublicApi([
+        'MPOWER',
+        ],
+        area='MPOWER')
+
+env.RequirePublicApi([
+        'A2',
+        ],
+        area='UTILS')
+
+env.RequirePublicApi([
+        'ONEX',
+        ],
+        area='ONEX')
+
+env.RequirePublicApi([
+        'CFM',
+        'COMMON',
+        'QSH',
+        ],
+        area='UTILS')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='UIM')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='HDR')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='DATAIOT')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='DATAMODEM')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        ],
+        area='UTILS')
+
+env.RequirePublicApi([
+        'WCDMA',
+        ],
+        area='FW')
+
+env.RequirePublicApi([
+        'FW_WCDMA',
+        ],
+        area='FW_WCDMA')
+
+env.RequirePublicApi([
+        'DATAMODEM',
+        ],
+        area='DATAIOT')
+
+env.RequirePublicApi([
+        'DATAMODEM',
+        ],
+        area='DATAMODEM')
+
+env.RequirePublicApi([
+        'SECUREMSM',
+        'WIREDCONNECTIVITY',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'C2K',
+        ],
+        area='FW')
+
+env.RequirePublicApi([
+        'FW_C2K',
+        ],
+        area='FW_C2K')
+
+env.RequirePublicApi([
+        'TDSCDMA',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'GPS',
+		],
+		area='GPS')
+
+env.RequirePublicApi([
+        'MCFG',
+		],
+		area='MCFG')
+
+env.RequirePublicApi([
+        'DMM',
+		],
+		area='MSF')		
+
+env.RequirePublicApi([
+        'UIM',
+		],
+		area='UIM')
+
+env.RequirePublicApi([
+        'MVS',
+		],
+		area='AVS')
+
+env.RequirePublicApi([
+        'RFTECH_LTE',
+        ],
+        area='RFTECH_LTE')
+
+env.RequireRestrictedApi(['VIOLATIONS'])
+
+
+env.PublishProtectedApi('NB1', [
+        '${NB1_ROOT}/cust/inc',
+        '${NB1_ROOT}/variation/inc',
+        '${NB1_ROOT}/ML1/l1_common/inc',
+        '${NB1_ROOT}/ML1/mclk/inc',
+        '${NB1_ROOT}/ML1/schdlr/inc',
+        '${NB1_ROOT}/ML1/manager/inc',
+        '${NB1_ROOT}/ML1/search/inc',
+        '${NB1_ROOT}/RRC/src',
+        '${NB1_ROOT}/RRC/ASN1/on_target',
+        '${NB1_ROOT}/RRC/ASN1/off_target',
+        '${NB1_ROOT}/cust/inc',
+        '${NB1_ROOT}/ML1/sleepmgr/inc',
+        '${NB1_ROOT}/ML1/msmgr/inc',
+        '${NB1_ROOT}/ML1/dlm/inc',
+        '${NB1_ROOT}/common/inc',
+        '${NB1_ROOT}/static/inc',
+        '${NB1_ROOT}/ML1/rfmgr/inc',
+        '${NB1_ROOT}/ML1/search/src',
+        '${NB1_ROOT}/variation/inc',
+        '${NB1_ROOT}/ML1/md/inc',
+        '${NB1_ROOT}/ML1/gapmgr/inc',
+        '${NB1_ROOT}/ML1/gm/inc',
+        '${NB1_ROOT}/L2/rlc/src',
+        '${NB1_ROOT}/ML1/gm/src',
+        '${NB1_ROOT}/ML1/cxm/inc',
+        '${NB1_ROOT}/L2/common/inc',
+        '${NB1_ROOT}/ML1/dlm/src',
+        '${NB1_ROOT}/L2/mac/src',
+        '${NB1_ROOT}/L2/rlc/inc',
+        '${NB1_ROOT}/L2/pdcp/src',
+        '${NB1_ROOT}/ML1/manager/src',
+        '${NB1_ROOT}/L2/mac/inc',
+        '${NB1_ROOT}/ML1/bplmn/inc',
+        '${NB1_ROOT}/L2/pdcp/inc',
+        '${NB1_ROOT}/ML1/ulm/inc',
+        '${NB1_ROOT}/ML1/schdlr/src',
+        '${NB1_ROOT}/ML1/ulm/src',
+        '${NB1_ROOT}/ML1/pos/inc',
+        '${NB1_ROOT}/ML1/afc/inc',
+        '${NB1_ROOT}/ML1/bplmn/src',
+        '${NB1_ROOT}/PLT/src',
+        '${NB1_ROOT}/NS/src',
+        '${NB1_ROOT}/ML1/gapmgr/src',
+        '${NB1_ROOT}/ML1/cxm/src',
+        '${NB1_ROOT}/ML1/sleepmgr/src',
+        '${NB1_ROOT}/ML1/msmgr/src',
+        '${NB1_ROOT}/ML1/rfmgr/src',
+        '${NB1_ROOT}/PLT/inc',
+        '${NB1_ROOT}/NS/inc',
+        '${NB1_ROOT}/tlb/src',
+        '${NB1_ROOT}/ML1/afc/src',
+        '${NB1_ROOT}/ML1/l1_common_imgs/inc',
+        '${NB1_ROOT}/ML1/l1_common_imgs/src',
+        '${NB1_ROOT}/ML1/poi/inc',
+        '${NB1_ROOT}/RRC/inc',
+        ])
+
+env.RequireProtectedApi(['NB1'])
+
+
+if 'USES_MSGR' in env:
+   env.AddUMID('${BUILDPATH}/nb1.umid', ['${NB1_ROOT}/api/nb1_cphy_ftm_msg.h',
+                                         '${NB1_ROOT}/api/nb1_cphy_irat_meas_msg.h',
+                                         '${NB1_ROOT}/api/nb1_cphy_msg.h',
+                                         '${NB1_ROOT}/api/nb1_cphy_rssi_msg.h',
+                                         '${NB1_ROOT}/api/nb1_ind_msg.h',
+                                         '${NB1_ROOT}/api/nb1_mac_msg.h',
+                                         '${NB1_ROOT}/api/nb1_pdcp_msg.h',
+                                         '${NB1_ROOT}/api/nb1_pdcp_offload_msg.h',
+                                         '${NB1_ROOT}/api/nb1_rlc_msg.h',
+																				 '${NB1_ROOT}/api/nb1_rrc_int_msg.h',
+                                         '${NB1_ROOT}/api/nb1_rrc_ext_msg.h',
+                                         '${NB1_ROOT}/api/nb1_rrc_irat_msg.h',
+                                         '${NB1_ROOT}/api/nb1_tlb_msg.h',
+                                         '${NB1_ROOT}/api/nb1_cxm_msg.h',
+                                     ])
+
+
+
+#remove all blocks to end of file when modem folder is removed
+
+
+env.PublishPrivateApi('VIOLATIONS', [
+                                     '${INC_ROOT}/modem/geran/variation/inc',
+                                     '${INC_ROOT}/modem/geran/cust/inc',
+                                     '${INC_ROOT}/modem/hdr/variation/inc',
+                                     '${INC_ROOT}/modem/hdr/cust/inc',
+                                     '${INC_ROOT}/modem/mcs/variation/inc',
+                                     '${INC_ROOT}/modem/mcs/cust/inc',
+                                     ])
+
+
+#-------------------------------------------------------------------------------
+# Publish protected API's for Nb1
+#-------------------------------------------------------------------------------
+# cust file relocation
+# Protected is "private within the SU" vs. Restricted with is visible to other SUs
+env.PublishProtectedApi('NB1', ['${INC_ROOT}/nb1/common/inc',
+                                '${INC_ROOT}/nb1/L2/common/inc',
+                                '${INC_ROOT}/nb1/common/inc',
+                                '${INC_ROOT}/nb1/cxm/inc',
+                                '${INC_ROOT}/nb1/L2/common/inc',
+                                '${INC_ROOT}/nb1/L2/inc',
+                                '${INC_ROOT}/nb1/L2/mac/inc',
+                                '${INC_ROOT}/nb1/L2/pdcp/inc',
+                                '${INC_ROOT}/nb1/L2/rlc/inc',
+                                '${INC_ROOT}/nb1/ML1/afc/inc',
+                                '${INC_ROOT}/nb1/ML1/bplmn/inc',
+                                '${INC_ROOT}/nb1/ML1/dlm/inc',
+                                '${INC_ROOT}/nb1/ML1/fwd/inc',
+                                '${INC_ROOT}/nb1/ML1/gapmgr/inc',
+                                '${INC_ROOT}/nb1/ML1/gm/inc',
+                                '${INC_ROOT}/nb1/ML1/gps/inc',
+                                '${INC_ROOT}/nb1/ML1/hrpdmeas/inc',
+                                '${INC_ROOT}/nb1/ML1/l1_common/inc',
+                                '${INC_ROOT}/nb1/ML1/mclk/inc',
+                                '${INC_ROOT}/nb1/ML1/inc',
+                                '${INC_ROOT}/nb1/ML1/manager/inc',
+                                '${INC_ROOT}/nb1/ML1/md/inc',
+                                '${INC_ROOT}/nb1/ML1/pos/inc',
+                                '${INC_ROOT}/nb1/ML1/rfmgr/inc',
+                                '${INC_ROOT}/nb1/ML1/schdlr/inc',
+                                '${INC_ROOT}/nb1/ML1/search/inc',
+                                '${INC_ROOT}/nb1/ML1/sleepmgr/inc',
+                                '${INC_ROOT}/nb1/ML1/msmgr/inc',
+                                '${INC_ROOT}/nb1/ML1/ulm/inc',
+                                '${INC_ROOT}/nb1/ML1/cxm/inc',
+                                '${INC_ROOT}/nb1/PLT/inc',
+                                '${INC_ROOT}/nb1/NB1/inc',
+                                '${INC_ROOT}/nb1/RRC/ASN1/off_target',
+                                '${INC_ROOT}/nb1/RRC/ASN1/on_target',
+                                '${INC_ROOT}/nb1/RRC/inc',
+                                '${INC_ROOT}/nb1/security/inc',
+                                '${INC_ROOT}/nb1/tlb/inc',
+                                '${INC_ROOT}/nb1/cust/inc',
+                                '${INC_ROOT}/nb1/variation/inc',
+                                # Off-target paths (won't show up in target builds
+                                '${NB1_ROOT}/integration/vst/qal/inc',
+                                ])
+
+
+
+#----------------------------------------------------.---------------------------
+# Continue loading software units
+#-------------------------------------------------------------------------------
+
+
+env.RequirePublicApi([
+               'DAL',
+               'DEBUGTOOLS',
+               'MPROC',
+               'SERVICES',
+               'SYSTEMDRIVERS',
+               'KERNEL',          # needs to be last
+               ], area='core')
+
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi([
+               'MCS',
+               'MPROC',
+               'UTILS',
+               'MMODE',
+               'NAS',
+               ])
+
+# Need to get access to Modem Restricted headers
+env.RequireRestrictedApi([
+               'MCS',
+               'MMODE',
+               'NAS',
+               'NB1',
+               'UTILS',
+	             'FW',
+               'LTE',
+               ])
+
+if 'NB1_ENABLE_LLVM_STATIC_ANALYZER' in env:
+  env.Replace(NB1_SA_DIR = '${INC_ROOT}/nb1/sa/')
+  env.Append(CFLAGS = '--compile-and-analyze ${NB1_SA_DIR}')
+
+if 'USES_BUILD_PAGEONLY_IMAGE' in env and 'USES_NB1' in env:
+  RCINIT_NB1 = ['MODEM_PAGEONLY']
+ 
+  # RC Init Task Dictionary
+  RCINIT_TASK_NB1_POI = {
+	    'thread_name'         : 'NB1_ML1_POI',
+	    'sequence_group'      : 'RCINIT_GROUP_3',
+            'thread_type'         : 'RCINIT_TASK_POSIX',
+	    'stack_size_bytes'    : '5632',
+	    'priority_amss_order' : 'NB1_POI_PRI_ORDER',
+	    'thread_entry'        : 'nb1_ml1_poi_task_main2',
+            }
+    
+# Add init function to RCInit
+if 'USES_RCINIT' in env and 'USES_BUILD_PAGEONLY_IMAGE' in env and 'USES_NB1' in env:
+	    env.AddRCInitTask(RCINIT_NB1, RCINIT_TASK_NB1_POI)
+
+if 'USES_NB1' in env:
+  env.LoadSoftwareUnits()

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NvSource>
+<!-- WTR2965_CATM_V2_COMMON.xml -->
+	<NvItem id="5479" name="NV_ENH_THERM_I" mapping="direct" encoding="dec">4340,5950</NvItem>
+	<NvItem id="23759" name="RFNV_LTE_C0_SPURS_TABLE_I" mapping="direct" encoding="dec">1824000000,0,1843200000,0,1862400000,0,748800000,0,2112000000,0,2131200000,0,2150400000,0,2169600000,0,940800000,0,960000000,0,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15,0,15</NvItem>
+</NvSource>

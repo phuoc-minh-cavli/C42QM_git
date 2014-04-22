@@ -1,0 +1,33 @@
+#===============================================================================
+#
+# RIL APSS TX Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/ril.tx/1.1/build/ril.scons#3 $
+#  $DateTime: 2023/05/07 20:36:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+
+#env.Append(CPPDEFINES=["MHI_TEST_VIRTIO_ENV"])
+if 'USES_APPS_ONLY_BOOT' in env:
+   env.Append(CPPDEFINES = ["PSM_APPS_ONLY_BOOT_SUPPORTED"])
+
+if "USES_AWARE" in env:
+   env.Append(CPPDEFINES = ["PSM_ENABLE_AWARE_CUSTOMIZATION"])
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

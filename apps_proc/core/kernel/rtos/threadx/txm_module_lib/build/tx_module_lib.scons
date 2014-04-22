@@ -1,0 +1,163 @@
+#===============================================================================
+#
+# TX module libs scons script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016, 2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/core.tx/6.0/kernel/rtos/threadx/txm_module_lib/build/tx_module_lib.scons#2 $
+#  $DateTime: 2020/08/20 03:34:46 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# import pdb; pdb.set_trace()
+
+env.Append(CPPDEFINES=["TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+
+#DAM code is compiled as ARM only at this moment
+if 'USES_ARM' in env:
+	env.Append(CCFLAGS = " --arm_only --apcs=/interwork ")
+	env.Append(ASMFLAGS = " --arm_only --apcs=/interwork ")
+else:
+    env.Append(CCFLAGS = "-marm ")
+    env.Append(ASMFLAGS = "-marm ")
+
+
+env.RequirePublicApi('KERNEL', area='core')
+
+SRCPATH = '${BUILD_ROOT}/core/kernel/rtos/threadx/txm_module_lib'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+TX_MODULE_LIB_SOURCES = [
+	'${BUILDPATH}/src/txm_module_thread_shell_entry.c',
+	'${BUILDPATH}/src/txm_module_callback_request_thread_entry.c',
+	'${BUILDPATH}/src/txm_module_system_call10.c',
+	'${BUILDPATH}/src/txm_module_system_call11.c',
+	'${BUILDPATH}/src/txm_module_system_call12.c',
+	'${BUILDPATH}/src/txm_module_system_call4.c',
+	'${BUILDPATH}/src/txm_module_system_call5.c',
+	'${BUILDPATH}/src/txm_module_system_call6.c',
+	'${BUILDPATH}/src/txm_module_system_call7.c',
+	'${BUILDPATH}/src/txm_module_system_call8.c',
+	'${BUILDPATH}/src/txm_module_system_call9.c',
+	'${BUILDPATH}/src/txm_block_allocate.c',
+	'${BUILDPATH}/src/txm_byte_pool_create.c',
+	'${BUILDPATH}/src/txm_block_pool_create.c',
+	'${BUILDPATH}/src/txm_block_pool_delete.c',
+	'${BUILDPATH}/src/txm_block_pool_info_get.c',
+	'${BUILDPATH}/src/txm_block_pool_performance_info_get.c',
+	'${BUILDPATH}/src/txm_block_pool_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_block_pool_prioritize.c',
+	'${BUILDPATH}/src/txm_block_release.c',
+	'${BUILDPATH}/src/txm_byte_allocate.c',
+	'${BUILDPATH}/src/txm_byte_pool_delete.c',
+	'${BUILDPATH}/src/txm_byte_pool_info_get.c',
+	'${BUILDPATH}/src/txm_byte_pool_performance_info_get.c',
+	'${BUILDPATH}/src/txm_byte_pool_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_byte_pool_prioritize.c',
+	'${BUILDPATH}/src/txm_byte_release.c',
+	'${BUILDPATH}/src/txm_event_flags_create.c',
+	'${BUILDPATH}/src/txm_event_flags_delete.c',
+	'${BUILDPATH}/src/txm_event_flags_get.c',
+	'${BUILDPATH}/src/txm_event_flags_info_get.c',
+	'${BUILDPATH}/src/txm_event_flags_performance_info_get.c',
+	'${BUILDPATH}/src/txm_event_flags_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_event_flags_set.c',
+	'${BUILDPATH}/src/txm_event_flags_set_notify.c',
+	'${BUILDPATH}/src/txm_module_application_request.c',
+	'${BUILDPATH}/src/txm_module_object_allocate.c',
+	'${BUILDPATH}/src/txm_module_object_deallocate.c',
+	'${BUILDPATH}/src/txm_module_object_pointer_get.c',
+	'${BUILDPATH}/src/txm_module_object_pointer_get_extended.c',
+	'${BUILDPATH}/src/txm_module_thread_system_suspend.c',
+	'${BUILDPATH}/src/txm_mutex_create.c',
+	'${BUILDPATH}/src/txm_mutex_delete.c',
+	'${BUILDPATH}/src/txm_mutex_get.c',
+	'${BUILDPATH}/src/txm_mutex_info_get.c',
+	'${BUILDPATH}/src/txm_mutex_performance_info_get.c',
+	'${BUILDPATH}/src/txm_mutex_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_mutex_prioritize.c',
+	'${BUILDPATH}/src/txm_mutex_put.c',
+	'${BUILDPATH}/src/txm_queue_create.c',
+	'${BUILDPATH}/src/txm_queue_delete.c',
+	'${BUILDPATH}/src/txm_queue_flush.c',
+	'${BUILDPATH}/src/txm_queue_front_send.c',
+	'${BUILDPATH}/src/txm_queue_info_get.c',
+	'${BUILDPATH}/src/txm_queue_performance_info_get.c',
+	'${BUILDPATH}/src/txm_queue_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_queue_prioritize.c',
+	'${BUILDPATH}/src/txm_queue_receive.c',
+	'${BUILDPATH}/src/txm_queue_send.c',
+	'${BUILDPATH}/src/txm_queue_send_notify.c',
+	'${BUILDPATH}/src/txm_semaphore_ceiling_put.c',
+	'${BUILDPATH}/src/txm_semaphore_create.c',
+	'${BUILDPATH}/src/txm_semaphore_delete.c',
+	'${BUILDPATH}/src/txm_semaphore_get.c',
+	'${BUILDPATH}/src/txm_semaphore_info_get.c',
+	'${BUILDPATH}/src/txm_semaphore_performance_info_get.c',
+	'${BUILDPATH}/src/txm_semaphore_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_semaphore_prioritize.c',
+	'${BUILDPATH}/src/txm_semaphore_put.c',
+	'${BUILDPATH}/src/txm_semaphore_put_notify.c',
+	'${BUILDPATH}/src/txm_thread_create.c',
+	'${BUILDPATH}/src/txm_thread_delete.c',
+	'${BUILDPATH}/src/txm_thread_entry_exit_notify.c',
+	'${BUILDPATH}/src/txm_thread_identify.c',
+	'${BUILDPATH}/src/txm_thread_info_get.c',
+	'${BUILDPATH}/src/txm_thread_interrupt_control.c',
+	'${BUILDPATH}/src/txm_thread_performance_info_get.c',
+	'${BUILDPATH}/src/txm_thread_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_thread_preemption_change.c',
+	'${BUILDPATH}/src/txm_thread_priority_change.c',
+	'${BUILDPATH}/src/txm_thread_relinquish.c',
+	'${BUILDPATH}/src/txm_thread_reset.c',
+	'${BUILDPATH}/src/txm_thread_resume.c',
+	'${BUILDPATH}/src/txm_thread_sleep.c',
+	'${BUILDPATH}/src/txm_thread_stack_error_notify.c',
+	'${BUILDPATH}/src/txm_thread_suspend.c',
+	'${BUILDPATH}/src/txm_thread_terminate.c',
+	'${BUILDPATH}/src/txm_thread_time_slice_change.c',
+	'${BUILDPATH}/src/txm_thread_wait_abort.c',
+	'${BUILDPATH}/src/txm_time_get.c',
+	'${BUILDPATH}/src/txm_time_set.c',
+	'${BUILDPATH}/src/txm_timer_activate.c',
+	'${BUILDPATH}/src/txm_timer_change.c',
+	'${BUILDPATH}/src/txm_timer_create.c',
+	'${BUILDPATH}/src/txm_timer_deactivate.c',
+	'${BUILDPATH}/src/txm_timer_delete.c',
+	'${BUILDPATH}/src/txm_timer_info_get.c',
+	'${BUILDPATH}/src/txm_timer_performance_info_get.c',
+	'${BUILDPATH}/src/txm_timer_performance_system_info_get.c',
+	'${BUILDPATH}/src/txm_trace_user_event_insert.c',
+	'${BUILDPATH}/src/txm_trace_buffer_full_notify.c',
+	'${BUILDPATH}/src/txm_trace_disable.c',
+	'${BUILDPATH}/src/txm_trace_enable.c',
+	'${BUILDPATH}/src/txm_trace_event_filter.c',
+	'${BUILDPATH}/src/txm_trace_event_unfilter.c',
+	'${BUILDPATH}/src/txm_trace_interrupt_control.c',
+	'${BUILDPATH}/src/txm_trace_isr_enter_insert.c',
+	'${BUILDPATH}/src/txm_trace_isr_exit_insert.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if 'USES_ARM' in env:
+	env.AddBinaryLibrary(['TXM_MODULES'],'${BUILD_ROOT}/core/kernel/rtos/threadx/txm_module_lib/build/txm_lib', TX_MODULE_LIB_SOURCES)
+else:
+    env.AddBinaryLibrary(['TXM_MODULES_LLVM'],'${BUILD_ROOT}/core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib', TX_MODULE_LIB_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

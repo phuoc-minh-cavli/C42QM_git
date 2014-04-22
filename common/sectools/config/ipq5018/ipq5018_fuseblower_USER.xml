@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower_user.xsd">
+
+    <metadata>
+        <chipset>ipq5018</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <secdat>
+        <file_info>default dat file</file_info>
+        <file_version>2</file_version>
+        <fuse_version>1</fuse_version>
+    </secdat>
+
+
+        <!--
+        Default ipq6018_fuseblower_USER.xml assumes that OEM_PK_HASH is blown in fuse for apps
+        (SEC_BOOT1_PK_Hash_in_Fuse is set to true). So,
+        OEM public key hash below needs to be set below for root_cert_hash. If OEM_PK_HASH is not blown in fuse
+        for apps (that is, read from bootrom) set SEC_BOOT1_PK_Hash_in_Fuse, to false and set ignore="true"
+        below for root_cert_hash.
+         -->
+
+    <module id="SECURITY_CONTROL_CORE">
+        <entry ignore="false">
+            <description>contains the OEM public key hash as set by OEM</description>
+            <name>root_cert_hash</name>
+            <value>0000000000000000000000000000000000000000000000000000000000000000</value>
+        </entry>
+        <entry ignore="true">
+            <description>SHA384 signed root cert to generate root hash</description>
+            <name>root_cert_sha384_hash_file</name>
+            <value>./../../resources/data_prov_assets/Signing/Local/qti_presigned_certs-key2048_exp65537_paddingPSS/qpsa_rootca.cer</value>
+        </entry>
+        <entry ignore="false">
+            <description>PK Hash is in Fuse for SEC_BOOT1 : Apps</description>
+            <name>SEC_BOOT1_PK_Hash_in_Fuse</name>
+            <value>true</value>
+        </entry>
+             <entry ignore="false">
+            <description>If PK Hash in Fuse is 0, then this index selects which of 16 keys in ROM to use</description>
+            <name>SEC_BOOT1_rom_pk_hash_index</name>
+            <value>0</value>
+        </entry>
+        <entry ignore="false">
+            <description>Use Serial Num for secure boot authentication (0: Use OEM ID (Default), 1: Use Serial Num)</description>
+            <name>SEC_BOOT1_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>PK Hash is in Fuse for SEC_BOOT3 : MPSS</description>
+            <name>SEC_BOOT3_PK_Hash_in_Fuse</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>If PK Hash in Fuse is 0, then this index selects which of 16 keys in ROM to use</description>
+            <name>SEC_BOOT3_rom_pk_hash_index</name>
+            <value>0</value>
+        </entry>
+        <entry ignore="false">
+            <description>Use Serial Num for secure boot authentication (0: Use OEM ID (Default), 1: Use Serial Num)</description>
+            <name>SEC_BOOT3_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM hardware ID</description>
+            <name>oem_hw_id</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM product ID</description>
+            <name>oem_product_id</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM periph PID</description>
+            <name>oem_periph_pid</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM periph VID</description>
+            <name>oem_periph_vid</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>if true, disable APPS debug</description>
+            <name>apps_debug_disabled</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>allowing bus DCVS SW feature will require and set APPS_NIDEN_DISABLE to 0</description>
+            <name>allow_bus_dcvs</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>prevents the Watch Dog from being disabled by the GPIO, true: ignore GPIO, false: use GPIO</description>
+            <name>watchdog_enable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>ALL_DEBUG_DISABLE</description>
+            <name>all_debug_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>MSMC_MSS_DBGEN</description>
+            <name>msmc_mss_dbgen</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>QC_WCSS_DBG_DISABLE</description>
+            <name>wcss_dbg_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>WCSS_SPNID_DISABLE</description>
+            <name>wcss_spniden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates RPM DBGEN.</description>
+            <name>rpm_dbgen_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates RPM NIDENs.</description>
+            <name>rpm_wcss_nid_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates RPM DAPEN.</description>
+            <name>rpm_dapen_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>WCSS_SPID_DISABLE</description>
+            <name>wcss_spiden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>WCSS NIDEN disable, newly added in Hawkeye v2</description>
+            <name>wcss_nid_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Q6SS_DBG_DISABLE</description>
+            <name>q6ss_dbg_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>APPS_DBGEN_DISABLE</description>
+            <name>apps_debug_disabled</name>
+            <value>false</value>
+        </entry>
+
+        <entry ignore="false">
+            <description>APPS_SPIDEN_DISABLE</description>
+            <name>apps_spiden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>APPS_SPNIDEN_DISABLE</description>
+            <name>apps_spniden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates Dap DBGEN.</description>
+            <name>dap_dbgen_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates Dap NIDEN.</description>
+            <name>dap_niden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates Dap SPIDEN.</description>
+            <name>dap_spiden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates Dap SPNIDEN.</description>
+            <name>dap_spniden_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used in internal logic that generates Dap DEVICEEN.</description>
+            <name>dap_deviceen_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>1bit, to disable the debug ports for UBI32 #1 and #2</description>
+            <name>efuse_ubi32_dbg_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Q6SS_ETM_DISABLE</description>
+            <name>q6ss_etm_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Q6SS_DFD_DISABLE</description>
+            <name>q6ss_dfd_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>DISABLE_QPIC_QUADIO_XFER</description>
+            <name>disable_qpic_quadio_xfer</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Debug test bus disable</description>
+            <name>fuse_debug_bus_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If true, all anti_rollback features are enabled.
+                    . boot anti_rollback feature
+                    . tzapps anti_rollback feature
+                    . pilsubsys anti_rollback feature
+                    . msa anti_rollback feature
+                If false, all anti_rollback features are disabled.
+            </description>
+            <name>anti_rollback_feature_enable</name>
+            <value>true</value>
+        </entry>
+    </module>
+</tns:fuseblower>

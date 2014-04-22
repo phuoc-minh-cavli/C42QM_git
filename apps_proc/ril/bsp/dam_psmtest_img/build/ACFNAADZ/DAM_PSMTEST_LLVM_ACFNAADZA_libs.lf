@@ -1,0 +1,9 @@
+../../api/nas/build/dam_psmtest_llvm/cortex-a7/ACFNAADZ/interfaces_qmi_nas.lib
+../../api/voice_nas_service_common/build/dam_psmtest_llvm/cortex-a7/ACFNAADZ/interfaces_qmi_voice_nas_service_common.lib
+../../api/common/build/dam_psmtest_llvm/cortex-a7/ACFNAADZ/interfaces_qmi_common.lib
+../../core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib
+../../core/mproc/qmi/build/LLVM/qcci_dam_lib.lib
+../../core/mproc/qmi/build/LLVM/IDL_DAM_LIB.lib
+../../core/services/time_qapi/build/LLVM/timer_dam_lib.lib
+../../ril/psm/qapi_lib/build/LLVM/qapi_psm_lib.lib
+../../ril/psm/dam_psmtest/build/dam_psmtest_llvm/cortex-a7/ACFNAADZ/dam_psmtest.lib

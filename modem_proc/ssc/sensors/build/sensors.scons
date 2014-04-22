@@ -1,0 +1,43 @@
+#===============================================================================
+#
+# Sensors libraries
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/build/sensors.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import os, inspect
+
+ME = inspect.getfile(inspect.currentframe())
+MY_ROOT = os.path.dirname(os.path.dirname(ME))
+
+#-------------------------------------------------------------------------------
+# Remove source files
+#-------------------------------------------------------------------------------
+sim_path= os.path.join(MY_ROOT, 'sim')
+
+REMOVE_FILES = []
+
+if 'SENSORS_DD_DEV_FLAG' not in env:
+  REMOVE_FILES +=  env.FindFiles(['*.*'], os.path.join(MY_ROOT, 'sim'))
+  REMOVE_FILES +=  env.FindFiles(['*.*'], os.path.join(MY_ROOT, 'flush_test'))
+  REMOVE_FILES +=  env.FindFiles(['*.*'], os.path.join(MY_ROOT, 'md_test'))
+  REMOVE_FILES +=  env.FindFiles(['*_log.proto'], MY_ROOT)
+
+env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)
+
+#-------------------------------------------------------------------------------
+# Scan subdirectories to find more /build folders
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

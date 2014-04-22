@@ -1,0 +1,18 @@
+# -------------------------------------------------------------------------------- #
+#                N A V R X _ A D C _ S R C . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the NavRX ADC Src module.
+#
+#  Copyright (c) 2016 Qualcomm Technologies, Inc. 
+#  All Rights Reserved.
+#  Confidential and Proprietary - Qualcomm Technologies, Inc. 
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/mgp/me/gen9/navrx/adc/src/build/navrx_adc_src.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# $Author: pwbldsvc $
+# --------------------------------------------------------------------------------- #
+
+Import('gps_env')
+
+gps_env.LoadSoftwareUnits()

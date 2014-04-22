@@ -1,0 +1,319 @@
+#===============================================================================
+#
+# HSUSB Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2010 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/wiredconnectivity/build/rel/2h09/hsusb/build/SConscript#4 $
+#  $DateTime: 2011/04/18 12:28:23 $
+#  $Author: tkwon $
+#  $Change: 1705973 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Publlic API
+#-------------------------------------------------------------------------------
+env.RequirePublicApi(['IPA', 'PORT_MAPPER'], area='data')
+env.RequirePublicApi('DPM', area='API')
+env.RequirePublicApi('MEMORY')
+env.RequirePublicApi('SECUREMSM')
+
+#env.RequirePrivateApi('HWENGINES_API')
+
+#-------------------------------------------------------------------------------
+# USES FLAG
+#-------------------------------------------------------------------------------
+env.Replace(USES_HSU_SNPS_CORE = True);
+
+#-------------------------------------------------------------------------------
+# PACK RULES
+#-------------------------------------------------------------------------------
+#SRCPATH = "${BUILD_ROOT}/core/wiredconnectivity"
+#IMAGE_SOURCES = ['APPS_IMAGE','CBSP_APPS_IMAGE']
+#PACK_TOOLS  = env.FindFiles(['*'], (SRCPATH + '/hsusb/driver/inc/9x06'))
+#PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/hsusb/driver/src/core_config/9x06'))
+#PACK_TOOLS += env.FindFiles(['*'], (SRCPATH + '/hsusb/driver/src/common/9x06'))
+#PACK_TOOLS.extend( 
+#    [(SRCPATH + '/build/9x06.sconscript'),
+#   ])
+#env.CleanPack(IMAGE_SOURCES, PACK_TOOLS)
+
+#-------------------------------------------------------------------------------
+# QDSS events
+#-------------------------------------------------------------------------------
+if 'USES_QDSS_SWE' in env:
+    env.AddSWEInfo(['QDSS_EN_IMG'], [
+        ['HSU_TASK_INIT','USB task initialization', 'T'],
+        ['HSU_USB_CORE_START','USB core started', 'T'],
+        ['HSU_HSIC_CORE_START','HSIC core started', 'T'],
+        ['HSU_USB_CONFIGURED','USB enumerated', 'T'],
+        ['HSU_HSIC_CONFIGURED','HSIC enumerated', 'T'],
+        ['HSU_A2_READY','A2 sent MDM_PWR_CTRL=1 to USB for A2 READY', 'T'],
+    ])
+env.PublishPrivateApi('WIREDCONNECTIVITY_HSUSB_QDSS_TRACE', [
+    "${INC_ROOT}/core/debugtrace/tracer/inc",
+])
+
+#-------------------------------------------------------------------------------
+# LOCAL FEATURE DEFINES
+#-------------------------------------------------------------------------------
+
+# Target Specific
+if env['MSM_ID'] in ['9x06','9205']:
+  env.Append(CPPDEFINES = [
+    #'FEATURE_HS_USB_TEST_SPOOF_DISCONNECT',
+    # Enable PRE_SILICON as not all dependencies are in
+    #'FEATURE_HS_USB_PRE_SILICON_BU',
+    'FEATURE_HS_USB_DISABLE_ECM_USING_BAM_AND_DBM',
+    #'FEATURE_HS_USB_CI_BAM_RESET_BEFORE_TRANSFER',
+    'QAPI_TXM_SOURCE_CODE',
+    'FEATURE_HS_USB_SER5_PORT',
+    'FEATURE_HS_USB_SER6_PORT',
+    #'CI_MERGE',
+    'FEATURE_HS_USB_NO_CI_CORE',
+])
+env.Append(CPPDEFINES = [
+    'FEATURE_HS_USB_INTEGRATED_PHY',
+
+    # Defer GET ENCAP RESP complete handling until RX ZLP is completed.  
+    # Additional debug code for EP 0 related code as well
+##ENABLE_LATER#  'FEATURE_HS_USB_VERIFY_RX_TX_ZLP_COMPLETION',
+##ENABLE_LATER#  'FEATURE_HS_USB_ERR_FATAL_UPON_TIMER_EXPIRY_FOR_RX_TX_ZLP_COMPLETION',
+
+    # Disable the feature below as it was causing crash on older PCs.
+    # This is a feature that enables additional ERR_FATAL on more conditions 
+    # for debug purposes.
+    # There is no compilation dependence with 
+    # FEATURE_HS_USB_VERIFY_RX_TX_ZLP_COMPLETION; however, there are  
+    # relatively less error checking paths without 
+    # FEATURE_HS_USB_VERIFY_RX_TX_ZLP_COMPLETION.
+##ENABLE_LATER#  'FEATURE_HS_USB_DEBUG_MISSING_ZLP',
+    #'FEATURE_HS_USB_DROP_RX_ZLP_DEBUG_EXP'
+    #'FEATURE_HS_USB_DROP_TX_ZLP_DEBUG_EXP'
+
+    # Debug jtask_schedule related count assertion failures
+    'FEATURE_HS_USB_DEBUG_JTASK_SCHEDULE',
+
+    # Circular logs to debug DTDs
+    #'FEATURE_HS_USB_DEBUG_DTD',
+
+    # Circular logs to debug memory related issues
+    'FEATURE_HS_USB_DEBUG_MEM_ALLOC',
+
+    # Disable HSIC Link Power Management by default since there is no host 
+    # that supports it.
+    #'FEATURE_HS_USB_LINK_POWER_MANAGEMENT'
+
+    # Enable diag command handler for usb/hsic
+    'FEATURE_HS_USB_HEALTH_MONITOR',
+
+ 
+    # Define to fix a race condition where SW is freeing the dTD and 
+    # overwriting the dTD's next_ptr field with a string of signature 
+    # 0xAABB00CC (CORRUPT_CHECK_MAGIC). 
+    # Since HW sees that next_ptr's termination bit (LSB) is 1, it tries to 
+    # deference 0xAABB00C0 casuing core system error/bam top level error.
+    'FEATURE_HS_USB_FREE_N_MINUS_1_TD',
+
+    # Changed to cached logging buffers for performance
+    # define to use change the HSU SPS SM buffer to use uncached memory
+    # 'FEATURE_HS_USB_LOG_UNCACHED'
+
+    # Define to add DCD related logging to hsu qmi logs */
+    # 'FEATURE_HSU_DCD_DEBUG_LOGS'
+
+    # Only enable the following define for debugging EP 0 critical failures as 
+    # it affects IST7 performance. 
+    # It also inserts an extra error checking condition to try to catch failing 
+    # modes in USB layer.
+    # This feature must be used in conjunction with FEATURE_HSU_DCD_DEBUG_LOGS
+    # 'FEATURE_HSU_DCD_DEBUG_CRITICAL_FAILURE_LOGS'
+
+    # Define to keep Host Ready High at bootup such that state machine can 
+    # progress without actual Host Ready
+    #'FEATURE_HS_USB_BAM_HOST_READY_HIGH_AT_BOOTUP',
+
+    # Define to run permutation testing
+    # 'HSU_SPS_SM_UNIT_TEST'
+
+    # Enable HS-USB serial layer statistics
+    'FEATURE_HS_USB_SER_STATISTICS',
+
+    # Compile HSIC code by default and control HSIC with EFS item
+    #'FEATURE_HS_USB_HSIC',
+    # enable when needed #define FEATURE_HS_USB_USE_FORCE_CONNECT
+
+    # Couple MDM and DIAG together on HS-USB when HSIC core becomes primary
+    #'FEATURE_HS_USB_HSIC_MDM_ON_HSUSB',
+    #'FEATURE_HS_USB_HSIC_RMNET_ON_HSUSB',
+
+    # Test flag to prevent Power Collapse when USB/HSIC is in mission mode 
+    # (bus RESUME) */
+    # 'FEATURE_HS_USB_NO_POWER_COLLAPSE_DURING_CONNECT'
+
+    # Feature to dump primary core HS-USB / HSIC link H/W registers on every 
+    # ERROR FATAL
+    #'FEATURE_HS_USB_DUMP_USB_INFO_ON_ERR_FATAL',
+
+    # Vote for A2 Power collapse after USB disconnect */
+    'FEATURE_HS_USB_A2_PC_VOTE_ON_USB_DISCONNECT',
+
+    # Power Optimization: If AHB2AHB Bridge Bypass is enabled in LINK HW,
+    # do not turn on SYSTEM clock as AHB clock will be used for SYSTEM 
+    # clock input to core.
+    #
+    #'FEATURE_HS_USB_TURN_OFF_SYSCLK_FOR_AHB2AHB_BYPASS',
+
+    # Workaround to stop performing REMOTE WAKEUP when DL BAM is not empty
+    # after number of retries defined in 
+    # HSU_SPS_SM_REMOTE_WAKEUP_ON_DL_BAM_NOT_EMPTY_MAX_RETRIES
+    # and allow HSIC/HSUSB to go to low power mode.
+    # This is to prevent the case where Host stops sending IN TOKEN for 
+    # DL BAM EP for long period of time.
+    'FEATURE_HS_USB_SPS_DL_BAM_REMOTE_WAKEUP_EXPIRY',
+
+    # Enable dynamic support for FUSION platform
+    'FEATURE_HS_USB_F3',
+
+    # Disable for 9x25: logging VDD MIN for peer chipset
+    #'FEATURE_HS_USB_VDDMIN_LOG',
+
+    # Enable sequence numbering for ECM control message
+    'FEATURE_HS_USB_ECM_CONTROL_SEQ_NUM',
+
+    # Enable recover
+    'FEATURE_HS_USB_RECOVER_DROPPED_PACKET',
+
+    # Enables the feature to share the INTR pipe among all the ECM instances
+    'FEATURE_HS_USB_ECM_INT_EP_SHARING',
+
+    # Enables the feature to make a interface with INTR pipe only i.e. 
+    # RMNET instance - data pipes(BULK In & BULK Out)
+    # Please note this feture cannot be used in composition that uses ECM INTR 
+    # pipe sharing, both the feature can be enabled but we cannot have composition 
+    # that uses both the features*/
+    'FEATURE_HS_USB_INTR_ONLY_ECM_PIPE',
+
+    # Fix to avoid resetting HSIC/HSUSB BAM after priming any EPs upon 
+    # bus RESUME
+    'FEATURE_HS_USB_RESET_BAM_UPON_RESUME_BEFORE_EP_PRIME',
+
+    # Enable BAM to BAM support with IPA on RMNET (ECM)
+    'FEATURE_HS_USB_BAM',
+    'FEATURE_HS_USB_ECM_BAM',
+	#'FEATURE_HS_USB_USE_IPA',
+    'FEATURE_HS_USB_BAM_RESET',
+
+    # Enable memory barrier DMB operation.
+    'FEATURE_HS_USB_MEMORY_BARRIER',
+
+    # Power Optimization: If AHB2AHB Bridge Bypass is enabled in LINK HW,
+    # do not turn on SYSTEM clock as AHB clock will be used for SYSTEM 
+    # clock input to core.
+    'FEATURE_HS_USB_TURN_OFF_SYSCLK_FOR_AHB2AHB_BYPASS',
+
+    # Workaround to stop performing REMOTE WAKEUP when DL BAM is not empty 
+    # after number of retries defined in 
+    # HSU_SPS_SM_REMOTE_WAKEUP_ON_DL_BAM_NOT_EMPTY_MAX_RETRIES
+    # and allow HSIC/HSUSB to go to low power mode.
+    # This is to prevent the case where Host stops sending IN TOKEN for DL 
+    # BAM EPfor long period of time.
+    'FEATURE_HS_USB_SPS_DL_BAM_REMOTE_WAKEUP_EXPIRY',
+
+    # Enable SPS on OBEX if QDSS is defined with FEATURE_HS_USB_QDSS_PORT
+    # Disabled for bring-up
+    'FEATURE_HS_USB_OBEX_BAM',
+  
+    # Replace ChipIdea USB 2.0 core with Synopsys USB 3.0 core
+    'FEATURE_HS_USB_SNPS_CORE',
+
+    # Self loopback with BAM2BAM
+    # This feature must be used with IPA compile flag turned off
+    #'FEATURE_HS_USB_BAM2BAM_SELF_LOOPBACK',
+
+    # Starting 9x35, VBUS detection is via PMIC
+    'FEATURE_HS_USB_VBUS_VIA_PMIC',
+    
+    # DCI(DIAG Consumer Interface) feature flag
+    'FEATURE_HS_USB_DCI_PORT',
+
+    # Debug feature to stop function and register logs upon initial enumeration to capture bootup sequence
+    #'FEATURE_HS_USB_LOG_UPTO_FIRST_ENUMERATION',
+    
+    # Feature to debug memory leak for USB memory heap
+    'FEATURE_HS_USB_TRACE',
+
+    # Unit testing of memory allocations
+    #'FEATURE_HS_USB_MEM_TEST',
+
+    # Feature to make ChipIdea default
+    #'FEATURE_HS_USB_CI_USB2_CORE_DEFAULT',
+
+    # Bring-up Flag
+    #'FEATURE_HS_USB_PRE_SILICON_BU',
+
+    # U1 & U2 enablement
+    #'FEATURE_HS_USB_SNPS_ENABLE_U1U2',
+
+    # No CI Core
+    #'FEATURE_HS_USB_NO_CI_CORE',
+    #'FEATURE_HS_USB_PICO_PHY',
+
+    # Passing core speed info to IPA
+    # 'FEATURE_HS_USB_NOTIFY_CORE_SPEED_TO_IPA',
+
+    # Feature to use HWIO to set the BCR as opposed to CLK driver
+    'FEATURE_HS_USB_USE_HWIO_BCR',
+
+    # Feature to print the DIAG log for Enum (state) as string other than number
+    #'FEATURE_HS_USB_DAIG_ENUM_STR',
+
+    #'FEATURE_HS_USB_USE_LEGACY_CIR_BUF',
+
+    #'FEATURE_HS_USB_LOG_TRB_POINTERS',
+
+    # Feature to use NV item value to set PHY TUNE
+    #'FEATURE_HS_USB_NV_PHY_TUNE',
+
+    # Feature to enable thread CPU profiling
+    #'FEATURE_HS_USB_THREAD_PROFILE',
+
+    # Feature to enable SuperSpeed burst mode
+    #'FEATURE_HS_USB_BURST_MODE',
+    
+    # Feature to use EndXfer upon Suspend and StartXfer upon Resume
+    #'FEATURE_HSU_USB_USE_ENDXFER_STARTXFER_FOR_SUSPEND_RESUME',
+
+    "USB_THREADX",
+    
+    #"Feature to enable/disable USB based authentication"
+    "FEATURE_HS_USB_AUTH"
+])
+
+#-------------------------------------------------------------------------------
+# Load SW Unit
+#-------------------------------------------------------------------------------
+
+if env.has_key('USES_HSU'):
+    env.LoadSoftwareUnits(0,"../hal/build")
+    env.LoadSoftwareUnits(0,"../classes/build")
+    env.LoadSoftwareUnits(0,"../driver/build")
+    env.LoadSoftwareUnits(0,"../core/build")
+    #env.LoadSoftwareUnits()

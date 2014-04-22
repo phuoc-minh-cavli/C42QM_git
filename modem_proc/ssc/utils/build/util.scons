@@ -1,0 +1,26 @@
+#===============================================================================
+#
+# Framework utilities
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/utils/build/util.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Scan subdirectories to find more /build folders
+#-------------------------------------------------------------------------------
+env.Append( CPPDEFINES = ['-DSNS_DIAG_SSID=MSG_SSID_SNS_PLATFORM'])
+env.LoadSoftwareUnits()
+

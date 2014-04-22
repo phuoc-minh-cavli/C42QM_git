@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="geran.0.0" type="1" />
+  <NvItemData name="GSM A5 Algorithms Supported" id="553" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="gsm_a5_algorithms_supported" description="" comment="" sizeOf="1" type="uint8">5 </Member>
+  </NvItemData>
+  <NvItemData name="UIM First Instruction Class" id="896" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="uim_first_inst_class" description="" comment="" sizeOf="1" type="uint16">1 </Member>
+  </NvItemData>
+  <NvItemData name="GSM AMR Call Configuration" id="1302" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="gsm_amr_call_config" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="Repeated ACCH" id="5107" description="Control flags for R-SACCH and R-FACCH" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="repeated_acch" description="Control flags for R-SACCH and R-FACCH" comment="" sizeOf="1" type="uint16">1 </Member>
+  </NvItemData>
+  <NvItemData name="EDGE Feature Support" id="2508" description="Indicates the support for EDGE by the phone" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="edge_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="EDA Feature Support" id="3630" description="Flag indicating EDA support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="eda_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="GERAN Feature Pack 1" id="2512" description="Indicates if the EDGE MS supports N/W assisted cell change" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="geran_feature_pack_1" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="1xEV Connection Release" id="4209" description="Flag indicating EDTM feature support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="edtm_feature_support" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvItemData>
+</NvData>

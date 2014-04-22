@@ -1,0 +1,48 @@
+#===============================================================================
+#
+# SDC library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018-19 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+import json
+import subprocess
+import os, inspect
+import platform
+
+env.RequirePublicApi([
+   'KERNEL',
+   'DEBUGTOOLS'
+   ], area='core')
+
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  build_target= False
+elif 'SSC_TARGET_HEXAGON_MDSP' in env['CPPDEFINES']:
+  build_target= False
+else:
+  build_target= True
+slpi_flavor =["slpi"]
+
+if 'SDC_ONLY_IMAGE' in env:
+   env.Append(CPPDEFINES = ['SDC_ONLY_IMAGE'])
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+sections = ['.text.sns_osa', '.data.sns_osa']
+if build_target:
+  if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+    env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+               flavor = slpi_flavor,
+               core_public_api = ['DEBUGTOOLS','POWER','KERNEL','PRODUCTS','SYSTEMDRIVERS','DAL'],
+               ssc_protected_api = ['SNS_INTERNAL_INCLUDES', 'SNS_FRAMEWORK'],
+               clean_pack_list = [],
+               island_sections = sections,
+               binary_lib = True)

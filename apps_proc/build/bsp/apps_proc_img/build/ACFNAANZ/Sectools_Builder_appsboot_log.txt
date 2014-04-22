@@ -1,0 +1,8 @@
+Logging to Z:\HY11_1\apps_proc\build\bsp\apps_proc_img\build\ACFNAANZ\Sectools_Builder_appsboot_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to Z:\HY11_1\apps_proc\build\bsp\txm_demo_app_img\build\ACFNAANZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to Z:\HY11_1\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAANZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to Z:\HY11_1\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAANZ\Sectools_Builder_dam_mod_log.txt
+Sectools Builder config was provided using deprecated api

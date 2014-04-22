@@ -1,0 +1,77 @@
+#===============================================================================
+#
+# Zlib Library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2013 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/services/compression/lz4/build/lz4.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/services/compression/lz4/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireRestrictedApi([
+   'SERVICES',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+LZ4_SOURCES = [
+   '${BUILDPATH}/lz4.c',
+]
+
+LZ4_IMAGES = [
+	'MODEM_IMAGE', 
+	'CBSP_MODEM_IMAGE',
+	'APPS_IMAGE',
+	'CBSP_APPS_IMAGE',
+	'SINGLE_IMAGE',
+	'CBSP_SINGLE_IMAGE',
+	'QDSP6_SW_IMAGE',
+	'CBSP_QDSP6_SW_IMAGE',
+]
+
+env.AddLibrary(LZ4_IMAGES,'${BUILDPATH}/lz4',LZ4_SOURCES)

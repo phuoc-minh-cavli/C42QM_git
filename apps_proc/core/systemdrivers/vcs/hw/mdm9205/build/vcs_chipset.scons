@@ -1,0 +1,25 @@
+#===============================================================================
+#
+# VCS DRIVER HW (CHIPSET) LIBRARY
+#
+# Processor: APCS
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright 2018 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/vcs/hw/mdm9205/build/vcs_chipset.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+env.SConscript('../apcs/build/vcs_apcs.scons', exports='env')

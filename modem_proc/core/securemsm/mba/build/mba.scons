@@ -1,0 +1,95 @@
+#===============================================================================
+#
+# MBA CORE Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2011 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:  $
+#  $DateTime: $
+#  $Author: $
+#  $Change: $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 12/15/11   mm      Updated scons to generate mba hwio file
+# 12/15/11   mm      Hexagon.py expects OBJS to be non-empty
+# 11/23/11   mm      First cut of MBA Scons
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+if env['MSM_ID'] in ['9205','9607']:
+	Return()
+
+
+#----------------------------------------------------------------------------
+# Source PATH
+#----------------------------------------------------------------------------
+MBA_SRC = "${COREBSP_ROOT}/securemsm/mba"
+
+env.VariantDir('${BUILDPATH}', MBA_SRC, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SECUREMSM',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'HWENGINES',
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['SECUREMSM'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+MODEM_DEBUG_SOURCES = [ '${BUILDPATH}/modem_stub.c' ]
+
+#XPU_Init is always called. However component drivers are initialized only in standalone mode
+if ('USES_RCINIT' in env):
+   RCINIT_IMG = ['CORE_QDSP6_SW','MODEM_IMAGE','WCN_IMAGE'] 
+   env.AddRCInitFunc(       # Code Fragment in TMC: NO
+   RCINIT_IMG,              
+   {
+     'sequence_group'             : 'RCINIT_GROUP_1',       # required
+     'init_name'                  : 'XPUInit',                 # required
+     'init_function'              : 'XPUInit',     # required
+  })
+  
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddBinaryObject(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE',
+	       'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'], MODEM_DEBUG_SOURCES)
+  
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Pack out files
+#-------------------------------------------------------------------------------

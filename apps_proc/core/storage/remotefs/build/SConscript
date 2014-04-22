@@ -1,0 +1,102 @@
+#===============================================================================
+#                    Copyright 2009 QUALCOMM Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# Time RAPI Libs
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/storage/remotefs/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'MODEM_DATA',
+   'MODEM_HDR',
+])
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'MODEM_DATA',
+   'DEBUGTOOLS',
+   'MEMORY',
+   'MPROC',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi(['COMMON', 'RMTFS'], area='API')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+if 'USES_REMOTEFS_QMI' in env:
+  env.Append(CPPDEFINES = ["FEATURE_REMOTEFS_USES_QMI"])
+  REMOTEFS_CLI_WRAPPER_SOURCES = [
+     '${BUILDPATH}/remotefs_qmi_client.c',
+     '${BUILDPATH}/remotefs_sahara.c',
+  ]
+  remotefs_qmi_cli_obj = env.Object(REMOTEFS_CLI_WRAPPER_SOURCES)
+  remotefs_qmi_cli_lib = env.Library('${BUILDPATH}/remotefs_cli_wrapper', remotefs_qmi_cli_obj)
+
+  REMOTEFS_SRV_WRAPPER_SOURCES = [
+     '${BUILDPATH}/remotefs_qmi_server.c',
+     '${BUILDPATH}/remotefs_sahara.c',
+     '${BUILDPATH}/remotefs_sahara_pkt.c',
+     '${BUILDPATH}/remotefs_sio.c',
+  ]
+  remotefs_qmi_srv_obj = env.Object(REMOTEFS_SRV_WRAPPER_SOURCES)
+  remotefs_qmi_srv_lib = env.Library('${BUILDPATH}/remotefs_srv_wrapper', remotefs_qmi_srv_obj)
+
+  remotefs_srv_wrapper_obj = env.Object(REMOTEFS_SRV_WRAPPER_SOURCES)
+  remotefs_srv_wrapper_lib = env.Library('${BUILDPATH}/remotefs_srv_wrapper', remotefs_srv_wrapper_obj)
+  remotefs_cli_wrapper_obj = env.Object(REMOTEFS_CLI_WRAPPER_SOURCES)
+  remotefs_cli_wrapper_lib = env.Library('${BUILDPATH}/remotefs_cli_wrapper', remotefs_cli_wrapper_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+if 'USES_REMOTEFS_QMI' in env:
+  env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW'],
+     remotefs_qmi_cli_lib)
+  env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'],
+     remotefs_qmi_srv_lib)
+
+#-------------------------------------------------------------------------------
+# Add remotefs init function to rcinit
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  if 'USES_REMOTEFS_QMI' in env:
+   RCINIT_REMOTEFS = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   env.AddRCInitTask(
+      RCINIT_REMOTEFS,
+      {
+      'sequence_group'             : 'RCINIT_GROUP_2',
+      'thread_name'                : 'REMOTEFS_SRV',
+      'thread_entry'               : 'remotefs_srv_task',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : '160',
+      'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+      })

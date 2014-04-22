@@ -1,0 +1,96 @@
+#/** @file FlashCommonLib.inf
+#  
+#  SLC Nand Library UEFI INF file
+#  
+#  Copyright (c) 2017, 2019 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# ----------   ---     ---------------------------------------------------------
+# 2019-06-11   sl      Multipage + interrupt support added
+# 2018-11-01   sb      Updated for 9205
+# 2017-03-03   eo      Initial version.
+#
+#==============================================================================
+# 80ee6be6-7555-4b62-a91d-28fce430b117
+# 487f10ee-a146-4283-a5a0-c0edf38d7fa8
+# 63a062be-b0b4-4bce-be90-856ab827167c
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = FlashCommonLoaderLib
+  FILE_GUID                      = 51F0224D-FE08-44b9-A258-6DE3D56A9352
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = FlashCommonLoaderLib 
+
+[Sources.ARM]
+  Loader/flash_bam_wrapper_intr.c
+  Loader/flash_boot_ops_setup.c
+  Loader/flash_dal.c
+  Loader/flash_dal_fwk.c
+  Loader/flash_dal_info.c
+  Loader/flash_dal_nand_reduced.c
+  Loader/flash_dal_util.c
+  Loader/flash_decode_nandids.c
+  Loader/flash_nand_entry.c
+  Loader/flash_nand_config.c
+  Loader/flash_nand_core.c
+  Loader/flash_nand_init.c
+  Loader/flash_nand_partition.c
+  Loader/flash_onfi.c
+  Loader/flash_otp_config.c
+  Loader/flash_properties.c
+  Loader/flash_nor_entry_reduced.c
+  Loader/flash_nor_i2c_init.c
+  Loader/flash_nor_i2c_core.c
+  Loader/flash_nor_i2c_config.c
+  EEPROM/flash_extdrv_i2c_v2.c
+  ../../XBLLoader/boothw_target.h
+  ../../Mdm9x05Pkg/Library/XBLLoaderLib/boot_target.h
+
+  NandHalLib/flash_hal.h
+
+[BuildOptions.ARM]
+  GCC:*_*_*_CC_FLAGS = -Wno-unused-function  -DBUILD_BOOT_CHAIN -DFLASH_ENABLE_NAND -DFLASH_ENABLE_DMA -DLOADER_CODE -DFLASH_WATCHDOG_RESET_ADDR=0x004AA000 -DFLASH_ENABLE_NOR_I2C -DFLASH_EXTDRV_I2C_INCLUDE_H=\"flash_extdrv_i2c_hwio.h\" -DFLASH_CFG_INCLUDE_H="\"flash_cfg_qpic_2_0_1.h\""
+  MSFT:*_*_*_CC_FLAGS =
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec  
+  QcomPkg/XBLLoaderApi.dec  
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  ServicesUtilsLib
+  SmemLib
+  NandHalLoaderLib
+  NandTargetLib
+  TimerLib
+  PcdLib
+  DALCommonLoaderLib
+  BootInterruptLib
+  SleepLib
+
+[Guids]
+  #gEfiPartTypeUnusedGuid                        ## SOMETIMES_CONSUMES ## GUID
+  #gEfiPartTypeSystemPartGuid                    ## SOMETIMES_CONSUMES ## Protocol
+  gEfiHashAlgorithmSha1Guid
+  gEfiPartitionTypeGuid                         ## CONSUMES
+
+[Protocols]
+  gEfiHashProtocolGuid
+
+[Pcd.common]
+
+  

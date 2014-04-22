@@ -1,0 +1,296 @@
+
+#===============================================================================
+#
+# MCFG related SCons file
+#
+# GENERAL DESCRIPTION
+#    This build script provides tech areas with a method to select which groups 
+#    should be included in MCFG configurations at build time. 
+#
+# Copyright (c) 2017-2018 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss_tools/config/build/mcfg_gps_gen.scons#1 $
+#  $DateTime: 2020/07/21 21:23:44 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     -----------------------------------------------------------
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#------------------------------------------------------------------------------
+# MCFG Image Variables
+#------------------------------------------------------------------------------
+MCFG_HW_IMG = env.get('MCFG_HW_IMG')
+MCFG_SW_IMG = env.get('MCFG_SW_IMG')
+MCFG_IMGS   = env.get('MCFG_IMGS')
+
+#------------------------------------------------------------------------------
+# Add MCFG groups to accepted MBN configurations
+#------------------------------------------------------------------------------
+if 'USES_MCFG_XML_BUILDER' in env:
+    if MCFG_IMGS is not None and env.get('IMAGE_NAME') in MCFG_IMGS:
+        env.AddMcfgInfo(MCFG_SW_IMG,
+        {
+          'modem_proc/gps/gnss_tools/config/APAC/DCM/mcfg_sw_gen_Commercial.xml':[
+                                                                          'DCM : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/APAC/KDDI/mcfg_sw_gen_Commercial.xml':[
+                                                                          'KDDI : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/APAC/Reliance/mcfg_sw_gen_Commercial.xml':[
+                                                                          'Reliance : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_Conf_VoLTE-Lab.xml':[
+                                                                          'CMCC : Conf_VoLTE-Lab',
+                                                                          'CT : VoLTE_Conf-Lab NoAPN_Vo_Conf-Lab EPS_Only_VoLTE_Conf-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_EPS_Only-Lab.xml':[
+                                                                          'CMCC : EPS_Only-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_LocTech_AGNSS-Lab.xml':[
+                                                                          'CMCC : AGNSS_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_LocTech_LPP-Lab.xml':[
+                                                                          'CMCC : LPP_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_LocTech_RRLP-Lab.xml':[
+                                                                          'CMCC : RRLP_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_Nsiot_VoLTE-Lab.xml':[
+                                                                          'CMCC : Nsiot_VoLTE-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_TGL_Comb_Attach-Lab.xml':[
+                                                                          'CMCC : TGL_Comb_Attach-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_Volte_OpenMkt-Commercial.xml':[
+                                                                          'CMCC : Volte_OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CMCC/mcfg_sw_gen_W_IRAT_Comb_Attach-Lab.xml':[
+                                                                          'CMCC : W_IRAT_Comb_Attach-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_CTA-Lab.xml':[
+                                                                          'CT : CTA-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_OpenMkt-Commercial.xml':[
+                                                                          'CT : OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_TEST-Lab.xml':[
+                                                                          'CT : TEST-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_TEST_EPS_ONLY-Lab.xml':[
+                                                                          'CT : TEST_EPS_ONLY-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_TEST_NO_APN-Lab.xml':[
+                                                                          'CT : TEST_NO_APN-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CT/mcfg_sw_gen_VoLTE_OpenMkt-Commercial.xml':[
+                                                                          'CT : hVoLTE_OpenMkt-Commercial VoLTE_OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CU/mcfg_sw_gen_OpenMkt-Commercial.xml':[
+                                                                          'CU : OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CU/mcfg_sw_gen_Subsidized-Commercial.xml':[
+                                                                          'CU : Subsidized-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CU/mcfg_sw_gen_Test-Lab.xml':[
+                                                                          'CU : Test-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/China/CU/mcfg_sw_gen_VoLTE-Commercial.xml':[
+                                                                          'CU : VoLTE-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/DT/mcfg_sw_gen_Commercial-Non_VoLTE.xml':[
+                                                                          'DT : Commercial-Non_VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/DT/mcfg_sw_gen_Commercial-VoLTE.xml':[
+                                                                          'DT : Commercial-VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/EE/mcfg_sw_gen_Commercial.xml':[
+                                                                          'EE : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Orange/mcfg_sw_gen_France-Commercial.xml':[
+                                                                          'Orange : France-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Orange/mcfg_sw_gen_Group_Non_IMS-Commercial.xml':[
+                                                                          'Orange : Group_Non_IMS-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Orange/mcfg_sw_gen_Romania-Commercial.xml':[
+                                                                          'Orange : Romania-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Orange/mcfg_sw_gen_Spain-Commercial.xml':[
+                                                                          'Orange : Spain-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Telefonica/mcfg_sw_gen_Germany-VoLTE.xml':[
+                                                                          'Telefonica : DE-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Telefonica/mcfg_sw_gen_Spain-Non_VoLTE.xml':[
+                                                                          'Telefonica : Spain-Non_VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Vodafone/mcfg_sw_gen_CZ-VoLTE.xml':[
+                                                                          'Vodafone : CZ-VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/EU/Vodafone/mcfg_sw_gen_Netherlands-VoLTE.xml':[
+                                                                          'Vodafone : Netherlands-VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/LATAM/AMX/mcfg_sw_gen_Non_VoLTE.xml':[
+                                                                          'AMX : Non_VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/LATAM/AMX/mcfg_sw_gen_VoLTE.xml':[
+                                                                          'AMX : VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/NA/ATT/mcfg_sw_gen_Non_VoLTE.xml':[
+                                                                          'ATT : Non_VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/NA/ATT/mcfg_sw_gen_VoLTE.xml':[
+                                                                          'ATT : FirstNet VoLTE',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/NA/TMO/mcfg_sw_gen_Commercial.xml':[
+                                                                          'TMO : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/NA/Verizon/mcfg_sw_gen_CDMAless.xml':[
+                                                                          'Verizon : CDMAless',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/NA/Verizon/mcfg_sw_gen_hVoLTE.xml':[
+                                                                          'Verizon : hVoLTE IMSless',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/Russia/Beeline/mcfg_sw_gen_Gen_3GPP.xml':[
+                                                                          'Beeline : Gen_3GPP',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/SEA/Smartfren/mcfg_sw_gen_Commercial.xml':[
+                                                                          'Smartfren : VoWiFi-Commercial Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/SEA/YTL/mcfg_sw_gen_Gen_3GPP.xml':[
+                                                                          'YTL : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_Conf_VoLTE-Lab.xml':[
+                                                                          'CMCC : Conf_VoLTE-Lab',
+                                                                          'CT : VoLTE_Conf-Lab NoAPN_Vo_Conf-Lab EPS_Only_VoLTE_Conf-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_EPS_Only-Lab.xml':[
+                                                                          'CMCC : EPS_Only-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_LocTech_AGNSS-Lab.xml':[
+                                                                          'CMCC : AGNSS_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_LocTech_LPP-Lab.xml':[
+                                                                          'CMCC : LPP_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_LocTech_RRLP-Lab.xml':[
+                                                                          'CMCC : RRLP_LocTech-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_Nsiot_VoLTE-Lab.xml':[
+                                                                          'CMCC : Nsiot_VoLTE-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_TGL_Comb_Attach-Lab.xml':[
+                                                                          'CMCC : TGL_Comb_Attach-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_Volte_OpenMkt-Commercial.xml':[
+                                                                          'CMCC : Volte_OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CMCC/mcfg_sw_gen_W_IRAT_Comb_Attach-Lab.xml':[
+                                                                          'CMCC : W_IRAT_Comb_Attach-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CU/mcfg_sw_gen_OpenMkt-Commercial.xml':[
+                                                                          'CU : OpenMkt-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CU/mcfg_sw_gen_Subsidized-Commercial.xml':[
+                                                                          'CU : Subsidized-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CU/mcfg_sw_gen_Test-Lab.xml':[
+                                                                          'CU : Test-Lab',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/certs/China/CU/mcfg_sw_gen_VoLTE-Commercial.xml':[
+                                                                          'CU : VoLTE-Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/ROW/mcfg_sw_gen_Gen_3GPP.xml':[
+                                                                          '3HK : HK-Commercial',
+                                                                          'AIS : Thailand-Commercial',
+                                                                          'AMX : MX-Commercial',
+                                                                          'APT : Commercial',
+                                                                          'Bell : CA-Commercial',
+                                                                          'Bouygues : France-Commercial',
+                                                                          'CellC : SAfrica-Commercial',
+                                                                          'ChunghwaTel : TW-Commercial',
+                                                                          'Claro : Colombia-Commercial',
+                                                                          'DT : PL-Commercial Croatia-Commercial CZ-Commercial Greece-Commercial',
+                                                                          'DTAC : VoLTE-Commercial',
+                                                                          'Elisa : FI-Commercial',
+                                                                          'FarEastOne : Commercial',
+                                                                          'Globe : PH-Commercial',
+                                                                          'H3G : Italy-Commercial UK-Commercial Denmark-Commercial SE-Commercial',
+                                                                          'HKT : HK-Commercial',
+                                                                          'M1 : SG-Commercial',
+                                                                          'MegaFon : RU-Commercial',
+                                                                          'MoroccoTel : MA-Commercial',
+                                                                          'Optus : AU-Commercial',
+                                                                          'Orange : Poland-Commercial',
+                                                                          'P1 : Malaysia-Commercial',
+                                                                          'ROW : Commercial',
+                                                                          'Rogers : CA-Commercial',
+                                                                          'SFR : FR-Commercial',
+                                                                          'STC : SA-Commercial',
+                                                                          'Singtel : Singapore-Commercial',
+                                                                          'SmarTone : HK-Commercial',
+                                                                          'StarHub : SG-Commercial',
+                                                                          'Swisscom : Swiss-Commercial',
+                                                                          'TDC : Denmark-Commercial',
+                                                                          'TIM : Italy-Commercial',
+                                                                          'TM : Commercial',
+                                                                          'TStar : TW-Commercial',
+                                                                          'Tele2 : Sweden-Commercial NL-Commercial',
+                                                                          'Telefonica : UK-Commercial Peru-Commercial',
+                                                                          'Telenor : Norway-Commercial Denmark-Commercial',
+                                                                          'Telia : Sweden-Commercial Norway-Commercial',
+                                                                          'Telstra : Commercial',
+                                                                          'Telus : CA-Commercial',
+                                                                          'Truemove : VoLTE-Commercial',
+                                                                          'UMobile : Malaysia-Commercial',
+                                                                          'Vodafone : Commercial',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/W_One/mcfg_sw_gen_Commercial.xml':[
+                                                                          'W_One : Commercial',
+                                                                      ],
+        })
+        env.AddMcfgInfo(MCFG_HW_IMG,
+        {
+          'modem_proc/gps/gnss_tools/config/common/MDM9x55/mcfg_hw_gen_DR_DSDS-7+5_mode.xml':[
+                                                                          'MDM9x55 : DR_DSDS-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MDM9x55/mcfg_hw_gen_SR_DSDS-7+5_mode.xml':[
+                                                                          'MDM9x55 : SR_DSDS-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MDM9x55_Fusion/mcfg_hw_gen_DR_DSDS-7+5_mode.xml':[
+                                                                          'MDM9x55_Fusion : DR_DSDS-7+7_mode',
+                                                                          'SDX20M_Fusion : DR_DSDS-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MDM9x55_Fusion/mcfg_hw_gen_SR_DSDS-7+5_mode.xml':[
+                                                                          'MDM9x55_Fusion : SR_DSDS-7+7_mode',
+                                                                          'SDX20M_Fusion : SR_DSDS-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MSM8998/mcfg_hw_gen_DR_DSDS-LA-7+5_mode.xml':[
+                                                                          'MSM8998 : DR_DSDS-LA-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MSM8998/mcfg_hw_gen_DR_DSDS-WP8-7+5_mode.xml':[
+                                                                          'MSM8998 : DR_DSDS-WP8-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MSM8998/mcfg_hw_gen_SR_DSDS-LA-7+5_mode.xml':[
+                                                                          'MSM8998 : SR_DSDS-cmcc_subsidized SR_DSDS-LA-7+7_mode',
+                                                                          'SDM660 : SR_DSDS-cmcc_subsidized SR_DSDS-LA-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/MSM8998/mcfg_hw_gen_SR_DSDS-WP8-7+5_mode.xml':[
+                                                                          'MSM8998 : SR_DSDS-WP8-7+7_mode',
+                                                                      ],
+          'modem_proc/gps/gnss_tools/config/common/ROW/mcfg_hw_gen_SR_DSDS-7+5_mode.xml':[
+                                                                          'SDM670 : SR_DSDS-cmcc_subsidized SR_DSDS-LA-7+7_mode',
+                                                                      ],
+        })

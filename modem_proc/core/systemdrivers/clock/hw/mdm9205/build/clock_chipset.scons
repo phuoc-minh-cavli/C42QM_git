@@ -1,0 +1,23 @@
+#===============================================================================
+#
+# CLOCK DRIVER HW (CHIPSET) LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/clock/hw/mdm9205/build/clock_chipset.scons#2 $
+#  $DateTime: 2019/01/02 21:42:16 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+env.SConscript('../mss/build/clock_mss.scons', exports='env')

@@ -1,0 +1,4 @@
+../../dataservices/sensor/build/sensor_dam_demo_llvm/cortex-a7/ACFNAADZ/txm_module_preamble_llvm.o
+../../dataservices/sensor/build/sensor_dam_demo_llvm/cortex-a7/ACFNAADZ/demo/test_app_module.o
+../../dataservices/sensor/build/sensor_dam_demo_llvm/cortex-a7/ACFNAADZ/demo/test_main_module.o
+../../dataservices/sensor/build/sensor_dam_demo_llvm/cortex-a7/ACFNAADZ/demo/test_utils.o

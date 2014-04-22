@@ -1,0 +1,50 @@
+#===============================================================================
+#
+# Boot Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# 
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = '${BUILD_ROOT}/core/entry/'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within boot
+#-------------------------------------------------------------------------------
+CBSP_APIS = [
+   'BOOT',
+   'APT',
+   'SERVICES',
+   'SYSTEMDRIVERS_HWIO',
+   'SYSTEMDRIVERS_PMU',
+   'WIREDCONNECTIVITY',
+   'KERNEL_LIBSTD',
+   'STORAGE_FLASH',
+   'SECURITY_CRYPTO',
+   'SECURITY_SECIMGAUTH',
+	'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_APIS)
+env.RequireRestrictedApi(CBSP_APIS)
+
+ENTRY_ASM_SOURCES = [
+   '${BUILDPATH}/entry/entry.S',
+]
+
+ENTRY_SOURCES = [
+  '${BUILDPATH}/entry/entry_mc.c',
+  '${BUILDPATH}/entry/malloc.c',
+  #'${BUILDPATH}/entry/memheap_lite.c',
+]
+
+env.AddObject(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], ENTRY_ASM_SOURCES)
+env.AddLibrary(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], '${BUILDPATH}/entry', [ENTRY_SOURCES])

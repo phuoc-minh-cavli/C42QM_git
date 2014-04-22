@@ -1,0 +1,158 @@
+#===============================================================================
+#
+# Subsys Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016,2019-2020 by QUALCOMM Technologies Incorporated. All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtools/subsys/build/subsys.scons#2 $
+#
+#===============================================================================
+
+Import('env')
+import os
+
+# Code for Apps only boot feature will be compiled
+# for only those flavors which have APPS_ONLY_BOOT flag defined
+# at target level
+if 'USES_APPS_ONLY_BOOT' not in env:
+  env.Replace(FEATURE_SUBSYS_DISABLE = 'yes')
+  
+# Set mba flag as False for 9205 where MBA image is not present
+# Set tz flag as true for 9205 as TZ needs to bring modem out of reset
+# Looking for something more generic to define these flags
+if env['MSM_ID'] in ['9205']:
+  env.Append(CPPDEFINES=["PIL_TZ_FILTER"])
+else:
+  env.Append(CPPDEFINES=["PIL_MBA_FILTER"])
+
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/debugtools/subsys/src"
+env.VariantDir('${BUILDPATH}', "${BUILD_ROOT}/core/debugtools/subsys/src", duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+#  Add Config folder to Inc Paths
+#-------------------------------------------------------------------------------
+
+SUBSYS_CONFIG = SRCPATH + '/${MSM_ID}'
+
+if os.path.exists(env.subst(SUBSYS_CONFIG)):
+   env.PublishPrivateApi('SUBSYS_CFG', [
+      "${BUILD_ROOT}/core/debugtools/subsys/src/${MSM_ID}",
+   ] )
+   #print "9205 path selected"
+else:
+   env.PublishPrivateApi('SUBSYS_CFG', [
+      "${BUILD_ROOT}/core/debugtools/subsys/src/generic_config",
+   ] )
+   #print "generic path selected"
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'HAL',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'PRODUCTS_SCM',
+   'KERNEL', # needs to be last also contains wrong comdef.h
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['SUBSYS_CFG'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+if env.has_key('FEATURE_SUBSYS_DISABLE'):
+   SUBSYS_SOURCES =  [
+      '${BUILDPATH}/subsys_stub.c',
+   ]
+else:
+   SUBSYS_SOURCES =  [
+      '${BUILDPATH}/subsys.c',
+   ]
+
+PIL_SOURCES =  [
+   '${BUILDPATH}/pil.c',
+   '${BUILDPATH}/pil_elf_loader.c',
+   '${BUILDPATH}/pil_modem.c',
+   '${BUILDPATH}/pil_rmb.c',
+   '${BUILDPATH}/pil_clock.c',
+   '${BUILDPATH}/pil_utils.c',
+   '${BUILDPATH}/pil_scm.c',
+]
+
+
+#SUBSYS_OS_SOURCES = [
+#   '${BUILDPATH}/pil_rex.c',
+#]
+
+PIL_OS_SOURCES = [
+   '${BUILDPATH}/pil_qurt.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(['CORE_APPS',], '${BUILDPATH}/subsys', SUBSYS_SOURCES)
+
+if not env.has_key('FEATURE_SUBSYS_DISABLE'):
+  env.AddLibrary(['CORE_APPS',], '${BUILDPATH}/pil', PIL_SOURCES)
+  env.AddLibrary(['CORE_APPS',], '${BUILDPATH}/pil_os', PIL_OS_SOURCES)
+
+## For time_init and time_init_config calls
+SUBSYS_RCINIT_IMAGE = []
+
+## Add to RCINIT
+SUBSYS_RCINIT_IMAGE.extend(['CORE_APPS',])
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# RCINIT Initializations and Task Entries
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+if not env.has_key('FEATURE_SUBSYS_DISABLE'):
+  if 'USES_RCINIT' in env:
+     env.AddRCInitFunc(           # Code Fragment in TMC: YES
+      SUBSYS_RCINIT_IMAGE,        # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+      {
+       'sequence_group'             : 'RCINIT_GROUP_0',              # required
+       'init_name'                  : 'subsys_init',                  # required
+       'init_function'              : 'subsys_init',                  # required
+       'dependencies'               : ['fs', 'timer_init']
+      })
+
+  if 'USES_RCINIT' in env:
+     env.AddRCInitTask(           # STUB FOR DATA STRUCTURES; NEEDS CREATED EARLY
+      SUBSYS_RCINIT_IMAGE,        # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+      {
+        'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+        'thread_name'                : 'subsys_task',                     # required
+        'thread_entry'               : 'subsys_task',                        
+        'stack_size_bytes'           : '4096',
+        'priority_amss_order'        : 'PIL_SS_PRI_ORDER',                
+        'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+        'dependencies'               : ['fs']
+      })

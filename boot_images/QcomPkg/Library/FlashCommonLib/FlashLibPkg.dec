@@ -1,0 +1,16 @@
+#/** @file NandLibPkg.dec
+# SLC Nand Library package.
+#
+# Copyright (c) 2017, Qualcomm Technologies Inc. All rights reserved.
+#
+#**/
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = NandLibPkg
+  PACKAGE_GUID                   = B8F5F511-16E6-4057-AF82-1C22C97B3DF8
+  PACKAGE_VERSION                = 0.1
+
+[Includes.common]
+
+

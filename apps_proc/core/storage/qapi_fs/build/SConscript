@@ -1,0 +1,82 @@
+#===============================================================================
+#
+# QAPI Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017, 2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who  what, where, why
+# ----------  ---  -------------------------------------------------------------
+# 2019-07-18  as   Add support to expose qapi source as library only
+# 2017-02-22  as   Create
+#===============================================================================
+
+# Import methods to get compile time configuration.
+import sys
+Import('env')
+env = env.Clone()
+   
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/storage/qapi_fs/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MPROC',
+   'SECUREMSM',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'DSM',
+   'QAPI',
+
+   # needs to be last as it may contain wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries    
+#-------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',                # Domain(REX + TN)
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_SOURCES = [
+    '${BUILDPATH}/qapi_fs.c',
+]
+env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', QAPI_SOURCES)
+

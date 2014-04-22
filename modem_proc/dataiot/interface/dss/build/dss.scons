@@ -1,0 +1,102 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+
+#turn off debug if requested  
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2") 
+    env.Replace(HEXAGON_DBG = "-g")  
+    env.Replace(GCC_DBG = "-g")
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'STORAGE',
+    'SECUREMSM',
+    'BUSES',
+	'MEMORY',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+env.RequirePublicApi(['MCFG'], area='mcfg_fwk')
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_PUBLIC_APIS = [
+    'DATAMODEM',
+    ]
+
+env.RequirePublicApi(MODEM_PUBLIC_APIS)
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'MODEM_DATA',
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+#code shipped as source
+DATAMODEM_DSS_SOURCES = [
+	'${BUILDPATH}/src/dssinternal.c',
+	'${BUILDPATH}/src/dssocket.c',
+    '${BUILDPATH}/src/ps_sock_mem_pool.c',
+    '${BUILDPATH}/src/ps_stat_sock.c',
+	'${BUILDPATH}/src/dss_dns_utils.c',
+	'${BUILDPATH}/src/dssocki.c',
+	'${BUILDPATH}/src/dss_control.c',
+    ]
+	
+DATAMODEM_DSS_PING_SOURCES = [
+        '${BUILDPATH}/src/dss_ping_comm_mgr.c',
+        '${BUILDPATH}/src/dss_ping.c',
+   ]
+
+if 'USES_DATAMODEM_DSS_PING' in env:
+   DATAMODEM_DSS_SOURCES += DATAMODEM_DSS_PING_SOURCES
+
+
+env.AddLibrary(['MODEM_MODEM', 'MOB_DATAMODEM'], '${BUILDPATH}/dss', [DATAMODEM_DSS_SOURCES])
+
+env.LoadSoftwareUnits()

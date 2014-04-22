@@ -1,0 +1,35 @@
+<!--
+/**
+ * @file   pcie_config.xml
+ * @brief
+ * This file contains the DAL XML properties for the PCIe Device Access Library.
+ */
+/*
+===============================================================================
+
+Edit History
+
+$Header:
+
+Change revision history maintained in version system
+===============================================================================
+Copyright (c) 2015 QUALCOMM Technologies Incorporated.
+All Rights Reserved.
+Qualcomm Confidential and Proprietary.
+===============================================================================
+*/
+-->
+<driver name="NULL">
+
+
+  <device id="/core/hwengines/pcie">
+    <props name="pcie_tgt_config" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+         pcie_tgt_config
+    </props>
+    <props name="pcie_gpio_config" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+         pcie_gpio_config
+    </props>
+  </device>
+
+</driver>
+

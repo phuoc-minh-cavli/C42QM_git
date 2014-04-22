@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# Qualcomm Technologies Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/msf.mpss/1.0/build/msf.scons#1 $
+# $DateTime: 2018/06/27 11:21:46 $
+# $Author: pwbldsvc $
+#===============================================================================
+
+#-----------------------------------------
+# Import and clone the SCons environment
+#-----------------------------------------
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------
+# Publish Protected Include Paths only avail to the rest of MSF
+#-----------------------------------------
+
+#-------------------------------------------------------------------------------
+# Load cleanpack script to remove private files etc. from customer builds
+#-------------------------------------------------------------------------------
+import os
+if os.path.exists('msf_cleanpack.py'):
+    env.LoadToolScript('msf_cleanpack.py')
+
+env.Append(HEXAGONCC_WARN = ' -Werror ')
+env.Append(HEXAGONCXX_WARN = ' -Werror ')
+
+#-----------------------------------------
+# Search for additional Units (must come last)
+#-----------------------------------------
+env.LoadSoftwareUnits()

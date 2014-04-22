@@ -1,0 +1,120 @@
+#===============================================================================
+#
+# Test Client
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/test/test_client/build/test_client.scons#4 $
+#  $DateTime: 2019/06/04 03:03:41 $
+#  $Change: 19412437 $
+#
+#===============================================================================
+
+Import('env')
+import os, inspect
+
+if 'SSC_TARGET_MDM9205' in env['CPPDEFINES']:
+  Return()
+
+if env.get('CHIPSET') in ["sdm439"]:
+  Return()
+ME = inspect.getfile(inspect.currentframe())
+MY_ROOT = os.path.dirname(os.path.dirname(ME))
+MY_NAME = os.path.basename(MY_ROOT)
+
+#-------------------------------------------------------------------------------
+# Internal dependencies
+#-------------------------------------------------------------------------------
+env.RequirePublicApi('SNS_INCLUDES', area='ssc')
+
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+if 'SSC_TARGET_HEXAGON' in env['CPPDEFINES']:
+  CBSP_API = [
+    'DEBUGTOOLS', # Required for debug log messages
+    'KERNEL',     # Required for debug log messages
+    'DAL',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'MPROC',
+    'POWER',
+    ]
+  env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequirePublicApi('UTILS', area='platform')
+env.RequirePublicApi(['COMMON'], area='QMIMSGS')
+env.RequirePublicApi(['SNS_API_INCLUDES'], area='ssc_api')
+
+#PEND: Removal of this line dependent on other teams getting their act together
+env.Append(CFLAGS = '-Wno-unused-parameter')
+
+#-------------------------------------------------------------------------------
+# Source Path
+#-------------------------------------------------------------------------------
+SRCPATH = os.path.join(MY_ROOT, 'src')
+if not os.path.isdir(SRCPATH):
+  if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+    SRCPATH = os.path.join(MY_ROOT, 'x86')
+  elif 'SSC_TARGET_HEXAGON' in env['CPPDEFINES']:
+    SRCPATH = os.path.join(MY_ROOT, 'hexagon')
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+INCPATH = os.path.join(MY_ROOT, 'inc')
+if os.path.isdir(INCPATH):
+  MY_API = MY_NAME + '_API'
+  env.PublishPrivateApi(MY_API, INCPATH)
+
+#-------------------------------------------------------------------------------
+# Source files
+#-------------------------------------------------------------------------------
+SRCFILES  =  env.FindFiles(['*.c'], SRCPATH)
+VARIANT_SRCFILES = [fname.replace(SRCPATH,'${BUILDPATH}') for fname in SRCFILES]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to Image
+#-------------------------------------------------------------------------------
+MY_LIB = os.path.join('${BUILDPATH}', MY_NAME)
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  lib = env.AddLibrary(['SSC_SIM'], MY_LIB, VARIANT_SRCFILES)
+elif 'SENSORS_DD_DEV_FLAG' not in env:
+  lib = env.AddLibrary(env['SSC_BUILD_TAGS'], MY_LIB, VARIANT_SRCFILES)
+else:
+  lib = env.AddBinaryLibrary(env['SSC_BUILD_TAGS'], MY_LIB, VARIANT_SRCFILES)
+
+#-------------------------------------------------------------------------------
+# Island mode
+#-------------------------------------------------------------------------------
+if "SNS_ISLAND_INCLUDE_TEST_CLIENT" in env:
+  env.Append(CPPDEFINES = ['SNS_ISLAND_INCLUDE_TEST_CLIENT'])
+  if 'USES_MEMSEG' in env:
+    env.TagLibraryForMemorySegment(env['SSC_BUILD_TAGS'], 'ssc', lib)
+  elif 'USES_ISLAND' in env:
+    env.AddIslandLibrary(env['SSC_BUILD_TAGS'], lib)
+
+#-------------------------------------------------------------------------------
+# Add the PD Spawn Call
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env and 'SNS_DISABLE_TEST_CLIENT' not in env and not ('USES_CLEAN_PACK' in env):
+  env.AddRCInitFunc(
+    ['SSC_SLPI_USER','SSC_ADSP_USER'],
+    {
+      'sequence_group'             : 'RCINIT_GROUP_7',           # required
+      'init_name'                  : 'sns_test_client',          # required
+      'init_function'              : 'sns_test_client_init',     # required
+      'dependencies'               : []
+    })
+
+#-------------------------------------------------------------------------------
+# Remove source files
+#-------------------------------------------------------------------------------
+REMOVE_FILES =  env.FindFiles(['*.c','*.h','*.proto','test_case'], MY_ROOT)
+env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)

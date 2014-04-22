@@ -1,0 +1,48 @@
+;============================================================================
+;  Name:
+;    DUMPSWITCHLIST.CMM
+;
+;  Description:
+;  Write out context switch buffer task window to specified output file.
+;
+;  Dependencies:
+;  Need to use T32 Build 11180 or later to use command EXT.MaxVSize
+;
+;  Usage:
+;    do dumpswitchlist <OUTPUT FILE>
+;
+; Copyright (c) 2008 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
+;----------------------------------------------------------------------------
+
+ENTRY &filename
+
+if "&filename"==""
+(
+  print "Select log file to dump context switch data to:"
+  dialog.filew *.log
+
+  entry &filename
+
+  if "&filename"==""
+  (
+    print "failed to create a file"
+    enddo
+  )
+
+  open #1 &filename /create
+  close #1
+)
+
+if "&filename"!=""
+(
+    &size=data.long(trace_buffer_size)
+
+    if version.build()>=11180.
+    (
+        EXT.MaxVSize &size
+    )
+    PrinTer.FILE &filename
+    WinPrint.Task.TB
+)
+
+

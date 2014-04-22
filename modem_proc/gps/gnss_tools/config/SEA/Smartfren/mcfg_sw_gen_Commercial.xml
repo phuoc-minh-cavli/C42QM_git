@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.1.0" type="1"/>
+<NvItemData name="MFLO MLC PLP Stats Post Params Ver2" id="4627" description="Enable/Disable gpsOneXTRA feature" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gps1_xtra_enabled" description="Enable/Disable gpsOneXTRA feature" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="MFLO MLC Location Dynamic Params Ver2" id="4628" description="Number of hours between automatic downloads" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gps1_xtra_download_interval" description="Number of hours between automatic downloads" comment="" sizeOf="1" type="uint16">72 </Member>
+	</NvItemData>
+	<NvItemData name="GPSOne XTRA Auto Download Enabled" id="4631" description="Enable/disable automatic periodic downloads of gpsOneXTRA files" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gps1_xtra_auto_download_enabled" description="Enable/disable automatic periodic downloads of gpsOneXTRA files" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Positioning Modes Supported" id="1920" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_positioning_modes_supported" description="" comment="" sizeOf="1" type="uint32">7 </Member>
+	</NvItemData>
+	<NvEfsItemData name="gnss_lpp_enable" id="67225" description="Use LPP when on LTE" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_lpp_enable">
+		<Member name="gnss_lpp_enable" description="Use LPP when on LTE" comment="" sizeOf="1" type="uint8">3 </Member>
+	</NvEfsItemData>
+	</NvData>

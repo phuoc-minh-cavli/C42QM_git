@@ -1,0 +1,8 @@
+Import('env')
+env = env.Clone()
+
+
+	
+env.PublishRestrictedApi('DATAMODEM', [
+   "${INC_ROOT}/dataiot/protocols/sec/ssl/chipset/inc"])
+env.LoadAPIUnits()

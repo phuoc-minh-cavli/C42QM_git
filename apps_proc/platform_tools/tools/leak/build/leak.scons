@@ -1,0 +1,74 @@
+#===============================================================================
+# tx_platform mem_leak Libs
+#
+# GENERAL DESCRIPTION
+#    tx_platform mem_leak Build Script
+#
+# Copyright (c) 2021-22 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/platform_tools.tx/1.0/tools/leak/build/leak.scons#3 $
+#  $DateTime: 2022/03/08 06:00:17 $
+#  $Author: pwbldsvc $
+#  $Change: 35840052 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/platform_tools/tools/leak/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi('OSYS')
+env.RequirePublicApi('SERVER_PROTOCOL')
+
+#The following flag is globally defined when compiling a module
+env.Append(CPPDEFINES = [
+   "TXM_MODULE",
+   "QAPI_TXM_MODULE",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('PLATFORMTOOLS_API', area='platform_tools')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#INC_DIRS = []
+
+#INC_DIRS = [
+#   '${INC_ROOT}/tx_platform/tools/leak/inc',
+#]
+
+#env.PublishPrivateApi('PLATFORMTOOLS_LEAK', INC_DIRS)
+
+PTOOLS_LEAK_SOURCES =  [
+   '${BUILDPATH}/leak_detector.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILD_ROOT}/platform_tools/build/leak'), PTOOLS_LEAK_SOURCES)
+

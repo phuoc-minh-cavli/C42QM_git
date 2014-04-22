@@ -1,0 +1,92 @@
+#===============================================================================
+# location_utils Libs
+#
+# GENERAL DESCRIPTION
+#    location_utils Build Script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/location.tx/3.0/utils/build/SConscript#2 $
+#  $DateTime: 2020/10/08 03:53:28 $
+#  $Change: 26543502 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# Create a processor specific macro which can be (ab)used for feature-ization.  
+#env.Append(CPPDEFINES = [( 'MPMINT_RPM_WAKEUP_IRQ', '201' ),         
+#                         ( 'HAL_MPMINT_TARGET_H', '\\"HALmpmint${MSM_ID}.h\\"' ),
+#                        ])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/utils/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/api/qapi',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/core/api/dal',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/core/api/storage',
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+]
+
+env.PublishPrivateApi('LOCATION_UTILS', INC_DIRS)
+
+LOC_UTILS_SOURCES =  [
+   '${BUILDPATH}/linked_list.c',
+   '${BUILDPATH}/loc_log.cpp',
+   '${BUILDPATH}/LocThread.cpp',
+   '${BUILDPATH}/msg_q.c',
+   '${BUILDPATH}/MsgTask.cpp',
+   '${BUILDPATH}/pthread_loc.c',
+   '${BUILDPATH}/LocTimer.cpp',
+   '${BUILDPATH}/LocUtilTimer.cpp',
+   '${BUILDPATH}/loc_diag.c',
+   '${BUILDPATH}/loc_cfg.cpp',
+   '${BUILDPATH}/loc_misc_utils.cpp',
+   '${BUILDPATH}/loc_nmea.cpp',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/utils'), LOC_UTILS_SOURCES)
+

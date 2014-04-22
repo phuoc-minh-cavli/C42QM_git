@@ -1,0 +1,139 @@
+# -------------------------------------------------------------------------------- #
+#                       G N S S _ M G P _ M E _ G E N 9 . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the whole MGP ME Gen8 subsystem. Defines the existence of MGP ME subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+#  Copyright (c) 2015 Qualcomm Technologies, Incorporated.
+#  Qualcomm Technologies, Inc. Confidential and Proprietary. All Rights Reserved.
+#
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+# $Header: $
+# $DateTime: $
+# 
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+
+#--------------------------------------------------------------------------------
+# Check USES flags and return if library isn't needed
+#--------------------------------------------------------------------------------
+if 'USES_CGPS' not in gps_env:
+    Return()
+
+#--------------------------------------------------------------------------------
+# Only compile this for Gen9 targets
+#--------------------------------------------------------------------------------
+if 'USES_FEATURE_GNSS_NAVHW_GEN9' not in gps_env:
+    gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*', '..'))
+    Return()
+
+if 'USES_FEATURE_GNSS_NAVHW_GEN9' in gps_env:
+    gps_env.Append(CPPDEFINES = "FEATURE_GNSS_IMEM")
+    gps_env.Append(CPPDEFINES = "FEATURE_GNSS_MC_BATCH_JOB")
+    
+#--------------------------------------------------------------------------------
+# Some Data structures are needed in Island mode and 
+# thus defined at a lower level
+#--------------------------------------------------------------------------------
+gps_env.PublishProtectedApi('GPS_MGP_GEN9', ['${GPS_ROOT}/gnss/mgp/me/gen9/cc/src',
+                                         '${GPS_ROOT}/gnss/mgp/me/gen9/pp/src',
+                                        ])
+gps_env.RequireProtectedApi(['GPS_MGP_GEN9'])
+
+#--------------------------------------------------------------------------------
+# Only cgps_ext.c is shipped compiled and shipped as source.  
+# All other folders and files are shipped as libraries
+#--------------------------------------------------------------------------------
+SRCPATH = '../src'
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_FEATURE_DYNAMIC_LOADING_GNSS' in gps_env:
+  if 'USES_MODEM_DYNAMIC_LOADING' in gps_env:
+    output = gps_env.GenerateCompileList(SRCPATH, '*.c')
+    
+    # Need to replace '${BUILDPATH}' with '${GPS_ROOT}'
+    output = [w.replace('${BUILDPATH}', abspath(gps_env.subst(SRCPATH))) for w in output]
+    
+    # This expects a string with the variable name to pass back
+    Return('output')
+    #End of Dynamic Module
+    #gps_env.PrintInfo("Dynamic loading FW is ready in GNSS")
+    
+  elif 'USES_FEATURE_EXTERNAL_PAGING' in gps_env:
+    gps_env.AddLibrary(['MODEM_MODEM'], 
+                   '${BUILDPATH}/' + 'gnss_me_gen9_dmm',
+                   gps_env.GenerateCompileList(SRCPATH, '*.c'))
+  else:
+    gps_env.AddLibrary(['MODEM_MODEM'], 
+                   '${BUILDPATH}/' + 'me_gen9',
+                   gps_env.GenerateCompileList(SRCPATH, '*.c'))
+else:
+  gps_env.AddLibrary(['MODEM_MODEM'], 
+                   '${BUILDPATH}/' + 'me_gen9',
+                   gps_env.GenerateCompileList(SRCPATH, '*.c'))
+
+
+#--------------------------------------------------------------------------------
+# TEMPORARY BUILDS WORKAROUNDS
+#--------------------------------------------------------------------------------
+gps_env.PrintInfo("Gen9 Build Workarounds in effect!")
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_MC_GEN9_LEGACY_CFG ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_MC_GAL_MERGE ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_CC_GAL_MERGE ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_CC_HWIO ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_CC_RESMGR_COMPILE ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_NAVRX_COMPILE ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_PP_COMPILE ")  # Modem level
+gps_env.Append(CPPDEFINES = " FEATURE_GNSS_SV_DATA_SESSION_ALLOCATION ")  # Modem level
+#--------------------------------------------------------------------------------
+# GEN9 ME memory saving features on 9x05
+#--------------------------------------------------------------------------------
+if 'USES_GPS_GEN9_ME' in gps_env and \
+   ( gps_env['PRODUCT_LINE'].startswith('MPSS.JO') or \
+     gps_env['PRODUCT_LINE'].startswith('MPSS.CT') ):
+  gps_env.Append(CPPDEFINES = " FEATURE_GNSS_ME_9x05_MEMORY_REDUCTION ")  # Modem level
+  gps_env.Append(CPPDEFINES = " FEATURE_GNSS_NAVBB_VTV3_HW ")  # Modem level
+  gps_env.PrintInfo("  GEN9 ME memory saving features on 9x05.")
+
+# Uncomment to enable USB less testing debug structures
+#gps_env.PrintInfo("MC Power Test Structures Enabled")
+#gps_env.Append(CPPDEFINES = " FEATURE_GNSS_MC_POWER_TEST_LOG_ENABLE ")  # Modem level
+
+#--------------------------------------------------------------------------------
+# Disable features when PDS is in use
+#--------------------------------------------------------------------------------
+if 'USES_PDS_EXT' in gps_env:
+    gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_CC_40MS_DPO_DISABLED ")  # Modem level
+    gps_env.PrintInfo("CC 40ms DPO is disabled!")
+
+#--------------------------------------------------------------------------------
+# Disable some features in CT builds trying to compile Gen9 ME
+#--------------------------------------------------------------------------------
+if 'USES_GPS_GEN9_ME' in gps_env and \
+   ( gps_env['PRODUCT_LINE'].startswith('MPSS.JO') or \
+     gps_env['PRODUCT_LINE'].startswith('MPSS.CT') ):
+  gps_env.Append(CPPDEFINES = " FEATURE_GNSS_GEN9_ME_ON_CT_WORKAROUNDS ")  # Modem level
+  gps_env.PrintInfo("  GEN9 ME Workarounds on CT builds are in effect")
+
+gps_env.LoadSoftwareUnits()

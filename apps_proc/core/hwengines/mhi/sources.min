@@ -1,0 +1,10 @@
+#do not compile sio related stuff as mhi virtio wont understand
+SOURCES+=mhi.c \
+         mhi_mmio.c \
+         mhi_osal.c
+         
+
+CCFLAGS+=-g -O0 -DMHI_DEBUG -DMHI_OSAL_MSG_LEVEL=MSG_MEDIUM
+LDFLAGS+=
+
+

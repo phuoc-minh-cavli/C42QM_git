@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+	<NvConfigurationData carrierIndex="0" version="uim.ss.1" type="1"/>
+	<NvEfsFile name="uim_hw_config" id="70210" description="UIM  HW Configuration" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/uimdrv/uim_hw_config" buildPath="modem_proc/uim/config/efs_files/hw_settings/SS/uim_hw_config"/>
+	<NvEfsFile name="uim_hw_ldo_config_efs" id="73588" description="UIM  HW LDO Configuration EFS" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/uimdrv/uim_hw_ldo_config_efs" buildPath="modem_proc/uim/config/efs_files/hw_settings/SS/uim_hw_ldo_config_efs"/>
+  <NvEfsFile name="uim_extended_slot_mapping_config" id="73855" description="UIM extended slot mapping configuration" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/uimdrv/uim_extended_slot_mapping_config" buildPath="modem_proc/uim/config/efs_files/hw_settings/SS/uim_extended_slot_mapping_config"/>
+  <NvItemData name="UIM Select Default USIM Application" id="4398" description="Selects the first USIM Application as the Default Application" comment="" category="Factory" mcfgAttributes="0x09" mcfgVariant="1">
+    <Member name="uim_select_default_usim_app" description="Selects the first USIM Application as the Default Application" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+    <NvEfsItemData name="me_feature_bmsk" id="73670" description="GSTK Feature Bitmask ME specific" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gstk/me_feature_bmsk">
+    <Member name="GSTK Feature Bitmask ME specific" description="GSTK Feature Bitmask ME specific" comment="" sizeOf="1" type="uint64">132 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="UIM PSM support" id="73804" description="Enable PSM support" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/psm_mode">
+    <Member name="UIM PSM support" description="UIM PSM support" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvEfsItemData>
+
+</NvData>

@@ -1,0 +1,89 @@
+#/** @file NandDxe.inf
+#  
+#  SLC NAND Driver UEFI INF file
+#  
+#  Copyright (c) 2017 Qualcomm Technologies, Inc.  
+#  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# ----------   -----   ----------------------------------------------------------
+# 2017/03/03   eo      Initial version.
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandDxe
+  FILE_GUID                      = F077B5FB-AA11-4e56-B25E-707854DE6AD5
+  MODULE_TYPE                    = DXE_RUNTIME_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = NandDxeEntryPoint
+
+[BuildOptions.AARCH64]
+  GCC:*_*_*_CC_FLAGS = -Wno-missing-field-initializers -Wno-missing-braces
+  MSFT:*_*_*_CC_FLAGS =
+  
+[Sources.common]
+  NandFtlApi.c
+  NandFtlCore.c
+  NandFtlOsal.c
+  NandFtlUtil.c
+  NandMibib.c
+  NandDxe.c
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  UefiRuntimeServicesTableLib
+  UefiRuntimeLib
+  UefiLib
+  UefiBootServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  UefiDriverEntryPoint
+  IoLib
+  DALModEnvLib
+  BamLib
+  QpicLib
+  NandHalLib
+  FlashCommonLib
+  UncachedMemoryAllocationLib
+  UefiCfgLib
+  BootConfigLib
+  
+[Guids]
+  gEfiEventExitBootServicesGuid 
+  gEfiEventVirtualAddressChangeGuid             ## CONSUMES ## Event
+  
+[Protocols]
+  gEfiChipInfoProtocolGuid
+  gEfiBlockIoProtocolGuid
+  gEfiCpuArchProtocolGuid
+  gEfiDevicePathProtocolGuid
+  gEfiMemCardInfoProtocolGuid
+  gEfiNandIoProtocolGuid
+  gEfiNandPartiGuidProtocolGuid
+  gEfiEraseBlockProtocolGuid
+  gQcomScmProtocolGuid
+  gEfiPartitionRecordGuid
+  gEfiSMEMProtocolGuid
+  
+[Pcd.common]
+
+[Depex]
+  gEfiClockProtocolGuid
+  AND
+  gEfiTimerArchProtocolGuid
+  

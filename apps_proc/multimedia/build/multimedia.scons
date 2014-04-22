@@ -1,0 +1,52 @@
+#===============================================================================
+#
+# Multimedia AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/multimedia2/bsp/config/msm7x30/main/latest/build/multimedia.scons#7 $
+#  $DateTime: 2010/05/11 15:23:23 $
+#  $Author: dfrancis $
+#  $Change: 1295696 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+env.Append(CPPFLAGS = " -DFEATURE_APSS_AUDIO_FTM")
+
+if 'USES_CLEAN_PACK' not in env:
+  env.Append(CPPFLAGS = " -DFEATURE_APSS_AUDIO_MWS_TEST")
+#-------------------------------------------------------------------------------
+# Include PATHs to cover up the core bsp non CMI compliancy issues.
+# TODO: Need to eliminate once CBSP fixes the issues.
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Include PATHs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('EXTERNAL_MULTIMEDIA', [
+   # RE-VISIT:
+   '${INC_ROOT}/core/systemdrivers/clk/inc',
+   '${INC_ROOT}/core/systemdrivers/tlmm/inc',
+   '${INC_ROOT}/core/services/diag/src/',
+])
+
+#env.RequireExternalApi(['BREW'])
+
+env.LoadSoftwareUnits()
+
+

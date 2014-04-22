@@ -1,0 +1,18 @@
+#-------------------------------------------------------------------------------
+# $Header: //components/rel/mmcp.mpss/6.1.10/mmode/cm/src/cmlib.min#1 $
+# 
+# 
+# NET 
+#-------------------------------------------------------------------------------
+NET_SOURCES=\
+	net_lib.c 
+
+NET_OBJS := $(TARGETDIR)/net.lib
+
+vpath %.c $(CM)
+
+$(TARGETDIR)/net.lib : $(NET_SOURCES)
+	$(group_c_compile)
+
+
+

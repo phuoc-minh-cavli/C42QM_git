@@ -1,0 +1,68 @@
+#===============================================================================
+#
+# Context Change Detector
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/ccd/build/sns_ccd.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import os, inspect
+
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  Return()
+
+CBSP_API = [
+  'DAL',
+  'KERNEL',
+  'SYSTEMDRIVERS',
+  'DEBUGTOOLS',
+]
+
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  if 'SNS_ISLAND_INCLUDE_CCD' in env:
+    ccd_island_sections = ['.text.sns', '.data.sns', '.rodata.*']
+  else:
+    ccd_island_sections = ''
+
+  if env['MSM_ID'] in ['8250']:
+    ccd_flavor = ['common', 'v3.0']
+  else:
+    ccd_flavor = ['common', 'v2.0']
+
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+               ssc_protected_api = ['SNS_INTERNAL_INCLUDES'],
+               flavor = ccd_flavor,
+               core_public_api = CBSP_API,
+               clean_pack_list = ['*.c','*.h','*.proto'],
+               register_func_name = "sns_ccd_register",
+               island_sections = ccd_island_sections,
+               diag_ssid = "MSG_SSID_SNS_SENSOR_INT")
+
+if 'USES_QDSS_SWE' in env:
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [
+            ['SNS_CCD_AMD_REPORT_OUTPUT', '', 'F'],
+            ['SNS_CCD_WALK_REPORT_OUTPUT', '', 'F'],
+            ['SNS_CCD_TILT_REPORT_OUTPUT', '', 'F'],
+            ['SNS_CCD_CMD_REPORT_OUTPUT', '', 'F'],
+            ['SNS_CCD_TTW_REPORT_OUTPUT', '', 'F'],
+  ]
+  env.AddSWEInfo(QDSS_IMG, events)
+
+if 'SNS_TE_INT_DEBUG_ENABLE' in env:
+  env.Append(CPPDEFINES = ['SNS_TE_INT_DEBUG_ENABLE'])
+
+if 'SNS_CCD_CMD_ENABLE' in env:
+  env.Append(CPPDEFINES = ['SNS_CCD_CMD_ENABLE'])

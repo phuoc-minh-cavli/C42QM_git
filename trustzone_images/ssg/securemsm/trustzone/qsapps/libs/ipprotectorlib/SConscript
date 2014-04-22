@@ -1,0 +1,60 @@
+#===============================================================================
+#
+# IPProtector Lib
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018, 2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ssg.tz/1.1.3/securemsm/trustzone/qsapps/libs/ipprotectorlib/SConscript#2 $
+#  $DateTime: 2021/10/01 11:04:45 $
+#  $Author: pwbldsvc $
+#  $Change: 33254047 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains schedulerents describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+# when      who      what
+#-------------------------------------------------------------------------------
+#
+##===============================================================================
+Import('env')
+env = env.Clone()
+
+libname = 'ipprot_lib'
+
+includes = [
+    "${BUILD_ROOT}/core/api/services",
+    "${BUILD_ROOT}/core/api/kernel/libstd/stringl",
+    "${BUILD_ROOT}/core/kernel/smmu/ACv3.0/common/inc",
+    "${BUILD_ROOT}/ssg/api/securemsm/trustzone/qsee",
+    "${BUILD_ROOT}/ssg/api/securemsm/util",
+    "${BUILD_ROOT}/ssg/securemsm/accesscontrol/api",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/include",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/mink/elflib/inc",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/mink/include",
+    "${BUILD_ROOT}/ssg/securemsm/secutils/inc",
+    "$SDK_ROOT/inc/elf",
+]
+
+sources = Glob('*.c')
+
+ipprotlib = env.SecureAppLibBuilder(includes, sources, libname,
+    deploy_sources = ['SConscript', 'ipprotector_api.h'],
+    deploy_variants = env.GetDefaultPublicVariants(),
+    deploy_lib = True)
+
+if env.StandaloneSdk():
+  elflib = '$SDK_ROOT/libs/$APP_EXEC_MODE/elflib.lib'
+else:
+  elflib = [env.SConscript('${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/elflib/SConscript', exports='env')]
+
+env.DeploySdkLib(ipprotlib)
+
+libs = [ipprotlib, elflib]
+Return('libs')

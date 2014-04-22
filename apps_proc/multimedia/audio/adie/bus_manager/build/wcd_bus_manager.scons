@@ -1,0 +1,146 @@
+#===============================================================================
+#
+# Adie interrupt handler
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/adie/bus_manager/build/wcd_bus_manager.scons#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Change: 17929171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 12/10/10   OA     Initial version.
+#===============================================================================
+
+
+#required in order to use wildcards for compilation
+from glob import glob
+from os.path import join, basename
+
+
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+BASEPATH = "${BUILD_ROOT}/multimedia/audio/adie/bus_manager"
+env.VariantDir('${BUILDPATH}', BASEPATH , duplicate=0) 
+
+
+
+# TODO: get MSG macro to be used
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+#env.Append(CPPDEFINES = [
+#    "MSG_BT_SSID_DFLT=MSG_SSID_<NAME>",
+#])
+
+
+#TODO: verify non CoreBSP dependencies
+#-------------------------------------------------------------------------------
+# non CoreBSP dependencies
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'EXTERNAL_MULTIMEDIA'
+])
+
+env.RequirePublicApi([
+   'EXTERNAL_MULTIMEDIA'
+ ])
+
+env.RequireRestrictedApi([
+   'AUDIO'
+])
+
+env.RequirePublicApi([
+   'AUDIO'
+])
+
+
+#-------------------------------------------------------------------------------
+# Local Include PATHs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('WCD_BUS_MANAGER', [
+    '${BUILDPATH}/src'
+])
+
+
+#TODO: verify CoreBSP dependencies
+#-------------------------------------------------------------------------------
+# CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',   
+   'BUSES',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequirePublicApi('MMUTILS')
+env.RequireRestrictedApi('WCD_OSAL')
+env.RequireRestrictedApi('WCD_CODEC')
+env.RequireRestrictedApi('WCD_CODEC_INTERNAL')
+
+#-------------------------------------------------------------------------------
+# Defines per target
+#-------------------------------------------------------------------------------
+#if env['MSM_ID'] == '8960':
+#   env.Append(CC_DFLAGS = " -D<FLAG>")
+#elif env['MSM_ID'] == '<other>':
+#   env.Append(CC_DFLAGS = " -D<FLAG>")
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+WCDBM_SOURCES = ['${BUILDPATH}/src/' + basename(fname)
+              for fname in glob(join(env.subst(BASEPATH)+'/src/', '*.c'))]
+# print "DEBUG WCDBM_SOURCES glob:" + join(env.subst(BASEPATH)+'/src/', '*.c')
+
+wcd_b_m_objs = env.Object(WCDBM_SOURCES)
+
+#if env.has_key('USES_NO_STRIP_NO_ODM'):
+wcd_b_m_objs = env.Library('${BUILDPATH}/WCD_BM', wcd_b_m_objs)
+#else:
+#  wcd_b_m_objs = File(env.subst("${BUILDPATH}${LIBSUFFIX}"))
+
+#todo: investigate the debug info macros for qcom scons.
+# print "DEBUG WCD_SOURCES ARE:"
+# for fname in WCDBM_SOURCES:
+  # print "- ", fname
+
+# print "DEBUG WCDIH_OBJECTS ARE:"
+# for fname in wcd_b_m_objs:
+  # print "- ", fname
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   wcd_b_m_objs)

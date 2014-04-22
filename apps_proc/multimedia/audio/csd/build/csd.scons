@@ -1,0 +1,38 @@
+#===============================================================================
+#
+# CSD Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: fzhou $
+#  $Change: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 06/25/2013    unni        Treating warning as errors across entire CSD
+# 08/04/2010    fzhou       Initial revision
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all csd modules
+#-------------------------------------------------------------------------------
+
+env.Append(CFLAGS = "--diag_error=warning ")
+
+env.LoadSoftwareUnits()
+

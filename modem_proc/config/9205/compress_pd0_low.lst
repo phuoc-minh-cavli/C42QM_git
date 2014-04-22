@@ -1,0 +1,12 @@
+/* List of files to compress for CLADE Low Priority */
+
+*modem_proc/mmcp*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/uim*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/qmimsgs*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/mpower*:(  .text  .text.* .gnu.linkonce.t.* )
+*audio_avs*:(  .text  .text.* .gnu.linkonce.t.* )
+/* *platform*:(  .text  .text.* .gnu.linkonce.t.* ) */
+*modem_proc/gps*:( EXCLUDE_FILE(gts_api.o gts_drsync.o gts_log.o gts_ttr.o) .text EXCLUDE_FILE(gts_api.o gts_drsync.o gts_log.o gts_ttr.o) .text.* .gnu.linkonce.t.* )
+
+/*Do not remove alignment, Linker can only handle cache line aligned inputs for compression*/
+. = ALIGN(64);

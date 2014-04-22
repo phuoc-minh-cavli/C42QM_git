@@ -1,0 +1,40 @@
+#/** @file DevPrgNLib.inf
+#
+#  NandTarget Lib
+#
+#  Copyright (c) 2018,2019 Qualcomm Technologies, Inc . All rights reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 11/21/18   sl      Initial revision.
+#
+#==============================================================================
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandTargetLib
+  FILE_GUID                      = f2f541ae-deae-46ea-adec-f26b1763ccb1
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = NandTargetLib
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS= -Wno-address-of-packed-member -Werror
+
+[Sources]
+  ../../Settings/NAND/NandTargetLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  QcomPkg/Library/MuslLib/MuslLib.dec  
+
+[LibraryClasses]
+

@@ -1,0 +1,197 @@
+#===============================================================================
+#
+# external page library
+#
+# GENERAL DESCRIPTION
+#   Build script to produce external pager library 
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/perf.mpss/2.1.2.0/extpl/build/extpl.scons#5 $
+#  $DateTime: 2020/11/05 05:13:45 $
+#  $Author: pwbldsvc $
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who      what, where, why
+# ---------- -------- ----------------------------------------------------------
+# 07-15-2017 che      Created
+#===============================================================================
+import os
+Import('env')
+env = env.Clone()
+
+if 'USES_FEATURE_EXTERNAL_PAGING' not in env:
+  Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/perf/extpl"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.PublishPrivateApi( 'EXTPL', [ '${INC_ROOT}/perf/extpl/inc'] )
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'BREW',
+   'CS',
+   'MODEM_PMIC',
+   'MULTIMEDIA_DISPLAY',
+])
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'MPROC',
+   'MEMORY',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'SECUREMSM',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+EXTPL_API = ['EXTPL',]
+env.RequirePublicApi(CBSP_API,area='CORE')
+env.RequirePublicApi(CBSP_API)
+env.RequirePublicApi(EXTPL_API, area='PERF')
+env.RequirePublicApi(EXTPL_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi(['MCFG'], area='MCFG')
+env.RequirePublicApi(['DMM'], area='MSF')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+EXTPL_SRCS = [
+   '${BUILDPATH}/src/q6_dczero.s',
+   '${BUILDPATH}/src/extpl.c', 
+   '${BUILDPATH}/src/extpl_auth.c', 
+   '${BUILDPATH}/src/extpl_module.c', 
+   '${BUILDPATH}/src/extpl_swappool.c', 
+   '${BUILDPATH}/src/vmac.c', 
+   '${BUILDPATH}/src/extpl_heap.c', 
+   '${BUILDPATH}/src/extpl_nb1_heap.c',    
+   '${BUILDPATH}/src/qdsp6sw_read.c',       
+]
+
+EXTPL_TEST_SRCS=[
+   '${BUILDPATH}/test/extpl_test.c',
+   '${BUILDPATH}/test/nb1_dmm_test_tail.c',
+   '${BUILDPATH}/test/m1_dmm_test_tail.c',
+   '${BUILDPATH}/test/nb1_dmm_test_head.c',
+   '${BUILDPATH}/test/m1_dmm_test_head.c',
+   '${BUILDPATH}/test/gps_dmm_test_tail.c',
+   '${BUILDPATH}/test/geran_dmm_test_tail.c',
+   '${BUILDPATH}/test/gps_dmm_test_head.c',
+   '${BUILDPATH}/test/geran_dmm_test_head.c',
+   '${BUILDPATH}/test/ondemand_test_head.c',
+   '${BUILDPATH}/test/ondemand_test_tail.c',
+]
+
+sources = EXTPL_SRCS
+if env.has_key('USES_FEATURE_EXTPL_TEST'):
+  sources += EXTPL_TEST_SRCS
+
+if 'USES_FEATURE_EXTERNAL_PAGING' in env:
+  #['MODEM_MODEM']
+  # env.AddLibrary( ['CORE_QDSP6_SW'], '${BUILDPATH}/extpl', sources )
+  env.AddBinaryLibrary(['CORE_QDSP6_SW'], '${BUILDPATH}/extpl', sources, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+
+  RCINIT_IMG = ['CORE_QDSP6_SW']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group'  : 'RCINIT_GROUP_2',              # required
+      'init_name'       : 'extpl',                       # required
+      'init_function'   : 'extpl_init',                  # required
+      'dependencies'    : ['timer_init','sec', 'bam_drv']
+    })
+
+  if env.has_key('USES_FEATURE_EXTPL_TEST'):
+    RCINIT_IMG = ['CORE_QDSP6_SW']
+    env.AddRCInitFunc(
+      RCINIT_IMG,
+      {
+        'sequence_group'  : 'RCINIT_GROUP_2',              # required
+        'init_name'       : 'extpl_test',                  # required
+        'init_function'   : 'extpl_test_init',             # required
+        'dependencies'    : ['timer_init','qmi_fw',]
+      })
+
+  image_units =[]
+  primary_elf = env.RealPath("${BUILD_MS_ROOT}/orig_${TARGET_NAME}.elf")
+  if "PAGEONLY_IMG" in primary_elf or "SENSORONLY_IMG" in primary_elf:
+    Return()
+
+  env.LoadToolScript("${BUILD_ROOT}/perf/extpl/build/extpl_img_builder.py")
+
+  if env.has_key('USES_FEATURE_SIGNED_EXTERNAL_PAGING'):
+    env.LoadToolScript("${BUILD_ROOT}/tools/build/scons/sectools/sectools_builder.py")
+    extpl_build_path=env.subst("${BUILD_ROOT}/perf/extpl/build/tmp/")
+    #----------------------------------------------------------------------------
+    # build external paging elf image
+    #----------------------------------------------------------------------------
+    print "Generating external paging elf image... "
+    extpl_paging_elf = env.ExtplPagingElfBuilder(os.path.join(extpl_build_path, "qdsp6sw_paging.elf"), [primary_elf])
+
+    #----------------------------------------------------------------------------
+    # build external paging mbn image
+    #----------------------------------------------------------------------------
+    print "Generating external paging mbn image..."
+    unsigned_path = os.path.join(env.SectoolGetUnsignedInstallPath(install_base_dir=extpl_build_path), "qdsp6sw_paging.mbn") 
+    extpl_paging_mbn = env.MbnBuilder(unsigned_path, 
+                                      extpl_paging_elf, 
+                                      IMAGE_TYPE='qdsp6sw', 
+                                      MBN_TYPE="elf", 
+                                      FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+
+    #----------------------------------------------------------------------------
+    # Sectools signing
+    # Default mapping will be used if msm_jtag_mapping.xml does not exist
+    #----------------------------------------------------------------------------
+    print "Sectool sign external paging mbn image..."
+    install_root = env.subst('${MBN_ROOT}')
+    msm_jtag_mapping_path = env.RealPath('${BUILD_ROOT}/build/ms/msm_jtag_mapping.xml')
+    signed_mbn = env.SectoolBuilder(
+               target_base_dir = 'tmp', 
+               source=extpl_paging_mbn, 
+               sign_id="qdsp6sw",
+               msmid = env['MSM_ID'],
+               msm_jtag_mapping_file=msm_jtag_mapping_path)   
+    extpl_signed_paging_mbn = env.InstallAs(os.path.join(extpl_build_path, "qdsp6sw_paging.mbn"), signed_mbn)
+    signed_paging_mbn = env.InstallAs(os.path.join(install_root, "qdsp6sw_paging.mbn"), signed_mbn)
+
+    image_units += [
+       signed_paging_mbn,
+       extpl_signed_paging_mbn
+    ]
+  else:
+    bin_build_path =env.subst("${BUILD_MS_ROOT}/bin/${SHORT_BUILDPATH}")
+    extpl_paging_bin = env.ExtplPagingBinBuilder(os.path.join(bin_build_path, "qdsp6sw_paging.bin"), [primary_elf])
+    image_units += extpl_paging_bin
+    
+  #=========================================================================
+  # Finish up...
+  env.BindAliasesToTargets(image_units)  

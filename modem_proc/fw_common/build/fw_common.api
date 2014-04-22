@@ -1,0 +1,26 @@
+#===============================================================================
+#
+# Modem firmware wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load API's for modem/fw
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/fw/components/fw_common.mpss/rel/15.2/release/build/fw_common.api#1 $
+#  $DateTime: 2023/04/13 01:31:09 $
+#
+#===============================================================================
+import os
+Import('env')
+
+path = env.subst('${INC_ROOT}/fw/common/api')
+if os.path.exists(path):
+  env.PublishPublicApi('FW_COMMON', ["${INC_ROOT}/fw/common/api"])
+else:
+  env.PublishPublicApi('FW_COMMON', ["${INC_ROOT}/fw_common/api"])
+env.LoadAPIUnits()

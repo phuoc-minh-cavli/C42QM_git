@@ -1,0 +1,35 @@
+//===========================================================================
+//
+// FILE:         daltpdm.xml
+//
+// DESCRIPTION:  This file contains the DAL XML properties for the TPDM
+//               Device Access Library.
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header: $
+//
+// when       who     what, where, why
+// --------   ---     -------------------------------------------------------
+// 08/05/15   ps     Initial revision for 9x55 
+//
+//===========================================================================
+//             Copyright (c) 2015, 2019 QUALCOMM Technologies Inc.
+//                    All Rights Reserved.
+//                  QUALCOMM Proprietary/GTDR
+//===========================================================================
+
+#include "../../dal/src/DalTPDM.h"
+<driver name="TPDM">
+<device id="DALDEVICEID_TPDM">
+//follows data set type dictated by specification: 2: CMB, 3: DSB    
+<props name="tpdm_device_attributes" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      tpdm_device_attributes
+</props>
+<props name="tpdm_device_attributes_len" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+	tpdm_device_attributes_len
+</props>
+</device>
+</driver>

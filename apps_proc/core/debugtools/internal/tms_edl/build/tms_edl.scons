@@ -1,0 +1,77 @@
+#===============================================================================
+#
+# TMS_EDL Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-18 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtools/internal/tms_edl/build/tms_edl.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/internal/tms_edl/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'PRODUCTS_SCM',
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+TMS_EDL_SOURCES =  [
+   '${BUILDPATH}/tms_edl.c',
+]
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(['CORE_APPS'], 
+    '${BUILDPATH}/tms_edl', TMS_EDL_SOURCES)
+
+if 'USES_RCINIT' in env:
+   env.AddRCInitFunc( 
+    ['CORE_APPS'], 
+    {
+     'sequence_group'             : 'RCINIT_GROUP_2',          # required
+     'init_name'                  : 'tms_edl_init',            # required
+     'init_function'              : 'tms_edl_init',            # required
+     'dependencies'               : ['scm',],
+    })
+

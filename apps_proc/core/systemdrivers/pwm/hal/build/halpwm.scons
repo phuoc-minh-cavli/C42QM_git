@@ -1,0 +1,88 @@
+#===============================================================================
+#
+# HAL PWM LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/pwm/hal/build/halpwm.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+import os
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "../"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+  'HAL',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+
+  # Needs to be last for wrong comdef.h
+  'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+HAL_PWM_BUILD_ROOT = os.getcwd();
+
+
+env.PublishPrivateApi("SYSTEMDRIVERS_PWM_HAL", [
+  HAL_PWM_BUILD_ROOT + "/../inc",
+  HAL_PWM_BUILD_ROOT + "/../src",
+])
+
+#-------------------------------------------------------------------------------
+# Image Definitions
+#-------------------------------------------------------------------------------
+
+HALPWM_IMAGES = ['CORE_APPS']
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+PWM_SOURCES = [
+  '${BUILDPATH}/hw/${CHIPSET}/HALpwmPlatform.c',
+  '${BUILDPATH}/src/HALpwm.c'
+]
+
+#-------------------------------------------------------------------------------
+# Add libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(HALPWM_IMAGES, '${BUILDPATH}/HALpwm', PWM_SOURCES)
+
+#---------------------------------------------------------------------------
+# Pack out target specific files not needed
+#---------------------------------------------------------------------------
+
+# Remove target specific hardware files
+ALL_HW_FILES = env.FindFiles(
+  ['*'],
+  '../hw/')
+MY_HW_FILES = env.FindFiles(
+  ['*'],
+  '../hw/${CHIPSET}')
+PACK_HW_FILES = list(set(ALL_HW_FILES) - set(MY_HW_FILES))
+env.CleanPack(HALPWM_IMAGES, PACK_HW_FILES)

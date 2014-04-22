@@ -1,0 +1,91 @@
+#===============================================================================
+#
+# Dynamic Loading Support Libs
+#
+#
+# Copyright (c) 2014 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when               who         what, where, why
+# --------           ---         -----------------------------------------------
+# 1/22/15          amitkulk      created 
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+core_public_apis = [
+   'DLFWK',
+   'RTLD',
+   'SERVICES',
+   'STORAGE',
+   'SECUREMSM',
+   'DAL',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'KERNEL',
+   ]
+
+platform_public_apis = ['RTLD',]
+
+env.RequirePublicApi(core_public_apis, area='core')
+env.RequirePublicApi(platform_public_apis, area='platform')
+
+env.RequireRestrictedApi([
+  'DLFWK',
+  'SERVICES',
+  'SECUREMSM',
+  'DAL',
+  'SYSTEMDRIVERS',
+  'STORAGE',
+  'KERNEL',
+  ])
+
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${MPSS_DLFWK_ROOT}/dlwSrc/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+DLW_SOURCES =  [
+   '${BUILDPATH}/dlw.c',
+   ]
+
+IMAGES = ['APPS_IMAGE', 'CBSP_APPS_IMAGE', 'CORE_APPS']
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+dlw_lib = env.AddBinaryLibrary(IMAGES,'${BUILDPATH}/dlwSrc', DLW_SOURCES)
+
+
+#-------------------------------------------------------------------------------
+# RC INIT
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   env.AddRCInitFunc(           # Code Fragment in TMC: YES
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_DALSYS_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_2',                # required
+     'init_name'                  : 'dynamic_loader_fwk',            # required
+     'init_function'              : 'dlw_Init',                      # required
+     #'dependencies'               : ['',]
+    })
+
+#-------------------------------------------------------------------------------
+# Load Subunits (sys)
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+
+
+

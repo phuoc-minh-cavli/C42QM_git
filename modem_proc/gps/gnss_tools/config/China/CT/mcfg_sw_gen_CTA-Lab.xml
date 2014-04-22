@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+<NvItemData name="GPSOne Capabilities" id="400" description="" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_capabilities" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+</NvItemData>
+<NvItemData name="AAGPS Positioning Modes Supported" id="1920" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="aagps_positioning_modes_supported" description="" comment="" sizeOf="1" type="uint32">65407 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Vx LCS Agent" id="1993" description="Item to disable or enable Vx LCS Agent functionality" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_vx_lcs_agent" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Vx Application Trusted Settings" id="1994" description="Bitmap indicating whether applications are Trusted or Non-Trusted" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_vx_app_trusted_settings" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Vx Dedicated SMS Teleservice Identifier" id="1995" description="GPSOne Vx dedicated SMS Teleservice Identifier" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_vx_ni_teleservice_id" description="" comment="" sizeOf="1" type="int16">65001 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Vx MO Max Duration" id="1997" description="Max SPPReq duration for MO Non-Trusted. Default val 0xffff." comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_vx_mo_max_duration" description="" comment="" sizeOf="1" type="int32">4294967295 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Seed Position Option" id="3520" description="Seed Position Engine Option Mask" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="seedpos_option_type" description="Seed Position Engine Option Mask" comment="" sizeOf="1" type="int16">65533 </Member>
+</NvItemData>
+<NvItemData name="AAGPS Use Transport Security" id="3758" description="Enable User Plane Secure Transport" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="use_security" description="Enable User Plane Secure Transport" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvItemData>
+<NvItemData name="CGPS 1X MPC Server Address IPV4" id="4698" description="1X MPC Server Address IPV4" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="cgps_1x_mpc_server_addr_ipv4" description="" comment="" sizeOf="1" type="uint32">180819621 </Member>
+</NvItemData>
+<NvItemData name="CGPS 1X MPC Server Port" id="4705" description="1X MPC Server Port" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="cgps_1x_mpc_server_port" description="" comment="" sizeOf="1" type="uint32">6066 </Member>
+</NvItemData>
+<NvItemData name="CGPS MO Method" id="4707" description="MO Method" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="cgps_mo_method" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvItemData>
+<NvItemData name="ARP Stats" id="4927" description="Enable/disable feature" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_time_info_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvItemData>
+<NvItemData name="GPSOne Lock" id="452" description="" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_lock" description="" comment="" sizeOf="1" type="uint32">0 </Member>
+</NvItemData>
+<NvItemData name="GNSS OEM Feature Mask" id="7165" description="OEM feature mask" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gnss_OEM_Feature_Mask" description="" comment="" sizeOf="1" type="uint32">2048 </Member>
+</NvItemData>
+<NvItemData name="MFLO MLC PLP Stats Post Params Ver2" id="4627" description="Enable/Disable gpsOneXTRA feature" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_enabled" description="Enable/Disable gpsOneXTRA feature" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvItemData>
+<NvItemData name="MFLO MLC Location Dynamic Params Ver2" id="4628" description="Number of hours between automatic downloads" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_download_interval" description="Number of hours between automatic downloads" comment="" sizeOf="1" type="uint16">24 </Member>
+</NvItemData>
+<NvItemData name="MFLO Bound Stream List Params Ver2" id="4629" description="Number of unsuccessful download attempts before aborting (xtra client)" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_num_download_attempts" description="Number of unsuccessful download attempts before aborting (xtra client)" comment="" sizeOf="1" type="uint8">3 </Member>
+</NvItemData>
+<NvItemData name="MFLO Stream Layer Header Info Static Params" id="4630" description="Number of minutes between download attempts" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_time_between_attempts" description="Number of minutes between download attempts" comment="" sizeOf="1" type="uint8">10 </Member>
+</NvItemData>
+<NvItemData name="GPSOne XTRA Auto Download Enabled" id="4631" description="Enable/disable automatic periodic downloads of gpsOneXTRA files" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps1_xtra_auto_download_enabled" description="Enable/disable automatic periodic downloads of gpsOneXTRA files" comment="" sizeOf="1" type="uint8">0 </Member>
+</NvItemData>
+<NvItemData name="CGPS NMEA Configuration Information" id="5047" description="CGPS NMEA Configuration Information" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="nmea_port_type" description="NMEA Port Type" comment="" sizeOf="1" type="uint32">2 </Member>
+	<Member name="nmea_reporting_type" description="NMEA Reporting Type" comment="" sizeOf="1" type="uint32">0 </Member>
+</NvItemData>
+<NvItemData name="GPS Default Operating Mode" id="6273" description="GPS Default Operating Mode" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps_default_operating_mode" description="GPS Default Operating Mode" comment="" sizeOf="1" type="uint32">1 </Member>
+</NvItemData>
+<NvItemData name="GPS Default TBF" id="6274" description="GPS Default Operating Mode" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="gps_default_tbf" description="GPS Default Operating Mode" comment="" sizeOf="1" type="uint32">1 </Member>
+</NvItemData>
+<NvItemData name="GPS Information" id="4116" description="NACC support bitmask for W2G(0x1) and G2W(0x2) procedures" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="interrat_nacc_support" description="NACC support bitmask for W2G(0x1) and G2W(0x2) procedures" comment="" sizeOf="1" type="uint8">4 </Member>
+</NvItemData>
+<NvEfsItemData name="gnss_agps_rat_pref_config" id="67217" description="AGPS RAT Preference" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_agps_rat_pref_config">
+	<Member name="umts_lte_prefered" description="Whether UMTS/LTE to be prefered over other RAT's when camped on more than one RAT." comment="" sizeOf="1" type="uint8">0 </Member>
+	<Member name="agps_rat_enable_bitmask" description="Bit mask to enable/disable AGPS on RAT's" comment="" sizeOf="1" type="int16">65535 </Member>
+</NvEfsItemData>
+<NvEfsItemData name="gnss_1x_up_supl_enable" id="65811" description="NV to enable/disable SUPL as 1x up protocol" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_1x_up_supl_enable">
+	<Member name="gnss_1x_up_supl_enable" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+</NvEfsItemData>
+<NvEfsItemData name="gnss_concurrent_sessions_support_config" id="73938" description="GNSS SM Concurrent Sessions Support Config" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_concurrent_sessions_support_config">
+	<Member name="concurrent_sessions_support_config" description="GNSS SM Concurrent Sessions Support Config" comment="" sizeOf="1" type="uint32">0 </Member>
+</NvEfsItemData>
+<NvEfsItemData name="bypass_gnss_aiding_check" id="74194" description="Bypass GNSS Aiding Check" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/bypass_gnss_aiding_check">
+	<Member name="bypass_gnss_aiding_check" description="Bypass GNSS Aiding Check" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvEfsItemData>
+<NvEfsItemData name="bypass_xtra_validity_check" id="74231" description="Bypass XTRA Validity Check" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/bypass_xtra_validity_check">
+	<Member name="bypass_xtra_validity_check" description="Bypass XTRA Validity Check" comment="" sizeOf="1" type="uint8">1 </Member>
+</NvEfsItemData>
+</NvData>

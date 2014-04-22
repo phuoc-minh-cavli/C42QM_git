@@ -1,0 +1,64 @@
+#===============================================================================
+#
+# Modem MCS API wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load API's for modem/mcs
+#
+#                        COPYRIGHT INFORMATION
+#
+# Copyright (c) 2010, 2012 - 2013, 2015, 2018 QUALCOMM Technologies, Inc (QTI) and its licensors.
+# All Rights Reserved.  QUALCOMM Technologies Proprietary.
+# Export of this technology or software
+# is regulated by the U.S. Government. Diversion contrary to U.S. law prohibited.
+# 
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/uim.mpss/3.3.1/build/uim.api#1 $
+#  $DateTime: 2020/07/22 10:53:27 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 08/20/18   dd      DS folder name change from datamodem to dataiot
+# 11/25/15   sp      Updated copyright
+# 09/22/15   kr      Remove invalid paths
+# 11/01/13   vr      QTF CRM MOB compilation
+# 06/18/13   av      Fallback to SFS if SFP not available
+# 02/26/13   at      Added obdapp paths
+# 09/18/12   nk      Changes to support modem folder removal
+# 05/03/12   jgr     Add moved public files
+# 07/10/10   enj     Initial revision
+#
+#===============================================================================
+Import('env')
+
+env.Replace(UIM_ROOT = '${INC_ROOT}/uim')
+
+env.PublishPublicApi('UIM',             ["${UIM_ROOT}/api",])
+env.PublishPublicApi('PUBLIC',        ["${UIM_ROOT}/api/public", ])
+
+env.PublishRestrictedApi('VIOLATIONS',[
+        '${INC_ROOT}/dataiot/interface/qmicore/inc',
+        '${INC_ROOT}/dataiot/interface/sysapi/inc',
+        '${INC_ROOT}/dataiot/interface/qmidata/inc',
+        '${INC_ROOT}/dataiot/interface/tasks/inc',
+        '${INC_ROOT}/dataiot/cust/inc',
+        '${INC_ROOT}/dataiot/interface/atcop/inc',
+        '${INC_ROOT}/dataiot/interface/utils/inc',
+        '${INC_ROOT}/dataiot/interface/api',
+        '${INC_ROOT}/dataiot/interface/rmifacectls/inc',
+        '${INC_ROOT}/dataiot/variation/inc',
+        '${INC_ROOT}/core/buses/api/icb',
+        '${INC_ROOT}/uim/obdapp/inc',
+        '${INC_ROOT}/uim/obdapp/src',
+        '${INC_ROOT}/core/cust/inc'
+        ])
+
+env.LoadAPIUnits()

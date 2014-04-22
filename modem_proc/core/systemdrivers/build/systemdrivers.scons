@@ -1,0 +1,44 @@
+#===============================================================================
+#
+# System Drivers Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/build/systemdrivers.scons#1 $
+#  $DateTime: 2018/06/26 03:18:17 $
+#  $Author: pwbldsvc $
+#  $Change: 16502877 $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all system drivers components
+#-------------------------------------------------------------------------------
+
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+import os
+
+hextool_ver = str(os.environ.get('HEXAGON_RTOS_RELEASE', '0'))[0]
+if int(hextool_ver)<6:
+  env.Append(CFLAGS = "-Werror ")
+
+if env.CheckAlias('devcfg_img'):
+   env.Append(CFLAGS = ' -Wno-unused-function')  
+  
+  
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+
+env.LoadSoftwareUnits()
+

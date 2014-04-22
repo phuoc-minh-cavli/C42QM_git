@@ -1,0 +1,48 @@
+AsnTileHeader DEFINITIONS AUTOMATIC TAGS ::= BEGIN 
+EXPORTS;
+
+/*
+2011/11/14 Mac: changed lat/lon/steps all into REAL to be inline with the main NDD.
+                Add engineering units at the tail of fields as per review comments.
+*/
+
+/*
+download header version 1.0.0 - to be modified when changes are made to file
+*/
+
+FileOffset      ::= INTEGER (0..4294967295)
+
+TimeStampL64    ::= INTEGER (-9223372036854775808..9223372036854775807)
+
+TileHeader ::= SEQUENCE {
+  formatVersion         INTEGER (1..65535),
+
+  latitude_deg          REAL, /* in degrees */
+  longitude_deg         REAL, /* in degrees */
+  step_in_latitude_deg  REAL, /* in degrees */
+  step_in_longitude_deg REAL, /* in degrees */
+
+  time_of_file_creation_msec TimeStampL64, 
+  contentVersion        INTEGER (1..4294967295),
+
+  max_age_hour          INTEGER (1..65535),
+  level_of_detail       INTEGER (1..255),
+  num_access_points     INTEGER (0..4294967295),
+
+  /*
+    This section is only needed if the number of access points is greater than one.
+    The support for extension addition group [[version: list]] is buggy in Obj-Sys ASN1C 6.4.4.
+   */
+  offset_MAC_section    FileOffset OPTIONAL,
+  offset_AP_section     FileOffset OPTIONAL,
+  /*size_per_AP_record should be at least num_bytes_for_distancex2 + 1. 
+  The 1-byte is for error */
+  /* doesn't include 6 bytes taken by MAC address*/
+  size_per_AP_record    INTEGER (3..65535) OPTIONAL,
+  num_bytes_for_distance  INTEGER (1..4)   DEFAULT 1,
+  distance_unit_in_meters INTEGER (1..255) DEFAULT 5,
+
+  ...
+}
+
+END

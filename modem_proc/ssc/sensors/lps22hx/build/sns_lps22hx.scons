@@ -1,0 +1,64 @@
+#===============================================================================
+#
+# lps22hx sensor implementation
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: 
+#  $DateTime: 
+#  $Change: 
+#
+#===============================================================================
+Import('env')
+import os,inspect
+
+# To add island support for drivers:
+# 1. Refactor driver files to separate all island mode functions in a separate
+#    file(s) with filenames ending in "_island". See 80-P9361-1 for details.
+#    Example: sns_lps22hx_hal_island.c
+# 2. Use a dedicated environment flag to check if island mode is enabled for the
+#    driver. Use format SNS_ISLAND_INCLUDE_<sensor_name>
+#    Example: SNS_ISLAND_INCLUDE_LPS22HX.
+# 3. Use this flag to decide whether add_island_files is set to True ot False
+#    when env.AddSSCSU() is called.
+# 4. Include the flag in build flag options (-f) to enable island mode for
+#    the driver.
+
+if 'SSC_TARGET_HEXAGON' not in env['CPPDEFINES']:
+  Return()
+
+lps22hx_island_enable = False
+if 'SNS_ISLAND_INCLUDE_LPS22HX' in env:
+  lps22hx_island_enable = True
+  
+if 'SNS_DISABLE_REGISTRY' not in env:
+  env.Append( CPPDEFINES = ['LPS22HX_ENABLE_REGISTRY_ACCESS'])
+
+if 'SSC_INCLUDE_SENS_VEND_LIBS' in env and ('sns_lps22hx' in env['SSC_INCLUDE_SENS_VEND_LIBS']):
+  # HY11 builds - ship as source
+  clean_pack_list = []
+  binary_lib = False
+  if 'SENSORS_DD_DEV_FLAG' in env:
+    # HD22 builds - ship as binary_lib
+    clean_pack_list = ['*.c','*.h','*.proto','*.json']
+    binary_lib = True
+else:
+  # Delete the NPOR driver from pack builds
+  clean_pack_list = ['*']
+  binary_lib = False
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             clean_pack_list = clean_pack_list,
+             register_func_name = "sns_register_lps22hx",
+             binary_lib = True,
+             add_island_files = lps22hx_island_enable,
+             diag_ssid = "MSG_SSID_SNS_SENSOR_EXT")
+

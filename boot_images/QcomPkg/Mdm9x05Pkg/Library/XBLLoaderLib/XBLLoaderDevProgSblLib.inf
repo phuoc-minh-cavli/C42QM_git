@@ -1,0 +1,69 @@
+#/** @file XBLLoaderDevProgSblLib.inf
+#
+#  XBL Loader Lib
+#  
+#  Copyright (c) 2019 Qualcomm Technologies, Inc.
+#  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 19/05/08   as      Add enhancements in hsuart transport layer
+# 06/19/19   as      Refered the file from XBLLoaderDevProgLib.inf
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = XBLLoaderDevProgLib
+  FILE_GUID                      = B800C0C0-4C06-11E5-B970-0800200C9A66
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = XBLLoaderDevProgLib
+
+[Sources.common]
+  sbl1_mc.c
+  sbl1_target.c
+  sbl1_hw.c
+  sbl1_config.c
+  boot_cdt_array.c
+  boot_rollback_img_set.c
+  boot_dload.c
+  sys_debug_mc.c
+
+
+[Sources.Arm]
+  sbl1.s
+
+[Sources.AARCH64]
+  sbl1_Aarch64.s |GCC
+  sbl1_sdi_Aarch64.s |GCC
+  
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -Werror -DBOOT_LOADER -DBOOT_WATCHDOG_DISABLED -DBOOT_PBL_H=\"pbl_sbl_shared.h\"  -DBUILD_BOOT_CHAIN -DRAM_PARTITION_TABLE_H=\"ram_partition.h\" -DBOOT_INTERNAL_HEAP_SIZE=0x05000 -DBOOT_EXTERNAL_HEAP_SIZE=0x10000 -DFEATURE_BOOT_LOAD_ELF -DFEATURE_BOOT_SKIP_ELF_HASH_VERIFICATION -DFEATURE_BOOT_VERSION_ROLL_BACK -DUSE_GNU_LD -DUSE_LOADER_UTILS   -DFEATURE_BOOT_LOGGER_RAM -DFEATURE_BOOT_LOGGER_TIMER -DFEATURE_BOOT_LOGGER_JTAG -DFEATURE_BOOT_LOGGER_UART -DFEATURE_BOOT_EXTERN_SECIMG_AUTH_COMPLETED -DFEATURE_SBL_DEVICEPROGRAMMER_IMAGE
+
+[Packages]
+  MdePkg/MdePkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec  
+  QcomPkg/Mdm9x05Pkg/Mdm9x05Pkg.dec
+  QcomPkg/Mdm9x05Pkg/Library/XBLLoaderLib/XBLLoaderLibPkg.dec
+  QcomPkg/Library/MuslLib/MuslLib.dec  
+  
+[LibraryClasses]
+  MuslLib
+  PrintLib
+  BaseLib
+  BaseMemoryLib
+  XBLCommonLib
+
+[FixedPcd]
+  gQcomTokenSpaceGuid.PcdBuildType
+
+

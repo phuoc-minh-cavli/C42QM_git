@@ -1,0 +1,3593 @@
+;#<FEEDBACK># ARM Linker, 5050106: Last Updated: Mon Jul 24 00:08:43 2023
+;VERSION 0.2
+;FILE AdcScalingUtil.o
+;FILE CLpr.o
+CLpr_deinit <= USED 0
+;FILE CLprRegistry.o
+CLprRegistry_deinit <= USED 0
+;FILE CLprm.o
+CLprm_deinit <= USED 0
+safe_signed_addition <= USED 0
+safe_signed_truncate <= USED 0
+;FILE CSManager.o
+_ZN12izat_gtpwwan8readCSDbEi <= USED 0
+_ZN12izat_gtpwwan9CSManager21onScanReqTimerExpiredEv <= USED 0
+_ZN12izat_gtpwwan9CSManager21saveScanCSConfigInEFSEP16ScanCsConfigInfo <= USED 0
+_ZN12izat_gtpwwan9CSManager24startActiveCrowdSourcingEv <= USED 0
+_ZN12izat_gtpwwan9CSManager25getCTechSwitchPunc99ValueEi <= USED 0
+_ZN12izat_gtpwwan9CSManager27calculateCSActiveTargetTimeEv <= USED 0
+_ZN12izat_gtpwwan9CSManager27saveScanActiveCSConfigInEFSEP17ScanCsActivConfig <= USED 0
+_ZN12izat_gtpwwan9CSManager8openCsDbEv <= USED 0
+;FILE CeML_Apss.o
+;FILE ClockApps.o
+;FILE ClockAppsDCVS.o
+;FILE ClockAppsLite.o
+Clock_DisablePRNG <= USED 0
+Clock_EnablePRNG <= USED 0
+;FILE ClockAppsPLL.o
+;FILE ClockAppsXO.o
+;FILE ClockBIST.o
+;FILE ClockDriver.o
+;FILE ClockFwk.o
+Clock_GetCtxt <= USED 0
+;FILE ClockLegacy.o
+clk_regime_init_nv <= USED 0
+;FILE ClockSources.o
+;FILE ClockVoltage.o
+Clock_VoltageResume <= USED 0
+Clock_VoltageSuspend <= USED 0
+;FILE ContextBase.o
+_ZN9izat_core11ContextBase18isFeatureSupportedEh <= USED 0
+;FILE CoreConfig.o
+CoreConfig_ReadString <= USED 0
+CoreConfig_ReadUint32 <= USED 0
+;FILE CoreEventNotification.o
+Core_EventDeRegister <= USED 0
+;FILE CoreHeap.o
+;FILE CoreMutex.o
+Core_MutexTryLock <= USED 0
+;FILE CoreMutexImpl.o
+;FILE CoreObjectQueue.o
+Core_ObjectDequeue <= USED 0
+;FILE CorePool.o
+Core_PoolLock <= USED 0
+Core_PoolUnlock <= USED 0
+;FILE CoreThreadImpl.o
+;FILE DALDevice.o
+DALDeviceFwk_DeInit <= USED 0
+;FILE DALGlbCtxt.o
+;FILE DALInterruptController.o
+;FILE DALInterruptControllerFwk.o
+;FILE DALProps.o
+DALSYS_GetDALPropertyHandleEx <= USED 0
+DALSYS_GetDALPropertyHandleStrEx <= USED 0
+;FILE DALSysInt.o
+DALSYS_GetDAL_Mod <= USED 0
+DALSYS_GetPropDir <= USED 0
+;FILE DALTLMM.o
+;FILE DALTLMMFwk.o
+;FILE DALTLMMState.o
+;FILE DALTsens.o
+;FILE DALTsensFwk.o
+;FILE DDISpmi.o
+;FILE DalAdc.o
+;FILE DalAdcFwk.o
+;FILE DalCTI.o
+;FILE DalChipInfo.o
+;FILE DalChipInfoFwk.o
+;FILE DalChipInfoLocal.o
+ChipInfo_GetManufacturer <= USED 0
+ChipInfo_GetRawManufacturer <= USED 0
+;FILE DalChipPower.o
+;FILE DalChipPowerMaster.o
+;FILE DalHWEvent.o
+;FILE DalHWIO.o
+;FILE DalHWIOFwk.o
+;FILE DalHWIOMap.o
+;FILE DalIPCInt.o
+IPCInt_Test <= USED 0
+;FILE DalIPCIntFwk.o
+;FILE DalPWM.o
+;FILE DalPWMFwk.o
+;FILE DalSTMCfg.o
+;FILE DalSTMTrace.o
+__asm___13_DalSTMTrace_c_4d734576__incr2_word_write <= USED 0
+__asm___13_DalSTMTrace_c_4d734576__incr4_word_write <= USED 0
+;FILE DalSpi.o
+;FILE DalSpiFwk.o
+;FILE DalTFunnel.o
+;FILE DalTMC.o
+;FILE DalTPDA.o
+;FILE DalTPDM.o
+;FILE DalTimetick.o
+;FILE DalTimetickFwk.o
+;FILE DalUart.o
+DalUart_PowerCapabilities <= USED 0
+DalUart_PowerGet <= USED 0
+DalUart_PurgeRx <= USED 0
+DalUart_SetCharFormat <= USED 0
+DalUart_TxSingleChar <= USED 0
+;FILE DalUartDma.o
+;FILE DalVAdc.o
+VAdc_GetHardwareChannel <= USED 0
+;FILE DalVAdcFwk.o
+;FILE FlpLocationAdapter.o
+_ZN18FlpLocationAdapter20enableGtpWwanCommandEv <= USED 0
+_ZN18FlpLocationAdapter21disableGtpWwanCommandEv <= USED 0
+_ZN18FlpLocationAdapter23isMotionTrackingSessionEP11LocationAPIj <= USED 0
+_ZN18FlpLocationAdapter26clearAllSingleShotSessionsEv <= USED 0
+_ZN18FlpLocationAdapter26setControlCallbacksCommandER24LocationControlCallbacks <= USED 0
+_ZN18FlpLocationAdapter27gnssDeleteAidingDataCommandER14GnssAidingData <= USED 0
+_ZN18FlpLocationAdapter30anySingleShotWwanSessionActiveEv <= USED 0
+;FILE FlpSlimClient.o
+;FILE FlpTimer.o
+;FILE GPIOInt.o
+GPIOIntr_InterruptNotify <= USED 0
+GPIOIntr_ReleaseDirectConnectInterrupt <= USED 0
+;FILE GPIOIntFwk.o
+;FILE GeofenceAdapter.o
+_ZN15GeofenceAdapter17pauseGeofenceItemEj <= USED 0
+_ZN15GeofenceAdapter18modifyGeofenceItemEjRK14GeofenceOption <= USED 0
+_ZN15GeofenceAdapter18resumeGeofenceItemEj <= USED 0
+_ZN15GeofenceAdapter21pauseGeofencesCommandEP11LocationAPIjPj <= USED 0
+_ZN15GeofenceAdapter22modifyGeofencesCommandEP11LocationAPIjPjP14GeofenceOption <= USED 0
+_ZN15GeofenceAdapter22resumeGeofencesCommandEP11LocationAPIjPj <= USED 0
+;FILE GtpProtocol.o
+_ZN12izat_gtpwwan11GtpProtocol30gtp_xta_encode_generic_cell_idEP9LocCellId <= USED 0
+_ZN12izat_gtpwwan9gtp_crc32EPvj <= USED 0
+;FILE GtpProtocolUtil.o
+gtp_xta_get_inserter_ptr <= USED 0
+;FILE GtpWwanClient.o
+_ZN12izat_gtpwwan13GtpWwanClient24onConnectionStatusChangeEbb <= USED 0
+;FILE GtpWwanConfig.o
+;FILE GtpWwanDataRequest.o
+;FILE GtpWwanIzatAdapter.o
+_ZN12izat_gtpwwan18GtpWwanIzatAdapter11InitCommandEv <= USED 0
+_ZN12izat_gtpwwan18GtpWwanIzatAdapter14cleanUpCommandEv <= USED 0
+_ZN12izat_gtpwwan18GtpWwanIzatAdapter22SendMsgRequestFdclListEP13LocFdclBsList <= USED 0
+;FILE GtpWwanNvItems.o
+_ZN12izat_gtpwwan14GtpWwanNvItems14getRetryNumberEv <= USED 0
+_ZN12izat_gtpwwan14GtpWwanNvItems14setRetryNumberEy <= USED 0
+_ZN12izat_gtpwwan14GtpWwanNvItems17getRetryAfterTimeEv <= USED 0
+;FILE GtpWwanTimer.o
+;FILE HALTcsrIntSel.o
+;FILE HAL_hsusb_MDM9x06.o
+;FILE HAL_hsusb_impl.o
+HAL_hsusb_ClearL1EntryCounts <= USED 0
+HAL_hsusb_GetAHBBufferableDataAccess <= USED 0
+HAL_hsusb_GetAHBClkGate <= USED 0
+HAL_hsusb_GetAhbBurstMode <= USED 0
+HAL_hsusb_GetAsyncBridgesBypass <= USED 0
+HAL_hsusb_GetBRemoteWake <= USED 0
+HAL_hsusb_GetDatalinePulsingReset <= USED 0
+HAL_hsusb_GetDebugL1Enable <= USED 0
+HAL_hsusb_GetDevicePEStateReset <= USED 0
+HAL_hsusb_GetDevicePortChirpKTime <= USED 0
+HAL_hsusb_GetDevicePortPreChirpKTime <= USED 0
+HAL_hsusb_GetEndpointPipeID <= USED 0
+HAL_hsusb_GetFs3Wire2WireSelect <= USED 0
+HAL_hsusb_GetGrantStolen <= USED 0
+HAL_hsusb_GetHIRD <= USED 0
+HAL_hsusb_GetHSICClkGate <= USED 0
+HAL_hsusb_GetHSICClkPllBypassNL <= USED 0
+HAL_hsusb_GetHSICClkPllReset <= USED 0
+HAL_hsusb_GetHostSimTimersStdMode <= USED 0
+HAL_hsusb_GetHostSimTimersSuspMode <= USED 0
+HAL_hsusb_GetHprotMode <= USED 0
+HAL_hsusb_GetIncrOverride <= USED 0
+HAL_hsusb_GetIsoInZlpPrime <= USED 0
+HAL_hsusb_GetIsochronousBugFix <= USED 0
+HAL_hsusb_GetL1FPR <= USED 0
+HAL_hsusb_GetL1GateAhbClkEnable <= USED 0
+HAL_hsusb_GetL1GateFsXcvrClkEnable <= USED 0
+HAL_hsusb_GetL1GateSysClkEnable <= USED 0
+HAL_hsusb_GetL1GateXcvrClkEnable <= USED 0
+HAL_hsusb_GetL1LPMEnable <= USED 0
+HAL_hsusb_GetL1LongEntryCount <= USED 0
+HAL_hsusb_GetL1PhyLPMEnable <= USED 0
+HAL_hsusb_GetL1PllPwrDwnEnable <= USED 0
+HAL_hsusb_GetL1PllTurnoffMinHird <= USED 0
+HAL_hsusb_GetL1RemoteWakeupEnable <= USED 0
+HAL_hsusb_GetL1RemoteWakeupTime <= USED 0
+HAL_hsusb_GetL1ShortEntryCount <= USED 0
+HAL_hsusb_GetL1State <= USED 0
+HAL_hsusb_GetLastError <= USED 0
+HAL_hsusb_GetLegacyMode <= USED 0
+HAL_hsusb_GetNoSofRxFifoFull <= USED 0
+HAL_hsusb_GetPeDpTxFifoIdleForce <= USED 0
+HAL_hsusb_GetPostedWrites <= USED 0
+HAL_hsusb_GetResumeEndInterrupt <= USED 0
+HAL_hsusb_GetSe0GlitchFixCtrl <= USED 0
+HAL_hsusb_GetSessVldChangeInterrupt <= USED 0
+HAL_hsusb_GetSessVldChangeStatus <= USED 0
+HAL_hsusb_GetSessVldControl <= USED 0
+HAL_hsusb_GetSessVldOperation <= USED 0
+HAL_hsusb_GetSessVldStatus <= USED 0
+HAL_hsusb_GetStreamRxBypassMode <= USED 0
+HAL_hsusb_GetStreamTxAutoMode <= USED 0
+HAL_hsusb_GetSuspendWrongOpmode <= USED 0
+HAL_hsusb_GetSysClkGate <= USED 0
+HAL_hsusb_GetSysClkSw <= USED 0
+HAL_hsusb_GetTestBusSelector <= USED 0
+HAL_hsusb_GetTxBufCollisionMode <= USED 0
+HAL_hsusb_GetTxEpPrimeL1Enable <= USED 0
+HAL_hsusb_GetTxEpPrimeL1Exit <= USED 0
+HAL_hsusb_GetXtorBypass <= USED 0
+HAL_hsusb_HWversion <= USED 0
+HAL_hsusb_Read16 <= USED 0
+HAL_hsusb_Read8 <= USED 0
+HAL_hsusb_ReadUlpiPhy <= USED 0
+HAL_hsusb_Reset <= USED 0
+HAL_hsusb_SetAHBBufferableDataAccess <= USED 0
+HAL_hsusb_SetAhbBurstMode <= USED 0
+HAL_hsusb_SetAsyncBridgesBypass <= USED 0
+HAL_hsusb_SetBRemoteWake <= USED 0
+HAL_hsusb_SetDatalinePulsingReset <= USED 0
+HAL_hsusb_SetDebugL1Enable <= USED 0
+HAL_hsusb_SetDevicePEStateReset <= USED 0
+HAL_hsusb_SetDevicePortChirpKTime <= USED 0
+HAL_hsusb_SetDevicePortPreChirpKTime <= USED 0
+HAL_hsusb_SetEndpointPipeID <= USED 0
+HAL_hsusb_SetFs3Wire2WireSelect <= USED 0
+HAL_hsusb_SetGrantStolen <= USED 0
+HAL_hsusb_SetHIRD <= USED 0
+HAL_hsusb_SetHostSimTimersStdMode <= USED 0
+HAL_hsusb_SetHostSimTimersSuspMode <= USED 0
+HAL_hsusb_SetHprotMode <= USED 0
+HAL_hsusb_SetIncrOverride <= USED 0
+HAL_hsusb_SetIsoInZlpPrime <= USED 0
+HAL_hsusb_SetIsochronousBugFix <= USED 0
+HAL_hsusb_SetL1FPR <= USED 0
+HAL_hsusb_SetL1GateAhbClkEnable <= USED 0
+HAL_hsusb_SetL1GateFsXcvrClkEnable <= USED 0
+HAL_hsusb_SetL1GateSysClkEnable <= USED 0
+HAL_hsusb_SetL1GateXcvrClkEnable <= USED 0
+HAL_hsusb_SetL1LPMEnable <= USED 0
+HAL_hsusb_SetL1PhyLPMEnable <= USED 0
+HAL_hsusb_SetL1PllPwrDwnEnable <= USED 0
+HAL_hsusb_SetL1PllTurnoffMinHird <= USED 0
+HAL_hsusb_SetL1RemoteWakeupEnable <= USED 0
+HAL_hsusb_SetL1RemoteWakeupTime <= USED 0
+HAL_hsusb_SetNoSofRxFifoFull <= USED 0
+HAL_hsusb_SetPeDpTxFifoIdleForce <= USED 0
+HAL_hsusb_SetPostedWrites <= USED 0
+HAL_hsusb_SetResumeEndInterrupt <= USED 0
+HAL_hsusb_SetSe0GlitchFixCtrl <= USED 0
+HAL_hsusb_SetSessVldChangeInterrupt <= USED 0
+HAL_hsusb_SetSessVldChangeStatus <= USED 0
+HAL_hsusb_SetSessVldControl <= USED 0
+HAL_hsusb_SetSessVldOperation <= USED 0
+HAL_hsusb_SetSessVldStatus <= USED 0
+HAL_hsusb_SetStreamRxBypassMode <= USED 0
+HAL_hsusb_SetStreamTxAutoMode <= USED 0
+HAL_hsusb_SetSuspendWrongOpmode <= USED 0
+HAL_hsusb_SetSysClkSw <= USED 0
+HAL_hsusb_SetTestBusSelector <= USED 0
+HAL_hsusb_SetTxBufCollisionMode <= USED 0
+HAL_hsusb_SetTxEpPrimeL1Enable <= USED 0
+HAL_hsusb_SetTxEpPrimeL1Exit <= USED 0
+HAL_hsusb_SetXtorBypass <= USED 0
+HAL_hsusb_SupportedCoresQty <= USED 0
+HAL_hsusb_SupportedPhyType <= USED 0
+HAL_hsusb_Write16 <= USED 0
+HAL_hsusb_Write8 <= USED 0
+HAL_hsusb_WriteUlpiPhy <= USED 0
+;FILE HAL_hsusb_impl_2r10.o
+;FILE HAL_hsusb_impl_2r8.o
+;FILE HAL_hsusb_impl_2r9.o
+;FILE HAL_hsusb_impl_3r0.o
+;FILE HAL_hsusb_impl_ChipIdea.o
+;FILE HAL_hsusb_impl_Default.o
+;FILE HAL_hsusb_impl_p3q2r13.o
+;FILE HAL_hsusb_impl_p3q3r50.o
+;FILE HAL_hsusb_target.o
+;FILE HAL_sys_m.o
+;FILE HALbimc.o
+HAL_bimc_EnableSlaveSegment <= USED 0
+HAL_bimc_GetArbitrationEnable <= USED 0
+HAL_bimc_GetDeviceParameters <= USED 0
+HAL_bimc_GetMasterParameters <= USED 0
+HAL_bimc_GetRemapSegment <= USED 0
+HAL_bimc_GetSlaveParameters <= USED 0
+HAL_bimc_GetSlaveSegment <= USED 0
+HAL_bimc_IsRemapSupported <= USED 0
+HAL_bimc_Reset <= USED 0
+HAL_bimc_Restore <= USED 0
+HAL_bimc_Save <= USED 0
+HAL_bimc_SetDangerBandwidth <= USED 0
+HAL_bimc_SetDangerMode <= USED 0
+HAL_bimc_SetDangerPolicy <= USED 0
+HAL_bimc_SetDangerPriority <= USED 0
+HAL_bimc_SetMasterClockGating <= USED 0
+HAL_bimc_SetQosPolicy <= USED 0
+HAL_bimc_SetRemapSegment <= USED 0
+HAL_bimc_SetSlaveClockGating <= USED 0
+HAL_bimc_SetSlaveSegment <= USED 0
+;FILE HALbimcImpl.o
+bimc_EnableSlaveSegment <= USED 0
+bimc_GetArbitrationEnable <= USED 0
+bimc_GetDeviceParameters <= USED 0
+bimc_GetMasterParameters <= USED 0
+bimc_GetRemapSegment <= USED 0
+bimc_GetSlaveParameters <= USED 0
+bimc_GetSlaveSegment <= USED 0
+bimc_IsRemapSupported <= USED 0
+bimc_Reset <= USED 0
+bimc_Restore <= USED 0
+bimc_Save <= USED 0
+bimc_SetDangerBandwidth <= USED 0
+bimc_SetDangerMode <= USED 0
+bimc_SetDangerPolicy <= USED 0
+bimc_SetDangerPriority <= USED 0
+bimc_SetMasterClockGating <= USED 0
+bimc_SetQosPolicy <= USED 0
+bimc_SetRemapSegment <= USED 0
+bimc_SetSlaveClockGating <= USED 0
+bimc_SetSlaveSegment <= USED 0
+;FILE HALclk.o
+HAL_clk_ClockControlDetectSourceExternal <= USED 0
+HAL_clk_ClockControlDetectSourceSleepClk <= USED 0
+HAL_clk_ClockControlDetectSourceTCXO <= USED 0
+HAL_clk_ConfigFootswitch <= USED 0
+HAL_clk_DetectClockConfig <= USED 0
+HAL_clk_DetectClockDivider <= USED 0
+HAL_clk_DisableClockDomain <= USED 0
+HAL_clk_EnableClockDomain <= USED 0
+HAL_clk_GetChipFamily <= USED 0
+HAL_clk_GetChipId <= USED 0
+HAL_clk_GetNextDebugDesc <= USED 0
+HAL_clk_InstallDebugDesc <= USED 0
+HAL_clk_IsClockRegimeSupported <= USED 0
+HAL_clk_IsPowerDomainSupported <= USED 0
+HAL_clk_IsSourceEnabled <= USED 0
+HAL_clk_IsSourceVoteEnabled <= USED 0
+HAL_clk_WaitForClockOff <= USED 0
+HAL_clk_WaitForClockOn <= USED 0
+;FILE HALclkAPCSMain.o
+;FILE HALclkGCCMain.o
+;FILE HALclkGeneric.o
+;FILE HALclkGenericPLL.o
+;FILE HALclkMain.o
+HAL_clk_Restore <= USED 0
+HAL_clk_Save <= USED 0
+;FILE HALclkTest.o
+;FILE HALdog.o
+HAL_dogAutokick <= USED 0
+HAL_dogDisableBark <= USED 0
+HAL_dogIsAutokicking <= USED 0
+;FILE HALgpioint.o
+HAL_gpioint_GetGroup <= USED 0
+HAL_gpioint_Reset <= USED 0
+HAL_gpioint_Restore <= USED 0
+HAL_gpioint_Save <= USED 0
+;FILE HALgpiointPlatform.o
+;FILE HALmpmint.o
+HAL_mpmint_All_Enable <= USED 0
+HAL_mpmint_Clear <= USED 0
+HAL_mpmint_GetNumber <= USED 0
+HAL_mpmint_GetNumberPhysical <= USED 0
+HAL_mpmint_GetPhysNumber <= USED 0
+HAL_mpmint_GetTrigger <= USED 0
+HAL_mpmint_IsClearBefore <= USED 0
+HAL_mpmint_IsEnabled <= USED 0
+HAL_mpmint_IsPending <= USED 0
+HAL_mpmint_Mask_Clear <= USED 0
+HAL_mpmint_Mask_Disable <= USED 0
+HAL_mpmint_Mask_Enable <= USED 0
+HAL_mpmint_Reset <= USED 0
+HAL_mpmint_Restore <= USED 0
+HAL_mpmint_Save <= USED 0
+HAL_mpmint_setup_interrupts <= USED 0
+;FILE HALmpmintIPC.o
+;FILE HALnoc.o
+HAL_noc_GetQosBandwidth <= USED 0
+HAL_noc_GetQosExtControl <= USED 0
+HAL_noc_GetQosMode <= USED 0
+HAL_noc_GetQosPriority <= USED 0
+HAL_noc_Reset <= USED 0
+HAL_noc_Restore <= USED 0
+HAL_noc_Save <= USED 0
+HAL_noc_SetQosExtControl <= USED 0
+;FILE HALnocImpl.o
+noc_GetQosBandwidth <= USED 0
+noc_GetQosExtControl <= USED 0
+noc_GetQosMode <= USED 0
+noc_GetQosPriority <= USED 0
+noc_Reset <= USED 0
+noc_Restore <= USED 0
+noc_Save <= USED 0
+noc_SetQosExtControl <= USED 0
+noc_calc_window <= USED 0
+;FILE HALpwm.o
+HAL_pwm_Reset <= USED 0
+;FILE HALpwmPlatform.o
+;FILE HALqgic.o
+HAL_qgic_AckInterrupt <= USED 0
+HAL_qgic_DisableDistributor <= USED 0
+HAL_qgic_DisableDistributorNS <= USED 0
+HAL_qgic_DisableInterrupts <= USED 0
+HAL_qgic_DisableInterruptsNS <= USED 0
+HAL_qgic_EndOfInterrupt <= USED 0
+HAL_qgic_GetActivePriority <= USED 0
+HAL_qgic_GetDistributorInfo <= USED 0
+HAL_qgic_GetPriority <= USED 0
+HAL_qgic_IsActive <= USED 0
+HAL_qgic_IsPPI <= USED 0
+HAL_qgic_IsSPI <= USED 0
+HAL_qgic_Reset <= USED 0
+HAL_qgic_SetBinaryPoint <= USED 0
+HAL_qgic_SetBinaryPointMode <= USED 0
+HAL_qgic_SetClockSecurity <= USED 0
+HAL_qgic_SetPriorityAll <= USED 0
+HAL_qgic_SetSecurity <= USED 0
+HAL_qgic_SetSecurityAll <= USED 0
+;FILE HALqgicStateStub.o
+;FILE HALqupe.o
+HAL_qupe_GetErrStatusIrqEnabled <= USED 0
+HAL_qupe_GetInTransferCountCurrent <= USED 0
+HAL_qupe_GetInputFifoEnabled <= USED 0
+HAL_qupe_GetIrqMask <= USED 0
+HAL_qupe_GetOutFifoOccupiedSlotsCount <= USED 0
+HAL_qupe_GetOutInMode <= USED 0
+HAL_qupe_GetOutTransferCountCurrent <= USED 0
+HAL_qupe_GetOutputFifoEnabled <= USED 0
+HAL_qupe_SetErrStatusIrqEnabled <= USED 0
+HAL_qupe_SetInIoMode <= USED 0
+HAL_qupe_SetInTransferCount <= USED 0
+HAL_qupe_SetOutIoMode <= USED 0
+HAL_qupe_SetOutTransferCount <= USED 0
+;FILE HALqupeI2c.o
+HAL_qupe_I2cFlush <= USED 0
+;FILE HALqupeSpi.o
+HAL_qupe_Spi_ConfigureChipSelect <= USED 0
+;FILE HALtcsr.o
+HAL_tcsr_HaltPort <= USED 0
+HAL_tcsr_Reset <= USED 0
+HAL_tcsr_Restore <= USED 0
+HAL_tcsr_Save <= USED 0
+HAL_tcsr_UnhaltPort <= USED 0
+;FILE HALthrottle.o
+HAL_throttle_Reset <= USED 0
+HAL_throttle_Restore <= USED 0
+HAL_throttle_Save <= USED 0
+;FILE HALtlmm.o
+HAL_tlmm_ConfigGpioGroup <= USED 0
+HAL_tlmm_GetNumberGpio <= USED 0
+HAL_tlmm_Reset <= USED 0
+HAL_tlmm_Restore <= USED 0
+HAL_tlmm_Save <= USED 0
+HAL_tlmm_SetDriveStrength <= USED 0
+HAL_tlmm_SetOwner <= USED 0
+HAL_tlmm_SetOwnerGroup <= USED 0
+HAL_tlmm_SetPull <= USED 0
+;FILE HALtsens.o
+HAL_tsens_ClearInterrupt <= USED 0
+HAL_tsens_ConfigSensor <= USED 0
+HAL_tsens_CurrentlyBeyondThreshold <= USED 0
+HAL_tsens_GetEnabledSensors <= USED 0
+HAL_tsens_GetLongestPeriod <= USED 0
+HAL_tsens_GetPeriod <= USED 0
+HAL_tsens_GetThreshold <= USED 0
+HAL_tsens_Init <= USED 0
+HAL_tsens_Reset <= USED 0
+HAL_tsens_SelectADCClkSrc <= USED 0
+HAL_tsens_SetPeriod <= USED 0
+HAL_tsens_SetSensorsEnabled <= USED 0
+HAL_tsens_SetState <= USED 0
+HAL_tsens_SetTurboMode <= USED 0
+;FILE HalQupeSpiBam.o
+;FILE I2cDeviceQup.o
+I2CDEV_CancelTransfer <= USED 0
+I2CDEV_GetPowerState <= USED 0
+I2CDEV_SendCmd <= USED 0
+;FILE I2cDriver.o
+;FILE I2cDriverDalFwk.o
+;FILE I2cPlatSvc.o
+I2CPLATDEV_AcquireIntLock <= USED 0
+I2CPLATDEV_GetAppClkKhz <= USED 0
+I2CPLATDEV_GetPowerState <= USED 0
+I2CPLATDEV_ReleaseIntLock <= USED 0
+I2CPLATDEV_ReleaseResourceExclusive <= USED 0
+I2CPLATDEV_SetResourceExclusive <= USED 0
+;FILE I2cSys.o
+I2CSYS_EnterCriticalSection <= USED 0
+I2CSYS_LeaveCriticalSection <= USED 0
+;FILE I2cUlog.o
+I2CLOG_LogVectorData <= USED 0
+I2cLog_LogBuffer <= USED 0
+I2cLog_UnlinkLogHandle <= USED 0
+;FILE IzatAdapterBase.o
+;FILE IzatApiBase.o
+_ZN9izat_core11IzatApiBase26reportRequestStartBatchingERK15LocationOptions21LocationAccuracyLevel <= USED 0
+;FILE IzatApiV02.o
+_ZN9izat_core10IzatApiV0210convertErrE23locClientStatusEnumType <= USED 0
+;FILE IzatPcid.o
+;FILE IzatPcidAdapter.o
+;FILE LocDBIface.o
+;FILE LocDualContext.o
+_ZN9izat_core14LocDualContext15getLocBgContextEPFYmPKcPFYPvS3_ES3_EP6LocMsgS2_b <= USED 0
+;FILE LocFSIface.o
+;FILE LocNetIface.o
+_ZN11LocNetIface12stopDataCallEv <= USED 0
+;FILE LocOSIface.o
+_Z25LocOSIface_getProcessNamePch <= USED 0
+_Z31LocOSIface_getCurrentJulianTimeP24LocOSIface_Julian_Time_t <= USED 0
+;FILE LocThread.o
+_ZN9LocThread4stopEb <= USED 0
+;FILE LocTimer.o
+;FILE LocUtilTimer.o
+;FILE LocationAPI.o
+_ZN11LocationAPI14pauseGeofencesEjPj <= USED 0
+_ZN11LocationAPI15modifyGeofencesEjPjP14GeofenceOption <= USED 0
+_ZN11LocationAPI15resumeGeofencesEjPj <= USED 0
+_ZN11LocationAPI15updateCallbacksER17LocationCallbacks <= USED 0
+_ZN18LocationControlAPI13enableGtpWwanEv <= USED 0
+_ZN18LocationControlAPI14createInstanceER24LocationControlCallbacks <= USED 0
+_ZN18LocationControlAPI14disableGtpWwanEv <= USED 0
+_ZN18LocationControlAPI15enableXtraDloadEv <= USED 0
+_ZN18LocationControlAPI16disableXtraDloadEv <= USED 0
+_ZN18LocationControlAPI20gnssDeleteAidingDataER14GnssAidingData <= USED 0
+_ZN18LocationControlAPI23gnssDeleteAidingDataAllEv <= USED 0
+_ZN18LocationControlAPI29gnssDeleteAidingDataEphemerisEv <= USED 0
+_ZN18LocationControlAPI34gnssDeleteAidingDataCachedLocationEv <= USED 0
+_ZN18LocationControlAPI7destroyEv <= USED 0
+_ZN18LocationControlAPIC1Ev <= USED 0
+_ZN18LocationControlAPID1Ev <= USED 0
+;FILE LocationWifiInterface.o
+_ZN28izat_location_wifi_interface21LocationWifiInterface15destroyInstanceEv <= USED 0
+_ZN28izat_location_wifi_interface21LocationWifiInterfaceD1Ev <= USED 0
+;FILE LocationWifiInterfaceTimer.o
+;FILE MQTTConnectClient.o
+;FILE MQTTDeserializePublish.o
+MQTTDeserialize_ack <= USED 0
+;FILE MQTTPacket.o
+getLenStringLen <= USED 0
+;FILE MQTTSerializePublish.o
+;FILE MQTTSubscribeClient.o
+MQTTDeserialize_suback <= USED 0
+;FILE MQTTUnsubscribeClient.o
+MQTTDeserialize_unsuback <= USED 0
+;FILE MsgTask.o
+_ZN7MsgTask7destroyEb <= USED 0
+;FILE PalNetIf.o
+;FILE PlatformInfo.o
+;FILE PlatformInfoFwk.o
+;FILE PmicArb.o
+PmicArb_RemoveCacheEntry <= USED 0
+;FILE QSEEComAPI.o
+;FILE QTEEInvoke.o
+;FILE QTEE_license_service_v01.o
+;FILE QmiSlimClient.o
+_ZN7qmislim6Client13GetTimeUpdateEyPv <= USED 0
+_ZN7qmislim6Client15EnablePedometerERK33slimEnablePedometerRequestStructTPv <= USED 0
+_ZN7qmislim6Client16EnableSensorDataERK34slimEnableSensorDataRequestStructTPv <= USED 0
+_ZN7qmislim6Client16GetNextEventTimeERy <= USED 0
+_ZN7qmislim6Client17EnableVehicleDataERK35slimEnableVehicleDataRequestStructTPv <= USED 0
+_ZN7qmislim6Client17ProcessTimeEventsEv <= USED 0
+_ZN7qmislim6Client6reinitENS_4NodeES1_ <= USED 0
+_ZN7qmislim6Client9ICallbackD0Ev <= USED 0
+_ZNK7qmislim6Client14isDisconnectedEv <= USED 0
+_ZNK7qmislim6Client8getStateEv <= USED 0
+;FILE SharkSSL.o
+SharkSsl_addCertificate <= USED 0
+SharkSsl_getCacheSize <= USED 0
+SingleListEnumerator_insertBefore <= USED 0
+SingleListEnumerator_removeElement <= USED 0
+;FILE SharkSslBigInt.o
+;FILE SharkSslCipher.o
+;FILE SharkSslCon.o
+SharkSslCon_acquireSession <= USED 0
+SharkSslCon_certificateRequested <= USED 0
+SharkSslCon_copyDecData <= USED 0
+SharkSslCon_encryptMore <= USED 0
+SharkSslCon_favorRSA <= USED 0
+SharkSslCon_getCertInfo <= USED 0
+SharkSslCon_getCiphersuite <= USED 0
+SharkSslCon_getEncBufPtr <= USED 0
+SharkSslCon_getEncBufSize <= USED 0
+SharkSslCon_getProtocol <= USED 0
+SharkSslCon_isCAListEmpty <= USED 0
+SharkSslCon_renegotiate <= USED 0
+SharkSslCon_requestClientCert <= USED 0
+SharkSslCon_resumeSession <= USED 0
+SharkSslCon_trustedCA <= USED 0
+SharkSslSession_getLatestAccessTime <= USED 0
+;FILE SharkSslCon_DTLS.o
+SharkSslCon_DTLS_getMaxTxPayloadSize <= USED 0
+SharkSslCon_DTLS_setMaxTxRecordSize <= USED 0
+;FILE SharkSslCon_DTLS_hs.o
+SharkSslCon_DTLS_incSeqNum <= USED 0
+;FILE SharkSslCon_hs.o
+SharkSslCon_clearCiphersuiteSelection <= USED 0
+;FILE SharkSslCrypto.o
+sharkssl_poly1305 <= USED 0
+;FILE SharkSslECC.o
+;FILE SharkSslPublic.o
+;FILE SpiDalProps.o
+;FILE SpiDevice.o
+SpiDevice_AsyncRead <= USED 0
+SpiDevice_AsyncWrite <= USED 0
+SpiDevice_BatchTransfer <= USED 0
+SpiDevice_CancelTransfer <= USED 0
+SpiDevice_Read <= USED 0
+SpiDevice_SetCSControl <= USED 0
+SpiDevice_Write <= USED 0
+;FILE SpiDeviceBam.o
+;FILE SpiDeviceOsSvc.o
+;FILE SpiDevicePlatSvc.o
+IBUSPLAT_GetPowerState <= USED 0
+;FILE SpiDeviceTransfer.o
+;FILE SpiUlog.o
+;FILE SpmiBus.o
+;FILE SpmiFetcherCfg.o
+;FILE SpmiHal.o
+;FILE SpmiOs.o
+;FILE SpmiOsImage.o
+;FILE SystemStatus.o
+_ZN9izat_core12SystemStatus13eventPositionERK11UlpLocationRK19GpsLocationExtended <= USED 0
+_ZN9izat_core12SystemStatus15destroyInstanceEv <= USED 0
+_ZN9izat_core12SystemStatus16setDefaultReportEv <= USED 0
+_ZN9izat_core15SystemStatusPdr6equalsERKS0_ <= USED 0
+_ZN9izat_core16SystemStatusXtra6equalsERKS0_ <= USED 0
+_ZN9izat_core19SystemStatusXoState6equalsERKS0_ <= USED 0
+_ZN9izat_core20SystemStatusLocation6equalsERKS0_ <= USED 0
+_ZN9izat_core20SystemStatusSvHealth6equalsERKS0_ <= USED 0
+_ZN9izat_core21SystemStatusEphemeris6equalsERKS0_ <= USED 0
+_ZN9izat_core23SystemStatusErrRecovery6equalsERKS0_ <= USED 0
+_ZN9izat_core24SystemStatusBestPosition6equalsERKS0_ <= USED 0
+_ZN9izat_core27SystemStatusPositionFailure6equalsERKS0_ <= USED 0
+_ZN9izat_core28SystemStatusInjectedPosition6equalsERKS0_ <= USED 0
+;FILE TsensiConversion.o
+;FILE ULogCore.o
+ULogCore_AttributeSet <= USED 0
+ULogCore_IsLogPresent <= USED 0
+ULogCore_List <= USED 0
+ULogCore_LogLevelGet <= USED 0
+ULogCore_LogLevelSet <= USED 0
+ULogCore_SetLockType <= USED 0
+ULogCore_SetTimestampSrcFn <= USED 0
+ULogCore_SetTransportToAlt <= USED 0
+;FILE ULogDiag.o
+ULogDiagAddPlugin <= USED 0
+ULogDiagAddPluginExt <= USED 0
+;FILE ULogFront.o
+ULogFront_RawInit <= USED 0
+ULogFront_RawLog <= USED 0
+ULogFront_RealTimeCharArray <= USED 0
+ULogFront_RealTimeCsv <= USED 0
+ULogFront_RealTimeData <= USED 0
+ULogFront_RealTimeStaticInit <= USED 0
+ULogFront_RealTimeStaticPrintf <= USED 0
+ULogFront_RealTimeString <= USED 0
+ULogFront_RealTimeWordArray <= USED 0
+ULogFront_RealTimeWordBaseFcn <= USED 0
+;FILE ULogParsers.o
+;FILE ULogRead.o
+;FILE UsefulBuf.o
+UsefulBuf_Compare <= USED 0
+UsefulBuf_Copy <= USED 0
+UsefulBuf_FindBytes <= USED 0
+UsefulBuf_Set <= USED 0
+UsefulOutBuf_CopyOut <= USED 0
+;FILE VAdcDiag.o
+;FILE VAdcHal.o
+VAdcHalGetPendingInterrupts <= USED 0
+;FILE VAdcLog.o
+VAdc_LogRecalibrationRequest <= USED 0
+;FILE VCSAPCS.o
+;FILE VCSCPU.o
+;FILE VCSDriver.o
+;FILE VCSFwk.o
+VCS_MapHWIORegion <= USED 0
+;FILE VCSNPA.o
+VCS_InitThermal <= USED 0
+;FILE VCSRails.o
+;FILE WifiPositioningEngine.o
+_ZN21izat_wifi_positioning11ReadNvCacheEv <= USED 0
+_ZN21izat_wifi_positioning12dumpscaninfoEPN28izat_location_wifi_interface38Location_Wifi_Interface_Operation_InfoE <= USED 0
+_ZN21izat_wifi_positioning21WifiPositioningEngine10saveNvItemERKSsS2_ <= USED 0
+_ZN21izat_wifi_positioning21WifiPositioningEngine15destroyInstanceEv <= USED 0
+_ZN21izat_wifi_positioning21WifiPositioningEngine19encodeEmbargoedListESs <= USED 0
+_ZN21izat_wifi_positioning21WifiPositioningEngine19stopTrackingSessionEv <= USED 0
+_ZN21izat_wifi_positioning21WifiPositioningEngineD1Ev <= USED 0
+_ZNK21izat_wifi_positioning21WifiPositioningEngine7sendMsgERKPFYvPvEPKv <= USED 0
+;FILE WifiPositioningIzatAdapter.o
+_ZN21izat_wifi_positioning12singleShotCbE15qapi_Location_t21qapi_Location_Error_t <= USED 0
+_ZN21izat_wifi_positioning26WifiPositioningIzatAdapter14cleanUpCommandEv <= USED 0
+_ZN21izat_wifi_positioning26WifiPositioningIzatAdapter24StopTrackingWifiPositionEv <= USED 0
+_ZN21izat_wifi_positioning26WifiPositioningIzatAdapter25StartTrackingWifiPositionEPvPFvS1_RK8Location13LocationErrorEi <= USED 0
+;FILE WifiPositioningTimer.o
+_ZN21izat_wifi_positioning20WifiPositioningTimer5startEj <= USED 0
+;FILE XtraApis.o
+;FILE XtraClient.o
+_ZN9izat_xtra10XtraClient12getXtraStateEv <= USED 0
+_ZN9izat_xtra10XtraClient12setXtraStateENS_5STATEE <= USED 0
+_ZN9izat_xtra10XtraClientD1Ev <= USED 0
+;FILE XtraConfig.o
+_ZN9izat_xtra10XtraConfigD1Ev <= USED 0
+;FILE XtraDataRequest.o
+_ZN9izat_xtra15XtraDataRequestD1Ev <= USED 0
+;FILE XtraIzatAdapter.o
+_ZN9izat_xtra15XtraIzatAdapter19removeClientCommandEP11LocationAPI <= USED 0
+_ZN9izat_xtra15XtraIzatAdapter27onRequestXtraServersAndDataEj <= USED 0
+;FILE XtraNvItems.o
+_ZN9izat_xtra11XtraNvItems5closeEv <= USED 0
+_ZN9izat_xtra11XtraNvItemsD1Ev <= USED 0
+;FILE XtraPlatform.o
+;FILE XtraTimeRequest.o
+_ZN9izat_xtra15XtraTimeRequestD1Ev <= USED 0
+;FILE XtraTimer.o
+;FILE XtraUserAgent.o
+_ZN9izat_xtra13XtraUserAgentD1Ev <= USED 0
+_ZNK9izat_xtra13XtraUserAgent23saveUploadedSocVersionsERKSs <= USED 0
+;FILE access_terminal_service_ex_v01.o
+;FILE acm_fd.o
+acm_notify_network_connection <= USED 0
+;FILE aes.o
+AES_CTR_xcrypt_buffer <= USED 0
+AES_ECB_decrypt <= USED 0
+AES_ECB_encrypt <= USED 0
+AES_ctx_set_iv <= USED 0
+AES_init_ctx <= USED 0
+;FILE alloc.o
+QURTK_mem_alloc_aligned <= USED 0
+;FILE allports.o
+mcastlist <= USED 0
+sysuptime <= USED 0
+;FILE amssheap.o
+amssheap_malloc <= USED 0
+;FILE amssheap_debug.o
+memdebug_failure_handler <= USED 0
+;FILE app_ping.o
+;FILE at_handler_main.o
+;FILE at_handler_utility.o
+;FILE atoi.o
+;FILE ats_bases.o
+ats_bases_set_remote_update <= USED 0
+;FILE ats_rtc.o
+ats_rtc_get_status <= USED 0
+ats_rtc_remote_update <= USED 0
+;FILE axicfgint.o
+AxiCfgInt_GetBimcMasterInfo <= USED 0
+AxiCfgInt_GetBimcSlaveInfo <= USED 0
+AxiCfgInt_GetMasterHalInfo <= USED 0
+AxiCfgInt_GetSlaveHalInfo <= USED 0
+AxiCfgInt_HaltMasterPort <= USED 0
+AxiCfgInt_SetQosPolicy <= USED 0
+AxiCfgInt_UnhaltMasterPort <= USED 0
+_AxiCfgInt_ConvertQosPolicy <= USED 0
+;FILE axicfgos.o
+;FILE bam.o
+bam_drv_deinit <= USED 0
+bam_pipe_bulktransfer <= USED 0
+bam_pipe_flush <= USED 0
+bam_pipe_get_current_descriptor_info <= USED 0
+bam_pipe_isirqmode <= USED 0
+bam_pipe_submit_all <= USED 0
+bam_pipe_timerctrl <= USED 0
+bam_pipe_trigger_event <= USED 0
+bam_pipe_trigger_event_sys <= USED 0
+bam_pipe_trigger_zlt_event <= USED 0
+bam_setirqmode <= USED 0
+bami_pipe_load_configs <= USED 0
+;FILE bam_debug.o
+;FILE bam_dmux_bam_iface.o
+;FILE bam_dmux_core.o
+bam_dmux_close <= USED 0
+;FILE bam_dmux_log.o
+;FILE bam_dmux_os_qurt.o
+;FILE bam_dmux_power.o
+bam_dmux_power_reset <= USED 0
+;FILE bamcore.o
+bamcore_getirqmode <= USED 0
+bamcore_pipe_get_descfifobase <= USED 0
+bamcore_pipe_get_descfifosize <= USED 0
+bamcore_pipe_getirqmode <= USED 0
+bamcore_pipe_timerconfig <= USED 0
+bamcore_pipe_timergetcount <= USED 0
+bamcore_pipe_timerreset <= USED 0
+bamcore_sw_ver <= USED 0
+;FILE bamcore_debug.o
+;FILE bamosal.o
+bam_osal_clock_ctl_deinit <= USED 0
+bam_osal_deinit <= USED 0
+bam_osal_ulogdeinit <= USED 0
+;FILE bamtgtcfg.o
+bam_tgt_getpipelockgroup <= USED 0
+;FILE beacons.o
+;FILE bit.o
+b_copy <= USED 0
+b_copy_litend_to_bigend_word <= USED 0
+b_copy_ltobw_s1d0 <= USED 0
+b_copy_ltobw_s2d0 <= USED 0
+b_packb <= USED 0
+b_packd <= USED 0
+b_packq <= USED 0
+b_packw <= USED 0
+b_unpackb <= USED 0
+b_unpackd <= USED 0
+b_unpackq <= USED 0
+b_unpackw <= USED 0
+;FILE block1.o
+;FILE bootstrap.o
+;FILE bootstrap_info.o
+;FILE busywait_hw_qtimer.o
+;FILE bytearray.o
+bytearray_destroy <= USED 0
+bytearray_frombuffer <= USED 0
+bytearray_reserved <= USED 0
+bytearray_slice <= USED 0
+;FILE c25519.o
+;FILE c25519_sw.o
+;FILE cache.o
+arch_is_full_l1_cache_flush_better <= USED 0
+btb_flush_mva <= USED 0
+cache_clean_data_lines_l1 <= USED 0
+cache_clean_part <= USED 0
+cache_clean_range_part <= USED 0
+cache_flush <= USED 0
+cache_flush_part <= USED 0
+cache_flush_range_part <= USED 0
+cache_invalidate_range_part <= USED 0
+clean_pt <= USED 0
+;FILE cb.o
+cb_copyl <= USED 0
+cb_memchr <= USED 0
+cb_memcmp <= USED 0
+cb_nset <= USED 0
+cb_writex <= USED 0
+;FILE cdc_fd.o
+cdc_dbm_ep_reset <= USED 0
+cdc_dbm_init <= USED 0
+cdc_get_max_packet_size <= USED 0
+cdc_read <= USED 0
+cdc_write <= USED 0
+;FILE ce.o
+;FILE cksum.o
+shortSum <= USED 0
+;FILE classic.o
+;FILE client_env.o
+;FILE cmd.o
+cmd_done <= USED 0
+;FILE coap_transaction.o
+get_coap_thread_id <= USED 0
+;FILE coap_utils.o
+;FILE connection.o
+;FILE console_printf.o
+;FILE cpu_monitor.o
+;FILE crc.o
+crc_16_calc <= USED 0
+crc_16_step <= USED 0
+crc_30_step <= USED 0
+crc_32_calc <= USED 0
+;FILE crc32.o
+;FILE crypto_kernel_mode_tests.o
+run_crypto_kernel_hmac_tests <= USED 0
+run_crypto_kernel_mode_tests <= USED 0
+run_crypto_km_preloaded_kernel_mode_tests <= USED 0
+test_aes_caller_nonce_encrypt_decrypt_mode_gcm_4k_inBuf_kern <= USED 0
+test_aes_encrypt_decrypt_kern <= USED 0
+test_aes_encrypt_decrypt_mode_ecb_kern <= USED 0
+test_aes_encrypt_decrypt_mode_ecb_odd_inBuf_size_kern <= USED 0
+test_aes_encrypt_decrypt_mode_gcm_4k_inBuf_kern <= USED 0
+test_aes_encrypt_decrypt_mode_gcm_kern <= USED 0
+test_aes_encrypt_decrypt_mode_gcm_odd_inBuf_size_kern <= USED 0
+test_aes_mult_block_encrypt_decrypt_mode_ecb_kern <= USED 0
+test_hmac_import_sign_verify_kern <= USED 0
+test_km_preloaded_aes_encrypt_decrypt_mode_gcm_4k_inBuf_kern <= USED 0
+;FILE cust_config.o
+getOemPoolSize <= USED 0
+;FILE da_cmd_action.o
+;FILE da_cmd_cti.o
+;FILE da_cmd_ctrl.o
+;FILE da_cmd_ctrl_common.o
+;FILE da_cmd_etm.o
+;FILE da_cmd_hwe.o
+;FILE da_cmd_info.o
+;FILE da_cmd_qmi_common.o
+;FILE da_cmd_qmi_misc.o
+;FILE da_cmd_qmi_rpm.o
+;FILE da_cmd_qmi_swt.o
+;FILE da_cmd_swt.o
+;FILE da_main.o
+;FILE da_parser.o
+;FILE da_reader.o
+;FILE dal_asm_wrap.o
+DALFW_LockSpinLock <= USED 0
+DALFW_LockSpinLockExt <= USED 0
+DALFW_LockedCompareExchangeW <= USED 0
+DALFW_LockedDecrementW <= USED 0
+DALFW_LockedExchangeW <= USED 0
+DALFW_LockedGetModifySetW <= USED 0
+DALFW_LockedIncrementW <= USED 0
+DALFW_TryLockSpinLock <= USED 0
+DALFW_TryLockSpinLockExt <= USED 0
+DALFW_UnLockSpinLock <= USED 0
+DALFW_UnLockSpinLockExt <= USED 0
+_raw_LockSpinLockExt <= USED 0
+_raw_TryLockSpinLockExt <= USED 0
+_raw_UnLockSpinLockExt <= USED 0
+;FILE dalfwkbase.o
+;FILE dapar_action.o
+;FILE dapar_cti.o
+;FILE dapar_etm.o
+;FILE dapar_hwe.o
+_handler_hwe_ss <= USED 0
+;FILE dapar_info.o
+;FILE dapar_odl.o
+;FILE dapar_sink.o
+;FILE dapar_stm.o
+;FILE dapar_swt.o
+;FILE data.o
+;FILE data_atfwd.o
+get_atfwd_task_thread_id <= USED 0
+;FILE data_atfwd_cmdq.o
+;FILE data_driver_access.o
+;FILE data_driver_access_txm.o
+;FILE data_filter_service_v01.o
+;FILE data_port.o
+qcmap_pthread_set_attr <= USED 0
+;FILE data_port_mapper_v01.o
+;FILE data_ril_port.o
+data_ril_format_log_msg <= USED 0
+;FILE data_system_determination_v01.o
+;FILE data_util_bit_field.o
+;FILE data_util_config.o
+;FILE data_util_list.o
+;FILE data_util_memory.o
+;FILE data_util_synchronization.o
+;FILE dcd_snps.o
+snps_dcd_abort_dbm_ep <= USED 0
+;FILE dcd_snps_cmd_evt.o
+;FILE dcd_snps_config.o
+snps_dcd_config_phy <= USED 0
+snps_dcd_reset_core <= USED 0
+snps_dcd_set_U1 <= USED 0
+snps_dcd_set_U2 <= USED 0
+;FILE dcd_snps_eps.o
+snps_dcd_config_tx_fifo_size <= USED 0
+snps_dcd_handle_fifo_overrun_underrun <= USED 0
+;FILE dcd_snps_intr.o
+;FILE dcd_snps_xfers.o
+;FILE dcvs_clkstub.o
+;FILE dcvs_core.o
+DCVSCoreCheckEnabled <= USED 0
+DCVSCoreGetNumAlgos <= USED 0
+;FILE dcvs_kernel.o
+DCVSKernelDynamicMemoryAllocate <= USED 0
+DCVSKernelTimerDestroy <= USED 0
+;FILE dcvs_npa.o
+CoreCpuResStateChange <= USED 0
+DCVSZeroStateRequestIssue <= USED 0
+dcvs_npa_events_deregister <= USED 0
+;FILE dcvs_nv.o
+;FILE dcvs_nv_os.o
+;FILE dcvs_target.o
+;FILE debug_init.o
+;FILE device_management_service_v01.o
+;FILE devices-qmi.o
+cpr_cold_qmi_request <= USED 0
+;FILE devices.o
+;FILE devices_actions.o
+;FILE devices_manager.o
+devices_manager_get_info <= USED 0
+devices_manager_get_lvl_list <= USED 0
+devices_manager_get_state_info <= USED 0
+devices_manager_reg_notify <= USED 0
+devices_manager_rm_dev <= USED 0
+;FILE dhcpsrvr.o
+dhs_timeisup <= USED 0
+;FILE diag.o
+diag_flow_control_mutex_init <= USED 0
+diag_get_sp_state <= USED 0
+diag_pause <= USED 0
+diag_set_security_state <= USED 0
+diag_set_sp_state <= USED 0
+diag_timeout <= USED 0
+;FILE diag_compress.o
+;FILE diag_f3_trace.o
+diag_f3_trace_save_to_smem <= USED 0
+;FILE diag_f3_trace_cmd.o
+;FILE diag_f3_trace_devcfg.o
+;FILE diag_f3_trace_nvcfg.o
+;FILE diag_fwd.o
+diag_fwd_suspend <= USED 0
+;FILE diagbuf.o
+diagbuf_flush <= USED 0
+diagbuf_send_pkt_single_proc_ctrl <= USED 0
+;FILE diagcomm_cfg.o
+diagcomm_update_io_type <= USED 0
+;FILE diagcomm_cmd.o
+diagcomm_cmd_get_rx_wmq_cnt <= USED 0
+;FILE diagcomm_ctrl.o
+diagcomm_ctrl_log_mask_status <= USED 0
+diagcomm_ctrl_port_id <= USED 0
+diagcomm_ctrl_send_num_presets <= USED 0
+;FILE diagcomm_io.o
+diagcomm_io_read <= USED 0
+;FILE diagcomm_io_sio.o
+;FILE diagcomm_io_socket.o
+diagcomm_io_socket_check_support <= USED 0
+;FILE diagcomm_io_udp.o
+diagcomm_io_udp_read <= USED 0
+;FILE diagcomm_sio.o
+diagcomm_connect_state <= USED 0
+diagcomm_flush_rx <= USED 0
+diagcomm_outbound_alloc_ctrl <= USED 0
+diagcomm_send_ctrl <= USED 0
+;FILE diagcomm_smd.o
+diag_cmd_code_check <= USED 0
+diag_health_get_alloc_bytes_cnt <= USED 0
+diag_health_get_dropped_bytes_cnt <= USED 0
+;FILE diagcompressed_buffer.o
+diagbufc_reset <= USED 0
+diagcompressed_buffer_free_bytes <= USED 0
+;FILE diagdiag_common.o
+diagdiag_cmd_request_handler <= USED 0
+diagdiag_file_read <= USED 0
+diagdiag_file_write <= USED 0
+diagdiag_loopback <= USED 0
+;FILE diagdsm.o
+;FILE diaglog.o
+diag_ctrl_update_log_mask <= USED 0
+diag_ctrl_update_log_preset_mask <= USED 0
+log_panic <= USED 0
+;FILE diagmm.o
+diag_offline <= USED 0
+diag_otasp_update <= USED 0
+diag_powerdown <= USED 0
+diag_shutdown <= USED 0
+;FILE diagpkt.o
+diagpkt_async_block <= USED 0
+diagpkt_async_release <= USED 0
+diagpkt_ctrl_get_msg_type <= USED 0
+diagpkt_slave_table_cleanup <= USED 0
+diagpkt_subsys_get_status <= USED 0
+diagpkt_subsys_reset_delayed_rsp_id <= USED 0
+diagpkt_subsys_set_rsp_cnt <= USED 0
+diagpkt_subsys_set_status <= USED 0
+;FILE discover.o
+;FILE dnsclnt.o
+TXTQuery <= USED 0
+dnc_clrstats <= USED 0
+dnc_clrtab <= USED 0
+dnc_getstats <= USED 0
+dns_update <= USED 0
+get_pointer_to_dnsc_records <= USED 0
+nslookupr <= USED 0
+;FILE dnsrelay.o
+;FILE dnssrvr.o
+_DHCPUpdateDnsdatabase <= USED 0
+_dns_server_deinit <= USED 0
+;FILE dnt_nv_efs.o
+;FILE dog.o
+dog_auto_register <= USED 0
+dog_crash_report <= USED 0
+dog_deregister <= USED 0
+dog_monitor_pause <= USED 0
+dog_monitor_resume <= USED 0
+dog_task_disable <= USED 0
+;FILE driver_object.o
+drv_obj_exit_once <= USED 0
+;FILE ds_cmdq.o
+;FILE ds_dpl_logging.o
+;FILE ds_list.o
+;FILE ds_log.o
+ds_iot_init_log <= USED 0
+ds_iot_ulog_print <= USED 0
+ds_iot_ulog_write <= USED 0
+;FILE ds_mod.o
+;FILE ds_mux.o
+;FILE ds_mux_api.o
+;FILE ds_mux_io.o
+;FILE ds_mux_logging.o
+;FILE ds_mux_logical.o
+;FILE ds_mux_phys.o
+;FILE ds_mux_platform.o
+ds_mux_destroy_crit_section <= USED 0
+;FILE ds_mux_svc.o
+;FILE ds_mux_task.o
+;FILE ds_mux_taski.o
+;FILE ds_mux_utils.o
+;FILE ds_port.o
+ds_platform_pthread_mutex_destroy <= USED 0
+;FILE ds_qmi_client_helper.o
+;FILE ds_util.o
+;FILE dsm.o
+dsm_peek_byte_long <= USED 0
+dsmi_dup_external_buffer <= USED 0
+dsmi_dup_external_buffer_long <= USED 0
+dsmi_insert <= USED 0
+dsmi_insert_long <= USED 0
+dsmi_iterator <= USED 0
+dsmi_pull16 <= USED 0
+dsmi_pull32 <= USED 0
+dsmi_pull8 <= USED 0
+dsmi_pullup_tail <= USED 0
+dsmi_pullup_tail_long <= USED 0
+dsmi_trim_packet <= USED 0
+dsmi_trim_packet_long <= USED 0
+;FILE dsm_init.o
+;FILE dsm_lock.o
+;FILE dsm_pool.o
+dsm_get_pool_stats <= USED 0
+dsm_pool_mem_event_level <= USED 0
+dsm_pool_reg_mem_free_event_cb <= USED 0
+dsm_remove_pool <= USED 0
+;FILE dsm_queue.o
+dsm_get_wm_stats <= USED 0
+dsm_queue_cnt <= USED 0
+dsm_set_dne_q_cnt <= USED 0
+dsmi_wm_get_count <= USED 0
+;FILE dsmi.o
+dsmi_check_mem_all_pools <= USED 0
+dsmi_verify_packet <= USED 0
+;FILE dsmutil.o
+dsm_bit_length_packet <= USED 0
+dsm_create_empty_pkt <= USED 0
+dsm_get_sfn_for_dl_sdu <= USED 0
+dsm_pkt_to_sdu_chain_bit <= USED 0
+dsm_pkt_to_sdu_chain_byte <= USED 0
+dsm_read_crc_status_bit <= USED 0
+dsm_sdu_to_pkt_chain_bit <= USED 0
+dsm_sdu_to_pkt_chain_byte <= USED 0
+dsm_set_crc_status_bit <= USED 0
+dsm_set_sdu_cnf <= USED 0
+dsm_write_sdu_mui <= USED 0
+dsmutili_new_buffer_w_thresh <= USED 0
+dsmutili_new_packet <= USED 0
+dsmutili_new_packet_flexible <= USED 0
+;FILE dsr_framework.o
+dsr_is_dsr_pending <= USED 0
+;FILE ecm_fd.o
+;FILE ecm_inf.o
+;FILE entry_mc.o
+entry_main_ctl <= USED 0
+;FILE er-coap-13.o
+;FILE err.o
+err_Fatal_aux_msg <= USED 0
+err_Fatal_internal0 <= USED 0
+err_Fatal_internal1 <= USED 0
+err_Fatal_internal2 <= USED 0
+err_SaveFatal0 <= USED 0
+err_crash_cb_dereg <= USED 0
+err_crash_cb_dereg_next_to_STM <= USED 0
+err_crash_cb_reg_next_to_STM <= USED 0
+;FILE err_action.o
+;FILE err_exception_handler.o
+;FILE err_image_version.o
+;FILE err_inject_crash.o
+;FILE err_inject_crash_rpm.o
+;FILE err_nv_efs.o
+;FILE err_nv_log.o
+err_clr_log <= USED 0
+err_disable_fs_log <= USED 0
+err_enable_fs_log <= USED 0
+err_get_log_ex <= USED 0
+;FILE err_reset_detect.o
+;FILE et_arp.o
+clear_arp_entries <= USED 0
+find_arp_pkt <= USED 0
+get_iface_from_net <= USED 0
+get_pointer_to_arp_table <= USED 0
+grat_arp <= USED 0
+;FILE event.o
+diag_ctrl_update_event_mask <= USED 0
+diag_ctrl_update_event_preset_mask <= USED 0
+;FILE event_api.o
+event_save_trace <= USED 0
+;FILE exception.o
+arm_exception_undefined_instruction <= USED 0
+arm_mmu_exception_abort <= USED 0
+getSpsr <= USED 0
+;FILE f3_trace_nv_efs.o
+;FILE fe_ge.o
+_fe_cmov <= USED 0
+_fe_isnegative <= USED 0
+_fe_isnonzero <= USED 0
+_fe_neg <= USED 0
+_fe_pow22523 <= USED 0
+_fe_sq2 <= USED 0
+_ge_add <= USED 0
+_ge_double_scalarmult_vartime <= USED 0
+_ge_frombytes_negate_vartime <= USED 0
+_ge_madd <= USED 0
+_ge_msub <= USED 0
+_ge_p1p1_to_p2 <= USED 0
+_ge_p1p1_to_p3 <= USED 0
+_ge_p2_0 <= USED 0
+_ge_p2_dbl <= USED 0
+_ge_p3_0 <= USED 0
+_ge_p3_dbl <= USED 0
+_ge_p3_to_cached <= USED 0
+_ge_p3_to_p2 <= USED 0
+_ge_p3_tobytes <= USED 0
+_ge_precomp_0 <= USED 0
+_ge_scalarmult_base <= USED 0
+_ge_scalarmult_varbase <= USED 0
+_ge_sub <= USED 0
+_ge_tobytes <= USED 0
+_select_cached <= USED 0
+cmov <= USED 0
+cmov_cached <= USED 0
+equal <= USED 0
+ge_cached_0 <= USED 0
+negative <= USED 0
+;FILE feature.o
+;FILE fixed.o
+;FILE flash_bam_wrapper.o
+;FILE flash_clocks.o
+flash_clocks_deinit <= USED 0
+;FILE flash_dal.o
+;FILE flash_dal_config.o
+;FILE flash_dal_fwk.o
+;FILE flash_dal_nand_default.o
+;FILE flash_dal_util.o
+flash_vtop_set_list_count <= USED 0
+;FILE flash_decode_nandids.o
+;FILE flash_ftl_api.o
+flash_ftl_read_lpa <= USED 0
+;FILE flash_ftl_core.o
+;FILE flash_ftl_osal.o
+;FILE flash_ftl_util.o
+;FILE flash_hal_common.o
+;FILE flash_hal_main.o
+flash_hal_get_op_list <= USED 0
+flash_hal_init <= USED 0
+flash_hal_post_process_op_list <= USED 0
+flash_hal_reset <= USED 0
+flash_hal_restore <= USED 0
+flash_hal_save <= USED 0
+flash_hal_set_xfer_cfg <= USED 0
+;FILE flash_hal_nand_main.o
+flash_hal_read_data_with_offset <= USED 0
+flash_hal_write_data <= USED 0
+flash_hal_write_main_spare <= USED 0
+;FILE flash_hal_nandc.o
+;FILE flash_hal_nandc_common.o
+;FILE flash_hal_nandc_default.o
+;FILE flash_hal_nandc_predef_bam_core.o
+hal_nandc_fptrs_init_reduced <= USED 0
+hal_nandc_predef_cmd_ptrs_init_reduced <= USED 0
+;FILE flash_hal_nandc_predef_bam_exec.o
+;FILE flash_hal_nandc_predef_bam_init.o
+;FILE flash_hal_nandc_predef_bam_pprocess.o
+;FILE flash_hal_properties.o
+;FILE flash_hal_reg_list.o
+;FILE flash_nand_config.o
+;FILE flash_nand_core.o
+nand_get_base_tbl_default <= USED 0
+nand_get_base_tbl_reduced <= USED 0
+;FILE flash_nand_entry.o
+nand_get_entry_vtbl_reduced <= USED 0
+;FILE flash_nand_init.o
+;FILE flash_nand_partition.o
+nand_retrieve_mibib <= USED 0
+;FILE flash_onfi.o
+;FILE flash_ops_setup.o
+flash_ops_deinit <= USED 0
+;FILE flash_otp_config.o
+;FILE flash_properties.o
+;FILE flog.o
+FLOG_Exit <= USED 0
+;FILE fs.o
+;FILE fs_api_counters.o
+fs_api_counters_flush_logs <= USED 0
+;FILE fs_benchmark.o
+fs_cpu_hog_init <= USED 0
+;FILE fs_buffer.o
+fsb_nand_shutdown <= USED 0
+;FILE fs_cookie.o
+fs_cookie_add <= USED 0
+fs_cookie_get_handle_for_ram <= USED 0
+fs_cookie_iter_close <= USED 0
+fs_cookie_iter_get_next <= USED 0
+fs_cookie_iter_open <= USED 0
+fs_cookie_release_handle <= USED 0
+fs_cookie_remove_all_cookies <= USED 0
+;FILE fs_counters.o
+fs_counters_reset_flash_counters <= USED 0
+fs_device_buffer_fill <= USED 0
+;FILE fs_db.o
+;FILE fs_desc.o
+fs_desc_close_and_nodev <= USED 0
+;FILE fs_device.o
+fs_device_close <= USED 0
+fs_device_read_sectors <= USED 0
+fs_device_reliable_write_sectors <= USED 0
+fs_device_write_sectors <= USED 0
+;FILE fs_device_efs_flash.o
+fs_device_efs_flash_close <= USED 0
+;FILE fs_diag.o
+fs_diag_factimage_end_handler <= USED 0
+fs_diag_factimage_read_handler <= USED 0
+fs_diag_factimage_start_handler <= USED 0
+fs_diag_filesystem_image_close <= USED 0
+fs_diag_filesystem_image_open <= USED 0
+fs_diag_filesystem_image_read <= USED 0
+fs_diag_prep_factimage_handler <= USED 0
+;FILE fs_diag_access.o
+;FILE fs_diag_golden_copy_handler.o
+;FILE fs_efs2.o
+fs_efs2_read_only_init <= USED 0
+;FILE fs_efs2_names.o
+;FILE fs_errno.o
+;FILE fs_estdio.o
+efs_efclose <= USED 0
+efs_efdopen <= USED 0
+efs_efflush <= USED 0
+efs_efileno <= USED 0
+efs_efopen <= USED 0
+efs_efread <= USED 0
+efs_efseek <= USED 0
+efs_efseek64 <= USED 0
+efs_eftell <= USED 0
+efs_eftell64 <= USED 0
+efs_efwrite <= USED 0
+efs_esetvbuf <= USED 0
+;FILE fs_factory.o
+;FILE fs_flash_dal_shim.o
+flash_shim_close <= USED 0
+;FILE fs_flash_usage_stats.o
+;FILE fs_ftl.o
+;FILE fs_global_lock.o
+;FILE fs_golden_copy.o
+;FILE fs_golden_copy_files_list.o
+;FILE fs_inode.o
+;FILE fs_journal.o
+;FILE fs_lib.o
+efs_chmod_recursive <= USED 0
+efs_chown_recursive <= USED 0
+efs_closedir_recursive <= USED 0
+efs_iter <= USED 0
+efs_opendir_recursive <= USED 0
+efs_raw_get <= USED 0
+efs_raw_put <= USED 0
+efs_read_full_file <= USED 0
+efs_readdir_recursive <= USED 0
+;FILE fs_logr.o
+;FILE fs_malloc.o
+fs_unsafe_align_malloc <= USED 0
+;FILE fs_mount.o
+fs_mount_mount <= USED 0
+fs_mount_remount <= USED 0
+fs_mount_umount <= USED 0
+;FILE fs_namei.o
+;FILE fs_nodev.o
+;FILE fs_osal_qurt.o
+fs_os_autodog_enable <= USED 0
+fs_os_autodog_enable_self <= USED 0
+fs_os_clr_timer <= USED 0
+fs_os_def_task_ext <= USED 0
+fs_os_set_dac <= USED 0
+fs_os_signal_destroy <= USED 0
+;FILE fs_pm.o
+fs_pm_shutdown_flush <= USED 0
+;FILE fs_pm_gc.o
+;FILE fs_pm_log.o
+fs_log_iter_mark <= USED 0
+fs_log_iter_peek_page <= USED 0
+fs_log_iter_reset <= USED 0
+fs_log_set_sequence <= USED 0
+;FILE fs_pm_ptable_nand.o
+;FILE fs_pm_super.o
+;FILE fs_privatedir.o
+efs_privatedir_set_access <= USED 0
+;FILE fs_profile.o
+fs_profile_disable <= USED 0
+fs_profile_enable <= USED 0
+;FILE fs_profile_config.o
+;FILE fs_profile_extensive.o
+fs_profile_extensive_disable <= USED 0
+fs_profile_extensive_enable <= USED 0
+;FILE fs_public.o
+efs_boot_init_romfs <= USED 0
+efs_boot_initialize <= USED 0
+efs_creat <= USED 0
+efs_filesystem_image_close <= USED 0
+efs_filesystem_image_open <= USED 0
+efs_filesystem_image_read <= USED 0
+efs_full_scrub <= USED 0
+efs_get_fs_data <= USED 0
+efs_get_volume_name <= USED 0
+efs_golden_copy_set_files_list <= USED 0
+efs_image_prepare <= USED 0
+efs_lock_filesystem <= USED 0
+efs_mkfifo <= USED 0
+efs_mknod <= USED 0
+efs_mount <= USED 0
+efs_power_down <= USED 0
+efs_prepare_shutdown <= USED 0
+efs_private_borrow_ram <= USED 0
+efs_remount <= USED 0
+efs_scrub <= USED 0
+efs_set_volume_name <= USED 0
+efs_store_data_in_superblock <= USED 0
+efs_umount <= USED 0
+efs_unlock_filesystem <= USED 0
+efs_utime <= USED 0
+efs_utime_item <= USED 0
+efs_wait_for_xact <= USED 0
+;FILE fs_realpath.o
+efs_normalize_path_string <= USED 0
+;FILE fs_rollback.o
+efs_rollback_create_rbk_file <= USED 0
+;FILE fs_romfs.o
+;FILE fs_stdio.o
+efs_fdopen <= USED 0
+efs_fileno <= USED 0
+efs_fopen <= USED 0
+efs_fpending <= USED 0
+efs_ftell <= USED 0
+efs_process_async_writes <= USED 0
+efs_set_async_params <= USED 0
+efs_set_sync <= USED 0
+efs_setvbuf <= USED 0
+;FILE fs_sync.o
+fs_sync_complete <= USED 0
+fs_sync_get_completed_token <= USED 0
+fs_sync_get_status <= USED 0
+fs_sync_init <= USED 0
+fs_sync_request_sync <= USED 0
+fs_sync_set_sync_timer_interval <= USED 0
+fs_sync_start <= USED 0
+fs_sync_start_timer <= USED 0
+fs_sync_stop_timer <= USED 0
+;FILE fs_task.o
+;FILE fs_timetick.o
+;FILE fs_timings.o
+;FILE fs_upgrade.o
+;FILE fs_util.o
+fs_fat_to_posix_time <= USED 0
+fs_posix_to_fat_date <= USED 0
+fs_posix_to_fat_time <= USED 0
+fs_string_iter_get_next <= USED 0
+fs_time_jul_from_secs <= USED 0
+fs_time_jul_to_secs <= USED 0
+;FILE fs_vnode.o
+fs_vnode_make_nodev <= USED 0
+;FILE glink_api.o
+glink_rpm_mask_rx_interrupt <= USED 0
+glink_sigs_local_get <= USED 0
+glink_sigs_remote_get <= USED 0
+;FILE glink_channel_migration.o
+;FILE glink_core_full_xport.o
+;FILE glink_core_if.o
+;FILE glink_core_intent.o
+;FILE glink_core_intentless_xport.o
+;FILE glink_core_internal.o
+glink_ssr <= USED 0
+;FILE glink_core_setup.o
+;FILE glink_os_cache_dal.o
+glink_os_cache_flush <= USED 0
+;FILE glink_os_utils_dal.o
+glink_os_atomic_decrement_uint32 <= USED 0
+glink_os_atomic_exchange_uint32 <= USED 0
+glink_os_atomic_increment_uint32 <= USED 0
+glink_os_cs_destroy <= USED 0
+glink_os_timer_init <= USED 0
+glink_os_timer_start <= USED 0
+glink_os_timer_stop <= USED 0
+;FILE glink_sio.o
+glink_sio_get_cntl_port_name <= USED 0
+glink_sio_get_data_port_name <= USED 0
+glink_sio_get_sio_id_from_name <= USED 0
+;FILE glink_sio_task.o
+;FILE glink_vector.o
+;FILE hal_qdss_tpda.o
+;FILE halqdss_csr.o
+HAL_qdss_csr_DisableAllBurstMasters <= USED 0
+HAL_qdss_csr_DisableBamDMAMaster <= USED 0
+HAL_qdss_csr_DisableModemMaster <= USED 0
+HAL_qdss_csr_DisableTimestampGenerator <= USED 0
+HAL_qdss_csr_EnableAllBurstMasters <= USED 0
+HAL_qdss_csr_EnableBamDMAMaster <= USED 0
+HAL_qdss_csr_EnableModemMaster <= USED 0
+HAL_qdss_csr_EnablePeriodicFlushEOT <= USED 0
+HAL_qdss_csr_EnableTimestampGenerator <= USED 0
+HAL_qdss_csr_GetETRByteCounter <= USED 0
+HAL_qdss_csr_GetMPMCounter <= USED 0
+HAL_qdss_csr_GetTimestampCounter <= USED 0
+HAL_qdss_csr_IsUSBEnabled <= USED 0
+HAL_qdss_csr_ManualEOT <= USED 0
+HAL_qdss_csr_SetAWIDs <= USED 0
+HAL_qdss_csr_SetBamDMAChannelOffset <= USED 0
+HAL_qdss_csr_SetModemChannelOffset <= USED 0
+HAL_qdss_csr_SetTimestampCounter <= USED 0
+HAL_qdss_csr_TriggerTimestampCapture <= USED 0
+HAL_qdss_csr_mux_ctrl_0 <= USED 0
+HAL_qdss_csr_mux_ctrl_1 <= USED 0
+HAL_qdss_csr_mux_ctrl_2 <= USED 0
+HAL_qdss_csr_mux_ctrl_3 <= USED 0
+;FILE halqdss_cti.o
+;FILE halqdss_etfetb.o
+HAL_qdss_etfetb_EnableFormatting <= USED 0
+HAL_qdss_etfetb_GetMode <= USED 0
+HAL_qdss_etfetb_GetRamDepth <= USED 0
+HAL_qdss_etfetb_GetReadPtr <= USED 0
+HAL_qdss_etfetb_GetWritePtr <= USED 0
+HAL_qdss_etfetb_SetFFCR <= USED 0
+HAL_qdss_etfetb_SetReadPtr <= USED 0
+HAL_qdss_etfetb_SetTriggerCounter <= USED 0
+HAL_qdss_etfetb_SetWritePtr <= USED 0
+HAL_qdss_etfetb_WriteData <= USED 0
+;FILE halqdss_etr.o
+HAL_qdss_etr_EnableFormatting <= USED 0
+HAL_qdss_etr_FlushWait <= USED 0
+HAL_qdss_etr_SetFFCR <= USED 0
+;FILE halqdss_replicator.o
+;FILE halqdss_stm_config.o
+HAL_qdss_isSyncEnabled <= USED 0
+HAL_qdss_stm_ClaimTagImplementMask <= USED 0
+HAL_qdss_stm_DisableSingleShot <= USED 0
+HAL_qdss_stm_EnableSingleShot <= USED 0
+HAL_qdss_stm_GenerateTimeStamp <= USED 0
+HAL_qdss_stm_HWEventATIDTriggerGenDisable <= USED 0
+HAL_qdss_stm_HWEventCompressionEnable <= USED 0
+HAL_qdss_stm_HWEventErrorDetectEnable <= USED 0
+HAL_qdss_stm_HWEventSelectAll <= USED 0
+HAL_qdss_stm_HWEventTrigOutMultiShotMode <= USED 0
+HAL_qdss_stm_HWEventTriggerEnableAll <= USED 0
+HAL_qdss_stm_SetConfigPhysAddr <= USED 0
+HAL_qdss_stm_SetDefaultSyncPeriod <= USED 0
+HAL_qdss_stm_isAccessLocked <= USED 0
+HAL_qdss_stm_isBusy <= USED 0
+HAL_qdss_stm_isCompEnabled <= USED 0
+;FILE halqdss_tfunnel.o
+HAL_qdss_tfunnel_EnableAllPorts <= USED 0
+HAL_qdss_tfunnel_EnableAllPortsAllFunnels <= USED 0
+HAL_qdss_tfunnel_isFunnelEnabled <= USED 0
+HAL_qdss_tfunnel_isLocked <= USED 0
+;FILE halqdss_tpdm.o
+HAL_qdss_tpdm_bc_get_enable_disable <= USED 0
+HAL_qdss_tpdm_dsb_get_patt_type <= USED 0
+HAL_qdss_tpdm_tc_get_enable_disable <= USED 0
+;FILE haven_util.o
+HavenT_AddCBORMap <= USED 0
+HavenT_AddInt <= USED 0
+HavenT_AddNonce <= USED 0
+HavenT_AddRawCBOR <= USED 0
+HavenT_AddString <= USED 0
+;FILE heap.o
+QURTK_heap_free <= USED 0
+;FILE hsu_al_bam_utils.o
+hsu_al_bam_alloc <= USED 0
+hsu_al_bam_free <= USED 0
+hsu_al_bam_ipa_pipe_connect <= USED 0
+hsu_al_bam_is_ipa_rdy_for_pipe_connect <= USED 0
+hsu_al_bam_pipe_disable_and_deinit <= USED 0
+hsu_al_bam_register_wakeup_event <= USED 0
+hsu_al_bam_utils_all_dbm_ep_init <= USED 0
+hsu_al_bam_utils_all_dbm_ep_reset <= USED 0
+hsu_al_bam_utils_core_dump <= USED 0
+hsu_al_bam_utils_dbm_init <= USED 0
+hsu_al_bam_utils_flush_all_pipe <= USED 0
+hsu_al_bam_utils_get_dl_pipes_status <= USED 0
+hsu_al_bam_utils_ipa_pm_release_clock <= USED 0
+hsu_al_bam_utils_ipa_pm_request_clk <= USED 0
+hsu_al_bam_utils_ipa_state_chg_resume <= USED 0
+hsu_al_bam_utils_ipa_state_chg_suspend <= USED 0
+hsu_al_bam_utils_print_all_pipe <= USED 0
+hsu_al_bam_utils_reset_bam_and_enable_all_pipe <= USED 0
+;FILE hsu_al_dsm_utils.o
+hsu_al_dsm_utils_f3 <= USED 0
+hsu_al_dsm_utils_get_dsm_chain_used_bytes <= USED 0
+hsu_al_dsm_utils_peek_wmq <= USED 0
+hsu_al_uncached_dsm_init <= USED 0
+;FILE hsu_al_ecm.o
+hsu_al_ecm_configure_bam_and_dpm <= USED 0
+hsu_al_ecm_enable_read_write_infinite_all_bam_ep <= USED 0
+hsu_al_ecm_is_any_item_pending <= USED 0
+hsu_al_ecm_pipe_wakeup_cb <= USED 0
+hsu_al_ecm_print_f3 <= USED 0
+hsu_get_diag_health_ecm_statistics_type <= USED 0
+;FILE hsu_al_mem.o
+rb_init <= USED 0
+;FILE hsu_al_ser.o
+;FILE hsu_al_ser_acm.o
+;FILE hsu_al_ser_base.o
+;FILE hsu_al_ser_obex.o
+;FILE hsu_al_task.o
+hsu_al_task_free_dsm <= USED 0
+hsu_al_task_free_rb <= USED 0
+;FILE hsu_bam_sm.o
+hsu_bam_sm_hw_initial_configuration <= USED 0
+hsu_bam_sm_notify_host_ready <= USED 0
+hsu_bam_sm_register_cbs <= USED 0
+;FILE hsu_boot_dload.o
+hsu_boot_dload_is_dload_info_pid_valid <= USED 0
+hsu_boot_dload_is_dload_info_serial_num_valid <= USED 0
+hsu_boot_dload_mark_dload_info_invalid <= USED 0
+;FILE hsu_bus_mode_notifier.o
+hsu_register_bus_mode_notif_cb <= USED 0
+hsu_unregister_bus_mode_notif_cb <= USED 0
+;FILE hsu_cdc_fd_api.o
+hsu_cdc_fd_api_cdc_read <= USED 0
+hsu_cdc_fd_api_cdc_write <= USED 0
+;FILE hsu_clkmgr.o
+hsu_clkmgr_disable_ahb2ahb_bridge_bypass_mode <= USED 0
+hsu_clkmgr_enable_ahb2ahb_bridge_bypass_mode <= USED 0
+hsu_clkmgr_is_clock_on <= USED 0
+hsu_clkmgr_is_peripheral_clock_on <= USED 0
+;FILE hsu_conf_sel_comp_utils.o
+hsu_conf_sel_comp_utils_get_comp_details_by_hsu_id <= USED 0
+hsu_conf_sel_comp_utils_get_comp_details_by_pid <= USED 0
+hsu_conf_sel_comp_utils_get_default_std_comp_info <= USED 0
+;FILE hsu_conf_sel_core_config.o
+hsu_conf_sel_core_config_get_usb3_core_conf_sel_info <= USED 0
+;FILE hsu_conf_sel_nv.o
+hsu_conf_sel_get_a2_pc_debounce_time_for_suspend <= USED 0
+hsu_conf_sel_get_ecm_rx_dsm_item_cnt <= USED 0
+hsu_conf_sel_get_ecm_rx_timeout <= USED 0
+hsu_conf_sel_get_ldo_power_collapse <= USED 0
+hsu_conf_sel_get_phy_config_param <= USED 0
+hsu_conf_sel_get_remote_wakeup_timeout <= USED 0
+hsu_conf_sel_hide_ftl <= USED 0
+hsu_conf_sel_is_ahb2ahb_bypass_enabled <= USED 0
+hsu_conf_sel_lpm_disabled <= USED 0
+hsu_conf_sel_nv_uim_first_inst_class_read <= USED 0
+hsu_conf_sel_ul_bam_bypassed <= USED 0
+;FILE hsu_conf_sel_stack_utils.o
+hsu_conf_sel_stack_utils_disable <= USED 0
+hsu_conf_sel_stack_utils_enable <= USED 0
+hsu_conf_sel_stack_utils_enable_perf_boost_idx <= USED 0
+hsu_conf_sel_stack_utils_force_disable_start <= USED 0
+hsu_conf_sel_stack_utils_force_disable_stop <= USED 0
+hsu_conf_sel_stack_utils_is_forced_disable <= USED 0
+hsu_conf_sel_stack_utils_reconfig_done <= USED 0
+hsu_conf_sel_stack_utils_restart_core <= USED 0
+hsu_conf_sel_stack_utils_switch_device_stack <= USED 0
+hsu_is_dev_configured <= USED 0
+;FILE hsu_config_selector.o
+hsu_conf_sel_change_pid_comp <= USED 0
+hsu_conf_sel_get_cur_comp_id <= USED 0
+hsu_conf_sel_get_cur_pid <= USED 0
+hsu_conf_sel_is_ep0_aggressive_err_chk_enabled <= USED 0
+hsu_conf_sel_is_ep0_timer_on_rx_tx_zlp_err_chk_enabled <= USED 0
+hsu_conf_sel_switch_dev_stack <= USED 0
+hsu_config_selector_is_qdss_bam_supported <= USED 0
+hsu_get_num_of_acm_instances <= USED 0
+;FILE hsu_core_config.o
+hsu_core_config_clear_core <= USED 0
+hsu_core_config_get_hs_main_core <= USED 0
+hsu_core_config_get_num_of_cores <= USED 0
+;FILE hsu_core_config_target.o
+;FILE hsu_event_notifier.o
+hsu_unregister_event_notif_cb <= USED 0
+;FILE hsu_health_diag.o
+hsu_diag_close_and_open <= USED 0
+hsu_rdm_close_diag_cb <= USED 0
+;FILE hsu_log.o
+hsu_audio_log <= USED 0
+hsu_bus_log <= USED 0
+hsu_data_log <= USED 0
+hsu_diag_enum2_str <= USED 0
+hsu_diag_enum_str <= USED 0
+hsu_ep0_log <= USED 0
+hsu_func_log <= USED 0
+hsu_log <= USED 0
+hsu_log_dbg_timer_1_cancel <= USED 0
+hsu_log_dbg_timer_1_start <= USED 0
+hsu_log_dbg_timer_2_cancel <= USED 0
+hsu_log_dbg_timer_2_start <= USED 0
+hsu_log_get_pid_from_core_index <= USED 0
+hsu_qmi_data_log <= USED 0
+hsu_qmi_log <= USED 0
+hsu_qmi_register_iface_log <= USED 0
+hsu_reg_dump_log <= USED 0
+hsu_reg_log <= USED 0
+hsu_ser4_data_log <= USED 0
+hsu_ser4_log <= USED 0
+hsu_snps_ctrl_log <= USED 0
+hsu_stop_func_log <= USED 0
+hsu_stop_reg_log <= USED 0
+hsu_ulog_2 <= USED 0
+hsu_ulog_3 <= USED 0
+hsu_ulog_4 <= USED 0
+hsu_ulog_enum2_2 <= USED 0
+hsu_ulog_enum2_3 <= USED 0
+hsu_ulog_str_5 <= USED 0
+hsu_ulog_str_6 <= USED 0
+hsu_vddmin_log <= USED 0
+;FILE hsu_lpm_gpio.o
+hsu_lpm_gpio_is_gpio_remote_wakeup_required <= USED 0
+hsu_lpm_gpio_remote_wakeup_gpio_high <= USED 0
+hsu_lpm_gpio_remote_wakeup_gpio_init <= USED 0
+;FILE hsu_lpm_snps.o
+hsu_lpm_snps_is_remote_wakeup_allowed <= USED 0
+;FILE hsu_mdm_apis.o
+hsu_api_disable_pmic_otg_comparators <= USED 0
+hsu_api_init_phy <= USED 0
+hsu_api_reg_dump <= USED 0
+hsu_api_ss_phy_functional <= USED 0
+hsu_api_update_vendor_id <= USED 0
+;FILE hsu_modem_proc_services.o
+hsu_modem_proc_services_init <= USED 0
+;FILE hsu_no_ecm_bam_sm.o
+hsu_no_ecm_bam_sm_notify_host_ready <= USED 0
+hsu_no_ecm_bam_sm_register_cbs <= USED 0
+;FILE hsu_os_abstract_bus.o
+hsu_os_ap2mdm_status_gpio_cb <= USED 0
+hsu_os_ap2mdm_status_gpio_register <= USED 0
+hsu_os_bus_get_num_cores <= USED 0
+hsu_os_bus_lfps_interrupt_uninit <= USED 0
+hsu_os_bus_lpm_disable <= USED 0
+hsu_os_bus_lpm_enable <= USED 0
+hsu_os_bus_pwr_evnt_interrupt_uninit <= USED 0
+hsu_os_bus_read_from_phy <= USED 0
+hsu_os_bus_read_from_phy_no_reset <= USED 0
+hsu_os_bus_save_mem_dump <= USED 0
+hsu_os_bus_space_read_1 <= USED 0
+hsu_os_bus_space_read_2 <= USED 0
+hsu_os_bus_space_read_4 <= USED 0
+hsu_os_bus_space_write_1 <= USED 0
+hsu_os_bus_space_write_2 <= USED 0
+hsu_os_bus_space_write_4 <= USED 0
+hsu_os_bus_usb2_phy_interrupt_uninit <= USED 0
+hsu_os_bus_write_to_phy <= USED 0
+hsu_os_usb3_hs_phy_isr_wrapper <= USED 0
+os_notify <= USED 0
+;FILE hsu_os_abstract_main.o
+;FILE hsu_os_abstract_mem.o
+;FILE hsu_os_abstract_stdlib.o
+;FILE hsu_os_abstract_sync.o
+os_safe_enter_d <= USED 0
+os_safe_leave_d <= USED 0
+;FILE hsu_phy_utils.o
+hsu_phy_utils_reg_read <= USED 0
+hsu_phy_utils_reg_read_bmsk <= USED 0
+hsu_phy_utils_reg_write <= USED 0
+hsu_phy_utils_reg_write_bmsk <= USED 0
+hsu_phy_utils_set_config_param <= USED 0
+hsu_phy_utils_set_default_override <= USED 0
+hsu_phy_utils_set_param_override_a <= USED 0
+hsu_phy_utils_set_param_override_b <= USED 0
+hsu_phy_utils_set_param_override_c <= USED 0
+hsu_phy_utils_set_param_override_d <= USED 0
+hsu_phy_utils_spoof_connect_core <= USED 0
+hsu_phy_utils_spoof_disconnect_core <= USED 0
+;FILE hsu_platform.o
+;FILE hsu_qurt_util.o
+;FILE hsu_timer.o
+hsu_timer_deinit <= USED 0
+;FILE hsu_vendor_specific.o
+;FILE hsu_vregmgr_npa.o
+;FILE http.o
+HttpCleanup <= USED 0
+;FILE http_client_req.o
+;FILE http_client_rsp.o
+;FILE http_util.o
+;FILE icmp.o
+;FILE icmp6.o
+icmp6Check <= USED 0
+;FILE iface.o
+if_killsocks <= USED 0
+if_netbytext <= USED 0
+ni_create <= USED 0
+ni_delete <= USED 0
+ni_set_state <= USED 0
+;FILE image_version.o
+image_version_initialize_version_table <= USED 0
+;FILE ims_iot_qmi_service_v01.o
+;FILE in_pcb.o
+;FILE in_utils.o
+bit2chr <= USED 0
+bit2str <= USED 0
+chr2bit <= USED 0
+do_trap <= USED 0
+gettok <= USED 0
+gio_hexdump <= USED 0
+in_bit2chr <= USED 0
+in_bit2str <= USED 0
+nextarg <= USED 0
+print_eth <= USED 0
+print_uptime <= USED 0
+resetqueues <= USED 0
+str2bit <= USED 0
+uslash <= USED 0
+;FILE ininit.o
+deinit_packets <= USED 0
+nichestack_init_done <= USED 0
+;FILE inmap.o
+inmap_destroy <= USED 0
+inmap_height <= USED 0
+inmap_size <= USED 0
+inmap_visit <= USED 0
+inmap_visit_postorder <= USED 0
+;FILE inport.o
+dputchar <= USED 0
+getch <= USED 0
+kbhit <= USED 0
+;FILE inq.o
+inq_destroy <= USED 0
+;FILE intconv.o
+FloatToInt16 <= USED 0
+FloatToInt32 <= USED 0
+FloatToInt64 <= USED 0
+FloatToInt8 <= USED 0
+FloatToUint16 <= USED 0
+FloatToUint32 <= USED 0
+FloatToUint64 <= USED 0
+FloatToUint8 <= USED 0
+Int16ToBit <= USED 0
+Int16ToInt8 <= USED 0
+Int16ToUbit <= USED 0
+Int16ToUint16 <= USED 0
+Int16ToUint8 <= USED 0
+Int32ToBit <= USED 0
+Int32ToInt16 <= USED 0
+Int32ToInt8 <= USED 0
+Int32ToUbit <= USED 0
+Int32ToUint16 <= USED 0
+Int32ToUint32 <= USED 0
+Int32ToUint8 <= USED 0
+Int64ToBit <= USED 0
+Int64ToInt16 <= USED 0
+Int64ToInt32 <= USED 0
+Int64ToInt8 <= USED 0
+Int64ToUbit <= USED 0
+Int64ToUint16 <= USED 0
+Int64ToUint32 <= USED 0
+Int64ToUint64 <= USED 0
+Int64ToUint8 <= USED 0
+Int8ToBit <= USED 0
+Int8ToUbit <= USED 0
+Int8ToUint8 <= USED 0
+Uint16ToBit <= USED 0
+Uint16ToInt16 <= USED 0
+Uint16ToInt8 <= USED 0
+Uint16ToUbit <= USED 0
+Uint16ToUint8 <= USED 0
+Uint32ToBit <= USED 0
+Uint32ToInt16 <= USED 0
+Uint32ToInt32 <= USED 0
+Uint32ToInt8 <= USED 0
+Uint32ToUbit <= USED 0
+Uint32ToUint16 <= USED 0
+Uint32ToUint8 <= USED 0
+Uint64ToBit <= USED 0
+Uint64ToInt16 <= USED 0
+Uint64ToInt32 <= USED 0
+Uint64ToInt64 <= USED 0
+Uint64ToInt8 <= USED 0
+Uint64ToUbit <= USED 0
+Uint64ToUint16 <= USED 0
+Uint64ToUint32 <= USED 0
+Uint64ToUint8 <= USED 0
+Uint8ToBit <= USED 0
+Uint8ToInt8 <= USED 0
+Uint8ToUbit <= USED 0
+;FILE intimer.o
+;FILE iotapp_dam_app_load.o
+;FILE iotapp_dss_util.o
+iot_dss_get_event_by_hndl <= USED 0
+;FILE iotapp_location.o
+;FILE iotapp_log_util.o
+iot_log_print <= USED 0
+iotapp_init_log <= USED 0
+iotapp_write_ulog <= USED 0
+;FILE iotapp_qmi_dins.o
+iotapp_qmi_dins_release <= USED 0
+;FILE iotapp_qmi_dms.o
+iotapp_qmi_dms_release <= USED 0
+;FILE iotapp_qmi_dsd.o
+iotapp_qmi_dsd_release <= USED 0
+;FILE iotapp_qmi_ims_iot.o
+iotapp_qmi_ims_iot_release <= USED 0
+;FILE iotapp_qmi_nas.o
+iotapp_qmi_nas_release <= USED 0
+;FILE iotapp_qmi_psm.o
+iotapp_qmi_pms_release <= USED 0
+;FILE iotapp_qmi_uim.o
+iotapp_qmi_uim_release <= USED 0
+iotapp_qmi_unregister_card_status <= USED 0
+;FILE iotapp_qmi_voice.o
+iotapp_qmi_voice_release <= USED 0
+;FILE iotapp_qmi_wds.o
+iotapp_qmi_wds_release <= USED 0
+;FILE iotapp_qmi_wms.o
+iotapp_qmi_wms_release <= USED 0
+;FILE ip.o
+ip_bldhead <= USED 0
+ip_write2 <= USED 0
+;FILE ip6.o
+ip6_add_addr <= USED 0
+ip6_find_open_slot <= USED 0
+ip6_remove_addr <= USED 0
+ip6_routing_set_enabled <= USED 0
+;FILE ip62mac.o
+;FILE ip6_pcb.o
+;FILE ip6ext.o
+;FILE ip6frags.o
+;FILE ip6mc.o
+;FILE ip6route.o
+ip6_pmtulookup <= USED 0
+rt6_delprefix <= USED 0
+;FILE ip_reasm.o
+;FILE ipc_router_core.o
+ipc_router_core_deinit <= USED 0
+ipc_router_core_get_packet <= USED 0
+ipc_router_core_send_packet <= USED 0
+ipc_router_policy_register <= USED 0
+ipc_router_xal_stop_xport <= USED 0
+;FILE ipc_router_database.o
+ipc_router_database_deinit <= USED 0
+;FILE ipc_router_init.o
+;FILE ipc_router_log.o
+ipc_router_log_error <= USED 0
+;FILE ipc_router_packet.o
+;FILE ipc_router_protocol.o
+ipc_router_protocol_peek_size <= USED 0
+;FILE ipc_router_xal_glink_common.o
+;FILE ipc_router_xal_glink_qurt.o
+;FILE ipdemux.o
+;FILE ipmc.o
+;FILE ipnet.o
+netclose <= USED 0
+;FILE ipopt.o
+;FILE ipraw.o
+;FILE iprcv.o
+;FILE iproute.o
+rt_lookup <= USED 0
+;FILE ipstart.o
+exit_hook <= USED 0
+;FILE jinit.o
+;FILE jos_bus.o
+;FILE jos_device.o
+j_device_attached <= USED 0
+j_device_detach <= USED 0
+j_device_get_desc <= USED 0
+j_device_get_ivars <= USED 0
+j_device_get_nameunit <= USED 0
+j_device_get_parent <= USED 0
+j_device_get_softc_no_null_check <= USED 0
+j_device_get_unit <= USED 0
+j_device_is_attached <= USED 0
+j_device_probe_and_attach <= USED 0
+j_get_usbd_device <= USED 0
+;FILE jos_driver.o
+j_device_ioctl <= USED 0
+j_device_resume <= USED 0
+j_device_suspend <= USED 0
+;FILE jos_entry.o
+generic_controller_resume <= USED 0
+generic_controller_suspend <= USED 0
+jstop_stack <= USED 0
+;FILE jos_mem.o
+jdma_dummy_set <= USED 0
+mem_log_print <= USED 0
+;FILE jos_sync.o
+;FILE jslave_init.o
+jcore_get_curr_configuration <= USED 0
+;FILE json.o
+json_serialize <= USED 0
+prv_serializeData <= USED 0
+;FILE jusb_chp9.o
+core_add_msos_string_descriptor <= USED 0
+core_release_msos_string_descriptor <= USED 0
+;FILE jusb_core.o
+core_begin_hw_accel_xfer <= USED 0
+core_dbm_ep_reset <= USED 0
+core_dbm_init <= USED 0
+core_dcd_usb_gsi_endpoint_config <= USED 0
+core_get_controller_index <= USED 0
+core_get_controller_number <= USED 0
+core_get_curr_speed_by_dcd_idx <= USED 0
+core_get_ep_num <= USED 0
+core_gsi_general_cfg <= USED 0
+core_gsi_post_channel_connect_init <= USED 0
+core_init_ep_trbs_hw_accel <= USED 0
+core_populate_ep_trb_hw_accel <= USED 0
+core_reset_event_buffer <= USED 0
+core_set_ep0_handler <= USED 0
+core_set_hwio_bit__updatexfer_ul <= USED 0
+core_setup_event_buf_and_gsi_interrupters <= USED 0
+;FILE kvp.o
+kvp_destroy <= USED 0
+kvp_frombuffer <= USED 0
+;FILE libel.o
+sky_add_cell_cdma_beacon <= USED 0
+sky_add_cell_lte_neighbor_beacon <= USED 0
+sky_add_cell_nb_iot_neighbor_beacon <= USED 0
+sky_add_cell_nr_beacon <= USED 0
+sky_add_cell_nr_neighbor_beacon <= USED 0
+sky_add_cell_umts_beacon <= USED 0
+sky_add_cell_umts_neighbor_beacon <= USED 0
+sky_add_gnss <= USED 0
+;FILE liblwm2m.o
+;FILE libstd_std_scanul.o
+;FILE linked_list.o
+linked_list_search <= USED 0
+;FILE list.o
+list_init <= USED 0
+list_linear_search <= USED 0
+list_merge <= USED 0
+list_peek_back <= USED 0
+list_peek_front <= USED 0
+list_peek_next <= USED 0
+list_peek_prev <= USED 0
+list_pop_back <= USED 0
+list_pop_front <= USED 0
+list_pop_item <= USED 0
+list_push_after <= USED 0
+list_push_back <= USED 0
+list_push_before <= USED 0
+list_push_front <= USED 0
+list_size <= USED 0
+list_split <= USED 0
+ordered_list_init <= USED 0
+ordered_list_linear_search <= USED 0
+ordered_list_merge <= USED 0
+ordered_list_peek_back <= USED 0
+ordered_list_peek_front <= USED 0
+ordered_list_peek_next <= USED 0
+ordered_list_peek_prev <= USED 0
+ordered_list_pop_back <= USED 0
+ordered_list_pop_front <= USED 0
+ordered_list_pop_item <= USED 0
+ordered_list_push <= USED 0
+ordered_list_size <= USED 0
+ordered_list_split <= USED 0
+;FILE listeners.o
+qseecom_listeners_module_stop <= USED 0
+;FILE lldb_brkpt.o
+lldb_cmd_suspend_module_threads <= USED 0
+lldb_suspend_module_threads <= USED 0
+update_lldb_server_debug_state <= USED 0
+;FILE lldb_driver.o
+;FILE lldb_next_pc.o
+;FILE lldb_process_req.o
+getNextPcBxBlx <= USED 0
+isBranchImmInst <= USED 0
+isBxBlxInst <= USED 0
+process_thread_list <= USED 0
+update_thread_bp_reg_context <= USED 0
+;FILE lldb_utils.o
+;FILE loc_api_sync_req.o
+;FILE loc_api_v02_client.o
+;FILE loc_cfg.o
+loc_update_conf <= USED 0
+;FILE loc_log.o
+loc_get_name_from_mask <= USED 0
+loc_get_target_name <= USED 0
+log_succ_fail_string <= USED 0
+;FILE loc_misc_utils.o
+loc_util_double_to_string <= USED 0
+loc_util_log_location <= USED 0
+loc_util_split_string <= USED 0
+loc_util_string_to_double <= USED 0
+;FILE loc_nmea.o
+;FILE loc_publicencrypt_txm.o
+;FILE location_module_manager.o
+;FILE location_service_iot_v02.o
+;FILE log_api.o
+log_get_length <= USED 0
+log_on_demand_register <= USED 0
+log_on_demand_unregister <= USED 0
+;FILE lookup_table_solver.o
+;FILE lpr_definition_cpu_vdd.o
+;FILE lpr_definition_cxo.o
+;FILE lpr_definition_rpm_sync.o
+;FILE lpr_definition_vdd_dig.o
+;FILE lwm2m_at_handler.o
+;FILE lwm2m_at_utility.o
+;FILE lwm2m_carrier.o
+;FILE lwm2m_id_mapping.o
+;FILE lwm2m_list.o
+;FILE lwm2m_psm.o
+;FILE lwm2m_rx.o
+;FILE lwm2mclient.o
+get_lwm2m_thread_Handle <= USED 0
+lwm2m_location_thread_stop <= USED 0
+;FILE lz4.o
+LZ4_uncompress <= USED 0
+LZ4_uncompress_unknownOutputSize <= USED 0
+;FILE management.o
+;FILE md5c.o
+;FILE mem_init.o
+mem_empty <= USED 0
+memcmpK <= USED 0
+;FILE mem_utility.o
+;FILE memheap.o
+mem_deinit_heap <= USED 0
+mem_heap_consumed <= USED 0
+mem_heap_get_alloc_info <= USED 0
+mem_heap_overhead <= USED 0
+mem_heap_set_crit_sect <= USED 0
+mem_heap_set_no_lock <= USED 0
+mem_heap_set_task_lock <= USED 0
+mem_heap_used <= USED 0
+mem_malloc_failed <= USED 0
+print_memheap_free_error_log <= USED 0
+;FILE memmove_s.o
+;FILE memory.o
+vma_search <= USED 0
+;FILE memscmp.o
+;FILE memscpy.o
+;FILE memsmove.o
+;FILE memsset.o
+;FILE memutils.o
+HeapCacheAddRef <= USED 0
+HeapCacheFindMemoryOverwrite <= USED 0
+HeapCacheGetBufferDebug <= USED 0
+HeapCacheGetBufferProd <= USED 0
+HeapCacheLeakReport <= USED 0
+HeapCacheRelease <= USED 0
+HeapCacheReturnBuffer <= USED 0
+HeapCacheUsageStatistics <= USED 0
+_Z26memory_tracker_leak_reportv <= USED 0
+_ZN9HeapCache12ReturnBufferEPv <= USED 0
+_ZN9HeapCache15UsageStatisticsEv <= USED 0
+_ZN9HeapCache6AddRefEv <= USED 0
+_ZN9HeapCache6GetBinEj <= USED 0
+_ZN9HeapCache7ReleaseEv <= USED 0
+_ZN9HeapCache9GetBufferEjPKcm <= USED 0
+memory_tracker_delete <= USED 0
+memory_tracker_get_location <= USED 0
+memory_tracker_initialize <= USED 0
+memory_tracker_new <= USED 0
+memory_tracker_terminate <= USED 0
+;FILE misc.o
+insb_rep <= USED 0
+insbh_rep <= USED 0
+insh_rep <= USED 0
+insw_rep <= USED 0
+outsb_rep <= USED 0
+outsbh_rep <= USED 0
+outsh_rep <= USED 0
+outsw_rep <= USED 0
+;FILE mpm_utils.o
+;FILE mpmint.o
+mpmint_get_num_mapped_interrupts <= USED 0
+mpmint_map_interrupts_with_master <= USED 0
+mpmint_setup_interrupts <= USED 0
+;FILE mpmint_log.o
+;FILE mpmint_map.o
+;FILE mpmint_os.o
+;FILE mqtt_mod.o
+get_mqtt_thread_id <= USED 0
+;FILE mqtt_port.o
+_dtrap <= USED 0
+mqtt_sem_free <= USED 0
+mqtt_suspend <= USED 0
+mqtt_wake <= USED 0
+;FILE mqttc.o
+;FILE msg.o
+msg_ssid_count <= USED 0
+;FILE msg_api.o
+msg_send_ts <= USED 0
+msg_send_ts_ext <= USED 0
+msg_send_var_ext <= USED 0
+msg_v2_send <= USED 0
+msg_v2_send_1 <= USED 0
+msg_v2_send_2 <= USED 0
+msg_v2_send_3 <= USED 0
+msg_v2_send_var <= USED 0
+msg_v4_errlog_0 <= USED 0
+msg_v4_errlog_0_ext <= USED 0
+msg_v4_errlog_1 <= USED 0
+msg_v4_errlog_1_ext <= USED 0
+msg_v4_errlog_2 <= USED 0
+msg_v4_errlog_2_ext <= USED 0
+msg_v4_errlog_3_ext <= USED 0
+qsr_int_msg_send <= USED 0
+qsr_int_msg_send_1 <= USED 0
+qsr_int_msg_send_2 <= USED 0
+qsr_int_msg_send_3 <= USED 0
+qsr_msg_send <= USED 0
+qsr_msg_send_1 <= USED 0
+qsr_msg_send_2 <= USED 0
+qsr_msg_send_3 <= USED 0
+qsr_msg_send_var <= USED 0
+;FILE msg_q.o
+msg_q_unblock <= USED 0
+;FILE nat_mod.o
+;FILE natfrag.o
+;FILE natftp.o
+;FILE natport.o
+;FILE nattl.o
+;FILE natutil.o
+del_alias <= USED 0
+del_proxy <= USED 0
+get_pointer_to_nat_table <= USED 0
+natconn_type <= USED 0
+new_alias <= USED 0
+new_proxy <= USED 0
+;FILE nd.o
+nd_dump <= USED 0
+nd_getPrePMTU <= USED 0
+;FILE net_utils.o
+dump_buf_to_dpl <= USED 0
+get_dummy_ipv4_header <= USED 0
+get_dummy_ipv6_header <= USED 0
+get_dummy_tcp_header <= USED 0
+get_dummy_udp_header <= USED 0
+get_ipnetstats <= USED 0
+get_mbuf_mfreeq <= USED 0
+get_no_pktFreeqs <= USED 0
+get_pktFreeq <= USED 0
+get_rcvdq <= USED 0
+get_sockqcnt <= USED 0
+get_tcpmibstats <= USED 0
+get_tcpnetstats <= USED 0
+get_udpnetstats <= USED 0
+;FILE netmain_mod.o
+get_arpnattick_thread_id <= USED 0
+get_dns_proxy_thread_id <= USED 0
+get_dnstick_thread_id <= USED 0
+get_ipfragtick_thread_id <= USED 0
+get_netmain_thread_id <= USED 0
+get_ping_thread_id <= USED 0
+get_tcptick_thread_id <= USED 0
+get_timertick_thread_id <= USED 0
+tk_nettick <= USED 0
+;FILE netmgr_call_manager.o
+;FILE netmgr_dins.o
+;FILE netmgr_exec.o
+;FILE netmgr_ext_util.o
+netmgr_log_print <= USED 0
+;FILE netmgr_iface_config.o
+;FILE netmgr_main.o
+;FILE netmgr_platform.o
+;FILE netmgr_qmi.o
+;FILE netmgr_qmi_dfs.o
+;FILE netmgr_qmi_dins.o
+;FILE netmgr_qmi_dpm.o
+;FILE netmgr_qmi_nipd.o
+;FILE netmgr_qmi_wda.o
+;FILE netmgr_qmi_wds.o
+;FILE netmgr_service_manager.o
+;FILE netmgr_sm.o
+;FILE network_access_service_v01.o
+;FILE non_ip_data_service_v01.o
+;FILE nonipsock.o
+;FILE npa.o
+npa_dal_event_callback <= USED 0
+npa_find_extension <= USED 0
+npa_is_next_wakeup_after_nas <= USED 0
+npa_notify_next_awake <= USED 0
+npa_sclk_to_qclk <= USED 0
+npa_timer_init <= USED 0
+;FILE npa_client.o
+npa_issue_isoc_request <= USED 0
+npa_issue_scalar_request_unconditional <= USED 0
+npa_modify_required_request <= USED 0
+npa_set_client_type_required <= USED 0
+npa_set_client_type_suppressible <= USED 0
+;FILE npa_event.o
+npa_destroy_custom_event <= USED 0
+npa_destroy_event_handle <= USED 0
+npa_dispatch_custom_event <= USED 0
+npa_get_first_event_of_trigger_type <= USED 0
+npa_get_next_event_of_trigger_type <= USED 0
+npa_post_custom_event <= USED 0
+npa_post_custom_event_nodups <= USED 0
+npa_post_custom_events <= USED 0
+npa_post_sync_event <= USED 0
+npa_resource_add_system_event_callback <= USED 0
+npa_resource_remove_system_event_callback <= USED 0
+npa_set_event_thresholds <= USED 0
+npa_set_event_watermarks <= USED 0
+;FILE npa_graph.o
+npa_any_resource_available_cb <= USED 0
+npa_change_resource_plugin <= USED 0
+npa_define_marker_with_attributes <= USED 0
+npa_destroy_resource <= USED 0
+npa_disable_node <= USED 0
+npa_enable_node <= USED 0
+npa_reset <= USED 0
+;FILE npa_list.o
+npa_list_Apply <= USED 0
+npa_list_ApplyAndClear <= USED 0
+npa_list_Clear <= USED 0
+npa_list_Find <= USED 0
+npa_list_IsEmpty <= USED 0
+npa_list_PeekFront <= USED 0
+npa_list_PopFront <= USED 0
+npa_list_Remove <= USED 0
+npa_list_SwapLists <= USED 0
+;FILE npa_log.o
+npa_add_client_log_by_handle <= USED 0
+npa_add_resource_log_by_name <= USED 0
+npa_remove_client_log_by_handle <= USED 0
+npa_remove_resource_log_by_name <= USED 0
+;FILE npa_plugins.o
+;FILE npa_query.o
+npa_query_by_event <= USED 0
+npa_query_resource_available <= USED 0
+;FILE npa_remote_resource.o
+;FILE npa_remote_rpm_protocol.o
+npa_rpm_do_deferred_updates <= USED 0
+;FILE npa_resource.o
+npa_get_request_attributes <= USED 0
+npa_issue_dependency_request <= USED 0
+npa_issue_dependency_vector_request <= USED 0
+npa_request_has_attribute <= USED 0
+npa_request_serviced <= USED 0
+npa_resource_has_attribute <= USED 0
+npa_resource_has_client <= USED 0
+npa_resource_trylock <= USED 0
+npa_set_resource_attribute <= USED 0
+npa_unset_request_attribute <= USED 0
+;FILE npa_target_config.o
+npa_target_config <= USED 0
+;FILE npa_target_routines.o
+;FILE npa_transaction.o
+npa_destroy_transaction <= USED 0
+npa_is_transaction_nested <= USED 0
+npa_mark_resource_forked <= USED 0
+;FILE nptcp.o
+;FILE nsport.o
+ns_fd_clr <= USED 0
+ns_mutex_create <= USED 0
+ns_mutex_deinit <= USED 0
+ns_mutex_destroy <= USED 0
+ns_sleep <= USED 0
+ns_ssl_accept <= USED 0
+ns_ssl_connect <= USED 0
+ns_ssl_obj_create <= USED 0
+;FILE obex_fd.o
+;FILE obj_cache.o
+;FILE object_access_control.o
+;FILE object_apn_connection.o
+find_apn_link_info <= USED 0
+;FILE object_cell_nw_connectivity.o
+;FILE object_connectivity_moni.o
+;FILE object_connectivity_stat.o
+;FILE object_device.o
+;FILE object_devicecap.o
+;FILE object_firmware.o
+;FILE object_location.o
+;FILE object_security.o
+;FILE object_server.o
+;FILE object_software_mgnt.o
+;FILE objects.o
+;FILE observe.o
+;FILE osal_qurt.o
+osal_atomic_add <= USED 0
+osal_atomic_clear_bit <= USED 0
+osal_atomic_set_bit <= USED 0
+osal_create_timer_ex <= USED 0
+osal_delete_crit_sect <= USED 0
+osal_delete_mutex <= USED 0
+osal_delete_timer <= USED 0
+osal_tls_getspecific <= USED 0
+osal_tls_key_create <= USED 0
+osal_tls_key_delete <= USED 0
+osal_tls_setspecific <= USED 0
+;FILE osporttk.o
+tk_event_clear <= USED 0
+tk_mutex_free <= USED 0
+tk_sem_post_isr <= USED 0
+tk_stats <= USED 0
+;FILE packet.o
+;FILE paramsdiag.o
+;FILE parseip.o
+if_nametoindex <= USED 0
+;FILE pb_common.o
+;FILE pb_decode.o
+;FILE pb_encode.o
+pb_encode_ex <= USED 0
+;FILE pgtable.o
+writeZeroes <= USED 0
+zero_mem_range <= USED 0
+;FILE picotls.o
+ptls_buffer__adjust_asn1_blocksize <= USED 0
+ptls_calc_hash <= USED 0
+ptls_decode24 <= USED 0
+;FILE ping.o
+;FILE pktalloc.o
+dump_buf_estats <= USED 0
+pk_Qname <= USED 0
+pk_delQ <= USED 0
+pk_maxblk <= USED 0
+pk_member <= USED 0
+pk_restore <= USED 0
+;FILE platform.o
+lwm2m_isprint <= USED 0
+lwm2m_printf <= USED 0
+;FILE pm_apps_proc_npa.o
+;FILE pm_apps_proc_npa_device.o
+;FILE pm_clk_driver.o
+pm_clk_get_data <= USED 0
+pm_clk_get_num_peripherals <= USED 0
+;FILE pm_comm.o
+;FILE pm_comm_spmi_dal.o
+pm_comm_read_byte_mask <= USED 0
+;FILE pm_gpio.o
+pm_gpio_config_bias_voltage <= USED 0
+pm_gpio_config_digital_input <= USED 0
+pm_gpio_config_digital_input_output <= USED 0
+pm_gpio_config_digital_output <= USED 0
+pm_gpio_enable <= USED 0
+pm_gpio_get_pin_status <= USED 0
+pm_gpio_irq_clear <= USED 0
+pm_gpio_irq_enable <= USED 0
+pm_gpio_irq_set_trigger <= USED 0
+pm_gpio_irq_status <= USED 0
+pm_gpio_peripheral_info_get <= USED 0
+pm_gpio_set_current_source_pulls <= USED 0
+pm_gpio_set_inversion_configuration <= USED 0
+pm_gpio_set_mux_ctrl <= USED 0
+pm_gpio_set_output_buffer_configuration <= USED 0
+pm_gpio_set_output_buffer_drive_strength <= USED 0
+pm_gpio_set_source_configuration <= USED 0
+pm_gpio_set_voltage_source <= USED 0
+pm_gpio_status_get <= USED 0
+;FILE pm_gpio_driver.o
+pm_gpio_get_num_peripherals <= USED 0
+;FILE pm_init.o
+;FILE pm_ldo_driver.o
+pm_ldo_get_data <= USED 0
+pm_ldo_get_num_peripherals <= USED 0
+;FILE pm_malloc.o
+;FILE pm_mpp_driver.o
+pm_mpp_get_data <= USED 0
+pm_mpp_get_num_peripherals <= USED 0
+;FILE pm_npa.o
+pm_npa_init <= USED 0
+;FILE pm_npa_device_clk_buff.o
+;FILE pm_npa_device_ldo.o
+;FILE pm_npa_device_smps.o
+;FILE pm_npa_device_vs.o
+;FILE pm_pbs_client_driver.o
+pm_pbs_client_get_data <= USED 0
+pm_pbs_client_get_num_peripherals <= USED 0
+;FILE pm_pon.o
+pm_pon_config_uvlo <= USED 0
+pm_pon_debounce_ctl <= USED 0
+pm_pon_gen2_get_all_pon_reasons <= USED 0
+pm_pon_get_all_pon_reasons <= USED 0
+pm_pon_get_fault_reason <= USED 0
+pm_pon_get_fsm_current_state <= USED 0
+pm_pon_get_off_reason <= USED 0
+pm_pon_get_on_reason <= USED 0
+pm_pon_get_poff_reason <= USED 0
+pm_pon_get_pon_reason <= USED 0
+pm_pon_get_s3_reset_reason <= USED 0
+pm_pon_get_soft_reset_reason <= USED 0
+pm_pon_get_spare_reg_data <= USED 0
+pm_pon_get_warm_reset_reason <= USED 0
+pm_pon_overtemp_reset_cfg <= USED 0
+pm_pon_pbl_status <= USED 0
+pm_pon_reset_source_cfg <= USED 0
+pm_pon_reset_source_ctl <= USED 0
+pm_pon_stage3_reset_source_cfg <= USED 0
+pm_pon_warm_reset_status <= USED 0
+pm_pon_warm_reset_status_clear <= USED 0
+;FILE pm_pon_app.o
+pm_app_misc_get_cfg <= USED 0
+pm_app_misc_set_cfg <= USED 0
+;FILE pm_pwroff.o
+;FILE pm_resource_manager.o
+;FILE pm_rtc.o
+pm_rtc_alarm_msec_clk_enable <= USED 0
+;FILE pm_rtc_driver.o
+pm_rtc_get_num_peripherals <= USED 0
+;FILE pm_rtcapp.o
+;FILE pm_smps_driver.o
+pm_smps_get_data <= USED 0
+pm_smps_get_num_peripherals <= USED 0
+;FILE pm_target.o
+;FILE pm_target_information.o
+;FILE pm_ulog.o
+;FILE pm_usb_app.o
+;FILE pm_utils.o
+pm_utils_get_upper_idx <= USED 0
+;FILE pm_vbatt_app.o
+;FILE pm_vbus_driver.o
+pm_vbus_get_data <= USED 0
+pm_vbus_get_num_peripherals <= USED 0
+;FILE pm_version.o
+pm_get_pbs_info <= USED 0
+pm_get_pmic_option_pin_info <= USED 0
+pm_get_pmic_revision <= USED 0
+pm_is_pmic_supported <= USED 0
+;FILE pool.o
+;FILE power.o
+wait_for_interrupt <= USED 0
+;FILE power_save_mode_service_v01.o
+;FILE product_dump.o
+sdi_clear_imem_cookie <= USED 0
+sdi_enabled <= USED 0
+;FILE product_lock.o
+;FILE proto.o
+;FILE psm_client.o
+psm_client_log_msg <= USED 0
+;FILE psm_core.o
+psm_core_log_msg <= USED 0
+psm_core_server_release <= USED 0
+;FILE psm_list.o
+;FILE psm_qmi.o
+psm_qmi_auto_start_modem <= USED 0
+psm_qmi_check_is_fota <= USED 0
+psm_qmi_client_release <= USED 0
+psm_qmi_fetch_modem_operational_status <= USED 0
+psm_qmi_get_boot_type <= USED 0
+psm_qmi_get_threshold_time <= USED 0
+psm_qmi_is_modem_controlled_psm <= USED 0
+psm_qmi_modify_modem_load_based_on_boot <= USED 0
+psm_qmi_read_modem_loading_flag <= USED 0
+psm_qmi_register_oprt_mode_ind <= USED 0
+psm_qmi_tau_timer_evaluate_load_modem <= USED 0
+;FILE psm_rtc.o
+psm_rtc_set_alarm <= USED 0
+;FILE psm_test.o
+;FILE psmd.o
+;FILE pthread_loc.o
+pthread_cond_broadcast <= USED 0
+;FILE q.o
+;FILE qapi_adc.o
+;FILE qapi_coap.o
+;FILE qapi_coap_txm.o
+;FILE qapi_device_info.o
+reg_app_callback <= USED 0
+;FILE qapi_device_info_txm.o
+register_qapi_device_info_txm <= USED 0
+;FILE qapi_diag.o
+;FILE qapi_diag_pkt.o
+;FILE qapi_dnsc.o
+qapi_Net_DNSc_Get_Host_By_Name2 <= USED 0
+;FILE qapi_dnsc_txm.o
+;FILE qapi_dss.o
+;FILE qapi_dss_txm.o
+;FILE qapi_fs.o
+;FILE qapi_ftl.o
+qapi_FTL_Read_lpa <= USED 0
+;FILE qapi_gpioint.o
+;FILE qapi_httpc.o
+;FILE qapi_httpc_txm.o
+;FILE qapi_i2c_dam.o
+;FILE qapi_i2c_master.o
+;FILE qapi_location.o
+;FILE qapi_lwm2m.o
+free_lwm2m_copy_obj_info <= USED 0
+lwm2m_copy_obj_info <= USED 0
+;FILE qapi_lwm2m_txm.o
+;FILE qapi_mqtt.o
+;FILE qapi_mqtt_txm.o
+;FILE qapi_net_txm.o
+;FILE qapi_netbuf.o
+;FILE qapi_netfilter.o
+;FILE qapi_netprofile.o
+qapi_Net_Profile_Set_Active <= USED 0
+qapi_Net_Profile_Set_Custom <= USED 0
+;FILE qapi_netstat.o
+;FILE qapi_ns_gen_v4.o
+;FILE qapi_ns_gen_v6.o
+qapi_Net_IPv6_Routing_Enable <= USED 0
+;FILE qapi_ns_utils.o
+;FILE qapi_pm_vbatt_app.o
+;FILE qapi_psm.o
+psm_is_mmu_support_enabled <= USED 0
+qapi_PSM_Client_Load_Modem <= USED 0
+;FILE qapi_pwm.o
+;FILE qapi_sensor_mgr.o
+;FILE qapi_sensor_mgr_txm.o
+;FILE qapi_socket.o
+;FILE qapi_socket_txm.o
+;FILE qapi_spi_dam.o
+;FILE qapi_spi_master.o
+;FILE qapi_ssl.o
+;FILE qapi_ssl_cert.o
+;FILE qapi_ssl_txm.o
+;FILE qapi_timer.o
+qapi_Timer_Def <= USED 0
+qapi_Timer_Undef <= USED 0
+qapi_Timer_set_absolute <= USED 0
+qapi_get_timer_inaccuracy <= USED 0
+qapi_time_get <= USED 0
+;FILE qapi_timer_txm.o
+query_timer_sleep_qapi_id <= USED 0
+;FILE qapi_tlmm.o
+;FILE qapi_tsens.o
+;FILE qapi_uart.o
+;FILE qapi_uart_dam.o
+;FILE qapi_usb.o
+;FILE qapi_utils.o
+;FILE qapi_version.o
+;FILE qapi_version_txm.o
+;FILE qca4004.o
+;FILE qca4004_api.o
+qca4004_deinit <= USED 0
+;FILE qca4004_gpio.o
+qca4004_release_gpio_all <= USED 0
+;FILE qca4004_iface.o
+;FILE qca4004_uart.o
+qca4004_uart_close <= USED 0
+qca4004_write <= USED 0
+;FILE qca4004_utils.o
+;FILE qcbor_decode.o
+QCBORDecode_Finish <= USED 0
+;FILE qcbor_encode.o
+QCBOREncode_AddDouble_3 <= USED 0
+QCBOREncode_AddFloat_3 <= USED 0
+QCBOREncode_AddRaw <= USED 0
+QCBOREncode_AddText_3 <= USED 0
+;FILE qcmap_cmdq.o
+;FILE qcmap_main.o
+;FILE qcmap_qti.o
+qcmap_evt_handler_cb <= USED 0
+qcmap_start_dnsc <= USED 0
+;FILE qdss_bam.o
+qdss_bam_deinit <= USED 0
+qdss_bam_reset <= USED 0
+;FILE qdss_control.o
+;FILE qdss_diag.o
+;FILE qdss_dump.o
+;FILE qdss_etr.o
+;FILE qdss_fuse_check_dal.o
+;FILE qdss_imem_dal.o
+;FILE qdss_init.o
+__asm___11_qdss_init_c_9baf02ac__incr2_word_write <= USED 0
+__asm___11_qdss_init_c_9baf02ac__incr4_word_write <= USED 0
+;FILE qdss_osal.o
+;FILE qdss_qmi_ctrl_client.o
+;FILE qdss_sio.o
+qdss_sio_send_chunk <= USED 0
+qdss_sio_send_data <= USED 0
+;FILE qdss_test.o
+;FILE qdss_tfunnel.o
+qdss_control_get_funnel <= USED 0
+;FILE qdss_tlmm.o
+;FILE qdss_tmc.o
+;FILE qdss_tpda.o
+;FILE qdss_tpdm.o
+;FILE qdss_trace_buffer.o
+;FILE qdss_trace_sink.o
+qdss_control_get_sink_list <= USED 0
+;FILE qdss_utils.o
+;FILE qflog.o
+QFLOG_Read_Cert_and_Key <= USED 0
+qflog_memcpy <= USED 0
+;FILE qflog_utils.o
+;FILE qmesa.o
+;FILE qmi_cci_common.o
+qmi_cci_common_deinit <= USED 0
+qmi_cci_xport_stop <= USED 0
+qmi_client_get_async_txn_id <= USED 0
+;FILE qmi_cci_shim_kernel.o
+;FILE qmi_cci_target.o
+;FILE qmi_csi_common.o
+qmi_csi_conn_complete <= USED 0
+qmi_csi_get_txn_id <= USED 0
+qmi_csi_send_broadcast_ind_raw <= USED 0
+qmi_csi_send_ind_raw <= USED 0
+qmi_csi_send_resp_raw <= USED 0
+qmi_csi_unregister <= USED 0
+;FILE qmi_csi_target.o
+;FILE qmi_fw_init.o
+;FILE qmi_idl_accessor.o
+qmi_idl_get_max_c_struct_len <= USED 0
+qmi_idl_inherit_service_object <= USED 0
+;FILE qmi_idl_lib.o
+;FILE qmi_idl_shim_kernel_stubs.o
+qmi_idl_shim_kernel_handler <= USED 0
+;FILE qmi_qteels_ser.o
+;FILE qmi_si_database.o
+qmi_si_deinit <= USED 0
+qmi_si_get_all_impl <= USED 0
+qmi_si_register_id <= USED 0
+qmi_si_register_object <= USED 0
+qmi_si_unregister_id <= USED 0
+qmi_si_unregister_object <= USED 0
+;FILE qmi_si_impl.o
+;FILE qmi_ssctl_ser_v02.o
+;FILE qmi_ssctl_v02_client.o
+;FILE qmi_time_client.o
+;FILE qmi_utils_client.o
+;FILE qmislim_common.o
+;FILE qmislim_qmi_client.o
+slim_QSQmiClient_EnablePedometer <= USED 0
+slim_QSQmiClient_EnableSensorData <= USED 0
+slim_QSQmiClient_EnableVehicleData <= USED 0
+slim_QSQmiClient_GetNextEventTime <= USED 0
+slim_QSQmiClient_GetTimeUpdate <= USED 0
+slim_QSQmiClient_ProcessTimeEvents <= USED 0
+;FILE qmislim_qmi_decoders.o
+;FILE qmislim_qmi_dm_log.o
+slim_QSLogCCINotifierDeinit <= USED 0
+slim_QSLogCCINotifierInit <= USED 0
+slim_QSLogCCINotifierServiceDec <= USED 0
+slim_QSLogCCINotifierServiceInc <= USED 0
+slim_QSLogCSIConnect <= USED 0
+slim_QSLogCSIDisconnect <= USED 0
+slim_QSLogCSIEncodedMessage <= USED 0
+slim_QSLogCSIRegister <= USED 0
+slim_QSLogCSIUnregister <= USED 0
+slim_QSLogConfigure <= USED 0
+;FILE qmislim_qmi_encoders.o
+slim_QSEncodeDataHeader <= USED 0
+slim_QSEncodeError <= USED 0
+slim_QSEncodeFlags <= USED 0
+slim_QSEncodePedometerData <= USED 0
+slim_QSEncodePedometerReportType <= USED 0
+slim_QSEncodeQmdData <= USED 0
+slim_QSEncodeQmdMotionState <= USED 0
+slim_QSEncodeSensorData <= USED 0
+slim_QSEncodeServiceProvider <= USED 0
+slim_QSEncodeSlimInd <= USED 0
+slim_QSEncodeTimeSource <= USED 0
+slim_QSEncodeVehicleMotionData <= USED 0
+slim_QSEncodeVehicleOdometryData <= USED 0
+slim_QSEncodeVehicleOdometryMask <= USED 0
+slim_QSEncodeVehicleSensorData <= USED 0
+slim_QSFixupEncodedTimeSource <= USED 0
+;FILE qmislim_target.o
+slim_QSOsParamsUnpackIpc <= USED 0
+;FILE qseecom.o
+;FILE qsocket_ipcr.o
+ipcr_find_sname <= USED 0
+qgetsockopt <= USED 0
+;FILE qtee_invoke_cred.o
+;FILE qtee_invoke_driver.o
+qtee_invoke_exit <= USED 0
+;FILE qtee_log_driver.o
+;FILE qti_bridge.o
+get_qti_bridge_task_thread_id <= USED 0
+;FILE qti_bridge_cmdq.o
+;FILE qti_bridge_ds_mux.o
+;FILE qti_bridge_logical.o
+;FILE qti_bridge_modem.o
+;FILE qti_bridge_peripheral.o
+;FILE qti_bridge_sio.o
+;FILE qti_cmdq.o
+;FILE qti_main.o
+get_qti_task_thread_id <= USED 0
+;FILE qti_qcmap.o
+;FILE qti_rmnet_dpm.o
+;FILE qti_rmnet_modem.o
+;FILE qti_rmnet_peripheral.o
+;FILE qti_rmnet_qmi.o
+;FILE qualcomm_debug_subsystem_control_v01.o
+;FILE queue.o
+q_delete_ext <= USED 0
+q_last_get <= USED 0
+q_linear_delete <= USED 0
+q_linear_delete_new <= USED 0
+q_m_put <= USED 0
+;FILE qurt_custom_cb_qapi_example.o
+custom_cb_qapi_example_init <= USED 0
+;FILE qurt_error.o
+;FILE qurt_fs.o
+;FILE qurt_init.o
+qurt_system_register_bsp_hook <= USED 0
+;FILE qurt_interrupt.o
+qurt_interrupt_default_irq_handler <= USED 0
+;FILE qurt_memory.o
+allocateKernelStack <= USED 0
+deallocateKernelStack <= USED 0
+;FILE qurt_parser.o
+;FILE qurt_pimutex.o
+qurt_mutex_lock_timed <= USED 0
+;FILE qurt_pipe.o
+qurt_pipe_delete <= USED 0
+qurt_pipe_flush <= USED 0
+qurt_pipe_receive_timed_ext <= USED 0
+qurt_pipe_send_timed_ext <= USED 0
+qurt_pipe_try_receive <= USED 0
+;FILE qurt_qtmr_timer.o
+;FILE qurt_scm.o
+;FILE qurt_storage_wrapper.o
+;FILE qurt_system.o
+qurt_fiq_free_restore <= USED 0
+qurt_system_power_systick_restore <= USED 0
+threadx_step_tick <= USED 0
+;FILE qurt_thread.o
+qurt_get_profiling_time <= USED 0
+qurt_get_thread_run_info <= USED 0
+qurt_profile_getTotalTime <= USED 0
+qurt_start_profiling_thread <= USED 0
+qurt_thread_get_idletime <= USED 0
+qurt_threadx_profile <= USED 0
+qurt_tls_delete_key <= USED 0
+qurt_txm_last_ran_thread_info <= USED 0
+;FILE qurt_timer.o
+qurt_timer_attr_get_duration <= USED 0
+qurt_timer_attr_get_option <= USED 0
+qurt_timer_attr_get_reload <= USED 0
+qurt_timer_attr_get_remaining <= USED 0
+qurt_timer_attr_set_reload <= USED 0
+qurt_timer_attr_set_signal <= USED 0
+qurt_timer_get_attr <= USED 0
+qurt_timer_get_remaining <= USED 0
+qurt_timer_restart <= USED 0
+;FILE qurt_timetick.o
+;FILE qurt_txm_exception_handler.o
+qurt_txm_module_exception_notify_cb_register <= USED 0
+qurt_txm_module_get_exception_info <= USED 0
+;FILE qurt_txm_module_mgr.o
+;FILE qurt_txm_qapi_fwk.o
+;FILE qurt_txm_uid_fwk.o
+;FILE qw.o
+qw_add <= USED 0
+qw_cmp <= USED 0
+qw_dec <= USED 0
+qw_div_by_power_of_2 <= USED 0
+qw_inc <= USED 0
+qw_mul <= USED 0
+qw_shift <= USED 0
+;FILE qwes.o
+;FILE qwes_client_env.o
+GetCertManager <= USED 0
+GetKmObject <= USED 0
+;FILE qwes_config.o
+;FILE qwes_daemon_expiration.o
+StopExpirationService <= USED 0
+;FILE qwes_daemon_http.o
+;FILE qwes_daemon_service.o
+;FILE qwes_daemon_tx.o
+;FILE qwes_file.o
+;FILE qwes_log.o
+;FILE qwes_memory.o
+qwes_mem_exit <= USED 0
+qwes_mem_init <= USED 0
+;FILE qwes_netctrl.o
+qwes_netctrl_close <= USED 0
+qwes_netctrl_release <= USED 0
+;FILE qwes_psm_tx.o
+qwes_psm_unregister <= USED 0
+;FILE qwes_service.o
+;FILE qwes_ssl.o
+qwes_ssl_convert_and_store_certificate <= USED 0
+;FILE qwes_thread_utils_qurt.o
+get_curr_thread_exec_mode <= USED 0
+qwes_cond_wait_broadcast <= USED 0
+;FILE qwes_token.o
+;FILE qwes_vector.o
+;FILE rawsock.o
+;FILE rcecb.o
+rcecb_register_handle <= USED 0
+rcecb_register_parm1_handle <= USED 0
+rcecb_register_parm1_name <= USED 0
+rcecb_register_parm2_handle <= USED 0
+rcecb_register_parm2_name <= USED 0
+rcecb_search_handle <= USED 0
+rcecb_search_name <= USED 0
+rcecb_signal_handle <= USED 0
+rcecb_signal_handle_nolocks <= USED 0
+rcecb_signal_name_nolocks <= USED 0
+rcecb_term <= USED 0
+rcecb_unregister_handle <= USED 0
+rcecb_unregister_name <= USED 0
+rcecb_unregister_parm0_handle <= USED 0
+rcecb_unregister_parm0_name <= USED 0
+rcecb_unregister_parm1_handle <= USED 0
+rcecb_unregister_parm1_name <= USED 0
+rcecb_unregister_parm2_handle <= USED 0
+rcecb_unregister_parm2_name <= USED 0
+;FILE rcesn.o
+rcesn_compare_eq_0 <= USED 0
+rcesn_compare_eq_prev <= USED 0
+rcesn_compare_gt_0 <= USED 0
+rcesn_compare_gt_prev <= USED 0
+rcesn_compare_lt_0 <= USED 0
+rcesn_compare_lt_prev <= USED 0
+rcesn_compare_mask_f_0001 <= USED 0
+rcesn_compare_mask_t_0001 <= USED 0
+rcesn_compare_ne_0 <= USED 0
+rcesn_compare_ne_prev <= USED 0
+rcesn_create_name <= USED 0
+rcesn_getregistrants_handle <= USED 0
+rcesn_getregistrants_name <= USED 0
+rcesn_getstatecurr_handle <= USED 0
+rcesn_getstatecurr_name <= USED 0
+rcesn_getstateprev_handle <= USED 0
+rcesn_getstateprev_name <= USED 0
+rcesn_register_sigex_handle <= USED 0
+rcesn_register_sigex_name <= USED 0
+rcesn_search_name <= USED 0
+rcesn_setstatecurr_handle <= USED 0
+rcesn_setstateprev_handle <= USED 0
+rcesn_signal_handle <= USED 0
+rcesn_signal_handle_timetick <= USED 0
+rcesn_signal_name <= USED 0
+rcesn_signal_name_timetick <= USED 0
+rcesn_term <= USED 0
+rcesn_unregister_sigex_handle <= USED 0
+rcesn_unregister_sigex_name <= USED 0
+rcesn_wait_handle <= USED 0
+rcesn_wait_name <= USED 0
+rcesn_wait_sigex_handle <= USED 0
+rcesn_wait_sigex_name <= USED 0
+;FILE rcevt.o
+rcevt_search_name <= USED 0
+rcevt_term <= USED 0
+rcevt_wait_handle <= USED 0
+rcevt_wait_name <= USED 0
+rcevt_wait_sigex_handle <= USED 0
+rcevt_wait_sigex_name <= USED 0
+;FILE rcevt_common.o
+rce_term <= USED 0
+;FILE rcevt_qurt.o
+;FILE rcinit_init.o
+;FILE rcinit_lookup.o
+rcinit_lookup_cpu_affinity <= USED 0
+rcinit_lookup_cpu_affinity_info <= USED 0
+rcinit_lookup_entry <= USED 0
+rcinit_lookup_entry_info <= USED 0
+rcinit_lookup_group_current <= USED 0
+rcinit_lookup_group_entry <= USED 0
+rcinit_lookup_name_info <= USED 0
+rcinit_lookup_policy_current <= USED 0
+rcinit_lookup_self <= USED 0
+;FILE rcinit_qurt.o
+;FILE rcinit_qurt_hs_list.o
+rcinit_internal_hs_list_del <= USED 0
+rcinit_internal_hs_list_query <= USED 0
+rcinit_internal_hs_list_query_hs <= USED 0
+;FILE rcinit_qurt_task.o
+bootstrap_rcinit_task <= USED 0
+rcinit_fail <= USED 0
+;FILE rcinit_qurt_term.o
+rcinit_handshake_shutdown <= USED 0
+rcinit_handshake_term <= USED 0
+rcinit_register_term <= USED 0
+rcinit_register_term_group <= USED 0
+rcinit_register_termfn <= USED 0
+rcinit_term_timeout_get <= USED 0
+rcinit_term_timeout_group_get <= USED 0
+rcinit_unregister_term <= USED 0
+rcinit_unregister_term_group <= USED 0
+rcinit_unregister_termfn_group <= USED 0
+;FILE rcinit_qurt_tls.o
+;FILE rcxh.o
+_rcxh_catching <= USED 0
+_rcxh_end <= USED 0
+_rcxh_finally <= USED 0
+_rcxh_scope_init <= USED 0
+_rcxh_throw <= USED 0
+rcxh_term <= USED 0
+;FILE rdevmap.o
+rdm_assign_port_tmp <= USED 0
+rdm_clear_compatibility <= USED 0
+rdm_close_device <= USED 0
+rdm_get_device_str <= USED 0
+rdm_get_multi_dev <= USED 0
+rdm_get_valid_ports <= USED 0
+rdm_is_busy <= USED 0
+rdm_issue_remote_opens <= USED 0
+rdm_register_remote_close_func <= USED 0
+rdm_register_remote_func_multi_dev <= USED 0
+rdm_register_remote_open_func <= USED 0
+rdm_register_service <= USED 0
+rdm_set_srv_compat_mask <= USED 0
+rdm_update_srv_dev_compat_table <= USED 0
+;FILE registration.o
+;FILE requests.o
+;FILE reshost.o
+;FILE ril_port.o
+ril_platform_get_imem_cookie_addr <= USED 0
+ril_platform_get_imem_magic_num <= USED 0
+ril_platform_thread_cond_wait_and_clear <= USED 0
+;FILE rmnet_bam.o
+;FILE rpm_mq.o
+rpm_mq_destroy <= USED 0
+rpm_mq_flush <= USED 0
+;FILE rpm_resource.o
+;FILE rpm_wire.o
+;FILE rpmclient.o
+rpm_mask_interrupt <= USED 0
+rpm_signal_aborted_sleep <= USED 0
+rpmclient_put <= USED 0
+rpmclient_put_nas <= USED 0
+;FILE rspcom_core.o
+rspcom_set_cfg <= USED 0
+rspcom_tx_notify_pkt <= USED 0
+;FILE rspcom_log_ulog.o
+;FILE rspcom_os_qurt.o
+;FILE rspcom_xport_sio.o
+;FILE scm.o
+scm_io_read <= USED 0
+scm_io_read_STM <= USED 0
+wdt_scm_call <= USED 0
+;FILE secure_memset.o
+;FILE sensor_location_interface_manager_v01.o
+;FILE sensors-9205.o
+;FILE sensors-adc.o
+;FILE sensors-tsens.o
+;FILE sensors_manager.o
+sensors_manager_rm_sensor <= USED 0
+;FILE server_driver.o
+;FILE shared_buffer.o
+shared_buffer_pool_destory_and_free <= USED 0
+;FILE sharkssl_hal_cert.o
+;FILE sharkssl_hal_cipher.o
+;FILE sharkssl_hal_keyexchange.o
+;FILE sio.o
+sio_close_ext <= USED 0
+sio_disable_device <= USED 0
+sio_flush_tx_ext <= USED 0
+sio_get_forward_port_id <= USED 0
+sio_is_baud_valid <= USED 0
+sio_need_to_forward_port <= USED 0
+;FILE sio_wrapper.o
+sio_is_uart_baud_valid <= USED 0
+;FILE siors232_mdd.o
+;FILE siors232_mdd_data.o
+;FILE siors232_mdd_ioctl.o
+;FILE sleep_client.o
+;FILE sleep_config.o
+;FILE sleep_holdoff_rcinit.o
+;FILE sleep_idle_plugin.o
+;FILE sleep_log.o
+sleep_log_deinit <= USED 0
+sleep_log_get_level <= USED 0
+;FILE sleep_log_internal.o
+;FILE sleep_lpr.o
+;FILE sleep_npa.o
+;FILE sleep_os.o
+sleep_efs_initialized <= USED 0
+sleep_get_hard_deadline <= USED 0
+sleep_os_get_last_timer_deadline <= USED 0
+sleep_os_offset_sleep_duration <= USED 0
+;FILE sleep_solver.o
+;FILE sleep_stats.o
+sleepStats_get_lpr_handle <= USED 0
+sleepStats_get_lpr_stats <= USED 0
+sleepStats_putLprLatency <= USED 0
+;FILE sleep_statsi.o
+sleepStats_getLastLprLatency <= USED 0
+;FILE sleep_target.o
+sleep_target_defer_timers <= USED 0
+sleep_target_disable_dog <= USED 0
+sleep_target_enable_dog <= USED 0
+sleep_target_get_CPU_arch <= USED 0
+sleep_target_get_rpm_assisted_mode <= USED 0
+sleep_target_undefer_timers <= USED 0
+;FILE slim_timetick.o
+;FILE smd.o
+smd_api_version <= USED 0
+smd_open_memcpy_2 <= USED 0
+smd_open_memcpy_sz <= USED 0
+;FILE smd_dsm.o
+smd_wm_open_2 <= USED 0
+;FILE smd_dsm_memcpy.o
+;FILE smd_internal.o
+smd_get_interrupt_info <= USED 0
+smdi_get_channel_id <= USED 0
+smdi_get_loopback_client <= USED 0
+smdi_get_loopback_server <= USED 0
+smdi_get_port_name_ex <= USED 0
+smdi_processors_exist <= USED 0
+;FILE smd_lite_api.o
+smd_is_port_open <= USED 0
+smdl_close <= USED 0
+smdl_open <= USED 0
+smdl_open_ex <= USED 0
+smdl_read <= USED 0
+smdl_rx_peek <= USED 0
+smdl_term <= USED 0
+smdl_tx_peek <= USED 0
+smdl_write <= USED 0
+;FILE smd_main.o
+;FILE smd_memcpy.o
+;FILE smd_packet_memcpy.o
+;FILE smd_qurt.o
+smd_copy_from_smd_chnl_uncached <= USED 0
+smd_dpc_queue <= USED 0
+smd_mem_move <= USED 0
+;FILE smd_sio.o
+smd_sio_close_ext <= USED 0
+smd_sio_dev_init <= USED 0
+smd_sio_driver_init <= USED 0
+smd_sio_flush_tx_ext <= USED 0
+smd_sio_get_sio_id_from_name <= USED 0
+;FILE smem.o
+smem_alloc_ext_mem <= USED 0
+smem_free <= USED 0
+smem_generic_memory_barrier <= USED 0
+;FILE smem_dal.o
+;FILE smem_ext.o
+;FILE smem_list.o
+;FILE smem_log.o
+smem_log_read <= USED 0
+;FILE smem_mapping_qurt.o
+;FILE smem_partition.o
+;FILE smem_qurt.o
+smem_mem_copy <= USED 0
+smem_mem_move <= USED 0
+;FILE smp2p.o
+smp2p_modify <= USED 0
+smp2p_write <= USED 0
+;FILE smp2p_internal.o
+;FILE smp2p_qurt.o
+smp2p_mem_move <= USED 0
+;FILE sms_decode.o
+;FILE smsm.o
+smsm_cb_deregister <= USED 0
+smsm_get_host_entry <= USED 0
+smsm_get_local_state <= USED 0
+smsm_set_reset <= USED 0
+;FILE smsm_intr_dal.o
+;FILE smsm_qurt.o
+smsm_cs_destroy <= USED 0
+smsm_free <= USED 0
+;FILE sockcall.o
+domain_check <= USED 0
+t_recv <= USED 0
+;FILE socket.o
+ipmc46_soptstr <= USED 0
+sovalid <= USED 0
+;FILE socket2.o
+;FILE soselect.o
+ifd_get <= USED 0
+;FILE specific_absorption_rate_v01.o
+;FILE spinlock.o
+smem_spin_locks_clear <= USED 0
+;FILE spinlock_cs_qurt.o
+;FILE spinlock_internal.o
+;FILE ssl.o
+;FILE ssl_cert.o
+;FILE ssl_cert_store.o
+;FILE ssl_picoTLS.o
+;FILE ssl_sharkssl.o
+;FILE ssl_store_common.o
+;FILE ssl_tzcrypto_services.o
+;FILE stm2.o
+;FILE strilib.o
+stristr <= USED 0
+;FILE strlcat.o
+;FILE strncasecmp.o
+;FILE strnlen.o
+;FILE subsys_stub.o
+;FILE subsystem_control_v02.o
+;FILE sys_m.o
+lpass_wdog_bite_isr <= USED 0
+sys_m_notify_modem_before_shutdown <= USED 0
+sys_m_sio_rx_notify <= USED 0
+;FILE sys_m_diag.o
+;FILE sys_m_qmi.o
+;FILE sys_m_smp2p.o
+sys_m_modem_smp2p_notify_deregister <= USED 0
+sys_m_modem_smp2p_notify_register <= USED 0
+sys_m_smp2p_get_adsp_shutdwn_ack <= USED 0
+sys_m_smp2p_init <= USED 0
+;FILE system_api.o
+;FILE ta_sync.o
+;FILE ta_util.o
+LoadTAWithAppLoader <= USED 0
+;FILE tal_clock.o
+;FILE tal_dma_bam.o
+;FILE tal_interrupt.o
+;FILE tal_os.o
+;FILE tal_tlmm.o
+;FILE tcp6.o
+;FILE tcp_in.o
+;FILE tcp_out.o
+;FILE tcp_subr.o
+;FILE tcp_timr.o
+;FILE tcp_usr.o
+;FILE tcp_zio.o
+tcp_pktalloc <= USED 0
+tcp_pktfree <= USED 0
+;FILE tcpcksum.o
+;FILE tcpport.o
+;FILE tcpsack.o
+;FILE therm_log.o
+therm_log_deinit <= USED 0
+therm_log_get_level <= USED 0
+;FILE therm_os.o
+;FILE thermal_config.o
+;FILE thermal_mitigation_device_service_v01.o
+;FILE thermal_monitor-data.o
+;FILE thermal_monitor.o
+;FILE thermal_util.o
+sort_int_arr <= USED 0
+;FILE time.o
+time_get_julian_leap_sec <= USED 0
+time_get_time_defines <= USED 0
+time_remote_update_get_seq_num <= USED 0
+time_remote_update_inc_seq_num <= USED 0
+time_set_ms <= USED 0
+time_start_mm_registration <= USED 0
+time_sync_time_of_day <= USED 0
+time_to_ms_native <= USED 0
+time_to_sec <= USED 0
+;FILE time_conv.o
+time_conv_secs_to_timestamp <= USED 0
+timetick_sclk64_add_sclks <= USED 0
+;FILE time_dal.o
+;FILE time_efs.o
+;FILE time_fn_map.o
+time_fn_map_set_pmic_time <= USED 0
+;FILE time_genoff.o
+time_genoff_get_allow_remote_updates <= USED 0
+time_genoff_get_genoff_offset <= USED 0
+time_genoff_get_remote_modem_update <= USED 0
+time_genoff_get_sys_time_in_sec_with_lp_sec <= USED 0
+time_genoff_is_valid <= USED 0
+time_genoff_remote_through_time_ipc <= USED 0
+time_genoff_set_allow_remote_updates <= USED 0
+time_genoff_set_remote_call_needed <= USED 0
+time_genoff_set_remote_modem_update <= USED 0
+time_genoff_sync_with_tod <= USED 0
+;FILE time_ipc.o
+;FILE time_jul.o
+time_jul_from_ms <= USED 0
+;FILE time_rex.o
+;FILE time_service_v01.o
+;FILE timeouts.o
+in_timerat <= USED 0
+in_timerkill <= USED 0
+in_timerreset <= USED 0
+in_timerset <= USED 0
+inet_timer <= USED 0
+;FILE timer.o
+timer_clr_osal_thread_timers <= USED 0
+timer_expires_at <= USED 0
+timer_get_active_timer_num <= USED 0
+timer_get_params <= USED 0
+timer_get_paused_timer_num <= USED 0
+timer_get_qurt_sig_registration_id <= USED 0
+timer_get_sclk_till_expiry <= USED 0
+timer_get_sclk_till_expiry_64 <= USED 0
+timer_get_start <= USED 0
+timer_get_start_64 <= USED 0
+timer_get_time_till_first_non_deferrable_timer <= USED 0
+timer_get_timer_free_q_cnt <= USED 0
+timer_pause <= USED 0
+timer_register_for_non_defer_expiry_change <= USED 0
+timer_restart <= USED 0
+timer_resume <= USED 0
+timer_set_absolute <= USED 0
+timer_set_params <= USED 0
+timer_set_wakeup <= USED 0
+timer_set_wakeup_64 <= USED 0
+;FILE timer_fn_map.o
+;FILE timer_slaves.o
+timer_slave_task2_init <= USED 0
+timer_slave_task3_init <= USED 0
+;FILE timetickLegacy.o
+timetick_cvt_from_sclk <= USED 0
+timetick_cvt_from_usec <= USED 0
+timetick_cvt_to_sclk <= USED 0
+timetick_cvt_to_sclk64 <= USED 0
+timetick_cvt_to_usec <= USED 0
+timetick_diff <= USED 0
+timetick_enable <= USED 0
+timetick_get_elapsed <= USED 0
+timetick_get_min_rearm_sclk <= USED 0
+timetick_get_raw <= USED 0
+timetick_init_sclk64 <= USED 0
+timetick_sclk_to_prec_us <= USED 0
+;FILE timetick_sclk64.o
+;FILE tlv.o
+;FILE tms_diag.o
+;FILE tms_dload.o
+tms_dload_reset_STM <= USED 0
+;FILE tms_edl.o
+;FILE tms_utils_fmt.o
+;FILE tms_utils_msg.o
+;FILE toolsdiag.o
+;FILE tracer.o
+__asm___8_tracer_c_7b2ba2d8__incr2_word_write <= USED 0
+__asm___8_tracer_c_7b2ba2d8__incr4_word_write <= USED 0
+;FILE tracer_cfgrpm_stub.o
+;FILE tracer_config.o
+__asm___15_tracer_config_c_480a816c__incr2_word_write <= USED 0
+__asm___15_tracer_config_c_480a816c__incr4_word_write <= USED 0
+_tcfg_rtnerr <= USED 0
+;FILE tracer_diag.o
+;FILE tracer_list.o
+tracer_list_clear <= USED 0
+;FILE tracer_ost.o
+__asm___12_tracer_ost_c_6fb540ad__incr2_word_write <= USED 0
+__asm___12_tracer_ost_c_6fb540ad__incr4_word_write <= USED 0
+;FILE tracer_portget.o
+__asm___16_tracer_portget_c_a88d3854__incr2_word_write <= USED 0
+__asm___16_tracer_portget_c_a88d3854__incr4_word_write <= USED 0
+;FILE tracer_portmgr.o
+__asm___16_tracer_portmgr_c_0b85eb66__incr2_word_write <= USED 0
+__asm___16_tracer_portmgr_c_0b85eb66__incr4_word_write <= USED 0
+tracer_port_himark <= USED 0
+tracer_portmgr_deinit <= USED 0
+;FILE tracer_stp.o
+__asm___12_tracer_stp_c_e5d6b7e4__incr2_word_write <= USED 0
+__asm___12_tracer_stp_c_e5d6b7e4__incr4_word_write <= USED 0
+tracer_stp_send_event_wa <= USED 0
+;FILE tracer_tds.o
+__asm___12_tracer_tds_c_44aea2a3__incr2_word_write <= USED 0
+__asm___12_tracer_tds_c_44aea2a3__incr4_word_write <= USED 0
+;FILE tracer_test.o
+;FILE tracer_test_api.o
+;FILE tracer_throttle.o
+;FILE transaction.o
+;FILE transport_selection.o
+;FILE tx_block_allocate.o
+;FILE tx_block_pool_cleanup.o
+;FILE tx_block_pool_create.o
+;FILE tx_block_pool_delete.o
+;FILE tx_block_pool_info_get.o
+;FILE tx_block_pool_performance_info_get.o
+;FILE tx_block_pool_performance_system_info_get.o
+;FILE tx_block_pool_prioritize.o
+;FILE tx_block_release.o
+;FILE tx_byte_allocate.o
+;FILE tx_byte_pool_cleanup.o
+;FILE tx_byte_pool_create.o
+;FILE tx_byte_pool_delete.o
+;FILE tx_byte_pool_info_get.o
+;FILE tx_byte_pool_performance_info_get.o
+;FILE tx_byte_pool_performance_system_info_get.o
+;FILE tx_byte_pool_prioritize.o
+;FILE tx_byte_pool_search.o
+;FILE tx_byte_release.o
+;FILE tx_event_flags_cleanup.o
+;FILE tx_event_flags_create.o
+;FILE tx_event_flags_delete.o
+;FILE tx_event_flags_get.o
+;FILE tx_event_flags_info_get.o
+;FILE tx_event_flags_performance_info_get.o
+;FILE tx_event_flags_performance_system_info_get.o
+;FILE tx_event_flags_set.o
+;FILE tx_initialize_high_level.o
+;FILE tx_low_power.o
+;FILE tx_mutex_cleanup.o
+;FILE tx_mutex_create.o
+;FILE tx_mutex_delete.o
+;FILE tx_mutex_get.o
+;FILE tx_mutex_info_get.o
+;FILE tx_mutex_performance_info_get.o
+;FILE tx_mutex_performance_system_info_get.o
+;FILE tx_mutex_prioritize.o
+;FILE tx_mutex_priority_change.o
+;FILE tx_mutex_put.o
+;FILE tx_queue_cleanup.o
+;FILE tx_queue_create.o
+;FILE tx_queue_delete.o
+;FILE tx_queue_flush.o
+;FILE tx_queue_front_send.o
+;FILE tx_queue_info_get.o
+;FILE tx_queue_performance_info_get.o
+;FILE tx_queue_performance_system_info_get.o
+;FILE tx_queue_prioritize.o
+;FILE tx_queue_receive.o
+;FILE tx_queue_send.o
+;FILE tx_semaphore_ceiling_put.o
+;FILE tx_semaphore_cleanup.o
+;FILE tx_semaphore_create.o
+;FILE tx_semaphore_delete.o
+;FILE tx_semaphore_get.o
+;FILE tx_semaphore_info_get.o
+;FILE tx_semaphore_performance_info_get.o
+;FILE tx_semaphore_performance_system_info_get.o
+;FILE tx_semaphore_prioritize.o
+;FILE tx_semaphore_put.o
+;FILE tx_thread_create.o
+;FILE tx_thread_delete.o
+;FILE tx_thread_identify.o
+;FILE tx_thread_info_get.o
+;FILE tx_thread_initialize.o
+;FILE tx_thread_performance_info_get.o
+;FILE tx_thread_performance_system_info_get.o
+;FILE tx_thread_preemption_change.o
+;FILE tx_thread_priority_change.o
+;FILE tx_thread_relinquish.o
+;FILE tx_thread_resume.o
+;FILE tx_thread_shell_entry.o
+;FILE tx_thread_sleep.o
+;FILE tx_thread_stack_error_notify.o
+;FILE tx_thread_suspend.o
+;FILE tx_thread_system_preempt_check.o
+;FILE tx_thread_system_resume.o
+;FILE tx_thread_system_suspend.o
+;FILE tx_thread_terminate.o
+;FILE tx_thread_time_slice.o
+;FILE tx_thread_time_slice_change.o
+;FILE tx_thread_timeout.o
+;FILE tx_thread_wait_abort.o
+;FILE tx_time_get.o
+;FILE tx_time_set.o
+;FILE tx_timer_activate.o
+;FILE tx_timer_change.o
+;FILE tx_timer_create.o
+;FILE tx_timer_deactivate.o
+;FILE tx_timer_delete.o
+;FILE tx_timer_expiration_process.o
+;FILE tx_timer_info_get.o
+;FILE tx_timer_initialize.o
+;FILE tx_timer_performance_info_get.o
+;FILE tx_timer_performance_system_info_get.o
+;FILE tx_timer_system_activate.o
+;FILE tx_timer_system_deactivate.o
+;FILE tx_timer_thread_entry.o
+;FILE tx_trace_buffer_full_notify.o
+;FILE tx_trace_disable.o
+;FILE tx_trace_enable.o
+;FILE tx_trace_event_filter.o
+;FILE tx_trace_event_unfilter.o
+;FILE tx_trace_initialize.o
+;FILE tx_trace_interrupt_control.o
+;FILE tx_trace_isr_enter_insert.o
+;FILE tx_trace_isr_exit_insert.o
+;FILE tx_trace_object_register.o
+;FILE tx_trace_object_unregister.o
+;FILE tx_trace_user_event_insert.o
+;FILE txe_block_allocate.o
+;FILE txe_block_pool_create.o
+;FILE txe_block_pool_delete.o
+;FILE txe_block_pool_info_get.o
+;FILE txe_block_pool_prioritize.o
+;FILE txe_block_release.o
+;FILE txe_byte_pool_create.o
+;FILE txe_byte_pool_delete.o
+;FILE txe_byte_pool_info_get.o
+;FILE txe_byte_pool_prioritize.o
+;FILE txe_event_flags_create.o
+;FILE txe_event_flags_delete.o
+;FILE txe_event_flags_get.o
+;FILE txe_event_flags_info_get.o
+;FILE txe_mutex_create.o
+;FILE txe_mutex_delete.o
+;FILE txe_mutex_get.o
+;FILE txe_mutex_info_get.o
+;FILE txe_mutex_prioritize.o
+;FILE txe_mutex_put.o
+;FILE txe_queue_flush.o
+;FILE txe_queue_front_send.o
+;FILE txe_queue_info_get.o
+;FILE txe_queue_prioritize.o
+;FILE txe_semaphore_ceiling_put.o
+;FILE txe_semaphore_create.o
+;FILE txe_semaphore_delete.o
+;FILE txe_semaphore_get.o
+;FILE txe_semaphore_info_get.o
+;FILE txe_semaphore_prioritize.o
+;FILE txe_semaphore_put.o
+;FILE txe_thread_info_get.o
+;FILE txe_thread_preemption_change.o
+;FILE txe_thread_priority_change.o
+;FILE txe_thread_relinquish.o
+;FILE txe_thread_resume.o
+;FILE txe_thread_suspend.o
+;FILE txe_thread_time_slice_change.o
+;FILE txe_timer_activate.o
+;FILE txe_timer_change.o
+;FILE txe_timer_create.o
+;FILE txe_timer_deactivate.o
+;FILE txe_timer_delete.o
+;FILE txe_timer_info_get.o
+;FILE txm_module_manager_alignment_adjust.o
+;FILE txm_module_manager_application_request.o
+;FILE txm_module_manager_callback_handlers.o
+;FILE txm_module_manager_callback_request.o
+;FILE txm_module_manager_callback_trampoline.o
+;FILE txm_module_manager_initialize.o
+;FILE txm_module_manager_internal_load.o
+;FILE txm_module_manager_kernel_dispatch.o
+;FILE txm_module_manager_object_allocate.o
+;FILE txm_module_manager_object_deallocate.o
+;FILE txm_module_manager_object_pointer_get.o
+;FILE txm_module_manager_object_pointer_get_extended.o
+;FILE txm_module_manager_object_pool_create.o
+;FILE txm_module_manager_thread_create.o
+;FILE txm_module_manager_thread_reset.o
+;FILE txm_module_manager_timer_notify_trampoline.o
+;FILE txm_module_manager_util.o
+_txm_module_manager_object_memory_check <= USED 0
+;FILE tz_syscalls.o
+tz_config_hw_for_offline_ram_dump <= USED 0
+;FILE uart_circ_buffer.o
+uart_circ_buffer_get_read_loc <= USED 0
+uart_circ_buffer_is_empty <= USED 0
+uart_circ_buffer_is_full <= USED 0
+uart_circ_buffer_log_state <= USED 0
+;FILE uart_compat.o
+;FILE uart_debug.o
+siors_mdd_api_dump_uart_status <= USED 0
+siors_mdd_debug_init <= USED 0
+;FILE uart_device_props.o
+;FILE uart_event_queue.o
+uart_event_queue_deinit <= USED 0
+;FILE uart_init.o
+;FILE uart_log.o
+uart_buf_log_buffer_0 <= USED 0
+uart_buf_log_buffer_1 <= USED 0
+uart_buf_log_buffer_3 <= USED 0
+uart_log_dal_msg_0 <= USED 0
+uart_log_dal_msg_1 <= USED 0
+uart_log_dal_msg_2 <= USED 0
+uart_log_dal_msg_3 <= USED 0
+;FILE udp.o
+;FILE udp6.o
+;FILE udp_open.o
+;FILE udpsock.o
+;FILE udpsock6.o
+;FILE ul_arb.o
+icb_notify_deregister <= USED 0
+icb_notify_get_notification_status <= USED 0
+icb_notify_register <= USED 0
+icb_notify_reset_notification_status <= USED 0
+icb_notify_update <= USED 0
+icbarb_create_client <= USED 0
+icbarb_create_client_ex <= USED 0
+icbarb_fill_client_vector <= USED 0
+icbarb_query <= USED 0
+ul_get_notification_list <= USED 0
+ul_insert_notification <= USED 0
+ul_notify_update_status <= USED 0
+ul_remove_notification <= USED 0
+;FILE ul_int.o
+ul_get_master_state <= USED 0
+ul_get_slave_state <= USED 0
+ul_target_get_master_list <= USED 0
+ul_target_get_slave_list <= USED 0
+;FILE ul_tree.o
+;FILE uri.o
+;FILE user_identity_module_v01.o
+;FILE userdata.o
+get_mac_address <= USED 0
+netbuf_set_active_profile <= USED 0
+netbuf_set_custom_profile <= USED 0
+netbuf_set_profile <= USED 0
+netbuf_validate_bufsize <= USED 0
+unique_id <= USED 0
+;FILE util_bit_field.o
+util_bit_field_remove_bits <= USED 0
+;FILE util_config.o
+;FILE util_counter_v01.o
+;FILE util_list.o
+util_list_enque_add_evaluator <= USED 0
+;FILE util_memory.o
+;FILE util_synchronization.o
+;FILE utilities.o
+get_base_beacons <= USED 0
+get_cdma_age <= USED 0
+get_cdma_bsid <= USED 0
+get_cdma_is_connected <= USED 0
+get_cdma_nid <= USED 0
+get_cdma_rssi <= USED 0
+get_cdma_sid <= USED 0
+get_ctx_logf <= USED 0
+get_ctx_rand_bytes <= USED 0
+get_gsm_age <= USED 0
+get_gsm_ci <= USED 0
+get_gsm_is_connected <= USED 0
+get_gsm_lac <= USED 0
+get_gsm_mcc <= USED 0
+get_gsm_mnc <= USED 0
+get_gsm_rssi <= USED 0
+get_lte_age <= USED 0
+get_lte_e_cellid <= USED 0
+get_lte_is_connected <= USED 0
+get_lte_mcc <= USED 0
+get_lte_mnc <= USED 0
+get_lte_rssi <= USED 0
+get_lte_tac <= USED 0
+get_nbiot_age <= USED 0
+get_nbiot_ecellid <= USED 0
+get_nbiot_is_connected <= USED 0
+get_nbiot_mcc <= USED 0
+get_nbiot_mnc <= USED 0
+get_nbiot_rssi <= USED 0
+get_nbiot_tac <= USED 0
+get_num_beacons <= USED 0
+get_num_cdma <= USED 0
+get_num_gsm <= USED 0
+get_num_lte <= USED 0
+get_num_nbiot <= USED 0
+get_num_umts <= USED 0
+get_umts_age <= USED 0
+get_umts_is_connected <= USED 0
+get_umts_lac <= USED 0
+get_umts_mcc <= USED 0
+get_umts_mnc <= USED 0
+get_umts_rssi <= USED 0
+get_umts_ucid <= USED 0
+;FILE utils.o
+_crypto_memcmp <= USED 0
+_crypto_memzero <= USED 0
+_crypto_verify_32 <= USED 0
+_crypto_verify_64 <= USED 0
+;FILE version_diagpkt.o
+;FILE version_init.o
+;FILE voice_service_v02.o
+;FILE wireless_data_administrative_service_v01.o
+;FILE wireless_data_service_v01.o
+;FILE wireless_messaging_service_v01.o
+;FILE xport_rpm.o
+;FILE xport_rpm_config.o
+;FILE xport_smem.o
+;FILE xport_smem_config.o
+;FILE xport_smem_qos_generic.o

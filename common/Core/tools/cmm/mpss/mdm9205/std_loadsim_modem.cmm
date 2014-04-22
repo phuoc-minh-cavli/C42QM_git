@@ -1,0 +1,392 @@
+// Title: std_loadsim_modem
+
+// License: License
+// Copyright 2010 Qualcomm Technologies Inc
+
+//	Description: General Description
+//	This script will load Q6 RAM dump binaries into the simulator
+//
+//	Supports loading of JTAG / USB RAM Dumps
+
+//	Input: Inputs
+//	None
+
+//	Output: Outputs
+//	None
+
+//	Usage: Usage
+//  do std_loadsim_modem
+
+//  Team: Functional Area
+//  CoreBSP Products
+
+//	Target: Target
+//	mdm9x45
+
+//	Author: Author
+//  $Author: pwbldsvc $
+
+//	Location: Perforce Revision
+//  $Header: //components/rel/core.glue/1.3/tools/cmm/mpss/mdm9205/std_loadsim_modem.cmm#4 $
+
+//	Edits: Edits
+//
+//	Created for MSM8960 on 5/15/2010
+// ------------------------------------------------------------------------------------------
+
+// Path to the memory binary and path to the build
+ENTRY &BASENAME &MODEM_BUILD &MODEM_ELF
+ 
+// Path to save the RAM dumps
+LOCAL &RAMDUMPDIR 
+ 
+// Placeholder for any filename to be created
+LOCAL &FILENAME
+LOCAL &FINALELF
+ 
+// Flag for USB Logs - True if logs are usb logs, false if jtag logs
+LOCAL &USB_RAMDUMPS
+
+GLOBAL &MPSS_BUILDROOT
+
+local  &Qube_VA
+local  &Qube_pa
+local  &roottask
+local  &rt_pt
+local  &rt_pt_offset
+
+
+ 
+MAIN:
+	do std_toolsconfig mdm9205 mpss
+	do std_constants.cmm
+	
+	
+	IF ("&BASENAME"=="")
+	(
+		PRINT "Select one of the RAM Dumps:"
+		DIALOG.FILE *.bin
+		ENTRY &FILENAME
+		&RAMDUMPDIR=OS.FILE.PATH(&FILENAME)
+		PRINT "RAM Dump Directory : &RAMDUMPDIR"
+	)
+	ELSE
+	(
+		// User entered the path. 
+		// Remove the trailing slash if user entered path with slash
+		//do std_utils.cmm REMOVESLASH EXIT &BASENAME
+		&RAMDUMPDIR="&BASENAME"
+	)
+	
+	// Check if user entered the path to the build
+	// in the command line.
+	IF ("&MODEM_BUILD"=="")
+	(
+		PRINT "Enter the location of the modem build: "
+		DIALOG.DIR C:/*
+		ENTRY &MODEM_BUILD
+	)
+
+LOAD_BUILDCONFIG:
+	IF OS.FILE(&MODEM_BUILD/modem_proc/core/products/std_buildconfig.cmm)
+	(
+		PRINT "Loading Modem Build Configuration: &MODEM_BUILD/modem_proc/core/products/std_buildconfig.cmm"
+		DO &MODEM_BUILD/modem_proc/core/products/std_buildconfig.cmm 
+	)
+	ELSE
+	(
+	//	PRINT "Modem Build Configuration not found: &MODEM_BUILD/core/products/std_buildconfig.cmm"
+	//	GOTO EXIT
+	)
+
+CHECK_FOR_RAMDUMPS:
+	&FILENAME="&RAMDUMPDIR/"+"QDSP6SW"+"&MODEM_DDR_log"+"_"+"&MODEM_DDR_Q6SW_DUMP_START_ADDR"+"&MODEM_DDR_logExtn"
+	&FILENAME2="&RAMDUMPDIR/"+"&USB_log"
+	IF OS.FILE("&FILENAME")
+	(
+		&USB_RAMDUMPS=0
+		GOTO SETUPSIM
+	)
+	ELSE IF OS.FILE("&FILENAME2")
+	(
+		&USB_RAMDUMPS=1
+		GOTO SETUPSIM
+	)
+	ELSE
+	(
+		PRINT "Dumps not found"
+		GOTO EXIT		
+	)
+	
+//	Set the simulator up for the target
+SETUPSIM:
+	//	Initialize the system for QDSP6V67 subsystem
+	
+	SYSTEM.RESET
+   	PRINT "Initializing Q6SW Subsystem: QDSP6V67"
+        SYSTEM.CPU HexagonV67
+        SYSTEM.UP
+ 
+	IF (&USB_RAMDUMPS==0)
+	(    
+          GOSUB LOADSYMS
+	     GOTO T32LOG
+	)
+	ELSE
+	(     
+	    GOSUB LOADSYMS
+		GOTO USBLOG
+	)
+
+// Load the logs collected using JTAG	
+T32LOG:
+	&FILENAME="&RAMDUMPDIR/"+"QDSP6SW"+"&MODEM_DDR_log"+"_"+"&MODEM_DDR_Q6SW_DUMP_START_ADDR"+"&MODEM_DDR_logExtn"
+	IF OS.FILE("&FILENAME")
+	(
+	    ; to be added
+		;&BIN_FILENAME="QDSP6SW"+"&JTAG_SHARED_RAM_log"
+		;GOSUB LOADMEM &SHARED_RAM_DUMP_START_ADDR &SHARED_RAM_DUMP_SIZE  &JTAG_SHARED_RAM_log
+
+		&BIN_FILENAME="QDSP6SW"+"&TCM_log"
+		GOSUB LOADMEM &TCM_Q6SW_DUMP_START_ADDR  &TCM_Q6SW_FULL_DUMP_SIZE &BIN_FILENAME
+
+		//&BIN_FILENAME="QDSP6SW"+"&MBA_DDR_log"
+		//GOSUB LOADMEM &MBA_DDR_Q6SW_DUMP_START_ADDR  &MBA_DDR_Q6SW_DUMP_SIZE  &BIN_FILENAME
+
+		&BIN_FILENAME="QDSP6SW"+"&MODEM_DDR_log"+"_"+"&MODEM_DDR_Q6SW_DUMP_START_ADDR"+"&MODEM_DDR_logExtn"
+		GOSUB LOADMEM &MODEM_DDR_Q6SW_DUMP_START_ADDR  &MODEM_DDR_Q6SW_DUMP_SIZE &BIN_FILENAME
+
+		if OS.FILE("&JTAG_TN_HLOS1_log")
+		(
+		GOSUB LOADMEM &EFS1_DUMP_START_ADDR  &EFS1_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS2_DUMP_START_ADDR  &EFS2_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS3_DUMP_START_ADDR  &EFS3_DUMP_SIZE &JTAG_EFS1_log
+		
+
+		)
+
+
+
+        
+
+		GOTO RESTOREMMU
+	)
+	ELSE
+	(
+		// Should never hit this section of code as we should have caught it earlier
+		PRINT %ERROR "WARNING: JTAG MODEM RAM DUMP NOT FOUND"
+	)
+
+// Load the logs collected using USB
+USBLOG:
+	&FILENAME="&RAMDUMPDIR/"+"&USB_log"
+	&LOAD_FILE="&RAMDUMPDIR/"+"load.cmm"
+
+	IF OS.FILE(&LOAD_FILE)
+	(
+	     &prdir=os.pwd()
+	     cd.do &LOAD_FILE
+	     cd &prdir
+
+		GOTO RESTOREMMU
+	)
+	ELSE 	IF OS.FILE("&FILENAME")
+	(
+
+	   GOSUB LOADMEM &SMI_DUMP_START_ADDR &SMI_DUMP_SIZE &USB_log
+	   
+	   GOTO RESTOREMMU
+	)
+	ELSE
+	(
+		PRINT "No RAM Dumps found in &RAMDUMPDIR"
+		GOTO EXIT
+	)
+
+//	Load the symbols
+LOADSYMS:
+
+	SYMBOL.ASMFRAME ON
+	SYMBOL.CASE OFF
+    
+	IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\osam\bin\T32\generic\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/osam/bin/T32/generic"
+	
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltee.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltee.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.lteena.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.lteena.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbe.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbe.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbena.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbena.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbge.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbge.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbgena.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgena.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbgeng.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeng.prod/install/modemv67X_512/debugger/T32"
+	ELSE  IF OS.FILE(&MODEM_BUILD\modem_proc\core\kernel\qurt\build\mapss_b\qdsp6\9205.ltenbgeniag.prod\install\modemv67X_512\debugger\T32\qurt_model.t32)
+				&edk_dir="&MODEM_BUILD"+"/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/debugger/T32"
+	
+	ELSE
+		(	
+			dialog.ok "qurt_model.t32 and qurt_model.men are not found"
+		)
+	&MPSS_BUILDROOT="&MODEM_BUILD"
+	TASK.CONFIG &edk_dir\qurt_model.t32
+	MENU.ReProgram &edk_dir\qurt_model.men
+
+	;do std_sessioncfg_mpss.cmm
+
+	&MODEMELFPATH="&MODEM_BUILD"+"/modem_proc/build/ms"
+      
+	IF ("&MODEM_ELF"!="")
+	(
+	  IF OS.FILE(&MODEM_ELF)
+	  (
+		d.load.elf &MODEM_ELF /nocode /noclear
+	  )
+	  ELSE
+	  (
+	    print "Can not find modem elf"
+	    goto EXIT
+	  )
+	)
+	ELSE
+	(
+		DIALOG.FILE &MODEMELFPATH/*.elf
+		ENTRY &FINALELF
+		d.load.elf &FINALELF /nocode 
+	)
+	d.l
+
+
+RETURN
+
+//	Restore MMU Settings	
+RESTOREMMU: 
+
+
+&Qube_va=address.offset(start)
+&Qube_pa=&Q6SW_START_ADDRESS
+
+;assume QURTK_pagetables has same physical and virtual addresses offset from the base. 
+&pagetable=address.offset(QURTK_pagetables)-&Qube_va+&Qube_pa
+
+TRANSlation.OFF
+TRANSlation.RESet
+&rt_pt=d.l(d:&pagetable)
+//MMU.FORMAT QURT &rt_pt (&Qube_va)--(&Qube_va+0xfffffff) &Qube_pa
+
+//NEED TO FIX to avoid hardcode
+mmu.create 0x82a00000--0x87a00000 0x82a00000-0x87a00000 
+//TRANSlation.TableWalk.ON
+//TRANSlation.ON
+
+
+local &tlb_address
+local &tlb_data_lo
+local &tlb_data_hi
+local &tlb_index
+
+
+
+&tlb_address=address.offset(QURTK_tlb_dump)
+&tlb_index=0x0
+
+// 128 entries in the TLB for QDSP6
+repeat 128
+(
+	//&tlb_data_lo=data.long(d:&tlb_address)
+	//&tlb_data_hi=data.long(d:(&tlb_address+4))
+	&tlb_data_lo=V.VALUE(((unsigned int *)&QURTK_tlb_dump)[2*&tlb_index])
+	&tlb_data_hi=V.VALUE(((unsigned int *)&QURTK_tlb_dump)[2*&tlb_index+1])
+	mmu.set.tlb &tlb_index &tlb_data_lo &tlb_data_hi
+	
+	//&tlb_index=&tlb_index+1
+	//&tlb_address=&tlb_address+0x8
+	&tlb_index=&tlb_index+1
+)
+
+endloop:
+
+mmu.tlb.scan
+
+// Restore saved TCM for USB dumps only
+IF (&USB_RAMDUMPS==1)
+(
+	IF (Y.EXIST(qurt_tcm_dump))
+	(
+		d.copy qurt_tcm_dump++0x80000 __tcm_pa_base__
+	)
+)
+
+mmu.on
+	
+//	Restore registers from the coredump structure or from file	
+RESTOREREGS:
+	&ERRORCODE2="RESTOREREGS"
+	
+	IF (&USB_RAMDUMPS==1)
+	(
+
+		IF (Y.EXIST(COREDUMP)&&(OS.FILE("&MODEM_BUILD/modem_proc/core/debugtools/err/cmm/load_coredump.cmm")))
+		(
+			// RESTORE REGISTERS FROM THE COREDUMP STRUCTURE
+
+			PRINT "RESTORING REGISTERS FROM COREDUMP: "
+			DO &MODEM_BUILD/modem_proc/core/debugtools/err/cmm/load_coredump.cmm
+			PRINT %CONTINUE "Complete"
+		)
+
+	)
+	ELSE
+	(
+		// Restore the registers from the JTAG register file
+
+		&FILENAME="&RAMDUMPDIR/"+"&QDSP6SW_root"+"_regs"+".cmm"
+      
+		IF OS.FILE("&FILENAME")
+		(
+			PRINT "RESTORING REGISTER STATE." 
+			DO &FILENAME
+		)
+		ELSE
+		(
+	        	PRINT %ERROR "WARNING: COULD NOT RESTORE REGISTER STATE. FILE &FILENAME MISSING."
+	        )
+	 )
+	
+      
+        cd &MODEM_BUILD
+
+	PRINT "Loading RAM Dump Binaries: Complete."
+	GOTO EXIT
+
+// Exit the program
+EXIT:
+	ENDDO
+
+
+	
+//	Function: LOADMEM
+//	Load a section of memory specified by start address and size
+//
+// Takes 3 arguments as inputs: Start Address, Size of memory space to load, Input Filename	
+
+LOADMEM:
+  ENTRY &1 &2 &3
+  LOCAL &START_ADDR
+  LOCAL &SIZE
+  LOCAL &LOG
+
+  
+  &START_ADDR="&1"
+  &SIZE="&2"
+  &LOG="&RAMDUMPDIR/"+"&3"
+
+  DATA.LOAD.BINARY &LOG &START_ADDR++&SIZE /LONG /noclear
+
+  PRINT %CONTINUE " &LOG LOADED."
+ RETURN

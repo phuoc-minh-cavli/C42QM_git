@@ -1,0 +1,101 @@
+#===============================================================================
+#
+# DAL Timetick Lib
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/timetick/build/timetick.scons#5 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/timetick/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+  'DAL',
+  'HAL',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+
+  # needs to be last also contains wrong comdef.h
+  'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi("SYSTEMDRIVERS_TIMETICK", [
+  "${BUILD_ROOT}/core/systemdrivers/timetick/src"
+])
+
+if env.has_key('HWIO_IMAGE'):
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${BUILDPATH}/TimetickHWIO.h',
+
+      # Filter to include only the QTMR symbol.
+      'filter-include': ['QTMR'],
+    }
+  ]
+)
+
+#-------------------------------------------------------------------------------
+# Source code
+#-------------------------------------------------------------------------------
+
+DAL_TIMETICK_SOURCES =  [
+  '${BUILDPATH}/DalTimetickInfo.c',
+  '${BUILDPATH}/DalTimetick.c',
+  '${BUILDPATH}/DalTimetickFwk.c',
+  '${BUILDPATH}/timetickLegacy.c',
+]
+
+#-------------------------------------------------------------------------------
+# Register initialization function and dependencies.
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CORE_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_0',                            # required
+      'init_name'      : 'timetick_legacy',                           # required
+      'init_function'  : 'timetick_legacy_init',                      # required
+      'dependencies'   : ['dalsys']
+    })
+
+#-------------------------------------------------------------------------------
+# Add libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+  ['CORE_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY'],
+  '${BUILDPATH}/DALTimetick_modem',
+  DAL_TIMETICK_SOURCES)
+
+if 'USES_DEVCFG' in env or 'USES_DEVCFG_PAGEONLY' in env or 'USES_DEVCFG_SENSORONLY' in env:
+  DEVCFG_IMG = ['DAL_DEVCFG_IMG', 'DAL_DEVCFG_PAGEONLY_IMG','DAL_DEVCFG_SENSORONLY_IMG']
+  env.AddDevCfgInfo(DEVCFG_IMG,
+  {
+    'soc_xml' : ['${BUILD_ROOT}/core/systemdrivers/timetick/config/Timetick.xml']
+  })

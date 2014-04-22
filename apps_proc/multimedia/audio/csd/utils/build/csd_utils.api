@@ -1,0 +1,41 @@
+#===============================================================================
+#
+# Core APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/bsp/config/scmm/main/latest/hwengines/build/paths.sconscript#6 $
+#  $DateTime: 2009/07/04 17:43:09 $
+#  $Author: wduembeg $
+#  $Change: 958523 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+env.PublishRestrictedApi('CSD_UTILS', [
+   "${INC_ROOT}/multimedia/audio/csd/utils/q6atl/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/q6msglib/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/ssr/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/ocmem/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/cleanup/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/resourcemanager/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/csd_debug_info/target/mdm/inc",
+   "${INC_ROOT}/multimedia/audio/csd/utils/common/inc",
+	 "${INC_ROOT}/multimedia/audio/csd/utils/vsm/inc"
+])
+
+env.LoadAPIUnits()

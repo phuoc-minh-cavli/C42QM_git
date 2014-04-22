@@ -1,0 +1,84 @@
+    <!-- Clock sources -->
+    <props name="ClockSources" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      SourceConfig
+    </props>
+
+    <!-- Clock Log Defaults -->
+    <props name="ClockLogDefaults" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      ClockLogDefaultConfig
+    </props>
+
+    <!-- Clock Init Flags -->
+    <props name="ClockInitFlags" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      ClockFlagInitConfig
+    </props>
+
+    #ifdef CLOCK_STUB_FWK_ENABLE
+    <!-- Clock Stub Config -->
+    <props name="ClockStubConfig" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      ClockStubConfig
+    </props>
+    #endif
+
+    <!-- APCS Clock Configurations -->
+
+    <!-- Clock Image BSP Configuration -->
+    <props name="ClockImageBSP" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      ClockImageBSPConfig
+    </props>
+
+    <!-- GCC Clock Configurations -->
+    <props name="gcc_blsp1_qup1_i2c_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1I2CAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup1_spi_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1SPIAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup2_i2c_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1I2CAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup2_spi_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1SPIAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup3_i2c_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1I2CAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup3_spi_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1SPIAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup4_i2c_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1I2CAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_qup4_spi_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1QUP1SPIAPPSClockConfig
+    </props>
+    <props name="gcc_blsp1_uart1_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1UART1APPSClockConfig
+    </props>
+    <props name="gcc_blsp1_uart2_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1UART1APPSClockConfig
+    </props>
+    <props name="gcc_blsp1_uart3_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1UART1APPSClockConfig
+    </props>
+    <props name="gcc_blsp1_uart4_apps_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      BLSP1UART1APPSClockConfig
+    </props>
+    <props name="gcc_ecc_core_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      GCCECCClockConfig
+    </props>
+    <props name="gcc_gp1_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      GP1ClockConfig
+    </props>
+    <props name="gcc_gp2_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      GP1ClockConfig
+    </props>
+    <props name="gcc_gp3_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      GP1ClockConfig
+    </props>
+    <props name="gcc_pcnoc_usb_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      USBHSSYSTEMClockConfig
+    </props>
+    <props name="gcc_pdm2_clk" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+      PDM2ClockConfig
+    </props>

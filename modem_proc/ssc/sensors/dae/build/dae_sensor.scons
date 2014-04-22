@@ -1,0 +1,62 @@
+#===============================================================================
+#
+# Data Acquisition Engine sensor
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/dae/build/dae_sensor.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+import os
+
+
+if 'SNS_ISLAND_INCLUDE_DAE' in env:
+  dae_island_sections = ['.text.sns', '.data.sns', '.rodata.*']
+else:
+  dae_island_sections = ''
+
+if env['MSM_ID'] in ['855', '1000', '8250']:
+  env.Append(CPPDEFINES = ['DAE_855_L2VIC_MAP'])
+
+if env['MSM_ID'] in ['8250']:
+  env.Append(CPPDEFINES = ['CCD_3'])
+
+
+if 'SSC_TARGET_HEXAGON_CORE_QDSP6_2_0' in env['CPPDEFINES']:
+  dae_sensor_flavor = ["hexagon_core_qdsp6_2.0"]
+else:
+  dae_sensor_flavor = ["hexagon_core_slpi_1.0"]
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+               flavor = dae_sensor_flavor,
+               ssc_protected_api = ['SNS_INTERNAL_INCLUDES'],
+               core_public_api = ['BUSES','DEBUGTOOLS','KERNEL','MPROC','SYSTEMDRIVERS','DAL'],
+               clean_pack_list = ['*.c','*.h', 'sns_dae_ccd.proto', 'qti_data_acquisition_engine.proto'],
+               register_func_name = "sns_register_dae_sensor",
+               diag_ssid = "MSG_SSID_SNS_SENSOR_INT",
+               island_sections = dae_island_sections)
+
+if 'USES_QDSS_SWE' in env:
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [
+            ['SNS_DAE_SENSOR_PRAM_READ_READY', '', 'F'],
+            ['SNS_DAE_SENSOR_NOTIFY_EVENT_START', '', 'F'],
+            ['SNS_DAE_SENSOR_NOTIFY_EVENT_END', '', 'F'],
+            ['SNS_DAE_SENSOR_DISPATCH_PRAM_DATA_BLOCK', '', 'F'],
+            ['SNS_DAE_SENSOR_INST_HANDLE_SDC_MSG', 'Message Id: %d', 'F'],
+           ]
+  env.AddSWEInfo(QDSS_IMG, events)
+
+

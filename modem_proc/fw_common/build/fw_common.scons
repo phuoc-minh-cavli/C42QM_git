@@ -1,0 +1,142 @@
+#===============================================================================
+#
+# Copyright (c) 2016 Qualcomm Technologies Incorporated.
+#
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/fw/components/fw_common.mpss/rel/15.2/release/build/fw_common.scons#1 $
+#
+#===============================================================================
+
+# --------------------------------------------------------------------------- #
+# Import SCons Environment                                                    #
+# --------------------------------------------------------------------------- #
+import os
+Import('env')
+from glob import glob
+from os.path import join, split, exists, abspath, isfile
+from fnmatch import fnmatch
+
+#---------------------------------------------------------------------------- #
+# Return from fw_<tech> if both fw/<tech> and fw_<tech> exists                #
+#---------------------------------------------------------------------------- #
+path = env.subst('${INC_ROOT}/fw/common/api')
+curr_file_path = os.getcwd()
+if (os.path.exists(path) and 'fw_common' in curr_file_path) or 'USES_STANDALONE_FW' in env:
+  Return()
+
+# --------------------------------------------------------------------------- #
+# Import SCons Environment                                                    #
+# --------------------------------------------------------------------------- #
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Necessary Public & Restricted API's
+#-------------------------------------------------------------------------------
+
+env.RequirePublicApi(['RFLM'], area='RF')
+
+env.RequirePublicApi([
+    'DAL',
+    'DEBUGTOOLS',
+    'MPROC',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'MEMORY',
+    'KERNEL',          # needs to be last
+    ], area='core')
+
+env.RequirePublicApi(['MCS'], area='MCS')
+env.RequirePublicApi(['RFLM'], area='RFLM')
+env.RequirePublicApi(['RFMODEM_BOLT'], area='RFMODEM_BOLT')
+env.RequirePublicApi(['COMMON'], area='FW')
+#-------------------------------------------------------------------------------
+# Autodetect UMID files
+#-------------------------------------------------------------------------------
+path,tech_folder = split(Dir('../').path)
+if 'fw_' in tech_folder:
+  api_folder = 'fw_common/api/'
+else:
+  api_folder = 'fw/common/api/'
+
+api_path = env.subst('${INC_ROOT}/'+api_folder)
+
+files = [ ]
+for fname in glob(join(api_path, '*_msg.h')):
+  env.PrintDebugInfo('fw', "common : AddUMID: " + fname)
+  files.append(fname)
+if len(files) > 0:
+  env.AddUMID('${BUILDPATH}/fw_common.umid', files)
+
+#-------------------------------------------------------------------------------
+# Set up object path
+#-------------------------------------------------------------------------------
+# default:
+#  internal build using normal buildpath
+#  external build using normal buildpath
+libname = 'fw_common'
+lib = libname + '.lib'
+objname = 'rfcmd_main'
+obj = objname + '.o'
+common_sdm = 'fw_common_sdm'
+common_sdm_lib = common_sdm + '.lib'
+if 'USES_INTERNAL_BUILD' not in env and 'USES_CUST_1' not in env:
+  lib = libname + '.ext.lib'
+  obj = objname + '.ext.o'
+  common_sdm_lib = common_sdm + '.ext.lib'
+
+if 'USES_BUILD_SENSORONLY_IMAGE' in env:
+    Return()
+	
+path = env.subst(join('..','bin','${SHORT_BUILDPATH}'))
+#find path, and corresponding binaries
+lib_path = abspath(join('..','bin',env.subst('${SHORT_BUILDPATH}'),lib))
+
+variant = 'MODEM_MODEM'
+if 'USES_BUILD_PAGEONLY_IMAGE' in env or 'USES_PAGEONLY_IMAGE' in env:
+    variant = 'MODEM_PAGEONLY'
+    path += '_pageonly'
+    
+if not isfile(lib_path):
+    # This step only for eng builds
+    # looks for fw libs if they are not in the default path
+    env.PrintWarning('FW: searching for ' + libname + ' lib...')
+    lib_path = ''
+    for dname, sdname, flist in os.walk(join('..','bin')):
+        for fname in flist:
+            if fnmatch(fname, libname + '*.lib'):
+                # we found lib
+                lib_path = abspath(join(dname, fname))
+                env.PrintWarning('FW: found ' + lib_path)
+                break
+        if lib_path != '':
+            break
+    if lib_path == '' or not isfile(lib_path):
+        # this is an error condition
+        env.PrintError('FW: ' + lib_path + ' NOT found!!!')
+        Exit(1)
+
+env.AddOEMLibrary([variant], join(path, lib))
+env.AddOEMLibrary([variant], join(path, common_sdm_lib))
+env.AddOEMLibrary([variant], join(path, obj))
+#-------------------------------------------------------------------------------
+# Set up link script path
+#-------------------------------------------------------------------------------
+#api_path = Dir('../api').path
+#for lcs_file in glob(join(api_path,'*.lcs')):
+#  env.AddLinkerFilePath(abspath(lcs_file))
+#for lcs_file in glob(join(path,'*.lcs')):
+#  env.AddLinkerFilePath(abspath(lcs_file))

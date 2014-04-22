@@ -1,0 +1,114 @@
+#===============================================================================
+#
+# Efs tests Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/qmesa/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 08/18/10   rt      Initial Version
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.Append(CPPDEFINES = [
+   "QURT_THREAD_ATTR_PRIORITY_DEFAULT=128",
+   "QURT_THREAD_ATTR_NAME_MAXLEN=20",
+   "QURT_THREAD_MAX_PRIORITIES=256",    
+   "QURT_THREAD_DEFAULT_STACK_SIZE=256",
+   "FEATURE_MUTEX_PI_RECURSIVE",
+   "TX_ENABLE_IRQ_NESTING",
+   "TX_ENABLE_PROFILING",
+   "TX_DISABLE_NOTIFY_CALLBACKS",
+   "FX_FILEX_PRESENT",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+   
+   
+#-------------------------------------------------------------------------------
+# SRC PATH
+#-------------------------------------------------------------------------------
+SRCPATH_ROOT = "${BUILD_ROOT}/core/qmesa"
+SRCPATH = SRCPATH_ROOT + "/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.Append(CPPDEFINES = 'FX_FILEX_PRESENT') 
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+'MODEM_API',
+'MODEM_1X',
+'DSM',
+])
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequirePublicApi('KERNEL', area='core')
+CBSP_API = [
+   'DAL',   
+   'HAL',   
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE'
+   'WIREDCONNECTIVITY',
+   'MPROC',
+   'SYSTEMDRIVERS',
+   'TESTFRAMEWORK'
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+   
+env.Append(CPPPATH = [
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/storage',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/debugtools',
+])
+
+QMESA_DEST_IMAGES = [
+  'CORE_APPS',
+]
+
+
+QMESA_SOURCES = [ 
+      '${BUILDPATH}/qmesa.c',
+]
+env.AddLibrary(QMESA_DEST_IMAGES,'${BUILDPATH}/qmesa', QMESA_SOURCES)
+
+
+if 'USES_RCINIT' in env:
+    RCINIT_EX_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitFunc(
+    RCINIT_EX_IMG,
+    {
+    'sequence_group'             : 'RCINIT_GROUP_1',
+    'init_name'                  : 'qmesa',
+    'init_function'              : 'qmesa_init',
+    'stack_size_bytes'           : '2048',
+    'dependencies'               : ['FS','fs_os','fs_qmi_client','qurt_txm_module_manager']
+    })
+
+
+    

@@ -1,0 +1,394 @@
+#===============================================================================
+#
+# Target-Level Build Script for Modem Processor - HW Configuration
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2013 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcfg.mpss/10.1.1/bsp/mcfg_hw_img/build/mcfg_hw_img.scons#1 $
+#  $DateTime: 2020/02/19 23:07:48 $
+#  $Change: 22644654 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+import sys
+import os
+import hashlib
+Import('env')
+import subprocess
+
+env = env.Clone()
+
+#------------------------------------------------------------------------------
+# Global constants & variables utilized throughout this file
+#------------------------------------------------------------------------------
+BLOCKSIZE = 65536
+
+legacy_configs_dir    = '${BUILD_ROOT}/mcfg/configs'
+build_variant_cfg_dir = '${BUILD_ROOT}/mcfg/bsp/mcfg_hw_img/build/${BUILDPATH}/configs'  
+genVariantMbn = os.getenv('VARIANT_LIST', 'Empty_variant_list').split(',')[0]
+currVariantName = os.getenv('VARIANT_NAME', 'No_variant_name')
+
+# MCFG_MASTER_VARIANT is used to determine which set of mbns should be copied to modem_proc/mcfg/configs/...
+if  os.getenv('MCFG_MASTER_VARIANT') is None: 
+    if (genVariantMbn == 'Empty_variant_list'): 
+        if (currVariantName == 'No_variant_name'):
+            print "MCFG: currVariantName not populated!"
+            raise
+        else: 
+            env['MCFG_MASTER_VARIANT'] = currVariantName
+    else:
+        env['MCFG_MASTER_VARIANT'] = genVariantMbn
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = ['mcfg_hw', 'mcfg', 'mpss', 'mpss_images']
+
+build_tags = ['MCFG_HW' ]
+
+# init environment variables
+env.InitImageVars(
+   alias_list=aliases,           # aliases
+   proc='qdsp6',              # proc
+   config='qdsp6_sw',                # config type, proc_name
+   plat='qurt',
+   target='MCFG_HW_IMG_${BUILD_ID}',# target (elf, image file name)
+   build_tags = build_tags,
+   deprecated_build_tags = ['CBSP_QDSP6_SW_IMAGE'],
+   tools = ['buildspec_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/kernel_builders.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/doc_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py',
+            '${BUILD_ROOT}/mcfg/build/mcfg_mbn_builder.py']
+   )
+
+if not env.CheckAlias(alias_list=aliases):
+  Return()
+
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+
+env.InitBuildConfig()
+env.Replace(MBN_FILE="${BUILD_MS_ROOT}/bin/${SHORT_BUILDPATH}/mcfg_hw")
+
+#---------------------------------------------------------------------------
+# Now that we know we need to build something, the first thing we need
+# to do is add our image to BuildProducts.txt, so that tools can verify
+# when our build is successful.  Make sure we append, so that we don't
+# overwrite other images that have written to this file.
+#---------------------------------------------------------------------------
+prod_files = []
+prod_files.append(env.BuildProductsFile ("${BUILDPATH}/BuildProducts_mcfg_hw.txt", "${BUILD_ROOT}/build/ms/bin/${SHORT_BUILDPATH}/mcfg_hw.mbn")) 
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+env.Replace(QDSP6_LIBDIR = "${COREBSP_ROOT}/kernel/qurt/install/modemv5/lib")
+env.Tool('hexagon', toolpath = ['${BUILD_ROOT}/tools/build/scons/scripts'])
+env.Tool('qdsp6_defs', toolpath = ['${BUILD_ROOT}/tools/build/scons/scripts'])
+if 'T_CFLAGS' in os.environ:
+   # Surround with spaces to protect against other flags added elsewhere
+   env.Append(CFLAGS = os.environ['T_CFLAGS'])
+
+#---------------------------------------------------------------------------
+#  Handle for the no-dealloc_return-libs
+#---------------------------------------------------------------------------
+dealloc_cflags = env.get('CFLAGS')
+if '-mno-dealloc_return' in dealloc_cflags:
+   env.Replace(QDSP6_RELEASE_LIB_DIR = "${QDSP6_RELEASE_DIR}/no-dealloc_return-libs/dinkumware/lib/${Q6VERSION}")
+
+mcfg_hw_gen_path = env.RealPath('${BUILD_ROOT}/mcfg/bsp/mcfg_hw_img/build/')        
+mcfg_hw_build_dest_name = '${SHORT_BUILDPATH}/${TARGET_NAME}_${BUILD_ASIC}${BUILD_ID}${BUILD_VER}'
+
+if env['PRODUCT_LINE'].startswith("MPSS.BO"):
+   mcfg_hw_lcs_file = env.RealPath('${BUILD_ROOT}/mcfg/mcfg_gen/build/mcfg_gen_bolt.lcs')
+else: 
+   mcfg_hw_lcs_file = env.RealPath('${BUILD_ROOT}/mcfg/mcfg_gen/build/mcfg_gen.lcs')        
+
+mcfg_conv_elf_to_mbn_script = env.RealPath('${BUILD_ROOT}/mcfg/mcfg_gen/build/mcfg_conv_elf_2_mbn.pl')        
+mcfg_hw_elf_filename = mcfg_hw_build_dest_name + ".elf"
+mcfg_hw_elf_mbn_filename = mcfg_hw_build_dest_name + ".mbn"
+mcfg_hw_elf_strip_filename = mcfg_hw_build_dest_name + "_strip.elf"
+
+#---------------------------------------------------------------------------
+# Libs/Objs
+#---------------------------------------------------------------------------
+mcfg_hw_img_libs = []
+mcfg_hw_img_objs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+# load MODEM libs/objs build rules.
+if env.PathExists('${INC_ROOT}/api'):
+    au_items = env.LoadAreaSoftwareUnits('api')
+else:
+    au_items = env.LoadAreaSoftwareUnits('qmimsgs')
+mcfg_hw_img_libs.extend(au_items['LIBS'])
+mcfg_hw_img_objs.extend(au_items['OBJS'])
+au_items = env.LoadAreaSoftwareUnits('mcfg')
+mcfg_hw_img_libs.extend(au_items['LIBS'])
+mcfg_hw_img_objs.extend(au_items['OBJS'])
+
+mcfg_hw_units = [mcfg_hw_img_libs, mcfg_hw_img_objs]
+
+# returns a list of mbn filepaths walking within directory.
+def get_filepaths(directory):
+    file_paths = []  # List which will store all of the  mbn filepaths.
+    filepath =""       
+    # Walk the directory.
+    for root, directories, files in os.walk(directory):
+        for filename in files:
+            # Join the two strings in order to form the full filepath.        
+            if filename.endswith(".mbn"):
+                filepath = os.path.join(root, filename)
+                #print "filepath is : " + filepath   
+            file_paths.append(filepath)        
+    return file_paths
+ 
+#generate master digest and write that to digest_filename
+def generate_master_digest(filepath, digest_filename):
+    f1=open(digest_filename,'wb')#open the file for writing in binary mode.
+    digest_list = [] #list which stores the digest per line in sorted list filepath.
+
+    #read the lines in filepath to compute digest of mbn files and append that to the digest_list
+    with open(filepath, 'r') as f:
+      mbn_path = f.read().splitlines()
+      for lines in mbn_path:
+        #print 'digest_path is : ' + lines + '\n'
+        if os.path.exists(lines) and os.path.getsize(lines) > 0:
+            digest = generate_hash(lines)
+            #print "digest for line : " + lines + "is :" + digest + '\n'
+            digest_list.append(digest)
+    #print "digest_list is : " 
+    #print digest_list
+    f1.write('\n'.join(digest_list))                                                      
+    f1.close()
+
+    #Creating digest for master digest file by computing digest for the appended digest data to make it easier wrt reading digest data size.
+    with open(digest_filename, 'r+') as f2:
+     print "digest_filename is : " + digest_filename + '\n'
+     master_digest = generate_hash(digest_filename)
+     #print "master_digest is : " + master_digest + '\n'
+     f2.seek(0)     
+     f2.write(master_digest)
+     f2.truncate()
+
+#This method is used to generate the filepaths in compliance with rfs(dir name to be truncated upto 8 chars.)     
+def get_rfs_filepaths(filepath):
+    file_paths = []  # List which will store all of the rfs filepaths.
+    path_str =""
+    #print "filepath inside get_rfs_filepaths is : " + filepath + '\n'
+
+    with open(filepath, 'r') as f:
+      for file_lines in f:
+        #print "line is : " + file_lines + '\n'
+        filepath_new = os.path.relpath(file_lines, env.subst(build_variant_cfg_dir))#substituting with the relative filepath
+        #print "filepath_new is : " + filepath_new + '\n'
+        path_list =filepath_new.split(os.sep)
+        #print "path_list is : " + path_list
+        new_list = []
+        for items in path_list[:-1]:
+            if len(items) > 8 :
+                new_list.append(items[0:8])
+            else:
+                new_list.append(items)       
+            path_str = '/'.join(new_list).lower()
+        path_str = '/'.join(new_list).lower() + "/mcfg_hw.mbn"
+        #print "path_str is : " + path_str + '\n'
+        file_paths.append(path_str)
+    return file_paths
+
+#This is used to generate digest based on SHA-256 for filename. 
+def generate_hash(filename):
+    #print "filename inside generate_hash is : " + filename + '\n'
+    with open(filename, 'rb') as f:
+        m = hashlib.sha256()
+        buf = f.read(BLOCKSIZE)
+        while len(buf) > 0:
+            m.update(buf)
+            buf = f.read(BLOCKSIZE)
+        sha_bin = m.digest()
+    
+    return sha_bin
+
+#This is main routine which calls other functions to generate consolidated information for "mbn_hw.dig" and "mbn_hw.txt".
+def generate_list_digest(target, source, env):
+    full_file_paths = get_filepaths(os.path.realpath(env.subst(build_variant_cfg_dir + '/mcfg_hw')))
+    full_file_paths_set = set(full_file_paths)
+    sorted_paths = sorted(full_file_paths_set)
+    #print "sorted_paths inside generate_list_digest is :"
+    #print  sorted_paths
+    #Make sure to open the file in binary mode for writing and new line as "\r\n", so that it is platform independent.
+    with open(str(target[0]), 'wb') as f:
+        f.write("\r\n".join(sorted_paths))
+
+    #Generating master digest file 
+    generate_master_digest(str(target[0]), str(target[1]))
+    
+    #Modify the mbn_hw.txt file to be in-line for RFS file path format.
+    rfs_file_paths = get_rfs_filepaths(str(target[0]))
+    with open(str(target[0]), 'wb') as rfs_file:
+      rfs_file.write("\r\n".join(rfs_file_paths))
+        
+# End def generate_list_digest()
+
+print '\t -- BUILDING-- MCFG-HW'
+print '\t -- FROM MCFG direectory'
+#=========================================================================
+# Beging building MCFG Image
+#-------------------------------------------------------------------------
+# filter is not define or filter is current target files only, ok to build misc files
+filter_opt = env.get('FILTER_OPT')
+target_all_hw_mbns = []
+
+if 'USES_MCFG_MBN_BUILDER' in env:
+    mcfgMbnLocation  = ARGUMENTS.get('MCFG_MBN_LOCATION', 'mcfg/mcfg_gen/generic')
+    for dir_name in mcfgMbnLocation.split(",") :
+        full_path = env.RealPath("${BUILD_ROOT}/" + dir_name, posix =True)
+        mcfg_config_xml_files = env.FindFiles( file_name_patterns = ['*.xml', '*.XML'], root_dir = full_path, posix=True )
+        for mcfg_config_xml_file in mcfg_config_xml_files :
+            if ("mcfg_sw" in mcfg_config_xml_file) or ("mcfg_hw_gen_Default" in mcfg_config_xml_file):
+               continue
+            print mcfg_config_xml_file
+            filename = mcfg_config_xml_file.split("/")[-1]
+            filename_split = filename.split("_")
+            config = filename_split[0] + "_" + filename_split[1] + ":" + filename.split("gen_")[1].replace(".xml","")
+            dirname= mcfg_config_xml_file.split("mcfg_gen/")[1].split(filename)[0]
+            config_temp = config.split(":")[1]
+            config_dirs = "/".join(config_temp.split('-')[1:]) + "/" + config_temp.split('-')[0]
+            mbn_variant_path = os.sep.join([config.split(":")[0], dirname + config_dirs, 'mcfg_' + filename_split[1] + '.mbn'])
+            target_mbn = env.RealPath(os.sep.join([build_variant_cfg_dir, mbn_variant_path]), posix = True)
+            target_all_hw_mbns.append(target_mbn)
+            mcfg_hw_units += env.McfgMbnBuilder(target_mbn, mcfg_config_xml_file)
+
+            # Copy configs from master variant to legacy location
+            if env.get('MCFG_MASTER_VARIANT') == currVariantName:
+                legacy_mbn_path = env.RealPath(os.sep.join([legacy_configs_dir, mbn_variant_path]), posix = True)
+                mcfg_hw_units += env.InstallFiles(legacy_mbn_path, target_mbn)
+
+if filter_opt is None:
+   mcfg_hw_units += prod_files
+
+   libs_path = env['INSTALL_LIBPATH']
+   
+   #Setup the bare minimum linker commands
+   env.Replace(LINKFLAGS ="-m${Q6VERSION} -nostdlib --strip-debug --strip-all --whole-archive --section-start .start=0x0 --entry=0x0 ${LFLAGS}")
+   env.Append(LINKFLAGS = '-T' + str(mcfg_hw_lcs_file))
+   env.Replace(LINKOBJGRP = "--start-group $_LIBFLAGS_POSIX  $SOURCES.posix --end-group ")
+
+   #Invoke the build command
+   mcfg_hw_elf = env.Program(mcfg_hw_build_dest_name, 
+                          source=[mcfg_hw_img_objs],
+                          LIBS=[mcfg_hw_img_libs], 
+                          LIBPATH=libs_path)
+
+   mcfg_hw_map = env.SideEffect(env.subst(mcfg_hw_build_dest_name + '.map'), mcfg_hw_elf)
+   mcfg_hw_sym = env.SideEffect(env.subst(mcfg_hw_build_dest_name + '.sym'), mcfg_hw_elf)
+   env.Clean(mcfg_hw_elf, mcfg_hw_map)
+   env.Clean(mcfg_hw_elf, mcfg_hw_sym)
+
+   # Generate MCFG HW MBN 
+   def gen_mcfg_hw_mbn(target, source, env):
+         
+      # Strip out extra info out of the elf using qdsp-objcopy
+      print 'MCFG-HW: Strip out extra info out of the elf using Binutils objcopy'
+      cdir = os.getcwd()
+      print 'MCFG-HW:Current working dir is:'
+      print cdir
+
+      if env.PathExists("${QDSP6BIN}"):
+         MCFG_OBJCOPY_PATH = env.RealPath("${QDSP6BIN}") 
+         if env['PLATFORM'] in ['windows', 'win32']:
+            MCFG_OBJCOPY_PATH = MCFG_OBJCOPY_PATH + "\\"
+         else:
+            MCFG_OBJCOPY_PATH = MCFG_OBJCOPY_PATH + "/"
+      else:
+         env.PrintWarning("${QDSP6BIN} not found using system environment. Using system paths for MCFG_OBJCOPY_PATH")
+         MCFG_OBJCOPY_PATH = ""
+
+      hexagon_rtos_release = env.get('HEXAGON_RTOS_RELEASE')
+      hexagon_major_release = hexagon_rtos_release.split(".")[0]
+      if hexagon_major_release <= "6":
+        MCFG_OBJCOPY = MCFG_OBJCOPY_PATH + "hexagon-objcopy${EXE_EXT}"
+      else:
+        MCFG_OBJCOPY = MCFG_OBJCOPY_PATH + "hexagon-elfcopy${EXE_EXT}"
+      env.PrintInfo("MCFG_OBJCOPY_PATH            = %s" % env.RealPath("${QDSP6BIN}"))
+
+      cmd = MCFG_OBJCOPY + " -I elf32-little --only-section .mcfg_seg" + \
+           " " + mcfg_hw_elf_filename + \
+           " " + mcfg_hw_elf_strip_filename
+      env.ExecCmds(cmd, dir=mcfg_hw_gen_path)
+
+      # Run the MCFG_CONV_ELF_2_MBN script to adjust p_offset and strip out link view
+      print 'MCFG-HW: Run the MCFG_CONV_ELF_2_MBN script to adjust p_offset and remove link view'
+      cmd2 = "perl " + mcfg_conv_elf_to_mbn_script + \
+            " " + mcfg_hw_elf_strip_filename + \
+            " -o " + mcfg_hw_elf_mbn_filename 
+      env.ExecCmds(cmd2, dir=mcfg_hw_gen_path) 
+         
+   # End def gen_mcfg_hw_mbn()
+
+   print '\t -- Generating mcfg_hw_mbn'
+   mcfg_hw_mbn = env.Command(mcfg_hw_elf_mbn_filename, mcfg_hw_elf_filename, gen_mcfg_hw_mbn)
+
+   mcfg_hw_strip_elf = env.SideEffect(env.subst(mcfg_hw_build_dest_name + '_strip.elf'), mcfg_hw_mbn)
+   env.Clean(mcfg_hw_mbn, mcfg_hw_strip_elf)
+        
+   install_mcfg_hw_elf = env.InstallAs(
+      "${BUILD_MS_ROOT}/M${BUILD_ASIC}${BUILD_ID}${BUILD_VER}_MCFG_HW.elf", mcfg_hw_elf)
+   install_mcfg_hw_mbn = env.InstallAs(
+      "${BUILD_MS_ROOT}/M${BUILD_ASIC}${BUILD_ID}${BUILD_VER}_MCFG_HW.mbn", mcfg_hw_mbn)
+
+   print '\t -- Invoke MbnBuilder for mcfg_hw_mbn'
+   cdir = os.getcwd()
+   print cdir
+   #-------------------------------------------------------------------------
+   # Build env mbn files
+   #-------------------------------------------------------------------------
+   target_mcfg_hw_mbn = env.MbnBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}", install_mcfg_hw_mbn, IMAGE_TYPE='mcfg_hw',
+                                        MBN_TYPE="elf", FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+                                        
+   #-------------------------------------------------------------------------
+   # Build mbn list and digest for auto discover
+   #-------------------------------------------------------------------------
+   target_mcfg_hw_mbn_list = env.Command([env.subst(build_variant_cfg_dir + '/mcfg_hw/mbn_hw.txt'), env.subst(build_variant_cfg_dir + '/mcfg_hw/mbn_hw.dig')],
+                                         target_all_hw_mbns, 
+                                         generate_list_digest)                                      
+
+   # Copy master variant files to legacy location
+   if env.get('MCFG_MASTER_VARIANT') == currVariantName:
+       mcfg_hw_units += env.InstallFiles(os.sep.join([legacy_configs_dir, 'mcfg_hw']), target_mcfg_hw_mbn_list)
+
+   #=========================================================================
+   # Define targets needed for MCFG_HW_IMG 
+   #=========================================================================
+   mcfg_hw_units += [
+      install_mcfg_hw_elf,
+      install_mcfg_hw_mbn,
+      target_mcfg_hw_mbn,
+      target_all_hw_mbns,
+      target_mcfg_hw_mbn_list,
+   ]
+
+# add aliases
+for alias in aliases:
+   env.Alias(alias, mcfg_hw_units)
+

@@ -1,0 +1,102 @@
+#===============================================================================
+#
+#
+# GENERAL DESCRIPTION
+#
+# Copyright (c) 2020 QUALCOMM Technologies Incorporated. All Rights Reserved
+#
+# Qualcomm Proprietary
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/core.mpss/3.10/systemdrivers/pmic/target/build/pmic_target.scons#2 $
+# $DateTime: 2020/04/21 01:54:13 $ 
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/27/20   prp     Created
+#===============================================================================
+import os, re
+Import('env')
+
+LIB_NAME        = 'pmic_target'
+IMAGE_SOURCES   = ['MODEM_MODEM','CORE_MODEM','CORE_QDSP6_SW','SBL3_BOOT_IMAGE', 'PMIC_BOOT_DRIVER', 'MODEM_APPS','MODEM_SENSORONLY','RPM_IMAGE']
+
+TARGET = env['CHIPSET']
+
+from glob import glob
+
+env = env.Clone()
+
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH , duplicate=0)
+
+file = env.GlobFiles(SRCPATH + '/' + TARGET + '/' + '*.c', posix=True)
+
+if not file:
+    TARGET = "default"
+
+env.RequirePublicApi([
+    'BUSES',
+    'DAL',
+    'DEBUGTOOLS',
+    'KERNEL',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    ],
+    area='CORE')
+
+env.RequireProtectedApi([
+    'PMIC_APPLICATION',
+    'PMIC_COMM',
+    'PMIC_CONFIG',
+    'PMIC_DRIVERS',
+    'PMIC_DEVICES',
+    'PMIC_FRAMEWORK',
+    'PMIC_NPA',
+    'PMIC_TARGET',
+    'PMIC_UTILS'
+    ])
+
+
+LIB_SOURCES = [ ]  #empy list
+
+SOURCE_FILES = [ ] 
+
+#find all .c
+SOURCE_FILES.extend(glob(SRCPATH + '/'+TARGET+'/*.c'))
+
+
+for filename in SOURCE_FILES:
+        LIB_SOURCES.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+
+env.AddLibrary(IMAGE_SOURCES, '${BUILDPATH}/'+LIB_NAME, [LIB_SOURCES])
+
+#-------------------------------------------------------------------------------
+# Clean pack configuration
+#-------------------------------------------------------------------------------
+source_path = os.path.abspath(SRCPATH)
+image_path = os.path.join(source_path, env['CHIPSET'])
+used_files = env.FindFiles(['*'], image_path)
+all_files = env.FindFiles(['*'], '../src/')
+packed_files = list(set(all_files) - set(used_files))
+env.CleanPack(['CORE_MODEM'], packed_files)

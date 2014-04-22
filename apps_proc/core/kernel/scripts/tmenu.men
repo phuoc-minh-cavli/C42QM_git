@@ -1,0 +1,83 @@
+
+
+MENU.ReProgram
+(
+ ADD
+ TOOLBAR
+ (
+TOOLITEM "Print threadx traces" "MB,B" "do \apps_proc\core\kernel\scripts\extract_trace.cmm"
+TOOLITEM "Thread" "TH,g"
+(
+	//&address=address.offset(track.address())
+    //Var.View %m %s (TX_THREAD*)&address
+	LOCAL &Val1
+	DIALOG
+	(
+		HEADER "Tx Thread Structure"
+		POS 1. 2. 20.
+		myInputB: EDIT "0x"
+		(;get the user input when the cursor leaves the EDIT control
+		&Val1=DIALOG.STRing(myInputB)
+		)
+		POS 29. 3. 5.
+		DEFBUTTON "OK"
+		(
+		CONTinue
+		DIALOG.END
+		IF "&Val1"!=""
+			Var.View %m %s (TX_THREAD*)&Val1
+		)
+	)
+	STOP
+	ENDDO
+)
+TOOLITEM "Signal" "EV,g"
+(
+	LOCAL &Val1
+	DIALOG
+	(
+		HEADER "Tx Signal Structure"
+		POS 1. 2. 20.
+		myInputB: EDIT "0x"
+		(;get the user input when the cursor leaves the EDIT control
+		&Val1=DIALOG.STRing(myInputB)
+		)
+		POS 29. 3. 5.
+		DEFBUTTON "OK"
+		(
+		CONTinue
+		DIALOG.END
+		IF "&Val1"!=""
+			Var.View %m %s (TX_EVENT_FLAGS_GROUP*)&Val1
+		)
+	)
+	STOP
+	ENDDO
+)
+TOOLITEM "Mutex" "MU,g"
+(
+	LOCAL &Val1
+	DIALOG
+	(
+		HEADER "Tx Mutex Structure"
+		POS 1. 2. 20.
+		myInputB: EDIT "0x"
+		(;get the user input when the cursor leaves the EDIT control
+		&Val1=DIALOG.STRing(myInputB)
+		)
+		POS 29. 3. 5.
+		DEFBUTTON "OK"
+		(
+		CONTinue
+		DIALOG.END
+		IF "&Val1"!=""
+			Var.View %m %s (TX_MUTEX*)&Val1
+		)
+	)
+	STOP
+	ENDDO
+)
+
+
+ )
+)

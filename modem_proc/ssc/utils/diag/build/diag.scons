@@ -1,0 +1,45 @@
+#===============================================================================
+#
+# Diag library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/utils/diag/build/diag.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  diag_flavor = ["x86"]
+else:
+  diag_flavor = ["hexagon"]
+
+if 'SNS_ISLAND_INCLUDE_DIAG' in env['CPPDEFINES']:
+  diag_sections = ['.text.sns', '.data.sns', '.bss.sns', '.rodata.sns']
+else:
+  diag_sections = ''
+
+if 'SENSORS_DD_DEV_FLAG' in env:
+  diag_clean_pack_list = ['*.c','*.h']
+  binlib=True
+else:
+  diag_clean_pack_list = []
+  binlib=False
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             flavor = diag_flavor,
+             ssc_protected_api = ['SNS_FRAMEWORK', 'SNS_INTERNAL_INCLUDES'],
+             clean_pack_list = diag_clean_pack_list,
+             binary_lib = binlib,
+             island_sections = diag_sections)

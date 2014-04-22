@@ -1,0 +1,52 @@
+#===============================================================================
+#
+# Dataservices APSS TX build script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2019 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/netservice/build/dataservices_netservice.scons#3 $
+#  $DateTime: 2021/03/11 03:38:46 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.Append(CPPDEFINES = 'ENABLE_SSL')
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+
+#env.RequirePublicApi(['NICHESTACK_PORT'], area='dataservices')
+env.RequirePublicApi(['NICHESTACK_PORT'])
+env.RequirePublicApi(['UTILS'], area='dataservices')
+
+#-------------------------------------------------------------------------------
+# Enable all suppressed warnings
+#-------------------------------------------------------------------------------
+cmdline_arg = map(str, COMMAND_LINE_TARGETS)
+#env.Append(CFLAGS = "--strict_warnings")
+
+# Configure for high space optimizations
+#env.Replace(ARMCC_OPT="-Ospace -O3")
+
+#-------------------------------------------------------------------------------
+# Define enable QDSS flag if this build supports QDSS
+#-------------------------------------------------------------------------------
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Remove Files cannot be shipped
+#-------------------------------------------------------------------------------

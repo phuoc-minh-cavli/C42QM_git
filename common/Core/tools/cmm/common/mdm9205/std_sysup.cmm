@@ -1,0 +1,52 @@
+LOCAL &T32_attachstate
+
+IF ((("&CONNECT"=="SWD")||("&CONNECT"=="swd"))&&(CABLE.TWOWIRE()))
+(
+   IF ("&Pcie_Boot_Flashless"=="True")
+   (
+       INTERCOM.EXECUTE &APPS0_PORT SYS.MODE.ATTACH
+       break
+   )
+   ELSE
+   (
+	SYS.M.A
+	BREAK
+	GOSUB CLEAR_WDOG_DEBUG_REGS
+	do std_utils HWIO_OUT MPM2_MPM_PS_HOLD 0x0
+	wait 100.ms
+	do std_utils ATTACHPROC dontgo
+	BREAK
+	GOTO EXIT	
+   )
+)
+ELSE 
+(
+   IF ("&Pcie_Boot_Flashless"=="True")
+   (
+       INTERCOM.EXECUTE &APPS0_PORT SYS.MODE.ATTACH
+       break
+   )
+   ELSE
+   (
+	SYS.U
+	GOSUB CLEAR_WDOG_DEBUG_REGS
+	SYS.U
+	GOTO EXIT	
+	
+    )	
+)
+
+
+CLEAR_WDOG_DEBUG_REGS:
+	do std_utils HWIO_OUT TCSR_RESET_DEBUG_SW_ENTRY 0x0
+	do std_utils HWIO_OUTF GCC_RESET_DEBUG MSM_TSENSE_RESET_DEBUG_EN 0x0
+	do std_utils HWIO_OUTF GCC_RESET_DEBUG PMIC_ABNORMAL_RESET_DEBUG_EN 0x0
+	do std_utils HWIO_OUTF GCC_RESET_DEBUG SECURE_WDOG_DEBUG_EN 0x0
+	//clear download cookie
+	do std_utils HWIO_OUT  TCSR_BOOT_MISC_DETECT 0x0
+	
+	RETURN
+
+
+EXIT:
+	ENDDO

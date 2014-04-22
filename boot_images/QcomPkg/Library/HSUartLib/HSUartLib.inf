@@ -1,0 +1,41 @@
+# @file  HSUartLib.inf
+#
+#
+#  Copyright (c) 2018, Qualcomm Technologies, Inc.  All Rights Reserved.
+# 
+#
+#
+#=============================================================================
+#                              EDIT HISTORY
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#
+# when       who      what, where, why
+# --------   ---      --------------------------------------------------------
+# 12/04/18   ss       HSUart Enablement
+#
+#=============================================================================
+
+[Defines]
+  INF_VERSION    = 0x00010005
+  BASE_NAME      = HSUartLib
+  MODULE_TYPE    = BASE
+  VERSION_STRING = 1.0
+  LIBRARY_CLASS  = HSUartLib
+
+[Sources]
+  HSUart.c
+  HSUart_settings.c
+
+[LibraryClasses]
+  IoLib
+  PcdLib
+
+[Packages]
+  MdePkg/MdePkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+
+[Pcd]
+  gQcomTokenSpaceGuid.UartPlatform

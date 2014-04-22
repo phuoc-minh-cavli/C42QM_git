@@ -1,0 +1,29 @@
+#===============================================================================
+#
+# QWES Lib API
+#
+# Copyright (c) 2018,2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#===============================================================================
+# Import SCons Environment
+Import('env')
+
+# Publish Restricted Include Paths
+
+env.PublishRestrictedApi('QWES_COMMON', [
+    "${INC_ROOT}/core/securemsm/qwes/common/inc",
+])
+
+env.PublishRestrictedApi('QWES_OS_ABSTRACTION', [
+    "${INC_ROOT}/core/securemsm/qwes/os_abstraction/threadx/inc",
+    "${INC_ROOT}/core/securemsm/qwes/os_abstraction/common/inc",
+])
+
+env.PublishRestrictedApi('QWES_CLI', [
+    "${INC_ROOT}/core/securemsm/qwes/cli/inc",
+])
+
+# Search for additional APIs
+env.LoadAPIUnits()

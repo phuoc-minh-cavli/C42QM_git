@@ -1,0 +1,117 @@
+#===============================================================================
+#
+# NB1 Common Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/common/build/nb1_common.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+#env.Append(CPPDEFINES = [
+#   "MSG_BT_SSID_DFLT=",
+#])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'STORAGE',
+    'MPROC',
+    'KERNEL',                             # needs to be last
+    ], area='core')
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi([
+    'ONEX',
+    'GPS',
+    'HDR',
+    'MCS',
+    'MMODE',
+    'RFA',
+    'UIM',
+    'UTILS',
+    ])
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi(['MCS'])
+env.RequirePublicApi(['NB1'])
+env.PublishPrivateApi('VIOLATIONS', ['${INC_ROOT}/core/systemdrivers/clk/inc'])
+
+# Need get access to Modem Restricted headers
+env.RequireRestrictedApi([
+    'MMODE',
+    'NAS',
+    'RFA',
+    'MDSP',
+    'MDSPSVC',
+    'GERAN',
+    'GPS',
+    'ONEX',
+    'HDR',
+    'MCS',
+    'NB1',
+    'UTILS',
+    'FW',
+    ])
+
+# Need to get access to protected APIs. 
+print "Craig - Grabbing NB1 protected API"
+env.RequireProtectedApi(['NB1'])
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Construct the list of source files by looking for *.c
+NB1_COMMON_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                      for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the NB1 RRC source and convert to a binary library
+env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_common', NB1_COMMON_SOURCES, pack_exception=['USES_COMPILE_LTE_L3_L2_PROTECTED_LIBS', 'USES_FEATURE_NB1_PACKBUILD_GENERATE_PROTECTED_LIBS', 'USES_CUST_1'])
+
+#-------------------------------------------------------------------------------
+# avoid run-time errors when trying to send MSGR messages
+#-------------------------------------------------------------------------------
+
+if 'USES_MSGR' in env:
+    env.AddUMID('${BUILDPATH}/nb1_common.umid', ['../inc/nb1_fc_msg.h'])
+
+# Load test units
+env.LoadSoftwareUnits()

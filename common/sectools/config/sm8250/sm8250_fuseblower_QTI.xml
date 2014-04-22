@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower.xsd">
+    <metadata>
+        <chipset>sm8250</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <module id="SECURITY_CONTROL_CORE">
+        <base_address>0x00780000</base_address>
+        <description/>
+
+        <fuse_region id="QFPROM_RAW_RD_PERM">
+            <description>Row 57</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801C8</address>
+                <operation>BLOW</operation>
+                <field id="SEC_KEY_DERIVATION_KEY">
+                    <description>Secondary Key Derivation Key Read Disable</description>
+                    <value>0x1</value>
+                    <bits>24</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_WR_PERM">
+            <description>Row 58</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801D0</address>
+                <operation>BLOW</operation>
+                <field id="Read Permissions Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region.
+                        Blow this bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>7</bits>
+                </field>
+                <field id="FEC enables Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region. Blow this
+                        bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>9</bits>
+                </field>
+                <field id="OEM Configuration Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region.
+                        Blow this bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>10</bits>
+                </field>
+                <field id="Public Key Hash 0 Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region.
+                        Blow this bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>17</bits>
+                </field>
+                <field id="OEM Secure Boot Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region. Blow this
+                        bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>23</bits>
+                </field>
+                <field id="Secondary Key Derivation Key Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region. Blow this
+                        bit after the region has been completely provisioned.
+                    </description>
+                    <value>0x1</value>
+                    <bits>24</bits>
+                </field>
+                <field id="Image Encryption Key 1 Write Disable">
+                    <description>
+                        Disables further QFPROM changes to the this region. Blow this
+                        bit after the region has been completely provisioned. This will
+                        likely be blown as part of in-field provisioning of RoT transfer.
+                    </description>
+                    <value>0x1</value>
+                    <bits>26</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_FEC_EN">
+            <description>Row 59</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801D8</address>
+                <operation>BLOW</operation>
+                <field id="REGION24_FEC_EN">
+                    <description>Secondary Key Derivation Key FEC Enable</description>
+                    <value>0x1</value>
+                    <bits>24</bits>
+                </field>
+                <field id="REGION26_FEC_EN">
+                    <description>Image Encryption Key 1 FEC Enable</description>
+                    <value>0x1</value>
+                    <bits>26</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_CONFIG">
+            <description>Rows 60, 61 and 62</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801E0</address>
+                <operation>BLOW</operation>
+                <field id="E_DLOAD_DISABLE">
+                    <description>
+                        OEM Optional. Disables emergency download via removable
+                        SD and/or USB downloader in Apps PBL error handler.
+                    </description>
+                    <value>0x0</value>
+                    <bits>0</bits>
+                </field>
+                <field id="ENUM_TIMEOUT">
+                    <description>
+                        OEM optional. BOOT ROM must support USB enumeration timeout.
+                        Timeout applies to both enumeration for FLCB (fast low current boot)
+                        and USB download mode. If USB is not enumerated within time
+                        (90 seconds); quit USB enumeration If USB suspend or disconnected
+                        after enumeration; start timer again.
+                    </description>
+                    <value>0x0</value>
+                    <bits>1</bits>
+                </field>
+                <field id="FORCE_DLOAD_DISABLE">
+                    <description>
+                        OEM optional. If FORCE_DLOAD_DISABLE is '0'; device goes to download
+                        mode if an error occurs very early in XBL1. If FORCE_DLOAD_DISABLE
+                        is set to '1'; device goes into cold boot if an error occurs very
+                        early in XBL1.
+                    </description>
+                    <value>0x0</value>
+                    <bits>2</bits>
+                </field>
+                <field id="FAST_BOOT[4:0]">
+                    <description>
+                        These fuses are used by boot code to specify which device has priority
+                        to be booted from. For SM8150, the mapping is as follows:
+                        00000: Default (UFS HS G1 -> SD -> USB3.0 -> EDL (eDL path- USB only))
+                        00001: SD -> UFS HS G1 -> eDL (eDL path USB only)
+                        00010: SD -> eDL (eDL path- USB only)
+                        00011: USB -> eDL (eDL path- SD then USB)
+                        00100: QSPI -> eDL (eDL path- SD then USB)
+                        00101: SPI-> eDL (eDL path- SD then USB)
+                    </description>
+                    <value>0x0</value>
+                    <bits>9:5</bits>
+                </field>
+                <field id="PBL_QSPI_BOOT_EDL_ENABLED">
+                    <description>
+                        When fuse is blown, EDL Path will be QSPI->SD->USB else the EDL path
+                        will be as before SD->USB.
+                    </description>
+                    <value>0x0</value>
+                    <bits>10</bits>
+                </field>
+                <field id="SPI_CLK_BOOT_FREQ">
+                    <description>
+                        Default is 37.5 MHz and when blown 19.2 MHz.
+                    </description>
+                    <value>0x0</value>
+                    <bits>11</bits>
+                </field>
+                <field id="SW_FUSE_PROG_DISABLE">
+                    <description>
+                        It is recommended not to blow this fuse. This fuse disables the
+                        ability to blow any more fuses through software. If desired to be
+                        blown; this should be blown at the end. Redundant with write
+                        permission fuses.
+                    </description>
+                    <value>0x0</value>
+                    <bits>12</bits>
+                </field>
+                <field id="PBL_FDL_TIMEOUT_RESET_FEATURE_ENABLE.">
+                    <description>
+                        Fuse bit to reset device if PBL enters into EDL mode unintentionally.
+                    </description>
+                    <value>0x0</value>
+                    <bits>13</bits>
+                </field>
+                <field id="PBL_LOG_DISABLE">
+                    <description>
+                        Used for controlling logging mechanism in PBL. '1' To
+                        limit the information collected in PBL logs.
+                    </description>
+                    <value>0x0</value>
+                    <bits>15</bits>
+                </field>
+                <field id="PBL_USB_TYPE_C_DISABLE">
+                    <description>
+                        Disables type-C functionality during PBL. PBL communication/
+                        enumeration happens over USB0_SS only. USB1_SS cannot be used.
+                    </description>
+                    <value>0x0</value>
+                    <bits>16</bits>
+                </field>
+                <field id="DISABLE_ROT_TRANSFER">
+                    <description>
+                        This fuse permanently disables root of trust transfer.
+                    </description>
+                    <value>0x1</value>
+                    <bits>20</bits>
+                </field>
+                <field id="SW_ROT_USE_SERIAL_NUM">
+                    <description>
+                        If set, PBL checks that signature covers a serial number that matches
+                        that read from fuses. This is for secure boot authentication.
+                    </description>
+                    <value>0x0</value>
+                    <bits>21</bits>
+                </field>
+                <field id="USB_SS_DISABLE">
+                    <description>
+                        Used to disable USB SS enumeration during Boot.
+                    </description>
+                    <value>0x0</value>
+                    <bits>22</bits>
+                </field>
+                <field id="APPS_HASH_INTEGRITY_CHECK_DISABLE">
+                    <description>
+                        Disables Hash computation/verification of individual ELF segments in PBL.
+                    </description>
+                    <value>0x0</value>
+                    <bits>23</bits>
+                </field>
+                <field id="DEBUG_DISABLE_IN_ROM">
+                    <description>
+                        This fuse is used to disable x509 ou field parsing. For now only disabling
+                        of crash dump OU field is done.
+                    </description>
+                    <value>0x0</value>
+                    <bits>25</bits>
+                </field>
+                <field id="DEBUG_POLICY_DISABLE">
+                    <description>
+                        Debug Policy is bypassed when this bit is 1. Debug Policy provides a means
+                        to re-enable debug capabilities under OEM-specified selectable conditions.
+                    </description>
+                    <value>0x0</value>
+                    <bits>28</bits>
+                </field>
+                <field id="ALL_DEBUG_DISABLE">
+                    <description>
+                        This fuse permanently disables all debug of the chip. It is not recommended
+                        to blow this bit. No RMAs are possible after this fuse is blown.
+                    </description>
+                    <value>0x0</value>
+                    <bits>29</bits>
+                </field>
+                <field id="SHARED_QSEE_SPIDEN_DISABLE">
+                    <description>
+                        Shared QSEE Secure Invasive Debug Disable bucket. This OEM controlled fuse
+                        can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>30</bits>
+                </field>
+                <field id="SHARED_QSEE_SPNIDEN_DISABLE">
+                    <description>
+                        Shared QSEE Secure Non-invasive Debug Disable bucket. This OEM controlled
+                        fuse can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>31</bits>
+                </field>
+                <field id="SHARED_MSS_DBGEN_DISABLE">
+                    <description>
+                        Shared MSS Invasive Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>32</bits>
+                </field>
+                <field id="SHARED_MSS_NIDEN_DISABLE">
+                    <description>
+                        Shared MSS Non-invasive Debug Disable bucket. This OEM controlled fuse
+                        can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>33</bits>
+                </field>
+                <field id="SHARED_CP_DBGEN_DISABLE">
+                    <description>
+                        Shared CP Invasive Debug Disable bucket. This OEM controlled fuse
+                        can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>34</bits>
+                </field>
+                <field id="SHARED_CP_NIDEN_DISABLE">
+                    <description>
+                        Shared CP Non-invasive Debug Disable bucket. This OEM controlled
+                        fuse can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>35</bits>
+                </field>
+                <field id="SHARED_NS_DBGEN_DISABLE">
+                    <description>
+                        Shared CP Invasive Debug Disable bucket. This OEM controlled fuse
+                        can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>36</bits>
+                </field>
+                <field id="SHARED_NS_NIDEN_DISABLE">
+                    <description>
+                        Shared CP Non-invasive Debug Disable bucket. This OEM controlled
+                        fuse can be overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>37</bits>
+                </field>
+                <field id="SHARED_MISC_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x1</value>
+                    <bits>40</bits>
+                </field>
+                <field id="SHARED_MISC1_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc1 Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x0</value>
+                    <bits>41</bits>
+                </field>
+                <field id="SHARED_MISC2_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc2 Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x0</value>
+                    <bits>42</bits>
+                </field>
+                <field id="SHARED_MISC3_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc3 Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x0</value>
+                    <bits>43</bits>
+                </field>
+                <field id="SHARED_MISC4_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc4 Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x0</value>
+                    <bits>44</bits>
+                </field>
+                <field id="SHARED_MISC5_DEBUG_DISABLE">
+                    <description>
+                        Shared Misc5 Debug Disable bucket. This OEM controlled fuse can be
+                        overriden by the corresponding QC fuse.
+                    </description>
+                    <value>0x0</value>
+                    <bits>45</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x007801E8</address>
+                <operation>BLOW</operation>
+                <field id="DISABLE_RSA">
+                    <description>
+                        When this bit is 0 and signed image type SHA384 + RSA/ECC is 0-- RSA OPERATION
+                        When this bit is 0 and signed image type SHA384 + RSA/ECC IS 1-- ECC OPERATION USING PKA IP
+                        When this bit is 1 and signed image type SHA384 + RSA/ECC is 0-- Error
+                        When this bit is 1 and signed image type SHA384 + RSA/ECC is 1-- ECC OPERATION USING PKA IP
+                    </description>
+                    <value>0x0</value>
+                    <bits>31</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x007801F0</address>
+                <operation>BLOW</operation>
+                <field id="PERIPH_PID[15:0]">
+                    <description>PID[15:0]</description>
+                    <value>0x0000</value>
+                    <bits>15:0</bits>
+                </field>
+                <field id="PERIPH_VID[15:0]">
+                    <description>VID[15:0]</description>
+                    <value>0x0000</value>
+                    <bits>31:16</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_SEC_BOOT">
+            <description/>
+            <fuse ignore="false" n="0">
+                <address>0x007805E8</address>
+                <operation>BLOW</operation>
+                <field id="SEC_BOOT1_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>5</bits>
+                </field>
+                <field id="SEC_BOOT2_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>13</bits>
+                </field>
+                <field id="SEC_BOOT3_AUTH_EN">
+                    <value>0x1</value>
+                    <bits>21</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_SEC_KEY_DERIVATION_KEY">
+            <description/>
+            <fuse ignore="false" n="0">
+                <address>0x007805F8</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description>Sec Key Derivation Key[55:0]</description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x00780600</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description>Sec Key Derivation Key[111:56]</description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x00780608</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description>Sec Key Derivation Key[167:112]</description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="3">
+                <address>0x00780610</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description>Sec Key Derivation Key[223:168]</description>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="4">
+                <address>0x00780618</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description>Sec Key Derivation Key[255:224]</description>
+                    <value>0x00000000</value>
+                    <bits>31:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_IMAGE_ENCR_KEY1">
+            <fuse ignore="false" n="0">
+                <address>0x007807E0</address>
+                <operation>BLOW</operation>
+                <field id="OEM Image Encryption Key 1[55:0]">
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x007807E8</address>
+                <operation>BLOW</operation>
+                <field id="OEM Image Encryption Key 1[111:56]">
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x007807F0</address>
+                <operation>BLOW</operation>
+                <field id="OEM Image Encryption Key 1[127:112]">
+                    <value>0x0000</value>
+                    <bits>15:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+    </module>
+</tns:fuseblower>

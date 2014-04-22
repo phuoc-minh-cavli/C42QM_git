@@ -1,0 +1,42 @@
+//
+// Defines log messages used by the direct channel
+//
+// Copyright (c) 2020 Qualcomm Technologies, Inc.
+// All Rights Reserved.
+// Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+syntax = "proto2";
+import "nanopb.proto";
+
+enum sns_direct_channel_log_id {
+  option (nanopb_enumopt).long_names = false;
+ 
+  // Log id for channel create request
+  // Use sns_direct_channel_create_msg to decode payload
+  SNS_DIRECT_CHANNEL_CREATE_MSG = 1;
+
+  // Log id for channel config request
+  // Use sns_direct_channel_config_msg to decode payload
+  SNS_DIRECT_CHANNEL_CONFIG_MSG = 2;
+  
+  // Log ID for channel delete
+  // No payload
+  SNS_DIRECT_CHANNEL_DELETE_MSG = 3;
+
+}
+
+/*Request message logged by the direct channel client manager*/
+message sns_direct_channel_request_log
+{
+  // Request log timestamp in Qtimer ticks
+  required fixed64 timestamp = 1;
+  
+  // Instance corresponding to channel
+  required fixed32 instance  = 2;
+
+  // log id used to decode request payload 
+  required sns_direct_channel_log_id log_id  = 3;
+
+  // request payload
+  optional bytes payload = 4;  
+}

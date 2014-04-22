@@ -1,0 +1,203 @@
+#===============================================================================
+#
+# IPC ROUTER Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2010,2018-2019 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/2H09/halcyon_modem/main/latest/AMSS/products/7x30/core/mproc/oncrpc/build/SConscript#11 $
+#  $DateTime: 2010/09/22 18:42:11 $
+#  $Author: coresvc $
+#  $Change: 1450404 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+import os.path
+Import('env')
+env = env.Clone()
+env.Append(CPPDEFINES=['MSG_BT_SSID_DFLT=MSG_SSID_ONCRPC'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/mproc/ipc_router"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'MODEM_DATA',
+   'MODEM_HDR',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DEBUGTOOLS',
+   'HAL',
+   'DAL',
+   'MEMORY',
+   'MPROC',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+   'DSM',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',   
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors
+#-------------------------------------------------------------------------------
+if 'ARMTOOLS' in env:
+   env.Append(CFLAGS = "--diag_error=warning ")
+   env.Append(CFLAGS = "--diag_error=77")
+   env.Append(CFLAGS = "--diag_error=117")
+   env.Append(CFLAGS = "--diag_error=940")
+
+if 'HEXAGON_TOOLS' in env:
+   env.Append(CFLAGS = "-Werror ")
+
+#-------------------------------------------------------------------------------
+# Device configuration
+#-------------------------------------------------------------------------------
+# Use devconfig only for MPSS
+if env.has_key('USES_DEVCFG') and env.has_key('USES_QDSP6'):
+   devcfg_mdm = [env.RealPath(SRCPATH + "/config/IPCRtrDevCfg_mdm.xml")]
+   devcfg_msm = [env.RealPath(SRCPATH + "/config/IPCRtrDevCfg_msm.xml")]
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   if 'USES_MULTI_DEVCFG' in env:
+      devcfg_taglist = env.get('DEVCFG_XML_TAGS')
+      devcfg_xml_config_dict = {}
+      for xml_tag in devcfg_taglist:
+         if xml_tag.lower().find("platform") == -1:
+            if xml_tag.lower().find("9") == 0:
+               devcfg_xml_config_dict.setdefault(xml_tag, devcfg_mdm)
+            else:
+               devcfg_xml_config_dict.setdefault(xml_tag, devcfg_msm)
+      env.AddDevCfgInfo(DEVCFG_IMG, devcfg_xml_config_dict)
+   else:
+      if env['MSM_ID'].lower().find("9x") == 0:
+         env.AddDevCfgInfo(DEVCFG_IMG, {'devcfg_xml' : devcfg_mdm})
+      else:
+         env.AddDevCfgInfo(DEVCFG_IMG, {'devcfg_xml' : devcfg_msm})
+
+
+# If WCNSS, then use native rex (no unlock) and a lower
+# packet pool size
+if env.has_key('WCN_IMAGE'):
+   env.Append(CPPDEFINES=['IPC_ROUTER_PACKET_CNT=200'])
+   env.Append(CPPDEFINES=['FEATURE_IPC_ROUTER_NATIVE_REX'])
+
+#by default, enable Ipc router policy feature
+env['IPC_ROUTER_POLICY_SUPPORTED'] = 'yes'
+#mark no for specific targets
+if env['MSM_ID'] in ['9x06','9205']:
+   env['IPC_ROUTER_POLICY_SUPPORTED'] = 'no'
+
+# ThreadX based QuRT OS
+if env.has_key('CBSP_APPS_IMAGE') and env['MSM_ID'] in ['9x06','9205']:
+   env.Append(CPPDEFINES=['IPC_ROUTER_OS_QURT_THREADX'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+IPC_ROUTER_CORE_SOURCES = [
+   '${BUILDPATH}/ipc_router_core.c',
+   '${BUILDPATH}/ipc_router_protocol.c',
+   '${BUILDPATH}/ipc_router_database.c',
+   '${BUILDPATH}/ipc_router_packet.c',
+   '${BUILDPATH}/ipc_router_log.c',
+   '${BUILDPATH}/ipc_router_init.c',
+   '${BUILDPATH}/qsocket_ipcr.c'
+]
+
+# Compile the Rex abstraction only if used
+if os.path.isfile("../qsocket_rex.c"):
+   IPC_ROUTER_CORE_SOURCES += ['${BUILDPATH}/qsocket_rex.c']
+
+IPC_ROUTER_XAL_SIO_SOURCES = [
+   '${BUILDPATH}/ipc_router_xal_sio.c',
+]
+
+IPC_ROUTER_XAL_GLINK_SOURCES = [
+   '${BUILDPATH}/ipc_router_xal_glink_common.c'
+]
+
+if os.path.isfile("../ipc_router_xal_glink_qurt.c"):
+   IPC_ROUTER_XAL_GLINK_SOURCES += ["${BUILDPATH}/ipc_router_xal_glink_qurt.c"]
+
+IPC_ROUTER_POLICY_SOURCES = [
+  '${BUILDPATH}/ipc_router_policy.c'
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+MODEM_ONLY_IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'CORE_GSS']
+APPS_ONLY_IMAGES = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+WCN_ONLY_IMAGES = ['WCN_IMAGE']
+
+
+NON_WCN_IMAGES = MODEM_ONLY_IMAGES + APPS_ONLY_IMAGES
+ALL_IMAGES = MODEM_ONLY_IMAGES + APPS_ONLY_IMAGES + WCN_ONLY_IMAGES
+
+env.AddLibrary(ALL_IMAGES, '${BUILDPATH}/ipc_router_core', IPC_ROUTER_CORE_SOURCES)
+
+if os.path.isfile("../ipc_router_xal_sio.c"):
+  env.AddLibrary(NON_WCN_IMAGES, '${BUILDPATH}/ipc_router_xal_sio', IPC_ROUTER_XAL_SIO_SOURCES)
+
+if env['IPC_ROUTER_POLICY_SUPPORTED'] == 'yes':
+  env.AddLibrary(NON_WCN_IMAGES, '${BUILDPATH}/ipc_router_policy', IPC_ROUTER_POLICY_SOURCES)
+  env.Append(CPPDEFINES=['FEATURE_IPC_ROUTER_POLICY'])
+
+if os.path.isfile("../ipc_router_xal_glink_common.c") and not (env['MSM_ID'] in ['9x45']) :
+   env.AddLibrary(APPS_ONLY_IMAGES, '${BUILDPATH}/ipc_router_xal_glink', IPC_ROUTER_XAL_GLINK_SOURCES)
+   env.Append(CPPDEFINES=['IPC_ROUTER_XAL_GLINK'])
+
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'CORE_GSS', 'WCN_IMAGE', 'CBSP_APPS_IMAGE', 'APPS_IMAGE']
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_IPC_ROUTER_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',                   # required
+     'init_name'                  : 'ipc_router',                       # required
+     'init_function'              : 'ipc_router_init',                  # required
+     'dependencies'               : ['sio','smem_log','glink']
+    })
+   if 'USES_IPC_ROUTER_MHI' in env:
+      env.AddRCInitFunc(           # Code Fragment in TMC: NO
+       RCINIT_IMG,                 # define TMC_RCINIT_INIT_IPC_ROUTER_INIT
+       {
+        'sequence_group'             : 'RCINIT_GROUP_4',                   # required
+        'init_name'                  : 'ipc_router_mhi',                   # required
+        'init_function'              : 'ipc_router_mhi_start',             # required
+        'dependencies'               : []
+       })
+
+

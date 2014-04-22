@@ -1,0 +1,34 @@
+#----------------------------------------------------------------------------
+# Copyright (c) 2014 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+# FILE:            core/debugtrace/cti/hal/build/ctihal.scons
+#
+# DESCRIPTION:     SCons for CTI HAL Interface.
+#
+#
+# EDIT HISTORY FOR MODULE
+# ---------------------------------------------------------------------------
+#
+# when         who         what, where, why
+# ----------   -------     -----------------
+# 2014-01-24   rpoddar     Initial revision.
+#
+#----------------------------------------------------------------------------
+
+Import('env')
+
+#----------------------------------------------------------------------------
+# Source PATH
+#----------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(['HAL','DAL','SERVICES','SYSTEMDRIVERS'])
+
+#----------------------------------------------------------------------------
+# Sources, libraries
+#----------------------------------------------------------------------------
+
+CTI_HAL_SRC = ['${BUILDPATH}/halqdss_cti.c']
+
+env.AddLibrary(['APPS_PROC'], '${BUILDPATH}/cti_hal', CTI_HAL_SRC)

@@ -1,0 +1,171 @@
+#===============================================================================
+#
+# Target-Level Build Script for ThreadX DAM modules
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/build.tn/4.0/bsp/core_txm_libs_llvm_app_img/build/core_txm_libs_llvm_app_img.scons#4 $
+#  $DateTime: 2020/03/17 05:03:32 $
+#  $Change: 22994479 $
+#===============================================================================
+import sys
+import os
+Import('env')
+
+env = env.Clone()
+
+
+
+#define TXM module bin creation builder from mbn
+bin_bld = Builder(action = '${BINTOOL} --bincombined $SOURCE --output $TARGET')
+env.Append(BUILDERS = {'BinBuilder' : bin_bld})
+
+#------------------------------------------------------------------------------
+# Image_cfg.xml setup
+#------------------------------------------------------------------------------
+#env.Replace(IMAGE_CONFIG_XML = env.subst("${BUILD_ROOT}/build/ms/image_cfg_apps.xml"))
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = ['llvm_dam']
+
+build_tags = ['TXM_MODULES_LLVM','llvm_dam']
+
+# init environment variables
+env.InitImageVars(
+   alias_list=aliases,           # aliases
+   proc='cortex-a7',             # proc
+   config='apps',                # config type, proc_name
+   plat='tx',
+   build_tags = build_tags,
+   tools = ['${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py' , '${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py']
+   )
+
+if not env.CheckAlias():
+   Return()
+
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+#env.Replace(USES_DEVCFG = True)
+#env.Replace(USES_DEVCFG_IMG_ONLY = True)
+env.Append(CPPDEFINES = ["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+
+env.Append(CCFLAGS = " -mno-unaligned-access ")
+env.Append(CCFLAGS = " -marm ")
+env.Append(ASMFLAGS = " -marm ")
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+
+#Here is where we change the COMPILER
+env.LoadToolScript('llvm_dam', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+#To be removed
+env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+
+
+#---------------------------------------------------------------------------
+# Libs/Objs
+#--------------------------------------------------------------
+image_libs = []
+
+image_objs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+# load Build Test libs/objs build rules.
+au_items = env.LoadAreaSoftwareUnits('build')
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+
+# HEADERS FOR IDLE FILES COMPILATION
+au_items = env.LoadAreaSoftwareUnits('api' , [ "common", "time","nas"])
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+#lOAD TXM_MODULE PATH:
+modules_path = env.RealPath('${BUILD_ROOT}/core/kernel/rtos/threadx/txm_module_lib')
+if env.PathExists(modules_path): 
+   au_items = env.LoadAreaSoftwareUnits('core' , ["kernel/rtos/threadx/txm_module_lib"])
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+else:
+    "txm_module_lib doesn't exist"
+#import pdb;pdb.set_trace() 
+
+#load MPROC DRIVER PATH.
+modules_path = env.RealPath('${BUILD_ROOT}/core/mproc/qmi/qapi_qcci')
+if env.PathExists(modules_path): 
+    au_items = env.LoadAreaSoftwareUnits('core' , ["mproc/qmi"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+#else:
+#    "doesn't exist"
+
+#load TIMER DRIVER PATH.
+modules_path = env.RealPath('${BUILD_ROOT}/core/services/time_qapi/src')
+if env.PathExists(modules_path): 
+    au_items = env.LoadAreaSoftwareUnits('core' , ["services/time_qapi"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+#else:
+#    "doesn't exist"
+
+if env.PathExists(modules_path): 
+    au_items = env.LoadAreaSoftwareUnits('core' , ["buses/uart"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+	
+#load Diag DRIVER PATH.
+modules_path = env.RealPath('${BUILD_ROOT}/core/services/diag/LSM/qapi/src')
+if env.PathExists(modules_path): 
+    au_items = env.LoadAreaSoftwareUnits('core' , ["services/diag"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+#else:
+#    "doesn't exist"
+
+# QTEE Invoke Proxy
+modules_path = env.RealPath('${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy')
+if env.PathExists(modules_path):
+    au_items = env.LoadAreaSoftwareUnits('core', ["securemsm/qtee_invoke/proxy"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+
+# QCBOR/UsefulBuf lib
+modules_path = env.RealPath('${BUILD_ROOT}/core/securemsm/QCBOR')
+if env.PathExists(modules_path):
+    au_items = env.LoadAreaSoftwareUnits('core', ["securemsm/QCBOR"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+
+# QWES library
+modules_path = env.RealPath('${BUILD_ROOT}/core/securemsm/qwes')
+if env.PathExists(modules_path):
+    au_items = env.LoadAreaSoftwareUnits('core', ["securemsm/qwes"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+
+env.BindAliasesToTargets(image_libs)
+
+

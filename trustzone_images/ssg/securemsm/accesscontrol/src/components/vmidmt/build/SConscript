@@ -1,0 +1,31 @@
+#===============================================================================
+#
+# AC Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2014-2017, 2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#===============================================================================
+import os
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMGS = ['CTZL64_IMAGE', 'TZOS_IMAGE', 'CTZL_IMAGE']
+  env.AddRCInitFunc(
+    RCINIT_IMGS,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_2',
+      'init_name'                  : 'vmidmt_config',
+      'init_function'              : 'tzbsp_vmidmt_config',
+      'dependencies'               : ['clock_init','saw','vpp','cprh','heap','heap','secboot_misc'],
+      'policy_optin'               : ['default']
+    })
+

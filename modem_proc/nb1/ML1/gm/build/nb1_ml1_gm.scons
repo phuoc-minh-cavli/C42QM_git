@@ -1,0 +1,141 @@
+#===============================================================================
+#
+# NB1 ML1 GM Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/ML1/gm/build/nb1_ml1_gm.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+env.Replace(HEXAGONCC_OPT = "${HEXAGON_OPT_2}")
+
+from glob import glob
+from os.path import join, basename
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_LTE_ML1",
+])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+	'MPROC',
+	'KERNEL',                             # needs to be last
+    ], area='core')
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi([
+    'ONEX',
+    'GPS',
+    'HDR',
+    'MCS',
+    'MMODE',
+    'RFA',
+    'UIM',
+    'UTILS',
+    ])
+
+# Need get access to Modem Restricted headers
+env.RequireRestrictedApi([
+    'MMODE',
+    'NAS',
+    'RFA',
+    'MDSP',
+    'MDSPSVC',
+    'GERAN',
+    'GPS',
+    'ONEX',
+    'HDR',
+    'MCS',
+    'NB1',
+    'FW',
+    'UTILS',
+    ])
+
+# Need to get access to NB1 protected headers
+env.RequireProtectedApi([
+    'NB1',
+    ])
+
+
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('GM', '${INC_ROOT}/modem/nb1/ML1/gm/src')
+
+# Construct the list of source files by looking for *.c
+NB1_ML1_GM_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                   for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+import re
+for stmname in glob(join(env.subst(SRCPATH), '*.stm')):
+    match = re.search('([^\\\/]*)\.stm', stmname)
+    match.group(1)
+    env.STM2('${BUILDPATH}/__' + match.group(1) + '_int.c',
+             '${BUILDPATH}/' + match.group(1) + '.stm')
+    NB1_ML1_GM_SOURCES.append('${BUILDPATH}/__' + match.group(1) + '_int.c')
+env.Append(CPPPATH = '${BUILDPATH}')
+env.Append(CPPPATH = '${NB1_ROOT}/ML1/gm/build/${BUILDPATH}')
+
+if 'USES_FEATURE_DYNAMIC_LOADING_LTE' not in env:
+    #existing to compile module as static library with env.AddBinaryLibrary()
+    if 'USES_ALLOW_REGENERATE_LIBS' in env:
+		# Compile the NB1 ML1 GM source and create a library (ship source)
+		env.AddLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_ml1_gm', NB1_ML1_GM_SOURCES)
+    else:
+		# Compile the NB1 ML1 GM source and convert to a binary library
+		env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_ml1_gm', NB1_ML1_GM_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+else:
+    if 'USES_FEATURE_EXTERNAL_PAGING' in env:
+		env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_ml1_gm_dmm', NB1_ML1_GM_SOURCES)
+    else:
+		env.Append(CFLAGS='-DDYNAMIC_LINKING_ENABLED')
+		env.AddSharedLibrary(['MODEM_MODEM'], '${BUILDPATH}/nb1_ml1_gm', NB1_ML1_GM_SOURCES)
+
+#-------------------------------------------------------------------------------
+# avoid run-time errors when trying to send MSGR messages
+#-------------------------------------------------------------------------------
+
+if 'USES_MSGR' in env:
+	env.AddUMID('${BUILDPATH}/nb1_ml1_gm.umid', ['../inc/nb1_ml1_gm_msg.h'])
+
+#-------------------------------------------------------------------------------
+# Look for test build files
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

@@ -1,0 +1,104 @@
+#===============================================================================
+#
+# Location GtpWifi Module
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/location.tx/3.0/wifipositioning/positioningEngine/build/SConscript#2 $
+#  $DateTime: 2020/11/17 21:50:45 $
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+if 'USES_FEATURE_TEST_DECODE' in env:
+  env.Append(CPPDEFINES = ["FEATURE_TEST_DECODE"])
+#-------------------------------------------------------------------------------
+# CORE BSP APIs
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DLFWK',
+   'RTLD',
+   'QAPI',
+   'COAP_QAPI',
+   'KERNEL',
+]
+env.RequirePublicApi(CBSP_API, area='core')
+#env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi('QCA4004_DRIVER_API', area='qca4004_driver')
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+DS_API = [
+    'QAPI',
+    'SHARKSSL',
+    'DSS_NET'
+]
+env.RequirePublicApi(DS_API, area='dataservices')
+env.RequirePublicApi('LOCATION_API')
+env.RequirePublicApi('LIBEL_POSITIONING')
+
+#env.RequirePublicApi('DATASERVICES_NET_IPSTACK', area='dataservices')
+env.RequirePublicApi([
+        'SHARKSSL',
+        ])
+
+
+#-------------------------------------------------------------------------------
+# LIBRARIES
+#-------------------------------------------------------------------------------
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/flp/inc',
+   '${INC_ROOT}/location/geofence/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/pcid/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/location/server_protocol_uri_v4/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/xtra/inc',
+   '${INC_ROOT}/location/locationwifiinterface/inc',
+   '${INC_ROOT}/location/wifipositioning/positioningEngine/inc',
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/libel',
+   '${INC_ROOT}/location/wifipositioning/embedded-lib/.submodules/tiny-AES128-C',
+   '${INC_ROOT}/kingfisherhost/api/inc',
+   '${INC_ROOT}/kingfisherhost/core/inc'
+]
+env.PublishPrivateApi('LOC_WIFI_POSITIONING', INC_DIRS)
+
+#-------------------------------------------------------------------------------
+# SOURCES
+#-------------------------------------------------------------------------------
+SRCPATH = '${BUILD_ROOT}/location/wifipositioning/positioningEngine/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Source files
+LOC_WIFI_POSITIONING_SOURCES = [
+	'${BUILDPATH}/WifiPositioningEngine.cpp',
+	'${BUILDPATH}/WifiPositioningIzatAdapter.cpp',
+	'${BUILDPATH}/WifiPositioningTimer.cpp',
+]
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILDPATH}/wifipositioning/positioningEngine'), LOC_WIFI_POSITIONING_SOURCES)

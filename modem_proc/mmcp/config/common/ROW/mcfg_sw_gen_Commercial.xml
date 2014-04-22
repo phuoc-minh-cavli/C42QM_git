@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="mmcp.0.0" type="1"/>
+	<NvEfsItemData name="lte_disable_duration" id="65778" description="Duration to disable LTE when CS services are not available" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/lte_disable_duration">
+		<Member name="lte_disable_duration" description="Duration to disable LTE when CS services are not available" comment="" sizeOf="1" type="uint32">0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="sms_mandatory" id="66473" description="SMS mandatory for device" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/sms_mandatory">
+		<Member name="sms_mandatory" description="SMS mandatory for device" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="lte_nas_ignore_mt_csfb_during_volte_call" id="73544" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/lte_nas_ignore_mt_csfb_during_volte_call">
+		<Member name="lte_nas_ignore_mt_csfb_during_volte_call" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+	<NvItemData name="Network Selection Mode Preference" id="849" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x39" mcfgVariant="1">
+		<Member name="nam" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="net_sel_mode" description="" comment="" sizeOf="1" type="uint16">0 </Member>
+	</NvItemData>
+	<NvItemData name="UMTS SMS Bearer Preference" id="909" description="" comment="" category="Display" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="sms_gw_bearer_pref" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvItemData>
+	<NvItemData name="UMTS Cell Broadcast SMS Carrier Configuration" id="1016" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="sms_gw_cb_config" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="UMTS Cell Broadcast SMS User Preference" id="1017" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="sms_gw_cb_user_pref" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvItemData>
+	<NvItemData name="MS SMS Max Number Of SMS" id="3006" description="Maximum number of SMS allowed on device." comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="ms_sms_max_number_of_sms" description="" comment="" sizeOf="1" type="uint16">23 </Member>
+	</NvItemData>
+	<NvItemData name="SMS MO Retry Period" id="3532" description="MO SMS retry period in seconds" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="sms_mo_retry_period" description="MO SMS retry period in seconds" comment="" sizeOf="1" type="int8">180 </Member>
+	</NvItemData>
+	<NvItemData name="SMS MO Retry Interval" id="3533" description="SMS MO retry interval in seconds" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="sms_mo_retry_interval" description="SMS MO retry interval in seconds" comment="" sizeOf="1" type="uint8">45 </Member>
+	</NvItemData>
+	<NvItemData name="NAS Release Compliance" id="4722" description="Indicates the current Specs release supported by NAS." comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="nas_release_compliance" description="" comment="" sizeOf="1" type="uint8">4 </Member>
+	</NvItemData>
+	<NvItemData name="Analog Mode Preference" id="10" description="" comment="" category="System" mcfgAttributes="0x29" mcfgVariant="1">
+		<Member name="nam" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="mode" description="" comment="" sizeOf="1" type="uint16">34 </Member>
+	</NvItemData>
+	<NvItemData name="CS TO VOIP Fallback Timer" id="6830" description="Time after which a 911 call attempt should fallback from CS to voip" comment="" category="VOIP" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="cs_to_voip_fallback_timer" description="Time after which a 911 call attempt should fallback from CS to voip" comment="" sizeOf="1" type="uint8">10 </Member>
+	</NvItemData>
+	<NvItemData name="VOIP Cancel Retry Timer" id="6831" description="Timer started after 911 call attempted over voip is cancelled by user" comment="" category="VOIP" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="voip_cancel_retry_timer" description="Timer started after 911 call attempted over voip is cancelled by user" comment="" sizeOf="1" type="uint8">10 </Member>
+	</NvItemData>
+	<NvEfsFile name="rat_acq_order" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/sd/rat_acq_order" buildPath="modem_proc/mmcp/config/EFS_files/att/Rat_acq_order"/>
+<NvEfsItemData name="mmgsdi_refresh_vote_ok" id="73509" description="Vote TRUE for refresh if NV is set, Default value = FALSE" comment="" category="SMS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/sms/mmgsdi_refresh_vote_ok">
+		<Member name="mmgsdi_refresh_vote_ok" description="Vote TRUE for refresh if NV is set, Default value = FALSE" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="sms_only" id="65776" description="SMS only registration" comment="" category="MMode" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/mmode/sms_only">
+		<Member name="sms_only" description="SMS only registration" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="nas_edrx_config" id="73871" description="eDRX configuration" comment="" category="NAS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/nas_edrx_config">
+		<Member name="Version" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="edrx_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_ptw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_cycle_length" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_ptw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_cycle_length" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_ptw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_cycle_length" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_ptw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_cycle_length" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_ptw" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="edrx_cycle_length" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Reserved" description="" comment="" sizeOf="15" type="uint8"> </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="nas_psm_timer_info" id="73867" description="" comment="" category="NAS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/nas_psm_timer_info">
+		<Member name="active_timer" description="" comment="" sizeOf="1" type="uint32">6 </Member>
+		<Member name="periodic_update_timer" description="" comment="" sizeOf="1" type="uint32">86400 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="nas_ciot_capability_config" id="73916" description="nv for configuration of CIoT capability" comment="" category="NAS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/nas/nas_ciot_capability_config">
+		<Member name="nas_ciot_capability_config" description="" comment="" sizeOf="1" type="uint16">1335 </Member>
+	</NvEfsItemData>
+	</NvData>

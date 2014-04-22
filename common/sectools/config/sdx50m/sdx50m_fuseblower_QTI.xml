@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower.xsd">
+
+    <metadata>
+        <chipset>sdx50m</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <module id="SECURITY_CONTROL_CORE">
+        <base_address>0x000a0000</base_address>
+        <fuse_region id="QFPROM_RAW_RD_WR_PERM">
+            <description>ROW 38, 39, 40, 41</description>
+            <fuse ignore="false">
+                <address>0x000a0130</address>
+                <operation>BLOW</operation>
+                <field id="SEC_KEY_DERIVATION_KEY_RD_PERM">
+                    <description>Blow this bit after the SKDK has been provisioned to secure the secondary key from being read back. A secure path hardware exists from SKDK to the crypto engine.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>10</bits>
+                </field>
+                <field id="WR_PERM">
+                    <description>Disable further QFPROM changes to the this region. Blow this bit only if no further changes to Rd/Wr Permissions are needed.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>34</bits>
+                </field>
+                <field id="OEM_CONFIG_WR_PERM">
+                    <description>Disables further QFPROM changes to the this region. Blow this bit after the region has been provisioned</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>38</bits>
+                </field>
+                <field id="SEC_KEY_DERIVATION_KEY_WR_PERM">
+                    <description>Disables further QFPROM changes to the this region. Blow this bit after the region has been provisioned</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>42</bits>
+                </field>
+                <field id="OEM_SEC_BOOT_WR_PERM">
+                    <description>Disables further QFPROM changes to the this region. Blow this bit after the region has been completely provisioned.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>43</bits>
+                </field>
+                <field id="PK_HASH_WR_PERM">
+                    <description>Disables further QFPROM changes to the this region. Blow this bit after the region has been provisioned.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>45</bits>
+                </field>
+                <field id="FEC_EN_WR_PERM">
+                    <description>Disables further QFPROM changes to the this region. Blow this bit after the region has been completely provisioned.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>50</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_CONFIG">
+            <fuse ignore="false" n="0">
+                <address>0x000a0150</address>
+                <operation>BLOW</operation>
+                <field id="E_DLOAD_DISABLE">
+                    <description>
+                        OEM Optional.
+                        Disables emergency download via removable SD and/or USB downloader in Apps
+                        PBL error handler.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>0</bits>
+                </field>
+                <field id="ENUM_TIMEOUT">
+                    <description>
+                        OEM optional.
+                        BOOT ROM must support USB enumeration timeout. Timeout applies to both enumeration for
+                        FLCB (fast low current boot) and USB download mode. If USB is not enumerated within time
+                        (90 seconds); quit USB enumeration If USB suspend or disconnected after enumeration;
+                        start timer again.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>1</bits>
+                </field>
+                <field id="RPMB_KEY_PROVISIONED">
+                    <description>Indicates that the RPMB Key has been already provisioned.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>2</bits>
+                </field>
+                <field id="FORCE_DLOAD_DISABLE">
+                    <description>
+                        OEM optional.
+                        If FORCE_DLOAD_DISABLE is '0'; device goes to download mode if an error occurs very early
+                        in XBL1. If FORCE_DLOAD_DISABLE is set to '1'; device goes into cold boot if an error
+                        occurs very early in XBL1. If this fuse is set to '1', FORCE_USB_BOOT GPIO state is not
+                        read during boot.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>3</bits>
+                </field>
+                <field id="FAST_BOOT[2:0]">
+                    <description>
+                        These fuses are used by boot code to specify which device has priority to be booted from.
+                        Mapping is as follows:
+                        0x1:PCIe
+                        0x2:USB
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>7:5</bits>
+                </field>
+                <field id="SPDM_SECURE_MODE">
+                    <description>This bit disables the SPDM from monitoring bus traffic.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>11</bits>
+                </field>
+                <field id="PBL_LOG_DISABLE">
+                    <description>Used for controlling logging mechanism in PBL. '1' To limit the information collected in PBL logs.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>22</bits>
+                </field>
+                <field id="DEBUG_POLICY_DISABLE">
+                    <description>Debug Policy is bypassed when this bit is 1. Debug Policy provides a means to re-enable debug capabilities under OEM-specified selectable conditions.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>30</bits>
+                </field>
+                <field id="DEBUG_DISABLE_IN_ROM">
+                    <description>This fuse is used to disable X509 OU Field Parsing. For now only disabling of Crash dump OU Field is done.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>31</bits>
+                </field>
+                <field id="ALL_DEBUG_DISABLE">
+                    <description>This fuse permanently disables all debug of the chip. It is not recommended to blow this bit. No RMAs are possible after this fuse is blown.</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>32</bits>
+                </field>
+                <field id="MSS_DBGEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the MSS global invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>33</bits>
+                </field>
+                <field id="MSS_NIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the MSS global non-invasive (trace and performance monitoring) debug capabilities. Can be overriden with OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>34</bits>
+                </field>
+                <field id="WCSS_DBGEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the WCSS global invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>35</bits>
+                </field>
+                <field id="RPM_DBGEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the RPM global invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>36</bits>
+                </field>
+                <field id="RPM_WCSS_NIDEN_DISABLE">
+                    <description>Used in internal logic that generates RPM and WCSS NIDENs.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>37</bits>
+                </field>
+                <field id="RPM_DAPEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the RPM DAPEN capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>38</bits>
+                </field>
+                <field id="VENUS_0_DBGEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the VENUS global invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>39</bits>
+                </field>
+                <field id="APPS_SPIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the APPS Secure privileged invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>44</bits>
+                </field>
+                <field id="APPS_SPNIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the APPS Secure privileged non-invasive (trace and performance monitoring) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>45</bits>
+                </field>
+                <field id="DAP_DBGEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the DAP global invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>46</bits>
+                </field>
+                <field id="DAP_NIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the DAP global non-invasive (trace and performance monitoring) debug capabilities. Can be overriden with OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>47</bits>
+                </field>
+                <field id="DAP_SPIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the DAP Secure privileged invasive (JTAG and monitor mode) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>48</bits>
+                </field>
+                <field id="DAP_SPNIDEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the DAP Secure privileged non-invasive (trace and performance monitoring) debug capabilities. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>49</bits>
+                </field>
+                <field id="DAP_DEVICEEN_DISABLE">
+                    <description>Blow this bit for secure solution. Disables the DAP Device Enable. Can be overridden by OVERRIDE registers.</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>50</bits>
+                </field>
+                <field id="ANTI_ROLLBACK_FEATURE_EN[3:0]">
+                    <description>
+                        Bit 0 - BOOT_ANTI_ROLLBACK_EN
+                        Bit 1 - TZAPPS_ANTI_ROLLBACK_EN
+                        Bit 2 - PILSUBSYS_ANTI_ROLLBACK_EN
+                        Bit 3 - MSA_ANTI_ROLLBACK_EN
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0xf</value>
+                    <bits>54:51</bits>
+                </field>
+                <field id="SNOC2MSS_DISABLE">
+                    <description>SNOC2MSS_DISABLE</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>55</bits>
+                </field>
+                <field id="FUSE_DEBUG_BUS_DISABLE">
+                    <description>Debug test bus disable</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>60</bits>
+                </field>
+                <field id="FUSE_DCC_DISABLE">
+                    <description>DCC feature disable</description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>61</bits>
+                </field>
+                <field id="DISABLE_HW_ECC">
+                    <description>Disable ECC in HW</description>
+                    <owner>QTI</owner>
+                    <value>0x0</value>
+                    <bits>62</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x000a0158</address>
+                <operation>BLOW</operation>
+                <field id="PERIPH_PID">
+                    <description>PCIe/USB product ID</description>
+                    <owner>QTI</owner>
+                    <value>0x0000</value>
+                    <bits>47:32</bits>
+                </field>
+                <field id="PERIPH_VID">
+                    <description>PCIe/USB vendor ID</description>
+                    <owner>QTI</owner>
+                    <value>0x0000</value>
+                    <bits>63:48</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_SEC_BOOT">
+            <description>ROW 60</description>
+            <fuse ignore="false" n="0">
+                <address>0x000a01e0</address>
+                <operation>BLOW</operation>
+                <field id="OEM_SECURE_BOOT1_AUTH_EN">
+                    <description>
+                        Blow this bit to enable secure boot for apps and other peripheral images.
+                        When this bit is '1'; enables authentication for any code that references
+                        secure boot configuration 1.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>5</bits>
+                </field>
+                <field id="OEM_SECURE_BOOT2_AUTH_EN">
+                    <description>
+                        Blow this bit to enable secure boot for apps and other peripheral images.
+                        When this bit is '1'; enables authentication for any code that references
+                        secure boot configuration 2.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>13</bits>
+                </field>
+                <field id="OEM_SECURE_BOOT3_AUTH_EN">
+                    <description>
+                        Blow this bit to enable secure boot for apps and other peripheral images.
+                        When this bit is '1'; enables authentication for any code that references
+                        secure boot configuration 3.
+                    </description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>21</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+    </module>
+</tns:fuseblower>

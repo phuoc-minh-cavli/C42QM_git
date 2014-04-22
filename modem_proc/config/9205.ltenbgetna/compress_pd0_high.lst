@@ -1,0 +1,32 @@
+/*List of files to compress for CLADE High Priority */
+
+/* TEXT */
+
+*modem_proc/apr*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/storage*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/services*:( EXCLUDE_FILE(msg_api.o) .text EXCLUDE_FILE(msg_api.o) .text.* .gnu.linkonce.t.* )
+*modem_proc/core/wiredconnectivity*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/debugtools*:( EXCLUDE_FILE(dog.o rcinit_init_root.o) .text EXCLUDE_FILE(dog.o rcinit_init_root.o) .text.* .gnu.linkonce.t.* )
+*modem_proc/core/debugtrace*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/apttests*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/securemsm*:(  EXCLUDE_FILE(cu_target.o  PrngML.o) .text EXCLUDE_FILE(cu_target.o PrngML.o) .text.* .gnu.linkonce.t.* )
+*modem_proc/core/systemdrivers*:( EXCLUDE_FILE(pm_init.o) .text EXCLUDE_FILE(pm_init.o) .text.* EXCLUDE_FILE(pm_init.o) .gnu.linkonce.t.* )
+*modem_proc/core/memory*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/mproc*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/fw*:(EXCLUDE_FILE(fw_vpev6_boot.o fw_sdm_mem.o) .text EXCLUDE_FILE(fw_vpev6_boot.o fw_sdm_mem.o) .text.* .gnu.linkonce.t.*)
+*modem_proc/core/buses*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/dal*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/power*:( EXCLUDE_FILE(spm.o) .text EXCLUDE_FILE(spm.o) .text.* EXCLUDE_FILE(spm.o) .gnu.linkonce.t.* )
+*modem_proc/rf*( EXCLUDE_FILE(rflm_ccs_rfc_hal_mdm.o rfcommon_debug.o rflm_qlnk.o rflm_dtr_reg_log.o rfc_gsm.o) .text EXCLUDE_FILE(rflm_ccs_rfc_hal_mdm.o rfcommon_debug.o rflm_qlnk.o rflm_dtr_reg_log.o rfc_gsm.o) .text.* .gnu.linkonce.t.* )
+*modem_proc/rf*:( EXCLUDE_FILE(rflm_ccs_rfc_hal_mdm.o rfcommon_debug.o rflm_qlnk.o rflm_dtr_reg_log.o rfc_gsm.o) .text EXCLUDE_FILE(rflm_ccs_rfc_hal_mdm.o rfcommon_debug.o rflm_qlnk.o rflm_dtr_reg_log.o rfc_gsm.o) .text.* .gnu.linkonce.t.* )
+*modem_proc/dataiot*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/dataimsiot*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/utils*:(  .text  .text.* .gnu.linkonce.t.* )
+/* *modem_proc/perf*:(  .text  .text.* .gnu.linkonce.t.* )  */
+*modem_proc/avs*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/cta*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/mcfg*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/mcs*:(  .text  .text.* .gnu.linkonce.t.* )
+
+/*Do not remove alignment, Linker can only handle cache line aligned inputs for compression*/
+. = ALIGN(64);

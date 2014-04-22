@@ -1,0 +1,363 @@
+// Title: std_loadsim_apps
+
+// License: License
+// Copyright 2010 Qualcomm Technologies Inc
+
+//	Description: General Description
+//	This script will load Q6 RAM dump binaries into the simulator
+//
+//	Supports loading of JTAG / USB RAM Dumps
+
+//	Input: Inputs
+//	None
+
+//	Output: Outputs
+//	None
+
+//	Usage: Usage
+//  do std_loadsim_modem
+
+//  Team: Functional Area
+//  CoreBSP Products 9x15
+
+//	Target: Target
+//	MDM9205
+
+//	Author: Author
+//  $Author: pwbldsvc $
+
+//	Location: Perforce Revision
+//  $Header: //components/rel/core.glue/1.3/tools/cmm/apps/mdm9205/std_loadsim_apps.cmm#2 $
+
+//	Edits: Edits
+//
+//	Updated for MDM9205 on 11/14/2016
+//	Created for MSM8960 on 05/15/2010
+// ------------------------------------------------------------------------------------------
+
+// Path to the memory binary and path to the build
+ENTRY &BASENAME &APPS_BUILD
+ 
+// Path to save the RAM dumps
+LOCAL &RAMDUMPDIR 
+LOCAL &mmu_data2
+LOCAL &APSS_FLAVOR
+LOCAL &mmufile
+LOCAL &TTBR0
+ 
+// Placeholder for any filename to be created
+LOCAL &FILENAME &FILENAME1 &FILENAME2 &FILENAME3
+LOCAL &FINALELF
+ 
+// Flag for USB Logs - True if logs are usb logs, false if jtag logs
+LOCAL &USB_RAMDUMPS
+
+LOCAL &t32_tempdir
+
+
+
+MAIN:
+	
+	do std_toolsconfig mdm9205 mpss
+	do std_constants.cmm
+
+	IF ("&BASENAME"=="")
+	(
+		PRINT "Select one of the RAM Dumps:"
+		DIALOG.FILE *.bin
+		ENTRY &FILENAME
+		&RAMDUMPDIR=OS.FILE.PATH(&FILENAME)
+		PRINT "RAM Dump Directory : &RAMDUMPDIR"
+	)
+	ELSE
+	(
+		// User entered the path. 
+		// Remove the trailing slash if user entered path with slash
+		//do std_utils.cmm REMOVESLASH EXIT &BASENAME
+		&RAMDUMPDIR="&BASENAME"
+	)
+	
+	// Check if user entered the path to the build
+	// in the command line.
+	IF ("&APPS_BUILD"=="")
+	(
+		PRINT "Enter the location of the Apps build: "
+		DIALOG.DIR C:/*
+		ENTRY &APPS_BUILD
+	)
+
+LOAD_BUILDCONFIG:
+	IF OS.FILE(&APPS_BUILD/apps_proc/core/products/std_buildconfig.cmm)
+	(
+		PRINT "Loading APPS Build Configuration: &APPS_BUILD/apps_proc/core/products/std_buildconfig.cmm"
+		DO &APPS_BUILD/apps_proc/core/products/std_buildconfig.cmm 
+	)
+	ELSE
+	(
+		//PRINT "APPS Build Configuration not found: &APPS_BUILD/core/products/std_buildconfig.cmm"
+	
+	       // GOTO EXIT
+	
+	)
+
+CHECK_FOR_RAMDUMPS:
+	&FILENAME="&RAMDUMPDIR/"+"&JTAG_SHARED_RAM_log"
+     &FILENAME2="&RAMDUMPDIR/"+"&USB_log"
+
+	IF OS.FILE("&FILENAME")
+	(
+		&USB_RAMDUMPS=0
+		GOTO SETUPSIM
+	)
+	ELSE IF OS.FILE("&FILENAME2")
+	(
+		&USB_RAMDUMPS=1
+		GOTO SETUPSIM
+	)
+	ELSE
+	(
+		PRINT "Dumps not found"
+		GOTO EXIT		
+	)
+
+	
+//	Set the simulator up for the target
+SETUPSIM:
+	//	Initialize the system for QDSP6V4 subsystem
+	
+	SYSTEM.RESET
+   	PRINT "Initializing Sparrow"
+    SYSTEM.CPU CortexA7
+    SYSTEM.UP
+
+ 
+	IF (&USB_RAMDUMPS==0)
+	(    
+	 GOSUB LOADSYMS
+  		GOSUB T32LOG
+         
+	     
+	)
+	ELSE
+	(     
+	        GOSUB LOADSYMS
+		GOSUB USBLOG
+		 
+	)
+
+// Load the logs collected using JTAG	
+T32LOG:
+	&FILENAME="&RAMDUMPDIR/"+"&JTAG_SHARED_RAM_log"
+	IF OS.FILE("&FILENAME")
+	(
+
+        
+		GOSUB LOADMEM &SHARED_RAM_DUMP_START_ADDR  &SHARED_RAM_DUMP_SIZE &JTAG_SHARED_RAM_log
+
+  		&FILENAME1="&RAMDUMPDIR/"+"&JTAG_TN_HLOS1_log"
+  		&FILENAME2="&RAMDUMPDIR/"+"&JTAG_LE_HLOS1_log"
+		&FILENAME3="&RAMDUMPDIR/"+"&JTAG_MN_HLOS1_log"
+	     	if OS.FILE("&FILENAME1")
+		(
+
+		GOSUB LOADMEM &TZ_DUMP_START_ADDR  &TZ_DUMP_SIZE &JTAG_TZ_log
+		GOSUB LOADMEM &EFS1_DUMP_START_ADDR  &EFS1_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS2_DUMP_START_ADDR  &EFS2_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS3_DUMP_START_ADDR  &EFS3_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &TN_HLOS1_DUMP_START_ADDR  &TN_HLOS1_DUMP_SIZE &JTAG_TN_HLOS1_log
+		GOSUB LOADMEM &TN_HLOS2_DUMP_START_ADDR  &TN_HLOS2_DUMP_SIZE &JTAG_TN_HLOS2_log
+		GOSUB LOADMEM &ACDB_DUMP_START_ADDR  &ACDB_DUMP_SIZE &JTAG_ACDB_log
+
+		)
+		else if OS.FILE("&FILENAME2")
+		(
+		
+		GOSUB LOADMEM &LE_HLOS1_DUMP_START_ADDR  &LE_HLOS1_DUMP_SIZE &JTAG_LE_HLOS1_log
+		GOSUB LOADMEM &LE_HLOS2_DUMP_START_ADDR  &LE_HLOS2_DUMP_SIZE &JTAG_LE_HLOS2_log
+
+		)
+		else if OS.FILE("&FILENAME3")
+		(
+		
+		GOSUB LOADMEM &TZ_DUMP_START_ADDR  &TZ_DUMP_SIZE &JTAG_TZ_log
+		GOSUB LOADMEM &EFS1_DUMP_START_ADDR  &EFS1_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS2_DUMP_START_ADDR  &EFS2_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &EFS3_DUMP_START_ADDR  &EFS3_DUMP_SIZE &JTAG_EFS1_log
+		GOSUB LOADMEM &MN_HLOS1_DUMP_START_ADDR  &MN_HLOS1_DUMP_SIZE &JTAG_MN_HLOS1_log
+
+		)
+ 
+ 
+
+
+		GOTO RESTOREMMU
+	)
+	ELSE
+	(
+		// Should never hit this section of code as we should have caught it earlier
+		PRINT %ERROR "WARNING: JTAG  RAM DUMP NOT FOUND"
+	)
+
+// Load the logs collected using USB
+USBLOG:
+	&FILENAME="&RAMDUMPDIR/"+"&USB_log"
+	&LOAD_FILE="&RAMDUMPDIR/"+"load.cmm"
+
+	IF OS.FILE(&LOAD_FILE)
+	(
+	     &prdir=os.pwd()
+	     cd.do &LOAD_FILE
+	     cd &prdir
+
+		GOTO RESTOREMMU
+	)
+	ELSE 	IF OS.FILE("&FILENAME")
+	(
+
+	   GOSUB LOADMEM &SMI_DUMP_START_ADDR &SMI_DUMP_SIZE &USB_log
+	   
+	   GOTO RESTOREMMU
+	)
+	ELSE
+	(
+		PRINT "No RAM Dumps found in &RAMDUMPDIR"
+		GOTO EXIT
+	)
+
+
+//	Load the symbols for LE only
+//  Need to work here to support TX
+
+LOADSYMS: 
+
+    DIALOG.FILE &APPSELFPATH/*.*
+    ENTRY &FINALELF
+
+    d.load.elf &FINALELF /nocode /noclear
+
+ 
+     RETURN
+      
+
+//	Restore MMU Settings
+	
+RESTOREMMU: 
+
+	IF OS.FILE("~~~~/../../../../../build/app/gen_buildflavor.cmm")
+	( 
+		DO ~~~~/../../../../../build/app/gen_buildflavor.cmm None
+	)
+	IF ("&HLOS_TYPE"=="TX")
+	(
+		data.load.elf &FINALELF /nocode
+		&TTBR0=address.offset(arm_mmu_pgtable)
+        PER.Set.simple C15:0x1 %Long 0x1
+        PER.Set.simple C15:0x2 %Long &TTBR0
+        TRANSlation.TableWalk ON
+        translation.on
+	    PRINT "MMU is configured successfully."
+
+		task.config ~~\demo\arm\kernel\threadx\threadx.t32
+		menu.reprogram ~~\demo\arm\kernel\threadx\threadx.men
+		//task.thread
+	)
+	ELSE IF ("&HLOS_TYPE"=="LE")
+	(
+		PER.S.F C15:0x2 %L 0x80004000
+		MMU.ON
+		MMU.SCAN
+		data.load.elf &FINALELF /nocode
+		task.config ~~\demo\arm\kernel\linux\linux-3.x\linux3.t32
+		menu.reprogram ~~\demo\arm\kernel\linux\linux-3.x\linux.men
+		task.dtask
+		v.v  %ASCII %STRING linux_banner
+ 	)
+	ELSE
+		PRINT "PLEASE LOAD THE BUILD WITH APPROPRIATE HLOS FLAVOR"
+ 	
+	
+//	Restore registers from the coredump structure or from file	
+RESTOREREGS:
+	&ERRORCODE2="RESTOREREGS"
+	VAR.NEW \THREAD_ID
+	VAR.NEW \QURT_THREAD_ID
+	
+	
+	IF (&USB_RAMDUMPS==1)
+	(
+		IF ("&HLOS_TYPE"=="TX")
+		(
+			VAR.SET \THREAD_ID=coredump.os.thread_id
+			IF (Y.EXIST(coredump)&&(OS.FILE("&APPS_BUILD/apps_proc/core/products/load_coredump.cmm")))
+			(
+				VAR.IF (\THREAD_ID>0)
+				(
+					// RESTORE REGISTERS FROM THE COREDUMP STRUCTURE
+					PRINT "RESTORING REGISTERS FROM COREDUMP: "
+					DO &APPS_BUILD/apps_proc/core/products/load_coredump.cmm
+					PRINT %CONTINUE "Complete"
+					V.F
+				)
+			)
+			VAR.SET \QURT_THREAD_ID=QURT_error_info.thread_id
+			IF (Y.EXIST(QURT_error_info)&&(OS.FILE("&APPS_BUILD/apps_proc/core/kernel/scripts/crash_reg_restore.cmm")))
+			(
+				VAR.IF (\QURT_THREAD_ID>0)
+				(
+					PRINT "DISPLAYING CRASH REGISTER RESTORE: "
+					DO &APPS_BUILD/apps_proc/core/kernel/scripts/crash_reg_restore.cmm
+					PRINT %CONTINUE "Complete"
+					V.F
+				)	
+			)
+		)
+	)
+	ELSE
+	(
+		// Restore the registers from the JTAG register file
+
+		&FILENAME="&RAMDUMPDIR/"+"&A7_root"+"_regs"+".cmm"
+      
+		IF OS.FILE("&FILENAME")
+		(
+			PRINT "RESTORING REGISTER STATE." 
+			DO &FILENAME
+		)
+		ELSE
+		(
+	        	PRINT %ERROR "WARNING: COULD NOT RESTORE REGISTER STATE. FILE &FILENAME MISSING."
+	        )
+	 )
+	
+      
+        cd &APPS_BUILD
+
+	
+
+	PRINT "Loading RAM Dump Binaries: Complete."
+	GOTO EXIT
+
+// Exit the program
+EXIT:
+	ENDDO
+	
+//	Function: LOADMEM
+//	Load a section of memory specified by start address and size
+//
+// Takes 3 arguments as inputs: Start Address, Size of memory space to load, Input Filename	
+
+LOADMEM:
+  ENTRY &1 &2 &3
+  LOCAL &START_ADDR
+  LOCAL &SIZE
+  LOCAL &LOG
+
+  
+  &START_ADDR="&1"
+  &SIZE="&2"
+  &LOG="&RAMDUMPDIR/"+"&3"
+
+  DATA.LOAD.BINARY &LOG &START_ADDR++&SIZE /LONG /noclear
+
+  PRINT %CONTINUE " &LOG LOADED."
+ RETURN

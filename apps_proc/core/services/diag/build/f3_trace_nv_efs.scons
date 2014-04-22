@@ -1,0 +1,83 @@
+#===============================================================================
+#
+# F3_TRACE_NV_EFS Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2014 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/apps/mdm/dev/markg.markg_9x15_apps_101211/apps_proc/core/debugtools/err/build/err.scons#1 $
+#  $DateTime: 2011/10/12 10:45:26 $
+#  $Author: coresvc $
+#  $Change: 1978284 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 10/09/14   rs      Updated scons api's. 
+# 03/22/13   rh      Transferred ownership from Error Services to Diag
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/services/diag/f3_trace/src"
+
+env.VariantDir('${BUILDPATH}/f3_trace/src', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'BREW',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Definitions
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = ["F3_TRACE_CONTROL_MASK_DEFAULT_VAL=0x01"])
+env.Append(CPPDEFINES = ["F3_TRACE_DETAIL_MASK_DEFAULT_VAL=0xFF"])
+env.Append(CPPDEFINES = ["F3_TRACE_MAX_FILES_DEFAULT_VAL=0x5"])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+F3_TRACE_NV_EFS_SOURCES =  [
+   '${BUILDPATH}/f3_trace/src/f3_trace_nv_efs.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+   
+env.AddLibrary([
+	'APPS_IMAGE', 'CBSP_APPS_IMAGE'],
+	'${BUILDPATH}/f3_trace_nv_efs',
+	F3_TRACE_NV_EFS_SOURCES)
+	
+
+

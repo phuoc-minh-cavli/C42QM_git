@@ -1,0 +1,37 @@
+#===============================================================================
+#
+# Core APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/bsp/config/scmm/main/latest/hwengines/build/paths.sconscript#6 $
+#  $DateTime: 2009/07/04 17:43:09 $
+#  $Author: wduembeg $
+#  $Change: 958523 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/07/13   unni     Bfamily - common code merge restructuring
+#
+#===============================================================================
+Import('env')
+
+env.PublishRestrictedApi('CSD_DEV', [
+   "${INC_ROOT}/multimedia/audio/csd/dev/common/inc",   
+   "${INC_ROOT}/multimedia/audio/csd/dev/family/inc",
+   "${INC_ROOT}/multimedia/audio/csd/dev/family/b-family/inc",
+   "${INC_ROOT}/multimedia/audio/csd/dev/target/inc",   
+   "${INC_ROOT}/multimedia/audio/csd/dev/target/mdm/inc"
+])   
+env.LoadAPIUnits()

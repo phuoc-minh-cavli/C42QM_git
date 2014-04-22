@@ -1,0 +1,154 @@
+Reconfig:value DL-DCCH-Message ::= 
+{
+  message c1 : rrcConnectionReconfiguration : 
+      {
+        rrc-TransactionIdentifier 1,
+        criticalExtensions c1 : rrcConnectionReconfiguration-r8 : 
+            {
+              nas-DedicatedInformationList 
+              {
+                '01'H,
+                '02'H,
+                '03'H
+              },
+              radioResourceConfiguration 
+              {
+                drb-ToAddModifyList 
+                {
+                  {
+                    eps-BearerIdentity 3,
+                    drb-Identity 3,
+                    rlc-Configuration am : 
+                      {
+                        ul-AM-RLC 
+                        {
+                          t-PollRetransmit ms5,
+                          pollPDU p4,
+                          pollByte kB250,
+                          maxRetxThreshold t1
+                        },
+                        dl-AM-RLC 
+                        {
+                          t-Reordering ms0,
+                          t-StatusProhibit ms0
+                        }
+                      },
+                    logicalChannelIdentity 10,
+                    logicalChannelConfig 
+                    {
+                      ul-SpecificParameters 
+                      {
+                        priority 1,
+                        prioritizedBitRate kBps16,
+                        bucketSizeDuration ms50,
+                        logicalChannelGroup 1
+                      }
+                    }
+                  },
+                  {
+                    eps-BearerIdentity 4,
+                    drb-Identity 4,
+                    pdcp-Configuration 
+                    {
+                      discardTimer ms50,
+                      rlc-UM 
+                      {
+                        pdcp-SN-Size len7bits
+                      },
+                      headerCompression rohc : 
+                        {
+                          maxCID 5,
+                          profiles 
+                          {
+                            profile0x0001 FALSE,
+                            profile0x0002 FALSE,
+                            profile0x0003 FALSE,
+                            profile0x0004 FALSE,
+                            profile0x0006 FALSE,
+                            profile0x0101 FALSE,
+                            profile0x0102 FALSE,
+                            profile0x0103 FALSE,
+                            profile0x0104 FALSE
+                          }
+                        }
+                    },
+                    rlc-Configuration um-Bi-Directional : 
+                      {
+                        ul-UM-RLC 
+                        {
+                          sn-FieldLength size10
+                        },
+                        dl-UM-RLC 
+                        {
+                          sn-FieldLength size10,
+                          t-Reordering ms20
+                        }
+                      },
+                    logicalChannelIdentity 8,
+                    logicalChannelConfig 
+                    {
+                      ul-SpecificParameters 
+                      {
+                        priority 3,
+                        prioritizedBitRate kBps16,
+                        bucketSizeDuration ms50,
+                        logicalChannelGroup 1
+                      }
+                    }
+                  },
+                  {
+                    eps-BearerIdentity 5,
+                    drb-Identity 5,
+                    pdcp-Configuration 
+                    {
+                      discardTimer ms50,
+                      rlc-UM 
+                      {
+                        pdcp-SN-Size len7bits
+                      },
+                      headerCompression rohc : 
+                        {
+                          maxCID 5,
+                          profiles 
+                          {
+                            profile0x0001 FALSE,
+                            profile0x0002 FALSE,
+                            profile0x0003 FALSE,
+                            profile0x0004 FALSE,
+                            profile0x0006 FALSE,
+                            profile0x0101 FALSE,
+                            profile0x0102 FALSE,
+                            profile0x0103 FALSE,
+                            profile0x0104 FALSE
+                          }
+                        }
+                    },
+                    rlc-Configuration um-Bi-Directional : 
+                      {
+                        ul-UM-RLC 
+                        {
+                          sn-FieldLength size5
+                        },
+                        dl-UM-RLC 
+                        {
+                          sn-FieldLength size5,
+                          t-Reordering ms10
+                        }
+                      },
+                    logicalChannelIdentity 6,
+                    logicalChannelConfig 
+                    {
+                      ul-SpecificParameters 
+                      {
+                        priority 5,
+                        prioritizedBitRate kBps8,
+                        bucketSizeDuration ms50,
+                        logicalChannelGroup 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+      }
+}

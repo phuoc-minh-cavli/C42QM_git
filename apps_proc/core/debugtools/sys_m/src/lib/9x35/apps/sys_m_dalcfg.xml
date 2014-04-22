@@ -1,0 +1,48 @@
+
+<!--
+GENERAL DESCRIPTION
+
+Copyright (c) 2013 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
+-->
+
+<!--
+EDIT HISTORY FOR MODULE
+$Header$
+-->
+
+#include "sys_m_pl_info_def.h"
+
+<!--
+Get values from go/platformid
+
+struct SYS_M_PL_INFO 
+{
+   uint32 platform;
+   uint32 version; 
+   uint32 subtype; 
+   uint32 fusion;
+
+   uint32 mdm2ap_status_gpio;
+   uint32 mdm2ap_err_fatal_gpio;
+   uint32 ap2mdm_status_gpio;
+   uint32 ap2mdm_err_fatal_gpio;
+};
+-->
+
+<driver name="NULL">
+   <device id="tms_sys_m">
+       <props name="pl_info_struct_arr" type="SYS_M_PL_INFO" array="True"> 
+	   {
+           <!-- must be first? -->
+           {0, 0, 0, 0, 0, 0, 0, 0 } ,
+           <!-- 9x35 CDP v1.0 subtype1 fusionw/8084-->
+           {0x01, 0x10000, 0x1, 0x1, 55, 57, 54, 56} ,
+           <!-- 9x35 MTP v1.0 subtype1 fusionw/8084--> 
+           {0x08, 0x10000, 0x1, 0x1, 55, 57, 54, 56} , 
+           <!-- 9x35 RCM v1.0 subtype1 fusionw/8084--> 
+           {0x21, 0x10000, 0x1, 0x1, 55, 57, 54, 56} , 
+           <!-- must be last -->
+           {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF} , 
+       } 
+       </props> </device> 
+</driver>

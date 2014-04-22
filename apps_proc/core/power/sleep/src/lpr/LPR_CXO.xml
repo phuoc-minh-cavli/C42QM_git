@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CXO Low Power Resource/Mode definitions
+
+  Copyright (c) 2012 Qualcomm Technologies Incorporated.
+  All Rights Reserved.
+  Qualcomm Confidential and Proprietary
+-->
+
+<!--
+  Note: Update enter/exit latencies once rpm portion is 
+        profiled. Right now the values are based on apps side
+        ulog profiling.
+-->
+
+<LPRDefinition>
+  <!-- The LPR defintion for CXO -->
+  <LPR Name="cxo" CoreMask="0xFFFFFFFF" InitFn="cxo_shutdown_init" ProfileFreq="300000">
+    <!-- shutdown LPRM -->
+    <Mode Name="shutdown"
+          Dependency="rpm.sync + cpu_vdd"
+          Order="BEFORE DEP cxo.shutdown"
+          PowerSavings="0, 1000"
+          EnterLat="524"
+          ExitLat="265"
+          Backoff="265"
+          EnterFn="cxo_shutdown_enter"
+          ExitFn="cxo_shutdown_exit"
+          >
+    </Mode>
+  </LPR>
+</LPRDefinition>

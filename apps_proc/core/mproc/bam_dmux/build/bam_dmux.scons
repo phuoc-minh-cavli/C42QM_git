@@ -1,0 +1,97 @@
+#==============================================================================
+#
+#                        BAM DMUX BUILD SCRIPT
+#
+# BAM Data Multiplexer Build Script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Inc. All Rights Reserved.
+# Qualcomm Technologies, Inc. Confidential and Proprietary.
+#
+#==============================================================================
+
+#==============================================================================
+#
+#                           EDIT HISTORY FOR FILE
+#
+# $Header: //components/rel/core.tx/6.0/mproc/bam_dmux/build/bam_dmux.scons#1 $
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 05/31/16   rv      Initial version.
+#==============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/mproc/bam_dmux/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+#  Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('BAM_DMUX_PRIVATE_API', [
+  "${BUILD_ROOT}/core/mproc/bam_dmux/inc",
+  "${BUILD_ROOT}/core/mproc/bam_dmux/cfg/${MSM_ID}"
+] )
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+  'DAL',
+  'DEBUGTOOLS',
+  'HWENGINES',
+  'KERNEL',
+  'POWER',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+  'MPROC',
+  'PRODUCTS_DSR',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['BAM_DMUX_PRIVATE_API'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+BAM_DMUX_SOURCES = [
+  '${BUILDPATH}/bam_dmux_core.c',
+  '${BUILDPATH}/bam_dmux_bam_iface.c',
+  '${BUILDPATH}/bam_dmux_power.c',
+  '${BUILDPATH}/bam_dmux_log.c',
+  #'${BUILDPATH}/bam_dmux_test.c',
+]
+
+BAM_DMUX_OS_QURT_SOURCES = [
+  '${BUILDPATH}/bam_dmux_os_qurt.c',
+]
+
+BAM_DMUX_SOURCES_STUBS = [
+  '${BUILDPATH}/bam_dmux_stubs.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Sources to image
+#-------------------------------------------------------------------------------
+# On TN Apps, all sources can be shipped.
+env.AddLibrary(['CBSP_APPS_IMAGE', 'APPS_IMAGE', 'CORE_QDSP6_SW'], '${BUILDPATH}/bam_dmux',
+               [BAM_DMUX_SOURCES, BAM_DMUX_OS_QURT_SOURCES])
+               #[BAM_DMUX_SOURCES_STUBS])
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  RCINIT_BAM_DMUX_INIT = {
+    'sequence_group'             : 'RCINIT_GROUP_0',
+    'init_name'                  : 'bam_dmux',
+    'init_function'              : 'bam_dmux_init',
+    'dependencies'               : ['bam_drv', 'smsm', 'timer_init', 'dsr']
+  }
+
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE', 'CORE_QDSP6_SW']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_BAM_DMUX_INIT )

@@ -1,0 +1,227 @@
+#===============================================================================
+#
+# HSUSB Core Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/hsusb/core/rel/2h09/build/SConscript#2 $
+#  $DateTime: 2010/09/15 01:06:55 $
+#  $Author: ablay $
+#  $Change: 1439911 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+if env.has_key('USES_HSU_OTG'):
+    env['USES_HSU_HOST']='yes'
+
+# Additional defines
+if not env.has_key('DBL_BOOT_IMAGE'):
+   env.Append(CPPDEFINES = ['USB_DEBUG'])
+
+# Do not define JDEBUG for EHOSTDL image due to memory constraint.
+if not env.has_key('EHOSTDL_IMAGE') and not env.has_key('DBL_BOOT_IMAGE'):
+   env.Append(CPPDEFINES = ['JDEBUG'])
+
+if env.has_key('USES_HSU_MS_FD_BOOT'):
+   if env.has_key('OSBL_BOOT_IMAGE') or env.has_key('SBL3_BOOT_IMAGE'):
+      env.Append(CPPDEFINES = ['FEATURE_HS_USB_MS_FD_BOOT'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/wiredconnectivity/hsusb/core/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MEMORY',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+   'DEBUGTRACE',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Source Code and LIBs
+#-------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# jos ###
+#-------------------------------------------------------------------------------
+HSU_CORE_JOS_C_SOURCES = [
+   '${BUILDPATH}/jos/debug_init.c',
+   '${BUILDPATH}/jos/jinit.c',
+   '${BUILDPATH}/jos/jos_bus.c',
+   '${BUILDPATH}/jos/jos_entry.c',
+   '${BUILDPATH}/jos/jos_mem.c',
+   '${BUILDPATH}/jos/jos_sync.c',
+   '${BUILDPATH}/jos/jos_driver.c',
+   '${BUILDPATH}/jos/jos_device.c',
+]
+
+HSU_CORE_JOS_OTG_C_SOURCES = [
+   '${BUILDPATH}/jos/jhost_init.c'
+]
+
+HSU_CORE_JOS_TEST_C_SOURCES = [
+   '${BUILDPATH}/jos/test_param.c',
+   '${BUILDPATH}/jos/debug_init.c',
+]
+
+hsu_jos_obj = env.Object(HSU_CORE_JOS_C_SOURCES)
+hsu_jos_lib = env.Library('${BUILDPATH}/hsu_core_jos', hsu_jos_obj)
+
+hsu_jos_otg_obj = env.Object(HSU_CORE_JOS_OTG_C_SOURCES)
+hsu_jos_otg_lib = env.Library('${BUILDPATH}/hsu_core_jos_otg', hsu_jos_otg_obj)
+
+hsu_jos_test_obj = env.Object(HSU_CORE_JOS_TEST_C_SOURCES)
+hsu_jos_test_lib = env.Library('${BUILDPATH}/hsu_core_jos_test', hsu_jos_test_obj)
+
+hsu_core_jos_libs = []
+
+if env.has_key('USES_HSU_TESTS'):
+   hsu_core_jos_libs += hsu_jos_test_lib
+else:
+   hsu_core_jos_libs += hsu_jos_lib
+
+   if env.has_key('USES_HSU_HOST'):
+      hsu_core_jos_libs += hsu_jos_otg_lib
+
+#-------------------------------------------------------------------------------
+# jslave ###
+#-------------------------------------------------------------------------------
+HSUSB_CORE_JSLAVE_C_SOURCES = [
+   '${BUILDPATH}/jslave/core/jslave_init.c',
+   '${BUILDPATH}/jslave/core/jusb_chp9.c',
+   '${BUILDPATH}/jslave/core/jusb_core.c',
+   #'${BUILDPATH}/jslave/dcd/dcd_tdi_4x.c',
+]
+
+if env.has_key('USES_HSU_SNPS_CORE'):
+   HSUSB_CORE_JSLAVE_C_SOURCES += [
+    '${BUILDPATH}/jslave/dcd/dcd_snps.c',
+    '${BUILDPATH}/jslave/dcd/dcd_snps_cmd_evt.c',
+    '${BUILDPATH}/jslave/dcd/dcd_snps_xfers.c',
+    '${BUILDPATH}/jslave/dcd/dcd_snps_intr.c',
+    '${BUILDPATH}/jslave/dcd/dcd_snps_eps.c',
+    '${BUILDPATH}/jslave/dcd/dcd_snps_config.c',
+   ]
+
+
+hsu_jslave_obj = env.Object(HSUSB_CORE_JSLAVE_C_SOURCES)
+hsu_jslave_lib = env.Library('${BUILDPATH}/hsu_core_jslave', hsu_jslave_obj)
+
+hsu_core_jslave_libs = [hsu_jslave_lib]
+
+#-------------------------------------------------------------------------------
+# dev ###
+#-------------------------------------------------------------------------------
+HSUSB_CORE_DEV_C_SOURCES = [
+   '${BUILDPATH}/dev/usb/ehci.c',
+   '${BUILDPATH}/dev/usb/ehci_local.c',
+   '${BUILDPATH}/dev/usb/root_hub.c',
+   '${BUILDPATH}/dev/usb/ucompdev.c',
+   '${BUILDPATH}/dev/usb/uhub.c',
+   '${BUILDPATH}/dev/usb/jusb.c',
+   '${BUILDPATH}/dev/usb/usb_quirks.c',
+   '${BUILDPATH}/dev/usb/usb_subr.c',
+   '${BUILDPATH}/dev/usb/usbdi.c',
+   '${BUILDPATH}/dev/usb/usbdi_util.c',
+   '${BUILDPATH}/dev/usb/xfrag.c',
+   '${BUILDPATH}/dev/usb/td243_rev2.c',
+   '${BUILDPATH}/dev/usb/td243_rev2_hw.c'
+]
+
+hsu_dev_obj = env.Object(HSUSB_CORE_DEV_C_SOURCES)
+hsu_dev_lib = env.Library('${BUILDPATH}/hsu_core_dev', hsu_dev_obj)
+
+#-------------------------------------------------------------------------------
+# JOTG ###
+#-------------------------------------------------------------------------------
+HSUSB_CORE_JOTG_C_SOURCES = [
+  '${BUILDPATH}/jotg/core/jotg_core.c',
+  '${BUILDPATH}/jotg/ocd/ocd_tdi_4x.c'
+]
+
+hsu_jotg_obj = env.Object(HSUSB_CORE_JOTG_C_SOURCES)
+hsu_jotg_lib = env.Library('${BUILDPATH}/hsu_core_jotg', hsu_jotg_obj)
+
+#-------------------------------------------------------------------------------
+# the stack ###
+#-------------------------------------------------------------------------------
+usb_core_lib = [hsu_core_jos_libs]
+
+if not env.has_key('USES_HSU_TESTS'):
+   usb_core_lib += hsu_core_jslave_libs
+   
+   if env.has_key('USES_HSU_HOST'):
+      usb_core_lib += hsu_dev_lib
+
+   if env.has_key('USES_HSU_OTG'):
+      usb_core_lib += hsu_jotg_lib
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+if env.has_key('USES_HSU'):
+
+   if env.has_key('USES_HS_USB_ON_MODEM_PROC'):
+      if env.has_key('USES_HS_USB_ON_DUAL_PROC'):
+         env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], usb_core_lib)
+         env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], usb_core_lib)
+      else:
+         env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], usb_core_lib)
+   else:
+      env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], usb_core_lib)
+   
+   # For single image only
+   env.AddLibsToImage(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE'], usb_core_lib)
+   
+
+

@@ -1,0 +1,25 @@
+#===============================================================================
+#
+# QUARTZ NET APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.PublishRestrictedApi('QCLI_DEMO', [
+        "${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/qcli",
+        "${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/net",
+		"${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/core",
+		"${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/lwm2m",
+		"${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/atfwd",
+		"${BUILD_ROOT}/dataservices/demo/QCLI_demo/src/version"
+   ])
+
+env.LoadAPIUnits()

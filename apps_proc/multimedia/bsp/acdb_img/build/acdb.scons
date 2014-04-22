@@ -1,0 +1,108 @@
+#===============================================================================
+#
+# EFS build script
+#
+# GENERAL DESCRIPTION
+#    EFS build script to generate Image Headers for EFS images
+#
+# Copyright 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/bsp/acdb_img/build/acdb.scons#7 $
+#  $DateTime: 2020/08/10 00:31:35 $
+#  $Author: pwbldsvc $
+#  $Change: 25417796 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who        what, where, why
+# --------    ---        ---------------------------------------------------------
+# 1/25/2011    vr        Compile only for fusion. Support for Golden copy image.
+# 1/6/2011     vr        Creates EFS image header files for fusion targets 
+#===============================================================================
+import os
+import shutil
+import string
+import glob
+Import('env')
+
+env = env.Clone()
+
+if env['BUILD_ID'] in ['ACINAAAM','ACFNAAMZ','ACFNAANZ','ACTNAAAN','ACKNAAAK','ACENAAKZ']:
+    Return() 
+
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles aliases
+aliases = [
+   'apps_images', 'all'
+]
+
+env.InitImageVars(
+   alias_list = aliases,               # list of aliases, unique name index [0]
+   proc = 'sparrow',                      # proc settings
+   config = 'apps',                   # config settings
+   build_tags = []                     # list of build tags for sub lib scripts
+   )
+ 
+if not env.CheckAlias():
+   Return()
+
+print "\n"   
+print "------------------------------------------------------------------------------"
+print "   Loading ACDB Image Script "
+print "------------------------------------------------------------------------------"   
+
+#------------------------------------------------------------------------------
+# configure and load in uses and path variables,
+#------------------------------------------------------------------------------
+env.InitBuildConfig()
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts.check for old version then new
+#---------------------------------------------------------------------------
+if (env.PathExists('${BUILD_ROOT}/tools/build/scons/sectools')):
+  env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/tools/build/scons/sectools/sectools/features/isc/parsegen'])
+elif (env.PathExists('${BUILD_ROOT}/sectools/sectools')):
+  env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen'])
+else:
+  env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/core/bsp/build/scripts'])
+
+#----------------------------------------------------------------------------
+# Generate ACDB Header and copy to build/ms/bin folder
+#----------------------------------------------------------------------------
+
+if not os.path.exists(env.subst('${MBN_ROOT}')):
+     os.makedirs(env.subst('${MBN_ROOT}')) 
+
+# Create the generic dictionary for MBN tools to use
+gen_dict = env.FilterDictionary(env['GLOBAL_DICT'], FLASH_TYPE="nand", IMAGE_TYPE="acdb", MBN_TYPE="bin", IMAGE_ID=29)
+
+env.ImageHeader(gen_dict, "", env.subst('${MBN_ROOT}/acdb_header.mbn'), "nonsecure", "reg", in_code_size = env['GLOBAL_DICT']['IMAGE_KEY_ACDB_SIZE'])
+
+acdb_destination = open(env.subst('${MBN_ROOT}/acdb.mbn'),'wb')
+shutil.copyfileobj(open(env.subst('${MBN_ROOT}/acdb_header.mbn'),'rb'), acdb_destination)
+
+if 'USES_AUDIO_BAREBONE_ACDB' in env:
+    print "USES_AUDIO_BAREBONE_ACDB\n"
+    image_header_size = 40
+    if 'USES_FEATURE_9X07_ACDB' in env:
+        print "USES_9607_ACDB"
+        acdb_image = open(env.subst('${BUILD_ROOT}/multimedia/audio/audcal/acdbdata/9607acdb_image/tx_image.img'),'rb')
+    else:
+        print "USES_Tx_ACDB"
+        acdb_image = open(env.subst('${BUILD_ROOT}/multimedia/audio/audcal/acdbdata/Tx_image/tx_image.img'),'rb')    
+    shutil.copyfileobj(acdb_image, acdb_destination)
+    acdb_destination.truncate(env['GLOBAL_DICT']['IMAGE_KEY_ACDB_SIZE']+image_header_size)
+else:
+    acdb_image = open(env.subst('${BUILD_ROOT}/multimedia/audio/audcal/acdbdata/full_image/mdm_acdb.img'),'rb')
+    shutil.copyfileobj(acdb_image, acdb_destination)
+
+acdb_destination.close()

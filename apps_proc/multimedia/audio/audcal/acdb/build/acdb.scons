@@ -1,0 +1,109 @@
+#===============================================================================
+#
+# audcal Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010-2011 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: fzhou $
+#  $Change: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 06/29/2011    ernanl      Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/audcal"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Include PATHs
+#-------------------------------------------------------------------------------
+
+
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequireRestrictedApi(CBSP_API)
+
+env.RequirePublicApi('MMUTILS')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('ACDB')
+#env.RequireRestrictedApi('ACDBDATA')
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+acdb_SOURCES = [
+   '${BUILDPATH}/acdb/src/acdb.c',
+   '${BUILDPATH}/acdb/src/acdb_command.c',
+   '${BUILDPATH}/acdb/src/acdb_init.c',
+   '${BUILDPATH}/acdb/src/acdb_file_mgr.c',
+   '${BUILDPATH}/acdb/src/acdb_data_mgr.c',
+   '${BUILDPATH}/acdb/src/acdb_parser.c',
+   '${BUILDPATH}/acdb/src/acdb_translation.c',
+   '${BUILDPATH}/acdb/src/acdb_utility.c',
+   '${BUILDPATH}/acdb/src/acdb_linked_list.c',
+   '${BUILDPATH}/acdb/src/acdb_override.c',
+   '${BUILDPATH}/acdb/src/acdb_delta_file_mgr.c',
+   '${BUILDPATH}/acdb/src/acdb_delta_parser.c',
+   '${BUILDPATH}/acdb_hlos/acdb_init_utility.c',   
+	]
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+acdb_obj = env.Object(acdb_SOURCES)
+acdb_lib = env.Library('${BUILDPATH}/acdb/acdb', acdb_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   acdb_lib)
+
+#env.Replace(ARMCC_OPT = "")
+#env.Replace(ARMCXX_OPT = "")
+#env.Replace(ARMASM_OPT = "")

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">	
+	<NvConfigurationData carrierIndex="0" version="" type="1"/>
+	<GroupFile name="ims_common_config.xml" description="Framework, Media and SIP Configurations" comment="" category="IMS" mcfgAttributes="0x19" buildPath="modem_proc/dataimsiot/Config/NA/TMO/ims_common_config.xml"/>
+	<GroupFile name="ims_rm_config.xml" description="RM and PM Configurations" comment="" category="IMS" mcfgAttributes="0x19" buildPath="modem_proc/dataimsiot/Config/NA/TMO/ims_rm_config.xml"/>
+  <GroupFile name="ims_qipcall_config.xml" description="Voice and SMS Configurations" comment="" category="IMS" mcfgAttributes="0x19" buildPath="modem_proc/dataimsiot/Config/NA/TMO/ims_qipcall_config.xml"/>
+</NvData>

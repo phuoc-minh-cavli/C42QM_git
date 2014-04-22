@@ -1,0 +1,100 @@
+#===============================================================================
+#
+# TMC Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/mcs/dsm/rel/1h09/build/dsm.scons#5 $
+#  $DateTime: 2010/08/25 13:16:34 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/memory/dsm/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_DS",
+   "FEATURE_DSM_POOL_OPTIMIZED_CB",
+])
+
+#-------------------------------------------------------------------------------
+# Necessary Public API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'DAL',
+    'DEBUGTOOLS',
+    'MEMORY',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ], area='core')
+
+#-------------------------------------------------------------------------------
+# External API's not built with SCons
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+    'BREW',
+])
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+DSM_C_SOURCES = [
+    '${BUILDPATH}/dsm.c',
+    '${BUILDPATH}/dsm_init.c',
+    '${BUILDPATH}/dsm_iov.c',
+    '${BUILDPATH}/dsm_lock.c',
+    '${BUILDPATH}/dsm_meta.c',
+    '${BUILDPATH}/dsm_pool.c',
+    '${BUILDPATH}/dsm_queue.c',
+    '${BUILDPATH}/dsmbit.c',
+    '${BUILDPATH}/dsmi.c',
+    '${BUILDPATH}/dsmutil.c',
+]
+
+# Compile the source and convert to a library
+dsm_obj = env.Object(DSM_C_SOURCES)
+dsm_lib = env.Library('${BUILDPATH}/dsm', dsm_obj)
+
+# Add our library to the ModemApps image
+env.AddLibsToImage(['MODEM_AMSS', 'MODEM_APPS'], dsm_lib)
+#env.AddLibrary( ['MODEM_APPS'], '${BUILDPATH}/mcs_dsm', [DSM_C_SOURCES] )
+
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',                   # required
+     'init_name'                  : 'dsm',                              # required
+     'init_function'              : 'dsm_init',                         # required
+     'dependencies'               : ['dalsys','smem','err_store',]
+    })
+

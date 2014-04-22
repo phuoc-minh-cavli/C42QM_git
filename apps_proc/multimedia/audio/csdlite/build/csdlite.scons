@@ -1,0 +1,103 @@
+#===============================================================================
+#
+# CSDLite Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/csdlite/build/csdlite.scons#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Author: pwbldsvc $
+#  $Change: 17929171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---      ----------------------------------------------------
+# 04/20/2015    jk        creation
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/csdlite"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequireRestrictedApi('CSDLITE')
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('CSD_COMMON')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('CSD_DEV')
+env.RequireRestrictedApi('CSD_UTILS')
+env.RequireRestrictedApi('APR')
+env.RequireRestrictedApi('CSD_VOICE')
+
+env.RequirePublicApi('MMUTILS')
+env.RequirePublicApi('APR')
+env.RequirePublicApi('AUDIO')
+
+
+# CsdLite.lib 
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+csdlite_SOURCES = [
+	'${BUILDPATH}/src/csdlite.c',
+]
+
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+csdlite_obj = env.Object(csdlite_SOURCES)
+csdlite_lib = env.Library('${BUILDPATH}', csdlite_obj)
+
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   csdlite_lib)

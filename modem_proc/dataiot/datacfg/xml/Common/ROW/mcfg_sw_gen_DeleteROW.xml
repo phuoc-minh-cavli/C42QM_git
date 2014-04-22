@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+	<NvEfsFile name="ds_dsd_attach_profile.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x50" mcfgVariant="2" targetPath="/data/ds_dsd_attach_profile.txt" buildPath="modem_proc/dataiot/datacfg/efs/row/ds_dsd_attach_profile.txt"/>
+    <NvEfsItemData name="rpm_params" id="67204" description="RPm parameter  struct" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x50" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/rpm_params">
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">60 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">30 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">60 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">30 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+      <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+    </NvEfsItemData>
+  <NvEfsItemData name="ds_iot_rpm_enabled" id="74348" description="ds_iot_rpm_enabled" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x50" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/iot_rpm_enabled">
+    <Member name="ds_iot_rpm_enabled" description="ds_iot_rpm_enabled" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvEfsItemData>
+	<NvEfsFile mcfgAttributes="0x50" subscription_mask="0x07" mcfgVariant="2" targetPath="/Data_Profiles/Profile1" buildPath="modem_proc/dataiot/datacfg/efs/row/Profile1"/>
+	<NvEfsFile mcfgAttributes="0x50" subscription_mask="0x07" mcfgVariant="2" targetPath="/Data_Profiles/Profile2" buildPath="modem_proc/dataiot/datacfg/efs/row/Profile2"/>
+</NvData>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="lte.0.0" type="1"/>
+    <NvEfsFile name="fgi" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi" buildPath="modem_proc/lte/configs/efs_files/sbm/fgi"/>
+    <NvEfsFile name="fgi_rel9" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi_rel9" buildPath="modem_proc/lte/configs/efs_files/sbm/fgi_rel9"/>
+    <NvEfsFile name="fgi_r10" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi_r10" buildPath="modem_proc/lte/configs/efs_files/sbm/fgi_r10"/>
+    <NvEfsFile name="disable_cap_ies" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/disable_cap_ies" buildPath="modem_proc/lte/configs/efs_files/sbm/disable_cap_ies"/>
+</NvData>

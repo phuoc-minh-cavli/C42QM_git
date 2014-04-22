@@ -1,0 +1,84 @@
+#===============================================================================
+#
+# Dynamic Loading Support Libs
+#
+#
+# Copyright (c) 2014 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when               who         what, where, why
+# --------           ---         -----------------------------------------------
+# 1/22/15          amitkulk      created 
+#===============================================================================
+
+Import('env')
+import os
+env = env.Clone()
+
+env.RequirePublicApi([
+   'DLFWK',
+   'STDDEF',
+   'RTLD',
+  ])
+
+dll_test_public_api_list = [
+		    ('CORE',                'DLFWK'),
+        ('CORE',                'STORAGE'),
+        ('CORE',                'KERNEL'),
+        ('CORE',                'DAL'),
+        ('CORE',                'DEBUGTOOLS'),
+        ('CORE',                'SERVICES'),
+        ]
+
+for api_area,api_name in dll_test_public_api_list:
+    env.RequirePublicApi([api_name], area=api_area)
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${MPSS_DLFWK_ROOT}/rtld"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('ADS_PDL', "${MPSS_DLFWK_ROOT}/rtld/src")
+env.RequirePrivateApi('ADS_PDL')
+
+env.PublishPrivateApi('RTLD_ARCH', "${MPSS_DLFWK_ROOT}/rtld/src/arch/arm")
+env.RequirePrivateApi('RTLD_ARCH')
+
+RTLD_SOURCES =  [
+   '${BUILDPATH}/src/rtld_pl.c',
+   '${BUILDPATH}/src/rtld.c',
+   '${BUILDPATH}/src/map_object.c',
+   '${BUILDPATH}/src/reloc.c',
+   '${BUILDPATH}/src/symbol.c',
+   '${BUILDPATH}/src/debug.c',
+   '${BUILDPATH}/src/load.c',
+   '${BUILDPATH}/src/search.c',
+   '${BUILDPATH}/src/headers.c',
+   '${BUILDPATH}/src/paths.c',
+   '${BUILDPATH}/src/arch/arm/mdreloc.c',
+   '${BUILDPATH}/src/arch/arm/rtld_start.s',
+   ]
+
+env.Append(CPPDEFINES = [("ELFSIZE", 32)])
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+rtld_lib = env.AddLibrary(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'APPS_IMAGE','CBSP_APPS_IMAGE'],
+    '${BUILDPATH}/rtld', RTLD_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load Subunits (sys)
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

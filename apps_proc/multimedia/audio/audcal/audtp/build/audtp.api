@@ -1,0 +1,37 @@
+#===============================================================================
+#
+# Core APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: 2009/07/04 17:43:09 $
+#  
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# copied and edited from other folders for testing purpose 
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Include PATHs
+#-------------------------------------------------------------------------------
+env.PublishRestrictedApi('AUDTP', [
+   
+   "${INC_ROOT}/multimedia/audio/audcal/audtp/inc",
+   "${INC_ROOT}/multimedia/audio/audcal/audtp/src",
+])
+
+env.LoadAPIUnits()

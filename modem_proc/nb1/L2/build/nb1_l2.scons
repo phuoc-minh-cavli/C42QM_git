@@ -1,0 +1,62 @@
+#===============================================================================
+#
+# TCXOMGR Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/L2/build/nb1_l2.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+
+# Remove this line and if statement once 6.4.04 toolchain has been released
+if env['HEXAGON_RTOS_RELEASE'] >= '6.4.04':
+   # Enable -O2 optimization
+   env.Replace(HEXAGONCC_OPT = "${HEXAGON_OPT_2}")
+
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+import os
+if not os.environ.get('HEXAGON_RTOS_RELEASE').startswith('6'):
+	env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror")
+	env = env.Clone(HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+
+env.PublishProtectedApi('NB1_L2_TEST',
+			 ['${NB1_ROOT}/L2/common/test/inc',
+			 '${NB1_ROOT}/L2/pdcp/test/inc',
+			 '${NB1_ROOT}/L2/rlc/test/inc',
+			 '${NB1_ROOT}/L2/mac/test/inc',
+			 '${NB1_ROOT}/integration/a2_sim/inc',
+			 ])
+env.RequireProtectedApi('NB1_L2_TEST')
+
+env.PublishProtectedApi('NB1_L2',
+			 ['${NB1_ROOT}/L2/common/src',
+			 '${NB1_ROOT}/L2/pdcp/src',
+			 '${NB1_ROOT}/L2/rlc/src',
+			 '${NB1_ROOT}/L2/mac/src',
+			 ])
+env.RequireProtectedApi('NB1_L2')
+
+env.RequirePublicApi('UTILS_A2_TEST')
+env.RequirePublicApi('UTILS_A2_TEST', area='utils')
+
+#-------------------------------------------------------------------------------
+# Continue loading software units
+#-------------------------------------------------------------------------------
+if 'USES_MOB' not in env:
+	env.LoadSoftwareUnits()
+

@@ -1,0 +1,81 @@
+#===============================================================================
+#
+# audcal Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: fzhou $
+#  $Change: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 08/04/2010    fzhou       Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/audcal"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',   
+   'BUSES',
+   'DEBUGTOOLS',   
+   'SERVICES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi('MMUTILS')
+
+env.RequireRestrictedApi('ACDB')
+env.RequireRestrictedApi('ACTP')
+env.RequireRestrictedApi('AUDTP')
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+actp_SOURCES = [
+   '${BUILDPATH}/actp/src/actp.c',
+	]
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+actp_obj = env.Object(actp_SOURCES)
+actp_lib = env.Library('${BUILDPATH}/actp/actp', actp_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   actp_lib)

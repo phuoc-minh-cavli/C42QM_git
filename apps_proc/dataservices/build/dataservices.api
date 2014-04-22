@@ -1,0 +1,29 @@
+#===============================================================================
+#
+# Dataservices APSS TX Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/build/dataservices.api#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+if 'USES_MOB' in env:
+    inc_root = env.get('INC_ROOT')
+    env.Replace(INC_ROOT=inc_root+'/../..')
+
+env.LoadAPIUnits()
+
+if 'USES_MOB' in env:
+    env.Replace(INC_ROOT=inc_root)

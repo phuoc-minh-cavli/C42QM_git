@@ -1,0 +1,94 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;*******************************************************
+                       **********************
+    2 00000000         ; * @file:    startup.s
+    3 00000000         ; * @purpose: Startup File for Bear RPM
+    4 00000000         ;
+    5 00000000         ;            Copyright (c) 2014 Qualcomm Technologies In
+                       corporated.
+    6 00000000         ;                   All Rights Reserved.
+    7 00000000         ;             QUALCOMM Proprietary and Confidential
+    8 00000000         ; ******************************************************
+                       ***********************
+    9 00000000                 IMPORT           ||Image$$INIT_DATA_RAM_STACK_EN
+D$$Base||
+   10 00000000         ; Vector Table Mapped to Address 0 at Reset
+   11 00000000         ;                AREA    RESET, DATA, READONLY
+   12 00000000                 AREA             RPM_ENTRY, DATA, READONLY
+   13 00000000 FFFFFFFC 
+                       __Vectors
+                               DCD              (||Image$$INIT_DATA_RAM_STACK_E
+ND$$Base|| - 4)
+   14 00000004         ; Initial Main SP
+   15 00000004 00000000        DCD              Reset_Handler ; Reset Handler
+   16 00000008                 AREA             |.text|, CODE, READONLY
+   17 00000000         ; Reset Handler
+   18 00000000         Reset_Handler
+   19 00000000                 EXPORT           Reset_Handler
+   20 00000000                 IMPORT           __main
+   21 00000000 4800            LDR              R0, =__main
+   22 00000002 4700            BX               R0
+   23 00000004                 END
+              00000000 
+Command Line: --debug --dwarf2 --cpu=Cortex-M3 --apcs=/noswst/interwork -o/loca
+l/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b
+/rpm_proc/core/bsp/rpm/build/startup.o -I/local/mnt/workspace/CRMBuilds/RPM.BF.
+2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build -I/l
+ocal/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_01570
+5/b/rpm_proc/core/bsp/rpm/src -Icust -Ims -I/local/mnt/workspace/CRMBuilds/RPM.
+BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/inc -I/
+local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_0157
+05/b/rpm_proc/core/api/boot -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034
+-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/buses/api/spmi -I/local/mnt/w
+orkspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_pr
+oc/core/buses/api/icb -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205
+AAAAANAZR-1_20191223_015705/b/rpm_proc/core/api/dal -I/local/mnt/workspace/CRMB
+uilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/api/d
+ebugtools -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_
+20191223_015705/b/rpm_proc/core/api/mproc -I/local/mnt/workspace/CRMBuilds/RPM.
+BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/api/power -I/lo
+cal/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705
+/b/rpm_proc/core/api/systemdrivers -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.
+3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/api/systemdrivers/pmic
+ -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_
+015705/b/rpm_proc/core/api/systemdrivers/hwio/mdm9x05 -I/local/mnt/workspace/CR
+MBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/api
+/debugtrace -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-
+1_20191223_015705/b/rpm_proc/core/api/services -I/local/mnt/workspace/CRMBuilds
+/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/boot/ddr/c
+ommon -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_2019
+1223_015705/b/rpm_proc/core/dal/framework/sys/inc -I/local/mnt/workspace/CRMBui
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+lds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/dal/con
+fig/9x05 -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_2
+0191223_015705/b/rpm_proc/core/debugtools/version/src -I/local/mnt/workspace/CR
+MBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/mpr
+oc/smem/inc -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-
+1_20191223_015705/b/rpm_proc/core/power/mpm/inc -I/local/mnt/workspace/CRMBuild
+s/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/power/mpm
+/hal/include -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR
+-1_20191223_015705/b/rpm_proc/core/power/mpm/hal/bsp/include -I/local/mnt/works
+pace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/c
+ore/power/sleep/inc -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AA
+AAANAZR-1_20191223_015705/b/rpm_proc/core/power/utils/inc -I/local/mnt/workspac
+e/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core
+/power/rpm/server -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAA
+ANAZR-1_20191223_015705/b/rpm_proc/core/power/rpm/inc -I/local/mnt/workspace/CR
+MBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/pow
+er/system_db/inc -I/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAA
+NAZR-1_20191223_015705/b/rpm_proc/core/systemdrivers/busywait/inc -I/local/mnt/
+workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_p
+roc/core/systemdrivers/timetick/inc --list=/local/mnt/workspace/CRMBuilds/RPM.B
+F.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/st
+artup.o.lst --sitelicense /local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M92
+05AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/startup.o.i

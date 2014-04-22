@@ -1,0 +1,97 @@
+#===============================================================================
+# location_izat_core Libs
+#
+# GENERAL DESCRIPTION
+#    location_izat_core Build Script
+#
+# Copyright (c) 2018-2020 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/location.tx/3.0/izat_core/build/SConscript#3 $
+#  $DateTime: 2021/10/26 04:59:54 $
+#  $Change: 33661129 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/izat_core/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL',
+]
+env.RequirePublicApi(CBSP_API, area='core')
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+DS_API = [
+    'NICHESTACK',
+    'QAPI',
+    'DSS_NET',
+    'DATASERVICES_NET_IPSTACK',
+    'CRYPTOLIB',
+]
+env.RequirePublicApi(DS_API, area='dataservices')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/flp/inc',
+   '${INC_ROOT}/location/geofence/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/pcid/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/xtra/inc',
+   '${INC_ROOT}/location/gtpwwan/inc',
+   '${INC_ROOT}/api/common/api',
+   '${INC_ROOT}/core/api/dal',
+   '${INC_ROOT}/core/api/mproc',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+]
+
+env.PublishPrivateApi('LOCATION_IZAT_CORE', INC_DIRS)
+
+if 'USES_LOCATION_DISABLE' in env:
+   LOC_IZAT_CORE_SOURCES =  [
+   '${BUILDPATH}/IzatAdapterBase.cpp',
+   '${BUILDPATH}/IzatApiBase.cpp',
+   ]
+else:
+    LOC_IZAT_CORE_SOURCES =  [
+   '${BUILDPATH}/IzatAdapterBase.cpp',
+   '${BUILDPATH}/IzatApiBase.cpp',
+   '${BUILDPATH}/IzatApiV02.cpp',
+    ]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/izat_core'), LOC_IZAT_CORE_SOURCES)
+

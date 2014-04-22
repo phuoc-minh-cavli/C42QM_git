@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower.xsd">
+    <metadata>
+        <chipset>bitra</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <module id="SECURITY_CONTROL_CORE">
+        <base_address>0x00780000</base_address>
+        <description></description>
+
+        <fuse_region id="QFPROM_RAW_WR_PERM">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x007801A8</address>
+                <operation>BLOW</operation>
+                <field id="RD_PERM">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>6</bits>
+                </field>
+                <field id="FEC_WR">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>8</bits>
+                </field>
+                <field id="OEM_CONFIG">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>9</bits>
+                </field>
+                <field id="PK_HASH0">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>15</bits>
+                </field>
+                <field id="OEM_SEC_BOOT">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>22</bits>
+                </field>
+                <field id="SEC_KEY_DERIVATION_KEY">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>23</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_RD_PERM">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x007801A0</address>
+                <operation>BLOW</operation>
+                <field id="SEC_KEY_DERIVATION_KEY">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>23</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_FEC_EN">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x007801B0</address>
+                <operation>BLOW</operation>
+                <field id="REGION23_FEC_EN">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x1</value>
+                    <bits>23</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_SEC_BOOT">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x007804D8</address>
+                <operation>BLOW</operation>
+                <field id="SEC_BOOT1">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x30</value>
+                    <bits>7:0</bits>
+                </field>
+                <field id="SEC_BOOT2">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x30</value>
+                    <bits>15:8</bits>
+                </field>
+                <field id="SEC_BOOT3">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x30</value>
+                    <bits>23:16</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_SEC_KEY_DERIVATION_KEY">
+            <description></description>
+            <fuse ignore="false" n="0">
+                <address>0x007804E8</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <owner>QTI</owner>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x007804F0</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <owner>QTI</owner>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x007804F8</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <owner>QTI</owner>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="3">
+                <address>0x007804F8</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <owner>QTI</owner>
+                    <value>0x00000000000000</value>
+                    <bits>55:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="4">
+                <address>0x00780500</address>
+                <operation>BLOW</operation>
+                <field id="KEY_DATA">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x00000000</value>
+                    <bits>31:0</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <description></description>
+                    <owner>QTI</owner>
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+    </module>
+</tns:fuseblower>

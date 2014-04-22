@@ -1,0 +1,72 @@
+#===============================================================================
+#                    Copyright 2011, 2019, 2022 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/qurt/common"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+if 'USES_QSEECOM' in env:
+  env.Append(CPPDEFINES = [
+   "DEFINE_QSEECOM_POOL",            # QSEECOM POOL DEFINE
+   "DEFINE_TZ_APPS_REGION",
+   ])
+
+if "USES_AWARE" in env:
+   env.Append(CPPDEFINES = [
+    "TX_ENABLE_AWARE_CUSTOMIZATION",
+   ])
+
+#-------------------------------------------------------------------------------
+# Sources, librarie
+#-------------------------------------------------------------------------------
+QURT_LIB_SOURCES =  [
+   '${BUILDPATH}/src/alloc.c',
+   '${BUILDPATH}/src/cust_config.c',
+   '${BUILDPATH}/src/heap.c',
+   '${BUILDPATH}/src/mem_init.c',
+   '${BUILDPATH}/src/memory.c',
+   '${BUILDPATH}/src/obj_cache.c',
+   '${BUILDPATH}/src/pgtable.c',
+   '${BUILDPATH}/src/pool.c',
+   '${BUILDPATH}/src/mem_utils_asm.S',
+]
+
+qurt_obj = env.Object(QURT_LIB_SOURCES)
+qurt_lib = env.Library('${BUILDPATH}/qurt', qurt_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image   
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage(
+   ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 
+    'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'],
+    [qurt_lib])

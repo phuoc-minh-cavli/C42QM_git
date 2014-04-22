@@ -1,0 +1,53 @@
+#/** @file
+#  
+#  NandPartiGuid DXE Driver build file.
+#  
+#  Copyright (c) 2017, Qualcomm Technologies, Inc. All rights reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 03/03/17   eo     Created.
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandPartiGuid
+  FILE_GUID                      = 9F1BA66C-1355-4BDB-8DEE-2ACA0920D611
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = NandPartitionGuidEntryPoint
+
+[BuildOptions.AARCH64]
+  GCC:*_*_*_CC_FLAGS = -Wno-missing-field-initializers
+  MSFT:*_*_*_CC_FLAGS =
+
+[Sources.common]
+  NandPartiGuidDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  QcomPkg/QcomPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  QcomLib
+  
+[Guids]
+ gEfiHashAlgorithmSha1Guid
+
+[Protocols]
+ gEfiHashProtocolGuid
+ gEfiNandPartiGuidProtocolGuid
+
+[Depex]
+ TRUE
+
+

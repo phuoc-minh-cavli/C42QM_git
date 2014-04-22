@@ -1,0 +1,34 @@
+#===============================================================================
+#
+# Modem firmware wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load API's for modem/fw
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/fw/components/fw_nb.mpss/rel/15.2/release/build/fw_nb.api#2 $
+#  $DateTime: 2023/04/27 07:48:28 $
+#
+#===============================================================================
+import os
+Import('env')
+
+
+
+path = env.subst('${INC_ROOT}/fw/nb/api')
+if os.path.exists(path):
+  env.PublishPublicApi('NB1', ["${INC_ROOT}/fw/nb/api",
+                               "${INC_ROOT}/fw/nb/nb1/api",
+                               "${INC_ROOT}/nb1/api"])
+else:
+  env.PublishPublicApi('FW_LTE', ["${INC_ROOT}/fw_nb/api",
+                                  "${INC_ROOT}/nb1/api"])
+  env.PublishPublicApi('NB1', ["${INC_ROOT}/fw_nb/api",
+                                  "${INC_ROOT}/nb1/api"])
+  
+env.LoadAPIUnits()

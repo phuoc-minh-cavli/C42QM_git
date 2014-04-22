@@ -1,0 +1,571 @@
+#===============================================================================
+#
+# Target-Level Build Script for Modem Processor
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2015 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: 2010/05/11 14:20:50 $
+#  $Change: 1295568 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+import sys
+import os
+Import('env')
+
+env = env.Clone()
+
+#------------------------------------------------------------------------------
+# Image_cfg.xml setup
+#------------------------------------------------------------------------------
+if env['MSM_ID'] in ['9205']:
+    env.Replace(IMAGE_CONFIG_XML = env.subst("${BUILD_ROOT}/build/ms/image_cfg_apps_9205.xml"))
+    print "picked 9205 chip id"
+else:
+    env.Replace(IMAGE_CONFIG_XML = env.subst("${BUILD_ROOT}/build/ms/image_cfg_apps.xml"))
+    print "picked 9x06"
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = ['apps_proc', 'amss_modem', 'apps_images','all']
+
+build_tags = ['CORE', 'CORE_APPS', 'LOCATION_APPS', 'MODEM', 'MODEM_APPS', 'MULTIMEDIA_APPS','CORE_TN','MULTIMEDIA_TN','API_TN','API_APPS','CTA_APPS', 'DAL_DEVCFG_IMG']
+
+if env.PathExists(os.path.join("${BUILD_ROOT}", "build/manifest.xml")) or 'CRMSERVERNAME' in os.environ:
+ build_tags.append('IMAGE_TREE_VERSION_AUTO_GENERATE')
+
+# init environment variables
+env.InitImageVars(
+   alias_list=aliases,           # aliases
+   proc='cortex-a7',              # proc
+   config='apps',                # config type, proc_name
+   plat='l4',
+  # target='apps_proc_IMG_${BUILD_ID}',# target (elf, image file name)
+   build_tags = build_tags,
+   deprecated_build_tags = ['CBSP_APPS_IMAGE'],
+      tools = ['${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/kernel_builders.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/scl_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py',
+            '${BUILD_ROOT}/core/kernel/devcfg/scripts/devcfg_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/cmm_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/swe_builder.py',
+            '${BUILD_ROOT}/core/bsp/build/scripts/sleep_lpr_builder.py',
+            #'${BUILD_ROOT}/build/myps/memory_analyzer.py',
+            ]
+   )
+
+if not env.CheckAlias():
+   Return()
+#----------------------------------------------------------------------------------
+# Suppress non-critical ARM license error to warning
+# C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
+#-----------------------------------------------------------------------------------
+env.Append(CFLAGS = "--diag_suppress=9931 ")
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+env.Replace(USES_DEVCFG = True)
+env.Replace(USES_DEVCFG_IMG_ONLY = True)
+env.Append(CPPDEFINES = ["QAPI_TXM_SOURCE_CODE"])
+
+
+
+#USES_FEATURE_DYNAMIC_LOADING_GLOBAL is the global flag.
+#Needs to be enabled from tbc_core.builds to enable dynamic loading on this target.
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING_GLOBAL'):
+   env.Replace(USES_FEATURE_DYNAMIC_LOADING = True)
+   env.Replace(USES_FEATURE_DYNAMIC_LOADING_FIX_PADDING_SIZE = True)
+   if env.has_key('USES_FEATURE_DYNAMIC_LOADING_FIX_PADDING_SIZE'):
+      env.Replace(DYNSTR_PAD_SIZE = 0x4000)
+      env.Replace(DYNSYM_PAD_SIZE = 0x2000)
+      env.Replace(DYNHASH_PAD_SIZE = 0x2000)
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+#Here is where we change the COMPILER
+#env.LoadToolScript('arm', toolpath = ["${BUILD_ROOT}/core/bsp/build/scripts"])
+env.LoadToolScript('arm', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+#To be removed
+env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+
+#---------------------------------------------------------------------------
+# Add compiler and linker flags required to enable dynamic loading
+#---------------------------------------------------------------------------
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+   env.Append(LINKCOM = " --override_visibility --base_platform --no_remove ")
+   env.Append(SHCCFLAGS = "--no_hide_all")
+   env.Append(SHLINKFLAGS = " --shared" + " --fpic" + " --pagesize 0x1000 --arm_linux --no_scanlib" )
+   
+env.Append(LINKFLAGS = " --entry=SBL_Entry")
+
+env.Append(LINKFLAGS = " --feedback=linkerfeedback")
+#---------------------------------------------------------------------------
+# Libs/Objs
+#--------------------------------------------------------------
+image_libs = []
+image_objs = []
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+  apps_proc_img_shlibs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+
+if ('USES_DISABLE_AUDIO_DATA' not in env): 
+
+  # load Build Test libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('build')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
+
+  #load Core BSP libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('core')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
+
+  #load Location BSP libs/objs build rules.
+  location_path = env.RealPath('${BUILD_ROOT}/location')
+  if env.PathExists(location_path):
+   au_items = env.LoadAreaSoftwareUnits('location')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+
+  if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+    apps_proc_img_shlibs.extend(au_items['SHARED_LIBS'])
+
+  # load API libs/objs build rules. 
+  au_items = env.LoadAreaSoftwareUnits('api') 
+  image_libs.extend(au_items['LIBS']) 
+  image_objs.extend(au_items['OBJS']) 
+
+  data_iot_sdk_path = env.RealPath('${BUILD_ROOT}/data_iot_sdk')
+  if env.PathExists(data_iot_sdk_path):
+   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk') 
+   image_libs.extend(au_items['LIBS']) 
+   image_objs.extend(au_items['OBJS'])
+
+  # load cta libs/objs build rules.
+  mbim_path = env.RealPath('${BUILD_ROOT}/mbim')
+  if env.PathExists(mbim_path):
+   au_items = env.LoadAreaSoftwareUnits('mbim')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])  
+
+  #load Stride libs/objs build rules
+  thirdparty_path = env.RealPath('${BUILD_ROOT}/stride')
+  if env.PathExists(thirdparty_path):
+    au_items = env.LoadAreaSoftwareUnits('stride')
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+   
+    fotatools_path = env.RealPath('${BUILD_ROOT}/fotatools')
+    if env.PathExists(fotatools_path):
+       if 'USES_FOTA' in env:
+           au_items = env.LoadAreaSoftwareUnits('fotatools')
+           image_libs.extend(au_items['LIBS'])
+           image_objs.extend(au_items['OBJS'])  
+  # load Multimedia libs/objs build rules. DISABLE multimedia for SPI-NOR
+
+  if env['BUILD_ID'] in ['ACIHAAAAA', 'ACIHAAAZA']:
+     env.PrintInfo("SPI-NOR BUILD, AUDIO DISABLED")
+  else:
+     multimedia_path = env.RealPath('${BUILD_ROOT}/multimedia')
+     if env.PathExists(multimedia_path):
+        au_items = env.LoadAreaSoftwareUnits('multimedia')
+        image_libs.extend(au_items['LIBS'])
+        image_objs.extend(au_items['OBJS'])
+
+  #load dataservices libs/objs build rules.
+  dataservices_path = env.RealPath('${BUILD_ROOT}/dataservices')
+  if env.PathExists(dataservices_path):
+   au_items = env.LoadAreaSoftwareUnits('dataservices')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+  
+  #load cta libs/objs build rules.
+  cta_path = env.RealPath('${BUILD_ROOT}/cta')
+  if env.PathExists(cta_path):
+   au_items = env.LoadAreaSoftwareUnits('cta')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+  
+  #load datafta libs/objs build rules.
+  datafta_path = env.RealPath('${BUILD_ROOT}/datafta')
+  if env.PathExists(datafta_path):
+   au_items = env.LoadAreaSoftwareUnits('datafta')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+  
+   #load etf libs/objs build rules.
+  testframework_path = env.RealPath('${BUILD_ROOT}/testframework')
+  if env.PathExists(testframework_path):
+   au_items = env.LoadAreaSoftwareUnits('testframework')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+   
+  modules_path = env.RealPath('${BUILD_ROOT}/etf_tx')
+  if env.PathExists(modules_path): 
+    au_items = env.LoadAreaSoftwareUnits('etf_tx')
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+
+  #load ril libs/objs build rules.
+  ril_path = env.RealPath('${BUILD_ROOT}/ril')
+  if env.PathExists(ril_path):
+   au_items = env.LoadAreaSoftwareUnits('ril')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS']) 
+   
+   
+   kingfisher_path = env.RealPath('${BUILD_ROOT}/kingfisherhost')
+   if env.PathExists(kingfisher_path):
+       if 'USES_KINGFISHER' in env:
+           au_items = env.LoadAreaSoftwareUnits('kingfisherhost')
+           image_libs.extend(au_items['LIBS'])
+           image_objs.extend(au_items['OBJS'])
+		   
+  #load platformtools BSP libs/objs build rules.
+  platformtools_path = env.RealPath('${BUILD_ROOT}/platform_tools')
+  if env.PathExists(platformtools_path):
+   au_items = env.LoadAreaSoftwareUnits('platform_tools')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+   
+elif ('USES_DISABLE_AUDIO_DATA' in env): 
+ 
+
+  # load Build Test libs/objs build rules.
+  # load Build Test libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('build')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
+
+  #load Core BSP libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('core')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
+
+  #load Location BSP libs/objs build rules.
+  location_path = env.RealPath('${BUILD_ROOT}/location')
+  if env.PathExists(location_path):
+   au_items = env.LoadAreaSoftwareUnits('location')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+
+  if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+    apps_proc_img_shlibs.extend(au_items['SHARED_LIBS'])
+
+  # load API libs/objs build rules. 
+  au_items = env.LoadAreaSoftwareUnits('api') 
+  image_libs.extend(au_items['LIBS']) 
+  image_objs.extend(au_items['OBJS']) 
+
+  # load cta libs/objs build rules.
+  mbim_path = env.RealPath('${BUILD_ROOT}/mbim')
+  if env.PathExists(mbim_path):
+   au_items = env.LoadAreaSoftwareUnits('mbim')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])  
+
+  #load Stride libs/objs build rules
+  thirdparty_path = env.RealPath('${BUILD_ROOT}/stride')
+  if env.PathExists(thirdparty_path):
+    au_items = env.LoadAreaSoftwareUnits('stride')
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+
+  #load dataservices libs/objs build rules.
+  dataservices_path = env.RealPath('${BUILD_ROOT}/dataservices')
+  if env.PathExists(dataservices_path):
+   au_items = env.LoadAreaSoftwareUnits('dataservices')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+  
+  #load cta libs/objs build rules.
+  cta_path = env.RealPath('${BUILD_ROOT}/cta')
+  if env.PathExists(cta_path):
+   au_items = env.LoadAreaSoftwareUnits('cta')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+
+   #load datafta libs/objs build rules.
+  datafta_path = env.RealPath('${BUILD_ROOT}/datafta')
+  if env.PathExists(datafta_path):
+   au_items = env.LoadAreaSoftwareUnits('datafta')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+
+  data_iot_sdk_path = env.RealPath('${BUILD_ROOT}/data_iot_sdk')
+  if env.PathExists(data_iot_sdk_path):
+   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk') 
+   image_libs.extend(au_items['LIBS']) 
+   image_objs.extend(au_items['OBJS'])
+   
+  #load ril libs/objs build rules.
+  ril_path = env.RealPath('${BUILD_ROOT}/ril')
+  if env.PathExists(ril_path):
+   au_items = env.LoadAreaSoftwareUnits('ril')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS']) 
+   
+   #load etf libs/objs build rules.
+   kingfisher_path = env.RealPath('${BUILD_ROOT}/kingfisherhost')
+   if env.PathExists(kingfisher_path):
+       if 'USES_KINGFISHER' in env:
+           au_items = env.LoadAreaSoftwareUnits('kingfisherhost')
+           image_libs.extend(au_items['LIBS'])
+           image_objs.extend(au_items['OBJS'])   
+
+  testframework_path = env.RealPath('${BUILD_ROOT}/testframework')
+  if env.PathExists(testframework_path):
+   au_items = env.LoadAreaSoftwareUnits('testframework')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+
+  
+   fotatools_path = env.RealPath('${BUILD_ROOT}/fotatools')
+   if env.PathExists(fotatools_path):
+       if 'USES_FOTA' in env:
+           au_items = env.LoadAreaSoftwareUnits('fotatools')
+           image_libs.extend(au_items['LIBS'])
+           image_objs.extend(au_items['OBJS']) 
+
+  platformtools_path = env.RealPath('${BUILD_ROOT}/platform_tools')
+  if env.PathExists(platformtools_path):
+   au_items = env.LoadAreaSoftwareUnits('platform_tools')
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+#------------------------------------------------------------------------------
+# Shared Library Pad File Support
+#------------------------------------------------------------------------------
+#Pad files are created to generate dummy segment in APPs ELF to copy dynamic sections postlink. (dynamic section on ARM are non-loadable, RVCT limitation.)
+#In order to avoid fixed size of pad file that we use to reserve space for .dynamic, .dynstr, .dynsym and .has sections
+#and to save image size we speculate the size of pad files needed for them here using linker symbol file for imported dynamic symbols.
+#granularity as of now is 1KB which we can further reduce for better memory savings.
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+   env.LoadToolScript('sharedlib_symbol', toolpath = ["${BUILD_ROOT}/core/bsp/build/scripts"])
+   env.LoadToolScript('pad_file_builder', toolpath = ["${BUILD_ROOT}/core/bsp/build/scripts"])
+   sh_libs_dynsyms_fname = "${SHORT_BUILDPATH}/APPS_PROC_shared_libs_dynsyms_ext.lst"
+   sh_libs_externs_fname = "${SHORT_BUILDPATH}/APPS_PROC_shared_libs_externs_ext.lst"
+   sh_lib_link_files = env.SharedLibGenerateLinkerList(
+         [sh_libs_dynsyms_fname, sh_libs_externs_fname], apps_proc_img_shlibs)
+
+   pad_file_list = env.AddDynamicPadFiles(["${SHORT_BUILDPATH}/dummy_dynamic_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_symbol_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_string_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_hash_padding.c"], ["${SHORT_BUILDPATH}/APPS_PROC_shared_libs_dynsyms_ext.lst"])
+   env.Depends(pad_file_list, sh_libs_dynsyms_fname)      
+   pad_file_list_o  = env.AddObject(build_tags, pad_file_list)
+   image_objs.append(pad_file_list_o)
+
+#-------------------------------------------------------------------------
+# Libs/Objs
+#-------------------------------------------------------------------------
+image_libs_path = env.get('INSTALL_LIBPATH')
+
+image_units = [image_libs, image_objs]
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+   image_units += [apps_proc_img_shlibs]
+
+if 'IMAGE_BUILD_LOCAL_FILES' in env:
+   #=========================================================================
+   # CBSP Image section
+   #=========================================================================
+
+   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # should of clone, but just to be on the safe side.
+   env = env.Clone()
+   
+   #-------------------------------------------------------------------------
+   # Internal depends within CoreBSP
+   #-------------------------------------------------------------------------
+   CBSP_API = [
+      'BOOT',
+      'BUSES',
+      'DAL',
+      'DEBUGTOOLS',
+      'HAL',      
+      'HWENGINES',
+      'IODEVICES',
+      'MPROC',
+      'POWER',
+      'SECUREMSM',
+      'SERVICES',
+      'STORAGE',
+      'SYSTEMDRIVERS',
+      'WIREDCONNECTIVITY',
+      'PRODUCTS', 
+      # needs to be last also contains wrong comdef.h
+      'KERNEL',
+   ]
+
+   env.RequirePublicApi(CBSP_API)
+   env.RequireRestrictedApi(CBSP_API)
+
+   #-------------------------------------------------------------------------
+   # quartz config XML files
+   #-------------------------------------------------------------------------
+   AMSS_RELOC_LC = "build_${TARGET_BLD_KCFG}/amss/bin/${BUILD_ID}.reloc"
+   AMSS_RELOC = "${L4_ROOT}/" + AMSS_RELOC_LC
+   TCXO_SHUTDOWN_RELOC_LC="0"
+
+   if env.has_key('USES_L4_3X') or env.has_key('USES_THREADX'):
+      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}", 
+         "${BUILD_MS_ROOT}/quartz_cfg.xml", AMSS_RELOC_LC=AMSS_RELOC_LC)
+   else:
+      quartz_machine_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_machine_${TARGET_NAME}", 
+         "${BUILD_MS_ROOT}/quartz_cfg_machine.xml")
+         
+      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}", 
+         ["${BUILD_MS_ROOT}/quartz_cfg.xml", quartz_machine_xml],
+         AMSS_RELOC_LC=AMSS_RELOC_LC)
+
+   #----------------------------------------------------------------------------
+   # Build env scatter load
+   #----------------------------------------------------------------------------
+   if env.has_key('USES_L4_3X') or env.has_key('USES_THREADX'):
+      target_scl = env.SclBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}", [
+         "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_DDROnly_rom.scl"
+      ])
+   else:
+      l4_scl_hdr_file = env.L4SclHeaderBuilder("${SHORT_BUILDPATH}/cust_l4_scl_${TARGET_NAME}", 
+         quartz_xml)
+
+      # "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_rom.scl"
+      # "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_SMIOnly_rom.scl"
+      # "${BUILD_MS_ROOT}/7600A_L4_${TARGET_IMAGE}_rom.scl"
+      target_scl = env.SclBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}", [
+         "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_DDROnly_rom.scl", 
+         l4_scl_hdr_file
+      ])
+
+   image_units += target_scl
+   
+   #----------------------------------------------------------------------------
+   # Sources, libraries
+   #----------------------------------------------------------------------------
+
+if 'IMAGE_BUILD_LINK' in env:
+   # actually doing link, reset image_units
+   image_units = []
+   
+   #-------------------------------------------------------------------------
+   # Build env QCOREIMG
+   #-------------------------------------------------------------------------
+   if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM= sh_libs_dynsyms_fname)
+   else:
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
+   env.Depends(image_elf, target_scl)
+   
+if 'IMAGE_BUILD_POST_LINK' in env:
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+   env.LoadToolScript("${BUILD_ROOT}/build/myps/qshrink/Qshrink20.py")
+   qshrink20_elf = env.Qshrink20(
+         "${SHORT_BUILDPATH}/${TARGET_NAME}_qsr2.elf",
+         [image_elf, "${BUILD_ROOT}/build/myps/qshrink/msg_hash.txt"])
+   
+   #-------------------------------------------------------------------------
+   #Generate Memory Analysis
+   #-------------------------------------------------------------------------
+   #if 'USES_MEMORY_ANALYZER' in env:
+   env.LoadToolScript("${BUILD_ROOT}/build/myps/memory_analyzer.py")
+   elfpath = env.File(env.RealPath(str(image_elf[0])))
+   mappath = env.File(env.RealPath(str(image_elf[0]).replace(".elf",".map")))
+   memanalyzer_src = [ mappath, elfpath]
+   memanalyzer_target = [ env.RealPath("${BUILD_ROOT}/build/ms/memory_analysis.csv") ]
+   memanalyzer_out = env.QCMAT_ANALYSIS(memanalyzer_target, memanalyzer_src)
+   image_units.append(memanalyzer_out)
+
+   #-------------------------------------------------------------------------
+   # Modify elf flags to update attributes for shared segments, 
+   # DL segments, etc.
+   #-------------------------------------------------------------------------
+   #target_elf = env.ModifyElfFlagsBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}_modifyelf", 
+    #  [qshrink20_elf, target_scl])
+   
+   # #-------------------------------------------------------------------------
+   # # Build env mbn files
+   # #-------------------------------------------------------------------------
+   target_mbn = env.MbnBuilder('${SHORT_BUILDPATH}/${TARGET_NAME}', qshrink20_elf, IMAGE_TYPE="amss_mbn",FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+   install_target_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', target_mbn)
+   install_root = env.subst('${MBN_ROOT}')
+   image_name = 'apps'
+   target_images = []
+  #----------------------------------------------------------------------------
+  # Sectools signing
+  #----------------------------------------------------------------------------
+   if env['MSM_ID'] in ['9205']:
+    env.LoadToolScript('sectools_builder', toolpath = ['${BUILD_ROOT}/sectools'])
+    env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen']) 
+    soc_hw_version = "0x20130100"
+    soc_vers = "0x2013"
+    config_xml = '${BUILD_ROOT}/sectools/config/integration/secimage_eccv3.xml'
+    sectools_mn_signed_mbn = env.SectoolBuilder(
+	target_base_dir = '${SHORT_BUILDPATH}',
+	source= target_mbn,
+	sign_id="appsboot",
+	soc_hw_version = soc_hw_version,
+	soc_vers = soc_vers,
+	config=config_xml,
+	sectools_install_base_dir = install_root,
+	install_file_name = image_name + '.mbn')
+    target_images.extend([sectools_mn_signed_mbn])   
+   else:
+       install_target_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', target_mbn)
+
+   #-------------------------------------------------------------------------
+   # create FAT image
+   #-------------------------------------------------------------------------
+   if 'FatfsBuilder' in env.get('BUILDERS', []):
+      target_fatfs = env.FatfsBuilder('${MBN_ROOT}/fat.bin', target_mbn, TARGET_PATH='image')
+      image_units += target_fatfs
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+
+   # copy elf and reloc to needed locations for AMSS tools to load on target
+   install_target_elf = env.InstallAs(
+      "${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf", image_elf)
+
+      
+   #=========================================================================
+   # Define targets needed QCOREIMG
+   #
+   image_units += [
+      install_target_elf,
+      target_mbn,
+      install_target_mbn,
+   ]
+
+if 'USES_CMMBUILDER' in env:
+   cmmscripts = env.CMMGenerateFiles()
+   image_units += cmmscripts
+
+#print env.Dump()
+
+#=========================================================================
+# Finish up...
+env.BindAliasesToTargets(image_units)
+#env.CMMBuilder(None, None)
+
+

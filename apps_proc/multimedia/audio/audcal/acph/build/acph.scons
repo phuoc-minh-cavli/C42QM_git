@@ -1,0 +1,107 @@
+#===============================================================================
+#
+# audcal Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: fzhou $
+#  $Change: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 08/04/2010    fzhou       Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/audcal"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Include PATHs
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'PRODUCTS_SCM',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi('APR')
+env.RequirePublicApi('MMUTILS')
+env.RequirePublicApi('AUDIO')
+
+env.RequireRestrictedApi('ACPH')
+env.RequireRestrictedApi('AUDCAL')
+env.RequireRestrictedApi('ACDB')
+#env.RequireRestrictedApi('ACDBDATA')
+env.RequireRestrictedApi('APR')
+env.RequireRestrictedApi('ADIECODEC')
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('CSD_VOICE')
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+acph_SOURCES = [
+   '${BUILDPATH}/acph/src/acph.c',
+   '${BUILDPATH}/acph_online/src/acph_online.c',
+   '${BUILDPATH}/acdb_hlos/acph_rtc_dsp.c',
+   '${BUILDPATH}/acdb_hlos/acph_rtc_adie.c',
+   '${BUILDPATH}/acdb_hlos/acph_rtc_fts_mcs.c',
+	]
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+acph_obj = env.Object(acph_SOURCES)
+acph_lib = env.Library('${BUILDPATH}/acph/acph', acph_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   acph_lib)

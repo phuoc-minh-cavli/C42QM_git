@@ -1,0 +1,17 @@
+sec_mode_cmd:value DL-DCCH-Message ::= 
+{
+  message c1 : securityModeCommand : 
+      {
+        rrc-TransactionIdentifier 1,
+        criticalExtensions c1 : securityModeCommand-r8 : 
+            {
+              securityConfiguration 
+              {
+                integrityProtAlgorithm eia1,
+                cipheringAlgorithm eea1,
+                keyChangeIndicator FALSE,
+                nextHopChainingCount 0
+              }
+            }
+      }
+}

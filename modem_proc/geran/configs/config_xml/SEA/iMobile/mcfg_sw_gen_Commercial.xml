@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="geran.0.0" type="1"/>
+<NvItemData name="GPRS Multi Slot Class" id="911" description="" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="timer" description="" comment="" sizeOf="1" type="uint8">33 </Member>
+	</NvItemData>
+<NvItemData name="UIM First Instruction Class" id="896" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="uim_first_inst_class" description="" comment="" sizeOf="1" type="uint16">1 </Member>
+	</NvItemData>
+	<NvItemData name="GSM AMR Call Configuration" id="1302" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gsm_amr_call_config" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	</NvData>

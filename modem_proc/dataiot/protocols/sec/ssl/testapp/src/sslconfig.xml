@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<SSLCONF>
+   <SECSSL_SES_SERVER>
+      <!--SECSSL_HOST_NAME indicates input is a hostname or IP in dot notation-->
+      <!--SECSSL_HOST_DOT_ADDR indicates Server IP addr (unit32) in network order-->
+      <server-type>SECSSL_HOST_NAME</server-type>
+      <server-nameorIP>alice.sni.velox.ch</server-nameorIP>
+      <server-port>443</server-port>
+   </SECSSL_SES_SERVER>
+
+   <SECSSL_SES_SSL_VERSION>
+      <!--the supported versions allowed are SECSSL_SSL_VER_30 and SECSSL_SSL_VER_TLS10-->
+      <ssl-version>SECSSL_SSL_VER_TLS10</ssl-version>
+   </SECSSL_SES_SSL_VERSION>
+
+   <SECSSL_SES_CS_LIST>
+      <!--input the number of ciphersuite. the input should between 1 and 12 inclusive-->
+      <!--if the input is n, n of the following entries should be given-->
+      <num-ciphersuite>5</num-ciphersuite>
+      <!--input preferred ciphersuite id used for advertisement in a Hello message. we only support the list below-->
+      <!--0x2f00 for {SECSSL_KEY_RSA, SECSSL_CRYPT_AES128, SECSSL_HASH_SHA}-->
+      <!--0x3300 for {SECSSL_KEY_DH_EPHEMERAL, SECSSL_CRYPT_AES128, SECSSL_HASH_SHA}-->
+      <!--0x3400 for {SECSSL_KEY_DH_ANONYMOUS, SECSSL_CRYPT_AES128, SECSSL_HASH_SHA}-->
+      <!--0x0500 for {SECSSL_KEY_RSA, SECSSL_CRYPT_RC4,  SECSSL_HASH_SHA}-->
+      <!--0x0400 for {SECSSL_KEY_RSA, SECSSL_CRYPT_RC4,  SECSSL_HASH_MD5}-->
+      <!--0x0a00 for {SECSSL_KEY_RSA, SECSSL_CRYPT_3DES, SECSSL_HASH_SHA}-->
+      <!--0x1600 for {SECSSL_KEY_DH_EPHEMERAL, SECSSL_CRYPT_3DES, SECSSL_HASH_SHA}-->
+      <!--0x0900 for {SECSSL_KEY_RSA, SECSSL_CRYPT_DES, SECSSL_HASH_SHA}-->
+      <!--0x1500 for {SECSSL_KEY_DH_EPHEMERAL, SECSSL_CRYPT_DES, SECSSL_HASH_SHA}-->
+      <!--0x1800 for {SECSSL_KEY_DH_ANONYMOUS, SECSSL_CRYPT_RC4, SECSSL_HASH_MD5}-->
+      <!--0x1b00 for {SECSSL_KEY_DH_ANONYMOUS, SECSSL_CRYPT_3DES, SECSSL_HASH_SHA}-->
+      <!--0x1a00 for {SECSSL_KEY_DH_ANONYMOUS, SECSSL_CRYPT_DES, SECSSL_HASH_SHA}-->
+      <!--ciphersuite-ID>0x2f00</ciphersuite-ID-->
+      <!--ciphersuite-ID>0x3300</ciphersuite-ID-->
+      <ciphersuite-ID>0x3400</ciphersuite-ID>
+      <ciphersuite-ID>0x0500</ciphersuite-ID>
+      <!--ciphersuite-ID>0x0400</ciphersuite-ID-->
+      <!--ciphersuite-ID>0x0a00</ciphersuite-ID-->
+      <!--ciphersuite-ID>0x1600</ciphersuite-ID-->
+      <!--ciphersuite-ID>0x0900</ciphersuite-ID-->
+      <!--ciphersuite-ID>0x1500</ciphersuite-ID-->
+      <ciphersuite-ID>0x1800</ciphersuite-ID>
+      <ciphersuite-ID>0x1b00</ciphersuite-ID>
+      <ciphersuite-ID>0x1a00</ciphersuite-ID>
+      <!--For example, if you want to add less than 12 ids (e.g., 4 ids), just remove above 8 items and keep any 4 items you want. Note, you have to change the num-ciphersuite above to 4-->
+   </SECSSL_SES_CS_LIST>
+
+   <SECSSL_SES_NUM_RENEG>
+      <!--maximum number of Renegotiations-->
+      <!--input a number between SECSSL_SES_NUM_RENEG_MIN_VAL (=1) and SECSSL_SES_NUM_RENEG_MAX_VAL (=10)-->
+      <num-reneg>10</num-reneg>
+   </SECSSL_SES_NUM_RENEG>
+
+   <SECSSL_SES_RENEG_TIMEOUT>
+      <!--time allowance per renegotiationn-->
+      <!--input a number between SECSSL_SES_RENEG_TIMEOUT_MIN_VAL (=100) and SECSSL_SES_RENEG_TIMEOUT_MAX_VAL (=1000)-->
+      <reneg-timeout>100</reneg-timeout>
+   </SECSSL_SES_RENEG_TIMEOUT>
+
+   <SECSSL_SES_NAGLE_MODE>
+      <!--SECSSL_NAGLE_ENABLED ensables nagle on transmission-->
+      <!--SECSSL_NAGLE_DISABLED disables nagle on transmission-->
+      <nagle-mode>SECSSL_NAGLE_DISABLED</nagle-mode>
+   </SECSSL_SES_NAGLE_MODE>
+
+   <SECSSL_SES_SOCKET_MODE>
+      <!--SSL socket operation mode (BSD style or Event-based)-->
+      <!--input is either SECSSL_SOCKET_MODE_BSD or SECSSL_SOCKET_MODE_EVENT-->
+      <socket-opt-mode>SECSSL_SOCKET_MODE_EVENT</socket-opt-mode>
+   </SECSSL_SES_SOCKET_MODE>
+
+   <SECSSL_SES_SERVER_NAME_LIST-->
+      <!--input the number of server names or IP addresses. NOTE: Do not exceed 15 inputs-->
+      <num-server-name>5</num-server-name>
+      <!--if your input above equals n, you must list n server names below-->
+      <server-name-or-ip>carol.sni.velox.ch</server-name-or-ip>
+      <server-name-or-ip>bob.sni.velox.ch</server-name-or-ip>
+      <server-name-or-ip>dave.sni.velox.ch</server-name-or-ip>
+      <server-name-or-ip>mallory.sni.velox.ch</server-name-or-ip>
+      <server-name-or-ip>sni.velox.ch</server-name-or-ip>
+      <!--if your input <num-ciphersuite> equals 2, you should list one more "server-name-or-ip>mail2.microsoft.com"-</server-name-or-ip" for example-->
+   </SECSSL_SES_SERVER_NAME_LIST-->
+
+   <SECSSL_SES_CA_CERTIFICATE>
+      <!--input the full file path of a root CA certificate (Don't exceed 512 characters)-->
+      <!--if don't have a root CA certificate, input NULL; --> 
+      <root-ca-cert-path>/config/cert/Sni Secure Server Authority.cer</root-ca-cert-path>
+   </SECSSL_SES_CA_CERTIFICATE>
+
+   <SECSSL_SES_SOCKET_FD>
+      <!--if use an external TCP socket, input EXTERNAL. Otherwise input INTERNAL.-->
+      <!--so far, we only support INTERNAL.-->
+      <ex-internal>INTERNAL</ex-internal>
+   </SECSSL_SES_SOCKET_FD>
+
+   <DISABLE_SECSSL_SES_PDP_CONTEXT_ID>
+      <!--If you want to open this feature, just delete "DISABLE_" at both above and below SECSSL_SES_PDP_CONTEXT_ID tags -->
+      <!--input the pdp profile ID we will use. ID shouldn't be negative-->
+      <pdp-profile-id>1</pdp-profile-id>
+   </DISABLE_SECSSL_SES_PDP_CONTEXT_ID>
+
+   <SECSSL_SES_ALERT_CB>
+      <!--input one operation mode from the following three options-->
+      <!--SECSSL_SES_ALERT_MODE_AUTO indicates to automatically handle all events.-->
+      <!--SECSSL_SES_ALERT_MODE_USER indicates to request user action for security related events.-->
+      <!--SECSSL_SES_ALERT_MODE_CERTINFO indicates to always suspend after cert parsing.-->
+      <resp-alert-mode>SECSSL_SES_ALERT_MODE_USER</resp-alert-mode>
+   </SECSSL_SES_ALERT_CB>
+</SSLCONF>

@@ -1,0 +1,25 @@
+#===============================================================================
+#
+# Data APSS TN Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2013 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/drivers/rmnet_bam/build/dataservices_rmnet.api#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/28/13   tz     Added IPA data
+#===============================================================================
+Import('env')
+
+env.LoadAPIUnits()

@@ -1,0 +1,90 @@
+#===============================================================================
+#
+# Spmi fetcher Libs
+#
+# GENERAL DESCRIPTION
+#    Spmi fetcher Libs build script
+#
+# Copyright (c) 2015 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/hwengines/ecm/build/build.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     -----------------------------------------------------------
+# 04/01/15   rl      Created
+#===============================================================================
+import os
+Import('env')
+env = env.Clone()
+
+if env['MSM_ID'] not in ['9x55']:
+   Return();
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/hwengines/ecm/"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'HAL',
+    'BUSES',
+   'HWENGINES',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DAL',   
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+   'POWER',
+]
+
+env.PublishPrivateApi('HWENGINES_SPMIF', [
+       "${INC_ROOT}/core/hwengines/ecm/${MSM_ID}",
+       "${INC_ROOT}/core/hwengines/ecm/hw",
+       "${INC_ROOT}/core/hwengines/ecm"
+   ])
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+SPMIF_COMMON_SOURCES =  [
+       '${BUILDPATH}/spmi_fetcher.c',
+       '${BUILDPATH}/hw/spmif_hw.c',
+       '${BUILDPATH}/ecm_diag.c',
+       '${BUILDPATH}/ecm.c',
+       '${BUILDPATH}/ecm_log.c',
+]
+    
+spmif_obj = env.Object([SPMIF_COMMON_SOURCES])
+spmif_lib = env.Library('${BUILDPATH}/spmif', spmif_obj)
+
+env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], [spmif_lib])
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['MODEM_IMAGE',    'CBSP_MODEM_IMAGE',  'CORE_APPS',
+                'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'init_name'                  : 'spmif_drv',
+      'init_function'              : 'ecm_diag_client_init',
+      'dependencies'               : ['bam_drv','clk_regime']
+    })

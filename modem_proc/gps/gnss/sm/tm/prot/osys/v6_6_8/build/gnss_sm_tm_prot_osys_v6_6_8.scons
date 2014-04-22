@@ -1,0 +1,92 @@
+# -------------------------------------------------------------------------------- #
+#         G N S S _ S M _ T M _ P R O T _ O S Y S _ V 6 _ 6 _ 8 . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the SM_TM Protocol OSYS V6_6_8 Subsystem
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+#  Copyright (c) 2015 Qualcomm Technologies, Inc.
+#  Qualcomm Technologies Confidential and Proprietary. All Rights Reserved. 
+#
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/sm/tm/prot/osys/v6_6_8/build/gnss_sm_tm_prot_osys_v6_6_8.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# 
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import and clone the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_osys_env')
+from glob import glob
+from os.path import join, basename
+
+
+
+#--------------------------------------------------------------------------------
+# Check USES flags and return if library isn't needed
+#--------------------------------------------------------------------------------
+if 'USES_CGPS' not in gps_osys_env:
+    Return()
+    
+if 'USES_FEATURE_GNSS_OSYS_V668' not in gps_osys_env:
+   gps_osys_env.CleanPack('CLEANPACK_TARGET', gps_osys_env.FindFiles('*', '..'))
+   Return()
+
+gps_osys_env.PrintInfo("Using GNSS OSYS V6.6.8")
+   
+#--------------------------------------------------------------------------------
+# Setup source PATH
+#--------------------------------------------------------------------------------
+SRCPATH = '../src'
+gps_osys_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#--------------------------------------------------------------------------------
+# Name of the subsystem to which this unit belongs
+#--------------------------------------------------------------------------------
+LIB_TARGET = '${BUILDPATH}/' + 'gnss_sm_tm_prot_osys_v6_6_8'
+
+#--------------------------------------------------------------------------------
+# Images that this VU is added
+#--------------------------------------------------------------------------------
+IMAGES = ['MODEM_MODEM']
+
+#--------------------------------------------------------------------------------
+# Generate the library and add to an image
+#--------------------------------------------------------------------------------
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../inc/tm_lppe_asn1.asn')
+
+BINARY_LIB_SOURCES = gps_osys_env.GenerateCompileList(SRCPATH, '*.c')
+
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../src/tm_lpp_asn1.c')
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../src/tm_rrlp_asn1.c')
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../src/tm_supl_asn1.c')
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../src/tm_lppe_asn1_dec.c')
+gps_osys_env.CleanPack("CLEANPACK_TARGET", '../src/tm_lppe_asn1_enc.c')
+
+if 'USES_FEATURE_GNSS_LPPE' not in gps_osys_env:
+    gps_osys_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'tm_lppe_asn1_dec.c')
+    gps_osys_env.RemoveCompileFile(BINARY_LIB_SOURCES, 'tm_lppe_asn1_enc.c')
+
+#--------------------------------------------------------------------------------
+# Ship our code as binary library and add it to the Modem image
+#--------------------------------------------------------------------------------
+gps_osys_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+
+gps_osys_env.LoadSoftwareUnits()

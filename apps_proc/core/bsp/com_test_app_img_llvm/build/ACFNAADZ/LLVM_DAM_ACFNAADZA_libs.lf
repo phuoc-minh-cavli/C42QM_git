@@ -1,0 +1,4 @@
+../../core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib
+../../core/securemsm/qtee_invoke/proxy/build/LLVM/qtee_invoke_proxy_user.lib
+../../core/securemsm/com_test_app/build/llvm_dam/cortex-a7/ACFNAADZ/txm_module_preamble_llvm.o
+../../core/securemsm/com_test_app/build/llvm_dam/cortex-a7/ACFNAADZ/app_module.o

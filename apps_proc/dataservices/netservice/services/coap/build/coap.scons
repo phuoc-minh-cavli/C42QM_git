@@ -1,0 +1,120 @@
+#===============================================================================
+#
+# IoTApp Dataservices APSS TX Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/netservice/services/coap/build/coap.scons#4 $
+#  $DateTime: 2021/06/24 08:35:48 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_ENABLE_COAP' not in env:
+	Return()
+
+#Setting build path
+SRCPATH = '${BUILD_ROOT}/dataservices/netservice/services/coap'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Setting compilation flags and macros
+#===============================================================================
+#LWM2M_LITTLE_ENDIAN - Used to indicate that little endian format to be used
+#COAP_STACK_SIZE - Stack size for coap stack thread
+#COAP_PRIORITY - Priority of coap stack thread
+#BLOCK1_SUPPORT - Block 1 transmission support
+#===============================================================================
+env.Append(CFLAGS = ['-DLWM2M_CLIENT_MODE', '-DLWM2M_LITTLE_ENDIAN', '-DCOAP_STACK_SIZE=16384', '-DCOAP_PRIORITY=50', '-DDTLS_SUPPORT', '-DBLOCK1_SUPPORT'])
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUBS')
+	#env.RequirePublicApi(['TX_SERVICES'])
+
+INC_DIRS = [
+   '${INC_ROOT}/dataservices/netservice/services/coap/api',
+]
+
+# Setting path for file inclusions
+env.RequirePublicApi(['KERNEL'], area='core')
+env.RequirePublicApi(['SERVICES'], area='core')
+env.RequirePublicApi(['DAL'], area='core')
+env.RequirePublicApi(['DEBUGTOOLS'], area='core')
+env.RequirePublicApi(['DATASERVICES_NET_IPSTACK'])
+env.RequirePublicApi(['NICHESTACK'])
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi('UTILS_EXT')
+env.RequireRestrictedApi(['DS_UTILS'])
+
+env.RequireRestrictedApi(['NET_UTILS'])
+
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi(['DSS_NET'],area='dataservices')
+env.RequireRestrictedApi(['TS_M2M_COMMON'])
+
+env.RequireRestrictedApi([
+	'COAP'
+])
+env.PublishPrivateApi('COAP_QAPI', INC_DIRS)
+
+
+# Adding source files to be compiled
+COAP_SRC = [
+	'${BUILDPATH}/src/coap_transaction.c',
+	'${BUILDPATH}/src/transaction.c',
+	'${BUILDPATH}/src/er-coap-13.c',
+	'${BUILDPATH}/src/connection.c',
+	'${BUILDPATH}/src/coap_utils.c',   
+]
+
+if '-DBLOCK1_SUPPORT' in env['CFLAGS']:
+	COAP_SRC = [COAP_SRC, '${BUILDPATH}/src/block1.c']
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+env.AddLibrary(IMAGES, ('${BUILDPATH}/coap'), COAP_SRC)
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_COAP_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_2',           # required
+  'init_name'                  : 'coap_init',                      # required
+  'init_function'              : 'coap_init',           # required
+  'dependencies'               : ['netmain']
+}
+
+RCINIT_INIT_COAP_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_2',          # required
+  'thread_name'                : 'coap',                    # required
+  'thread_entry'               : 'coap_thread',           
+  'stack_size_bytes'           : '8096',
+  'priority_amss_order'        : '50'
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE','MOB_DATASERVICES']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_COAP_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_COAP_TASK )
+

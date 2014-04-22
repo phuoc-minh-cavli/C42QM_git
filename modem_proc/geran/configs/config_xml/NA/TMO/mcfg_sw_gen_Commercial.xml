@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="geran.0.0" type="1" />
+  <NvItemData name="GPRS Multi Slot Class" id="911" description="" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="timer" description="" comment="" sizeOf="1" type="uint8">33 </Member>
+  </NvItemData>
+  <NvItemData name="EDA Feature Support" id="3630" description="Flag indicating EDA support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="eda_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="GERAN Feature Pack 1" id="2512" description="Indicates if the EDGE MS supports N/W assisted cell change" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="geran_feature_pack_1" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="1xEV Connection Release" id="4209" description="Flag indicating EDTM feature support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="edtm_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+</NvData>

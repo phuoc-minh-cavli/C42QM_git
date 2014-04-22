@@ -1,0 +1,23 @@
+<qcscons_cleanpack>
+
+<rel_dir_defaults>
+      <build_dir> apps_proc/build/ms </build_dir>
+      <build_cmd> build.sh BUILD_ID={build_ids} USES_FLAGS={uses}</build_cmd>
+      <build_ids> * </build_ids>
+      <uses></uses>
+</rel_dir_defaults>
+
+<rel_dir do_compile_test='True' full_build="True">
+      <name> HY11_1 </name>
+</rel_dir>
+
+<rel_dir_copy>
+      <name> HK11 </name>
+      <file> apps_proc/build/ms/bin/*/*</file>
+</rel_dir_copy>
+<rel_dir_copy>
+      <name> [] </name>
+      <file> apps_proc/tools/build/scons/build/setenv.cmd </file>
+      <file> apps_proc/tools/build/scons/build/setenv.sh  </file>
+</rel_dir_copy>
+</qcscons_cleanpack>

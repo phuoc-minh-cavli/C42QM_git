@@ -1,0 +1,290 @@
+; Additional L4Ka/Pistachio Menues
+
+add
+menu
+(
+  popup "&L4"
+  (
+  menuitem "[=GVbDTtuYuoXYS42mtBcogfXmN42WL72WmtRTUKKRD63Wld3WlNRDkkf@D7YWF] List Iguana &PD"
+    (
+     if WINDOW.NAME("winPDList")
+     (
+        WINTOP winPDList
+     )
+     else
+     (
+        WINPOS ,,,,,,winPDList NORMAL "Iguana PD List"
+        Task.PD
+     )
+  )
+
+  menuitem "[=AVZDyhtSR277iiitt00FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] List &L4 Threads"
+(
+     if WINDOW.NAME("winTList")
+     (
+        WINTOP winTList
+     )
+     else
+     (
+        WINPOS ,,,,,,winTList NORMAL "L4 Thread List"
+        Task.Thread
+     )
+)
+
+  menuitem "[=5Vl6cs$a1eFHRN0NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] List &Rex Tasks"
+  (
+     if WINDOW.NAME("winRTList")
+     (
+        WINTOP winRTList
+     )
+     else
+     (
+        WINPOS ,,,,,, winRTList NORMAL "REX Task List"
+        Task.RexTask
+     )
+  )
+
+  menuitem "[=5VlP5RxuAHhfHx80RQMIE0NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] List &Mutexes"
+  (
+     if WINDOW.NAME("winMXList")
+     (
+        WINTOP winMXList
+     )
+     else
+     (
+        WINPOS ,,,,,, winMXList NORMAL "KxMutex List"
+        Task.Mutex
+     )
+  )
+  menuitem "[=5Vl6eJJqHJ5a4ZH000@F43604lYkiGGdt00NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] &Stack Coverage Analysis"
+   (
+       Task.Stack
+   )
+
+  menuitem "[=EVZD5tyoXcG@R0QV804487p2D1VeYD84XF8@nWVFdYe4n7WlG8xgFlr1A0R4lr0Y300mmGQQADjiz6E100FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] &Trace Buffer"
+   (
+       Task.TB
+   )
+
+  menuitem "[=7V6E$@g0VsUk$HYaKqponKJ206D000KKz30l300E0Vz3jJKt0TLS5L0Vc$pBbLqKE10V70d$laf27tOKKN10E$qBLgvfc00VsU80lf@RVcKKW50R$qBLgfeL2002VTl3zJKu7z2lE7D0t0J$fFifvOu00t0J$fFiffca30QV804487p2D1VeYD84XF8@nWVFdYe4n7WlG8xgFlr1A0R4lr0Y300mmGQQADjiz6E100FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD] &Console"
+    (
+        Task.Console
+    )
+
+  menuitem "[=9Vj@UjDv0t1l$07DRbYmN66jvPvOul$0T0ll04Y0ucFDcdcMnoIyuQQMIEA73073lB0RqqponW$1x0VW1861nEWRDGEkZccvosrjbTLD6TJRzE0V$1tu1jsWwsmzsx$$r$wrjbTLD6pG70E0z7tlWoRB6ollKMIEA7] &Do Reset"
+    (
+        Do Reset
+    )
+ popup "Demand Loading"
+  (
+    menuitem "[=521eacUzloMRz6osOzu9$fgTLV70$000$000t1l$07DRbYmN66jvPvOul$0T0ll04Y0ucFDcdcMnoIyuQQMIEA73073lB0RqqponW$1x0VW1861nEWRDGEkZccvosrjbTLD6TJRzE0V$1tu1jsWwsmzsx$$r$wrjbTLD6pG70E0z7tlWoRB6ollKMIEA7] &Demand Loading Pool Info"
+      (
+        if WINDOW.NAME("winDLPI")
+        (
+           WINTOP winDLPI
+        )
+        else
+        (
+           WINPOS ,,,,,, winDLPI NORMAL "Demand Loading Pool Information"
+           Task.DLP
+        )
+      )
+
+    )
+  )
+  popup "Trace"
+  (
+    popup "List"
+    (
+      separator
+      menuitem "&Task Switches"     "Trace.List List.TASK"
+      menuitem "&Default and Tasks" "Trace.List List.TASK DEFault"
+    )
+  )
+  popup "Perf"
+  (
+    separator
+    popup "&Task Runtime"
+    (
+      menuitem "[:perf]Show &Numerical"   "Trace.STATistic.TASK"
+      menuitem "[:achart]Show as &Timing" "Trace.CHART.TASK"
+      menuitem "[:achart]Tracking with Trace &List"
+      (
+        Trace.List List.TASK DEFault /Track
+        Trace.CHART.TASK /Track
+      )
+    )
+    popup "Task &Function Runtime"
+    (
+      menuitem "[:perf]Show &Numerical"     "Trace.STATistic.TASKFUNC"
+      menuitem "[:perf]Show as &Tree"       "Trace.STATistic.TASKTREE"
+      menuitem "[:perf]Show &Detailed Tree" "Trace.STATistic.TASKTREE ALL"
+      menuitem "[:achart]Show as &Timing"   "Trace.CHART.TASKFUNC"
+      menuitem "[:alist]Show N&esting"      "Trace.List List.TASK FUNC TI.FUNC"
+    )
+    popup "Task &Status"
+    (
+      menuitem "[:perf]Show &Numerical"   "Trace.STATistic.TASKSTATE"
+      menuitem "[:achart]Show as &Timing" "Trace.CHART.TASKSTATE"
+      menuitem "[:achart]Tracking with Trace &List"
+      (
+        Trace.List List.TASK DEFault /Track
+        Trace.CHART.TASKSTATE /Track
+      )
+    )
+  )
+)
+
+
+menu "task.tl"
+(
+  default
+  menuitem "Thread Display Detailed"  "TASK.Thread track.address()"
+  menuitem "Display thread"
+  (
+    &address=address.offset(track.address())
+    Var.View %m %in (struct thread *)&address
+  )
+  menuitem "Dump thread"  "Data.dump track.address()"
+)
+
+menu "task.tid"
+(
+  menuitem "Thread ID"
+  (
+    &address=address.offset(track.address())
+    Var.View %m %in (tcb_t*)&address
+  )
+)
+
+menu "task.tprio"
+(
+  menuitem "Thread Priority"
+  (
+    &address=address.offset(track.address())
+    Var.View %m %in (tcb_t*)&address
+  )
+)
+
+menu "task.tname"
+(
+  menuitem "Thread Name"
+  (
+    &address=address.offset(track.address())
+    Var.View %m %in (tcb_t*)&address
+  )
+)
+
+menu "task.event"
+(
+  menuitem "Task"
+  (
+    &address=address.offset(track.address())
+    Var.View %m %in (tcb_t*)&address
+  )
+)
+
+;Add some extra default buttons to the toolbar
+
+  add
+  toolbar
+  (
+   separator
+   toolitem "Source/List" "list" "Data.List"
+   toolitem "Memory Dump" "dump" "Data.dump"
+   toolitem "Register" "reg" "Register"
+   separator
+   toolitem "Watch" ":varwatch" "Var.Watch"
+   toolitem "Stack" ":varframe" "Var.Frame /l /c"
+   toolitem "Automatic Watch" ":varref" "Var.Ref"
+   separator
+   toolitem "List Breakpoints" "break" "Break.List"
+   toolitem "List Symbols" "symbols" "sYmbol.Browse"
+   separator
+  )
+
+; L4 toolbars
+ADD
+TOOLBAR
+(
+  TOOLITEM "PD List" "[=GVbDTtuYuoXYS42mtBcogfXmN42WL72WmtRTUKKRD63Wld3WlNRDkkf@D7YWF]"
+    (
+     if WINDOW.NAME("winPDList")
+     (
+        WINTOP winPDList
+     )
+     else
+     (
+        WINPOS ,,,,,,winPDList NORMAL "Iguana PD List"
+        Task.PD
+     )
+  )
+  TOOLITEM "Thread List" "[=AVZDyhtSR277iiitt00FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]"
+  (
+     if WINDOW.NAME("winTList")
+     (
+        WINTOP winTList
+     )
+     else
+     (
+        WINPOS ,,,,,,winTList NORMAL "L4 Thread List"
+        Task.Thread
+     )
+  )
+  SEPARATOR
+  TOOLITEM "List REX Tasks" "[=5Vl6cs$a1eFHRN0NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]"
+  (
+     if WINDOW.NAME("winRTList")
+     (
+        WINTOP winRTList
+     )
+     else
+     (
+        WINPOS ,,,,,, winRTList NORMAL "REX Task List"
+        Task.RexTask
+     )
+  )
+  TOOLITEM "List Mutexes" "[=5VlP5RxuAHhfHx80RQMIE0NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]"
+  (
+     if WINDOW.NAME("winMXList")
+     (
+        WINTOP winMXList
+     )
+     else
+     (
+        WINPOS ,,,,,, winMXList NORMAL "KxMutex List"
+        Task.Mutex
+     )
+  )
+  TOOLITEM "Stack Coverage Analysis" "[=5Vl6eJJqHJ5a4ZH000@F43604lYkiGGdt00NF4I0kBNj34bU106N2906aN2eKVV96WF046V7D1NaD0R8$qAb$U3U@hJhdRm$1s3rA70606h3L0VdWW516002WVXHL0FQGlGGQADD0@yxJmNe30YaLI@4$sDFN4mNZml71NhA02UMsm90RpprXV300WFGQOEeYD84jFNH0B784zH8RIYUQk21300FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]" "Task.Stack"
+  TOOLITEM "Trace Buffer" "[=EVZD5tyoXcG@R0QV804487p2D1VeYD84XF8@nWVFdYe4n7WlG8xgFlr1A0R4lr0Y300mmGQQADjiz6E100FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]"
+   (
+     if WINDOW.NAME("winTB")
+     (
+        WINTOP winTB
+     )
+     else
+     (
+        WINPOS ,,,,,, winTB NORMAL "Trace Buffer"
+        Task.TB
+     )
+  )
+  SEPARATOR
+  TOOLITEM "Console" "[=7V6E$@g0VsUk$HYaKqponKJ206D000KKz30l300E0Vz3jJKt0TLS5L0Vc$pBbLqKE10V70d$laf27tOKKN10E$qBLgvfc00VsU80lf@RVcKKW50R$qBLgfeL2002VTl3zJKu7z2lE7D0t0J$fFifvOu00t0J$fFiffca30QV804487p2D1VeYD84XF8@nWVFdYe4n7WlG8xgFlr1A0R4lr0Y300mmGQQADjiz6E100FAEItd32c4DGNZa346kbT6$rT5DN72omGQQADD]" "Task.Console"
+  TOOLITEM "Reset" "[=9Vj@UjDv0t1l$07DRbYmN66jvPvOul$0T0ll04Y0ucFDcdcMnoIyuQQMIEA73073lB0RqqponW$1x0VW1861nEWRDGEkZccvosrjbTLD6TJRzE0V$1tu1jsWwsmzsx$$r$wrjbTLD6pG70E0z7tlWoRB6ollKMIEA7]" "Do Reset"
+  SEPARATOR
+  TOOLITEM "Demand Loading Pool Info" "[=521eacUzloMRz6osOzu9$fgTLV70$000t1l$07DRbYmN66jvPvOul$0T0ll04Y0ucFDcdcMnoIyuQQMIEA73073lB0RqqponW$1x0VW1861nEWRDGEkZccvosrjbTLD6TJRzE0V$1tu1jsWwsmzsx$$r$wrjbTLD6pG70E0z7tlWoRB6ollKMIEA7]"
+    (
+      if WINDOW.NAME("winDLPI")
+      (
+         WINTOP winDLPI
+      )
+      else
+      (
+         WINPOS ,,,,,, winDLPI NORMAL "Demand Loading Pool Information"
+         Task.DLP
+      )
+    )
+)
+
+

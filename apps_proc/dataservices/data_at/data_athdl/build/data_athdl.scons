@@ -1,0 +1,71 @@
+#===============================================================================
+#
+# RIL APSS TX
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/data_at/data_athdl/build/data_athdl.scons#3 $
+#  $DateTime: 2021/02/26 00:27:11 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 10/19/18   xiangma Baseline
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('ATFWD_EXT')
+env.RequirePublicApi('DATA_ATFWD')
+env.RequirePublicApi('QAPI')
+env.RequirePublicApi('UTILS_EXT')
+env.RequireRestrictedApi('DS_UTILS')
+env.RequireRestrictedApi(['NET_UTILS'])
+
+RIL_PORT_RESTRICTED_APIS = [
+ 'DATA_RIL_PORT',
+    'DATA_ATFWD',    
+    'DATA_ATHDL',
+    'LWM2M_ATHDL'
+    ]
+
+env.RequireRestrictedApi(RIL_PORT_RESTRICTED_APIS)		
+
+SRCPATH = '${BUILD_ROOT}/dataservices/data_at/data_athdl/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+DATA_ATHDL_PORT_SOURCES = [
+	'${BUILDPATH}/at_handler_utility.c',
+	'${BUILDPATH}/at_handler_main.c'
+]
+
+IMAGES = ['APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/data_athdl'), DATA_ATHDL_PORT_SOURCES,pack_exception=['USES_RSRC_RIL'])
+env.Append(CPPDEFINES = ["AT_LOG_LEVEL_LOW"])
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+

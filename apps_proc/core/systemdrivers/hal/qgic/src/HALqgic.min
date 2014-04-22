@@ -1,0 +1,47 @@
+
+# ===========================================================================
+# 
+# FILE:         HALqgic.min
+# 
+# DESCRIPTION:  
+#   This is the makefile for the Qualcomm generic interrupt controller
+#   hardware abstration layer.
+#   Build environments should not include this file, but should use the
+#   top level HAL.min instead.
+# 
+# ===========================================================================
+#              Copyright (c) 2009 QUALCOMM Incorporated.
+#                     All Rights Reserved.
+#                   QUALCOMM Proprietary/GTDR
+# ===========================================================================
+# $Header: //components/rel/core.tx/6.0/systemdrivers/hal/qgic/src/HALqgic.min#1 $
+# ===========================================================================
+
+
+# ---------------------------------------------------------------------------
+# Add sources and set the search path
+# ---------------------------------------------------------------------------
+
+HAL_SOURCES += HALqgic.c
+
+vpath %.c $(HAL_QGIC_SRC)
+
+
+# ---------------------------------------------------------------------------
+# Define target HWIO header based on processor
+# ---------------------------------------------------------------------------
+
+ifeq ($(IMAGE), RPM_PROC)
+  HAL_CFLAGS += -DHAL_QGIC_TARGET_H=\"target/HALqgicTargetRPM.h\"
+endif
+
+ifeq ($(IMAGE), MODEM_PROC)
+  HAL_CFLAGS += -DHAL_QGIC_TARGET_H=\"target/HALqgicTargetMSS.h\"
+endif
+
+ifeq ($(IMAGE), APPS_PROC)
+  HAL_CFLAGS += -DHAL_QGIC_TARGET_H=\"target/HALqgicTargetSCSS.h\"
+endif
+
+
+

@@ -1,0 +1,119 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/appsrv/utils/build/datamodem_as_utils.scons#1 $
+#  $DateTime: 2020/03/17 08:03:16 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/05/14   ml      Initial Version
+#===============================================================================
+Import('env')
+
+#import pdb
+
+from glob import glob
+from os.path import join, basename
+
+#turn off debug if requested
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2")
+    env.Replace(HEXAGON_DBG = "-g")
+    env.Replace(GCC_DBG = "-g")
+
+if 'USES_APPSRV_TEST_TOOL' in env:
+  env.Append(CFLAGS = ['-DFEATURE_DATA_APPSRV_DIAG_SUPPORT'])
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+#    'SYSTEMDRIVERS',
+#    'WIREDCONNECTIVITY',
+#    'STORAGE',
+#    'SECUREMSM',
+#    'BUSES',
+#    'DAL',
+#    'POWER',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    # 'MODEM_DATA',
+    # 'MODEM_DATACOMMON',
+    # 'MODEM_DATAMODEM',
+    'DATAMODEM',
+    'DATACOMMON',
+    'DATA',
+    'MCS',
+    'ONEX',
+    'NAS',
+    'HDR',
+    'MMODE',
+    'RFA',
+    'GERAN',
+    'UIM',
+    'WCDMA',
+    'MDSP',
+    'UTILS',
+    'LTE',
+    'CNE',
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+#code shipped as library
+APPSRV_UTILS_SOURCES = [
+   '${BUILDPATH}/src/ds_appsrv_task.c',
+]
+
+if 'USES_APPSRV_TEST_TOOL' in env:
+  APPSRV_UTILS_DIAG = [
+     '${BUILDPATH}/src/ds_appsrv_diag.c',
+  ]
+   
+env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_DATAMODEM' ], '${BUILDPATH}/utils',[APPSRV_UTILS_SOURCES, ])
+
+if 'USES_APPSRV_TEST_TOOL' in env:
+  env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_DATAMODEM' ], '${BUILDPATH}/utils_diag',[APPSRV_UTILS_DIAG, ])
+
+env.LoadSoftwareUnits()

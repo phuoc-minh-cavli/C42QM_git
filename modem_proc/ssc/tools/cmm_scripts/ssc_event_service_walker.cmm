@@ -1,0 +1,115 @@
+;============================================================================
+;
+; Event service walker
+;
+;   To be called by ssc_parser.cmm to walk the Event Service DB
+;
+; Version: 2.0
+;
+; Copyright (c) 2017-2019 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Qualcomm Technologies, Inc. Confidential and Proprietary.
+;============================================================================
+
+ENTRY
+
+print "##### Event Service #####"
+print
+
+&buffer_island=V.VALUE(*((uintptr_t*)&event_buffer_island))
+&island_full=V.VALUE(*((int32_t*)&event_service.island_full))
+&event_island_buffer_size=V.VALUE(sizeof(event_buffer_island))
+&len=V.VALUE(sizeof(event_clusters_island))/V.VALUE(sizeof(event_clusters_island[0]))
+
+print "#Island Heap#"
+print "Start           = 0x"+format.HEX(8,&buffer_island)
+print "Size            = "+format.decimal(5,&event_island_buffer_size/1024.)+" Kbytes"
+print "Island Full     = "+format.decimal(5,&island_full)
+print "Total Clusters  = "+format.decimal(5,&len)
+print "Clusters in-use:"
+
+&idx=0
+&row=1
+&available_cluster=0
+while &idx<&len
+(
+  &cluster=V.VALUE(&(event_clusters_island[&idx]))
+  &ref_cnt=V.VALUE(((sns_cluster*)&cluster)->ref_cnt)
+  if &idx%32.==0
+  (
+    print format.decimal(5,&row)+": "
+    &row=&row+1
+  )
+  if &ref_cnt==0
+  (
+    &available_cluster=&available_cluster+1
+  )
+  &idx=&idx+1
+  print %CONTinue " "+format.decimal(1,&ref_cnt)
+)
+
+print "Blocks available:"
+&idx=0
+&available_block=0
+&len=V.VALUE(sizeof(available_blocks_island))/V.VALUE(sizeof(available_blocks_island[0]))
+while &idx<&len
+(
+  &block=V.VALUE(available_blocks_island[&idx])
+  if &idx%4==0
+  (
+    print
+  )
+  &idx=&idx+1
+  print %CONTinue " "+format.binary(32.,&block)
+)
+
+&buffer=V.VALUE(*((uintptr_t*)&event_buffer))
+&event_buffer_size=V.VALUE(sizeof(event_buffer))
+&len=V.VALUE(sizeof(event_clusters))/V.VALUE(sizeof(event_clusters[0]))
+
+print
+print "#DDR Heap#"
+print "Start           = 0x"+format.HEX(8,&buffer)
+print "Size            = "+format.decimal(5,&event_buffer_size/1024.)+" Kbytes"
+print "Total Clusters  = "+format.decimal(5,&len)
+print "Clusters in-use:"
+
+&idx=0
+&row=1
+&available_cluster=0
+while &idx<&len
+(
+  &cluster=V.VALUE(&(event_clusters[&idx]))
+  &ref_cnt=V.VALUE(((sns_cluster*)&cluster)->ref_cnt)
+  if &idx%32.==0
+  (
+    print format.decimal(5,&row)+": "
+    &row=&row+1
+  )
+  if &ref_cnt==0
+  (
+    &available_cluster=&available_cluster+1
+  )
+  &idx=&idx+1
+  print %CONTinue " "+format.decimal(1,&ref_cnt)
+)
+
+print "Blocks available:"
+&idx=0
+&available_block=0
+&len=V.VALUE(sizeof(available_blocks))/V.VALUE(sizeof(available_blocks[0]))
+while &idx<&len
+(
+  &block=V.VALUE(available_blocks[&idx])
+  if &idx%4==0
+  (
+    print
+  )
+  &idx=&idx+1
+  print %CONTinue " "+format.binary(32.,&block)
+)
+
+print
+print "==================================================================================="
+print
+enddo

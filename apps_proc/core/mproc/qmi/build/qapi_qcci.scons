@@ -1,0 +1,79 @@
+#===============================================================================
+#
+# qcci lib scons script for threadx qapi dam user space
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017, 2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/core.tx/6.0/mproc/qmi/build/qapi_qcci.scons#3 $
+#  $DateTime: 2020/12/29 05:46:59 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# import pdb; pdb.set_trace()
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('QAPI')
+#env.RequirePublicApi('SERVICES', area='core')
+#env.RequirePublicApi('DEBUGTOOLS', area='core')
+#env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+#env.RequirePublicApi('HWENGINES', area='core')
+#env.RequirePublicApi('MEMORY', area='core')
+#env.RequirePublicApi('DAL', area='core')
+#env.RequirePublicApi('STORAGE', area='core')
+#env.RequirePublicApi('SERVICES', area='core')
+	
+SRCPATH = '${BUILD_ROOT}/core/mproc/qmi'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_QMI_SYSCALL_ENABLE' in env:
+    QCCI_DAM_LIB_SOURCES = [
+	'${BUILDPATH}/qapi_qcci/qmi_cci_shim_user.c',
+]
+else:
+    QCCI_DAM_LIB_SOURCES = [
+	'${BUILDPATH}/qapi_qcci/qmi_cci_shim_user_stubs.c',
+] 
+
+if 'USES_QMI_SYSCALL_ENABLE' in env:
+    IDL_DAM_LIB_SOURCES = [
+	'${BUILDPATH}/qapi_qcci/qmi_idl_shim_user.c',
+]
+else:
+    IDL_DAM_LIB_SOURCES = [
+	'${BUILDPATH}/qapi_qcci/qmi_idl_shim_user_stubs.c',
+]
+
+
+if 'USES_ARM' in env:
+    env.AddBinaryLibrary(['TXM_MODULES'],'${BUILD_ROOT}/core/mproc/qmi/build/qcci_dam_lib',QCCI_DAM_LIB_SOURCES) 
+    env.AddBinaryLibrary(['TXM_MODULES'],'${BUILD_ROOT}/core/mproc/qmi/build/IDL_DAM_LIB',IDL_DAM_LIB_SOURCES) 
+else:
+    env.AddBinaryLibrary(['TXM_MODULES_LLVM'],'${BUILD_ROOT}/core/mproc/qmi/build/LLVM/qcci_dam_lib',QCCI_DAM_LIB_SOURCES) 
+    env.AddBinaryLibrary(['TXM_MODULES_LLVM'],'${BUILD_ROOT}/core/mproc/qmi/build/LLVM/IDL_DAM_LIB',IDL_DAM_LIB_SOURCES)
+	
+#-------------------------------------------------------------------------------
+# CleanPack (Remove) files which should not be shipped
+#-------------------------------------------------------------------------------
+QAPI_SRCPATH = '${BUILD_ROOT}/core/mproc/qmi/qapi_qcci'
+DONT_SHIP_SRC = env.FindFiles(['qmi_cci_shim_user.c', 'qmi_idl_shim_user.c'],
+                    QAPI_SRCPATH + '/..')
+PACK_OUT = list(set(DONT_SHIP_SRC))
+env.CleanPack(['CBSP_APPS_IMAGE', 'APPS_IMAGE'], 
+              PACK_OUT)
+	
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+#env.LoadSoftwareUnits()

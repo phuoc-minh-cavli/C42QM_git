@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+	<NvConfigurationData carrierIndex="1" version="0xEE000100" type="1"/>
+	<NvEfsFile mcfgAttributes="0x09" mcfgVariant="2" targetPath="/multi_mbn/row.mbn" buildPath="modem_proc/mcfg/configs/mcfg_sw/generic/common/ROW/Commercial/mcfg_sw.mbn"/>
+	<NvTrlRecord name="MCFG TRL record" description="Configuration Framework Data" comment="" category="MCFG" mcfgAttributes="0x00">
+		<Member name="MCFG_trl_struct_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="MCFG_trl_struct_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">2 </Member>
+		<Member name="MCFG_trl_struct_version" description="Value Trailer Record TLV" comment="" sizeOf="1" type="uint16">256 </Member>
+		<Member name="MCFG_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="MCFG_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">4 </Member>
+		<Member name="MCFG_version" description="Value Trailer Record TLV" comment="" sizeOf="1" type="int32">3992977664 </Member>
+		<Member name="Configuration_Name_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Configuration_Name_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">8 </Member>
+		<Member name="Configuration_Name" description="Value Trailer Record TLV" comment="" sizeOf="8" type="uint8">MultiMBN</Member>
+		<Member name="QC_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">5 </Member>
+		<Member name="QC_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">4 </Member>
+		<Member name="QC_version" description="Value Trailer Record TLV" comment="" sizeOf="1" type="int32">3992977664 </Member>
+	</NvTrlRecord>
+</NvData>

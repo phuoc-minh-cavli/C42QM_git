@@ -1,0 +1,289 @@
+
+ENTRY &A7_root &save_location &Flavor
+local &mmu_cr
+local &reg
+
+do std_constants.cmm
+
+;****************************************************************************
+; Save the register state
+;****************************************************************************
+&filename="&save_location"+"\"+"&A7_root"+"&regs_log"
+store &filename hex register
+print "A7 register state saved to file &filename.cmm"
+
+;****************************************************************************
+; Save the A7 breakpoints
+;****************************************************************************
+&filename="&save_location"+"\"+"&A7_root"+"&bp_log"
+store &filename hex break tronchip 
+print "A7 breakpoint state saved to file &filename.cmm"
+
+;****************************************************************************
+; Save the MMU state data
+;****************************************************************************
+&filename="&save_location"+"\"+"&A7_root"+"&MMU_log"
+open #1 "&filename" /create
+
+&mmu_cr=data.long(c15:0x1)
+&ttb=data.long(c15:0x2)
+&dacr=data.long(c15:0x3)
+
+write #1 "B::"
+write #1 "PER.S C15:0x3 %LONG "+"&dacr"
+write #1 "PER.S C15:0x2 %LONG "+"&ttb"
+write #1 "PER.S C15:0x1 %LONG "+"&mmu_cr"
+write #1 "ENDDO"
+
+close #1
+
+
+;clean and invalidate A7 cache
+do flush_cache_a7.cmm
+print "A7 cache flushed."
+
+;****************************************************************************
+; Set A7 in Secure mode
+;****************************************************************************
+ON ERROR Cont
+r.s ns 0x0
+
+
+; Dump Smem contents to file
+  
+&filename="&save_location"+"\"+"&JTAG_SHARED_RAM_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB SHARED_RAM_SAVE_ERROR
+data.save.binary &filename A:&SHARED_RAM_DUMP_START_ADDR++&SHARED_RAM_DUMP_SIZE /long
+ON ERROR
+print "SMEM saved."
+
+
+; Dump TZ contents to file
+&filename="&save_location"+"\"+"&JTAG_TZ_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB TZ_SAVE_ERROR
+data.save.binary &filename A:&TZ_DUMP_START_ADDR++&TZ_DUMP_SIZE /long
+ON ERROR
+print "TZ saved."
+
+;****************************************************************************
+; Set A7 in non-Secure mode
+;****************************************************************************
+ON ERROR Cont
+r.s ns 0x1
+
+if ("&HLOS"=="TN")
+(
+
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS1_log"
+print "Saving FS1 contents to &filename ..."
+ON ERROR GOSUB EFS1_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS1_DUMP_START_ADDR++&EFS1_DUMP_SIZE /long
+ON ERROR
+print "EFS1 saved."
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS2_log"
+print "Saving FS2 contents to &filename ..."
+ON ERROR GOSUB EFS2_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS2_DUMP_START_ADDR++&EFS2_DUMP_SIZE /long
+ON ERROR
+print "EFS2 saved."
+
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS3_log"
+print "Saving FS3 contents to &filename ..."
+ON ERROR GOSUB EFS3_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS3_DUMP_START_ADDR++&EFS3_DUMP_SIZE /long
+ON ERROR
+print "EFS3 saved."
+
+
+
+
+; Dump hlos1 contents to file
+&filename="&save_location"+"\"+"&JTAG_TN_HLOS1_log"
+print "Saving HLOS1 contents to &filename ..."
+ON ERROR GOSUB TN_HLOS1_SAVE_ERROR
+data.save.binary &filename EAXI:&TN_HLOS1_DUMP_START_ADDR++&TN_HLOS1_DUMP_SIZE /long
+ON ERROR
+print "TN HLOS1 saved."
+
+; Dump hlos2 contents to file
+&filename="&save_location"+"\"+"&JTAG_TN_HLOS2_log"
+print "Saving HLOS2 contents to &filename ..."
+ON ERROR GOSUB TN_HLOS2_SAVE_ERROR
+data.save.binary &filename EAXI:&TN_HLOS2_DUMP_START_ADDR++&TN_HLOS2_DUMP_SIZE /long
+ON ERROR
+print "TN HLOS2 saved."
+
+
+; Dump acdb contents to file
+&filename="&save_location"+"\"+"&JTAG_ACDB_log"
+print "Saving acdb contents to &filename ..."
+ON ERROR GOSUB ACDB_SAVE_ERROR
+data.save.binary &filename EAXI:&ACDB_DUMP_START_ADDR++&ACDB_DUMP_SIZE /long
+ON ERROR
+print "ACDB saved."
+
+
+
+)
+else if ("&HLOS"=="LE")
+(
+
+; Dump hlos1 contents to file
+&filename="&save_location"+"\"+"&JTAG_LE_HLOS1_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB LE_HLOS1_SAVE_ERROR
+data.save.binary &filename EAXI:&LE_HLOS1_DUMP_START_ADDR++&LE_HLOS1_DUMP_SIZE /long
+ON ERROR
+print "LE HLOS1 saved."
+
+; Dump hlos2 contents to file
+&filename="&save_location"+"\"+"&JTAG_LE_HLOS2_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB LE_HLOS2_SAVE_ERROR
+data.save.binary &filename EAXI:&LE_HLOS2_DUMP_START_ADDR++&LE_HLOS2_DUMP_SIZE /long
+ON ERROR
+print "LE HLOS2 saved."
+
+
+)
+else if ("&HLOS"=="MN")
+(
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS1_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB EFS1_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS1_DUMP_START_ADDR++&EFS1_DUMP_SIZE /long
+ON ERROR
+print "EFS1 saved."
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS2_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB EFS2_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS2_DUMP_START_ADDR++&EFS2_DUMP_SIZE /long
+ON ERROR
+print "EFS2 saved."
+
+
+; Dump efs1 contents to file
+&filename="&save_location"+"\"+"&JTAG_EFS3_log"
+print "Saving smem contents to &filename ..."
+ON ERROR GOSUB EFS3_SAVE_ERROR
+data.save.binary &filename EAXI:&EFS3_DUMP_START_ADDR++&EFS3_DUMP_SIZE /long
+ON ERROR
+print "EFS3 saved."
+
+
+; Dump hlos1 contents to file
+&filename="&save_location"+"\"+"&JTAG_MN_HLOS1_log"
+print "Saving MN HLOS contents to &filename ..."
+ON ERROR GOSUB MN_HLOS1_SAVE_ERROR
+data.save.binary &filename EAXI:&MN_HLOS1_DUMP_START_ADDR++&MN_HLOS1_DUMP_SIZE /long
+ON ERROR
+print "MN HLOS1 saved."
+
+
+; Dump acdb contents to file
+&filename="&save_location"+"\"+"&JTAG_ACDB_log"
+print "Saving acdb contents to &filename ..."
+ON ERROR GOSUB ACDB_SAVE_ERROR
+data.save.binary &filename EAXI:&ACDB_DUMP_START_ADDR++&ACDB_DUMP_SIZE /long
+ON ERROR
+print "ACDB saved."
+
+)
+
+ELSE
+(
+		PRINT "APPS HLOS Configuration not found"
+		GOTO EXIT
+	
+)
+
+ENDDO
+
+
+SHARED_RAM_SAVE_ERROR:
+print "ERROR saving smem !"
+del &filename
+RETURN
+
+
+TZ_SAVE_ERROR:
+print "ERROR saving TZ !"
+del &filename
+RETURN
+
+EFS1_SAVE_ERROR:
+print "ERROR saving EFS1 !"
+del &filename
+RETURN
+
+
+
+EFS2_SAVE_ERROR:
+print "ERROR saving EFS2 !"
+del &filename
+RETURN
+
+
+
+EFS3_SAVE_ERROR:
+print "ERROR saving EFS3 !"
+del &filename
+RETURN
+
+
+
+
+TN_HLOS1_SAVE_ERROR:
+print "ERROR saving TN HLOS1 !"
+del &filename
+RETURN
+
+
+TN_HLOS2_SAVE_ERROR:
+print "ERROR saving TN HLOS2 !"
+del &filename
+RETURN
+
+
+
+
+LE_HLOS1_SAVE_ERROR:
+print "ERROR saving LE HLOS1 !"
+del &filename
+RETURN
+
+
+LE_HLOS2_SAVE_ERROR:
+print "ERROR saving LE HLOS2 !"
+del &filename
+RETURN
+
+
+
+ACDB_SAVE_ERROR:
+print "ERROR saving ACDB !"
+del &filename
+RETURN
+
+
+MN_HLOS1_SAVE_ERROR:
+print "ERROR saving MN HLOS !"
+del &filename
+RETURN
+
+
+EXIT:
+ENDDO
+

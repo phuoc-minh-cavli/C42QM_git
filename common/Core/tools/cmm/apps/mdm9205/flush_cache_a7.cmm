@@ -1,0 +1,60 @@
+;L1 Cache 32 KB
+; 4-way, 64B line size, 128 sets
+
+;L2 Cache 256KB
+; 8-way, 64B line size, 512 sets
+
+; Flush L1
+; mcr     p15, 0, r0, c7, c14, 2 ; clean by set/way
+;0x2e7
+; mcr     p15, 2, r10, c0, c0, 0  ; select current cache level in cssr
+;0x2000
+
+&cache_level=0
+d.s C15:0x2000 %long &cache_level
+
+wait 2s
+
+&set=0
+
+while (&set<0x80)
+(
+  &way=0
+  while (&way<4) 
+  (
+    &data=((&set<<0x6)|(&way<<0x1E)|(&cache_level))
+    d.s C15:0x2e7 %long &data
+    &way=&way+1
+   
+   ) 
+
+ &set=&set+1
+)
+
+
+
+
+; Flush L2
+
+&cache_level=&cache_level+2
+d.s C15:0x2000 %long &cache_level
+
+wait 2s
+
+&set=0
+
+while (&set<0x200)
+(
+  &way=0
+  while (&way<8) 
+  (
+    &data=((&set<<0x6)|(&way<<0x1D)|(&cache_level))
+    d.s C15:0x2e7 %long &data
+    &way=&way+1
+   
+   ) 
+
+ &set=&set+1
+)
+
+

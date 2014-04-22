@@ -1,0 +1,75 @@
+#===============================================================================
+#
+# Power rail manager utility
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#  $Id: //components/rel/ssc.slpi/5.1/utils/pwr_rail_mgr/build/pwr_rail_mgr.scons#2 $
+#  $DateTime: 2019/06/04 03:03:41 $
+#  $Change: 19412437 $
+#
+#===============================================================================
+Import('env')
+import os,inspect
+
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+  'SERVICES',
+  'POWER',
+  'PMIC',
+  'DAL',        # for DALSys.h included in npa.h
+  'DEBUGTOOLS',
+  'KERNEL',
+  'SYSTEMDRIVERS',
+]
+
+if env.get('CHIPSET') in ["sdm439"]:
+   CBSP_API += ['SYSTEMDRIVERS_PMIC']
+
+me = inspect.getfile(inspect.currentframe())
+my_root = os.path.dirname(os.path.dirname(me))
+
+pwr_rail_mgr_flavor = ["hexagon"]
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  pwr_rail_mgr_flavor = ["x86"]
+elif 'SSC_TARGET_HEXAGON_MDSP' in env['CPPDEFINES']:
+  pwr_rail_mgr_flavor = ["hexagon_mdsp"]
+
+pwr_rail_mgr_cleanpack = []
+if 'SENSORS_DD_DEV_FLAG' not in env: 
+  for tempdir in os.listdir(os.path.join(my_root, 'inc')):
+    if tempdir not in env['CHIPSET']: 
+      chipdir = os.path.join(my_root, 'inc', tempdir)
+      if os.path.isdir(chipdir):
+        pwr_rail_mgr_cleanpack += env.FindFiles('*', chipdir)
+  binlib=False
+else:
+  pwr_rail_mgr_cleanpack=['*.c','*.h']
+  binlib=True
+  
+env.Append(CPPPATH = [
+   "${SSC_ROOT}/utils/pwr_rail_mgr/inc/${CHIPSET}",
+])  
+ 
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             flavor = pwr_rail_mgr_flavor,
+             core_public_api = CBSP_API,
+             ssc_protected_api = ['SNS_FRAMEWORK','SNS_INTERNAL_INCLUDES'],
+             clean_pack_list = pwr_rail_mgr_cleanpack,
+             binary_lib=binlib,
+             island_sections = ['.text.sns', '.data.sns','.rodata.sns'])
+
+REMOVE_FILES=pwr_rail_mgr_cleanpack
+env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)

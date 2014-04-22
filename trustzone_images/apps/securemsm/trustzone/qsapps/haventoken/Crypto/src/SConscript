@@ -1,0 +1,25 @@
+#===============================================================================
+#
+# CryptoLib build script
+#
+# GENERAL DESCRIPTION
+#    build script
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+libname = 'crypto_lib'
+
+includes = [
+   "../../HavenTUsefulBufLib/inc",
+   "../../Utils/inc",
+   "../inc",
+   "${BUILD_ROOT}/apps/securemsm/trustzone/qsapps/misc_headers",
+]
+
+env.Append(CPPPATH = includes)
+sources = Glob('*.c')
+
+lib = env.SecureAppLibBuilder(includes, sources, libname)
+env.Deploy([lib, 'SConscript'])
+Return('lib')

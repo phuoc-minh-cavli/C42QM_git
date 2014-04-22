@@ -1,0 +1,47 @@
+#===============================================================================
+#
+# DESCRIPTION:  Sconscript file for Buses include paths.
+#
+#===============================================================================
+#
+#                             Edit History
+#
+# $Header: //components/rel/core.mpss/3.10/buses/build/paths.sconscript#3 $
+#
+# when       who     what, where, why
+# --------   ---     -------------------------------------------------------
+# 03/06/19   ss      Moved UART,SIO,RDM Drivers from Wiredconnectivity to Buses.
+# 02/28/12   dj      Added ICB path
+# 02/27/12   PS      Added SPI path
+# 01/12/12   PS      Initial release
+#
+#===============================================================================
+#                    Copyright 2012,2014,2019 QUALCOMM Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+
+Import('env')
+
+# Public APIs these are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('BUSES', [
+       "${INC_ROOT}/core/api/buses",
+       "${INC_ROOT}/core/buses/api/spmi/bear",
+       "${INC_ROOT}/core/buses/api/spi",
+       "${INC_ROOT}/core/buses/api/i2c",
+       "${INC_ROOT}/core/buses/api/icb",
+       "${INC_ROOT}/core/buses/api/uart_lite",
+       "${INC_ROOT}/core/api/buses/sio",
+       "${INC_ROOT}/core/api/buses/rdevmap",
+	   ])
+
+# Restricted APIs these are accessible by anyone with in CoreBSP
+env.PublishRestrictedApi('BUSES', [
+       "${INC_ROOT}/core/buses/uart/src",
+       "${INC_ROOT}/core/buses/uart/mdd/inc",
+       "${INC_ROOT}/core/buses/sio/src",
+       "${INC_ROOT}/core/buses/rdevmap/inc",
+       "${INC_ROOT}/core/buses/sio/src/common",
+       "${INC_ROOT}/core/buses/sio/src/amss",
+])
+

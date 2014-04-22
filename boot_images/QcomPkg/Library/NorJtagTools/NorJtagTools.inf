@@ -1,0 +1,64 @@
+#/** @file JtagProgrammer.inf
+#
+#  EEPROM Jtag Programmer INF
+#  
+#  Copyright (c) 2018 Qualcomm Technologies, Inc.  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 12/04/18   sl      add exception so packit don't remove cmm scrips
+# 29/11/18   sl      remove RUMI related macros
+# 23/02/18   svl     Add support for EEPROM on VT Qcs405
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NorJtagTools
+  FILE_GUID                      = db4ffb88-2f85-4994-8f08-73c70f585507
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+
+
+[Sources.ARM]
+  config_v1/nor_core_v1.c
+  nor_param.c
+  nor_core.c
+  nor_entry.c
+  nor_wrapper.c
+  nor_mem_init.c
+  nor_stress.c
+  nor_dump.c
+  nor_utils.c
+  flash_log.c
+  nor_start.S | GCC
+  ModuleEntryPoint.S | GCC
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -DBUILD_TOOL_CHAIN  -DMAX_PAGE_SIZE=512 -DNOR_PAGE_SIZE=512 -DFLASH_NOR_DEVICE_ID=DALDEVICEID_FLASH_DEVICE_2  -DFLASH_TOOLS_HEAP_SIZE=2400 -DBUILD_NOR_TOOLS -DBUILD_JFLASH -g -DFLASH_LOG_H="\"flash_log.h\"" -DFLASH_WATCHDOG_DISABLED -DNOISY -DTNOISY="3"
+  GCC:*_*_*_DLINK_FLAGS = --script=$(BUILD_DIR)/$(ARCH)/$(MODULE_NAME).ld
+  MSFT:*_*_*_CC_FLAGS = -DFEATURE_GPP
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+
+[LibraryClasses]
+  DALCommonLoaderLib
+  DALConfigToolsLib
+  NorToolsLib
+
+[Guids]
+

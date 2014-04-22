@@ -1,0 +1,3133 @@
+<?xml version="1.0"?>
+<NvSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!---->
+  <NvItemData id="20295" name="NV_LTE_B3_TX_LIMIT_VS_TEMP_I" compressed="false" variableSize="false" index="0" subscriptionid="0">
+		<Member type="int8" name="UNKNOWN" sizeOf="1">-11</Member>
+		<Member type="int8" name="UNKNOWN" sizeOf="7">-11 0 0 0 0 10 10</Member>
+  </NvItemData>
+  <NvItemData id="20294" name="RFNV_LTE_B3_TX_CAL_CHAN_I" subscriptionid="0" variableSize="false" index="0" compressed="false">
+    <Member type="uint16" name="UNKNOWN[0-1]" sizeOf="2">19207 19265</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19322</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19375</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19425</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19475</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19525</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19575</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19621</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19667</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19713</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19759</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19805</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19851</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19897</Member>
+    <Member type="uint16" name="UNKNOWN" sizeOf="1">19943</Member>
+  </NvItemData>
+  <NvItemData id="24160" name="RFNV_LTE_B3_TX_EPT_DPD_CONFIG_PARAMS_I" subscriptionid="0" variableSize="false" index="0" compressed="false">
+    <Member type="uint32" name="UNKNOWN[0-1]" sizeOf="2">0 0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">21</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">15</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">820</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">420</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">240</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">40</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">20</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">80</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">20</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">1</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">1</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">820</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+    <Member type="uint32" name="UNKNOWN" sizeOf="1">0</Member>
+  </NvItemData>
+  <NvItemData id="28051" name="RFNV_LTE_C0_B3_PA_STATIC_Z_I" subscriptionid="0" variableSize="false" index="0" compressed="true">
+    <Member type="int16" name="HEADER[0-1]" sizeOf="2">2 4</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="int16" name="HEADER" sizeOf="1">0</Member>
+    <Member type="cmn_pa_static_type" name="CMN_PA_Static" sizeOf="1">
+      <Struct>
+        <Member type="pa_type" name="PA_RANGE_MAP" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">3 2 1 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_FALL_SW" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">1000 -110 20 80 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_RISE_SW" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 -80 50 110 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="TX_ROT_ANGLE" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_COMP_UP" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_COMP_DOWN" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pin_pout_type" name="TX_LIN_VS_TEMP_VS_FREQ_P_IN" sizeOf="1">
+          <Struct>
+            <Member type="freq_type" name="temp[0]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[1]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[2]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[3]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[4]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[5]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[6]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+            <Member type="freq_type" name="temp[7]" sizeOf="1">
+              <Struct>
+                <Member type="pa_type" name="freq[0]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[1]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[2]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[3]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[4]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[5]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[6]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[7]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[8]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[9]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[10]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[11]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[12]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[13]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[14]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+                <Member type="pa_type" name="freq[15]" sizeOf="1">
+                  <Struct>
+                    <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+                  </Struct>
+                </Member>
+              </Struct>
+            </Member>
+          </Struct>
+        </Member>
+        <Member type="pin_pout_type" name="TX_LIN_VS_TEMP_VS_FREQ_P_OUT" sizeOf="1">
+					<Struct>
+						<Member type="freq_type" name="temp" sizeOf="8">
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -34 -31 -29 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -34 -32 -30 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -34 -32 -31 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-30 -34 -32 -32 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-30 -33 -32 -32 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-30 -33 -32 -33 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-30 -34 -33 -34 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-30 -34 -33 -35 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -34 -34 -36 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -35 -34 -37 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -35 -35 -37 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -35 -35 -38 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-31 -36 -35 -39 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-32 -36 -36 -40 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-32 -36 -36 -40 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-32 -37 -36 -41 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -23 -21 -17 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -23 -21 -18 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -23 -21 -19 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-20 -22 -21 -20 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-20 -22 -21 -21 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-20 -22 -21 -22 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-20 -23 -22 -23 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-20 -23 -22 -24 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -23 -23 -25 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -24 -23 -25 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -24 -24 -26 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -24 -24 -27 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -25 -24 -28 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-21 -25 -25 -29 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-22 -25 -25 -29 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-22 -26 -26 -30 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -13 -10 -5 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -13 -11 -7 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-11 -12 -10 -8 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-11 -12 -10 -9 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-10 -12 -10 -10 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-10 -12 -11 -10 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-11 -12 -12 -12 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-11 -12 -12 -13 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-11 -13 -13 -14 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -13 -13 -14 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -13 -14 -15 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -14 -14 -16 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -14 -14 -17 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -14 -15 -18 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -15 -15 -19 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-12 -15 -16 -19 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -1 1 5 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -1 1 4 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -1 1 3 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-1 -1 0 2 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-1 -1 0 1 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-1 -1 0 1 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-1 -1 -1 -1 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-1 -2 -2 -2 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -2 -2 -2 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -3 -3 -3 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -3 -3 -4 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -3 -4 -5 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -3 -4 -6 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-2 -4 -5 -7 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-3 -4 -5 -8 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">-3 -5 -6 -8 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 8 10 17 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 8 9 15 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 8 9 14 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 8 9 13 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">7 8 8 12 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">7 8 8 11 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">7 8 7 10 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">7 7 7 9 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 7 6 8 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 7 6 7 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 6 5 6 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 6 4 5 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 5 4 4 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">6 5 3 3 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">5 4 3 2 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">5 4 2 2 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">13 17 18 30 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">13 17 18 27 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">13 17 17 25 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 17 17 24 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 17 16 22 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 17 16 21 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 16 15 20 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 16 15 19 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 16 14 18 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 15 14 17 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 15 13 16 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 15 12 15 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 14 12 14 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">14 14 11 13 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">13 13 11 12 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">13 13 10 11 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 26 27 39 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 26 26 37 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 26 26 35 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 26 25 33 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 26 25 32 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 25 24 31 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 25 23 30 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 25 23 29 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 24 22 28 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 24 21 27 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 24 21 26 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 23 20 25 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">21 23 19 23 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 22 19 22 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 21 18 21 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">20 21 17 21 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+							<Struct>
+								<Member type="pa_type" name="freq" sizeOf="16">
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">23 32 32 46 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">23 31 31 43 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 31 31 41 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 32 30 39 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">25 32 30 39 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">25 31 29 37 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">25 31 28 36 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 30 27 35 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 29 27 34 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 29 26 33 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 29 25 31 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 28 24 30 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 28 24 29 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 27 23 28 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 27 22 27 0 0 0 0</Member>
+									</Struct>
+									<Struct>
+										<Member type="int16" name="pa" sizeOf="8">24 26 22 26 0 0 0 0</Member>
+									</Struct>
+								</Member>
+							</Struct>
+						</Member>
+					</Struct>
+				</Member>
+        <Member type="freq_type" name="PA_COMP_UP_VS_FREQ" sizeOf="1">
+          <Struct>
+            <Member type="pa_type" name="freq[0]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[1]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[2]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[3]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[4]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[5]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[6]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[7]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[8]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[9]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[10]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[11]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[12]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[13]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[14]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[15]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+          </Struct>
+        </Member>
+        <Member type="freq_type" name="PA_COMP_DOWN_VS_FREQ" sizeOf="1">
+          <Struct>
+            <Member type="pa_type" name="freq[0]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[1]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[2]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[3]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[4]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[5]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[6]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[7]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[8]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[9]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[10]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[11]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[12]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[13]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[14]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+            <Member type="pa_type" name="freq[15]" sizeOf="1">
+              <Struct>
+                <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+              </Struct>
+            </Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="POUT_CONTROL" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_FALL_SW_NBIoT" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">1000 -110 20 80 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="PA_RISE_SW_NBIoT" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 -80 50 110 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="LTE_INTRA_BAND_ULCA_PA_FALL_SW" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+        <Member type="pa_type" name="LTE_INTRA_BAND_ULCA_PA_RISE_SW" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="pa[0-7]" sizeOf="8">0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+      </Struct>
+    </Member>
+  </NvItemData>
+  <NvItemData id="28885" name="RFNV_LTE_B3_TX_STATIC_DATA_I" subscriptionid="0" variableSize="true" index="0" compressed="true">
+    <Member type="uint16" name="version" sizeOf="1">0</Member>
+    <Member type="uint16" name="num_of_element" sizeOf="1">5</Member>
+    <Member type="DataType_Header" name="datatype" sizeOf="1">
+      <Struct>
+        <Member type="uint16" name="datatype" sizeOf="1">218</Member>
+      </Struct>
+    </Member>
+    <Member type="RFNV_DATA_TYPE_TX_MIN_POWER_LIMIT_CONTROL" name="RFNV_DATA_TYPE_TX_MIN_POWER_LIMIT_CONTROL" sizeOf="1">
+      <Struct>
+        <Member type="uint8" name="nv_container_index" sizeOf="1">0</Member>
+        <Member type="uint8" name="reserved" sizeOf="1">0</Member>
+        <Member type="RFNV_DATA_TX_MIN_POWER_LIMIT_CONTROL_TYPE" name="tx_min_pl_ctrl" sizeOf="1">
+          <Struct>
+            <Member type="int16" name="min_tx_power_dB10" sizeOf="1">-440</Member>
+          </Struct>
+        </Member>
+      </Struct>
+    </Member>
+    <Member type="DataType_Header" name="datatype" sizeOf="1">
+      <Struct>
+        <Member type="uint16" name="datatype" sizeOf="1">144</Member>
+      </Struct>
+    </Member>
+    <Member type="RFNV_DATA_TYPE_LTE_TX_MAX_POWER_BASED_ON_EARFCN" name="RFNV_DATA_TYPE_LTE_TX_MAX_POWER_BASED_ON_EARFCN" sizeOf="1">
+      <Struct>
+        <Member type="uint8" name="nv_container_index" sizeOf="1">0</Member>
+        <Member type="uint8" name="reserved" sizeOf="1">0</Member>
+        <Member type="uint32" name="tx_upper_bound_earfcn[0-15]" sizeOf="16">19949 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Member>
+        <Member type="int16" name="pwr_dbm10[0-15]" sizeOf="16">230 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Member>
+      </Struct>
+    </Member>
+    <Member type="DataType_Header" name="datatype" sizeOf="1">
+      <Struct>
+        <Member type="uint16" name="datatype" sizeOf="1">463</Member>
+      </Struct>
+    </Member>
+    <Member type="RFNV_DATA_TYPE_UE_POWER_CLASS_BAND" name="RFNV_DATA_TYPE_UE_POWER_CLASS_BAND" sizeOf="1">
+      <Struct>
+        <Member type="int8" name="ue_power_class_CATM1" sizeOf="1">3</Member>
+        <Member type="int8" name="ue_power_class_NBIoT" sizeOf="1">3</Member>
+      </Struct>
+    </Member>
+    <Member type="DataType_Header" name="datatype" sizeOf="1">
+      <Struct>
+        <Member type="uint16" name="datatype" sizeOf="1">472</Member>
+      </Struct>
+    </Member>
+    <Member type="RFNV_DATA_TYPE_TX_MAX_POWER_LIMIT_ADJUST_V3" name="RFNV_DATA_TYPE_TX_MAX_POWER_LIMIT_ADJUST_V3" sizeOf="1">
+      <Struct>
+        <Member type="uint8" name="catm1_nb1_mode" sizeOf="1">0</Member>
+        <Member type="uint32" name="ue_power_class_mask" sizeOf="1">0</Member>
+        <Member type="int32" name="min_bw_khz" sizeOf="1">0</Member>
+        <Member type="int32" name="max_bw_khz" sizeOf="1">0</Member>
+        <Member type="RFNV_TX_MAX_PWR_LIMIT_ADJUST_VS_EARFCN_TABLE_TYPE" name="tx_pwr_limit_adjust" sizeOf="1">
+          <Struct>
+            <Member type="uint32" name="tx_upper_bound_earfcn[0-15]" sizeOf="16">19949 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Member>
+            <Member type="int16" name="pwr_adjust_db10[0-15]" sizeOf="16">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Member>
+          </Struct>
+        </Member>
+      </Struct>
+    </Member>
+    <Member type="DataType_Header" name="datatype" sizeOf="1">
+      <Struct>
+        <Member type="uint16" name="datatype" sizeOf="1">473</Member>
+      </Struct>
+    </Member>
+    <Member type="RFNV_DATA_TYPE_LTE_MPR_V3" name="RFNV_DATA_TYPE_LTE_MPR_V3" sizeOf="1">
+      <Struct>
+        <Member type="uint8" name="catm_nb1_mode" sizeOf="1">0</Member>
+        <Member type="uint8" name="active_cluster_mask" sizeOf="1">0</Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[0]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[1]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[2]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[3]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[4]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[5]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[6]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[7]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[8]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[9]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[10]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[11]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[12]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[13]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[14]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[15]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[16]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[17]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[18]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[19]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[20]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[21]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[22]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[23]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[24]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[25]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[26]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[27]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[28]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[29]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[30]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[31]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[32]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[33]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[34]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[35]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[36]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[37]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[38]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[39]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[40]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[41]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[42]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[43]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[44]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[45]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[46]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[47]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[48]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[49]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[50]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[51]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[52]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[53]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[54]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[55]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[56]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[57]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[58]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[59]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[60]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[61]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[62]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[63]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[64]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[65]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[66]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[67]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[68]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[69]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[70]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[71]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[72]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[73]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[74]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[75]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[76]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[77]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[78]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[79]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[80]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[81]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[82]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[83]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[84]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[85]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[86]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[87]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[88]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[89]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[90]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[91]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[92]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[93]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[94]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[95]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[96]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[97]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[98]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[99]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[100]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[101]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[102]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[103]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[104]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[105]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[106]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[107]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[108]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[109]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[110]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[111]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[112]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[113]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[114]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[115]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[116]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[117]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[118]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[119]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[120]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[121]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[122]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[123]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[124]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[125]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[126]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+        <Member type="RFNV_DATA_LTE_MPR_TYPE" name="mpr_table[127]" sizeOf="1">
+          <Struct>
+            <Member type="int32" name="tx_earfcn_min" sizeOf="1">0</Member>
+            <Member type="int32" name="tx_earfcn_max" sizeOf="1">0</Member>
+            <Member type="int32" name="modulation_type_mask" sizeOf="1">0</Member>
+            <Member type="int32" name="bandwidth_type_mask" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_start_max" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_min" sizeOf="1">0</Member>
+            <Member type="int16" name="agg_rb_block_max" sizeOf="1">0</Member>
+            <Member type="int16" name="mpr_db10" sizeOf="1">0</Member>
+          </Struct>
+        </Member>
+      </Struct>
+    </Member>
+  </NvItemData>
+  <file_history>
+    <owner />
+  </file_history>
+</NvSource>

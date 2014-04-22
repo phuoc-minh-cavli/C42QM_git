@@ -1,0 +1,91 @@
+//=============================================================================
+//
+// FILE:        HALvmidmtData.xml
+//
+// DESCRIPTION: This file contains the HAL XML properties for the VMIDMT driver.
+//
+//=============================================================================
+//
+//                             Edit History
+//
+// $Header:  $
+// $DateTime: $
+// $Author: $
+// $Change: $
+//
+// when         who     what, where, why
+// ----------   ---     -------------------------------------------------------
+// 12/07/2016   ps      Updated for 845
+// 01/15/2016   dh      Updated for 8998
+// 07/14/2014   sc      Updated for 8996
+// 09/10/2013   sc      Initial revision
+//
+//=============================================================================
+// Copyright (c) 2013, 2014
+// Qualcomm Incorporated.
+// All Rights Reserved.
+// Qualcomm Confidential and Proprietary
+//=============================================================================
+#include "HALvmidmt.h"
+#include "HALvmidmtInfoImpl.h"
+#include <HALhwio.h>
+#include "HALvmidmtHWIOTarget.h"
+
+<driver name="NULL">
+
+  <device id="/dev/vmidmt">
+    <props id=VMIDMT_MSS_NAV_CE type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_MSS_NAV_CE_CFG_VMIDMT_SCR0), {4, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_MSS_Q6 type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_MSS_Q6_CFG_VMIDMT_SCR0), {4, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_PCNOC_SNOC1 type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_PCNOC_SNOC_1_CFG_VMIDMT_SCR0), {128, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_PCNOC_SNOC2 type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_PCNOC_SNOC_2_CFG_VMIDMT_SCR0), {128, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_PCNOC_SNOC3 type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_PCNOC_SNOC_3_CFG_VMIDMT_SCR0), {128, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_PCNOC_SNOC4 type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(VMIDMT_PCNOC_SNOC_4_CFG_VMIDMT_SCR0), {128, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_RPM_MSGRAM type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(RPM_VMIDMT_SCR0), {1, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_DEHR type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(DEHR_VMIDMT_SCR0), {1, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_CRYPTO0_BAM type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(CRYPTO0_CRYPTO_BAM_VMIDMT_SCR0), {17, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_QDSS_VMIDDAP type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(QDSS_QDSS_VMIDDAP_VMIDMT_SCR0), {2, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_QDSS_VMIDETR type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(QDSS_QDSS_VMIDETR_VMIDMT_SCR0), {2, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_BAM_BLSP1_DMA type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(BLSP1_BLSP_BAM_VMIDMT_SCR0), {17, 0, 0, 0, 0, FALSE}}
+    </props>
+
+    <props id=VMIDMT_QPIC type="HAL_vmidmt_InfoType">
+      {HWIO_ADDR(QPIC_QPIC_VMIDMT_SCR0), {10, 0, 0, 0, 0, FALSE}}
+    </props>
+
+  </device>
+
+</driver>

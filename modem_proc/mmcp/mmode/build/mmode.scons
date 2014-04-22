@@ -1,0 +1,55 @@
+#===============================================================================
+#
+# MMODE Subsystem build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mmcp.mpss/6.1.10/mmode/build/mmode.scons#1 $
+#  $DateTime: 2023/04/25 14:39:18 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/15/10   pm      Initial revision
+#
+#===============================================================================
+Import('env')
+
+import os
+
+LTE_VARIANTS = ['9607.lteonly.test','9607.lteonly.prod','9607.lteonlyf3.test','9607.lteonlyf3.prod','9607.lteonlynogps.test','9607.lteonlynogps.prod',
+                '9607.lteonlynogpsf3.test','9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltenb.test','9607.ltenb.prod',
+                '9607.ltenbf3.test','9607.ltenbf3.prod','9607.ltegsm.test','9607.ltegsm.prod','9607.ltenbg.test','9607.ltenbg.prod','9607.ltenbgf3.prod',
+                '9607.ltenbgniag.test','9607.ltenbgniag.prod','9607.ltenbgniagf3.prod','9607.ltenbniag.test','9607.ltenbniag.prod','9607.ltenbniagf3.prod',
+				'9607.ltenbg128.test','9607.ltenbg128.prod','9607.ltenbg128f3.prod','9607.ltenbgniag128.test','9607.ltenbgniag128.prod','9607.ltenbgniag128f3.prod',
+				'9607.ltenb128.test','9607.ltenb128.prod','9607.ltenb128f3.prod','9607.ltenbniag128.test','9607.ltenbniag128.prod','9607.ltenbniag128f3.prod',
+				'9607.dyn.test','9607.ltenbgniaf3.prod','9607.ltenbgniaf3.test','9607.ltenbgcladev2.test','9205.ltenbgcladev2.test','9205.ltenbgcladev2.prod',
+				'8909.lteonly.test','8909.lteonly.prod','9607.extpl.test','9607.extpl.prod','9205.ltenbgefi.test','9205.ltenbgefi.prod']
+
+LTE_NON_IMS_VARIANTS = ['9607.ltenbgniag.test','9607.ltenbgniag.prod','9607.ltenbgniagf3.prod','9607.ltenbniag.test','9607.ltenbniag.prod','9607.ltenbniagf3.prod', 
+                        '9607.ltenbgniag128.test','9607.ltenbgniag128.prod','9607.ltenbgniag128f3.prod','9607.ltenbniag128.test', '9607.ltenbniag128.prod','9607.ltenbniag128f3.prod', 
+                        '9607.ltenbgniaf3.prod','9607.ltenbgniaf3.test','9205.ltenbgeniag.test','9205.ltenbgeniag.prod','9205.ltenbena.test','9205.lteena.test']
+						  
+LTE_NON_NB1_VARIANTS = ['9607.lteonly.test', '9607.lteonly.prod','9607.lteonlyf3.test','9607.lteonlyf3.prod','9607.lteonlynogps.test','9607.lteonlynogps.prod',
+                      '9607.lteonlynogpsf3.test','9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltegsm.test','9607.ltegsm.prod','9205.lteena.test','9205.ltee.test']
+					  
+if os.environ.get('VARIANT_NAME', '') in LTE_NON_IMS_VARIANTS:
+   env.Append(CPPDEFINES =  [
+            'FEATURE_MMODE_DISABLE_LTE_VOICE',
+            'FEATURE_MMODE_DISABLE_NON_LTE_VOICE'
+            ])
+
+if not os.environ.get('VARIANT_NAME', '') in LTE_NON_NB1_VARIANTS:
+   env.Append(CPPDEFINES =  [
+            'FEATURE_MMODE_NB1'
+            ])
+
+env.LoadSoftwareUnits()

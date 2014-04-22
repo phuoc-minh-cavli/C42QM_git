@@ -1,0 +1,22 @@
+#=================================================================
+# UTILS SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+env.RequirePublicApi([
+    'MMUTILS',
+])
+
+env.RequirePublicApi('KERNEL', area='core')
+
+SRCPATH = "${BUILD_ROOT}/multimedia/mmutils"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+MMUTILS_SOURCES = [   
+  '${BUILDPATH}/src/mmstd.c',
+]
+
+IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW','MULTIMEDIA_APPS']
+env.AddLibrary(IMAGES, ('${BUILDPATH}/mmutils'), MMUTILS_SOURCES)

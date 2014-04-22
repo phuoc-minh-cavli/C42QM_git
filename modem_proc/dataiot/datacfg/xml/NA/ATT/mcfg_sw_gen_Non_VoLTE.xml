@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="data.0.0" type="1"/>
+<GroupFile name="mcfg_sw_gen_DeleteROW.xml" description="" comment="" category="" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/Common/ROW/mcfg_sw_gen_DeleteROW.xml"/>
+  <NvEfsItemData name="ds_3gpp_mtu" id="65814" description="3GPP Maximum Transmission Unit" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/ds_3gpp_mtu">
+    <Member name="ds_3gpp_mtu" description="3GPP Maximum Transmission Unit" comment="" sizeOf="1" type="uint16">1430 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="rpm_params" id="67204" description="RPm parameter  struct" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/rpm_params">
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">60 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">30 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">60 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">30 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+    <Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="rpm_suppported_sim" id="67205" description="SIM supporting RPM" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/rpm_suppported_sim">
+    <Member name="Unidentified" description="" comment="" sizeOf="60" type="uint8">3 1 0 4 1 0 3 1 0 1 8 0 3 1 0 5 6 0 3 1 0 6 5 0 3 1 0 1 7 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="ds_apn_switching" id="69679" description="To enable LTE attach apn switching" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/dsd/ds_apn_switching">
+    <Member name="ds_apn_switching" description="To enable LTE attach apn switching" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="ser_req_throttle_behavior" id="69710" description="Specify behavior for service request throttling" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/ser_req_throttle_behavior">
+    <Member name="ds_3gpp_srv_req_throttle_behavior" description="Specify behavior for service request throttling" comment="" sizeOf="1" type="uint32">1 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="dynamic_port_cfg" id="70319" description="QMI Dynamic Port Configuration" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/dynamic_port_cfg">
+    <Member name="dynamic_port_cfg" description="Dynamic Port Configuration" comment="" sizeOf="1" type="uint8">2 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="call_orig_allowed_before_ps_attach" id="70332" description="Call origination is allowed before ps attach" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/call_orig_allowed_before_ps_attach">
+    <Member name="call_orig_allowed_before_ps_attach" description="Call origination is allowed before ps attach" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="ds_3gpp_redial_for_no_cause" id="72564" description="" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/ds_3gpp_redial_for_no_cause">
+    <Member name="ds_3gpp_redial_for_no_cause" description="Redial for no cause code" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvEfsItemData>
+  <NvEfsFile name="ds_dsd_attach_profile.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/ds_dsd_attach_profile.txt" buildPath="modem_proc/dataiot/datacfg/efs/att/ds_dsd_attach_profile.txt"/>
+  <NvEfsFile name="pdn_throttling_config.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/epc/pdn_throttling_config.txt" buildPath="modem_proc/dataiot/datacfg/efs/att/pdn_throttling_config.txt"/>
+  <NvEfsFile name="srv_req_throt_config.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/3gpp/throttling/srv_req_throt_config.txt" buildPath="modem_proc/dataiot/datacfg/efs/att/srv_req_throt_config.txt"/>
+  <NvEfsFile name="apn_reject_name.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/3gpp/ps/apn_reject/apn_reject_name.txt" buildPath="modem_proc/dataiot/datacfg/efs/att/apn_reject_name.txt"/>
+  <NvEfsFile name="Profile1" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile1" buildPath="modem_proc/dataiot/datacfg/efs/att/Profile1"/>
+  <NvEfsFile name="Profile2" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile2" buildPath="modem_proc/dataiot/datacfg/efs/att/Profile2"/>
+  <NvItemData name="Ipv6 Enabled" id="1896" description="" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="ipv6_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	</NvData>

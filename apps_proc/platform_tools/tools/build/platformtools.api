@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# tx_platform APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021-2022 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/platform_tools.tx/1.0/tools/build/platformtools.api#2 $
+#  $DateTime: 2022/02/10 02:34:44 $
+#  $Author: pwbldsvc $
+#  $Change: 35368793 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+INC_DIRS = [
+   '${INC_ROOT}/platform_tools/tools/leak/inc',
+]
+
+env.PublishPublicApi('PLATFORMTOOLS_API', INC_DIRS)
+
+env.LoadAPIUnits()

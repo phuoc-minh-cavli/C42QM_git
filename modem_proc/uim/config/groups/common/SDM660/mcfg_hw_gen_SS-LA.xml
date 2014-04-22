@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="qmi_cat_mode" id="65683" description="QMI CAT mode" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/cat/qmi_cat_mode">
+		<Member name="QMI_CAT_MODE" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvEfsItemData>
+	</NvData>

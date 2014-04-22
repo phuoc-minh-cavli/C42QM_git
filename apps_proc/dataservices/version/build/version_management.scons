@@ -1,0 +1,49 @@
+#===============================================================================
+#
+# VERSION_MANAGEMENT lib
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019-2020 by QUALCOMM Technologies, Inc.
+# All Rights Reserved.
+#
+#===============================================================================
+
+Import('env')
+
+env = env.Clone()
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+
+SRCPATH = '${BUILD_ROOT}/dataservices/version/qapi/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Configure for high space optimizations
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi('QAPI', area='core')
+env.RequirePublicApi(['PSM_CLIENT'], area='ril')
+env.RequirePublicApi(['LOCATION_API'],area='location')
+env.RequireRestrictedApi(['NET_UTILS'])
+env.RequireRestrictedApi(['DS_UTILS'])
+
+VERSION_SOURCES = [
+	'${BUILDPATH}/qapi_version.c',
+	'${BUILDPATH}/qapi_version_txm.c'
+]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/version_management'), VERSION_SOURCES)
+env.LoadSoftwareUnits()
+
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_4',        # required
+  'init_name'                  : 'register_qapi_version_handler_txm',          # required
+  'init_function'              : 'register_qapi_version_handler_txm'          # required
+}
+if 'USES_RCINIT' in env:
+	RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE','MOB_DATASERVICES']
+	env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )

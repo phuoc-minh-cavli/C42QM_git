@@ -1,0 +1,137 @@
+Area.Create IO 80. 200.
+Area.Select IO
+Area IO
+
+local &tcb
+local &ugp
+local &max_threads_tcm
+local &spec_handle
+local &outer_table_ptr
+local &inner_table_ptr
+local &qdi_obj
+local &temp
+local &spec_address
+local &spec_header
+local &spec_idx
+
+ENTRY &idx
+
+IF ("&idx"=="")
+(
+  print "No Spec index specified, Printing contents of default Spec index 0"
+  &idx=0
+)
+
+
+&spec_address=v.value(island_spec_object->header[&idx].spec_start)
+
+print "Island spec address 0x" &spec_address
+&spec_tlb_base=v.value(((struct island_spec*)&spec_address)->tlbs)
+&spec_tlb_addr=&spec_tlb_base
+print "Dumping TLB entries from Error dump 0x" &spec_tlb_addr
+
+
+print
+print "IDX   TLBL     TLBH    VALID  GLOBAL ASID  Virt        Phys        Size    XWRU CCCC"
+print "=== ======== ========  =====  ====== ====  =========== =========== ======= ==== ============="
+&idx=0
+
+
+&spec_tlb_num=v.value(((struct island_spec*)&spec_address)->tlb_count)
+
+
+repeat &spec_tlb_num
+(
+
+   &tlb_lo=data.long(d:(&spec_tlb_addr))
+   &tlb_hi=data.long(d:(&spec_tlb_addr+4))
+
+   &valid=&tlb_hi>>0x1f
+   &global=(&tlb_hi>>0x1e)&0x1
+   &asid=(&tlb_hi>>14)&0x7f
+   &virt_addr=&tlb_hi&0xfffff
+
+   &XWRU_bits=(&tlb_lo>>0x1c)&0xf
+   &CCCC_bits=(&tlb_lo>>0x18)&0xf
+   &phys_addr=(&tlb_lo&0xffffff)>>1
+   &size_bits=&tlb_lo&0x7f
+
+   if (&valid==1)
+   (
+      ; 4K is the smallest page size
+      &size=0x1000
+      while ((&size_bits&0x1)==0)
+      (
+         &size=4*&size
+         &size_bits=&size_bits>>1
+      )
+
+      if (&size>0x1000)
+         &phys_addr=&phys_addr&0xfffffff0
+      if (&size>0x1000)
+         &phys_addr=&phys_addr&0xffffff00
+
+      if (&CCCC_bits==0x6)
+         &cache_string="uncached"
+      else if (&CCCC_bits==0x4)
+         &cache_string="device"
+      else if (&CCCC_bits==0x7)
+         &cache_string="Write-back"
+      else
+         &cache_string="----"
+
+      print FORMAT.DECIMAL(3., &idx) "  " FORMAT.HEX(5., &tlb_lo) " " FORMAT.HEX(5., &tlb_hi) "   " &valid  "     "   &global "   " FORMAT.DECIMAL(6., &asid) "   0x" FORMAT.HEX(5., &virt_addr) "0000 " "0x" FORMAT.HEX(5., &phys_addr) "0000 " FORMAT.HEX(7., &size) " " FORMAT.BINARY(4., &XWRU_bits) " " FORMAT.BINARY(4., &CCCC_bits) " - &cache_string"
+   )
+   else
+   (
+      print FORMAT.DECIMAL(3., &idx) "  " &valid
+   )
+;   &tlb_entry=&tlb_entry+8.
+   &idx=&idx+1
+   &spec_tlb_addr=&spec_tlb_addr+8.
+)
+
+print 
+&spec_interrupt_base=v.value(((struct island_spec*)&spec_address)->interrupt_list)
+print "Dumping TLB entries from Error dump 0x" &spec_interrupt_base
+print "Interrupts supported in Island"
+&spec_interrupt_num=v.value(((struct island_spec*)&spec_address)->interrupt_count)
+repeat &spec_interrupt_num
+(
+    &interrupt_no=data.long(d:(&spec_interrupt_base))
+    print FORMAT.HEX(3.,&interrupt_no) " --> " "(" FORMAT.DECIMAL(1.,&interrupt_no) ")"
+    &spec_interrupt_base=&spec_interrupt_base+4	
+)
+
+print
+&spec_vrange_base=v.value(((struct island_spec*)&spec_address)->vrange_list)
+print "Dumping vrange entries from island spec 0x" &spec_vrange_base
+print "vranges supported in Island"
+&spec_vrange_num=v.value(((struct island_spec*)&spec_address)->vrange_count)
+repeat &spec_vrange_num
+(
+    &vrange_lo=data.long(d:(&spec_vrange_base))
+	&spec_vrange_base=&spec_vrange_base+4	
+	&vrange_hi=data.long(d:(&spec_vrange_base))
+    print "0x" FORMAT.HEX(3.,&vrange_lo) "--" "0x" FORMAT.HEX(3.,&vrange_hi)
+    &spec_vrange_base=&spec_vrange_base+4
+)
+
+print
+&spec_prange_base=v.value(((struct island_spec*)&spec_address)->prange_list)
+print "Dumping physical range entries from island spec 0x" &spec_prange_base
+print "pranges supported in Island"
+&spec_prange_num=v.value(((struct island_spec*)&spec_address)->prange_count)
+repeat &spec_prange_num
+(
+    &prange_lo=data.long(d:(&spec_prange_base))
+	&spec_prange_base=&spec_prange_base+4	
+	&prange_hi=data.long(d:(&spec_prange_base))
+    print "0x" FORMAT.HEX(3.,&prange_lo) "--" "0x" FORMAT.HEX(3.,&prange_hi)
+    &spec_prange_base=&spec_prange_base+4
+)
+
+
+print "Done"
+
+enddo

@@ -1,0 +1,303 @@
+// Title: std_loadsim_rpm
+
+// License: License
+// Copyright 2010 Qualcomm Technologies Inc
+
+//	Description: General Description
+//	This script will load RPM RAM dump binaries into the simulator
+//
+//	Supports loading of JTAG / USB RAM Dumps
+
+//	Input: Inputs
+//	<Path to the dumps>  <RPM build>
+
+//	Output: Outputs
+//	None
+
+//	Usage: Usage
+//  do std_loadsim_arm7
+
+//  Team: Functional Area
+//  CoreBSP Products 8660
+
+//	Target: Target
+//	MSM8660
+
+//	Author: Author
+//  $Author: pwbldsvc $
+
+//	Location: Perforce Revision
+//  $Header: //components/rel/core.glue/1.3/tools/cmm/rpm/mdm9205/std_loadsim_rpm.cmm#1 $
+
+//	Edits: Edits
+//      dmagunta         : Ported for 9x15
+//      rvennam         : Changed rpm directory structure
+//      rvennam         : Added support for USB dumps   
+//	rvennam	        : Ported for MSM8960                                                     	: 05/15/2011
+//	amcheriy	: Created for MSM8660								: 02/15/2010
+// ------------------------------------------------------------------------------------------
+
+AREA
+// Path to the memory binary and path to the build
+ ENTRY &BASENAME &RPM_BUILD
+ 
+ // Path to save the RPM dumps
+ LOCAL &RAMDUMPDIR 
+ 
+   // Placeholder for any filename to be created
+ LOCAL &FILENAME
+
+ LOCAL &FILENAME2
+ 
+ // Flag for USB Logs - True if logs are usb logs, false if jtag logs
+ LOCAL &USB_RAMDUMPS
+ 
+MAIN:
+	
+       // Load constant definitions
+      do std_constants.CMM	
+	
+	IF ("&BASENAME"=="")
+	(
+		PRINT "Select one of the RAM Dumps:"
+		DIALOG.FILE *.bin
+		ENTRY &FILENAME
+		&RAMDUMPDIR=OS.FILE.PATH(&FILENAME)
+		PRINT "RAM Dump Directory : &RAMDUMPDIR"
+	)
+	ELSE
+	(
+		// User entered the path. 
+		// Remove the trailing slash if user entered path with slash
+		//do std_utils.cmm REMOVESLASH EXIT &BASENAME
+		&RAMDUMPDIR="&BASENAME"
+	)
+	
+	// Check if user entered the path to the build
+	// in the command line.
+	IF ("&RPM_BUILD"=="")
+	(
+		PRINT "Enter the location of the RPM build: "
+		DIALOG.DIR C:/*
+		ENTRY &RPM_BUILD
+	)
+
+
+CHECK_FOR_RAMDUMPS:
+	// Check the directory argument to see if RPM RAM Dumps
+	// Else, prompt for the path to the dumps
+	&FILENAME="&RAMDUMPDIR"+"/"+"&MSGRAM_log"
+	IF OS.FILE("&FILENAME")
+	(
+		&USB_RAMDUMPS=0
+		GOTO SETUPSIM
+	)
+	
+	&FILENAME="&RAMDUMPDIR"+"/&USB_CODE_RAM_log"
+	IF OS.FILE("&FILENAME")
+	(
+		&USB_RAMDUMPS=1
+		GOTO SETUPSIM
+	)
+	
+	PRINT "No Dumps found"
+	GOTO EXIT
+
+//	Set the simulator up for the target
+SETUPSIM:
+	//	Initialize the system for Scorpion
+	
+	SYSTEM.RESET
+
+	PRINT "Initializing RPM Subsystem"
+	SYSTEM.CPU CortexM3
+	SYSTEM.UP
+	
+
+	IF (&USB_RAMDUMPS==0)
+	(
+		GOTO T32LOG
+	)
+	ELSE
+	(
+		GOTO USBLOG
+	)
+
+T32LOG:
+	// Load RPM message RAM
+	&FILENAME="&RAMDUMPDIR"+"/"+"&MSGRAM_log"
+	&FILENAME2="&MSGRAM_log"
+
+	IF OS.FILE("&FILENAME")
+	(
+		GOSUB LOADMEM &MSGRAM_RPM_START  &MSGRAM_SIZE  &FILENAME2
+	)
+	ELSE
+	(
+	
+	        PRINT "MSG RAM dump not fund"
+		GOTO EXIT
+	)
+	
+	
+	// Load RPM coderam RAM
+	&FILENAME="&RAMDUMPDIR"+"/"+"&CODERAM_log"
+	&FILENAME2="&CODERAM_log"
+	IF (OS.FILE("&FILENAME"))
+	(
+		GOSUB LOADMEM &CODERAM_RPM_START  &CODERAM_SIZE &FILENAME2
+	)
+	ELSE
+	(
+		PRINT "coderam dump file not found "
+	)
+
+	// Load RPM Data RAM
+	&FILENAME="&RAMDUMPDIR"+"/"+"&DATARAM_log"
+	&FILENAME2="&DATARAM_log"
+	IF (OS.FILE("&FILENAME"))
+	(
+		GOSUB LOADMEM &DATARAM_RPM_START  &DATARAM_SIZE &FILENAME2
+
+	)
+	ELSE
+	(
+		PRINT "DATARAM dump file not found "
+	)
+
+	
+	GOTO LOADSYMS
+
+USBLOG:
+	// Load RPM Code RAM
+	&FILENAME="&RAMDUMPDIR"+"/&USB_CODE_RAM_log"
+	&FILENAME2="&USB_CODE_RAM_log"
+	IF OS.FILE("&FILENAME")
+	(
+		GOSUB LOADMEM &CODERAM_RPM_START  &CODERAM_SIZE &FILENAME2
+	)
+	ELSE
+	(
+	
+	     PRINT "CODERAM dump not fund"
+		GOTO EXIT
+	)
+	
+	
+	// Load RPM Message RAM
+	&FILENAME="&RAMDUMPDIR"+"/&USB_MSG_RAM_log"
+	&FILENAME2="&USB_MSG_RAM_log"
+	IF (OS.FILE("&FILENAME"))
+	(
+		GOSUB LOADMEM &MSGRAM_RPM_START  &MSGRAM_SIZE  &FILENAME2
+	)
+	ELSE
+	(
+		PRINT "MSGRAM dump file not found "
+	)
+
+     // Load RPM Data RAM
+	&FILENAME="&RAMDUMPDIR"+"/&USB_DATA_RAM_log"
+	&FILENAME2="&USB_DATA_RAM_log"
+	IF (OS.FILE("&FILENAME"))
+	(
+		GOSUB LOADMEM &DATARAM_RPM_START  &DATARAM_SIZE &FILENAME2
+
+	)
+	ELSE
+	(
+		PRINT "DATARAM dump file not found "
+	)
+
+	
+	GOTO LOADSYMS
+
+//	Load the symbols
+LOADSYMS:
+	
+	SYMBOL.ASMFRAME ON
+	SYMBOL.CASE OFF
+	
+	IF ("&RPM_BUILD"=="")
+	(
+		PRINT "Enter the location of the RPM Build:"
+		DIALOG.DIR C:/*
+		ENTRY &RPM_BUILD
+	)
+		
+	&FILENAME="&RPM_BUILD/rpm_proc/core/bsp/rpm/build/RPM_AAAAANAAR.elf"
+	IF OS.FILE("&FILENAME")
+	(
+		D.LOAD.ELF &FILENAME /NOCODE /strippart "rpm_proc"
+	)
+	ELSE
+	(
+		PRINT %ERROR "WARNING: RPM ELF file not found in build"
+	)
+
+//	Restore registers from the coredump structure or from file	
+RESTOREREGS:
+	
+	// Restore the registers from the JTAG register file
+
+	IF (&USB_RAMDUMPS==1)
+	(
+
+		IF (Y.EXIST(rpm_core_dump)&&(OS.FILE("&RPM_BUILD/rpm_proc/core/bsp/rpm/scripts/rpm_restore_from_core.cmm")))
+		(
+			// RESTORE REGISTERS FROM THE COREDUMP STRUCTURE
+
+			PRINT "RESTORING REGISTERS FROM COREDUMP: "
+			DO &RPM_BUILD/rpm_proc/core/bsp/rpm/scripts/rpm_restore_from_core.cmm
+			PRINT %CONTINUE "Complete"
+		)
+		
+
+	)
+	ELSE
+	(
+
+
+		&FILENAME="&RAMDUMPDIR/"+"RPM"+"&regs_log"
+		IF OS.FILE(&FILENAME)
+		(
+			PRINT "RESTORING REGISTER STATE." 
+			DO &FILENAME
+		)
+		ELSE
+		(
+			PRINT %ERROR "WARNING: COULD NOT RESTORE REGISTER STATE. FILE &FILENAME MISSING."
+		)
+
+	)
+		
+	PRINT "Loading RAM Dump Binaries: Complete."
+	GOTO EXIT
+
+// Exit the program
+EXIT:
+      d.l
+      v.f
+	ENDDO
+	
+//	Function: LOADMEM
+//	Load a section of memory specified by start address and size
+//
+// Takes 3 arguments as inputs: Start Address, Size of memory space to load, Input Filename	
+
+LOADMEM:
+  ENTRY &1 &2 &3
+  LOCAL &START_ADDR
+  LOCAL &SIZE
+  LOCAL &LOG
+
+  
+  &START_ADDR="&1"
+  &SIZE="&2"
+  &LOG="&RAMDUMPDIR/"+"&3"
+
+  DATA.LOAD.BINARY &LOG &START_ADDR++&SIZE /LONG
+
+  PRINT %CONTINUE " &LOG LOADED."
+  RETURN
+

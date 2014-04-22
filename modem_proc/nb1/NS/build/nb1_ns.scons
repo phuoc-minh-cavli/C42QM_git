@@ -1,0 +1,104 @@
+#===============================================================================
+#
+# NB1 PLT Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/NS/build/nb1_ns.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 08/31/17   sy     Initial creation.
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename, abspath
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('NS', ['${INC_ROOT}/nb1/ns/src'])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last
+    ], area='core')
+
+
+
+env.RequirePublicApi(['UTILS'])
+
+env.RequirePublicApi(['FW_NB'], area='FW_NB')
+env.RequirePublicApi(['NB1'])
+
+
+env.RequireRestrictedApi(['UTILS'])
+env.RequireProtectedApi(['UTILS'])
+
+# Need to get access to NB1 protected headers
+env.RequireProtectedApi([
+    'NB1',
+    ])
+
+env.RequireExternalApi('BREW')
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Run the PLT Script tool
+if env.PathExists('../../../fw_nb/build'):
+    fw_nb_path = '../../../fw_nb/build'
+elif env.PathExists('../../../fw/fw_nb/build'):
+    fw_nb_path = '../../../fw/fw_nb/build'
+else:
+    fw_nb_path = '../../../fw/api/build'
+
+# Run the PLT Script tool
+if env.PathExists('../../../fw_nb/build'):
+    fw_nb1_path = '../../../fw_nb/build'
+elif env.PathExists('../../../fw/fw_nb/build'):
+    fw_nb1_path = '../../../fw/fw_nb/build'
+else:
+    fw_nb1_path = '../../../fw/api/build'
+
+
+
+# Add the autogen build path to the compilation path
+env.Append(CPPPATH = env.subst('${NB1_ROOT}/NS/build/$BUILDPATH'))
+
+# Construct the list of source files by looking for *.c
+NB1_NS_SOURCES  = ['${BUILDPATH}/' + basename(fname)
+                    for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the NB1 PLT source and create a library (ship source)
+env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/nb1_ns', NB1_NS_SOURCES)

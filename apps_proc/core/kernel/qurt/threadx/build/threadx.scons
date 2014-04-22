@@ -1,0 +1,119 @@
+#===============================================================================
+#                    Copyright 2016-20,2022 QUALCOMM Technologies, Inc.
+#                           All Rights Reserved.
+#               Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/qurt/threadx"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "QURT_THREAD_ATTR_PRIORITY_DEFAULT=128",
+   "QURT_THREAD_ATTR_NAME_MAXLEN=20",
+   "QURT_THREAD_MAX_PRIORITIES=256",    
+   "QURT_THREAD_DEFAULT_STACK_SIZE=256",
+   "FEATURE_MUTEX_PI_RECURSIVE",
+   "TX_ENABLE_IRQ_NESTING",
+   "TX_ENABLE_PROFILING",
+   "TX_DISABLE_NOTIFY_CALLBACKS",
+   "FX_FILEX_PRESENT",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   "TX3_CHANGES",
+   "QAPI_FS_DAM_FILE_SEPERATION",
+   "TXM_ENABLE_LAST_THREAD_INFO=1",
+   ])
+   
+if 'USES_TX_KERNEL_TRACE' in env:
+   env.Append(CPPDEFINES = [
+    "TX_ENABLE_EVENT_TRACE"
+   ])
+
+if 'USES_MODULE_MMU_CONTROL_ENABLE' in env:
+   env.Append(CPPDEFINES = [
+    "MODULE_MMU_CONTROL_ENABLE",
+   ])
+
+if "USES_AWARE" in env:
+   env.Append(CPPDEFINES = [
+    "TX_ENABLE_AWARE_CUSTOMIZATION",
+   ])
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'PRODUCTS_DSR',
+   'PRODUCTS_SCM',
+   'PRODUCTS_UTILS',
+   'QTEE_INVOKE_DRIVER_API',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+   'BUSES',
+   'WIREDCONNECTIVITY',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi('CONSOLE_PRINTF', area='dataservices')
+env.RequirePublicApi('QAPI', area='platform_tools')
+
+#-------------------------------------------------------------------------------
+# Sources, librarie
+#-------------------------------------------------------------------------------
+QURT_LIB_SOURCES =  [
+   '${BUILDPATH}/src/qurt_error.c',
+   '${BUILDPATH}/src/qurt_init.c',
+   '${BUILDPATH}/src/qurt_interrupt.c',
+   '${BUILDPATH}/src/qurt_memory.c',
+   '${BUILDPATH}/src/qurt_pimutex.c',
+   '${BUILDPATH}/src/qurt_pipe.c',
+   '${BUILDPATH}/src/qurt_rmutex.c',
+   '${BUILDPATH}/src/qurt_signal.c',
+   '${BUILDPATH}/src/qurt_system.c',
+   '${BUILDPATH}/src/qurt_thread.c',
+   '${BUILDPATH}/src/qapi_handler_registry.c',
+   '${BUILDPATH}/src/qurt_timer.c',
+   '${BUILDPATH}/src/qurt_qtmr_timer.c',
+   '${BUILDPATH}/src/qurt_timetick.c',
+   '${BUILDPATH}/src/qurt_cond.c',
+   '${BUILDPATH}/src/qurt_txm_qapi_fwk.c',
+   '${BUILDPATH}/src/qurt_fs.c',
+   '${BUILDPATH}/src/qurt_custom_cb_qapi_example.c',
+   '${BUILDPATH}/src/qurt_shared_memory.c',
+   '${BUILDPATH}/src/qurt_txm_mmu.c',
+   '${BUILDPATH}/src/qurt_txm_uid_fwk.c',
+   '${BUILDPATH}/src/qurt_module_integrity_check.c',
+   '${BUILDPATH}/src/qurt_parser.c',
+   '${BUILDPATH}/src/qurt_scm.c',
+   '${BUILDPATH}/src/qurt_storage_wrapper.c',
+   '${BUILDPATH}/src/qurt_txm_exception_handler.c',   
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/qurt', QURT_LIB_SOURCES)
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitFunc(           # Code Fragment in TMC: YES
+    RCINIT_IMG,                  # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',                   # required
+     'init_name'                  : 'qurt_timer_Task',                       # required
+     'init_function'              : 'qurt_qtmr_timer_init',                  # required
+     'dependencies'               : ['dalsys',]
+    })

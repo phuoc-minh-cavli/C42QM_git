@@ -1,0 +1,23 @@
+// Title: smmu_xpu_disable.cmm
+
+//Description: Disable QDSP6 SMMU XPU by granting Q6 permission to access entire Memory range
+
+LOCAL &val
+
+&val=data.long(EZAXI:0x1817010)&0x1
+
+if (&val==0x0) 
+(
+	D.S EZAXI:0x1817010 %LE %Long 0x80008001 
+)
+
+D.S EZAXI:0x37248 %LE %Long 0xFFFFFFFF
+
+
+if (&val==0x0) 
+(
+	D.S EZAXI:0x1817010 %LE %Long 0x80008000
+)
+
+
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+  <NvItemData name="Toolkit CS PS Parallel" id="5770" description="supports BIP and Voice call in parallel" comment="" category="Factory" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+	<Member name="toolkit_cs_ps_parallel_is_enabled" description="supports BIP and Voice call in parallel" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvItemData>
+  <NvEfsFile name="features_status_list" id="67211" description="To enable/disable MMGSDI Features" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/mmgsdi/features_status_list" buildPath="modem_proc/uim/config/efs_files/rel/features_status_list"/>
+</NvData>

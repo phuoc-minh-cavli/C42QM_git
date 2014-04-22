@@ -1,0 +1,49 @@
+#include "pm_dal_prop_ids.h"
+
+<driver name="NULL">
+<device id="/apps/pmic/common">
+<props id=PM_PROP_CLK_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+clk_reg
+</props>
+<props id=PM_PROP_GPIO_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+gpio_reg
+</props>
+<props id=PM_PROP_VBUS_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+vbus_reg
+</props>
+<props id=PM_PROP_MPP_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+mpp_reg
+</props>
+<props id=PM_PROP_PBS_CLIENT_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+pbs_client_reg
+</props>
+<props id=PM_PROP_CLK_COMMON type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+clk_common
+</props>
+<props id=PM_PROP_CLK_SLEEP_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+clk_sleep_reg
+</props>
+<props id=PM_PROP_SMPS_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+smps_reg
+</props>
+<props id=PM_PROP_LDO_REG type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+ldo_reg
+</props>
+<props id=PM_PROP_FTS_VOLT type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+fts_volt
+</props>
+<props id=PM_PROP_FTS2p5_VOLT type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+fts2p5_volt
+</props>
+<props id=PM_PROP_HFS_VOLT type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+hfs_volt
+</props>
+<props id=PM_PROP_ULT_BUCK_VOLT_1 type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+ult_buck_volt_1 
+</props>
+<props id=PM_PROP_ULT_BUCK_VOLT_2 type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+ult_buck_volt_2
+</props>
+</device> 
+</driver>
+

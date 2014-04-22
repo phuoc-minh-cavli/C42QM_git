@@ -1,0 +1,13 @@
+TypicalMeasConfig:value DL-DCCH-Message ::= 
+{
+  message c1 : rrcConnectionReconfiguration : 
+      {
+        rrc-TransactionIdentifier 1,
+        criticalExtensions c1 : rrcConnectionReconfiguration-r8 : 
+            {
+              measurementConfiguration 
+              {
+              }
+            }
+      }
+}

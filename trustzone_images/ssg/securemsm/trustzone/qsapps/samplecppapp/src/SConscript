@@ -1,0 +1,113 @@
+#===========================================================================
+#  Copyright (c) 2018-2019 QUALCOMM Technologies Incorporated.
+#  All Rights Reserved.
+#  Qualcomm Confidential and Proprietary
+#===============================================================================
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+import os
+
+Import ('env')
+env = env.Clone()
+
+for target in ['smplcppap32','smplcppap64']:
+  aliases = []
+  if target == 'smplcppap32':
+    if env['APP_EXEC_MODE'] == 'aarch64':
+      continue
+    aliases = ['samplecppapp', 'smplcppap32', 'uefitzt', 'deploy','allapps']
+    env.Replace(OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/samplecppapp/build/$PROC')
+    env.Replace(LIB_OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/samplecppapp/build/${SHORT_BUILDPATH}/$PROC')
+    app_name = 'SampleCppApp'
+    uuid_name ='53616D70-6C65-4370-7041-707000000032'
+  elif target == 'smplcppap64':
+    if env['APP_EXEC_MODE'] == 'aarch32':
+      continue
+    aliases = ['samplecppapp', 'smplcppap64', 'uefitzt', 'deploy','allapps']
+    env.Replace(OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/smplcppap64/build/$PROC')
+    env.Replace(LIB_OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/smplcppap64/build/${SHORT_BUILDPATH}/$PROC')
+    app_name = 'SampleCppApp64'
+    uuid_name ='53616D70-6C65-4370-7041-707000000064'
+
+  if not env.CheckAlias(aliases):
+    continue
+
+  #------------------------------------------------------------------------------
+  # We need to specify "neon" to generate SIMD instructions in 32-bit mode
+  #------------------------------------------------------------------------------
+  if env['PROC'] == 'scorpion':
+    env.Append(CCFLAGS = " -mfpu=neon ")
+
+  env.Append(CCFLAGS = ' -DSAMPLE_APP=1 ')
+
+  #-------------------------------------------------------------------------------
+  # Compiler, object, and linker definitions
+  #-------------------------------------------------------------------------------
+  test_fuse_inc = ['${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/samplecppapp/inc/$CHIPSET']
+  includes = [
+    '${INC_ROOT}/ssg/securemsm/trustzone/qsapps/samplecppapp/inc',
+    '${INC_ROOT}/ssg/securemsm/trustzone/qsapps/sampleapp/inc',
+    '${INC_ROOT}/ssg/securemsm/trustzone/qsapps/sampleapp/src',
+  ]
+  includes.extend(test_fuse_inc)
+
+  #----------------------------------------------------------------------------
+  # App core Objects
+  #----------------------------------------------------------------------------
+
+  sources = [
+          'app_main.cpp',
+          'sampleCppFeatures/cppFeatures.cpp',
+          'sampleCppFeatures/sampleStringFeatures.cpp',
+          'sampleCppFeatures/sampleClassFeature.cpp',
+          'sampleCppFeatures/sampleOverloadingFeature.cpp',
+          'sampleCppFeatures/sample_operatorOverload.cpp',
+          'sampleCppFeatures/sample_functionOverload.cpp',
+          'sampleCppFeatures/sampleEncapsulationFeature.cpp',
+          'sampleCppFeatures/sampleInheritanceFeature.cpp',
+          'sampleCppFeatures/sampleTemplateFeature.cpp',
+          'sampleCppFeatures/sampleTemplateFunction.cpp',
+          'sampleCppFeatures/sampleSTLFeatures.cpp',
+          'sampleCppFeatures/sampleDynamicAllocation.cpp',
+          'sampleCppFeatures/sampleMiscelleneousFeature.cpp',
+          'sampleCppFeatures/handle.cpp',
+          'app_sfs.cpp',
+          'app_smplserv_test.cpp',
+          'app_smplcert_test.cpp',
+  ]
+
+  deploy_sources = []
+  deploy_sources.extend(sources)
+
+  #-------------------------------------------------------------------------------
+  # Add metadata to image
+  # For debugging purposes UUID is "SampleCppApp" in hex.
+  #-------------------------------------------------------------------------------
+  md = {
+     'appName':    app_name,
+     'UUID':       uuid_name,
+     'privileges': ['default', 
+                    'CertValidate',
+                    'OEMUnwrapKeys',
+                    'TestSandbox',],
+     'heapSize': 0x10000,
+  }
+  libs = []
+  if env['PROC'] == 'scorpion':
+    md['memoryType'] = 'Unprotected'
+
+  deploy_header_files = env.Glob('../inc/*')
+
+  samplecppapp_units = env.SecureAppBuilder(
+    sources = sources,
+    includes = includes,
+    metadata = md,
+    image = target,
+    user_libs = libs,
+    deploy_sources = deploy_sources + ['SConscript'] + deploy_header_files,
+    deploy_variants = env.GetDefaultPublicVariants()
+  )
+
+  env.Alias(aliases, samplecppapp_units)

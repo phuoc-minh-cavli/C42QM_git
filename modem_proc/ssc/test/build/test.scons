@@ -1,0 +1,25 @@
+#===============================================================================
+#
+# SEE Test Tools:w
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/test/build/test.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Scan subdirectories to find more /build folders
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+

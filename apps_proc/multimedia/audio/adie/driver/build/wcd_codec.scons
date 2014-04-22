@@ -1,0 +1,147 @@
+#===============================================================================
+#
+# Adie Codec
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/adie/driver/build/wcd_codec.scons#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Change: 17929171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 12/10/10   OA     Initial version.
+#===============================================================================
+
+
+#required in order to use wildcards for compilation
+from glob import glob
+from os.path import join, basename
+
+
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+BASEPATH = "${BUILD_ROOT}/multimedia/audio/adie/driver"
+env.VariantDir('${BUILDPATH}', BASEPATH , duplicate=0) 
+
+
+
+# TODO: get MSG macro to be used
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+#env.Append(CPPDEFINES = [
+#    "MSG_BT_SSID_DFLT=MSG_SSID_<NAME>",
+#])
+
+
+#TODO: verify non CoreBSP dependencies
+#-------------------------------------------------------------------------------
+# non CoreBSP dependencies
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'EXTERNAL_MULTIMEDIA'
+])
+
+env.RequirePublicApi([
+   'EXTERNAL_MULTIMEDIA'
+ ])
+
+env.RequireRestrictedApi([
+   'AUDIO'
+])
+
+env.RequirePublicApi([
+   'MMUTILS'
+])
+
+env.RequirePublicApi([
+   'AUDIO'
+])
+
+#-------------------------------------------------------------------------------
+# Local Include PATHs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('WCD_CODEC', [
+  "${INC_ROOT}/multimedia/audio/adie/driver/src"
+])
+
+env.RequireRestrictedApi('ADIECODEC')
+env.RequireRestrictedApi('WCD_OSAL')
+env.RequireRestrictedApi('WCD_CODEC')
+env.RequireRestrictedApi('WCD_CODEC_INTERNAL')
+
+#TODO: verify CoreBSP dependencies
+#-------------------------------------------------------------------------------
+# CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',   
+   'BUSES',
+   'DEBUGTOOLS',
+   'SERVICES',
+   
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+#-------------------------------------------------------------------------------
+# Defines per target
+#-------------------------------------------------------------------------------
+#if env['MSM_ID'] == '8960':
+#   env.Append(CC_DFLAGS = " -D<FLAG>")
+#elif env['MSM_ID'] == '<other>':
+#   env.Append(CC_DFLAGS = " -D<FLAG>")
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+WCDCODEC_SOURCES = ['${BUILDPATH}/src/' + basename(fname)
+              for fname in glob(join(env.subst(BASEPATH)+'/src/', '*.c'))]
+# print "DEBUG WCD_SOURCES glob:" + join(env.subst(BASEPATH)+'/src/', '*.c')
+
+wcdcodec_objs = env.Object(WCDCODEC_SOURCES)
+
+#if env.has_key('USES_NO_STRIP_NO_ODM'):
+wcdcodec_lib = env.Library('${BUILDPATH}/WCD_CODEC', wcdcodec_objs)
+#else:
+#  wcdcodec_lib = File(env.subst("${BUILDPATH}${LIBSUFFIX}"))
+
+#todo: investigate the debug info macros for qcom scons.
+#print "DEBUG WCDCODEC_SOURCES ARE:"
+#for fname in WCDCODEC_SOURCES:
+#  print "- ", fname
+
+#print "DEBUG WCDCODEC_OBJECTS ARE:"
+#for fname in wcdcodec_objs:
+#  print "- ", fname
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   wcdcodec_lib)

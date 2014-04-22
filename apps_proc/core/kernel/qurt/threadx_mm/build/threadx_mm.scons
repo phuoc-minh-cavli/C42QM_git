@@ -1,0 +1,88 @@
+#===============================================================================
+#               Copyright 2016-18,2020,2022 QUALCOMM Technologies, Inc.
+#                           All Rights Reserved.
+#             Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# QURT TXM Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/qurt/threadx_mm"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "QURT_THREAD_ATTR_PRIORITY_DEFAULT=128",
+   "QURT_THREAD_ATTR_NAME_MAXLEN=20",
+   "QURT_THREAD_MAX_PRIORITIES=256",    
+   "QURT_THREAD_DEFAULT_STACK_SIZE=256",
+   "FEATURE_MUTEX_PI_RECURSIVE",
+   "TX_ENABLE_IRQ_NESTING",
+   "TX_ENABLE_PROFILING",
+   "TX_DISABLE_NOTIFY_CALLBACKS",
+   "FX_FILEX_PRESENT",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   "TX3_CHANGES",
+   "TXM_ENABLE_LAST_THREAD_INFO=1",
+   #"TX_ENABLE_MODULE_UNLOAD",	# Enable this feature flag to test module unloading 
+   #"TX_ENABLE_DAM_EXCEPTION_CB_TEST",  # Enable this feature flag to test module exception callback. 
+   #"TX_LAST_RAN_THREAD_INFO_TEST", # Enable this flag to test Last ran thread info.
+   ])
+   
+if 'USES_TX_KERNEL_TRACE' in env:
+   env.Append(CPPDEFINES = [
+      "TX_ENABLE_EVENT_TRACE"
+   ])
+   
+if 'USES_MODULE_MMU_CONTROL_ENABLE' in env:
+   env.Append(CPPDEFINES = [
+      "MODULE_MMU_CONTROL_ENABLE",
+   ])
+
+if "USES_AWARE" in env:
+   env.Append(CPPDEFINES = [
+      "DISABLE_KERNEL_MODULE_LOADER"
+   ])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'PRODUCTS_DSR',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, librarie
+#-------------------------------------------------------------------------------
+QURT_TXM_LIB_SOURCES =  [
+   '${BUILDPATH}/src/qurt_txm_module_mgr.c',
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+env.AddLibrary(IMAGES , ('${BUILDPATH}/qurt_txm'), QURT_TXM_LIB_SOURCES)
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'qurt_txm_module_manager',          # required
+     'init_function'              : 'qurt_txm_module_manager_entry',    # required
+     'dependencies'               : ['fs',]                             # fs_task is a dependency
+    })

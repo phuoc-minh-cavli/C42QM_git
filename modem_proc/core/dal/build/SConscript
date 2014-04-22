@@ -1,0 +1,37 @@
+#===============================================================================
+#
+# DAL Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/dal/build/SConscript#2 $
+#  $DateTime: 2018/09/07 03:22:57 $
+#  $Author: pwbldsvc $
+#  $Change: 17066400 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+dal_root = '${BUILD_ROOT}/core/dal'
+env.Replace(DAL_ROOT = dal_root)
+#env.Replace(DEVCFG_BOOT_TEST = 'yes')
+if 'DEVCFG_BOOT_TEST' in env:
+   env.Append(CPPDEFINES = ["DEVCFG_BOOT_TEST"]) 
+	
+env.Append(CCFLAGS = " -fno-strict-aliasing")
+env.LoadSoftwareUnits()

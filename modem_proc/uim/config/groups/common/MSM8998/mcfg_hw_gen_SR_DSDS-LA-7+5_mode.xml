@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="qmi_cat_mode" id="65683" description="QMI CAT mode" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/cat/qmi_cat_mode">
+		<Member name="QMI_CAT_MODE" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvEfsItemData>
+	<NvEfsFile name="device_features_status_list" id="73763" description="To pick first gsma entry match in SE13 table lookup if there are more than one GSMA entries with same MCC-MNC" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/mmgsdi/device_features_status_list" buildPath="modem_proc/uim/config/efs_files/hw_settings/device_features_status_list"/>
+	<!--
+
+Following Entries are UIM Secure NV Items for reference purposes - Please uncomment corresponding items to enable the setting
+
+<NvEfsItemData name="halt_subscription" id="65954" description="Halt Subscription" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/halt_subscription">		<Member name="halt_subscription" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="encrypt_sub_ok" id="67285" description="Encrypt Subscription OK" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/encrypt_sub_ok">		<Member name="encrypt_sub_ok" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="apdu_security_restrictions" id="67285" description="APDU Security Restrictions" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/uim/apdu_security_restrictions">		<Member name="apdu_security_restrictions" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsFile name="apdu_security_aid_list" id="67317" description="APDU Security AID List" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/qmi/uim/apdu_security_aid_list" buildPath="modem_proc/uim/config/efs_files/apdu_security_aid_list"/>
+
+<NvEfsItemData name="sap_security_restrictions" id="70283" description="SAP Security Restrictions" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/uim/sap_security_restrictions"><Member name="sap_security_restrictions" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="auth_security_restrictions" id="70284" description="AUTH Security Restrictions" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/uim/auth_security_restrictions"><Member name="auth_security_restrictions" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="qmi_cat_block_sms_pp_env" id="71557" description="QMI CAT Block SMS-PP Env" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/cat/qmi_cat_block_sms_pp_env"><Member name="qmi_cat_block_sms_pp_env" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="" id="" description="UIM Remote Service Enable" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/remote/uim_remote_service_enable"><Member name="" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+<NvEfsItemData name="silent_recovery" id="72534" description="Silent Recovery" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/uim/silent_recovery"><Member name="silent_recovery" description="" comment="" sizeOf="1" type="uint8">0 </Member></NvEfsItemData>
+
+-->
+</NvData>

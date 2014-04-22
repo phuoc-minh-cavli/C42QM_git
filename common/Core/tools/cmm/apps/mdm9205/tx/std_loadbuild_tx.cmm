@@ -1,0 +1,222 @@
+//============================================================================
+//  Name:                                                                     
+//    std_loadbuild_la.cmm 
+//
+//  Description:                                                              
+//    LA Specific Build loading script
+//                                                                            
+// Copyright (c) 2013 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who           what, where, why
+// --------   ---           ---------------------------------------------------------
+//01/03/2016  martham       acdb.mbn flashing support for tx.2.0
+// 06/24/2014 AJCheriyan    Added pmic.mbn loading support
+// 05/26/2014 AJCheriyan    Added single image loading option
+// 12/05/2013 AJCheriyan    Added erase option back in for UFS
+// 11/05/2013 AJCheriyan    Added changes to pass storage type to loading script
+// 10/02/2013 AJCheriyan    New set of changes for UFS loading
+// 10/01/2012 AJCheriyan    Removed SDI image loading for good (needs boot support)
+// 09/13/2012 AJCheriyan    Added SDI image loading (add partition.xml changes)
+// 09/07/2012 AJCheriyan    Removed SDI image loading (revert partition.xml changes )
+// 09/02/2012 AJCheriyan    Added SDI image loading
+// 08/08/2012 AJCheriyan    Fixed issue with paths for mjsdload
+// 07/19/2012 AJCheriyan    Created for B-family 
+
+// ARG0 - Load option - Supported : ERASEONLY, LOADCOMMON, LOADFULL, LOADIMG
+// ARG1 - Valid image name. Can be used only with LOADIMG option.
+ENTRY &ARG0 &ARG1 
+
+LOCAL &CWD &SEARCHPATHS &STORAGE_OPTION &STORAGE_TYPE &PROGRAMMER &PARTITION
+LOCAL &XML &MAX_PARTITIONS &XML_LOCATION &BINARY &BINARYPATH &PROGRAMMER_NAND &PROGRAMMER_ERASE
+
+MAIN:
+    // We have checked for all the intercom sessions at this point and we don't need any error
+    // Save the argument
+    &LOAD_OPTION="&ARG0"
+
+    // Switch to the tools directory
+    &CWD=OS.PWD()
+
+	&PROGRAMMER="boot_images/QcomPkg/Library/NandJtagTools/load_image"
+	&PROGRAMMER_NAND="boot_images/QcomPkg/Library/NandJtagTools/mjnand"
+	&PROGRAMMER_ERASE="boot_images/QcomPkg/Library/NandJtagTools/erasenand.cmm"
+
+
+    // Erase only
+    IF (("&ARG0"=="ERASEONLY")||("&ARG0"=="LOADFULL"))
+    (
+		 CD.DO &BOOT_BUILDROOT/&PROGRAMMER_ERASE NOMENU
+    )
+
+    // Load common images
+    IF ("&ARG0"=="LOADFULL")
+    (
+        // Check for all the common images 
+
+        // Check for the presence of all the binaries
+        // Not needed because meta-build should have populated all this information
+        // SBL, TZ, RPM, APPSBL, SDI
+        do std_utils FILEXIST FATALEXIT &BOOT_BUILDROOT/&BOOT_BINARY
+        do std_utils FILEXIST FATALEXIT &RPM_BUILDROOT/&RPM_BINARY
+        do std_utils FILEXIST FATALEXIT &APSS_BUILDROOT/&APSS_BINARY
+        do std_utils FILEXIST FATALEXIT &TZ_BUILDROOT/&TZ_BINARY
+		do std_utils FILEXIST FATALEXIT &MPSS_BUILDROOT/&MPSSPAGING_BINARY
+	    //do std_utils FILEXIST FATALEXIT &MPSS_BUILDROOT/&MPSS_BINARY
+	    do std_utils FILEXIST FATALEXIT &METAROOTDIR/&MULTIIMGOEM_BINARY
+
+        DO &BOOT_BUILDROOT/&PROGRAMMER partition &PARTITION_METASCRIPTSDIR/partition.mbn				           
+        DO &BOOT_BUILDROOT/&PROGRAMMER sbl  &BOOT_BUILDROOT/&BOOT_BINARY
+		DO &BOOT_BUILDROOT/&PROGRAMMER rpm  &RPM_BUILDROOT/&RPM_BINARY
+	    DO &BOOT_BUILDROOT/&PROGRAMMER apps &APSS_BUILDROOT/&APSS_BINARY
+	    //DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_BINARY
+		//DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_BINARY
+	    DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_paging &MPSS_BUILDROOT/&MPSSPAGING_BINARY
+	    DO &BOOT_BUILDROOT/&PROGRAMMER tz  &TZ_BUILDROOT/&TZ_BINARY
+		//DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_BINARY
+		DO &BOOT_BUILDROOT/&PROGRAMMER devcfg_fota  &TZ_BUILDROOT/&TZDEVCFGFOTA_BINARY
+		DO &BOOT_BUILDROOT/&PROGRAMMER acdb  &APSS_BUILDROOT/&ACDB_BINARY 
+		//DO &BOOT_BUILDROOT/&PROGRAMMER multi_image  &METAROOTDIR/&MULTIIMGOEM_BINARY
+		
+		IF (FILE.EXIST("&TZ_BUILDROOT/&TZDEVCFG_BINARY"))
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_BINARY
+		)
+		ELSE
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_AWARE_BINARY 
+		)
+		
+		IF (FILE.EXIST("&MPSS_BUILDROOT/&MPSS_BINARY"))
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_BINARY
+		)
+		ELSE
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_AWARE_BINARY  
+		)
+		
+		IF (FILE.EXIST("&MPSS_BUILDROOT/&MPSSTINY_BINARY"))
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_BINARY
+		)
+		ELSE
+		(
+			DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_AWARE_BINARY
+		)
+		
+	    CD.DO &BOOT_BUILDROOT/&PROGRAMMER_NAND NOMENU AAATANAA
+
+    )     
+    
+    // Load common images
+    IF ("&ARG0"=="LOADSINGLE")
+    (
+        DO &BOOT_BUILDROOT/&PROGRAMMER sbl &BOOT_BUILDROOT 
+	    DO &BOOT_BUILDROOT/&PROGRAMMER rpm  
+	    DO &BOOT_BUILDROOT/&PROGRAMMER mba 
+	    DO &BOOT_BUILDROOT/&PROGRAMMER apps 
+	    DO &BOOT_BUILDROOT/&PROGRAMMER qdsp 
+		DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_paging
+		DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny
+	    DO &BOOT_BUILDROOT/&PROGRAMMER tz  
+		DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg
+		DO &BOOT_BUILDROOT/&PROGRAMMER multi_image
+	    DO &BOOT_BUILDROOT/&PROGRAMMER acdb
+		 
+        // Check for the binary first 
+        IF ("&ARG1"=="sbl")
+        (
+            do std_utils FILEXIST FATALEXIT &BOOT_BUILDROOT/&BOOT_BINARY
+            DO &BOOT_BUILDROOT/&PROGRAMMER sbl &BOOT_BUILDROOT/&BOOT_BINARY
+
+        )
+        IF ("&ARG1"=="tz")
+        (
+            do std_utils FILEXIST FATALEXIT &TZ_BUILDROOT/&TZ_BINARY
+            DO &BOOT_BUILDROOT/&PROGRAMMER tz &TZ_BUILDROOT/&TZ_BINARY
+			//DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_BINARY
+			IF (FILE.EXIST("&TZ_BUILDROOT/&TZDEVCFG_BINARY"))
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_BINARY
+			)
+			ELSE
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER tz_devcfg  	&TZ_BUILDROOT/&TZDEVCFG_AWARE_BINARY 
+			)
+			DO &BOOT_BUILDROOT/&PROGRAMMER devcfg_fota  &TZ_BUILDROOT/&TZDEVCFGFOTA_BINARY
+        )
+        IF ("&ARG1"=="rpm")
+        (
+            do std_utils FILEXIST FATALEXIT &RPM_BUILDROOT/&RPM_BINARY
+            DO &BOOT_BUILDROOT/&PROGRAMMER rpm &RPM_BUILDROOT/&RPM_BINARY
+
+        )
+        IF ("&ARG1"=="mpss")
+        (
+            //do std_utils FILEXIST FATALEXIT &MPSS_BUILDROOT/&MPSS_BINARY
+            //DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_BINARY
+			IF (FILE.EXIST("&MPSS_BUILDROOT/&MPSS_BINARY"))
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_BINARY
+			)
+			ELSE
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER qdsp &MPSS_BUILDROOT/&MPSS_AWARE_BINARY  
+			)
+			DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_paging &MPSS_BUILDROOT/&MPSSPAGING_BINARY
+        )
+		IF ("&ARG1"=="apps")
+        (
+            do std_utils FILEXIST FATALEXIT &APSS_BUILDROOT/&APSS_BINARY
+            DO &BOOT_BUILDROOT/&PROGRAMMER apps &APSS_BUILDROOT/&APSS_BINARY
+			DO &BOOT_BUILDROOT/&PROGRAMMER acdb  &APSS_BUILDROOT/&ACDB_BINARY 
+        )
+		IF ("&ARG1"=="tiny_mpss")
+        (
+            //do std_utils FILEXIST FATALEXIT &MPSS_BUILDROOT/&MPSSTINY_BINARY
+            //DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_BINARY
+			IF (FILE.EXIST("&MPSS_BUILDROOT/&MPSSTINY_BINARY"))
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_BINARY
+			)
+			ELSE
+			(
+				DO &BOOT_BUILDROOT/&PROGRAMMER qdsp_tiny &MPSS_BUILDROOT/&MPSSTINY_AWARE_BINARY
+			)
+        )
+	    DO &BOOT_BUILDROOT/&PROGRAMMER partition &PARTITION_METASCRIPTSDIR/partition.mbn
+	    CD.DO &BOOT_BUILDROOT/&PROGRAMMER_NAND NOMENU AAATANAA
+	  )
+			
+
+	// Now reset the chip for fresh cold boot
+	do std_reset
+	// Let the system run and boot
+	do std_utils ATTACHPROC
+	
+    // Return to the old directory
+    CD &CWD
+
+    GOTO EXIT
+
+FATALEXIT:
+    END
+
+EXIT:
+    ENDDO
+
+
+
+    
+    
+    
+
+        
+

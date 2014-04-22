@@ -1,0 +1,164 @@
+#===============================================================================
+#
+# I2C Libs
+#
+# GENERAL DESCRIPTION
+#    Public build script for I2C BUS driver.
+#
+#    Copyright (c) 2009-2019 Qualcomm Technologies, Incorporated.
+#                        All rights reserved.
+#    Qualcomm Technologies, Confidential and Proprietary.
+#
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/2H09/voyager_modem/rel/3.x/AMSS/products/9X00/core/buses/sbi/dal/build/SConscript#1 $
+#  $DateTime: 2011/05/17 12:32:27 $
+#  $Author: coresvc $
+#  $Change: 1751859 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/04/19   ss      Added support for qapi registration in a common place.
+# 01/16/19   ss      Added support for MDM9205
+# 03/09/17   vg      Added support for I2C_DAM_init
+# 09/02/16   pr      Added support for 9x07
+# 02/09/12   lk      Added device inc path.
+# 02/09/12   lk      Added configurable properties file.
+# 02/09/12   ag      Fixed the location where the object files are built.
+# 01/21/12   ag	     Initial release
+#
+#===============================================================================
+Import('env')
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+env = env.Clone()
+#print env
+# Additional defines
+env.Append(CPPDEFINES = ["FEATURE_LIBRARY_ONLY"])   
+
+SRCPATH = "../src"
+
+IMAGES = []
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+CBSP_APIS = []
+I2C_CONFIG_XML = {}
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('BUSES_I2C_DEVICE', [
+   '${INC_ROOT}/core/buses/i2c/src/dev',
+   '${INC_ROOT}/core/buses/i2c/src/drv',
+   '${INC_ROOT}/core/buses/i2c/src/logs/inc',
+   '${INC_ROOT}/core/buses/qup/src/logs/inc',
+   '${INC_ROOT}/core/buses/qup/inc',
+   '${INC_ROOT}/core/buses/qup/hw',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_APIS += [
+   'BUSES',
+   'DAL',
+   'HAL',
+   'SYSTEMDRIVERS',
+   'HWENGINES',
+   'KERNEL',   
+   'SERVICES',
+   'POWER',
+   'PRODUCTS_DSR',
+   'DEBUGTOOLS',
+   'QAPI'
+]
+
+env.RequirePublicApi(CBSP_APIS)
+env.RequireRestrictedApi(CBSP_APIS)
+
+if env['MSM_ID'] in ['9x06']:
+   if env.has_key('APPS_PROC'):
+      env.Replace(I2C_CONFIG_XML = 'i2c_apps_mdm9x06.xml')
+      IMAGES = ['APPS_IMAGE',      'CBSP_APPS_IMAGE']
+elif env['MSM_ID'] in ['9205']:
+   if env.has_key('APPS_PROC'):
+      env.Replace(I2C_CONFIG_XML = 'i2c_apps_mdm9x05.xml')
+      IMAGES = ['APPS_IMAGE',      'CBSP_APPS_IMAGE']	  
+else:
+   Return();
+   
+   
+   env.Append(CPPDEFINES = ["I2CLOG_LEVEL_COMPILE=I2CLOG_LEVEL_2"])   
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+I2C_DEVICE_GLOB_FILES = env.GlobFiles('../src/*/*.c', posix=True)
+ 
+#GLOB returns the relative path name, it needs to replaced with correct build location
+I2C_DEVICE_SOURCES = [path.replace(SRCPATH, '${BUILDPATH}') for path in I2C_DEVICE_GLOB_FILES]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+# env.AddLibrary is a new API, only if the IMAGES is valid in the build env
+# the objects will built and added to the image.
+#-------------------------------------------------------------------------------
+env.AddLibrary(IMAGES, '${BUILDPATH}/I2cDriver', I2C_DEVICE_SOURCES)
+
+#---------------------------------------------------------------------------
+# Device Config
+#---------------------------------------------------------------------------
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG, 
+   {
+      'devcfg_xml'    : '${BUILD_ROOT}/core/buses/i2c/config/${I2C_CONFIG_XML}'
+   })
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',               
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_SOURCES = [
+    '${BUILDPATH}/drv/qapi_i2c_master.c',
+]
+env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', QAPI_SOURCES)
+   
+   
+#---------------------------------------------------------------------------
+# Test Code
+#---------------------------------------------------------------------------
+#if 'USES_RCINIT' in env:
+#   RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+#   if 0:
+#      env.AddRCInitTask(           
+#      RCINIT_IMG,                 
+#       {
+#         'sequence_group'             : 'RCINIT_GROUP_7',                   # required
+#         'thread_name'                : 'i2c_test_task',              # required
+#         'thread_entry'               : 'i2c_test_task',
+#         'stack_size_bytes'           : '6144',
+#         'priority_amss_order'        : 'SHARED_FOREGROUND_PRI_ORDER',
+#         'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+#       }) 
+
+

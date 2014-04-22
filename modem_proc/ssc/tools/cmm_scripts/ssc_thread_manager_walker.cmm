@@ -1,0 +1,185 @@
+;============================================================================
+;
+; SEE Thread Manager Walker
+;
+; To be called by ssc_parser.cmm to walk the Thread Manager DB
+;
+; Version: 2.0
+;
+; Copyright (c) 2018-2019 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Qualcomm Technologies, Inc. Confidential and Proprietary.
+;============================================================================
+
+ENTRY
+
+print "##### Thread Manager #####"
+print ""
+
+&thread_pool_cnt=V.VALUE(sizeof(thread_pools) / sizeof(sns_thread_pool))
+&j=0
+&pending_task=V.VALUE(thread_pools[0].pending_tasks.item.next)
+&max_num_tasks=V.VALUE(sizeof(((sns_tmgr_task_arr*)&pending_task)->tasks) / \
+                       sizeof(((sns_tmgr_task_arr*)&pending_task)->tasks[0]))
+&max_tasks_to_display=20.
+
+while &j<&thread_pool_cnt
+(
+  &pool=V.VALUE(&thread_pools[&j])
+  &thread_cnt=V.VALUE(thread_pools[&j].threads_len)
+
+  print "Thread Pool "+format.decimal(1,&j)+" - (sns_thread_pool*)0x"+format.HEX(8,&pool)
+
+  &task_cnt=0
+  &task_idx=0
+  &num_tasks=V.VALUE(thread_pools[&j].pending_tasks.cnt)
+  &task=V.VALUE(thread_pools[&j].pending_tasks.item.next)
+
+  while &task_idx<&num_tasks
+  (
+    &header_printed=0
+    &m=0
+    &n=0
+    while &m<&max_num_tasks
+    (
+      &lib=V.VALUE(((sns_tmgr_task_arr*)&task)->tasks[&m].library)
+      &func=V.VALUE(((sns_tmgr_task_arr*)&task)->tasks[&m].func)
+      &func_arg=V.VALUE(((sns_tmgr_task_arr*)&task)->tasks[&m].func_arg)
+
+      if (&lib!=0)&&(&func!=0)
+      (
+        if &task_cnt<&max_tasks_to_display
+        (
+          if &header_printed==0
+          (
+            &header_printed=1
+            print
+            print "    ----- Pending task list #"+format.decimal(1,&task_idx+1)+" -----"
+          )
+          &reg_func=V.VALUE(*&(((sns_sensor_library*)&lib)->register_func))
+          &reg_func_symbol= Y.NAME(D:&reg_func)
+          &reg_func_symbol="'"+string.split("&reg_func_symbol","\",-1)+"'"
+          print "    #"+format.decimal(1,&n+1)+" "
+          print %CONTinue format.STRing("&reg_func_symbol",30.,' ')
+          gosub print_task &func &func_arg
+        )
+        &task_cnt=&task_cnt+1.
+        &n=&n+1
+      )
+      &m=&m+1.
+    )
+
+    &task=V.VALUE(((sns_list_item*)&task)->next->item)
+    &task_idx=&task_idx+1.
+  )
+
+  if &task_cnt==0
+  (
+    print
+    print "  No pending task"
+  )
+  else if &task_cnt>=&max_tasks_to_display
+  (
+    print "    . . ."
+    print "    There are a total of "+format.decimal(1,&task_cnt)+" tasks in "
+    print %CONTinue format.decimal(1,&num_tasks)+" lists"
+  )
+
+  &k=0
+  while &k<&thread_cnt
+  (
+    &thread=V.VALUE(&thread_pools[&j].threads[&k])
+    &library=V.VALUE(thread_pools[&j].threads[&k].library)
+    &thread_utilization=V.VALUE(thread_pools[&j].threads[&k].thread_utilization)
+
+    print
+    print "  SNS_SEE_"+CONVert.CHAR(V.VALUE(thread_pools[&j].name))
+    print %CONTinue "_"+format.decimal(1,&k)+" - (sns_worker_thread*)0x"+format.HEX(8,&thread)
+    print "    Utilization  = "+format.decimal(1,&thread_utilization)
+    if &library==0
+    (
+      print "    Current Job  = None"
+    )
+    else
+    (
+      &func=V.VALUE(*&(((sns_sensor_library*)&library)->register_func))
+      &func_symbol= Y.NAME(D:&func)
+      &func_symbol= "'"+string.split("&func_symbol","\",-1)+"'"
+      print "    Current Job  = "+format.STRing("&func_symbol",30.,' ')
+
+      &func=V.VALUE(thread_pools[&j].threads[&k].func)
+      &func_arg=V.VALUE(thread_pools[&j].threads[&k].func_arg)
+      gosub print_task &func &func_arg
+
+      &start_time=V.VALUE(thread_pools[&j].threads[&k].start_time)
+      &ms_from_crash=((&qtime-&start_time)/19200.0)
+      if &ms_from_crash<1000.
+      (
+        print "    Job Duration = "+format.float(6,6,&ms_from_crash)+" ms"
+      )
+      else
+      (
+        &seconds_from_crash=(&ms_from_crash/1000.0)
+        if &seconds_from_crash<60.
+        (
+          print "    Job Duration = "+format.float(6,6,&seconds_from_crash)+" seconds"
+        )
+        else
+        (
+          &minutes_from_crash=(&seconds_from_crash/60.0)
+          if &minutes_from_crash<60.
+          (
+            print "    Job Duration = "+format.float(6,6,&minutes_from_crash)+" minutes"
+          )
+          else
+          (
+            &hours_from_crash=(&minutes_from_crash/60.0)
+            if &hours_from_crash<24.
+            (
+              print "    Job Duration = "+format.float(6,6,&hours_from_crash)+" hours"
+            )
+            else
+            (
+              &days_from_crash=(&hours_from_crash/24.)
+              print "    Job Duration = "+format.float(6,6,&days_from_crash)+" days"
+            )
+          )
+        )
+      )
+    )
+    &k=&k+1.
+  )
+  print
+  print
+  &j=&j+1.
+)
+
+print "==================================================================================="
+print ""
+enddo
+
+; ****************************************print_task***************************************
+print_task:
+  entry &func &func_arg
+  &func_symbol= Y.NAME(D:&func)
+  if STRing.SCAN("&func_symbol","event_service",0)!=-1
+  (
+    print %CONTinue " <-- (sns_fw_data_stream*)0x"+format.HEX(8,&func_arg)
+  )
+  else if STRing.SCAN("&func_symbol","stream_service",0)!=-1
+  (
+    &msg_id=V.VALUE(((sns_request*)&func_arg)->message_id)
+    &req_len=V.VALUE(((sns_request*)&func_arg)->request_len)
+    &stream=V.VALUE(((sns_fw_request*)&func_arg)->stream)
+    &sensor=V.VALUE(((sns_fw_data_stream*)&stream)->dst_sensor)
+    if &sensor==0
+    (
+      &sensor=V.VALUE(((sns_fw_data_stream*)&stream)->dst_instance->sensor)
+    )
+    &data_type=V.VALUE(((sns_fw_sensor*)&sensor)->attr_info->attr_info->data_type)
+    print %CONTinue " <-- (sns_fw_request*)0x"+format.HEX(8,&func_arg)
+    print %CONTinue " on stream 0x"+format.HEX(8,&stream)
+    print %CONTinue " from '"+DATA.STRing(D:&data_type)+"'"
+  )
+  return
+

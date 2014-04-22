@@ -1,0 +1,72 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for HAL QDSS-TPDA Library.
+#
+# Copyright (c) 2015 QUALCOMM Technolgies Inc.
+# All rights reserved.
+# Qualcomm Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/core.tx/6.0/debugtrace/tpda/dal/build/tpdadal.scons#1 $
+#
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_APIS = [
+   'DEBUGTRACE',
+   'SERVICES',
+   'HAL',
+   'DAL',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+
+
+env.RequirePublicApi(CBSP_APIS)
+env.RequireRestrictedApi(CBSP_APIS)
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+
+config = env['QDSS_MSM_CONFIG']
+
+TPDA_DAL_SRC=['${BUILDPATH}/DalTPDA.c']
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+env.AddLibrary(['APPS_PROC'],
+   '${BUILDPATH}/tpdm_dal',TPDA_DAL_SRC)
+
+# Remove target config files for other targets
+ALL_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../../config/')
+
+MY_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../../config/'+config)
+
+PACK_CONFIG_FILES = list(set(ALL_CONFIG_FILES) - set(MY_CONFIG_FILES))
+env.CleanPack(['APPS_PROC'], PACK_CONFIG_FILES)
+
+
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+       'devcfg_xml' :  ['../../config/'+config+'/daltpda.xml',
+                        '../../config/'+config + '/tpda_config.c']
+   })

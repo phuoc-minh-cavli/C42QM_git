@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="geran.0.0" type="1"/>
+<NvItemData name="DTM Feature Support" id="3628" description="Flag indicating DTM support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="dtm_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="DARP Feature Support" id="4117" description="DARP Feature Support (SAIC)" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="darp_feature_support" description="DARP Feature Support (SAIC)" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvItemData>
+<NvEfsItemData name="g2l_blind_redir_after_csfb_control" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/geran/grr/g2l_blind_redir_after_csfb_control">
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	</NvData>

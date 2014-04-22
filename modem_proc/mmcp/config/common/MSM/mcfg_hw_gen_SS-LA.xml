@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="mmcp.0.0" type="1"/>
+	<NvEfsItemData name="enable_thin_ui_cfg" id="70310" description="UI Task Configurations" comment="" category="ThinUI" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/Thin_UI/enable_thin_ui_cfg">
+		<Member name="enable_thin_ui_cfg" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="thinui_setup_resp_req" id="" description="" comment="" category="MMode" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/mmode/thinui_setup_resp_req.txt">
+		<Member name="thinui_setup_resp_req" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	</NvData>

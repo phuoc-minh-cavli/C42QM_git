@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="geran.0.0" type="1" />
+  <NvItemData name="UIM First Instruction Class" id="896" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="uim_first_inst_class" description="" comment="" sizeOf="1" type="uint16">1 </Member>
+  </NvItemData>
+  <NvItemData name="GPRS Multi Slot Class" id="911" description="" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="timer" description="" comment="" sizeOf="1" type="uint8">33 </Member>
+  </NvItemData>
+  <NvItemData name="GSM AMR Call Configuration" id="1302" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="gsm_amr_call_config" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="EDGE Feature Support" id="2508" description="Indicates the support for EDGE by the phone" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="edge_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="EDA Feature Support" id="3630" description="Flag indicating EDA support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="eda_feature_support" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="GERAN Feature Pack 1" id="2512" description="Indicates if the EDGE MS supports N/W assisted cell change" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="geran_feature_pack_1" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvItemData>
+  <NvItemData name="DTM Feature Support" id="3628" description="Flag indicating DTM support" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="dtm_feature_support" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvItemData>
+  <NvItemData name="DTM Multislot Class" id="3629" description="DTM multislot class" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="dtm_multislot_class" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+  </NvItemData>
+  <NvEfsFile name="read_pch_during_transfer_whitelist" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/read_pch_during_transfer_whitelist" buildPath="modem_proc/geran/configs/efs_files/cu/read_pch_during_transfer_whitelist" />
+  <NvEfsFile name="l1_debug" id="65770" description="GSM L1 Debug" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/gsm/l1/l1_debug" buildPath="modem_proc/geran/configs/efs_files/cu/l1_debug" />
+  <NvEfsFile name="g2l_blind_redir_after_csfb_control" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/grr/g2l_blind_redir_after_csfb_control" buildPath="modem_proc/geran/configs/efs_files/cu/g2l_blind_redir_after_csfb_control" />
+</NvData>

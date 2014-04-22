@@ -1,0 +1,84 @@
+#=============================================================================
+# CLOCK DRIVER SHARED LIBRARY
+#
+# Target:    All
+# Processor: All
+#
+#=============================================================================
+# $Header: //components/rel/core.tx/6.0/products/instrumentation/build/instrumentation.scons#1 $
+#=============================================================================
+#  Copyright 2010 Qualcomm Technologies Incorporated.
+#  All Rights Reserved.
+#  QUALCOMM Proprietary/GTDR
+#=============================================================================
+
+import os
+Return()
+Import('env')
+env = env.Clone()
+if 'USES_INSTRU' not in env:
+	Return()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "../src/"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'MEMORY',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'WIREDCONNECTIVITY',
+   'KERNEL',
+]
+ 	 
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+APSS_LIBCOV_SOURCES = [
+  '${BUILDPATH}/libcov_apss_small.c',
+  '${BUILDPATH}/instrumentation_diag.c',
+]
+
+#-------------------------------------------------------------------------------
+# Define objects
+#-------------------------------------------------------------------------------
+apss_libcov_obj = env.Object([
+  APSS_LIBCOV_SOURCES
+], CPPPATH=['C:/Program Files (x86)/BullseyeCoverage/run']+env['CPPPATH'])
+
+apss_libcov_lib = env.Library('${BUILDPATH}/apss_libcov_lib', apss_libcov_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+print "Enabling Bullseye coverage"
+
+env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE' ], [apss_libcov_lib])
+
+
+if 'USES_RCINIT' in env:
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    ['CORE_APPS'],                 # define TMC_RCINIT_INIT_ERR_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'instrumentation_init',                         # required
+     'init_function'              : 'instrumentation_init',                         # required
+     #'dependencies'               : ['',]
+    })
+

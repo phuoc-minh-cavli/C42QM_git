@@ -1,0 +1,67 @@
+#==============================================================================
+#     Copyright (c) 2014-2016 QUALCOMM Technologies Incorporated.
+#     All rights reserved.
+#     Qualcomm Confidential and Proprietary
+#==============================================================================*/
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/products/scm"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+	'SYSTEMDRIVERS',
+   'PRODUCTS_SCM',
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Source Code
+#------------------------------------------------------------------------------- 
+PLATFORM_SCM_SOURCES =  [
+	'${BUILDPATH}/src/scm.c',
+	'${BUILDPATH}/src/scm2.c',
+	'${BUILDPATH}/src/tz_syscalls.c',
+	'${BUILDPATH}/src/tz_smc.S',
+	'${BUILDPATH}/src/tz_smc2.S',
+]
+
+#-------------------------------------------------------------------------------
+# Libraries
+#------------------------------------------------------------------------------- 
+scm_object = env.Object(PLATFORM_SCM_SOURCES)
+scm_lib = env.Library('${BUILDPATH}', scm_object)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage(['CBSP_APPS_IMAGE', 'APPS_IMAGE'], scm_lib)
+
+#-------------------------------------------------------------------------------
+# RCInit 
+#-------------------------------------------------------------------------------
+RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+
+if 'USES_RCINIT' in env:
+  env.AddRCInitFunc(
+    RCINIT_IMG,          
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',
+     'init_name'                  : 'scm',           
+     'init_function'              : 'scm_initialize',
+     'dependencies'               : ['dalsys', 'qurt_timer_task']
+    })

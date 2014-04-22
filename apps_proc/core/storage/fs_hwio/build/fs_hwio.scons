@@ -1,0 +1,81 @@
+#============================================================================
+#
+# FS HWIO module
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015, 2018 by QUALCOMM Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#----------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/storage/fs_hwio/build/fs_hwio.scons#1 $  $DateTime: 2020/01/30 22:49:35 $  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who  what, where, why
+# ----------  ---  ----------------------------------------------------------
+# 2018-12-31  as    Put rc_init registration under REMOTEFS_QMI flag.
+# 2015-03-02  dks   Create
+#
+#============================================================================
+Import('env')
+env = env.Clone()
+
+#----------------------------------------------------------------------------
+# Source PATH
+#----------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/storage/fs_hwio/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'STORAGE',
+   'SERVICES',
+   'DAL',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+]
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#----------------------------------------------------------------------------
+# Sources, libraries
+#----------------------------------------------------------------------------
+
+FS_HWIO_SOURCES = [
+  '${BUILDPATH}/fs_hwio.c',
+]
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+FS_HWIO_DEST_IMAGES = [
+  'CORE_APPS',                  # Domain(REX + TN)
+]
+
+if 'USES_REMOTEFS_QMI' in env:
+  env.AddLibrary(FS_HWIO_DEST_IMAGES,'${BUILDPATH}/fs_hwio', FS_HWIO_SOURCES)
+
+#----------------------------------------------------------------------------
+# RCINIT Initialization of the storage_diag
+#----------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  if 'USES_REMOTEFS_QMI' in env:
+   RCINIT_IMG = FS_HWIO_DEST_IMAGES
+   env.AddRCInitFunc(
+     RCINIT_IMG,
+    {
+    'sequence_group'             : 'RCINIT_GROUP_0',
+    'init_name'                  : 'fs_hwio',
+    'init_function'              : 'fs_hwio_init'
+  })

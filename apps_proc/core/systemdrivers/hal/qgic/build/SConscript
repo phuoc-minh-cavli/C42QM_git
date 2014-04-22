@@ -1,0 +1,72 @@
+#===============================================================================
+#                    Copyright 2011 QUALCOMM Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# HAL QGIC Libs
+#-------------------------------------------------------------------------------
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/hal/qgic/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+  'DAL',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+  'KERNEL',
+]
+ 
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('QGIC_HAL_TARGET', [
+   "${INC_ROOT}/core/systemdrivers/hal/qgic/inc",
+   "${INC_ROOT}/core/systemdrivers/hal/qgic/src/target",
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+QGIC_SOURCES =  [
+    '${BUILDPATH}/HALqgic.c'
+]
+
+if env.has_key('WCN_IMAGE'):
+  QGIC_SOURCES += [
+  '${BUILDPATH}/HALqgicState.c'
+      ]
+else:
+  QGIC_SOURCES += [
+  '${BUILDPATH}/HALqgicStateStub.c'
+      ]
+halqgic_obj = env.Object(QGIC_SOURCES)
+halqgic_lib = env.Library('${BUILDPATH}/HALqgic', halqgic_obj)
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage(
+	['APPS_IMAGE', 'CBSP_APPS_IMAGE', 'TZOS_IMAGE', 'RPM_IMAGE','WCN_IMAGE','CBSP_WCN_IMAGE',
+	'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_BOOT_2'], 
+  halqgic_lib)
+
+

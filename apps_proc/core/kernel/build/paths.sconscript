@@ -1,0 +1,151 @@
+#===============================================================================
+#
+# Kernel Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/kernel/build/paths.sconscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+env.Replace(REX_CORE_COMMON = "rex_core/common")
+env.Replace(REX_CORE_OS_NAME = "l4")
+env.Replace(REX_CORE_OS_COMMON = "rex_core/posix/common")
+env.Replace(REX_CORE_OS = "rex_core/posix/os_stubs/" + env.get('REX_CORE_OS_NAME'))
+
+if env.has_key('BUILD_BOOT_CHAIN'):
+   if env.has_key('USES_L4_3X'):
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/kernel/rex/src",
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/libstd",
+         "${INC_ROOT}/core/api/kernel/devcfg",
+      ])
+   elif env.has_key('USES_QURT') or env.has_key('USES_THREADX'):
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/api/kernel/threadx",
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/libstd",
+         "${INC_ROOT}/core/kernel/libstd/inc",
+         "${INC_ROOT}/core/api/kernel/libstd/stringl",
+      ])
+   else:
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/kernel/rex/src",
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/pmem",   
+         "${INC_ROOT}/core/api/kernel/devcfg",
+      ])
+else:
+   # Public APIs these are accessible by anyone internal or external to CoreBSP
+   if env.has_key('USES_L4_3X'):
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/api/kernel",
+         "${INC_ROOT}/core/api/kernel/rex",
+         "${INC_ROOT}/core/api/kernel/rex/os/l4",
+         "${INC_ROOT}/core/api/kernel/rte",
+         "${INC_ROOT}/core/api/kernel/pmem",
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/perfmon_counters/cortexa7",
+         "${INC_ROOT}/core/api/kernel/3xportinc",
+         "${INC_ROOT}/core/api/kernel/3xportinc/quartz",
+         "${INC_ROOT}/core/api/kernel/3xportinc/l4/cust",
+         "${INC_ROOT}/core/api/kernel/libstd",
+         "${INC_ROOT}/core/api/kernel/libstd/stringl",
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+      ])
+   elif env.has_key('USES_QURT') or env.has_key('USES_THREADX'):
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/api/kernel",
+         "${INC_ROOT}/core/api/kernel/libstd",
+         "${INC_ROOT}/core/kernel/libstd/inc",
+         "${INC_ROOT}/core/api/kernel/libstd/stringl",
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+         "${INC_ROOT}/core/api/kernel/devcfg",
+      ])
+   else:
+      env.PublishPublicApi('KERNEL', [
+         "${INC_ROOT}/core/api/kernel",
+         "${INC_ROOT}/core/api/kernel/rex",
+         "${INC_ROOT}/core/api/kernel/posix",
+         "${INC_ROOT}/core/api/kernel/rte",
+         "${INC_ROOT}/core/api/kernel/pmem",   
+         "${INC_ROOT}/core/api/kernel/arch/cortexa7",
+         "${INC_ROOT}/core/api/kernel/perfmon_counters/cortexa7",
+         "${INC_ROOT}/core/api/kernel/timetest",
+         "${INC_ROOT}/core/kernel/libstd/inc",
+         "${INC_ROOT}/core/api/kernel/quartz",
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+         "${INC_ROOT}/core/api/kernel/devcfg",
+      ])
+
+if not env.has_key('BUILD_BOOT_CHAIN'):
+   # Restricted APIs these are accessible within CoreBSP only
+   if env.has_key('USES_L4_3X'):
+      env.PublishRestrictedApi('KERNEL', [
+         "${INC_ROOT}/core/kernel/rex/src",
+        "${INC_ROOT}/core/kernel/rexl4/inc",
+         "${INC_ROOT}/core/kernel/rexl4/arch/arm/inc",
+         "${INC_ROOT}/core/kernel/rte/src",
+         "${INC_ROOT}/core/kernel/a11perfcnt/src",
+         "${INC_ROOT}/core/kernel/dl_pager/src",
+         "${INC_ROOT}/core/kernel/bootlib/apps/inc",
+         "${INC_ROOT}/core/kernel/${REX_CORE_COMMON}/inc",
+         "${INC_ROOT}/core/kernel/${REX_CORE_OS_COMMON}/inc",
+         "${INC_ROOT}/core/kernel/${REX_CORE_OS}/inc",         
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+      ])
+   elif env.has_key('USES_QURT') or env.has_key('USES_THREADX'):
+      env.PublishRestrictedApi('KERNEL', [
+         "${INC_ROOT}/core/kernel/dl_pager/src",
+         "${INC_ROOT}/core/kernel/bootlib/apps/inc",
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+         "${INC_ROOT}/core/api/kernel/devcfg",
+         "${INC_ROOT}/core/kernel/devcfg/inc",
+         "${INC_ROOT}/core/api/kernel/libstd",
+         "${INC_ROOT}/core/kernel/libstd/inc",
+         "${INC_ROOT}/core/api/kernel/libstd/stringl",
+      ])
+   else:
+      env.PublishRestrictedApi('KERNEL', [
+         "${INC_ROOT}/core/kernel/build/amss/include",
+         "${INC_ROOT}/core/kernel/libs/quartz/include",
+         "${INC_ROOT}/core/kernel/ats/src",
+         "${INC_ROOT}/core/kernel/rex/src",
+         "${INC_ROOT}/core/kernel/rexl4/src",
+         "${INC_ROOT}/core/kernel/rte/src",
+         "${INC_ROOT}/core/kernel/libs/l4/cust/qct/include",
+         "${INC_ROOT}/core/kernel/a11perfcnt/src",
+         "${INC_ROOT}/core/kernel/dl_pager/src",
+		 "${INC_ROOT}/core/kernel/bootlib/apps/inc"
+         "${INC_ROOT}/core/api/kernel/qurt",
+         "${INC_ROOT}/core/api/kernel/threadx",
+         "${INC_ROOT}/core/api/kernel/devcfg",
+         "${INC_ROOT}/core/kernel/devcfg/inc",
+      ])
+env.LoadAPIUnits()

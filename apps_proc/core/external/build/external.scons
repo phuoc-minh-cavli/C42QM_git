@@ -1,0 +1,29 @@
+#===============================================================================
+#
+# External Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/bsp/external/scmm/main/latest/build/external.sconscript#2 $
+#  $DateTime: 2009/07/07 06:36:51 $
+#  $Author: wduembeg $
+#  $Change: 960076 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+Return()
+env.LoadSConscripts("${BUILD_ROOT}/core/bsp/external/build/external.sconscript")

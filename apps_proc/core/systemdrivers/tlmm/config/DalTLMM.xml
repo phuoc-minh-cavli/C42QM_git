@@ -1,0 +1,14 @@
+
+<!-- NOTE: DAL config has trouble parsing multi-line comment, so please put -->
+<!--       proper comment tags on each line                                 -->
+<!--                                                                        -->
+<!-- TLMM Driver Properties file                                           -->
+<!-- Note we depend on the include path for the following directories to be -->
+<!-- available to the DAL config compiler:                                  -->
+<!-- "${INC_ROOT}/core/systemdrivers/tlmm/config"                           -->
+<!-- "${INC_ROOT}/core/systemdrivers/tlmm/config/${CHIPSET}"                -->
+
+
+<driver name="TLMM">
+	#include "TLMMChipset.xml" 
+</driver>

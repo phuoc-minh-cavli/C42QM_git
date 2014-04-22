@@ -1,0 +1,68 @@
+#===============================================================================
+# qca4004 driver core Libs
+#
+# GENERAL DESCRIPTION
+#    qca4004 driver core Build Script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/kingfisherhost.tx/1.0/core/build/SConscript#2 $
+#  $DateTime: 2019/05/13 23:39:04 $
+#  $Change: 19179468 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#env.Append(CPPDEFINES = ["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/kingfisherhost/core/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'BUSES',
+   'KERNEL',
+   'QAPI'
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/kingfisherhost/api/inc',
+   '${INC_ROOT}/kingfisherhost/core/inc',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/qcli',
+]
+
+env.PublishPrivateApi('QCA4004_DRIVER_CORE', INC_DIRS)
+
+QCA4004_DRIVER_CORE_SOURCES =  [
+   '${BUILDPATH}/qca4004.c',
+   '${BUILDPATH}/qca4004_uart.c',
+   '${BUILDPATH}/qca4004_gpio.c',
+   '${BUILDPATH}/qca4004_iface.c',
+   '${BUILDPATH}/qca4004_utils.c',
+   '${BUILDPATH}/qca4004_api.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/qca4004_core'), QCA4004_DRIVER_CORE_SOURCES)
+

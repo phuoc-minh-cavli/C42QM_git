@@ -1,0 +1,111 @@
+;Copyright (c) 2018  by Qualcomm Technologies, Inc.  All Rights Reserved
+
+Area.Clear qdi_handle_list
+Area.Create qdi_handle_list
+Area.Select qdi_handle_list
+Area qdi_handle_list
+
+
+LOCAL &device_name_ptr
+LOCAL &device_name_len
+LOCAL &device_next
+LOCAL &opener_ptr
+
+VAR.NEWLOCAL char[50] \device_name
+
+print "******************************************"
+print " Registered devices in qurt_qdi_generic: *"
+print "******************************************"
+print ""
+print "device              create_function"
+print ""
+
+&device=v.value(qurt_qdi_generic.devname_list)
+WHILE (&device!=0)
+(
+  &device_name_ptr=v.value(((struct devname_entry*)&device)->name)
+  &device_name_len=v.value(((struct devname_entry*)&device)->name_cmp_len)
+  &opener_ptr=v.value(((qurt_qdi_obj_t*)((struct devname_entry*)&device)->objptr)->invoke)
+  &opener_name=symbol.name(D:&opener_ptr)
+  
+  &n=0
+  WHILE (&n<&device_name_len)
+  (
+   &d=data.byte(D:(&device_name_ptr+&n)) 
+   var.set \device_name[&n]=&d
+   &n=&n+1
+  )  
+  print format.string(var.string(\device_name),20.,' ')  "&opener_name"
+  
+  &device=v.value(((struct devname_entry*)&device)->next) 
+)
+
+
+
+
+LOCAL &qdi_handle_table
+LOCAL &max_handle
+LOCAL &qdi_obj_ptr
+LOCAL &invoke_pointer
+LOCAL &island_handle_count
+LOCAL &max_user_processes
+
+print ""
+print ""
+print "******************************************"
+print "          handle and qdi list            *"
+print "******************************************"
+print ""    
+         		 
+&k=0
+&PD_MAX=129.
+&island_handle_count=v.value(qurtos_island_handle_count)
+&max_user_processes=v.value(qurtos_max_user_processes)
+
+WHILE (&k<&PD_MAX)
+(
+ &qdi_handle_table=v.value(qurtos_root_prealloc.outer_handle_table[&k].objs)
+ &max_handle=v.value(qurtos_root_prealloc.outer_handle_table[&k].max_handle)
+ IF (&qdi_handle_table!=0)
+ (
+  print ""
+  print ""
+  print "**qdi_handle_table=&qdi_handle_table"
+  print "**max_handle=&max_handle" 
+  print ""  
+  print "handle  qdi_obj_ptr invocation_ptr  ASID  island  invocation_function"
+ 
+  &i=0
+  WHILE (&i<&max_handle)
+  ( 
+    &qdi_obj_ptr=v.value(((qurt_qdi_obj_t**)&qdi_handle_table)[&i])
+	IF (&qdi_obj_ptr!=0)
+    (
+	 &invoke_pointer=v.value(((qurt_qdi_obj_t*)&qdi_obj_ptr)->invoke)
+     &invoke_name=symbol.name(D:&invoke_pointer)
+     &j=FORMAT.HEX(4.,&i)
+	 IF (&island_handle_count>0)
+	 (  
+	  IF (&k==0x0)
+         print "0x&j  &qdi_obj_ptr  &invoke_pointer        -     Y     &invoke_name"
+	  ELSE IF (&k==&max_user_processes+1)
+         print "0x&j  &qdi_obj_ptr  &invoke_pointer      0x0     -     &invoke_name"
+	  ELSE
+		 print "0x&j  &qdi_obj_ptr  &invoke_pointer      &k     -     &invoke_name"
+	 )
+	 ELSE
+	  print "0x&j  &qdi_obj_ptr  &invoke_pointer      &k     -     &invoke_name"
+	 
+     &i=&i+1
+	)
+	ELSE
+	 &i=&max_handle+1
+  )
+ )
+  
+ &k=&k+1 
+
+)
+
+
+ENDDO

@@ -1,0 +1,148 @@
+#==============================================================================
+#
+#                            RSP COM Scons File
+#
+# RSP Communication Build Script.
+#
+# Copyright  2018 Qualcomm Technologies, Inc. All Rights Reserved.
+# Qualcomm Technologies, Inc. Confidential and Proprietary.
+#
+#==============================================================================
+
+#==============================================================================
+#
+#                           EDIT HISTORY FOR FILE
+#
+# $Header: //components/rel/core.tx/6.0/mproc/rspcom/build/rspcom.scons#1 $
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 02/13/18   rv      Initial version.
+#==============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/mproc/rspcom"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+#  Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('RSPCOM_PRIVATE_API', [
+  SRCPATH + "/inc",
+  SRCPATH + "/cfg",
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+  'BUSES',
+  'DAL',
+  'DEBUGTOOLS',
+  'KERNEL',
+  'MEMORY',
+  'MPROC',
+  'POWER',
+  'PRODUCTS_DSR',
+  'SERVICES',
+  'SYSTEMDRIVERS',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePrivateApi(['RSPCOM_PRIVATE_API'])
+
+#-------------------------------------------------------------------------------
+# Features
+#-------------------------------------------------------------------------------
+RSPCOM_FEATURE_ENABLE_TEST = False
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+RSPCOM_CORE_SOURCES = [
+  '${BUILDPATH}/src/rspcom_core.c',
+]
+
+RSPCOM_OS_QURT_SOURCES = [
+  '${BUILDPATH}/src/rspcom_os_qurt.c',
+]
+
+RSPCOM_XPORT_SIO_SOURCES = [
+  '${BUILDPATH}/src/rspcom_xport_sio.c',
+]
+
+RSPCOM_LOG_SOURCES = [
+  '${BUILDPATH}/src/rspcom_log_ulog.c',
+]
+
+RSPCOM_TEST_SOURCES = [
+  '${BUILDPATH}/src/rspcom_test.c',
+]
+
+#-------------------------------------------------------------------------------
+# Images
+#-------------------------------------------------------------------------------
+RSPCOM_IMAGES_SUPPORTED = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+
+#-------------------------------------------------------------------------------
+# CleanPack
+#-------------------------------------------------------------------------------
+PACK_OUT = env.FindFiles(['*.h', '*.c', '*.s'], SRCPATH)
+env.CleanPack(RSPCOM_IMAGES_SUPPORTED, PACK_OUT)
+
+#-------------------------------------------------------------------------------
+#  Support
+#-------------------------------------------------------------------------------
+if 'USES_LLDB_ENABLE' not in env:
+  env.PrintInfo('RSPCOM is not supported!')
+  Return()
+
+#-------------------------------------------------------------------------------
+# Add Sources to image
+#-------------------------------------------------------------------------------
+env.AddBinaryLibrary(RSPCOM_IMAGES_SUPPORTED, 
+                     '${BUILDPATH}/rspcom',
+                     [RSPCOM_CORE_SOURCES, RSPCOM_LOG_SOURCES, RSPCOM_OS_QURT_SOURCES])
+
+env.AddBinaryLibrary(RSPCOM_IMAGES_SUPPORTED, 
+                     '${BUILDPATH}/rspcom_xport_sio',
+                     [RSPCOM_XPORT_SIO_SOURCES])
+
+if RSPCOM_FEATURE_ENABLE_TEST is True:
+  env.AddBinaryLibrary(RSPCOM_IMAGES_SUPPORTED, 
+                      '${BUILDPATH}/rspcom_test',
+                      [RSPCOM_TEST_SOURCES])
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  RCINIT_RSPCOM_INIT = {
+    'sequence_group'             : 'RCINIT_GROUP_0',
+    'init_name'                  : 'rspcom',
+    'init_function'              : 'rspcom_init',
+    'dependencies'               : ['dalsys', 'timer_init']
+  }
+  env.AddRCInitFunc(RSPCOM_IMAGES_SUPPORTED, RCINIT_RSPCOM_INIT)
+
+  RCINIT_RSPCOM_XPORT_SIO_INIT = {
+    'sequence_group'             : 'RCINIT_GROUP_0',
+    'init_name'                  : 'rspcom_xport_sio',
+    'init_function'              : 'rspcom_xport_sio_init',
+    'dependencies'               : ['rspcom', 'sio']
+  }
+  env.AddRCInitFunc(RSPCOM_IMAGES_SUPPORTED, RCINIT_RSPCOM_XPORT_SIO_INIT)
+  
+  if RSPCOM_FEATURE_ENABLE_TEST is True:
+    RCINIT_RSPCOM_TEST_INIT = {
+      'sequence_group'             : 'RCINIT_GROUP_3',
+      'init_name'                  : 'rspcom_test',
+      'init_function'              : 'rspcom_test_init',
+      'dependencies'               : ['rspcom', 'rspcom_xport_sio']
+    }
+    env.AddRCInitFunc(RSPCOM_IMAGES_SUPPORTED, RCINIT_RSPCOM_TEST_INIT)

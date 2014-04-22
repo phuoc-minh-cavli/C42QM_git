@@ -1,0 +1,54 @@
+#===============================================================================
+#
+# sw tilt
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/tilt/build/sns_tilt.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+tilt_sensor_cnt = 1
+
+if 'USES_MULTIPLE_SENSORS' in env:
+  tilt_sensor_cnt = 2
+
+if ('SSC_TARGET_HEXAGON_MDSP' in env['CPPDEFINES']):
+  Return()
+if "SNS_ISLAND_INCLUDE_TILT" in env:
+  island_cfg = True
+else:
+  island_cfg = False
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             clean_pack_list = ['*.c','*.h','*.proto','*.json'],
+             ssc_protected_api = ['SNS_MATH_UTIL','SNS_INTERNAL_INCLUDES', 'SNS_INCLUDES', 'SNS_API_INCLUDES'],
+             register_func_name = "sns_tilt_register",
+             binary_lib = True,
+             add_island_files = island_cfg,
+             diag_ssid = "MSG_SSID_SNS_SENSOR_INT",
+             registration_cnt = tilt_sensor_cnt)
+
+if 'USES_QDSS_SWE' in env:
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [
+            ['SNS_TILT_INST_NOTIFY_START', '', 'F'],
+            ['SNS_TILT_INST_NOTIFY_END', '', 'F'],
+            ['SNS_TILT_REPORT_OUTPUT', '', 'F'],
+           ]
+  env.AddSWEInfo(QDSS_IMG, events)

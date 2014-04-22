@@ -1,0 +1,56 @@
+#===============================================================================
+#
+# Services Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010,2016-2017 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:  $
+#  $DateTime: 2010/09/14 17:32:48 $
+#  $Author: irenes $
+#  $Change: 1439454 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 02/24/17   gn      Changes to support DIAG QAPIs with DAM framework
+# 07/20/16   nk      Changes Needed for ThreadX support
+#===============================================================================
+Import('env')
+
+# Public APIs these are accessible by anyone internal or external to CoreBSP
+env.PublishPublicApi('SERVICES', [
+   "${INC_ROOT}/core/api/services",
+   "${INC_ROOT}/core/services/diag/diag_mask_tbl/src",
+   "${INC_ROOT}/core/api/rapi/services/inc",
+   "${INC_ROOT}/core/services/diag/LSM/qapi/src",
+   "${INC_ROOT}/core/qapi/common",
+])
+
+# Restricted APIs these are accessible by anyone within CoreBSP
+env.PublishRestrictedApi('SERVICES', [
+   "${INC_ROOT}/core/api/services",
+   "${INC_ROOT}/core/services/diag/DCM/rtos/src",
+   "${INC_ROOT}/core/services/diag/LSM/common/src",
+   "${INC_ROOT}/core/services/diag/platform/bmp/src",
+   "${INC_ROOT}/core/services/diag/DCM/common/src",
+   "${INC_ROOT}/core/services/ondevice_diag/src",
+   "${INC_ROOT}/core/services/nv/src",
+   "${INC_ROOT}/core/services/time/src",
+   "${INC_ROOT}/core/services/time_qmi_clnt/src",
+   "${INC_ROOT}/core/services/utils/src",
+   "${INC_ROOT}/core/mproc/qmi/qcci",
+   "${INC_ROOT}/core/services/osal/inc",
+   "${INC_ROOT}/core/services/osal/qurt/inc",
+   "${INC_ROOT}/core/services/diag/f3_trace/src",
+   "${INC_ROOT}/core/services/diag/LSM/qapi/src",
+])

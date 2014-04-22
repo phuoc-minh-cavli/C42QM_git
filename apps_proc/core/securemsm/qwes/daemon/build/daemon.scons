@@ -1,0 +1,128 @@
+#===============================================================================
+#
+# QWES Daemon Lib
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# Import SCons Environment
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/qwes/daemon"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Dependency paths for include files
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'SERVICES',
+    'DEBUGTOOLS',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'QAPI',
+    'MPROC',
+    'QCBOR_QAPI',
+    'USEFULBUF_QAPI',
+    'QWES_QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'SECUREMSM_DRIVER_OBJECT_API',
+    'QWES_COMMON',
+    'QWES_OS_ABSTRACTION',
+]
+
+QWES_API = [
+    'QWES_AGENT',
+    'QWES_DAEMON',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.RequireProtectedApi(QWES_API)
+
+env.RequirePublicApi([
+  'COMMON',                   # This is to get common QMI Interface file
+  ], area='API')
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS=" --c99 --gnu")
+
+#-------------------------------------------------------------------------------
+# Sources, library
+#-------------------------------------------------------------------------------
+QWES_DAEMON_SOURCES =  [
+    '${BUILDPATH}/threadx/src/qwes_daemon_tx.c',
+    '${BUILDPATH}/threadx/src/server_driver.c',
+    '${BUILDPATH}/threadx/src/config_network.c',
+    '${BUILDPATH}/common/src/qmi_qteels_ser.c',
+    '${BUILDPATH}/common/src/QTEE_license_service_v01.c',
+    '${BUILDPATH}/common/src/qwes_daemon_http.c',
+    '${BUILDPATH}/common/src/qwes_daemon_expiration.c',
+    '${BUILDPATH}/common/src/qwes_daemon_service.c',
+    '${BUILDPATH}/common/src/qwes_token.c',
+]
+
+IMAGES = [
+    'CBSP_APPS_IMAGE',
+    'CORE',
+    'CORE_APPS',
+    'MODEM',
+    'MODEM_APPS'
+]
+
+env.AddBinaryLibrary(
+    IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/daemon/build/qwes_license_service',
+    QWES_DAEMON_SOURCES
+)
+
+QWESD_SRC_FILES = env.FindFiles(
+  ['*.c', '*.cpp', '*.h', '*.idl'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWESD_SRC_FILES)
+
+QWESD_CFG_FILES = env.FindFiles(
+  ['qwesd.conf'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWESD_CFG_FILES)
+
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CBSP_APPS_IMAGE','CORE', 'CORE_APPS','MODEM', 'MODEM_APPS']
+    RCINIT_TASK = {
+        'sequence_group': 'RCINIT_GROUP_7',
+        'thread_name': 'qwesd',
+        'thread_entry': 'qwesd_service_driver',
+        'thread_type': 'RCINIT_TASK_QURTTASK',
+        'stack_size_bytes': '4096',
+        'priority_amss_order': 'MAX_PRI_ORDER',
+        'cpu_affinity': 'REX_ANY_SMT_MASK',
+        'dependencies': ['fs']
+    }
+
+    env.AddRCInitTask(RCINIT_IMG, RCINIT_TASK)
+
+# This is for CleanPack
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qwes/daemon/common/src/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()

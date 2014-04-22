@@ -1,0 +1,893 @@
+;****************************************************************************************
+;   PMIC_SPMI.cmm
+;
+;   <andyma> - Prepared for MSM8974 (Aragorn) PMIC Bring-up - July 10, 2012
+;   <andyma> - Prepared for MSM8974 (Aragornv2) PMIC Bring-up - Feb 06, 2013
+;
+;   This PMIC_SPMI.cmm script supports PMIC read and write to both regular and bank
+;   registers from Trace32 command line or in interactive mode.
+;
+;
+;   Usage - display this HELP Menu
+;   ------------------------------
+;   'do PMIC_SPMI -h' or 'do PMIC_SPMI /?'
+;
+;   Usage - Trace32 command line
+;   -----------------------------
+;   "do PMIC_SPMI INIT $ch"                 --> init pmic spmi
+;   "do PMIC_SPMI $addr"                    --> read from a register addr
+;   "do PMIC_SPMI $addr $data"              --> write data to register addr
+;   "do PMIC_SPMI $addr mskclr $data"       --> clr the masked-bit(&data) of the register
+;   "do PMIC_SPMI $addr mskset $data"       --> set the masked-bit(&data) of the register
+;   "do PMIC_SPMI WORD $addr $data"         --> burst write a word (4 bytes)
+;   "do PMIC_SPMI $addr RETOUT"             --> return the read back value to the caller
+;   "do PMIC_SPMI rcheck $addr"             --> test the power rail (input must be the addr)
+;
+;   Example:
+;   --------
+;   Writing 0xA5 to the register 0x51740:
+;     do PMIC_SPMI 0x51740 0xA5
+;   note: the 'addr' parameter should be a 12-bit address
+;
+;****************************************************************************************
+
+global &pmic_spmi_ch 
+local &read_err &write_err &run
+local &pmic_arb_chnln_wdata0_addr
+local &pmic_arb_chnln_rdata0_addr
+local &pmic_arb_chnln_cmd_addr
+local &pmic_arb_chnln_status_addr
+local &test_zeev
+
+
+ENTRY &arg1 &arg2 &arg3 &arg4
+
+local &sysmode
+
+&run=0
+if (run())
+(
+   sys.m.a
+   break
+   &run=1
+)
+
+
+; Load the symbol needed by this PMIC driver script
+;do ~~~~/8974_PmicArbSym.cmm
+do ~~~~/8974_PmicArbSymLite.cmm  ; UPDATED FOR Trahira
+
+;on error gosub errhandle
+
+&sysmode=SYSTEM.MODE()
+if (&sysmode!=0x0B)
+(
+    ;print "Error: TRACE32 system.mode is currently down.  Please do system.up first."
+    ;enddo
+	sys.m.a
+	break
+)
+
+; init pmic spmi function block
+if ("&arg1"=="init")||("&arg1"=="INIT")
+(
+    if ("&arg2"=="")||((&arg2>5.)&&(&arg2<0.))
+    (
+        print "Error: Invalid channel number."
+    )
+    else
+    (
+        ;    ; This will initialize the PMIC_arb including the GENI core FW
+           gosub PMIC_ARB_SPMI_INIT &arg2
+        ;)
+    )
+	if (&run==0x1)
+	(
+	   go
+	)   
+    ENDDO
+)
+
+;gosub PMIC_ARB_SPMI_INIT 4
+;goto next
+
+; Perform pmic_arb initialization check here
+if ((data.long(a:PMIC_ARB_SPMI_CFG_REG)&0x1)!=0x1)
+(
+    gosub PMIC_ARB_SPMI_INIT 4	; if SPMI not initialized, assumed RPM channel arbitration
+)
+if (!Y.EXIST(PMIC_ARB_CHNL0_SYMFLAG))&&(!Y.EXIST(PMIC_ARB_CHNL1_SYMFLAG))&&(!Y.EXIST(PMIC_ARB_CHNL2_SYMFLAG))&&(!Y.EXIST(PMIC_ARB_CHNL3_SYMFLAG))&&(!Y.EXIST(PMIC_ARB_CHNL4_SYMFLAG))&&(!Y.EXIST(PMIC_ARB_CHNL5_SYMFLAG))
+(
+    gosub PMIC_ARB_SET_CH 4
+)
+
+
+;next:
+
+if ("&arg1"!="READ")&&("&arg1"!="WRITE")&&("&arg1"!="read")&&("&arg1"!="write")
+(
+    ; display usage for PMIC_SPMI.cmm
+    if ("&arg1"=="-h")||("&arg1"=="/?")||("&arg1"=="-help")||("&arg1"=="")
+    (
+        gosub HELP_PMIC_SPMI
+        if (&run==0x1)
+		(
+		   go
+		)
+		ENDDO
+    )
+    
+    ; reset pmic spmi
+    if ("&arg1"=="reset")||("&arg1"=="RESET")
+    (
+        gosub PMIC_ARB_SPMI_RESET
+        if (&run==0x1)
+		(
+		   go
+		)
+		ENDDO
+    )
+
+    ; regulator check
+    if ("&arg1"=="rcheck")||("&arg1"=="RCHECK")
+    (
+        if ("&arg2"!="")
+        (
+            &addr=(&arg2&0xFFF00)|0x46
+            gosub SPMI_WRITE &addr 0x80
+            wait 0.001s
+            gosub PMIC_REGULATOR_CHECK &arg2
+            entry &return_status           
+        )
+        else
+        (
+            print "Invalid regulator address input"
+        )
+        if (&run==0x1)
+		(
+		   go
+		)
+        ENDDO
+    )
+    
+    ; mask set and clear function block
+    if ("&arg2"=="mskclr")||("&arg2"=="MSKCLR")||("&arg2"=="mskset")||("&arg2"=="MSKSET")
+    (
+        &msk=&arg3
+
+        if ("&arg2"=="mskclr")||("&arg2"=="MSKCLR")
+        (
+            gosub SPMI_READ &arg1
+            entry &return_data
+            if (&read_err==0)
+            (
+				&return_data=&return_data&(~&msk)
+                gosub SPMI_WRITE &arg1 &return_data
+                ;print "PMIC SPMI has written &return_data to address &arg1"
+            )
+            else
+            (
+                print "PMIC SPMI write failed: timeout"
+            )
+        )
+
+        if ("&arg2"=="mskset")||("&arg2"=="MSKSET")
+        (
+            gosub SPMI_READ &arg1
+            entry &return_data
+            if (&read_err==0)
+            (
+                &return_data=&return_data|&msk
+                gosub SPMI_WRITE &arg1 &return_data
+                ;print "PMIC SPMI has written &return_data to address &arg1"
+            )
+            else
+            (
+                print "PMIC SPMI read failed: timeout"
+            )
+        )
+		if (&run==0x1)
+		(
+			go
+		)
+        ENDDO
+    )
+    ; end mask set and clear function block
+
+    ; word write
+    if (("&arg1"=="WORD")||("&arg1"=="word"))&&("&arg2"!="")&&("&arg3"!="")
+    (
+        gosub SPMI_WRITE_WORD &arg2 &arg3
+        if (&write_err==0.)
+        (
+        )
+        else
+        (
+            print "PMIC SPMI write failed: timeout"
+        )
+        if (&run==0x1)
+		(
+		   go
+		)
+		ENDDO
+    )
+    
+    ; do PMIC_SPMI <addr> <val> ==> do command line SPMI write
+    if ("&arg1"!="")&&("&arg2"!="")&&("&arg2"!="RETOUT")
+    (
+        gosub SPMI_WRITE &arg1 &arg2
+        if (&write_err==0.)
+        (
+            print "PMIC SPMI WRITE: &arg2 to register &arg1"
+			;wait 0.1s
+        )
+        else
+        (
+            print "PMIC SPMI write failed: timeout"
+        )
+        if (&run==0x1)
+		(
+		   go
+		)
+		ENDDO
+    )
+    
+    ; do PMIC_SPMI <addr> ==> do command line SPMI Read
+    if ("&arg1"!="")&&(("&arg2"=="")||("&arg2"=="RETOUT"))
+    (
+        gosub SPMI_READ &arg1
+        entry &return_data
+		if (&read_err==0.)
+        (
+            if "&arg2"==""
+            (
+                print "PMIC SPMI READ: register &arg1 = &return_data"
+            )
+            else if "&arg2"=="RETOUT"
+            (
+                if (&run==0x1)
+				(
+				   go
+				)
+				ENDDO &return_data
+            )
+        )
+        else
+        (
+            print "PMIC SPMI read failed: timeout"
+        )
+    )
+	if (&run==0x1)
+	(
+	   go
+	)
+    ENDDO
+)
+
+
+; pop-up menu 
+if ("&arg1"=="READ")||("&arg1"=="WRITE")||("&arg1"=="read")||("&arg1"=="write")
+(
+    ;WINPAGE
+    ;winpage.create P001
+    ;winpage.select P001
+
+    area.create Screen 500. 1000.
+    area.select Screen
+    area.view Screen
+
+    print " Please provide PMIC SPMI register address and value in HEX (e.g 0x00)"
+    print
+    print " Address: "
+    enter &addr
+
+    if ("&arg1"=="WRITE")||("&arg1"=="write")
+    (
+        print " Value: "
+        enter &value
+        gosub SPMI_WRITE &addr &value
+        if (&write_err==0.)
+        (
+            print "PMIC SPMI has written &value to address &addr"
+        )
+        else
+        (
+            print "PMIC SPMI read/write failed: timeout"
+        )
+    )
+
+    &return_data=0
+    if ("&arg1"=="READ")||("&arg1"=="read")
+    (
+        gosub SPMI_READ &addr
+        entry &return_data
+        if (&read_err==0.)
+        (
+            print "PMIC SPMI has read &return_data from the address &addr"
+            ;print "PMIC SPMI READ: address &addr = &return_data"
+        )
+        else
+        (
+            print "PMIC SPMI read failed: timeout"
+        )
+    )
+   
+    area.reset
+    ;WINPAGE
+    ;winpage.delete P001
+
+    if ("&arg1"=="WRITE")||("&arg1"=="write")
+    (
+        print "PMIC SPMI has written &value to address &addr"
+    )
+    else
+    (
+        print "PMIC SPMI has read &return_data from the address &addr"
+        ;print "PMIC SPMI READ: address &addr = &return_data"
+    )
+)
+if (&run==0x1)
+(
+   go
+)
+ENDDO
+
+;***********************************************************************************
+PMIC_ARB_SPMI_INIT:
+    ENTRY &ch
+    ; initialize m_core only
+    
+	if ((data.long(a:PMIC_ARB_SPMI_CFG_REG)&0x1)==0x0)
+	(
+       ; 1. Write SPMI GENI FW image - NOTE for Trahira this is done by HW
+       ; do ~~~~/loadGeniImage min
+
+       ; 2. Initiate FORCE-DEFAULT command
+       d.s a:PMIC_ARB_SPMI_GENI_FORCE_DEFAULT_REG %long 0x1
+
+       ; 3. Switch PROGRAM-RAM clock muxing to serial clock
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_GENI_CLK_CTRL)
+       &rd_reg=&rd_reg|0x1
+       d.s a:PMIC_ARB_SPMI_GENI_CLK_CTRL %long &rd_reg
+
+       ; 4. Disable all security features
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_SEC_DISABLE_REG)
+       &rd_reg=&rd_reg|0x1
+       d.s a:PMIC_ARB_SPMI_SEC_DISABLE_REG %long &rd_reg
+   
+       ; 5. Disable forced High-Z driven to GENI outputs
+       ; SOE0_EN
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_GENI_OUTPUT_CTRL)
+       &rd_reg=&rd_reg|0x1
+       d.s a:PMIC_ARB_SPMI_GENI_OUTPUT_CTRL %long &rd_reg
+
+       ; SOE1_EN
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_GENI_OUTPUT_CTRL)
+       &rd_reg=&rd_reg|0x2
+       d.s a:PMIC_ARB_SPMI_GENI_OUTPUT_CTRL %long &rd_reg
+
+       ; 6. Configure SPMI_MID_REG register
+       d.s a:PMIC_ARB_SPMI_MID_REG %long 0x00
+
+       ; 7. Set FORCE_MASTER_WRITE_ON_ERROR and enable arbiter
+       ; FORCE_MASTER_WRITE_ON_ERROR
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_CFG_REG)
+       &rd_reg=&rd_reg|0x8
+       d.s a:PMIC_ARB_SPMI_CFG_REG %long &rd_reg
+   
+       ; ARBITER_ENABLE
+       &rd_reg=data.long(a:PMIC_ARB_SPMI_CFG_REG)
+       &rd_reg=&rd_reg|0x1
+       d.s a:PMIC_ARB_SPMI_CFG_REG %long &rd_reg
+    )
+	
+    ; Select program ram clock to AHB
+;    d.s a:PMIC_ARB_SPMI_GENI_CLK_CTRL %long 0x0
+;
+;    ; Load full FW-image
+;    do ~~~~/loadGeniImage full
+;    
+;    ; Set the program ram clock back to serial
+;    d.s a:PMIC_ARB_SPMI_GENI_CLK_CTRL %long 0x1
+;
+;    ; Peripheral ownership init
+;    d.s a:PMIC_ARB_SPMI_PERIPH4_2OWNER_TABLE_REG %long 0x4
+;    d.s a:PMIC_ARB_SPMI_PERIPH3_2OWNER_TABLE_REG %long 0x3
+;    d.s a:PMIC_ARB_SPMI_PERIPH2_2OWNER_TABLE_REG %long 0x2
+;    d.s a:PMIC_ARB_SPMI_PERIPH1_2OWNER_TABLE_REG %long 0x1
+;    d.s a:PMIC_ARB_SPMI_PERIPH0_2OWNER_TABLE_REG %long 0x0
+;    d.s a:PMIC_ARB_SPMI_PERIPH5_2OWNER_TABLE_REG %long 0x5    
+;
+;    ; Mapping table
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG0 %long 0x001a0204
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG1 %long 0x00120902
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG2 %long 0x00040303
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG3 %long 0x00000403
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG4 %long 0x00000a00
+;    d.s a:PMIC_ARB_SPMI_MAPPING_TABLE_REG5 %long 0x00000000
+;    
+;    ; Enable PIC interrupt (set 9th bit only)
+;    &rd_reg=data.long(a:PMIC_ARB_SPMI_CFG_REG)
+;    &rd_reg=&rd_reg|0x100
+;    d.s a:PMIC_ARB_SPMI_CFG_REG %long &rd_reg
+;    ;d.s a:PMIC_ARB_SPMI_CFG_REG %long 0x0109
+
+    ; Set the channel
+    gosub PMIC_ARB_SET_CH &ch
+    &pmic_spmi_ch=&ch
+    
+    &hw_rev=data.long(a:PMIC_ARB_HW_VERSION)
+
+    ;print "Init done. HW Rev = &hw_rev. CH = &pmic_spmi_ch"
+    ;print "Init done. Setting CH to &pmic_spmi_ch for this TRACE32."
+RETURN
+
+; Not tested yet
+PMIC_ARB_SPMI_RESET:
+   ; Enable GCC internal sleep clock that is needed for toggling soft resets
+   &rd_reg=data.long(a:GCC_GCC_IM_SLEEP_CBCR)
+   &rd_reg=&rd_reg|0x1                          ;set CLK_ENABLE
+   d.s a:GCC_GCC_IM_SLEEP_CBCR %long &rd_reg
+
+   ; Toggle BCR for PMIC_ARB_SPMI.
+   &rd_reg=data.long(a:GCC_SPMI_BCR)
+   &rd_reg=&rd_reg|0x1     ;set BLK_ARES
+   d.s a:GCC_SPMI_BCR %long &rd_reg
+
+   ; Timer
+   wait 0.01s
+   
+   &rd_reg=data.long(a:GCC_SPMI_BCR)
+   &rd_reg=&rd_reg&(~0x1)                       ;clr BLK_ARES
+   d.s a:GCC_SPMI_BCR %long &rd_reg
+   
+   wait 0.01s
+   
+   print "Soft reset done"   
+   ;y.reset
+RETURN
+
+;***********************************************************************************
+; SPMI_WRITE
+; A PMIC arbiter write sequence is:
+; 1. Write WDATA registers for the swOwner's channel
+; 2. Write the channel's CMD reg
+; 3. Wait for transaction done indication
+; Note: Data is always one byte for PM8841/8941
+;***********************************************************************************
+SPMI_WRITE:
+    ENTRY &addr &wrVal
+
+    &write_err=0x0
+
+    ; Build the command
+    gosub PMIC_ARB_BUILD_CMD 0x0 0x0 &addr 0x1
+    entry &rd_cmd
+
+    ;print "SPMI_WRITE: Address is &addr; Command is &rd_cmd; Data is &wrVal"
+
+    ; Check the channel status
+    ;gosub PMIC_ARB_WAIT_4_CMD_DONE
+
+    ; Write first 4 data bytes (only one byte for PM8841/8941)
+    d.s a:PMIC_ARB_CHNLn_WDATA0 %long &wrVal
+
+    ; Write data bytes (no need for PM8841/8941)
+    ;d.s a:PMIC_ARB_CHNLn_WDATA1 %long 0x0
+
+    ; Write to the command register
+    d.s a:PMIC_ARB_CHNLn_CMD %long &rd_cmd
+
+    ; Wait for a transaction done
+    gosub PMIC_ARB_WAIT_4_CMD_DONE
+    entry &status
+
+    if (&status==1.)
+    (
+        &write_err=0x1
+        ;print "Write failed: timeout"
+    )
+
+    ;print "SPMI_WRITE: Write data done"    
+RETURN
+
+;***********************************************************************************
+; SPMI_WRITE_WORD
+; A PMIC arbiter write sequence is:
+; 1. Write WDATA registers for the swOwner's channel
+; 2. Write the channel's CMD reg
+; 3. Wait for transaction done indication
+; Note: Data is always one byte for PM8841/8941
+;***********************************************************************************
+SPMI_WRITE_WORD:
+    ENTRY &addr &wrValWord
+
+    &write_err=0x0
+
+    ; Build the command
+    gosub PMIC_ARB_BUILD_CMD 0x0 0x0 &addr 0x4
+    entry &rd_cmd
+
+    ; Write first 4 data bytes
+    d.s a:PMIC_ARB_CHNLn_WDATA0 %long &wrValWord
+
+    ; Write to the command register
+    d.s a:PMIC_ARB_CHNLn_CMD %long &rd_cmd
+
+    ; Wait for a transaction done
+    gosub PMIC_ARB_WAIT_4_CMD_DONE
+    entry &status
+
+    if (&status==1.)
+    (
+        &write_err=0x1
+    )
+RETURN
+
+;***********************************************************************************
+; SPMI_READ
+; A PMIC arbiter read sequence is:
+; 1. Write the swOwner's channel's CMD reg
+; 2. Wait for a transaction done indication
+; 3. Read the channel's RDATA regs
+; Note: Data is always one byte for PM8841/8941
+;***********************************************************************************
+SPMI_READ:
+    ENTRY &addr
+    
+    &read_err=0x0
+	&return_data=0x0
+
+    ; Build the command
+    gosub PMIC_ARB_BUILD_CMD 0x1 0x1 &addr 0x1
+    entry &rd_cmd
+
+    ;print "SPMI_READ: Address is &addr; Command is &rd_cmd"
+
+    ; Write to the command register
+    d.s a:PMIC_ARB_CHNLn_CMD %long &rd_cmd
+
+    ; Wait for a transaction done
+    gosub PMIC_ARB_WAIT_4_CMD_DONE
+    entry &status
+
+    if (&status==1.)
+    (
+        &read_err=0x1
+        print "Read failed: timeout"
+    )
+    else if (&status==0.)
+    (
+        ; Read data from the Rx register
+        &return_data=data.long(a:PMIC_ARB_CHNLn_RDATA0)
+        &return_data=(&return_data)&(0xFF)
+    )
+    ;print "SPMI_READ: Read data is &return_data, &status"
+RETURN &return_data
+
+
+;***********************************************************************************
+; PMIC_REGULATOR_CHECK
+;***********************************************************************************
+PMIC_REGULATOR_CHECK:
+    ENTRY &addr
+    
+    &return_status=0x0
+    &statusbit=0x0
+
+    gosub SPMI_READ &addr
+    entry &return_data
+
+    &statusbit=&return_data&0x80
+    
+    if (&statusbit==0x80)
+    (
+        print "Regulator &addr check passed."
+        &return_status=0x0
+	)
+    else
+    (
+        print "Regulator &addr check failed."
+        &return_status=0x1
+    )
+    ;print "SPMI_READ: Read data is &return_data, &status"
+RETURN &return_status
+
+
+
+;***********************************************************************************
+; Helper functions
+;***********************************************************************************
+PMIC_ARB_BUILD_CMD:
+    ENTRY &opcode &priority &addr &bytecnt
+    ; Build the command word
+    &rd_cmd=0x0
+    ;&rd_cmd=(&opcode<<27.)|(&priority<<24.)|(&addr<<4.)|(&bytecnt)
+    ; According to QI, 0x0 is for 1 byte
+	&rd_cmd=(&opcode<<27.)|(&priority<<26.)|(&addr<<4.)|(&bytecnt-1.)
+RETURN &rd_cmd
+
+
+PMIC_ARB_WAIT_4_CMD_DONE:
+    ;field_mask  DROPPED 0x00000008
+    ;field_mask  DENIED  0x00000004
+    ;field_mask  FAILURE 0x00000002
+    ;field_mask  DONE    0x00000001
+
+    ;PRINT "Waiting for command done..."
+    &status=0.
+    &timer=0.
+    &ready=0.
+    while (&ready!=0x1)&&(&timer<=500.)
+    (
+       &ready=data.long(a:PMIC_ARB_CHNLn_STATUS)
+       &ready=&(ready)&(0xFF)
+       &timer=&timer+1.
+    )
+    if (&ready!=0x1)&&(&timer>=80.)
+    (
+       &status=1. ; timeout
+    )
+    ;PRINT "Command done."
+    ;PRINT "PMIC_WAIT_4_CMD_DONE: Command Done &ready"
+RETURN &status
+
+; Create the t32 address label based on the selected channel
+PMIC_ARB_SET_CH:
+    ENTRY &ch
+ 
+    ;krait_sec      = 0
+    ;krait_nsec     = 1
+    ;modem          = 2
+    ;pronto         = 3
+    ;rpm            = 4
+    ;lpass          = 5
+
+    &pmic_spmi_ch=&ch;
+    
+    if (&ch==0x0)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL0_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: Krait_sec (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL0_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL0_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL0_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL0_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL0_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL0_STATUS
+            y.create.l PMIC_ARB_CHNL0_SYMFLAG 0xF820000C   ; use unused address as the dummy value
+            y.create.done            
+        )
+    )
+    else if (&ch==0x1)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL1_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: Krait_nsec (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL1_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL1_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL1_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL1_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL1_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL1_STATUS
+            y.create.l PMIC_ARB_CHNL1_SYMFLAG 0xF8200010   ; use unused address as the dummy value
+            y.create.done
+        )
+    )
+    else if (&ch==0x2)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL2_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: Modem (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL2_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL2_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL2_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL2_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL2_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL2_STATUS
+            y.create.l PMIC_ARB_CHNL2_SYMFLAG 0xF8200014   ; use unused address as the dummy value
+            y.create.done
+        )
+    )
+    else if (&ch==0x3)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL3_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: Pronto (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL3_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL3_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL3_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL3_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL3_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL3_STATUS
+            y.create.l PMIC_ARB_CHNL3_SYMFLAG 0xF8200018   ; use unused address as the dummy value
+            y.create.done
+        )
+    )
+    else if (&ch==0x5)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL5_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: LPASS (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL5_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL5_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL5_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL5_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL5_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL5_STATUS
+            y.create.l PMIC_ARB_CHNL5_SYMFLAG 0xF8200020   ; use unused address as the dummy value
+            y.create.done
+        )
+    )
+    else if (&ch==0x4)
+    (
+        if (Y.EXIST(PMIC_ARB_CHNL4_SYMFLAG))
+        (
+        )
+        else
+        (
+            ;PRINT "Channel selected: RPM (&pmic_spmi_ch)"
+            y.create.l PMIC_ARB_CHNLn_CMD PMIC_ARB_CHNL4_CMD
+            y.create.l PMIC_ARB_CHNLn_WDATA0 PMIC_ARB_CHNL4_WDATA0
+            y.create.l PMIC_ARB_CHNLn_WDATA1 PMIC_ARB_CHNL4_WDATA1
+            y.create.l PMIC_ARB_CHNLn_RDATA0 PMIC_ARB_CHNL4_RDATA0
+            y.create.l PMIC_ARB_CHNLn_RDATA1 PMIC_ARB_CHNL4_RDATA1
+            y.create.l PMIC_ARB_CHNLn_STATUS PMIC_ARB_CHNL4_STATUS
+            y.create.l PMIC_ARB_CHNL4_SYMFLAG 0xF820001C   ; use unused address as the dummy value
+            y.create.done
+        )
+    )
+RETURN    
+
+; Helper function
+SPMI_WRITE_CH:
+    ENTRY &ch &addr &wrVal
+    local &timer_wr_ch &ready_wr_ch
+    
+    &write_err=0x0
+    
+    ;&pmic_arb_chnln_wdata0_addr=PMIC_ARB_CHNL0_WDATA0+0x80*&ch
+    &pmic_arb_chnln_wdata0_addr=0xFC4CF810+0x80*&ch
+    ;&pmic_arb_chnln_cmd_addr=PMIC_ARB_CHNL0_CMD+0x80*&ch
+    &pmic_arb_chnln_cmd_addr=0xFC4CF800+0x80*&ch
+    ;&pmic_arb_chnln_status_addr=PMIC_ARB_CHNL0_STATUS+0x80*&ch
+    &pmic_arb_chnln_status_addr=0xFC4CF808+0x80*&ch
+
+    ; Build the command
+    gosub PMIC_ARB_BUILD_CMD 0x0 0x0 &addr 0x1
+    entry &rd_cmd
+
+    ; Write first 4 data bytes (only one byte for PM8841/8941)
+    d.s a:&pmic_arb_chnln_wdata0_addr %long &wrVal
+
+    ; Write to the command register
+    d.s a:&pmic_arb_chnln_cmd_addr %long &rd_cmd
+
+    ; Wait for a transaction done
+    &timer_wr_ch=0.
+    &ready_wr_ch=0x0
+    while (&ready_wr_ch!=0x1)&&(&timer_wr_ch<=500.)
+    (
+        &ready_wr_ch=data.long(a:&pmic_arb_chnln_status_addr)
+        &ready_wr_ch=&(ready_wr_ch)&(0xFF)
+        &timer_wr_ch=&timer_wr_ch+1.
+    )
+    if (&ready_wr_ch!=0x1)&&(&timer_wr_ch>=50.)
+    (
+        &write_err=0x1
+    )
+RETURN
+
+; Helper function
+SPMI_READ_CH:
+    ENTRY &ch &addr
+    
+    &read_err=0
+	&return_data=0
+
+    ;&pmic_arb_chnln_rdata0_addr=PMIC_ARB_CHNL0_RDATA0+0x80*&ch
+    &pmic_arb_chnln_rdata0_addr=0xFC4CF818+0x80*&ch
+    ;&pmic_arb_chnln_cmd_addr=PMIC_ARB_CHNL0_CMD+0x80*&ch
+    &pmic_arb_chnln_cmd_addr=0xFC4CF800+0x80*&ch
+    ;&pmic_arb_chnln_status_addr=PMIC_ARB_CHNL0_STATUS+0x80*&ch
+    &pmic_arb_chnln_status_addr=0xFC4CF808+0x80*&ch    
+    
+    
+    ; Build the command
+    gosub PMIC_ARB_BUILD_CMD 0x1 0x1 &addr 0x1
+    entry &rd_cmd
+
+    ; Write to the command register
+    d.s a:&pmic_arb_chnln_cmd_addr %long &rd_cmd
+
+    ; Wait for a transaction done
+    &timer_rd_ch=0.
+    &ready_rd_ch=0x0
+    while (&ready_rd_ch!=0x1)&&(&timer_rd_ch<=500.)
+    (
+        &ready_rd_ch=data.long(a:&pmic_arb_chnln_status_addr)
+        &ready_rd_ch=&(ready_rd_ch)&(0xFF)
+        &timer_rd_ch=&timer_rd_ch+1.
+    )
+    if (&ready_rd_ch!=0x1)&&(&timer_rd_ch>=50.)
+    (
+        &read_err=0x1
+        print "Read failed: timeout"
+    )
+    else
+    (
+        ; Read data from the Rx register
+        &return_data=data.long(a:&pmic_arb_chnln_rdata0_addr)
+        &return_data=(&return_data)&(0xFF)
+    )
+RETURN &return_data
+
+
+;***********************************************************************************
+; Help menu
+;***********************************************************************************
+HELP_PMIC_SPMI:
+winpos 10% 10% 80% 60%
+area.create Help 500. 1000.
+area.select Help
+area.view Help
+;area.reset
+;area
+   print "PMIC_SPMI usages:"
+   print
+   print "NOTE: the 'addr' parameter should be a 20-bit address in the format of:"
+   print "      SID[19:16], PID Address[15:8], Offset[7:0]"
+   print 
+   print 
+   print "do PMIC_SPMI INIT $ch                           --> init pmic spmi with channel# (see below)"
+   print "do PMIC_SPMI $addr                              --> read a byte from register"
+   print "do PMIC_SPMI $addr $data                        --> write a byte to register"
+   print "do PMIC_SPMI WORD $addr $data                   --> burst write a word (4 bytes)"
+   print "do PMIC_SPMI $addr mskclr $data                 --> clr the masked-bit(&data) of the register"
+   print "do PMIC_SPMI $addr mskset $data                 --> set the masked-bit(&data) of the register"
+   print "do PMIC_SPMI $addr RETOUT                       --> return the read back value to the caller"
+   print 
+   print "Example1: do PMIC_SPMI INIT 4                   --> init the pmic spmi with channel 4 (RPM)"
+   print "Example2: do PMIC_SPMI 0x51740 0xA5             --> write 0xA5 to the spmi slave address 0x51740"
+   print "Example3: do PMIC_SPMI 0x51740                  --> read from SPMI slave 0x51740"
+   print "Example4: do PMIC_SPMI WORD 0x51740 0x12345678  --> write 4 bytes of 0x12345678 to address 0x51740"
+   print
+   print
+   print "SPMI Channel Selection:"
+   print " 0: krait_sec "
+   print " 1: krait_nsec"
+   print " 2: modem     "
+   print " 3: pronto    "
+   print " 4: rpm       "
+   print " 5: lpass     "
+   print
+   print
+   print "Note: if you are not able to see any PMIC messages, try to do 'area.reset'"
+area.reset
+RETURN
+
+
+
+;errhandle:
+;( 
+;    print "Error: PMIC SPMI has not been initialized." 
+;    enddo
+;) 
+;return 
+

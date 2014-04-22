@@ -1,0 +1,16 @@
+#===============================================================================
+#
+# DATA QFLOG APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.LoadAPIUnits()

@@ -1,0 +1,159 @@
+#===============================================================================
+#
+# smecom_ixfile_shared Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 - 2013 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/securemsm/modem_sec/build/SConscript#4 $
+#  $DateTime: 2018/12/11 01:29:23 $
+#  $Author: pwbldsvc $
+#  $Change: 17820705 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who        what, where, why
+# --------   ---        ---------------------------------------------------------
+# 10/24/13   vj          disable prng usage for 8916 bringup  
+# 01/04/13   rsahay      Initial Version
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/modem_sec"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SECUREMSM',
+   'DEBUGTOOLS',
+   'HAL',
+   'SYSTEMDRIVERS',
+   'SERVICES',
+   'DAL',
+   'BOOT',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+if env['MSM_ID'] in ['8x10']:
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/inc")
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/${MSM_ID}")
+else:
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/inc")
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/${MSM_ID}")
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/common")
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal/${MSM_ID}")
+    env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal")
+
+#env.Append(CCFLAGS = " --restrict ")
+
+#-------------------------------------------------------------------------------
+# Generates mba_hwio.h
+#-------------------------------------------------------------------------------
+if env.has_key('HWIO_IMAGE'):
+
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/${MSM_ID}/modem_hwio.h',
+      'modules': ['MSS_RMB','DEHR_BIMC','DEHR_VMIDMT','MSS_PERPH','SECURITY_CONTROL_CORE', 'BIMC_S_DDR0_SCMO', 'TCSR_TCSR_REGS' ],
+      'output-phys': True,
+    }
+  ]
+)
+#----------------------------------------------------------------------------
+# Modem Security Sources
+#----------------------------------------------------------------------------
+MODEM_SEC_SOURCES = [
+    '${BUILDPATH}/src/${MSM_ID}/modem_xpu_int.c',
+    '${BUILDPATH}/src/${MSM_ID}/modem_vmidmt_config.c',
+    '${BUILDPATH}/src/xpu2/hal/HALxpu2.c',
+    '${BUILDPATH}/src/modem_rollback_version.c',
+    '${BUILDPATH}/src/modem_rollback_hw_mutex.c'
+]
+if env['MSM_ID'] in ['9205']:
+  MODEM_AC_SOURCES = ['${BUILDPATH}/src/xpu2/modem_xpu_stub.c']
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if env.has_key('USES_SEC'):
+	env.AddBinaryLibrary(
+		['CORE_QDSP6_SW', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE',
+		 'MODEM_IMAGE',  'CBSP_MODEM_IMAGE', 'MODEM_MODEM',
+		 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE',
+		], '${BUILDPATH}/modem_sec', [MODEM_SEC_SOURCES, MODEM_AC_SOURCES])
+
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['MODEM_IMAGE', 'CORE_MODEM', 'CORE_QDSP6_SW']
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_DSM_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'modem_sec',                        # required
+     'init_function'              : 'modem_sec_config_xpu_error_reporting',     # required
+     'dependencies'               : ['dalsys','GPIOint','err_init',],
+    })
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_DSM_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'modem_sec_rollback',                        # required
+     'init_function'              : 'modem_rollback_version_main',     # required
+     'dependencies'               : ['dalsys',],
+    })
+
+#-------------------------------------------------------------------------------
+# Pack out files
+#-------------------------------------------------------------------------------
+ALL_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/src')
+MY_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/src/${MSM_ID}')
+SHARED_CONFIG_FILES = env.FindFiles(
+  ['modem_rollback_hw_mutex.c','modem_rollback_version.c'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/src')
+PACK_CONFIG_FILES = list(set(ALL_CONFIG_FILES) - set(MY_CONFIG_FILES) - set(SHARED_CONFIG_FILES))
+env.CleanPack(['CORE_MODEM'], PACK_CONFIG_FILES)
+
+ALL_INC_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset')
+
+ALL_INC_CONFIG_FILES += [
+  '${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal/HALxpu2.h',
+  '${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal/HALhwioXpu2Generic.h',
+  '${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal/HALxpu2Hwio.h',
+  '${COREBSP_ROOT}/securemsm/modem_sec/src/xpu2/hal/$[MSM_ID]/HALxpu2HWIOTarget.h',
+  ]
+MY_INC_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/${MSM_ID}')
+SHARED_INC_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/modem_sec/inc/chipset/common')  
+PACK_INC_CONFIG_FILES = list(set(ALL_INC_CONFIG_FILES) - set(MY_INC_CONFIG_FILES)- set(SHARED_INC_CONFIG_FILES))
+env.CleanPack(['CORE_MODEM'], PACK_INC_CONFIG_FILES)

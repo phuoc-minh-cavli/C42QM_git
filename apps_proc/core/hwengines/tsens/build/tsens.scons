@@ -1,0 +1,242 @@
+#===============================================================================
+#
+# Tsens Libs
+#
+# GENERAL DESCRIPTION
+#    Tsens Libs build script
+#
+# Copyright (c) 2010, 2013-2015 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Qualcomm Technologies Confidential and Proprietary.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/hwengines/tsens/build/tsens.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 15-05-08   jjo     Enable for 9x55.
+# 15-01-29   jjo     Use C99.
+# 14-06-10   jjo     Remove 9x35.
+# 14-03-31   jjo     Added 9x45.
+# 12-05-20   jjo     Ported to 9x35.
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+if env['MSM_ID'] not in ['9205']:
+   Return();
+
+env.Append(CFLAGS = "--diag_error=warning --c99")
+
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+
+TSENS_V1_HW = ['9205']
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in TSENS_V1_HW:
+   env.PublishPrivateApi('HWENGINES_TSENS', [
+      "${INC_ROOT}/core/hwengines/tsens/dal/common",
+      "${INC_ROOT}/core/hwengines/tsens/dal/v1",
+      "${INC_ROOT}/core/hwengines/tsens/diag/protected",
+      "${INC_ROOT}/core/hwengines/tsens/hal/common",
+      "${INC_ROOT}/core/hwengines/tsens/qapi/src",      
+   ])
+else:
+   env.PublishPrivateApi('HWENGINES_TSENS', [
+      "${INC_ROOT}/core/hwengines/tsens/dal/common",
+      "${INC_ROOT}/core/hwengines/tsens/dal/v2",
+      "${INC_ROOT}/core/hwengines/tsens/diag/protected",
+   ])
+
+#-------------------------------------------------------------------------------
+# SRC PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/hwengines/tsens"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'BUSES',
+   'HWENGINES',
+   'KERNEL',   
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'POWER',
+   'PRODUCTS_DSR',
+   'QAPI'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Configuration
+#-------------------------------------------------------------------------------
+
+# Default settings
+TSENS_DIAG_SUPPORT = False
+TSENS_TEST_SUPPORT = False
+TSENS_QAPI_SUPPORT = True
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+TSENS_DAL_V1_SOURCES = [
+   '${BUILDPATH}/dal/v1/DALTsensFwk.c',
+   '${BUILDPATH}/dal/v1/DALTsensInfo.c',
+   '${BUILDPATH}/dal/v1/DALTsens.c',
+   '${BUILDPATH}/dal/v1/TsensiConversion.c'
+]
+
+TSENS_DAL_V2_SOURCES = [
+   '${BUILDPATH}/dal/v2/DALTsens.c',
+]
+
+if env['MSM_ID'] in TSENS_V1_HW:
+   TSENS_DAL_HW_SOURCES = TSENS_DAL_V1_SOURCES
+else:
+   TSENS_DAL_HW_SOURCES = TSENS_DAL_V2_SOURCES
+
+TSENS_HAL_SOURCES = [
+   '${BUILDPATH}/hal/${MSM_ID}/HALtsens.c',
+]
+
+TSENS_QAPI_SOURCES = [
+   '${BUILDPATH}/qapi/src/qapi_tsens.c',
+]
+
+TSENS_BSP_SOURCES = [
+   '${BUILDPATH}/config/${MSM_ID}/TsensBsp.c',
+]
+
+TSENS_DIAG_SOURCES = [
+   '${BUILDPATH}/diag/src/TsensDiag.c'
+]
+
+TSENS_TEST_SOURCES = [
+   '${BUILDPATH}/test/src/TsensTest.c',
+]
+
+#-------------------------------------------------------------------------------
+# XML files
+#-------------------------------------------------------------------------------
+
+TSENS_CONFIG_FILE_XML = '${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/tsens_props.xml'
+# env.AddLibrary(['DAL_DEVCFG_IMG'], '${BUILDPATH}/tsens_bsp_lib', TSENS_BSP_SOURCES)
+
+if TSENS_CONFIG_FILE_XML:
+   if 'USES_DEVCFG' in env:
+      env.AddDevCfgInfo(['DAL_DEVCFG_IMG'],
+      {
+         'devcfg_xml' : ['${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/tsens_props.xml',
+                         '${BUILDPATH}/config/${MSM_ID}/TsensBsp.c']
+      })
+
+#-------------------------------------------------------------------------------
+# RCINIT
+#-------------------------------------------------------------------------------
+
+RCINIT_IMAGES = ['CORE_MODEM', 'CORE_APPS', 'IMC_IMAGE']
+
+RCINIT_INIT_FUNC_1 = {
+   'sequence_group'             : 'RCINIT_GROUP_2',
+   'init_name'                  : 'tsens_diag',
+   'init_function'              : 'TsensDiagInit',
+   'dependencies'               : ['npa'],
+}
+
+RCINIT_INIT_FUNC_2 = {
+   'sequence_group'             : 'RCINIT_GROUP_2',
+   'init_name'                  : 'tsens_test',
+   'init_function'              : 'tsens_test',
+   'dependencies'               : ['npa'],
+}
+
+if 'USES_RCINIT' in env:
+   if TSENS_DIAG_SUPPORT:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_1)
+   if TSENS_TEST_SUPPORT:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_2)
+
+#-------------------------------------------------------------------------------
+# Libraries
+#-------------------------------------------------------------------------------
+
+TSENS_IMAGES = ['CORE_MODEM', 'CORE_APPS', 'IMC_IMAGE', 'TSENS_BOOT_DRIVER']
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',                # Domain(REX + TN)
+]
+
+env.AddLibrary(TSENS_IMAGES,
+               '${BUILDPATH}/tsens',
+               [TSENS_DAL_HW_SOURCES, TSENS_HAL_SOURCES])
+
+if TSENS_DIAG_SUPPORT:
+   env.AddLibrary (TSENS_IMAGES,
+                   '${BUILDPATH}/tsens_diag',
+                   [TSENS_DIAG_SOURCES])
+
+if TSENS_TEST_SUPPORT:
+   env.AddLibrary(TSENS_IMAGES,
+                  '${BUILDPATH}/tsens_test',
+                  [TSENS_TEST_SOURCES])
+
+if TSENS_QAPI_SUPPORT:
+   env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', TSENS_QAPI_SOURCES)
+#-------------------------------------------------------------------------------
+# Pack files (files to remove)
+#-------------------------------------------------------------------------------
+
+# Remove HW files
+if env['MSM_ID'] in TSENS_V1_HW:
+   TSENS_DAL_HW_REMOVE_SOURCES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/dal/v2/')
+else:
+   TSENS_DAL_HW_REMOVE_SOURCES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/dal/v1/')
+env.CleanPack(TSENS_IMAGES, TSENS_DAL_HW_REMOVE_SOURCES)
+
+# Remove BSP files
+ALL_CONFIG_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/config/')
+MY_CONFIG_FILES =  env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/')
+PACK_CONFIG_FILES = list(set(ALL_CONFIG_FILES) - set(MY_CONFIG_FILES))
+env.CleanPack(TSENS_IMAGES, PACK_CONFIG_FILES)
+
+# Remove HAL files
+ALL_HAL_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/hal/')
+COMMON_HAL_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/hal/common/')
+MY_HAL_FILES =  env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/hal/${MSM_ID}/')
+PACK_HAL_FILES = list(set(ALL_HAL_FILES) - set(MY_HAL_FILES) - set(COMMON_HAL_FILES))
+env.CleanPack(TSENS_IMAGES, PACK_HAL_FILES)
+
+# Remove test files
+TEST_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/test/')
+env.CleanPack(TSENS_IMAGES, TEST_FILES)
+
+# Remove scripts
+SCRIPT_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/scripts/')
+env.CleanPack(TSENS_IMAGES, SCRIPT_FILES)
+
+# Remove diag files
+if TSENS_DIAG_SUPPORT != True:
+   DIAG_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/diag/')
+   env.CleanPack(TSENS_IMAGES, DIAG_FILES)

@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<!DOCTYPE image SYSTEM "weaver-1.0.dtd">
+<!-- vim: set ts=4 sw=4 et ai nosi: -->
+<image>
+<build>
+  <max_elf_tlb value="0x1000000"/>
+  <relocatable_image value="false"/>
+  <pool_allocation_order value="address"/>
+  <tlbdump_usage value="compare"/>
+  <mapping_method value="optimal"/>
+  <allow_map_wx value="false"/>
+  <section user_mode="true"/>
+  <section name=".start"                  user_mode="false"/>
+  <section name=".init"                   user_mode="false"/>
+  <section name=".data_tcm_static_kernel" mapping="rx"/>
+  <section name=".data_tcm_static_fw"     mapping="rw"/>
+  <!--<section name=".data_tcm_static_sw"     mapping="rw"/>-->
+  <section name="*_overlay"               mapping="overlay"/>
+  <section name="overlay_*"               mapping="overlay"/>
+  <section name=".high_catm1_dynamic*"    mapping="overlay"/>
+  <section name=".low_catm1_dynamic*"     mapping="overlay"/>
+  <section name="*_tcm_*"                 cache_policy="1"/>
+  <section name=".data_l1wb_l2uc"         cache_policy="0"/>
+  <section name=".data_uncached"          cache_policy="6"/>
+  <section name=".bss_uncached"          cache_policy="6"/>
+  <section name="*_tcm_static_*"          physpool="TCM_POOL"/>
+  <section mapping="rx" name=".keep_uncached"/>
+
+  <section name=".clade.dict"
+            physpool="CLADE_DICT"
+            copybytes="4"
+            tlb_lock="boot"
+            mapping="rx"/>
+  <section name=".clade.exception_high"
+            mapping="rx"
+           cache_policy="1"
+           physpool="TCM_POOL"/>
+  <!-- used to create mapping between uncompression VA range and compression PA range -->
+  <section name=".region_high_clade_static"
+           clade_register="clade_region_high_pd0"/>
+  <section name=".region_low_clade_static"
+           clade_register="clade_region_low_pd0"/>
+  <!-- used to program CladeCompPDX register-->
+  <section name=".clade.comp"
+           clade_register="clade_comp"
+           tlb_lock="boot"
+           mapping="rx"/>
+  <!-- used to prgram CladeExcHiPDX register-->
+  <section name=".clade.exception_high"
+           clade_register="clade_exception_high"/>
+  <!-- used to program CladeExcLowPDX register-->
+  <section name=".clade.exception_low_large"
+           clade_register="clade_exception_low_large"
+           tlb_lock="boot"
+           mapping="rx"/>
+  <!-- used to program CladeExcLowSmallPDX register-->
+  <section name=".clade.exception_low_small"
+           clade_register="clade_exception_low_small"
+           tlb_lock="boot"
+           mapping="rx"/>
+
+  <section name=".clade.metadata"
+           tlb_lock="boot"
+           mapping="rx"/>
+  <!-- used to program CladeRegion register -->
+  <clade_base_paddr value="0x20000000" />
+  
+  <!-- used to create mapping between uncompression VA range and compression PA range -->
+	<section name=".region_clade2"   
+	 clade_register="clade2_region_pd0"/>
+	 
+	<section name=".clade2.comp"           
+		 clade_register="clade2_comp"
+		 tlb_lock="boot"
+		 mapping="rx"/>
+	<section name=".clade2.16B_free_list"
+         clade_register= "clade2_free_base_addr_16"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+	<section name=".clade2.32B_free_list"
+         clade_register= "clade2_free_base_addr_32"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+	<section name=".clade2.48B_free_list"
+         clade_register= "clade2_free_base_addr_48"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+	<section name=".clade2.64B_free_list"
+         clade_register= "clade2_free_base_addr_64"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+	<section name=".clade2.metadata"
+         clade_register= "clade2_metadata_base"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+	<section name=".clade2.regs"
+         clade_register= "clade2_regs"
+		 tlb_lock="boot" 
+		 mapping="rx"/>
+
+  <!-- used to program Clade2 Region register -->
+        <clade2_base_paddr value="0xC0000000" />
+
+  <!--
+    override ELF segment RWX permissions; TODO: do this in ELF semgents
+    instead of here
+  -->
+  <section name=".hw_rodata" mapping="rw"/>
+  <section name=".hw_rwdata" mapping="rw"/>
+  <section name=".rodata.diag" mapping="rw"/>
+  <section name=".rodata" mapping="rw"/>
+  <section name=".data" mapping="rw"/>
+  <section name=".9205_DEVCFG_DATA" mapping="rw"/>
+  <section name=".eh_frame" mapping="rw"/>
+  <section name=".gcc_except_table" mapping="rw"/>
+  <section name=".ctors" mapping="rw"/>
+  <section name=".dtors" mapping="rw"/>
+  <section name=".bss" mapping="rw"/>
+  <section name=".sdata" mapping="rw"/>
+  <section name="ro_fatal" mapping="rx"/>
+  <section name=".candidate_compress_section" mapping="rx"/>
+  <section name=".rw_candidate_compress_section" mapping="rx"/>
+  <section name=".dynamicReclaim" mapping="rw"/>
+  <section name="*region_*_clade*" tlb_lock="root"/>
+  <section name="*region_*_clade*" tlb_lock_min_size="0x100000"/>
+
+  <!--<section name="*" tlb_lock="1"/>-->
+ </build>
+
+    <machine>
+
+      <include file="../../core/api/systemdrivers/irqs/mdm9205/interrupts.xml"/>
+
+      <!-- base of clade registers-->
+      <clade_cfg_base value = "0x045D0000" />
+      <clade_exc_hi_word value = "1024" />
+      <clade_dict_word value = "6144" />
+      <clade2_cfg_base value = "0x043C0000" />
+
+      <Hexagon_ss_base value = "0xEC100000" />
+      <tcxo intmask="0xffffffff"/>
+      <timer>
+        <base value = "0xEC120000" />
+        <intno value = "2" />
+        <priority value="76"/>
+        <bitmask value="0xff" />
+        <IST_priority value="64" />
+        <IST_bitmask value="0xff" />
+      </timer>
+      <chicken_bits>
+          <rgdr value="0x00000000" />
+         <chicken value="0x08200004" />
+      </chicken_bits>
+
+	  <isdb_imem addr="0x08600934" />
+
+      <cache>
+        <l1_iprefetch enabled="true" lines="1"/>
+        <l2_iprefetch enabled="true" lines="0"/>
+        <l1_ipartition    main="full"/>
+        <l1_dpartition    main="full"/>
+        <l2_partition     main="full"/>
+        <l2_size          value="256"/>
+		<l2_writeback enabled="true" />
+      </cache>
+
+      <cache_policy name="writeback" value="0x0"/>
+      <cache_policy name="writethrough" value="0x1"/>
+      <cache_policy name="l1_wt_l2_cacheable" value="0x5"/>
+      <cache_policy name="l1_wb_l2_cacheable" value="0x7"/>
+      <cache_policy name="l1_wb_l2_uncacheable" value="0x0"/>
+      <cache_policy name="l1_wb_l2_wt" value="0x8"/>
+      <cache_policy name="uncached" value="0x6"/>
+      <cache_policy name="device" value="0x4"/>
+
+      <dynamic_multi_threading enabled="true" />
+      <bus_resources_shared enabled="false" />
+
+<etm_cfg_base addr="0x04590000" />
+
+    </machine>
+
+    
+    <kernel>
+      <hthread_mask value = "0xf" />
+      <heap_size value = "0x20000"/>
+      <max_threads value = "300"/>
+      <max_threads_in_tcm value = "0"/>
+      <max_futexes value = "8092"/>
+      <trace_mask value = "0x5FF"/>
+      <trace_size value = "16384" />
+      <fastint_stack size = "1024" />
+      <tcm_dump size="0x40000" error="user" power="boot"/> 
+      <int_nest_allow_mask value="0x00008000" />
+      <qurtos_stack_size value = "4096"/>
+    </kernel>
+
+    <!-- 18.5MB of physical pool -->
+    <physical_pool name="DEFAULT_PHYSPOOL">
+        <region base="0x80000000" size="0x1280000" />
+    </physical_pool>
+
+	<!-- HWIO pool for dynamically mapped region -->
+    <physical_pool name="HWIO_POOL">
+	   <region base="0x09000000" size="0x1000000" />
+	</physical_pool>
+
+<!--- LPASS physical Pools-->
+	<physical_pool name="ADSP_DRIVER_POOL">
+        <region base="0x07700000" size="0x00020000" />
+    </physical_pool>
+
+        <physical_pool name="EBI1_pool">
+        <region base="0x00000000" size="0x80000000" />
+		<region base="0x80000000" size="0x80000000" />
+    </physical_pool>
+<!--- LPASS physical Pools End-->
+
+<!--- 256KB TCM_POOL-->
+ <physical_pool name="TCM_POOL">
+  <region base="0x04400000" size="0x40000"/>
+ </physical_pool>
+
+  <!--Clade configuration of copying dictionary and high priority exception area -->
+  <physical_pool name="CLADE_DICT">
+    <region base="0x045D2000" size="0x6000"/>
+  </physical_pool>
+  
+    <program name="AMSS">
+        <stack_size value = "0x1000" />
+        <!--  AMSS Heap Dummy here -->
+        <heap_size name="heap_size" value="0" type="appregion" />
+
+        <!--
+        alexh: dynamic_default_pool_size causes more problems than it solves.
+        Try to avoid setting it.
+
+        <dynamic_default_pool_size name="size" value="0xe40000" />
+        -->
+
+        <main_priority value = "1" />
+        <main_bitmask value = "0xff" />
+		<reaper_priority value = "0x2F" />
+		<max_pimutex_prio value = "75" />
+<!-- 		<tlb_first_replaceable value="48" /> -->
+
+        <include file="../../core/api/systemdrivers/hwio/mdm9205/msmhwioplat.xml"/>
+
+<!-- for clade2 cfg base mapping-->
+
+		<memsection direct="true"
+          tlb_lock="1"
+          attach="rw"
+          bus_attr="01"
+          virt_addr="0x043C0000"
+          phys_addr="0x043C0000"
+          size="0x10000"
+          cache_policy="device" />
+
+      <memsection direct="true"
+          tlb_lock="1"
+          attach="rw"
+          bus_attr="01"
+          virt_addr="0x045d0000"
+          phys_addr="0x045d0000"
+          size="0x10000"
+          cache_policy="device" />
+
+        <!-- MSS_TOP: These HWIO mappings are done manually as they need  -->
+                <!--          special handling: tlb_lock must be "1" for          -->
+                <!--          performance, and a small piece (mempool page0) must -->
+                <!--          be mapped as WB cached.                             -->
+                <!--          Note the virtual address should not be changed      -->
+                <!--          without coordinating with msmhwiobase.h and the FW  -->
+                <!--          team.                                               -->
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC000000"
+                    phys_addr="0x04000000"
+                    size="0x00100000"
+          cache_policy="device" />
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC100000"
+                    phys_addr="0x04100000"
+                    size="0x00100000"
+          cache_policy="device" />
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC200000"
+                    phys_addr="0x04200000"
+                    size="0x00100000"
+          cache_policy="device" />
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC300000"
+                    phys_addr="0x04300000"
+                    size="0x00100000"
+          cache_policy="device" />
+
+     <!-- MLM Registers -->
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC5B0000"
+                    phys_addr="0x045B0000"
+                    size="0x00010000"
+          cache_policy="device" />
+
+
+     <!-- L1S memory -->
+                <memsection
+                    tlb_lock="1"
+                    bus_attr="01"
+                    glob="1"
+                    direct="false"
+                    attach="RW"
+                    virt_addr="0xEC600000"
+                    phys_addr="0x04600000"
+                    size="0x00100000"
+          cache_policy="writethrough" />
+
+        <!--  excludes the TCM HWIO region from QuRT virtual mapping so it wont conflict with idempotent overlays -->
+        <memsection
+          attach="reserved"
+          virt_addr="0x04000000"
+          size="0x01000000" />
+
+<!-- Do not allow kernel to map CLADE2 VA range-->          
+<memsection
+attach="reserved"
+          virt_addr="0xD0000000"
+          size="0x00400000" />
+
+<!-- Do not allow kernel to map FW and TCM Dump VA range-->
+<memsection
+attach="reserved"
+          virt_addr="0xDCC00000"
+          size="0x000C0000" />
+
+<!-- Sys IMEM for EFS -->
+
+         <memsection direct="true"
+          attach="rw"
+          bus_attr="01"
+          virt_addr="0x08628000"
+          phys_addr="0x08628000"
+          size="0x1000"
+          cache_policy="uncached" />
+
+
+		<memsection direct="true"
+          attach="rw"
+          bus_attr="01"
+          virt_addr="0x08600000"
+          phys_addr="0x08600000"
+          size="0x10000"
+          cache_policy="uncached" />
+
+    <!-- HWIO Regions (SEC CTRL)) -->
+        <memsection direct="true"
+             attach="rw"
+             bus_attr="01"
+             virt_addr="0x00058000"
+             size="0x4000"
+             cache_policy="device" />
+
+        <!-- HWIO Regions (SEC CTRL 2nd part)) -->
+        <memsection direct="true"
+             attach="rw"
+             bus_attr="01"
+             virt_addr="0x0005C000"
+             size="0x4000"
+             cache_policy="device" />
+
+
+<!-- ETM_BASE -->
+        <memsection tlb_lock = "1"
+		   glob="1"
+           direct="true"
+           attach="rw"
+           virt_addr="0x04590000"
+           size="0x00001000"
+           cache_policy="uncached" />
+
+      <!-- L2 CONFIG BASE -->
+      <memsection tlb_lock = "1"
+        glob="1"
+        direct="true" 
+        attach="rw" 
+        virt_addr="0x045A0000" 
+        size="0x00001000" 
+        cache_policy="uncached" />  
+
+<!-- shared memory(TZ-modem) for sec channel -->
+<memsection
+        attach="rw"
+        direct="false"
+        bus_attr="01"
+        virt_addr="0xDCD00000"
+        phys_addr="0x81FBD000"
+        size="0x01000"
+        cache_policy="uncached" />
+
+    </program>
+
+
+
+</image>

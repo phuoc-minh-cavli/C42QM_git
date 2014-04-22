@@ -1,0 +1,413 @@
+//============================================================================
+//  Name:                                                                     
+//    std_loadbuild.cmm 
+//
+//  Description:                                                              
+//    Generates GUI for std_loadbuild and returns user's specifications
+//    Also contains information on what images are part of this target and the buildroot paths for them.
+//                                                                            
+//  Copyright (c) 2012 - 2016 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who             what, where, why
+// --------   ---             ---------------------------------------------------------
+// 10/27/2017 SONELALG      Added perf boot and system image loading support
+// 03/14/2017 JBILLING      Set up for Napali
+// 02/02/2016 JBILLING      Updates for automation
+// 12/14/2015 JBILLING      Added Fusion build menu
+// 09/29/2015 JBILLING      Warnings added for non-common images
+// 08/24/2015 JBILLING      Help menu added
+// 04/17/2015 JBILLING      Deviceprogrammer changes
+// 02/01/2015 JBILLING      Updated for 8996
+// 02/08/2012 AJCheriyan    Fixed issue with buttons
+// 07/19/2012 AJCheriyan    Created for B-family 
+
+//###################Arguments passed #####################
+LOCAL &ArgumentLine
+ENTRY %LINE &ArgumentLine
+LOCAL &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+ENTRY &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+LOCAL &PASS &RVAL0 &RVAL1 &RVAL2 &RVAL3 &RVAL4 &RVAL5 &RVAL6 &RVAL7 &RVAL8 &RVAL9 &RVAL10 &RVAL11
+LOCAL &present_dir
+&present_dir=os.pwd()
+AREA.SELECT
+GOSUB MAIN &ArgumentLine
+ENTRY %LINE &rvalue 
+GOSUB EXIT &rvalue
+ 
+
+
+
+
+//////////////////////////////////////////
+//
+//      Subroutine: MAIN
+//
+//      Main functionality. Starts dialog and calls std_loadbuild
+//
+////////////////////////////////////////////
+MAIN:
+
+
+    // Global variables populated by the the build options utility
+    LOCAL &NEW_BOOTBUILD &NEW_TZBUILD &NEW_APPSBUILD &NEW_MPSSBUILD
+
+    LOCAL &LOAD_TYPE &LOAD_IMG 
+
+    LOCAL &BOOT_IMAGE_DIR
+	
+    IF OS.DIR("&BOOT_BUILDROOT\QcomPkg")
+    (
+        &BOOT_IMAGE_DIR="QcomPkg"
+    )
+    ELSE
+    (
+        &BOOT_IMAGE_DIR="boot_images"
+    )
+	&LOAD_TYPE="NULL"
+    &LOAD_IMG="NULL"
+	&NEW_BOOTBUILD=0.
+	&NEW_TZBUILD=0.
+	&NEW_APPSBUILD=0.
+	&NEW_MPSSBUILD=0.
+
+	// Create the dialog for the script
+	GOSUB CREATEDIALOG
+    // Wait for the person to do something
+    STOP
+
+    //Go right into loadbuild and end things after this
+LOADBUILD:
+
+
+    // Call the utility to map all the builds to the other sessions
+    GOSUB BUILDSYNCUP
+
+
+    
+    DIALOG.END
+    do std_loadbuild &LOAD_TYPE &LOAD_IMG
+    //stop stack here.
+    END
+    
+//////////////////////////////////////////
+//
+//      Subroutine: CREATEDIALOG
+//
+//      Sub-routine to create the dialog
+//
+////////////////////////////////////////////
+CREATEDIALOG:
+    
+    // Check if the window exists
+    WINTOP BUILDOPTIONS
+    IF FOUND()
+       RETURN 
+    WINPOS ,,,,,, LOADSIM
+
+    DIALOG
+    (&
+        HEADER "Build Options"
+        
+        POS 0. 0. 71. 27.
+        BOX "Select Image Sources"
+        POS 1. 1. 70. 1.
+				
+        BOOTTEXT: TEXT "Boot Build"
+        BOOTEDIT: EDIT "&BOOT_BUILDROOT" "GOSUB VERIFYBOOTBUILD"
+		
+        TZTEXT: TEXT "TZ Build"
+        TZEDIT: DEFEDIT "&TZ_BUILDROOT" "GOSUB VERIFYTZBUILD"
+
+        APSSTEXT: TEXT "APSS Build"
+        APSSEDIT: DEFEDIT "&APSS_BUILDROOT" "GOSUB VERIFYAPSSBUILD"
+		
+		RPMTEXT: TEXT "RPM Build"
+        RPMEDIT: DEFEDIT "&RPM_BUILDROOT" "GOSUB VERIFYRPMBUILD"
+
+        MPSSTEXT: TEXT "MPSS Build"
+        MPSSEDIT: DEFEDIT "&MPSS_BUILDROOT" "GOSUB VERIFYMPSSBUILD"
+
+        POS 45. 12. 15. 1. 
+        HELPBUTTON: DEFBUTTON "HELP"
+        (
+            DIALOG.OK "Paste the paths of the various builds for this debug session. Click the map button after that. The defaults are provided by the meta build."
+        )
+        POS 1. 12. 15. 1.
+        MAPBUTTON: DEFBUTTON "Map" "GOSUB BUILDSYNCUP"
+
+        POS 1. 14. 37. 10.
+        BOX "Load Options"
+        POS 2. 15. 34. 1.
+        LOAD.ERASEONLY: CHOOSEBOX "Erase Storage only" "GOSUB SETLOADOPTION"
+        LOAD.FULLLOAD: CHOOSEBOX "Load Full Build(sbl,tz,rpm,apss,mpss)" "GOSUB SETLOADOPTION"
+        LOAD.SINGLEIMG: CHOOSEBOX "Load single image" "GOSUB SETLOADOPTION"
+        LOADIMGSELECT: DYNPULLDOWN "sbl,apps,tz,rpm,mpss,tiny_mpss" "GOSUB SETLOADOPTION" 
+		
+        POS 2. 20. 15. 2.
+        LOADBUTTON: DEFBUTTON "Load" "GOSUB LOADBUILD"
+
+
+    )
+    // Set the default options here
+    GOSUB CHECKLOAD
+    DIALOG.SET LOAD.FULLLOAD
+    &LOAD_TYPE="LOADFULL"
+	GOSUB SETLOADOPTION
+    /////////////Return from CREATEDIALOG//////////////////
+    RETURN
+
+    
+    
+    
+
+    
+SETLOADOPTION:
+    IF DIALOG.BOOLEAN(LOAD.ERASEONLY)
+    (
+        &LOAD_TYPE="ERASEONLY"
+
+    )
+    IF DIALOG.BOOLEAN(LOAD.SINGLEIMG)
+    (
+        &LOAD_TYPE="LOADSINGLE"
+        &LOAD_IMG=DIALOG.STRING(LOADIMGSELECT)
+        IF ("&LOAD_IMG"=="")
+        (
+            DIALOG.DISABLE LOADBUTTON
+        )
+        ELSE
+        (
+            DIALOG.ENABLE LOADBUTTON
+        )
+    )
+    
+    IF ("&LOAD_TYPE"=="LOADFULL")
+    (
+		&LOAD_TYPE="LOADFULL"
+        GOSUB CHECKLOAD
+    )
+
+    RETURN
+
+VERIFYBOOTBUILD:
+    LOCAL &DIR
+
+    &DIR=DIALOG.STRING(BOOTEDIT)
+    &DIR=STRING.TRIM("&DIR")
+    IF OS.DIR("&DIR/QcomPkg")
+    (
+        &BOOT_BUILDROOT="&DIR"
+        DIALOG.SET BOOTEDIT "&BOOT_BUILDROOT"
+        // We have a new build
+        &NEW_BOOTBUILD=1.
+        &BOOT_IMAGE_DIR="QcomPkg"
+        GOSUB CHECKLOAD
+
+    )
+    ELSE IF OS.DIR("&DIR/boot_images/QcomPkg")
+    (
+        &BOOT_BUILDROOT="&DIR"
+        DIALOG.SET BOOTEDIT "&BOOT_BUILDROOT"
+        // We have a new build
+        &NEW_BOOTBUILD=1.
+        &BOOT_IMAGE_DIR="boot_images"
+        GOSUB CHECKLOAD
+
+    )
+    ELSE
+    (
+        DIALOG.SET BOOTEDIT "Invalid Boot Build"
+        DIALOG.DISABLE LOADBUTTON
+        DIALOG.DISABLE MAPBUTTON
+    )
+	
+    RETURN
+
+
+
+
+VERIFYAPSSBUILD:
+      LOCAL &DIR
+
+    &DIR=DIALOG.STRING(APSSEDIT)
+    &DIR=STRING.TRIM("&DIR")
+    IF !OS.DIR("&DIR/apps_proc")
+    (
+        DIALOG.SET APSSEDIT "Invalid APSS Build"
+        DIALOG.DISABLE LOADBUTTON
+        DIALOG.DISABLE MAPBUTTON
+    )
+    ELSE
+    (
+        &APSS_BUILDROOT="&DIR"
+        DIALOG.SET APSSEDIT "&APSS_BUILDROOT"
+        &NEW_APSSBUILD=1.
+        GOSUB CHECKLOAD
+    )
+    RETURN
+VERIFYTZBUILD:
+      LOCAL &DIR
+
+    &DIR=DIALOG.STRING(TZEDIT)
+    &DIR=STRING.TRIM("&DIR")
+    IF !OS.DIR("&DIR/trustzone_images")
+    (
+        DIALOG.SET TZEDIT "Invalid TZ Build"
+        DIALOG.DISABLE LOADBUTTON
+        DIALOG.DISABLE MAPBUTTON
+    )
+    ELSE
+    (
+        &TZ_BUILDROOT="&DIR"
+        DIALOG.SET TZEDIT "&TZ_BUILDROOT"
+        &NEW_TZBUILD=1.
+        GOSUB CHECKLOAD
+    )
+    RETURN
+VERIFYMPSSBUILD:
+    LOCAL &DIR
+
+    &DIR=DIALOG.STRING(MPSSEDIT)
+    &DIR=STRING.TRIM("&DIR")
+    IF !OS.DIR("&DIR/modem_proc")
+    (
+        DIALOG.SET MPSSEDIT "Invalid MPSS Build"
+        //DIALOG.DISABLE LOADBUTTON
+        DIALOG.DISABLE MAPBUTTON
+    )
+    ELSE
+    (
+        &MPSS_BUILDROOT="&DIR"
+        DIALOG.SET MPSSEDIT "&MPSS_BUILDROOT"
+        &NEW_MPSSBUILD=1.
+        GOSUB CHECKLOAD
+    )
+    
+    RETURN
+	
+VERIFYRPMBUILD:
+    LOCAL &DIR
+    &DIR=DIALOG.STRING(RPMEDIT)
+    &DIR=STRING.TRIM("&DIR")
+    IF !OS.DIR("&DIR/rpm_proc")
+    (
+        DIALOG.SET RPMEDIT "Invalid RPM Build"
+        //DIALOG.DISABLE LOADBUTTON
+        DIALOG.DISABLE MAPBUTTON
+    )
+    ELSE
+    (
+        &RPM_BUILDROOT="&DIR"
+        DIALOG.SET RPMEDIT "&RPM_BUILDROOT"
+        &NEW_RPMBUILD=1.
+        GOSUB CHECKLOAD
+    )
+    
+    RETURN
+
+CHECKLOAD:
+    LOCAL &DIR
+
+    IF (OS.DIR("&BOOT_BUILDROOT/&BOOT_IMAGE_DIR"))&&(OS.DIR("&TZ_BUILDROOT/trustzone_images"))
+    (
+        DIALOG.ENABLE LOADBUTTON
+        DIALOG.ENABLE MAPBUTTON
+    )
+    ELSE
+    (
+        DIALOG.DISABLE LOADBUTTON
+        DIALOG.ENABLE MAPBUTTON
+    )
+
+    RETURN
+
+
+
+BUILDSYNCUP:
+    // Assumptions: 
+    // 1. &NEW_XYZBUILD variable is populated correctly to indicate the state 
+    // of the build. A non-zero value indicates that user has changed the build from what 
+    // was present in the meta build.
+    // 2. Utility is always run from the AOP T32 session
+    // 3. Every processor cares only about its own image. APSS is the only exception (at times).
+    // So we notify only necessary procs that their build has changed. 
+	
+
+	
+    IF ("&NEW_BOOTBUILD">"0.")
+    (
+       do std_intercom_do &APPS0_PORT std_mapbuilds BOOT &BOOT_BUILDROOT
+    )
+    IF ("&NEW_TZBUILD">"0.")
+    (
+        do std_intercom_do &APPS0_PORT std_mapbuilds TZ &TZ_BUILDROOT
+    )
+    IF ("&NEW_APSSBUILD">"0.")
+    (
+        do std_intercom_do &APPS0_PORT std_mapbuilds APSS &APSS_BUILDROOT 
+    )
+    IF ("&NEW_MPSSBUILD">"0.")
+    (
+        do std_intercom_do &APPS0_PORT std_mapbuilds MPSS &MPSS_BUILDROOT
+        do std_intercom_do &MPSS_PORT  std_mapbuilds MPSS &MPSS_BUILDROOT
+        do std_intercom_do &MPSS_PORT std_sessioncfg_mpss
+    )
+
+    RETURN
+                      
+////////////////////////////////////////
+//
+//          WARN_NON_COMMON_IMAGE_UPDATE
+//          public function
+//          Prints usage information
+//          Expected input: None
+//
+/////////////////////////////////////////
+WARN_NON_COMMON_IMAGE_UPDATE:
+    AREA.CREATE std_loadbuild_warning 75. 16.
+    AREA.SELECT std_loadbuild_warning
+    WINPOS 0. 0. 75. 16.
+    AREA.VIEW std_loadbuild_warning
+    
+
+    PRINT " "
+    PRINT "    *********************WARNING*********************"
+    PRINT " "
+    PRINT "    **Updating non-common image paths (e.g. MPSS, ADSP, CDSP, SLPI, WLAN)**"
+    PRINT "    **in this dialog box WILL NOT update their associated binaries **"
+    PRINT "    **for build loading                                            **"
+    PRINT " "
+    PRINT "    However, updating common image paths (e.g. TZ, AOP, BOOT, APSS)        "
+    PRINT "    in this dialog box WILL push their associated binaries during loading. "
+    PRINT " "
+    PRINT "    Non-common binaries need to be updated via USB, either through        "
+    PRINT "    an HLOS-specific process or by regenerating the NON-HLOS.bin"
+    PRINT "    locally and pushing that binary into the file system  "
+    
+    
+    IF "&HLOS"=="WP"
+    (
+        PRINT "    (e.g. for WP FFU tool is used, which also then overwrites common binaries as well)"
+    )
+    ELSE
+    (
+        PRINT "    (e.g. for Android - via fastboot or ADB push)"
+    )
+    PRINT " "
+
+RETURN
+
+
+
+
+EXIT:
+    LOCAL &result
+    ENTRY %LINE &result 
+    ENDDO &result

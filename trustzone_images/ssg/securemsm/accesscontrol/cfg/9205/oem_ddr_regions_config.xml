@@ -1,0 +1,42 @@
+#include "ACOEMConfig.h"
+
+<driver name="NULL">
+
+  <global_def>
+  </global_def>
+
+    <!--
+     Uncomment the following block, add or deleet the CDATA entries depepnding on 
+     number of regions required to be configured. modify the source and destination VM 
+	 and required parameters to be configured. Provide a valid start address and range
+	 which need to be configured as it should not be part of TZ/TA/PIL regions.
+    -->
+	<!--
+  <device id="/ac/oem_ddr_regions_config">
+    <props name="oemCustomRegion" type=ACOEMCustomRegion array="True">
+    <![CDATA[
+    {
+        {
+          .srcVM = AC_VM_HLOS,
+          .destVM[0] = AC_VM_MSS_MSA,
+          .destVM[1] = AC_VM_HLOS,
+          .destVMPerm[0] = (AC_PERM_R | AC_PERM_W),
+          .destVMPerm[1] = (AC_PERM_R | AC_PERM_W),
+          .startAddress = 0x81d40000,
+          .size = 0x1000
+        },
+		{
+          .srcVM = AC_VM_HLOS,
+          .destVM[0] = AC_VM_MSS_MSA,
+          .destVM[1] = AC_VM_HLOS,
+          .destVMPerm[0] = (AC_PERM_R | AC_PERM_W),
+          .destVMPerm[1] = (AC_PERM_R | AC_PERM_W),
+          .startAddress = 0x81d39000,
+          .size = 0x1000
+        },
+    }
+    ]]>
+    </props>
+  </device>
+  -->
+</driver>

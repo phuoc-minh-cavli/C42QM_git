@@ -1,0 +1,29 @@
+<!--
+/**
+ * @file   mhi_tgt_config.xml
+ * @brief
+ * This file contains the DAL XML properties for the MHI Device Access Library.
+ */
+/*
+===============================================================================
+
+Edit History
+
+$Header:
+
+Change revision history maintained in version system
+===============================================================================
+Copyright (c) 2015 QUALCOMM Technologies Incorporated.
+All Rights Reserved.
+Qualcomm Confidential and Proprietary.
+===============================================================================
+*/
+-->
+<driver name="NULL">
+  <device id="/core/hwengines/mhi">
+    <props name="mhi_core_tgt_config" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+         mhi_core_tgt_config
+    </props>
+  </device>
+</driver>
+

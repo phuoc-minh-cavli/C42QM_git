@@ -1,0 +1,115 @@
+#===============================================================================
+#
+# USB Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2015,2017,2019,2020 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/dev/core.tx/6.0/awnosrid.core.tx.6.0.test_tracker_02_nov/wiredconnectivity/hsusb/driver/build/DAM.scons#1 $
+#  $DateTime: 2020/07/21 09:53:54 $
+#  $Author: pwbldsvc $
+#  $Change: 25009250 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/04/19   ss      Added support for qapi registration in a common place.
+# 01/16/19   ss      Added support for MDM9205
+#===============================================================================
+import os.path
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+#  Publish protected APIs
+#-------------------------------------------------------------------------------
+
+#  There are none.
+
+#-------------------------------------------------------------------------------
+#  Figure out USB_ROOT dynamically.  Look at the usual suspects.
+#-------------------------------------------------------------------------------
+
+SRCPATH_USB = "${BUILD_ROOT}/core/wiredconnectivity/hsusb/driver/src"
+
+env.Replace( USB_ROOT = SRCPATH_USB )
+env.VariantDir('${BUILDPATH}', SRCPATH_USB, duplicate=0) 
+
+env.Append(CPPDEFINES = [
+   "TXM_MODULE",
+   "QAPI_TXM_MODULE",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireExternalApi([
+    'DSM',
+    'CS',
+    'BREW',
+    'MODEM_API',
+    'MODEM_MMODE',
+    'MODEM_PMIC',
+    'MODEM_DATA',
+    'MODEM_HDR',
+    'MODEM_1X',
+    'MODEM_RF',
+    'MODEM_SERVICES',
+    'MODEM_NAS',
+    'MODEM_WCDMA',
+    'MODEM_UIM',
+    'MULTIMEDIA_AUDIO',
+    'WCONNECT',
+])
+ 
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_APIS = [
+   'DAL',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MEMORY',
+   'MPROC',
+   'POWER',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'SERVICES',
+   'STORAGE',   
+   'KERNEL',   
+   'PRODUCTS_DSR',
+   'QAPI',
+]
+
+env.RequirePublicApi( CBSP_APIS )
+env.RequireRestrictedApi( CBSP_APIS )
+
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_SOURCES = [
+	'${BUILDPATH}/adapt_layers/qapi_usb_user.c',
+]
+
+if 'USES_ARM' in env:
+	env.AddLibrary(['TXM_MODULES'],'${BUILD_ROOT}/core/wiredconnectivity/hsusb/driver/build/qapi_dam',QAPI_SOURCES)
+else:
+	env.AddLibrary(['TXM_MODULES_LLVM'],'${BUILD_ROOT}/core/wiredconnectivity/hsusb/driver/build/LLVM/qapi_dam',QAPI_SOURCES)
+   
+env.LoadSoftwareUnits()

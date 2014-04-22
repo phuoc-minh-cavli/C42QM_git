@@ -1,0 +1,212 @@
+;========================================================================
+;
+; recover_circular_buffer.cmm
+;
+; This script extracts the data from Circular buffer in the dumps and forwards
+; the same to a perl script which parses each chunk to generate a QMDL file
+;
+; Usage instructions found in InitArea routine.
+;
+;
+; Copyright (c) 2016 by QUALCOMM Technologies, Inc
+;=======================================================================
+
+;==========================================================================
+;
+;                       EDIT HISTORY FOR MODULE
+;
+;when       who     what, where, why
+;--------   ---     ------------------------------------------------------------
+;01/13/16   gn      Created.
+
+;===========================================================================*
+
+
+
+; Declaration of 'constants' used in this script
+local &CIRCULAR_BUFFER_DATA_FILE
+&CIRCULAR_BUFFER_DATA_FILE="circular_buffer_data.bin"
+&CIRCULAR_BUFFER_OUTPUT_QMDL="circular_buffer_data.qmdl2"
+local &OUTFILE_DEFAULT_PATH
+&OUTFILE_DEFAULT_PATH="C:\Temp"
+&FORMAT_SCRIPT="FormatCircularBuffer.pl"
+&size=0;
+
+local &circular_buf_head &circular_buf_tail
+local &circular_buf_wrap_len
+
+local &circular_buf_start
+
+local &debug_level_screen
+&debug_level_screen=0
+
+; ----------------------------------------------
+; This controls the level of debug messages printed to the log file
+; The higher the value, the more messages will be displayed
+; A level of 0 will not generate a log file 
+; (i.e. must be level 1 or higher to see a log)
+;
+local &debug_level_log
+&debug_level_log=0
+
+; Internal flag. Should always be initialized to 0
+local &debug_log_open
+&debug_log_open=0
+
+local &temp &hash_file_addr &hash_length &hash_file_part1 &hash_file_part2
+&hash_file_part1=0
+&hash_file_part2=0
+; *************************************************************************
+; Main
+;
+;   This is the main control loop for the script
+; *************************************************************************
+
+Main:
+
+  gosub InitArea
+  &final_output="C:/temp/output.txt"
+ 
+  ;printing the values in the T32 area
+
+  
+    if y.exist(diag_tx_mode)
+  (
+	; Read the address of the circular buffer
+	&circular_buf_start=v.value(diag_tx_mode[0].buf_ptr)
+	
+	;Get the size of the buffer
+	&size=v.value(diag_tx_mode[0].buf_size)     
+  
+	;Read the head
+	&circular_buf_head=v.value(diag_tx_mode[0].buf_head)
+  
+	;Read the tail
+	&circular_buf_tail=v.value(diag_tx_mode[0].buf_tail)
+  )
+    
+; This script only supports one guid currently and would need to be expanded to support multiple guids for devices with Multi PD
+  
+  &hash_length=0x8
+  &hash_file_addr=v.value(&diag_qshrink_database_file_list)+0xF 
+  
+  gosub ReadBytes &hash_length
+  entry &hash_file_part1
+  gosub ReadBytes &hash_length
+  entry &hash_file_part2
+
+  
+  gosub DebugPrint 0 "";
+  gosub DebugPrint 0 "Extracting the data from Circular Buffer"
+  
+  DATA.SAVE.Binary "&OUTFILE_DEFAULT_PATH\&CIRCULAR_BUFFER_DATA_FILE" d:(&circular_buf_start)..(&circular_buf_start+&size)
+  local &command &final_output &script_path
+  &script_path=OS.PWD()
+  
+  if (!os.file("&script_path\&FORMAT_SCRIPT"))
+  (
+    gosub DebugPrint 0 "ERROR: Missing perl script to format the circular buffer data "
+    gosub DebugPrint 0 "       &FORMAT_EXTRACTION_SCRPIT can not be located."
+  )
+    &command="perl &script_path\&FORMAT_SCRIPT &OUTFILE_DEFAULT_PATH\&CIRCULAR_BUFFER_DATA_FILE &OUTFILE_DEFAULT_PATH\&CIRCULAR_BUFFER_OUTPUT_QMDL &circular_buf_head &circular_buf_tail &hash_file_part2 &hash_file_part1"
+    gosub DebugPrint 0 "";
+    
+    gosub DebugPrint 0 "Formatting the circular buffer binary with perl script to create &CIRCULAR_BUFFER_OUTPUT_QMDL" ;     
+    gosub DebugPrint 0 "Executing: &command"
+    gosub DebugPrint 0 "Please wait..."
+      
+  ; Use 'winprint' command to capture any error messages that might pop up
+   printer.file "&final_output"
+   wp.OS.window &command
+   
+   gosub DebugPrint 0 "Script Complete...";
+   gosub DebugPrint 0 "Please find the QMDL file at &OUTFILE_DEFAULT_PATH\&CIRCULAR_BUFFER_OUTPUT_QMDL";
+   
+
+ENDDO
+
+
+
+; *************************************************************************
+; InitArea
+;
+;   Initializes text areas needed by T32 and any related initialization.
+; *************************************************************************
+
+InitArea:
+
+  Area.Create F3
+  Area.Select F3
+  Area.Clear F3
+  Area F3
+
+  gosub DebugPrint 0 "Beginning recover_circular_buffer.cmm script"
+  gosub DebugPrint 0 
+  gosub DebugPrint 0 "  Usage: cd.do <path>/recover_circular_buffer.cmm "
+  gosub DebugPrint 0 "****NOTE : Make sure that you copy qbd file to path of qmdl2 file to convert qmdl2 to isf and view on QXDM"
+  gosub DebugPrint 0 "         The QMDL file will be saved at C:\temp\circular_buffer_data.qmdl2."
+  gosub DebugPrint 0 "         The Compressed Data Binary can be found at C:\temp\circular_buffer_data.bin."
+  gosub DebugPrint 0 "         For any error logs, please check C:\temp\output.txt"
+
+RETURN
+
+; *************************************************************************
+; ReadBytes &N
+;
+;   This routine reads &N bytes from the address &hash_file_addr returning
+;   a single value that concatinates the &N bytes.;
+;
+;   Returns: &data
+; *************************************************************************
+
+ReadBytes:
+  ENTRY &length
+  local &data
+  &data=0
+  &num_shift=0
+
+  WHILE (&length>0)
+  (
+    &temp=Data.BYTE(D:&hash_file_addr)
+    &data=((&temp<<(&num_shift*8))|&data)
+	&num_shift=&num_shift+1
+    &hash_file_addr=&hash_file_addr-1
+    &length=&length-1
+  )
+
+RETURN &data
+
+
+
+; *************************************************************************
+; DebugPrint &L &M
+;
+;   Prints out debug message &M if &L is less than or equal to the global
+;   variable &debug_level
+; *************************************************************************
+
+DebugPrint:
+  entry &level &debugmsg
+  
+  if &level<=&debug_level_screen
+  (
+    if &level==0
+    (
+      print &debugmsg
+    )
+    else
+    (
+      print "DEBUG &level: &debugmsg"
+    )
+  )
+
+
+  if (&level<=&debug_level_log)&&(&debug_log_open==1)
+  (
+    WRITE #2 "Debug &level: &debugmsg"
+  )
+
+
+RETURN
+
+

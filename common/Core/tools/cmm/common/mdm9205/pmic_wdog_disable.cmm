@@ -1,0 +1,2 @@
+do pmic_spmi.cmm INIT 0x4 ; initialize to RPM
+do pmic_spmi.cmm 0x857 0x0 ; disalbe PMIC WDOG

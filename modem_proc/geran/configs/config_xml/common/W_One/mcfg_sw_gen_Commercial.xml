@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="geran.0.0" type="1" />
+  <NvItemData name="UIM First Instruction Class" id="896" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="uim_first_inst_class" description="" comment="" sizeOf="1" type="uint16">1 </Member>
+  </NvItemData>
+  <NvEfsFile name="read_pch_during_transfer_whitelist" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/read_pch_during_transfer_whitelist" buildPath="modem_proc/geran/configs/efs_files/W_One/read_pch_during_transfer_whitelist" />
+</NvData>

@@ -1,0 +1,132 @@
+#===============================================================================
+#
+# secboot auth Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2011 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:  $
+#  $DateTime: $
+#  $Author:  $
+#  $Change:  $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+# 07/07/10   mm      Initial Version
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/secboot/"
+if env['MSM_ID'] in ['9205']:
+   env['CHIPSET'] = "mdm9205"
+if env['MSM_ID'] in ['9607']:
+   env['CHIPSET'] = "mdm9607"
+
+   
+env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secboot/inc")
+env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secboot/src")
+
+if env['MSM_ID'] in ['9205','9607']:
+	env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secboot/hw/${CHIPSET}/")
+else:
+	env.Append(CPPPATH = "${COREBSP_ROOT}/securemsm/secboot/hw/hwio_stub/")
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SECUREMSM',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'BOOT',
+   'BOOT_TOOLS',
+   'DAL',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+#-------------------------------------------------------------------------------
+# Generates mba_hwio.h
+#-------------------------------------------------------------------------------
+if env.has_key('HWIO_IMAGE'):
+
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${INC_ROOT}/core/securemsm/secboot/hw/${CHIPSET}/msmhwioreg.h',
+	  'modules': ['CRYPTO.*','PERIPH.*','SECURITY.*','MSS_PERPH', 'TCSR_TCSR_REGS'],
+    }
+  ]
+)
+
+SME_PROTECTED_API = [
+     'CRYPTODRIVERS',
+]
+env.RequireProtectedApi(SME_PROTECTED_API)
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+SECBOOT_LIB_SOURCES = [
+	'${BUILDPATH}/src/secboot.c',
+	'${BUILDPATH}/src/secboot_asn1.c',
+	'${BUILDPATH}/src/secboot_x509.c',
+	'${BUILDPATH}/src/secboot_ceml.c',
+	'${BUILDPATH}/src/secboot_mrc.c',
+	'${BUILDPATH}/src/secboot_verify_sig.c',
+	'${BUILDPATH}/src/secboot_stub.c',
+	'${BUILDPATH}/src/secboot_rsa_primitive.c',
+	'${BUILDPATH}/src/secboot_rsa_pss.c',
+	'${BUILDPATH}/src/secboot_kpi.c',
+	'${BUILDPATH}/src/secboot_util.c',
+	'${BUILDPATH}/src/secboot_metadata.c',
+	'${BUILDPATH}/src/secboot_ecc.c',
+	'${BUILDPATH}/src/secctrl/secboot_hw.c',
+	'${BUILDPATH}/src/secctrl/secboot_hw_sha3rot.c',	
+]	
+
+#-------------------------------------------------------------------------------
+# Add Libraries to MBA Image
+#-------------------------------------------------------------------------------
+
+env.AddBinaryLibrary(
+        ['MBA_CORE_SW','CORE_QDSP6_SW','MODEM_MODEM'],
+        '${BUILDPATH}/secboot_auth',
+        SECBOOT_LIB_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Pack out files
+#-------------------------------------------------------------------------------
+		
+#pack src files
+ALL_SRC_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/secboot/chipset')
+MY_SRC_FILES = env.FindFiles(
+  ['*'],
+  '${COREBSP_ROOT}/securemsm/secboot/chipset/${CHIPSET}')
+PACK_SRC_FILES = list(set(ALL_SRC_FILES) - set(MY_SRC_FILES))
+env.CleanPack(['CORE_MODEM'], PACK_SRC_FILES)

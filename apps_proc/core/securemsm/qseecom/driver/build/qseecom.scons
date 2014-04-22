@@ -1,0 +1,85 @@
+#===============================================================================
+#                    Copyright 2011 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/qseecom/driver"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",            # needed for _txm_module_manager_file_load symbol visibility
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+   
+if 'USES_QSEE_LOG' in env:
+  env.Append(CPPDEFINES = [
+   "ENABLE_QSEE_LOGGING",            # QSEE logging
+   ])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'PRODUCTS_DSR',
+   'PRODUCTS_SCM',
+
+   'SECUREMSM',
+   'QTEE_INVOKE_QAPI',
+   'MINK',
+   'QTEE_LOG_API',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'SECUREMSM_DRIVER_OBJECT_API',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.Append(CFLAGS="--gnu --c99")
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+QSEECOM_LIB_SOURCES =  [
+   '${BUILDPATH}/src/qseecom.c'
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/build/qseecom', QSEECOM_LIB_SOURCES)
+
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/boot_elf_header.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/qlist.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/qseecom.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/qseecom_log.h"])
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+    env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'qseecom_init',                     # required
+     'init_function'              : 'qseecom_driver_init',              # required
+     'dependencies'               : ['qurt_txm_module_manager',]        # For Module manager init
+    })
+

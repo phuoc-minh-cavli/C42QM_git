@@ -1,0 +1,50 @@
+#===============================================================================
+#
+# MODEM_CFG Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2012 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcfg.mpss/10.1.1/build/mcfg.scons#1 $
+#  $DateTime: 2020/02/19 23:07:48 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 01/14/12   sbt     Initial creation
+#===============================================================================
+
+#-----------------------------------------
+# Import and clone the SCons environment
+#-----------------------------------------
+Import('env')
+
+#-----------------------------------------
+# Publish Protected Include Paths only avail to the rest of MCFG
+#-----------------------------------------
+
+#-------------------------------------------------------------------------------
+# Load cleanpack script to remove private files etc. from customer builds
+#-------------------------------------------------------------------------------
+import os
+if os.path.exists('mcfg_cleanpack.py'):
+    env.LoadToolScript('mcfg_cleanpack.py')
+
+if not(env['PRODUCT_LINE'].startswith("MPSS.AT")):
+  env.Append(HEXAGONCC_WARN = ' -Werror-high ')
+  env.Append(HEXAGONCXX_WARN = ' -Werror-high ')
+
+#-----------------------------------------
+# Search for additional Units (must come last)
+#-----------------------------------------
+env.LoadSoftwareUnits()

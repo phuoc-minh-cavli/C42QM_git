@@ -1,0 +1,223 @@
+;****************************************************************************
+;**         std_savelogs.cmm
+;**
+;**         This script save the MDM9X45 system state for later debug,
+;**         and is intended to be executed from the ARM7 Trace32 session.
+;**
+;****************************************************************************
+;**
+;**                        EDIT HISTORY FOR MODULE
+;**
+;**  $Header: //components/rel/core.glue/1.3/tools/cmm/common/mdm9205/std_savelogs.cmm#1 $
+;**
+;** when       who        what, where, why
+;** --------   ---        ------------------------------------------------------
+;** 11/26/15   c_akaki    Support for 9x07
+;** 07/10/14   chens	  Support for 9x45	
+;****************************************************************************
+
+
+
+;****************************************************************************
+; Declare variables
+;****************************************************************************
+local &cwd
+local &basename
+local &option
+local &filename
+local &reg
+local &time_total
+local &time_each
+local &t
+local &QC_cpu
+
+;****************************************************************************
+; Save the MMU state and Page Table addresses
+;****************************************************************************
+local &mmu_cr
+local &ttb
+local &dacr
+
+;****************************************************************************
+; Save directory of this script
+;****************************************************************************
+&cwd=os.pwd()
+
+; Stop processor if it's still running
+if run()
+(
+  break
+)
+
+area.reset
+area
+; Determine which processor we're running on.
+; Don't run on anything but the ARM9
+if "&QC_cpu"==""
+(
+  ; Use system CPU if QC_cpu is not set
+  &QC_cpu=CPU()
+)
+
+if ("&QC_cpu"=="CortexM3")
+(
+)
+else if ("&QC_cpu"=="CortexA7")
+(
+)
+else
+(
+  print "This script must be run from the RPM or A7 T32 session"
+  enddo
+)
+
+
+ENTRY &save_location
+
+if "&save_location"==""
+(
+  print "Enter path to save dumps to: "
+  ENTER &save_location
+  if "&save_location"==""
+  (
+    print "path to save dumps to not entered"
+    enddo
+  )
+)
+
+ if !os.dir(&save_location) 
+ (
+     mkdir &save_location
+ )
+print "&cwd"
+
+;Generate all paths if necessary
+do ../std_toolsconfig mdm9205 apps
+
+do std_constants.cmm
+
+&Flavor="&HLOS"
+
+do std_intercom_init CHECKSESSION 1 APPS
+do std_intercom_init CHECKSESSION 1 MPSS
+do std_intercom_init CHECKSESSION 1 RPM 
+
+IF ("&MPSS_ALIVE"=="1.")
+(
+  intercom.execute &MPSS_PORT break
+)
+
+if ("&QC_cpu"=="CortexM3")
+(
+IF ("&APPS0_ALIVE"=="1.")
+(
+  intercom.execute &APPS0_PORT break
+)
+)
+
+if ("&QC_cpu"=="CortexA7")
+(
+IF ("&RPM_ALIVE"=="1.")
+(
+  intercom.execute &RPM_PORT break
+)
+)
+
+IF ("&IPA_ALIVE"=="1.")
+(
+  intercom.execute &IPA_PORT break
+)
+
+
+
+
+;****************************************************************************
+; Set up windows and get base file name if necessary
+;****************************************************************************
+&time_total=clock.unix()
+area
+
+print
+print "Begin debug save."
+
+print ""
+
+
+;****************************************************************************
+; Save RPM state
+;****************************************************************************
+
+if ("&QC_cpu"=="CortexA7")
+(
+IF ("&RPM_ALIVE"=="1.")
+(
+  do std_intercom_do.cmm &RPM_PORT std_savelogs_rpm.cmm  &save_location
+  print "RPM register state saved to file " "&save_location"+"\"+"&RPM_root"+"&regs_log"
+)
+)
+else
+(
+  do std_savelogs_rpm.cmm  &save_location
+  print "RPM register state saved to file " "&save_location"+"\"+"&RPM_root"+"&regs_log"
+)  
+
+
+
+;****************************************************************************
+; Save A7 state
+;****************************************************************************
+
+if ("&QC_cpu"=="CortexA7")
+(
+  do save_A7.cmm  &A7_root &save_location &Flavor  
+  print "A7 register state saved to file " "&save_location"+"\"+"&A7_root"+"&regs_log"
+)
+else
+(
+IF ("&APPS0_ALIVE"=="1.")
+(
+  do std_intercom_do.cmm &APPS0_PORT save_A7.cmm  &A7_root &save_location &Flavor
+  print "A7 register state saved to file " "&save_location"+"\"+"&A7_root"+"&regs_log"
+)
+)
+
+;****************************************************************************
+; Save the QDSP6SW state
+;****************************************************************************
+
+IF ("&MPSS_ALIVE"=="1.")
+(
+  ;set MSAVAL of register QDSS_CS_QDSSCSR_DAPMSAVAL to 0x1
+  data.set EDAP:0x801054 %LE %LONG 0x1
+  
+  do std_intercom_do.cmm &MPSS_PORT q_debugsave.cmm  &QDSP6SW_root &save_location
+  print "QDSP6SW register state saved to file " "&save_location"+"\"+"&QDSP6SW_root"+"&regs_log"
+)
+else
+(
+  print "WARNING! Q6DSPSW register state not saved.  QDSP6SW may still be running."
+)
+
+
+;****************************************************************************
+; Save IPA state
+;****************************************************************************
+IF ("&IPA_ALIVE"=="1.")
+(
+  ; Enables JTAG DAP to attach on IPA
+  
+  ;intercom.execute &IPA_T32 break
+  do std_intercom_do.cmm &IPA_PORT ..\ipa\std_savelogs_ipa.cmm  &ipa_root &save_location 
+  print "ipa register state saved to file " "&save_location"+"\"+"&ipa_root"+"&regs_log"
+)
+else
+(
+  print "WARNING! ipa register state not saved.  ipa may still be running."
+)
+
+
+
+ENDDO
+
+
+

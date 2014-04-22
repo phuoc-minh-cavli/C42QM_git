@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+	<NvEfsItemData name="gnss_lpp_enable" id="67225" description="Use LPP when on LTE" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_lpp_enable">
+		<Member name="gnss_lpp_enable" description="Use LPP when on LTE" comment="" sizeOf="1" type="uint8">3 </Member>
+	</NvEfsItemData>
+</NvData>

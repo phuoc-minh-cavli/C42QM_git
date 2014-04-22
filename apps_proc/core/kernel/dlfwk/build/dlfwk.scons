@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# Dynamic Loading Support Libs
+#
+#
+# Copyright (c) 2014 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when               who         what, where, why
+# --------           ---         -----------------------------------------------
+# 1/22/15          amitkulk      created 
+#===============================================================================
+Import('env')
+
+env.Append(HEXAGON_WARN = " -Werror")
+dlfwk_root = '${BUILD_ROOT}/core/kernel/dlfwk'
+env.Replace(MPSS_DLFWK_ROOT = dlfwk_root)
+
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+	env.LoadSoftwareUnits()
+
+

@@ -1,0 +1,135 @@
+#===============================================================================
+#
+# HAL CLK CHIPSET LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/hal/clk/hw/mdm9205/build/halclk_chipset.scons#4 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "../"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'HAL',
+   'DAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+HAL_CLK_CHIPSET_BUILD_ROOT = os.getcwd();
+
+env.PublishPrivateApi("SYSTEMDRIVERS_HAL_CLK_CHIPSET", [
+  HAL_CLK_CHIPSET_BUILD_ROOT + "/../inc",
+])
+
+#-------------------------------------------------------------------------------
+# Sources: HALClock Chipset Sources
+#-------------------------------------------------------------------------------
+
+HALCLK_CHIPSET_SOURCES = [
+    '${BUILDPATH}/src/HALclkMain.c',
+    '${BUILDPATH}/src/HALclkTest.c',
+    '${BUILDPATH}/src/gcc/HALclkAUDIOAHBBUS.c',
+    '${BUILDPATH}/src/gcc/HALclkAUDIOCXO.c',
+    '${BUILDPATH}/src/gcc/HALclkBIMC.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1QUP1.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1QUP2.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1QUP3.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1QUP4.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1UART1.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1UART2.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1UART3.c',
+    '${BUILDPATH}/src/gcc/HALclkBLSP1UART4.c',
+    '${BUILDPATH}/src/gcc/HALclkGCC.c',
+    '${BUILDPATH}/src/gcc/HALclkGCCMain.c',
+    '${BUILDPATH}/src/gcc/HALclkPCNOC.c',
+    '${BUILDPATH}/src/gcc/HALclkSECCTRL.c',
+    '${BUILDPATH}/src/gcc/HALclkSPMI.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOAUXI2S.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOEXTMCLK2.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOPCMDATAOE.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOPRII2S.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOSECI2S.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOSECPCMDATAOE.c',
+    '${BUILDPATH}/src/gcc/HALclkULTAUDIOTERPCMDATAOE.c',
+    '${BUILDPATH}/src/mss/HALclkADC.c',
+    '${BUILDPATH}/src/mss/HALclkBUS.c',
+    '${BUILDPATH}/src/mss/HALclkCLOCKDRIVERGENNODOMAIN.c',
+    '${BUILDPATH}/src/mss/HALclkCOXM.c',
+    '${BUILDPATH}/src/mss/HALclkMODEM.c',
+    '${BUILDPATH}/src/mss/HALclkMSSCCMain.c',
+    '${BUILDPATH}/src/mss/HALclkQ6.c',
+    '${BUILDPATH}/src/mss/HALclkUIM.c',
+]
+
+HAL_CLOCK_ASM_OBJS = [ '${BUILDPATH}/src/HALclkInitASM.S' ]
+env.AddObject(['CORE_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY'], HAL_CLOCK_ASM_OBJS)
+
+#-------------------------------------------------------------------------------
+# Sources: HALClockChipset Library Creation
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_MODEM','MODEM_SENSORONLY'],
+   '${BUILDPATH}/HALclk_chipset',
+   HALCLK_CHIPSET_SOURCES)
+
+#-------------------------------------------------------------------------------
+# HWIO
+#-------------------------------------------------------------------------------
+
+if env.has_key('HWIO_IMAGE'):
+
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${INC_ROOT}/core/systemdrivers/hal/clk/hw/${CHIPSET}/inc/HALclkHWIO.h',
+      'modules': ['GCC_CLK_CTL_REG', 'MSS_PERPH', 'MSS_QDSP6SS_PUB', 'MSS_NAV'],
+      'filter-exclude': ['TSENS', 'ACR', 'RPU', 'RESERVED', 'RESERVE', 'DUMMY'],
+      'output-offsets': True,
+      'header':
+        '/*\n'
+        ' * HWIO base definitions\n'
+        ' */\n'
+        '#define PROC_CLK_BRANCH_ENA_VOTE   GCC_MSS_Q6_CLOCK_BRANCH_ENA_VOTE\n\n'
+        'extern  uint32                     HAL_clk_nHWIOBaseTop;\n' +
+        '#define CLK_CTL_BASE               HAL_clk_nHWIOBaseTop\n' +
+        '#define CLK_CTL_BASE_PHYS          0x01800000\n' +
+        '#define CLK_CTL_BASE_SIZE          0x00090000\n\n' +
+        'extern uint32                      HAL_clk_nHWIOBaseMSS;\n' +
+        '#define MSS_TOP_BASE               HAL_clk_nHWIOBaseMSS\n' +
+        '#define MSS_TOP_BASE_PHYS          0x4000000\n' +
+        '#define MSS_TOP_BASE_SIZE          0x0400000\n\n',
+    }
+  ])

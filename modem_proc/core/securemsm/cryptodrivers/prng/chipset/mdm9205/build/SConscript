@@ -1,0 +1,122 @@
+#===============================================================================
+#
+# cryptoLibs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/securemsm/cryptodrivers/prng/chipset/mdm9205/build/SConscript#3 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#  $Change: 20199023 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 8/21/10 YK          Initial version
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('PrngCL', [
+   '${INC_ROOT}/core/securemsm/cryptodrivers/prng/shared/inc', 
+   '${INC_ROOT}/core/securemsm/cryptodrivers/prng/chipset/${CHIPSET}/inc', 
+   '${INC_ROOT}/core/securemsm/cryptodrivers/prng/environment/inc',
+   '${INC_ROOT}/core/securemsm/cryptodrivers/prng/environment/env/amss/inc',
+])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/cryptodrivers/prng/chipset/${CHIPSET}/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'BREW',
+   'CS',
+   'DSM',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'MPROC',
+   'SECUREMSM',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BOOT',
+   'HWENGINES',
+   'POWER',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+
+env.Append(CPPDEFINES = ['_ARM_', '__arm', 'ARM', 'ARM_BREW_BUILD'])
+env.Append(ARMCC_OPT = ' --loose_implicit_cast ')
+env.Append(ARMCPP_OPT = ' --loose_implicit_cast ')
+if env.has_key('BUILD_BOOT_CHAIN'):
+   env.Append(CPPDEFINES = ['FEATURE_LIBRARY_ONLY'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+PrngCL_LIB_SOURCES = [
+        '${BUILDPATH}/PrngCL.c',
+        '${BUILDPATH}/PrngCL_DALIntf.c',
+]
+
+PrngCL_LIB_SOURCES_PAGEONLY = [
+        '${BUILDPATH}/PrngCL.c',
+ ]
+
+CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/cryptodrivers/prng/chipset/mdm9607/")
+
+env.CleanPack(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE',
+      'MODEM_IMAGE',  'CBSP_MODEM_IMAGE',
+      'APPS_IMAGE',   'CBSP_APPS_IMAGE',
+      'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE',
+      'MBA_CORE_SW','MODEM_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY'], CLEAN_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddBinaryLibrary(
+       ['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE',
+        'MODEM_IMAGE',  'CBSP_MODEM_IMAGE',
+        'APPS_IMAGE',   'CBSP_APPS_IMAGE',
+        'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE','MBA_CORE_SW','MODEM_MODEM','MODEM_SENSORONLY'],
+        '${BUILDPATH}/PrngCL',
+       PrngCL_LIB_SOURCES)
+
+env.AddBinaryLibrary(
+       ['MODEM_PAGEONLY'],'${BUILDPATH}/PrngCL', PrngCL_LIB_SOURCES_PAGEONLY)

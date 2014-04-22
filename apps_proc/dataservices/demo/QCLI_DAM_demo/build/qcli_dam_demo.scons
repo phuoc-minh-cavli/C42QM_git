@@ -1,0 +1,125 @@
+#===============================================================================
+#
+# TX demo module app scons script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+#
+# Copyright (c) 2021 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/demo/QCLI_DAM_demo/build/qcli_dam_demo.scons#4 $
+#  $DateTime: 2022/08/03 06:39:54 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.Append(CPPDEFINES = 'INCLUDE_SSLDEMO')
+	env.Append(CPPDEFINES = 'ENABLE_SSL')
+
+#The following flag is globally defined when compiling a module
+env.Append(CPPDEFINES = [
+   "TXM_MODULE",
+   "QAPI_TXM_MODULE",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+
+env.Append(CFLAGS = ['-DLWM2M_LITTLE_ENDIAN'])
+
+
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi(['DAL'], area='core')
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('PRODUCTS', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('QAPI', area='core')
+env.RequirePublicApi('QAPI', area='dataservices')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('LOCATION_API', area='location')
+env.RequirePublicApi('QCMAP_EXT')
+env.RequirePublicApi('ATFWD_EXT')
+env.RequirePublicApi(['PSM_CLIENT'], area='ril')
+env.RequirePublicApi('UTILS_EXT')
+
+env.PublishPrivateApi('QCLI_DAM_DEMO_H', [
+        "${BUILD_ROOT}/dataservices/demo/QCLI_DAM_demo/src/qcli",
+        "${BUILD_ROOT}/dataservices/demo/QCLI_DAM_demo/src/net" ,
+		"${BUILD_ROOT}/dataservices/demo/QCLI_DAM_demo/src/atfwd",
+		"${BUILD_ROOT}/dataservices/demo/QCLI_DAM_demo/src/version"
+   ])
+	
+SRCPATH = '${BUILD_ROOT}/dataservices/demo/QCLI_DAM_demo/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_ARM' in env:
+    QCLI_DAM_DEMO_SOURCES = [
+	'${BUILDPATH}/txm_module_preamble.S',
+    '${BUILDPATH}/qcli/pal_module.c',
+    '${BUILDPATH}/qcli/qcli_module.c',
+    '${BUILDPATH}/net/netutils_module.c',
+    '${BUILDPATH}/net/dss_netapp_module.c',
+	'${BUILDPATH}/net/bench_module.c',
+    '${BUILDPATH}/net/netcmd_module.c',
+	'${BUILDPATH}/net/httpc_module.c',
+    '${BUILDPATH}/net/ssl_dam_demo.c',
+    '${BUILDPATH}/net/cert_dam_demo.c',
+	'${BUILDPATH}/net/psm_demo.c',
+    '${BUILDPATH}/location/qapi_location_qcli_iface.c',
+    '${BUILDPATH}/net/device_info_cmd.c',
+    '${BUILDPATH}/net/mqtt_cmd.c',
+    '${BUILDPATH}/net/mqtt_cli_app.c',
+	'${BUILDPATH}/net/coap_cmd.c',
+    '${BUILDPATH}/atfwd/atfwd_cli_app_module.c',
+	'${BUILDPATH}/version/version_cli_app_module.c',
+	'${BUILDPATH}/net/multi_app_cmdq_1_module.c',
+	'${BUILDPATH}/net/multi_app_cmdq_2_module.c',	
+	'${BUILDPATH}/net/multi_app_test_module.c',
+]
+else:
+    QCLI_DAM_DEMO_SOURCES = [
+	'${BUILDPATH}/txm_module_preamble_llvm.S',
+    '${BUILDPATH}/qcli/pal_module.c',
+    '${BUILDPATH}/qcli/qcli_module.c',
+    '${BUILDPATH}/net/netutils_module.c',
+    '${BUILDPATH}/net/dss_netapp_module.c',
+	'${BUILDPATH}/net/bench_module.c',
+    '${BUILDPATH}/net/netcmd_module.c',
+	'${BUILDPATH}/net/httpc_module.c',
+    '${BUILDPATH}/net/ssl_dam_demo.c',
+    '${BUILDPATH}/net/cert_dam_demo.c',
+	'${BUILDPATH}/net/psm_demo.c',
+    '${BUILDPATH}/location/qapi_location_qcli_iface.c',
+    '${BUILDPATH}/net/device_info_cmd.c',
+    '${BUILDPATH}/net/mqtt_cmd.c',
+    '${BUILDPATH}/net/mqtt_cli_app.c',
+	'${BUILDPATH}/net/coap_cmd.c',
+    '${BUILDPATH}/atfwd/atfwd_cli_app_module.c',
+	'${BUILDPATH}/version/version_cli_app_module.c',
+	'${BUILDPATH}/net/multi_app_cmdq_1_module.c',
+	'${BUILDPATH}/net/multi_app_cmdq_2_module.c',	
+	'${BUILDPATH}/net/multi_app_test_module.c',
+]
+
+
+env.AddObject(['QCLI_DAM_DEMO'], QCLI_DAM_DEMO_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

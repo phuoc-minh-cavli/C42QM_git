@@ -1,0 +1,427 @@
+/*
+ * ON DEMAND PAGING section
+ *
+**/
+
+.candidate_extpl_section_ondemand (COPY):
+{
+    __swapped_segments_extpl_ondemand_text_start__ = .;
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    
+    /* 
+    *modem_proc/perf/extpl*: ondemand_test_head.o( .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/datamodem/interface/atcop*:(  .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/datamodem/interface/qmicore*:(  .text EXCLUDE_FILE(ds_qmi_svc.o) .text.* .gnu.linkonce.t.* )
+    *modem_proc/datamodem/interface/qmidata*:(  .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/datamodem/interface/qmimsglib*:(  .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/perf/extpl*: ondemand_test_tail.o( .text  .text.* .gnu.linkonce.t.* )
+    */
+    
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    
+    __swapped_segments_extpl_ondemand_text_end__ = .;
+    __swapped_segments_extpl_ondemand_rodata_start__ = .;
+    
+    /*
+    *modem_proc/perf/extpl*: ondemand_test_head.o( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/datamodem/interface/atcop*:(  .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/datamodem/interface/qmicore*:(  .rodata EXCLUDE_FILE(ds_qmi_svc.o)  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/datamodem/interface/qmidata*:(  .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/datamodem/interface/qmimsglib*:(  .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/perf/extpl*: ondemand_test_tail.o( .rodata  .rodata.* .gnu.linkonce.r.* )
+    */
+    
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_ondemand_rodata_end__ = .;
+
+} : candidate_extpl_section_ondemand=0x0
+
+__swapped_segments_end__ = .;   /* mark the end of address range for dlpager */
+
+.candidate_extpl_section_nb1 (COPY):
+{
+    /*
+     * NB1 TEXT
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_nb1_text_start__ = .;
+    *modem_proc/perf/extpl*: nb1_dmm_test_head.o( .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/perf/extpl*: extpl_nb1_heap.o( .text  .text.* .gnu.linkonce.t.* )    
+    
+    *modem_proc/nb1*: ( .text.dmm_extpl_code )
+    *modem_proc/nb1*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+
+    __swapped_segments_extpl_nb1_fw_text_start__ = .;  
+    *modem_proc/fw/fw_nb*:( .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw/nb*:( .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw_nb*:( .text  .text.* .gnu.linkonce.t.* )
+    __swapped_segments_extpl_nb1_fw_text_end__ = .;  
+    
+    *modem_proc/perf/extpl*: nb1_dmm_test_tail.o( .text  .text.* .gnu.linkonce.t.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_nb1_text_end__ = .;
+
+    /*
+     * NB1 RODATA
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_nb1_rodata_start__ = .;
+    *modem_proc/perf/extpl*: nb1_dmm_test_head.o( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/perf/extpl*: extpl_nb1_heap.o( .rodata  .rodata.* .gnu.linkonce.r.* )        
+
+    *modem_proc/nb1*: ( .rodata.dmm_extpl_rodata )
+    *modem_proc/nb1*_dmm.lib:( .rodata  .rodata.* .gnu.linkonce.r.* )
+
+    __swapped_segments_extpl_nb1_fw_rodata_start__ = .;  
+    *modem_proc/fw/fw_nb*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw/nb*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw_nb*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_nb1_fw_rodata_end__ = .;  
+    
+    *modem_proc/perf/extpl*: nb1_dmm_test_head.o( .rodata  .rodata.* .gnu.linkonce.r.* )    
+    __swapped_segments_extpl_nb1_rodata_end__ = .;
+
+
+    /*
+     * NB1 RWDATA
+     *
+    **/
+    __swapped_segments_extpl_nb1_rwdata_start__ = .;
+    *modem_proc/perf/extpl*: nb1_dmm_test_head.o( .data  .data.* )
+    *modem_proc/perf/extpl*: extpl_nb1_heap.o( .data  .data.* )    
+    
+    *modem_proc/nb1*: ( .data.dmm_extpl_data )
+    *modem_proc/nb1*_dmm.lib:( .data  .data.* )
+
+    __swapped_segments_extpl_nb1_fw_data_start__ = .;  
+    *modem_proc/fw/fw_nb*:( .data  .data.*  )
+    *modem_proc/fw/nb*:( .data  .data.*  )
+    *modem_proc/fw_nb*:( .data  .data.*  )
+    __swapped_segments_extpl_nb1_fw_data_end__ = .;  
+    
+    *modem_proc/perf/extpl*: nb1_dmm_test_tail.o( .data  .data.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_nb1_rwdata_end__ = .;
+
+
+    /*
+     * NB1 BSS
+     *
+    **/
+    __swapped_segments_extpl_nb1_bss_start__ = .;
+    *modem_proc/perf/extpl*: nb1_dmm_test.o( *COMMON  .bss  .bss.* )
+    *modem_proc/perf/extpl*: extpl_nb1_heap.o( *COMMON  .bss  .bss.* )    
+    
+    *modem_proc/nb1*: ( .bss.dmm_extpl_bss )
+    *modem_proc/nb1*_dmm.lib:( *COMMON  .bss  .bss.*  )
+
+    __swapped_segments_extpl_nb1_fw_bss_start__ = .;  
+    *modem_proc/fw/fw_nb*:( *COMMON  .bss  .bss.*  )
+    *modem_proc/fw/nb*:( *COMMON  .bss  .bss.*  )
+    *modem_proc/fw_nb*:( *COMMON  .bss  .bss.*  )
+    __swapped_segments_extpl_nb1_fw_bss_end__ = .;  
+    
+    *modem_proc/perf/extpl*: nb1_dmm_test.o( *COMMON  .bss  .bss.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    __swapped_segments_extpl_nb1_bss_end__ = .;
+    
+} : candidate_extpl_section_nb1=0x0
+
+.redistribute_dynamic : 
+{
+
+    /*
+     * M1 TEXT
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+
+    INCLUDE hot_cold_catm1_dynamic.lst
+    *modem_proc/perf/extpl*: m1_dmm_test_head.o( .text .text.* .gnu.linkonce.t.* )
+
+
+    *modem_proc/fw/fw_lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw/lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw_lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/lte/ML1*: (  .text  .text.* .gnu.linkonce.t.* )
+    *modem_proc/lte*: ( .text.dmm_extpl_code )
+    *modem_proc/lte*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+
+    *modem_proc/perf/extpl*: m1_dmm_test_tail.o( .text .text.* .gnu.linkonce.t.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+}
+
+.candidate_extpl_section_m1 (COPY):
+{
+    /*
+     * M1 RODATA
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_m1_rodata_start__ = .;
+    *modem_proc/perf/extpl*: m1_dmm_test_head.o( .rodata .rodata.* .gnu.linkonce.r.* )
+
+    *modem_proc/lte*: ( .rodata.dmm_extpl_rodata )
+    *modem_proc/lte*_dmm.lib:( .rodata .rodata.* .gnu.linkonce.r.* )
+
+    __swapped_segments_extpl_m1_fw_rodata_start__ = .;  
+    *modem_proc/fw/fw_lte*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw/lte*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw_lte*:( .rodata  .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_m1_fw_rodata_end__ = .;  
+
+
+    *modem_proc/perf/extpl*: m1_dmm_test_tail.o( .rodata .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_m1_rodata_end__ = .;
+
+
+    /*
+     * M1 RWDATA
+     *
+    **/
+    __swapped_segments_extpl_m1_rwdata_start__ = .;
+    *modem_proc/perf/extpl*: m1_dmm_test_head.o( .data .data.* )
+
+    *modem_proc/lte*: ( .data.dmm_extpl_data )
+    *modem_proc/lte*_dmm.lib:( .data .data.* )
+
+    __swapped_segments_extpl_m1_fw_data_start__ = .;  
+    *modem_proc/fw/fw_lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data.* )
+    *modem_proc/fw/lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data.* )
+    *modem_proc/fw_lte*:( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .data.* )
+    __swapped_segments_extpl_m1_fw_data_end__ = .;  
+
+    *modem_proc/perf/extpl*: m1_dmm_test_tail.o( .data .data.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_m1_rwdata_end__ = .;
+
+
+    /*
+     * M1 BSS
+     *
+    **/
+    __swapped_segments_extpl_m1_bss_start__ = .;
+    *modem_proc/perf/extpl*: m1_dmm_test_head.o( *COMMON  .bss  .bss.* )
+    
+    *modem_proc/lte*: ( .bss.dmm_extpl_bss )
+    *modem_proc/lte*_dmm.lib: ( *COMMON  .bss  .bss.* )
+
+    __swapped_segments_extpl_m1_fw_bss_start__ = .;  
+    *modem_proc/fw/fw_lte*: ( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) *COMMON EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss.*  )
+    *modem_proc/fw/lte*: ( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) *COMMON EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss.*  )
+    *modem_proc/fw_lte*: ( EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) *COMMON EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss EXCLUDE_FILE(rffw_lte_shared_mem_ctrl.o) .bss.*  )
+    __swapped_segments_extpl_m1_fw_bss_end__ = .;  
+
+    *modem_proc/perf/extpl*: m1_dmm_test_tail.o( *COMMON  .bss  .bss.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    __swapped_segments_extpl_m1_bss_end__ = .;
+    
+} : candidate_extpl_section_m1=0x0
+    
+
+.candidate_extpl_section_geran (COPY):
+{
+    /*
+     * GERAN TEXT
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_geran_text_start__ = .;
+    *modem_proc/perf/extpl*: geran_dmm_test_head.o( .text .text.* .gnu.linkonce.t.* )
+
+    *modem_proc/geran*: ( .text.dmm_extpl_code )
+    *modem_proc/geran*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+    *rftech_gsm*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+    
+    __swapped_segments_extpl_geran_fw_text_start__ = .;
+    *modem_proc/fw/fw_geran*:(EXCLUDE_FILE(gfw_diag.o) .text .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw/geran*:(EXCLUDE_FILE(gfw_diag.o) .text .text.* .gnu.linkonce.t.* )
+    *modem_proc/fw_geran*:(EXCLUDE_FILE(gfw_diag.o) .text .text.* .gnu.linkonce.t.* )
+    __swapped_segments_extpl_geran_fw_text_end__ = .;
+    
+ *modem_proc/perf/extpl*: extpl_heap.o( .text .text.* .gnu.linkonce.t.* )
+    *modem_proc/perf/extpl*: geran_dmm_test_tail.o( .text .text.* .gnu.linkonce.t.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_geran_text_end__ = .;
+
+
+    /*
+     * GERAN RODATA
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_geran_rodata_start__ = .;
+    *modem_proc/perf/extpl*: geran_dmm_test_head.o( .rodata .rodata.* .gnu.linkonce.r.* )
+
+    *modem_proc/geran*: ( .rodata.dmm_extpl_rodata )
+    *modem_proc/geran*_dmm.lib:( .rodata .rodata.* .gnu.linkonce.r.* )
+    *rftech_gsm*_dmm.lib:( .rodata .rodata.* .gnu.linkonce.r.* )
+    
+    __swapped_segments_extpl_geran_fw_rodata_start__ = .;
+    *modem_proc/fw/fw_geran*:( .rodata .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw/geran*:( .rodata .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/fw_geran*:( .rodata .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_geran_fw_rodata_end__ = .;
+    
+    *modem_proc/perf/extpl*: extpl_heap.o( .rodata .rodata.* .gnu.linkonce.r.* )
+    *modem_proc/perf/extpl*: geran_dmm_test_tail.o( .rodata .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_geran_rodata_end__ = .;
+
+
+    /*
+     * GERAN RWDATA
+     *
+    **/
+    __swapped_segments_extpl_geran_rwdata_start__ = .;
+    *modem_proc/perf/extpl*: geran_dmm_test_head.o( .data .data.* )
+
+    *modem_proc/geran*: ( .data.dmm_extpl_data )
+    *modem_proc/geran*_dmm.lib:( .data .data.* )
+    *rftech_gsm*_dmm.lib:( .data .data.* )
+    
+    __swapped_segments_extpl_geran_fw_data_start__ = .;
+    *modem_proc/fw/fw_geran*:(EXCLUDE_FILE(gfw_diag.o) .data  .data.* )
+    *modem_proc/fw/geran*:(EXCLUDE_FILE(gfw_diag.o) .data  .data.* )
+    *modem_proc/fw_geran*:(EXCLUDE_FILE(gfw_diag.o) .data  .data.* )
+    __swapped_segments_extpl_geran_fw_data_end__ = .;
+    
+  *modem_proc/perf/extpl*: extpl_heap.o( .data .data.* )
+        
+    *modem_proc/perf/extpl*: geran_dmm_test_tail.o( .data .data.*  )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_geran_rwdata_end__ = .;
+
+
+    /*
+     * GERAN BSS
+     *
+    **/
+    __swapped_segments_extpl_geran_bss_start__ = .;
+    *modem_proc/perf/extpl*: geran_dmm_test_head.o( *COMMON  .bss  .bss.* )
+
+    *modem_proc/geran*: ( .bss.dmm_extpl_bss )
+    *modem_proc/geran*_dmm.lib:( *COMMON  .bss  .bss.* )    
+    *rftech_gsm*_dmm.lib:( *COMMON  .bss  .bss.* )
+    
+    __swapped_segments_extpl_geran_fw_bss_start__ = .;
+    *modem_proc/fw/fw_geran*:( .COMMON .bss .bss.* )
+    *modem_proc/fw/geran*:( .COMMON .bss .bss.* )
+    *modem_proc/fw_geran*:( .COMMON .bss .bss.* )
+    __swapped_segments_extpl_geran_fw_bss_end__ = .;
+  *modem_proc/perf/extpl*: extpl_heap.o( *COMMON  .bss  .bss.* )
+    
+    *modem_proc/perf/extpl*: geran_dmm_test_tail.o( *COMMON  .bss  .bss.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    __swapped_segments_extpl_geran_bss_end__ = .;
+} : candidate_extpl_section_geran=0x0
+
+.candidate_extpl_section_gps (COPY):
+{
+    /*
+     * GPS TEXT
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_gps_text_start__ = .;
+    *modem_proc/perf/extpl*: gps_dmm_test_head.o( .text .text.* .gnu.linkonce.t.* )
+
+    *modem_proc/gps*: ( .text.dmm_extpl_code )
+    *modem_proc/gps*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+
+    *modem_proc/perf/extpl*: gps_dmm_test_tail.o( .text .text.* .gnu.linkonce.t.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_gps_text_end__ = .;
+
+
+    /*
+     * GPS RODATA
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_gps_rodata_start__ = .;
+    *modem_proc/perf/extpl*: gps_dmm_test_head.o( .rodata .rodata.* .gnu.linkonce.r.* )
+
+    *modem_proc/gps*: ( .rodata.dmm_extpl_rodata )
+    *modem_proc/gps*_dmm.lib:( .rodata .rodata.* .gnu.linkonce.r.* )
+
+    *modem_proc/perf/extpl*: gps_dmm_test_tail.o( .rodata .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_gps_rodata_end__ = .;
+
+
+    /*
+     * GPS RWDATA
+     *
+    **/
+    __swapped_segments_extpl_gps_rwdata_start__ = .;
+    *modem_proc/perf/extpl*: gps_dmm_test_head.o( .data .data.* )
+
+    *modem_proc/gps*: ( .data.dmm_extpl_data )
+    *modem_proc/gps*_dmm.lib:( .data .data.* )
+
+    *modem_proc/perf/extpl*: gps_dmm_test_tail.o( .data .data.*  )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_gps_rwdata_end__ = .;
+
+
+    /*
+     * GPS BSS
+     *
+    **/
+    __swapped_segments_extpl_gps_bss_start__ = .;
+    *modem_proc/perf/extpl*: gps_dmm_test_head.o( *COMMON  .bss  .bss.* )
+
+    *modem_proc/gps*: ( .bss.dmm_extpl_bss )
+    *modem_proc/gps*_dmm.lib:( *COMMON  .bss  .bss.* )
+
+    *modem_proc/perf/extpl*: gps_dmm_test_tail.o( *COMMON  .bss  .bss.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ ); 
+    __swapped_segments_extpl_gps_bss_end__ = .;
+    
+} : candidate_extpl_section_gps=0x0
+
+
+.candidate_extpl_section_foo (COPY):
+{
+    /*
+     * FOO Example TEXT
+     *
+    **/
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_foo_text_start__ = .;
+    *foo*_dmm.lib:( .text .text.* .gnu.linkonce.t.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );    
+    __swapped_segments_extpl_foo_text_end__ = .;
+
+
+    /*
+     * Foo Example RODATA
+     *
+    **/
+    __swapped_segments_extpl_foo_rodata_start__ = .;
+    *foo*_dmm.lib:( .rodata .rodata.* .gnu.linkonce.r.* )
+    __swapped_segments_extpl_foo_rodata_end__ = .;
+
+
+    /*
+     * Foo Example RWDATA
+     *
+    **/
+    __swapped_segments_extpl_foo_rwdata_start__ = .;
+    *foo*_dmm.lib:( .data .data.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );
+    __swapped_segments_extpl_foo_rwdata_end__ = .;
+
+
+    /*
+     * Foo Example BSS
+     *
+    **/
+    __swapped_segments_extpl_foo_bss_start__ = .;
+    *foo*_dmm.lib:( *COMMON  .bss  .bss.* )
+    . = ALIGN( __swapped_segments_extpl_page_size__ );    
+    __swapped_segments_extpl_foo_bss_end__ = .;
+    
+} : candidate_extpl_section_foo=0x0
+

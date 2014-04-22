@@ -1,0 +1,75 @@
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/sensortask/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+env.RequirePublicApi([
+    'BUSES',
+    'DAL',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+	'PRODUCTS_DSR'
+    ],
+    area='CORE')
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireExternalApi([
+   'CS'        # AEEStd.h
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'HAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'QAPI',
+   # Must be last due to comdef.h issues
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+SENSORTASK_SOURCES = [
+   '${BUILDPATH}/sensor_accel_bmi160.c',
+   '${BUILDPATH}/sensor_als_tmd2772.c',
+   '${BUILDPATH}/sensor_humidity_hts221.c',
+   '${BUILDPATH}/sensorutil.c',
+   '${BUILDPATH}/qapi_sensors.c'
+    ]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_APPS'],
+   '${BUILDPATH}/sensortask',
+   SENSORTASK_SOURCES)
+   
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_4',        # required
+  'init_name'                  : 'register_qapi_sensor_txm',          # required
+  'init_function'              : 'register_qapi_sensor_txm',          # required
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )

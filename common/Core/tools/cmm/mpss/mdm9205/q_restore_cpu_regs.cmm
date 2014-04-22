@@ -1,0 +1,8 @@
+entry &file
+
+on error gosub
+(
+	return
+)
+
+do &file

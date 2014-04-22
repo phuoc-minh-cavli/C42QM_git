@@ -1,0 +1,105 @@
+#===============================================================================
+#
+# NAS Subsystem build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mmcp.mpss/6.1.10/nas/build/nas.scons#1 $
+#  $DateTime: 2023/04/25 14:39:18 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/15/10   pm      Initial revision
+#
+#===============================================================================
+Import('env')
+import os
+
+#LTE only variants
+if os.environ.get('VARIANT_NAME', '') in ['9607.lteonly.test', '9607.lteonly.prod','9607.lteonlyf3.test','9607.lteonlyf3.prod','9607.lteonlynogps.test','9607.lteonlynogps.prod','9607.lteonlynogpsf3.test','9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltenb.test','9607.ltenb.prod','9607.ltenbf3.test','9607.ltenbf3.prod','9607.ltenbniag.test','9607.ltenbniag.prod','9607.ltenbniagf3.prod','9607.ltenb128.test','9607.ltenb128.prod','9607.ltenb128f3.prod','9607.ltenbniag128.test','9607.ltenbniag128.prod','9607.ltenbniag128f3.prod','8909.lteonly.test','8909.lteonly.prod','9205.lteena.test','9205.lteena.prod','9205.ltenbena.test','9205.ltenbena.prod','9205.ltee.test','9205.ltenbe.test','9205.ltee.prod','9205.ltenbe.prod']:
+    env.Append(CPPDEFINES = [
+           #'FEATURE_NAS_DISABLE_VOICE',
+	   'FEATURE_NAS_DISABLE_SUPL_SERVICES'
+	   ])
+#LTE_GSM flavors
+elif os.environ.get('VARIANT_NAME', '') in ['9607.ltegsm.test','9607.ltegsm.prod','9607.ltenb.test','9607.ltenb.prod','9607.ltenbg.test','9607.ltenbg.prod','9607.ltenbgf3.prod','9607.ltenbgniag.test','9607.ltenbgniag.prod','9607.ltenbgniagf3.prod','9607.ltenbg128.test','9607.ltenbg128.prod','9607.ltenbg128f3.prod','9607.ltenbgniag128.test','9607.ltenbgniag128.prod','9607.ltenbgniag128f3.prod','9607.dyn.test','9607.ltenbgniaf3.test','9607.ltenbgniaf3.prod', '9607.extpl.test', '9607.extpl.prod','9607.ltenbgcladev2.test','9205.ltenbgcladev2.test','9205.ltenbgcladev2.prod','9205.rumi.eval', '9205.extpl.test', '9205.extpl.prod','9205.rumiextpl.test','9205.rumiextpl.prod','9205.extplnag.test','9205.extplnag.prod','9205.ltenbge.test','9205.ltenbgena.test','9205.ltenbgeng.test','9205.ltenbge.prod','9205.ltenbgena.prod','9205.ltenbgeng.prod','9205.ltenbgetna.test','9205.ltenbgetna.prod', '9205.ltenbgeniag.test','9205.ltenbgeniag.prod','9205.ltenbgefi.test','9205.ltenbgefi.prod']:
+    env.Append(CPPDEFINES = [
+           #'FEATURE_NAS_DISABLE_VOICE',
+		   #'FEATURE_NAS_CS_DISABLED',
+		   'FEATURE_NAS_IRAT_DISABLED',
+	       'FEATURE_NAS_DISABLE_SUPL_SERVICES'
+	   ])
+
+nas_public_api_list = [
+   ('CORE', 'BUSES'),
+   ('CORE', 'POWER'),
+   ('UTILS', 'OSYS'),
+   ('UTILS', 'A2'),
+   ('AVS', 'MVS'),
+   ('UIM', 'UIM'),
+   ('MPOWER', 'MPOWER'),
+   ('WCDMA', 'WCDMA'),
+   ('FW', 'WCDMA'),
+   ('TDSCDMA', 'TDSCDMA'),
+   ('MCFG', 'MCFG'),
+   ('NB1', 'NB1'),
+]
+
+if 'MOB_NAS' in env:
+  env.PublishPrivateApi('NAS_TEST', ["${INC_ROOT}/mob/qtf/inc"])
+  env.PublishPrivateApi('NAS_TEST', ["${INC_ROOT}/mmcp/nas/test/common/inc"])
+  env.RequirePrivateApi(['NAS_TEST'])
+  env.RequirePublicApi('QTF', area='MOB')
+
+  if env['PLATFORM'] in ['linux', 'linux2']:
+    if 'ENABLE_AFL' in env:
+      env.Replace(CC = "afl-clang-fast") 
+      env.Replace(CXX = "afl-clang-fast++")
+      env.Prepend(CC_DFLAGS = '-DFEATURE_NAS_AFL ')
+      env.PrintInfo("FEATURE_NAS_AFL enabled in NAS")
+    else: 
+      env.Replace(CC = "/local/mnt/workspace/AFL/afl-2.42b/afl-clang")
+      env.Replace(CXX = "/local/mnt/workspace/AFL/afl-2.42b/afl-clang++")  
+      env.PrintInfo("FEATURE_NAS_AFL disabled in NAS")
+
+for api_area,api_name in nas_public_api_list:
+     env.RequirePublicApi([api_name], area=api_area)
+
+env.PublishPrivateApi('VIOLATIONS',[
+   '${INC_ROOT}/wcdma/variation/inc',
+   '${INC_ROOT}/wcdma/cust/inc',
+   '${INC_ROOT}/wcdma/l1/offline/inc',
+   '${INC_ROOT}/wcdma/l1/offline/src',
+   '${INC_ROOT}/wcdma/rrc/src',
+   '${INC_ROOT}/wcdma/l2/inc',
+   '${INC_ROOT}/wcdma/mac/inc',
+   '${INC_ROOT}/wcdma/rlc/inc',
+   '${INC_ROOT}/wcdma/rrc/inc',
+   '${INC_ROOT}/utils/osys',
+   '${INC_ROOT}/mcs/hwio/inc',
+   '${INC_ROOT}/mcs/variation/inc',
+   '${INC_ROOT}/mcs/cust/inc',
+   '${INC_ROOT}/mcs/hwio/inc/${CHIPSET}',
+])
+
+env.LoadSoftwareUnits()
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/cb/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/cnm/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/mbmsm/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/mm/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/mn/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/rabm/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/reg/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/services/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/sm/inc"])
+env.PublishProtectedApi('NAS', ["${INC_ROOT}/mmcp/nas/tc/inc"])
+

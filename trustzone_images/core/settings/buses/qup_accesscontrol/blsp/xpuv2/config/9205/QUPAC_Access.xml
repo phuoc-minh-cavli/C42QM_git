@@ -1,0 +1,197 @@
+//===========================================================================
+//
+// FILE:         QUPAC_Access.xml
+//
+// DESCRIPTION:  This file lists access permission for al QUPS
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header: 
+//
+// when       who     what, where, why
+// 2/23/2022  rk      Updated configurations for Aware
+// 7/31/2019  ss      Enabled GPIO Protection for UART1 for Tiny Modem usecase.
+// 7/11/2019  ss      Enabled GPIO Protection for QUP4
+// 5/28/2019  ss      Assigned QUP instance 4 to Modem.
+// 4/22/2019  ss      Created for MDM9205
+//
+//===========================================================================
+//             Copyright c 2019, 2022 QUALCOMM Technologies, Incorporated.
+//                    All Rights Reserved.
+//                  QUALCOMM Confidential & Proprietary
+//===========================================================================
+//#define TLMM_BASE                                             0x01000000
+
+
+#include "QupACCommonIds.h"
+#include "HALxpu2.h"
+
+
+//All QUPs have to be listed below. Any QUP not present cannot be accesssed by any subsystem. 
+//It's designed to be flexible enough to list only available QUPs on a particular platform.
+
+<driver name="NULL">
+   <global_def>
+      <var_seq name="blsp1_hclk_name"   type=DALPROP_DATA_TYPE_STRING>   gcc_blsp1_ahb_clk   </var_seq>
+
+      <var_seq name = "TLMM_REG_BASE_ADDRS"   type=DALPROP_DATA_TYPE_UINT32_SEQ> 
+         0x01000000, end 
+      </var_seq>
+
+      <var_seq name = "TLMM_XPUS"   type=DALPROP_DATA_TYPE_UINT32_SEQ> 
+         HAL_XPU2_TLMM, end 
+      </var_seq>
+
+   </global_def>
+
+#ifdef USES_AWARE_OVERRIDES
+
+   <device id=BLSP_QUP_1_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_QUP_1                </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_I2C              </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   2, 3, end                 </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_MSS_MSA                </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     11                        </props>
+   </device>   
+
+#else
+
+   <device id=BLSP_QUP_1_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_QUP_1                </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_SPI              </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   0, 1, 2, 3, end       </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     11                        </props>
+   </device>   
+
+#endif
+
+   <device id=BLSP_QUP_2_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_QUP_2                </props>
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_I2C              </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   6, 7, end               </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     12                        </props>
+   </device>   
+ 
+   <device id=BLSP_QUP_3_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_QUP_3                </props>
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_I2C              </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   10, 11, end               </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     13                        </props>
+   </device>
+    
+   <device id=BLSP_QUP_4_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_QUP_4             </props>
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_I2C           </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                      </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   14, 15, end            </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   15, end                    </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_MSS_MSA             </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                      </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     14                     </props>
+   </device>
+   
+#ifdef USES_AWARE_OVERRIDES
+
+   <device id=BLSP_UART_1_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_1               </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_UART_2_LINE      </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   0, 1, end                 </props> 
+	  //if in case this DEBUG UART is used by any secured subsystem like MODEM or TZ then we need to assign Secure RG groups to protect the GPIOs, like if DEBUG UART is used for tiny modem
+	    boot other than the default HLOS boot then we need a secure RG group to protect the GPIOS for MODEM subsystem.
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   13, end                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     7                         </props>
+   </device>
+
+#else
+
+   <device id=BLSP_UART_1_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_1               </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_UART_4_LINE      </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   0, 1, 2, 3, end           </props> 
+	  //if in case this DEBUG UART is used by any secured subsystem like MODEM or TZ then we need to assign Secure RG groups to protect the GPIOs, like if DEBUG UART is used for tiny modem
+	    boot other than the default HLOS boot then we need a secure RG group to protect the GPIOS for MODEM subsystem.
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   13, end                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     7                         </props>
+   </device>
+
+#endif
+
+   <device id=BLSP_UART_2_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_2               </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_UART_4_LINE      </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   4, 5, 6, 7, end               </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     8                         </props>
+   </device>
+
+   <device id=BLSP_UART_3_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_3               </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_UART_4_LINE      </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   8, 9, 10, 11, end               </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     9                         </props>
+   </device>
+
+   <device id=BLSP_UART_4_DEV_ACCESS>
+      <props name="CHIP_BUS_INDEX"      type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_4               </props> 
+      <props name="BUS_PROTOCOL"        type=DALPROP_ATTR_TYPE_UINT32>     PROTOCOL_UART_4_LINE      </props>
+      <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   12, 13, 14, 15, end        </props> 
+      <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
+      <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     10                        </props>
+   </device>
+   
+    <device id="BLSP_GLOBAL_PROP">
+      <props name="NUM_PERIPH_BLSP_CORES" type=DALPROP_ATTR_TYPE_UINT32> 1 </props> // Number of peripheral BLSP cores
+
+      <props name="NUM_BLSP1_QUP_CORES" type=DALPROP_ATTR_TYPE_UINT32> 4 </props> // 4 QUPs per BLSP1 core in this target
+      
+      <props name="NUM_BLSP1_UART_CORES" type=DALPROP_ATTR_TYPE_UINT32> 4 </props> // 4 UARTS per BLSP1 core in this target
+      
+      
+      <props name="BLSP1_BLSP_BAM_BASE" type=DALPROP_ATTR_TYPE_UINT32> 0x07884000 </props>
+     
+      <props name="BLSP1_BAM_PIPE_SID_BASE" type=DALPROP_ATTR_TYPE_UINT32> 0x20 </props>
+     
+      <props name="BLSP1_HCLK_NAME" type=DALPROP_ATTR_TYPE_STRING_PTR> blsp1_hclk_name </props>
+      
+
+      <props name="TLMM_NUM_TILES"    type=DALPROP_ATTR_TYPE_UINT32>           1                     </props>
+      <props name="TLMM_BASE_ADDRS"   type=DALPROP_ATTR_TYPE_UINT32_SEQ_PTR>   TLMM_REG_BASE_ADDRS   </props>
+      <props name="TLMM_XPU_IDS"      type=DALPROP_ATTR_TYPE_UINT32_SEQ_PTR>   TLMM_XPUS             </props>
+      //For information about the RG value/Index, please refer Access Control Wiki.
+   </device>
+
+</driver>
+

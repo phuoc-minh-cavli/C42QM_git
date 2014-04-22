@@ -1,0 +1,136 @@
+#===============================================================================
+#
+# SPI Libs
+#
+# GENERAL DESCRIPTION
+#    Public build script for SPI BUS driver.
+#
+# Copyright (c) 2016,2017,2019 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/04/19   ss      Added support for qapi registration in a common place.
+# 01/16/19   ss      Added support for MDM9205
+# 02/20/17   ska     Modified to add QAPI , public API's
+# 09/20/16   dpk     Initial release
+#
+#===============================================================================
+Import('env')
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+env = env.Clone()
+#print env
+# Additional defines
+env.Append(CPPDEFINES = ["FEATURE_LIBRARY_ONLY"])   
+
+SRCPATH = "../src"
+
+IMAGES = []
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+CBSP_APIS = []
+SPI_CONFIG_XML = {}
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('BUSES_SPI_DEVICE', [
+   '${INC_ROOT}/core/buses/spi/src/device/',
+   '${INC_ROOT}/core/buses/spi/src/device/inc',
+   '${INC_ROOT}/core/buses/spi/src/logs/inc',
+   '${INC_ROOT}/core/buses/qup/src/logs/inc',
+   '${INC_ROOT}/core/buses/qup/inc',
+   '${INC_ROOT}/core/buses/qup/hw',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_APIS += [
+   'BUSES',
+   'DAL',
+   'HAL',
+   'SYSTEMDRIVERS',
+   'HWENGINES',
+   'KERNEL',   
+   'SERVICES',
+   'POWER',
+   'PRODUCTS_DSR',
+   'DEBUGTOOLS',
+   'QAPI',
+]
+
+env.RequirePublicApi(CBSP_APIS)
+env.RequireRestrictedApi(CBSP_APIS)
+
+if env['MSM_ID'] in ['9x06']:
+   if env.has_key('APPS_PROC'):
+      env.Replace(SPI_CONFIG_XML = 'spi_props_apps_9x06.xml')
+      IMAGES = ['APPS_IMAGE',      'CBSP_APPS_IMAGE']
+elif env['MSM_ID'] in ['9205']:
+   if env.has_key('APPS_PROC'):
+      env.Replace(SPI_CONFIG_XML = 'spi_props_apps_9x05.xml')
+      IMAGES = ['APPS_IMAGE',      'CBSP_APPS_IMAGE']	  
+else:
+   Return();
+
+env.Append(CPPDEFINES = ["SPILOG_LEVEL_COMPILE=SPILOG_LEVEL_2"])   
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+SPI_DEVICE_GLOB_FILES = env.GlobFiles('../src/*/*.c', posix=True)
+ 
+#GLOB returns the relative path name, it needs to replaced with correct build location
+SPI_DEVICE_SOURCES = [path.replace(SRCPATH, '${BUILDPATH}') for path in SPI_DEVICE_GLOB_FILES]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+# env.AddLibrary is a new API, only if the IMAGES is valid in the build env
+# the objects will built and added to the image.
+#-------------------------------------------------------------------------------
+env.AddLibrary(IMAGES, '${BUILDPATH}/SpiDriver', SPI_DEVICE_SOURCES)
+
+#---------------------------------------------------------------------------
+# Device Config
+#---------------------------------------------------------------------------
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG, 
+   {
+      'devcfg_xml'    : '${BUILD_ROOT}/core/buses/spi/config/${SPI_CONFIG_XML}'
+   })
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',               
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+QAPI_SOURCES = [
+    '${BUILDPATH}/driver/qapi_spi_master.c',
+]
+env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', QAPI_SOURCES)
+   
+      

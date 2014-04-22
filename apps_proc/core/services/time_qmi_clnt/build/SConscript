@@ -1,0 +1,112 @@
+#===============================================================================
+#
+# QMI Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2016 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: 2010/09/22 18:42:11 $
+#  $Author: coresvc $
+#  $Change: 1450404 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+env.Append(CPPDEFINES=['MSG_BT_SSID_DFLT=MSG_SSID_ONCRPC'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/services/time_qmi_clnt/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside of CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'DAL',
+   'MPROC',
+   'DIAG',
+   'STORAGE',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'MPROC_QMI_PRIVATE',
+   'WIREDCONNECTIVITY',
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi(['COMMON','TIME'], area='API')
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Add Libraries to image
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
+## For time_init and time_init_config calls
+TIME_QMI_RCINIT_IMAGE = []
+
+#-------------------------------------------------------------------------------
+# CPP defines
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES='FEATURE_TIMER_NO_NPA')
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+QMI_TIME_QMI_CLNT_SOURCES = [
+   '${BUILDPATH}/qmi_time_client.c',   
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE',
+   'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+   'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'],
+   '${BUILDPATH}/time_qmi_clnt',
+   [QMI_TIME_QMI_CLNT_SOURCES] )
+
+## Add to RCINIT
+TIME_QMI_RCINIT_IMAGE.extend(['APPS_IMAGE', 'CBSP_APPS_IMAGE'])
+
+
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+   env.AddRCInitFunc(           # Code Fragment in TMC: YES
+    TIME_QMI_RCINIT_IMAGE,         # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_2',              # required
+     'init_name'                  : 'qmi_time_client_init',                  # required
+     'init_function'              : 'qmi_time_client_init',                  # required
+     'dependencies'               : ['time',]
+    })
+
+#-------------------------------------------------------------------------------

@@ -1,0 +1,321 @@
+
+
+GLOBAL &ACCESS
+
+&ACCESS="AXI"
+
+global &TRUE
+&TRUE=1
+global &FALSE
+&FALSE=0
+
+
+; 
+; File names for saved logs
+;
+global &QDSP6SW_root
+&QDSP6SW_root="QDSP6SW"
+
+global &RPM_root
+&RPM_root="RPM"
+
+global &A7_root
+&A7_root="A7"
+
+global &ipa_root
+&ipa_root="ipa"
+
+global &bp_log
+&bp_log="_breakpoint.cmm"
+
+global &regs_log
+&regs_log="_regs.cmm"
+
+global &TCM_log
+&TCM_log="_TCM.bin"
+
+global &MBA_DDR_log
+&MBA_DDR_log="_MBA_DDR.bin"
+
+global &ITCM_log
+&ITCM_log="_ITCM.bin"
+
+
+global &LPM_log
+&LPM_log="_LPM.bin"
+
+
+global &MMU_log
+&MMU_log="_mmu.cmm"
+
+
+global &CODERAM_log
+&CODERAM_log="_RPM_code_ram.bin"
+
+global &DATARAM_log
+&DATARAM_log="_RPM_data_ram.bin"
+
+
+global &JTAG_SHARED_RAM_log
+&JTAG_SHARED_RAM_log="_jtag_shared_ram.bin"
+
+
+global &JTAG_TZ_log
+&JTAG_TZ_log="_jtag_tz.bin"
+
+global &JTAG_EFS1_log
+&JTAG_EFS1_log="_jtag_efs1.bin"
+
+global &JTAG_EFS2_log
+&JTAG_EFS2_log="_jtag_efs2.bin"
+
+global &JTAG_EFS3_log
+&JTAG_EFS3_log="_jtag_efs3.bin"
+
+global &JTAG_TN_HLOS1_log
+&JTAG_TN_HLOS1_log="_jtag_tn_hlos1.bin"
+
+global &JTAG_TN_HLOS2_log
+&JTAG_TN_HLOS2_log="_jtag_tn_hlos2.bin"
+
+global &JTAG_LE_HLOS1_log
+&JTAG_LE_HLOS1_log="_jtag_le_hlos1.bin"
+
+global &JTAG_LE_HLOS2_log
+&JTAG_LE_HLOS2_log="_jtag_le_hlos2.bin"
+
+global &JTAG_MN_HLOS1_log
+&JTAG_MN_HLOS1_log="_jtag_mn_hlos.bin"
+
+global &JTAG_ACDB_log
+&JTAG_ACDB_log="_jtag_acdb.bin"
+
+global &MSGRAM_log
+&MSGRAM_log="_RPM_msg_ram.bin"
+
+global &MODEM_DDR_log
+&MODEM_DDR_log="_modem_ram"
+
+global &MODEM_DDR_logExtn
+&MODEM_DDR_logExtn=".bin"
+
+global &USB_DATA_RAM_log
+&USB_DATA_RAM_log="DATARAM.bin"
+
+global &USB_CODE_RAM_log
+&USB_CODE_RAM_log="CODERAM.bin"
+
+global &USB_MSG_RAM_log
+&USB_MSG_RAM_log="RPM_MSG.bin"
+
+
+global &USB_log
+&USB_log="DDRCS0.bin"
+
+global &IPA_IRAM_log
+&IPA_IRAM_log="IPA_IRAM.bin"
+
+global &IPA_DRAM_log
+&IPA_DRAM_log="IPA_DRAM.bin"
+
+global &IPA_SRAM_log
+&IPA_SRAM_log="IPA_SRAM.bin"
+
+global &IPA_HRAM_log
+&IPA_HRAM_log="IPA_HRAM.bin"
+
+global &IPA_MBOX_log
+&IPA_MBOX_log="IPA_MBOX.bin"
+
+global &IPA_REG1_log
+&IPA_REG1_log="IPA_REG1.bin"
+
+global &IPA_REG2_log
+&IPA_REG2_log="IPA_REG2.bin"
+
+global &IPA_REG3_log
+&IPA_REG3_log="IPA_REG3.bin"
+
+global &USB_MMU_log
+&USB_MMU_log="mmu.cmm"
+global &USB_load_log
+&USB_load_log="load.cmm"
+
+;
+; Start, End addresses for memory dumps
+;
+
+
+global &SHARED_RAM_DUMP_START_ADDR
+&SHARED_RAM_DUMP_START_ADDR=0x87D00000
+
+global &SHARED_RAM_DUMP_SIZE 
+&SHARED_RAM_DUMP_SIZE=0xFFFFF
+
+global &TZ_DUMP_START_ADDR
+&TZ_DUMP_START_ADDR=0x87E00000
+
+global &TZ_DUMP_SIZE
+&TZ_DUMP_SIZE=0x17FFFFF
+
+
+;remote EFS
+global &EFS1_DUMP_START_ADDR
+&EFS1_DUMP_START_ADDR=0x80D00000
+
+global &EFS1_DUMP_SIZE
+&EFS1_DUMP_SIZE=0xFFFFF
+
+global &EFS2_DUMP_START_ADDR
+&EFS2_DUMP_START_ADDR=0x80E00000
+
+global &EFS2_DUMP_SIZE
+&EFS2_DUMP_SIZE=0xFFFFF
+
+global &EFS3_DUMP_START_ADDR
+&EFS3_DUMP_START_ADDR=0x80F00000
+
+global &EFS3_DUMP_SIZE
+&EFS3_DUMP_SIZE=0xfffff
+
+
+;RPM:
+global &MSGRAM_START
+&MSGRAM_START=0x00060000
+
+global &MSGRAM_RPM_START
+&MSGRAM_RPM_START=0x60060000
+
+global &MSGRAM_SIZE 
+&MSGRAM_SIZE=0x4fff
+
+global &CODERAM_START
+&CODERAM_START=0x00200000
+
+global &CODERAM_RPM_START
+&CODERAM_RPM_START=0x0
+
+global &CODERAM_SIZE 
+&CODERAM_SIZE=0x23fff
+
+
+global &DATARAM_START
+&DATARAM_START=0x290000
+
+global &DATARAM_RPM_START
+&DATARAM_RPM_START=0x90000
+
+global &DATARAM_SIZE 
+&DATARAM_SIZE=0X10000
+
+
+;q6 TCM/L2
+global &TCM_Q6SW_DUMP_START_ADDR
+&TCM_Q6SW_DUMP_START_ADDR=0x04400000
+
+global &TCM_Q6SW_FULL_DUMP_SIZE
+&TCM_Q6SW_FULL_DUMP_SIZE=0x3FFFFF
+
+global &TCM_Q6SW_512K_DUMP_SIZE
+&TCM_Q6SW_512K_DUMP_SIZE=0x7FFFF
+
+global &TCM_L2CACHE_START_ADDR
+&TCM_L2CACHE_START_ADDR=0x04480000
+
+
+global &MBA_DDR_Q6SW_DUMP_START_ADDR
+&MBA_DDR_Q6SW_DUMP_START_ADDR=0XD100000
+
+global &MBA_DDR_Q6SW_DUMP_SIZE
+&MBA_DDR_Q6SW_DUMP_SIZE=0XFC000
+
+; Audio LPM
+
+global &LPM_Q6LPASS_DUMP_START_ADDR
+&LPM_Q6LPASS_DUMP_START_ADDR=0x07718000
+
+global &LPM_Q6LPASS_DUMP_SIZE
+&LPM_Q6LPASS_DUMP_SIZE=0x1fff
+
+
+
+; IPA Mem region
+
+global &IPA_IRAM_DUMP_START_ADDR
+&IPA_IRAM_DUMP_START_ADDR=0x7950000
+
+global &IPA_IRAM_DUMP_SIZE
+&IPA_IRAM_DUMP_SIZE=0x4000
+
+global &IPA_DRAM_DUMP_START_ADDR
+&IPA_DRAM_DUMP_START_ADDR=0x7954000
+
+global &IPA_DRAM_DUMP_SIZE
+&IPA_DRAM_DUMP_SIZE=0x3EFF
+
+global &IPA_SRAM_DUMP_START_ADDR
+&IPA_SRAM_DUMP_START_ADDR=0x7945000
+
+global &IPA_SRAM_DUMP_SIZE
+&IPA_SRAM_DUMP_SIZE=0x1FFF
+
+global &IPA_HRAM_DUMP_START_ADDR
+&IPA_HRAM_DUMP_START_ADDR=0x7949000
+
+global &IPA_HRAM_DUMP_SIZE
+&IPA_HRAM_DUMP_SIZE=0x2EFF
+
+global &IPA_MBOX_DUMP_START_ADDR
+&IPA_MBOX_DUMP_START_ADDR=0x7962000
+
+global &IPA_MBOX_DUMP_SIZE
+&IPA_MBOX_DUMP_SIZE=0xFF
+
+global &IPA_REG1_START_ADDR
+&IPA_REG1_START_ADDR=0x7904000
+
+global &IPA_REG1_DUMP_SIZE
+&IPA_REG1_DUMP_SIZE=0x26fff
+
+global &IPA_REG2_START_ADDR
+&IPA_REG2_START_ADDR=0x7940000
+
+global &IPA_REG2_DUMP_SIZE
+&IPA_REG2_DUMP_SIZE=0x4fff
+
+global &IPA_REG3_START_ADDR
+&IPA_REG3_START_ADDR=0x7960000
+
+global &IPA_REG3_DUMP_SIZE
+&IPA_REG3_DUMP_SIZE=0x1fff
+
+global &IPA_VIEW_IRAM_DUMP_START_ADDR
+&IPA_VIEW_IRAM_DUMP_START_ADDR=0x0
+
+global &IPA_VIEW_DRAM_DUMP_START_ADDR
+&IPA_VIEW_DRAM_DUMP_START_ADDR=0x4000
+
+
+&cur_dir=os.ppd()
+
+
+IF OS.FILE("~~~~/../../apps/mdm9205/TN/std_mem_map_constants.cmm")
+( 
+    do ~~~~/../../apps/mdm9205/TN/std_mem_map_constants.cmm
+)
+ELSE IF OS.FILE("~~~~/../../apps/mdm9205/MN/std_mem_map_constants.cmm")
+(
+    do ~~~~/../../apps/mdm9205/MN/std_mem_map_constants.cmm
+)
+ELSE IF OS.FILE("~~~~/../../apps/mdm9205/le/std_mem_map_constants.cmm")
+(
+    do ~~~~/../../apps/mdm9205/le/std_mem_map_constants.cmm
+)
+ELSE IF OS.FILE("~~~~/../../apps/mdm9205/tx/std_mem_map_constants.cmm")
+(
+    do ~~~~/../../apps/mdm9205/tx/std_mem_map_constants.cmm
+)
+
+ENDDO
+
+

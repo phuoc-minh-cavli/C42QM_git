@@ -1,0 +1,57 @@
+#/** @file DDRTargetLib.inf
+#
+#  DDR Lib
+#  
+#  Copyright (c) 2014-2015 Qualcomm Technologies, Inc.  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 12/15/15   bh      Settings relocation
+# 08/17/15   sr      Initial Revision
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DSFTargetLib
+  FILE_GUID                      = 5452BA01-44C3-4D2C-8A49-2E4D89CACC1B
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DSFTargetLib
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -DDDRCC_PLL_EXTENSION_0 -DFEATURE_BOOT_EXTERN_DDR_COMPLETED  -DSHARED_IMEM_DDR_PARAM_BASE=0x08628190 -DSHARED_IMEM_DDR_TRAINING_COOKIE=0x08628020 -DBUILD_BOOT_CHAIN -DUSE_LOADER_UTIL -DRPM_SHARED_IMEM_DDR_PARAM_BASE=0x68628190 -DSHARED_IMEM_DDR_TRAINING_BASE=0x08628300 -DRPM_SHARED_IMEM_DDR_TRAINING_BASE=0x68628300 -Wno-tautological-compare
+ 
+[Sources.common]
+  ./controller/BIMC_v1.c
+  ./controller/BIMC_DPE_v1.c
+  ./controller/BIMC_SHKE_v1.c
+  ./controller/BIMC_SCMO_v1.c
+  ./phy/v1/DDR_PHY.c
+  #./phy/v1/ddr_phy_training.c
+  #./phy/v1/bimc_training_apis.c
+  ./phy/AHB2PHY.c
+  
+  ../../../Library/DDRLib/common/params/v1/ddr_params.h
+  
+[Packages]
+  QcomPkg/Mdm9x05Pkg/Library/DSFTargetLib/DSFTargetLibPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  MdePkg/MdePkg.dec
+  QcomPkg/QcomPkg.dec
+
+[LibraryClasses]
+  MuslLib
+  
+[FeaturePcd]
+
+[FixedPcd]
+
+[Guids]
+

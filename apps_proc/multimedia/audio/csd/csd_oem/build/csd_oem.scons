@@ -1,0 +1,101 @@
+#===============================================================================
+#
+# CSD OEM Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 06/04/13      unni        Adding oem dependencies
+# 08/04/10      fzhou       Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all csd device module
+#-------------------------------------------------------------------------------
+
+env.Append(CFLAGS = "--diag_error=warning ")
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd/csd_oem"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Include PATHs
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequirePublicApi('MMUTILS')
+env.RequirePublicApi('AUDIO')
+
+env.RequireRestrictedApi('CSD_COMMON')
+env.RequireRestrictedApi('CSD_UTILS')
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('WCD_CODEC')
+env.RequireRestrictedApi('CSD_OS_DEP')
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+csdoem_SOURCES = [
+   '${BUILDPATH}/src/csd_dev_oem.c',
+	]
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+csdoem_obj = env.Object(csdoem_SOURCES)
+csdoem_lib = env.Library('${BUILDPATH}/OEM/csdoem', csdoem_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   csdoem_lib)

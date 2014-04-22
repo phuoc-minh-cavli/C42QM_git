@@ -1,0 +1,273 @@
+//============================================================================================
+//  Name:                                                                     
+//    extract_appscpu_context.cmm 
+//
+//Copyright (c) 2014 - 2016 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
+//
+//Description:
+//	1. This Script is used to extract APPS cpu context from ram dumps which saved by SDI(for abnormal resets)/TZ(non-secure wdog reset).
+//	2. To extract the cpu context, load the TZ symbols from the elf path, which need to be entered by user when asked for.
+//	3. Once the Symbols are loaded, core0_regs.cmm will be generated at c:\TEMP\.
+//	4. Run core0_regs.cmm and then load the APPS symbols to get the callstack.
+//
+//============================================================================================
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who             what, where, why
+// --------   ---             ---------------------------------------------------------
+// 02/16/2018 Hema           Update script to support symbols from QSEE and TZ
+// 08/22/2016 c_sknven		Created the file for setting the register contents from RAM dumps.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Defining the Macros
+LOCAL &SDI_DUMP_MAGIC
+LOCAL &SDI_FIRST_PASS_SUCCESS_COOKIE_ADDR
+
+&SDI_DUMP_MAGIC=0x42445953
+&SDI_FIRST_PASS_SUCCESS_COOKIE_ADDR=0x8600b14
+
+
+; Declaring the Local variabless
+Local &BUILDPATH &BUILDVERIFIED &IS_QSEE &TZ_PATH &DUMPCTX_VAR &DUMPREG_VAR &DUMPTYPE_VAR
+
+MAIN:
+	
+	// Subroutine to create the dialogue
+	GOSUB OPENDIALOG
+	
+	STOP
+
+ENABLE_LOAD:
+	DIALOG.END
+	
+    //Check if the build is QSEE or TZ
+    GOSUB CHECKIFQSEE
+    
+	// Loading the TZ Symbols from elf 
+   	GOSUB LOADELF
+	
+	//Subroutine to save the context into the file
+    GOSUB SAVE_CPU_CTXT_TO_FILE
+	
+   GOSUB LOAD_CPU_REGS
+	
+	GOTO EXIT
+
+// Sub-routine to create the dialog
+
+OPENDIALOG:
+	// Check if the window existing
+	WINTOP LOADSIM
+	IF FOUND()
+       RETURN 
+	WINPOS ,,,,,, LOADSIM
+	DIALOG
+	(
+	    HEADER "Load TZ elf"
+		
+		POS 0. 0. 69. 1.
+		BUILDTEXT: TEXT "Enter TZ Elf location"
+		BUILDEDIT: DEFEDIT "elf Location" "GOSUB VERIFYELF"
+		
+		POS 70. 1. 8. 1.
+		VALBUTTON: DEFBUTTON "Verify" "GOSUB VERIFYELF"
+		
+		POS 35. 3. 10. 1.
+		LOADBUTTON: DEFBUTTON "Load Logs" "GOSUB ENABLE_LOAD"
+	)
+	DIALOG.DISABLE LOADBUTTON
+	
+RETURN
+	
+//Subroutine to verify the elf path
+
+VERIFYELF: 
+	Local &DIR
+
+	&DIR=DIALOG.STRING(BUILDEDIT)
+		IF !OS.FILE("&DIR")
+		(
+			DIALOG.SET BUILDEDIT "Invalid elf Path..Enter correct path"
+			// Disable the loading button
+			DIALOG.DISABLE LOADBUTTON
+		)
+		ELSE
+		(
+		    &BUILDPATH="&DIR"
+			&BUILDVERIFIED="TRUE"
+		)
+		
+	IF ("&BUILDVERIFIED"=="TRUE")
+	(
+		DIALOG.ENABLE LOADBUTTON
+	)
+
+	RETURN
+
+CHECKIFQSEE:   
+ 
+    IF (STRING.SCAN("&BUILDPATH","qsee.elf",0)!=-1)
+    (
+        &IS_QSEE="TRUE"
+    )
+
+    RETURN
+	
+//Function to load the TZ Symbols from the path
+LOADELF:
+	IF ("&BUILDPATH"=="")
+	(
+		PRINT %ERROR "Invalid arguments"
+		GOTO EXIT
+	)
+	ELSE
+	(
+		D.LOAD.ELF "&BUILDPATH" /nocode /noclear
+		PRINT "Loaded TZ symbols"
+	)
+
+	RETURN
+	
+//Function to save the context into file
+SAVE_CPU_CTXT_TO_FILE:
+
+	LOCAL &pass_cookie_val
+	LOCAL &val1
+    
+    
+     IF ("&IS_QSEE"=="TRUE")
+	(
+		&TZ_PATH="qsee"
+        &DUMPCTX_VAR="SysdbgCPUDump"
+        &DUMPREG_VAR="SysdbgCPUCtxtType"
+        &DUMPTYPE_VAR="SysdbgCPUDumpType"
+	)
+    ELSE
+    (
+        &TZ_PATH="tz"
+        &DUMPCTX_VAR ="sysdbgCPUDump"
+        &DUMPREG_VAR="sysdbgCPUCtxtType"
+        &DUMPTYPE_VAR="sysdbgCPUDumpType"
+    )
+	
+    VAR.NEW &DUMPREG_VAR* \p_sysdbg_cpu_st_addr
+    VAR.NEW dump_entry_type* \p_dump_entry
+    VAR.NEW sysdbg_cpu32_ctxt_regs_type* \p_cpu32_contxt
+    VAR.NEW &DUMPTYPE_VAR* \p_cpu_dump_addr
+    VAR.NEW dump_data_type* \p_dump_t
+	
+	//Check whether SDI is executed. If not executed, the context cannot be extracted
+	&pass_cookie_val=DATA.LONG(EAXI:&SDI_FIRST_PASS_SUCCESS_COOKIE_ADDR)
+	
+	IF (&pass_cookie_val!=0xDEADD00D)
+	(
+		PRINT "SDI is not executed."
+		GOTO EXIT
+	)
+    
+	//Check for symbols existence
+	IF (!Y.EXIST("&DUMPCTX_VAR"))
+	(
+		PRINT "Symbols are not exists.."
+		//GOTO EXIT
+	)
+	
+	VAR.SET \p_cpu_dump_addr=\\&TZ_PATH\Global\&DUMPCTX_VAR
+	var.IF (\p_cpu_dump_addr==0x0)
+	(
+		PRINT " Sysdbg CPU dump buffer not allocated."
+		GOTO EXIT
+	)
+	
+	VAR.SET \p_dump_t=\\&TZ_PATH\Global\&DUMPCTX_VAR.CPUDump[0]
+	var.IF (\p_dump_t==0x0)
+	(
+		PRINT " Sysdbg CPU dump buffer not allocated."
+		GOTO EXIT
+	)	
+	
+	var.IF (\p_dump_t->magic!=&SDI_DUMP_MAGIC)
+	(
+		PRINT "SDI: CPU context not saved."
+		GOTO EXIT
+    )
+	
+	//Get SDI dump structures
+	VAR.SET \p_dump_entry=(dump_entry_type*)(\\&TZ_PATH\Global\&DUMPCTX_VAR.CPUDump[0])
+	VAR.SET \p_sysdbg_cpu_st_addr=(&DUMPREG_VAR*)(\p_dump_entry->start_addr)
+	VAR.SET \p_cpu32_contxt=(sysdbg_cpu32_ctxt_regs_type*)(&(\p_sysdbg_cpu_st_addr->cpu_regs))
+		
+
+	
+	//Creating file to save cpu register context
+	
+	OPEN #1 c:\temp\core0_regs.cmm /Create
+
+	GOSUB CPU_REGS_CTXT
+
+	PRINT "core0_regs.cmm is generated in c:\temp folder"
+
+	CLOSE #1
+	
+	RETURN
+		
+CPU_REGS_CTXT:
+
+	Var.WRITE #1 "r.s r0 " %HEX \p_cpu32_contxt->r0
+	Var.WRITE #1 "r.s r1 " %HEX \p_cpu32_contxt->r1 
+	Var.WRITE #1 "r.s r2 " %HEX \p_cpu32_contxt->r2
+	Var.WRITE #1 "r.s r3 " %HEX \p_cpu32_contxt->r3
+	Var.WRITE #1 "r.s r4 " %HEX \p_cpu32_contxt->r4
+	Var.WRITE #1 "r.s r5 " %HEX \p_cpu32_contxt->r5
+	Var.WRITE #1 "r.s r6 " %HEX \p_cpu32_contxt->r6
+	Var.WRITE #1 "r.s r7 " %HEX \p_cpu32_contxt->r7
+	Var.WRITE #1 "r.s r8 " %HEX \p_cpu32_contxt->r8
+	Var.WRITE #1 "r.s r9 " %HEX \p_cpu32_contxt->r9
+	Var.WRITE #1 "r.s r10 " %HEX \p_cpu32_contxt->r10
+	Var.WRITE #1 "r.s r11 " %HEX \p_cpu32_contxt->r11 
+	Var.WRITE #1 "r.s r12 " %HEX \p_cpu32_contxt->r12
+	Var.WRITE #1 "r.s r13_usr " %HEX \p_cpu32_contxt->r13_usr
+	Var.WRITE #1 "r.s r14_usr " %HEX \p_cpu32_contxt->r14_usr
+	//Var.WRITE #1 "r.s r13_hyp " %HEX \p_cpu32_contxt->r13_hyp
+	Var.WRITE #1 "r.s r14_irq " %HEX \p_cpu32_contxt->r14_irq
+	Var.WRITE #1 "r.s r13_irq " %HEX \p_cpu32_contxt->r13_irq
+	Var.WRITE #1 "r.s r14_svc " %HEX \p_cpu32_contxt->r14_svc
+	Var.WRITE #1 "r.s r13_svc " %HEX \p_cpu32_contxt->r13_svc
+	Var.WRITE #1 "r.s r14_abt " %HEX \p_cpu32_contxt->r14_abt
+	Var.WRITE #1 "r.s r13_abt " %HEX \p_cpu32_contxt->r13_abt
+	Var.WRITE #1 "r.s r14_und " %HEX \p_cpu32_contxt->r14_und
+	Var.WRITE #1 "r.s r13_und " %HEX \p_cpu32_contxt->r13_und
+	Var.WRITE #1 "r.s r8_fiq " %HEX \p_cpu32_contxt->r8_fiq
+	Var.WRITE #1 "r.s r9_fiq " %HEX \p_cpu32_contxt->r9_fiq
+	Var.WRITE #1 "r.s r10_fiq " %HEX \p_cpu32_contxt->r10_fiq
+	Var.WRITE #1 "r.s r11_fiq " %HEX \p_cpu32_contxt->r11_fiq
+	Var.WRITE #1 "r.s r12_fiq " %HEX \p_cpu32_contxt->r12_fiq
+	Var.WRITE #1 "r.s r13_fiq " %HEX \p_cpu32_contxt->r13_fiq
+	Var.WRITE #1 "r.s r14_fiq " %HEX \p_cpu32_contxt->r14_fiq
+	Var.WRITE #1 "r.s pc " %HEX \p_cpu32_contxt->pc
+	Var.WRITE #1 "r.s cpsr " %HEX \p_cpu32_contxt->cpsr
+	//Var.WRITE #1 "r.s r13_mon " %HEX \p_cpu32_contxt->r13_mon
+	//Var.WRITE #1 "r.s r14_mon " %HEX \p_cpu32_contxt->r14_mon
+    //Var.WRITE #1 "r.s r14_hyp " %HEX \p_cpu32_contxt->r14_hyp
+	//Var.WRITE #1 "_reserved " %HEX \p_cpu32_contxt->_reserved
+	//Var.WRITE #1 "__reserved1 " %HEX \p_cpu32_contxt->__reserved1
+	//Var.WRITE #1 "__reserved2 " %HEX \p_cpu32_contxt->__reserved2
+	//Var.WRITE #1 "__reserved3 " %HEX \p_cpu32_contxt->__reserved3
+	//Var.WRITE #1 "__reserved4 " %HEX \p_cpu32_contxt->__reserved4
+	
+	RETURN
+
+LOAD_CPU_REGS:
+	
+	DO c:\temp\core0_regs.cmm
+	
+	PRINT "CPU registers are loaded. Load APPS symbols to view HLOS context."
+	
+	RETURN
+	
+EXIT:
+    ENDDO

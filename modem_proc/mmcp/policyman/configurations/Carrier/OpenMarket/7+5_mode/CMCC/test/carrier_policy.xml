@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Carrier Policy for CMCC CSFB configuration with TGL Home <-> GWL roaming
+$Header: //components/rel/mmcp.mpss/6.1.10/policyman/configurations/Carrier/OpenMarket/7+5_mode/CMCC/test/carrier_policy.xml#1 $
+-->
+<policy name        = "generic"
+        changelist  = "$Change: 46174567 $"
+        schema_ver  = "1"
+        policy_ver  = "73.3.12"
+>
+
+  <initial>
+    <actions>
+      <!-- Define the Home MCCs -->
+      <mcc_list name="home_mccs">
+        404 460 310 001
+      </mcc_list>
+
+      <mcc_list name="lw_roam_mccs"> 440 441 450 </mcc_list>
+
+      <define_timer name = "noservice" interval = "20" units = "min" id = "1" />
+
+      <!-- Define RF Bands list for CHGWLT -->
+      <rf_band_list name="rf_bands_gwlt">
+        <gw_bands base = "hardware" />
+        <lte_bands base = "hardware" />
+        <tds_bands base = "hardware" />
+      </rf_band_list>
+
+      <!-- Boolean: should we enforce Full RAT mode ? -->
+      <boolean_define name="pm:xml_full_rat" initial="true" />
+      <boolean_define name="nas:SingleIMEI" initial="true" />
+	  
+      <!-- Set initial power up capability -->
+      <rat_capability_if base="none">
+        <include> GSM TDSCDMA LTE </include>
+      </rat_capability_if>
+      <rf_bands_if list="rf_bands_gwlt" />
+
+      <feature> dualmmode </feature>
+
+      <ue_mode> CSFB </ue_mode>
+      <boolean_define name="full_rat_eval" initial="false" />
+
+    </actions>
+  </initial>
+
+  <!--
+  ====================================================================
+    Rules to handle OOS situations.
+  ====================================================================
+  -->
+
+  <!-- RULE #1 -->
+  <!-- If we are not in ONLINE, stop the OOS timer.
+  -->
+  <rule precond="none">
+    <conditions>
+      <not> <phone_operating_mode> ONLINE </phone_operating_mode> </not>
+    </conditions>
+    <actions>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #2 -->
+  <rule precond="none">
+    <conditions>
+      <true/>
+    </conditions>
+    <actions>
+      <boolean_set name="full_rat_eval">
+        <any_of>
+          <timer_expired name="noservice" />
+          <all_of>
+            <oos_scan_cnt test=">=" value="1" />
+            <not> <have_service /> </not>
+          </all_of>        
+        </any_of>
+      </boolean_set>
+      <if>
+        <cond> <timer_expired name="noservice" /> </cond>
+        <then> <expired_timer_handled name="noservice" /> </then>
+      </if>
+      <continue />
+    </actions>
+  </rule>
+  
+  <!-- RULE #3 -->
+  <!-- Enforce Full RAT if needed -->
+  <rule precond="none">
+    <conditions>
+      <phone_operating_mode> ONLINE </phone_operating_mode>
+      <any_of>
+        <enforce_full_rat />
+        <boolean_test name="full_rat_eval" />
+      </any_of>
+      <not> <have_service /> </not>
+    </conditions>
+    <actions>
+      <rat_capability base="config" >
+        <exclude> CDMA HDR </exclude>
+      </rat_capability>
+      <rf_bands list = "rf_bands_gwlt" />
+      <svc_mode> LIMITED </svc_mode>
+      <rat_order> G W L T C H </rat_order>
+    </actions>
+  </rule>
+
+  <!-- RULE #4 -->
+  <!-- Wait if we don't have service -->
+  <rule precond="none">
+    <conditions>
+      <not> <have_service /> </not>
+    </conditions>
+    <actions>
+      <if>
+        <cond> <phone_operating_mode> ONLINE </phone_operating_mode> </cond>
+        <then> <timer_start name="noservice" /> </then>
+      </if>
+    </actions>
+  </rule>
+
+  <!--
+  ====================================================================
+    Rules where location info can be used.
+  ====================================================================
+  -->
+
+  <!-- RULE #5 -->
+  <!-- If we are Home, stay in TGL -->
+  <rule precond="none">
+    <conditions>
+     <have_service />
+     <location_mcc_in list="home_mccs" />
+    </conditions>
+    <actions>
+      <rat_capability base="config">
+        <exclude> WCDMA CDMA HDR </exclude>
+      </rat_capability>
+      <rf_bands list="rf_bands_gwlt" />
+      <svc_mode> FULL </svc_mode>
+      <timer_stop name="noservice" />
+      <rat_order> L W T G C H </rat_order>
+    </actions>
+  </rule>
+
+  <!-- RULE #6 -->
+  <!-- If in Japan/Korea, restrict to LW capability -->
+  <rule precond="none">
+    <conditions>
+      <have_service />
+      <location_mcc_in list="lw_roam_mccs" />
+    </conditions>
+    <actions>
+      <rat_capability base = "none">
+        <include> LTE WCDMA </include>
+      </rat_capability>
+      <rf_bands list = "rf_bands_gwlt" />
+      <svc_mode> FULL </svc_mode>
+      <rat_order> L W T G C H </rat_order>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #7 -->
+  <!-- If we are Roaming, stay in GWL -->
+  <rule precond="none">
+    <conditions>
+     <have_service />
+    </conditions>
+    <actions>
+      <rat_capability base="config">
+        <exclude> TDSCDMA CDMA HDR </exclude>
+      </rat_capability>
+      <rf_bands list="rf_bands_gwlt" />
+      <svc_mode> FULL </svc_mode>
+      <timer_stop name="noservice" />
+      <rat_order> L W T G C H </rat_order>
+    </actions>
+  </rule>
+
+</policy>

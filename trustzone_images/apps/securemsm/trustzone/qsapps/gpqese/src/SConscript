@@ -1,0 +1,94 @@
+#===============================================================================
+#
+# App Core
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/apps.tz/2.1.3/securemsm/trustzone/qsapps/gpqese/src/SConscript#1 $
+#  $DateTime: 2019/05/23 05:23:25 $
+#  $Author: pwbldsvc $
+#  $Change: 19291951 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains schedulerents describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+
+Import('env')
+
+#------------------------------------------------------------------------------
+# We need to specify "neon" to generate SIMD instructions in 32-bit mode
+#------------------------------------------------------------------------------
+if env['PROC'] == 'scorpion':
+    env.Append(CCFLAGS=" -mfpu=neon ")
+
+
+
+# Enable QSEE logging
+env.Append(CPPDEFINES=["GPQESE_QSEE_LOG_SUPPORTED"])
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+includes = [
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/biometric/inc",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/tee_se_utils/inc",
+    "${BUILD_ROOT}/apps/securemsm/trustzone/qsapps/misc_headers",
+    "$SDK_ROOT/inc/tee_se_utils",
+]
+
+#----------------------------------------------------------------------------
+# App core Objects
+#----------------------------------------------------------------------------
+sources = Glob('*.c')
+headers = Glob('*.h')
+
+if env.StandaloneSdk():
+  libs = [
+    '$SDK_ROOT/libs/${APP_EXEC_MODE}/tee_se_api.lib',
+    '$SDK_ROOT/libs/${APP_EXEC_MODE}/tee_se_utils.lib',
+    '$SDK_ROOT/libs/${APP_EXEC_MODE}/biometric.lib'
+  ]
+else:
+  libs = [
+    env.SConscript('${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/tee_se_api/build/SConscript',exports='env'),
+    env.SConscript('${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/tee_se_utils/build/SConscript',exports='env'),
+    env.SConscript('${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/libs/biometric/build/SConscript',exports='env'),
+  ]
+
+#-------------------------------------------------------------------------------
+# Add metadata to image
+#-------------------------------------------------------------------------------
+app_name = 'gpqese'
+
+md = {
+    'appName': app_name,
+    'description': 'ESE Trusted Application',
+    'version': '1.0.0',
+    'UUID': '32552B22-89FE-42B4-8A45-A0C4E2DB0326',
+    'privileges': ['default', 'ESEService'],
+    'acceptBufSize': 0x30000,  # ESE CAPDU(64K) and 2 * RAPDU(64K) plus some overhead
+    'heapSize': 0x27000,  # At least For accepted CAPDU and RAPDU
+}
+
+app_units = env.SecureAppBuilder(
+    sources=sources,
+    includes=includes,
+    metadata=md,
+    image=app_name,
+    deploy_sources=[sources, headers, 'SConscript'],
+    deploy_variants = env.GetDefaultPublicVariants(),
+    user_libs=libs)
+
+#-------------------------------------------------------------------------------
+# Must ship the binaries as well as sources above
+#-------------------------------------------------------------------------------
+env.Deploy(app_units)
+
+op = env.Alias(app_name, app_units)
+Return('app_units')
+#===============================================================================

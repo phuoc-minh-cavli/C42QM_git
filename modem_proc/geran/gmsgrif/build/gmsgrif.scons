@@ -1,0 +1,136 @@
+#===============================================================================
+#
+#       G E R A N   M S G R   I F   S C O N S   C O N F I G U R A T I O N
+#
+# GENERAL DESCRIPTION
+#    SCons build script for the GL1 MSGR Interface VU
+#
+# Copyright (c) 2013-2015 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/geran.mpss/5.2.0/gmsgrif/build/gmsgrif.scons#2 $
+#  $DateTime: 2018/04/30 09:42:45 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/01/18   hd      CR2167422 : FR 46686: Support GERAN as dynamic module using DMM/External paging framework 
+# 29/06/13   pa      CR536820: Added GL1 Msgr If Task. Initial version.
+#
+#===============================================================================
+import sys
+
+def main(env):
+  # If USES_WPLT is set this library is required
+  if 'USES_WPLT' not in env:
+    # Otherwise verify that USES_GSM or USES_UMTS is set, if not bail out now
+    if 'USES_GSM' not in env and 'USES_UMTS' not in env:
+      return()
+
+  if not env.PathExists('${GERAN_ROOT}/gmsgrif/inc'):
+    # This file should not be present in baselines that don't have gmsgrif task
+    # trap it if it is present to prevent RCInit link errors
+    # Tell cleanpack to delete all files (not just private ones) before shipping
+    env.CleanPack('CLEANPACK_TARGET', env.FindFiles('*', '..'))
+    return()
+
+  ################################################################
+  # SIMPLE CONFIGURABLE ITEMS:
+  #-------------------------------------------------------------------------------
+  # Name of the subsystem to which this unit belongs
+  #-------------------------------------------------------------------------------
+  SU_NAME = 'GERAN'
+
+  #-------------------------------------------------------------------------------
+  # Name of this unit
+  #-------------------------------------------------------------------------------
+  UNIT_NAME = 'GMSGRIF'
+
+  #-------------------------------------------------------------------------------
+  # Source path
+  #-------------------------------------------------------------------------------
+  # The path to the source files
+  SRCPATH = '../src'
+
+  #-------------------------------------------------------------------------------
+  # Source files
+  #-------------------------------------------------------------------------------
+  # The source files. Either '*.c' or list the files individually.
+  # If listing the files individually, include any private files, they will be stripped later
+  # e.g. SRC_FILES = ['foo.c', 'bar.c']
+  SRC_FILES = '*.c'
+
+  PRIVATE_SRC_FILES = []
+
+  #-------------------------------------------------------------------------------
+  # Required internal APIs
+  #-------------------------------------------------------------------------------
+  REQUIRED_SU_APIS = [
+      'GCOMMON',
+      'GDIAG',
+      'GDRIVERS',
+      'GL1',
+      'GL2',
+      'GLLC',
+      'GMAC',
+      'GMDSP',
+      'GRLC',
+      'GRR',
+      'GSNDCP',
+      'GPLT',
+      'GMSGRIF'
+      ]
+
+  #-------------------------------------------------------------------------------
+  # Images the SU will be loaded into (MODEM_APPS and/or MODEM_MODEM)
+  #-------------------------------------------------------------------------------
+  IMAGES = ['MODEM_MODEM', 'MOB_GERAN']
+
+
+  ################################################################
+  sys.path.append('${GERAN_BUILD_TOOLS}')
+  import geran_build_tools
+  # UNIT-SPECIFIC SCONS MAGIC
+  ################################################################
+  # (for build specialists to play their tricks)
+
+  ################################################################
+  # DATA ASSEMBLED, PUT IT INTO ACTION USING THE SHARED
+  # FUNCTIONS IN build/geran_build_tools.py
+  ################################################################
+
+
+  geran_build_tools.set_up_component_build_config(
+    env,
+    SU_NAME=                  SU_NAME,
+    UNIT_NAME=                UNIT_NAME,
+    SRCPATH=                  SRCPATH,
+    SRC_FILES=                SRC_FILES,
+    PRIVATE_SRC_FILES=        PRIVATE_SRC_FILES,
+    REQUIRED_SU_APIS=         REQUIRED_SU_APIS,
+    IMAGES=                   IMAGES,
+    MSG_BT_SSID_DFLT=         'MSG_SSID_GSM_GL1_MSGRIF',  # Doesn't use the standard naming convention
+    DELIVER_SOURCE =          False,                       # GL1 is delivered as a binary to some customers
+    DMM =                     True
+  )
+
+
+  env.LoadSoftwareUnits()
+
+try:
+  Import('env') # Fails if used from SCons test harness
+  _usingTestHarness = False
+except:
+  _usingTestHarness = True
+
+if not _usingTestHarness:
+  main(env)
+#else: test harness calls main() directly with its own env
+

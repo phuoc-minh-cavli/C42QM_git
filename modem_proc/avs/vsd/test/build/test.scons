@@ -1,0 +1,29 @@
+#=================================================================
+# VS SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:
+  print 'Skipping VS TestClient compilation as USES_FEATURE_VS_MEMORY_OPTIMISED flag is defined'
+else:
+  TEST_SRCPATH = "../src"
+  env.VariantDir('${BUILDPATH}', TEST_SRCPATH, duplicate=0)
+
+  env.PublishPrivateApi('TEST', [
+      "${AVS_ROOT}/vsd/test/inc/private",
+  ])
+
+  TESTSRCPATH = [   
+    '${BUILDPATH}/vs_testclient.c',
+  ]
+
+  if 'AVS_MPSS_TEST' in env:
+   IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+  else:
+   IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+  env.AddLibrary(IMAGES, ('${BUILDPATH}/test/test'), TESTSRCPATH)
+  env.LoadSoftwareUnits()
+#end else of if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:

@@ -1,0 +1,50 @@
+//-----------------------------------------------------------------------------
+//               Shared Memory TOC Device Configuration
+//-----------------------------------------------------------------------------
+//
+// FILE:        smem_xbl_loader.xml
+//
+// DESCRIPTION: This file contains DAL XML config properties for the Shared 
+//              Memory module, for all images on all targets.
+//
+//=============================================================================
+// Copyright (c) 2016-2018 Qualcomm Technologies, Inc.
+// All Rights Reserved.
+// Confidential and Proprietary - Qualcomm Technologies, Inc.
+//=============================================================================
+//
+//                          EDIT HISTORY FOR FILE
+//
+// $Header:  $
+//
+// when       who     what, where, why
+// --------   ---     ---------------------------------------------------------
+// 03/28/18   vr      Updated mainline version.
+// 04/04/13   bt      Initial revision for MSM targets.
+// ----------------------------------------------------------------------------
+
+<driver name="NULL">
+  <global_def>
+    <var_seq name="smem_partitions_file" type=DALPROP_DATA_TYPE_STRUCT_INC_FILE>
+      ./../SMEM/smem_partitions.c
+    </var_seq>
+  </global_def>
+  <device id="/core/mproc/smem">
+	<props name="smem_vers" type=DALPROP_ATTR_TYPE_UINT32 >
+      0x000B2002
+	</props>
+    
+	<props name="smem_toc_vers" type=DALPROP_ATTR_TYPE_UINT32 >
+	  0x00000001
+	</props>
+
+    <props name="smem_partitions" type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+      smem_toc_partition_entries
+    </props>
+
+	<props name="smem_max_items" type=DALPROP_ATTR_TYPE_UINT32 >
+	  512
+	</props>
+    
+  </device>
+</driver>

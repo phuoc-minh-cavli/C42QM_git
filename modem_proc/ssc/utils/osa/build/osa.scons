@@ -1,0 +1,125 @@
+#===============================================================================
+#
+# OSA library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/utils/osa/build/osa.scons#4 $
+#  $DateTime: 2019/08/17 11:20:41 $
+#  $Change: 20233270 $
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+import json
+import subprocess
+import os, inspect
+import platform
+
+flag = False
+if 'SENSORS_DD_DEV_FLAG' in env:
+   flag = True
+
+env.Append(CPPPATH = [
+   "${SSC_ROOT}/utils/osa/hexagon/target/${CHIPSET}",
+])
+
+env.RequirePublicApi([
+   'KERNEL',
+   'DEBUGTOOLS'
+   ], area='core')
+
+if 'SDC_ONLY_IMAGE' in env:
+   env.Append(CPPDEFINES = ['SDC_ONLY_IMAGE'])
+
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  osa_flavor = ["x86"]
+elif 'SSC_TARGET_HEXAGON_MDSP' in env['CPPDEFINES']:
+  osa_flavor = ["hexagon_user_pd_common", "hexagon_user_pd_mdsp"]
+else:
+  osa_flavor = ["hexagon_user_pd_common", "hexagon_user_pd_slpi"]
+
+if env['MSM_ID'] in ['845']:
+  osa_flavor.append("sdm845")
+elif env['MSM_ID'] in ['855']:
+  osa_flavor.append("sdm855")
+elif env['MSM_ID'] in ['1000']:
+  osa_flavor.append("sdm1000")
+elif env['MSM_ID'] in ['6150']:
+  osa_flavor.append("sm6150")
+elif env['MSM_ID'] in ['7150']:
+  osa_flavor.append("sm7150")
+elif env['MSM_ID'] in ['8250']:
+  osa_flavor.append("sm8250")
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+sections = ['.text.sns_osa', '.data.sns_osa']
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             flavor = osa_flavor,
+             core_public_api = ['DEBUGTOOLS','POWER','KERNEL','PRODUCTS','SYSTEMDRIVERS','DAL'],
+             ssc_protected_api = ['SNS_INTERNAL_INCLUDES', 'SNS_FRAMEWORK'],
+             clean_pack_list = [],
+             island_sections = sections,
+             binary_lib = flag)
+
+#-------------------------------------------------------------------------------
+# Add the PD Spawn Call to the Root PD.
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  if env['MSM_ID'] in ['845','855','670','1000','6150','7150','8250','nicobar','saipan']:
+    env.Append(CPPDEFINES="SENSOR_IMG_NAME=\\\"sensor_process\\\"")
+  else:
+    env.Append(CPPDEFINES="SENSOR_IMG_NAME=\\\"M${BUILD_ASIC}${BUILD_ID}${BUILD_VER}_SENSOR.pbn\\\"")
+
+  # Make the sns_root_pd_init.c file available to root PD
+  OSA = inspect.getfile(inspect.currentframe())
+  OSA_DIR = os.path.dirname(os.path.dirname(OSA))
+
+  env.RequireProtectedApi(['SNS_INTERNAL_INCLUDES', 'SNS_FRAMEWORK'])
+  env.RequirePublicApi('SNS_INCLUDES', area='ssc')
+  env.RequirePublicApi(['DEBUGTOOLS','POWER','KERNEL','PRODUCTS','SYSTEMDRIVERS','DAL'],area='core')
+  if not (env.IsTagEnable('MODEM_MODEM') or env.IsTagEnable('MODEM_SENSORONLY')):
+    SNS_ROOT_PD_SRC = os.path.join(OSA_DIR, 'hexagon_root_pd', 'sns_root_pd_init.c')
+    SNS_ROOT_PD_LIB = os.path.join('${BUILDPATH}', 'sns_root_pd_init')    
+    if 'SENSORS_DD_DEV_FLAG' in env:
+      env.AddBinaryLibrary(['SSC_SLPI_ROOT','CORE_ADSP_ROOT','CORE_QDSP6_SW'], SNS_ROOT_PD_LIB, SNS_ROOT_PD_SRC)
+    else:
+      env.AddLibrary(['SSC_SLPI_ROOT','CORE_ADSP_ROOT','CORE_QDSP6_SW'], SNS_ROOT_PD_LIB, SNS_ROOT_PD_SRC)
+
+
+# Add the PD Spawn Call to the Root PD.
+  if env['MSM_ID'] in ['845','855','670','1000','6150','7150','8250','nicobar','saipan','439']:
+    env.AddRCInitFunc(
+      ['SSC_SLPI_ROOT','CORE_ADSP_ROOT','CORE_QDSP6_SW'],
+      {
+        'sequence_group'             : 'RCINIT_GROUP_7',
+        'init_name'                  : 'pd_sensors',
+        'init_function'              : 'sns_root_pd_init',
+      })
+
+  env.AddRCInitFunc(
+    ['SSC_SLPI_USER','MODEM_MODEM','MODEM_SENSORONLY','SSC_ADSP_USER','CORE_SSC_ADSP_USER'],
+    {
+      'sequence_group'             : 'RCINIT_GROUP_7',           # required
+      'init_name'                  : 'sns',                      # required
+      'init_function'              : 'sns_user_pd_init',         # required
+      'dependencies'               : ['uTimetick','i2cbsp_init','adsppm_client','pram_mgr_clnt']
+    })
+
+me = inspect.getfile(inspect.currentframe())
+my_root = os.path.dirname(os.path.dirname(me))
+utils_osa_dir = os.path.join(my_root, my_root)
+
+if 'SENSORS_DD_DEV_FLAG' in env:
+  REMOVE_FILES =  env.FindFiles(['*.c', '*.h', '*.proto', '*.json'], utils_osa_dir)
+  env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)

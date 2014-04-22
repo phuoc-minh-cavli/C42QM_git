@@ -1,0 +1,96 @@
+# Copyright (c) 2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+Import('env')
+env = env.Clone()
+
+SRCPATH = '${BUILD_ROOT}/core/securemsm/qwes/cli'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_QSEE_LOG' in env:
+    env.Append(CPPDEFINES = [
+        "ENABLE_QSEE_LOGGING",            # QSEE logging
+    ])
+
+#-------------------------------------------------------------------------------
+# Dependency paths for include files
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'QTEE_INVOKE_QAPI',
+    'QAPI',
+    'USEFULBUF_QAPI',
+    'QWES_QAPI',
+    'QCBOR_QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QWES_COMMON',
+    'QWES_OS_ABSTRACTION',
+    'QWES_CLI',
+]
+
+QWES_API = [
+    'QWES_DAEMON',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.RequireProtectedApi(QWES_API)
+
+if 'USES_ARM' in env:
+    env.Append(CCFLAGS=" --cpp11 --gnu --no_rtti --force_new_nothrow -O0")
+    env.Append(CCFLAGS=" -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS")
+    env.Replace(ARM_FPMODE_FAST="")
+    env.Replace(ARM_NOINLINE="")
+    env.Replace(ARM_NOAUTOINLINE="")
+    env.Replace(ARM_SPLIT_SECTIONS="")
+    env.Replace(ARM_DATA_REORDER="")
+    env.Replace(ARM_LOOSE_IMPLICIT_CAST="")
+else:
+    env.Append(CCFLAGS=" --std=gnu++11 -fno-rtti -fno-exceptions")
+    env.Append(CCFLAGS=" -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS")
+
+#-------------------------------------------------------------------------------
+# Sources, library
+#-------------------------------------------------------------------------------
+QWES_CLI_SOURCES_KERNEL =  [
+    '${BUILDPATH}/src/da.cpp',
+    '${BUILDPATH}/src/cli_common.c',
+]
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+]
+
+USER_IMAGES = [
+    'CORE_TXM_LIBS',
+]
+
+env.AddBinaryLibrary(
+    IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/cli/build/qwes_cli_kernel',
+    QWES_CLI_SOURCES_KERNEL
+)
+
+QWES_CLI_SRC_FILES = env.FindFiles(
+  ['*.c', '*.cpp', '*.h'],
+  '../')
+
+env.CleanPack(['CORE', 'CORE_APPS'], QWES_CLI_SRC_FILES)

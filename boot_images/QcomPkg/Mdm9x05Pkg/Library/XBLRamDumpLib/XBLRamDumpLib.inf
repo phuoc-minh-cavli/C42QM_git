@@ -1,0 +1,103 @@
+#/** @file XBLRamDumpLib.inf
+#
+#  XBL RamDump
+#  
+#  Copyright (c) 2015, 2016, 2017, 2018-19 Qualcomm Technologies, Inc.  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 12/28/17   rohik   Added whitelist protection and removed clobber protection
+# 05/05/17   bd      Secure minidump changes
+# 02/02/17   bd      Add SmemLib
+# 01/19/17   bd      Add minidump support
+# 01/12/17   sj      Added support for saving the logdump partition with PC dump
+# 10/24/16   yps     Clean unused libs
+# 07/15/16   yps     Remove Sec lib
+# 06/15/16   kpa     Add support for Display
+# 06/07/16   aab     Added PmicLoaderLib
+# 03/10/16   aab     Added PmicLib and SPMILib
+# 03/09/16   kpa     Use LoaderCacheLib instead of shared functions cache api
+# 08/06/15   as      Use shared functions
+# 05/19/15   kpa     Added PIMEMTargetLib.
+# 05/12/15   bh      Replace LoaderUtilsLib with MuslLib
+# 05/01/15   plc     Initial Revision
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = XBLRamDump
+  FILE_GUID                      = 545E720B-F218-4DE5-9246-8A6EE0E095FA
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+
+[Sources.common]
+  ../../Include/HALbootHWIO.h
+  ../XBLLoaderLib/boot_target.h
+  ../../../XBLLoader/boot_sdcc.h
+  ../../../XBLRamDump/boot_sahara.h
+  ../../../XBLRamDump/boot_transport.h
+  ../../../XBLLoader/boot_logger_timer.h
+  
+  ../../../XBLLoader/boot_util.c
+  ../../../XBLLoader/boot_ram_init.c
+  ../../../XBLLoader/boot_shared_functions_consumer.c
+  ../../../XBLLoader/boot_hash_buffer.c
+  ../../../XBLLoader/boot_hash.c
+  ../../../XBLLoader/boot_dload_debug.c
+  ../../../XBLLoader/boot_extern_pimem_interface.c
+  ../../../XBLLoader/boot_logger_timer.c
+  ../../../XBLLoader/boot_statistics.c
+  ../../../XBLLoader/boot_minidump.c  
+
+  ../../../XBLRamDump/boot_extern_qusb_interface.c
+  ../../../XBLRamDump/boot_extern_encr_key_interface.c
+  ../../../XBLRamDump/boot_extern_hsuart_interface.c
+
+  #../../../XBLRamDump/boot_raw_partition_ramdump.c
+  #../../../XBLRamDump/boot_sd_ramdump.c
+  
+  ../../../XBLRamDump/boot_sahara.c
+  ../../../XBLRamDump/boot_transport.c
+
+  boot_dload_debug_target.c
+  sbl1_sahara.c
+  XBLRamDump.c
+
+[Sources]
+  ModuleEntryPoint.S | GCC
+
+[BuildOptions]
+  RVCT:*_*_*_CC_FLAGS = --diag_error=warning -DBOOT_PBL_H=\"pbl_sbl_shared.h\" -DFEATURE_SAHARA_BOOT -DSAHARA_MAX_PACKET_SIZE_IN_BYTES=0xFFC -DSAHARA_MAX_MEMORY_DATA_SIZE_IN_BYTES=0xFF8 -DSAHARA_PACKET_LOG_LENGTH=0x64 -DFEATURE_BOOT_LOGGER_RAM -DFEATURE_BOOT_LOGGER_TIMER -DFEATURE_BOOT_LOGGER_JTAG -DFEATURE_BOOT_LOGGER_UART
+  RVCT:*_*_*_DLINK_FLAGS = --first=XBLDebug.lib(ModuleEntryPoint) --scatter $(WORKSPACE)/QcomPkg/$(TARGETPKG)/xbl_$(BUILDFLAVOR).scl
+  GCC:*_*_*_CC_FLAGS = -Werror -DBOOT_PBL_H=\"pbl_sbl_shared.h\" -DFEATURE_SAHARA_BOOT -DSAHARA_MAX_PACKET_SIZE_IN_BYTES=0xFFC -DSAHARA_MAX_MEMORY_DATA_SIZE_IN_BYTES=0xFF8 -DSAHARA_PACKET_LOG_LENGTH=0x64 -DUSE_GNU_LD -DUSE_LOADER_UTILS -DFEATURE_BOOT_LOGGER_RAM -DFEATURE_BOOT_LOGGER_TIMER -DFEATURE_BOOT_LOGGER_JTAG -DFEATURE_BOOT_LOGGER_UART -DBOOT_MEMORY_DEBUG_64BIT
+  GCC:*_*_*_DLINK_FLAGS = --script=$(BUILD_DIR)/$(ARCH)/$(MODULE_NAME).ld
+  MSFT:*_*_*_CC_FLAGS = -DBOOT_PBL_H=\"pbl_sbl_shared.h\" -DFEATURE_SAHARA_BOOT -DSAHARA_MAX_PACKET_SIZE_IN_BYTES=0xFFC -DSAHARA_MAX_MEMORY_DATA_SIZE_IN_BYTES=0xFF8 -DSAHARA_PACKET_LOG_LENGTH=0x64 -DUSE_GNU_LD -DUSE_LOADER_UTILS -DFEATURE_BOOT_LOGGER_RAM -DFEATURE_BOOT_LOGGER_TIMER -DFEATURE_BOOT_LOGGER_JTAG -DFEATURE_BOOT_LOGGER_UART -DBOOT_MEMORY_DEBUG_64BIT
+  #MSFT:*_*_*_DLINK_FLAGS = --script=$(BUILD_DIR)/$(ARCH)/$(MODULE_NAME).ld
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  QcomPkg/Mdm9x05Pkg/Library/XBLRamDumpLib/XBLRamDumpLibPkg.dec
+  QcomPkg/Library/MuslLib/MuslLib.dec    
+
+[LibraryClasses]
+  PrintLib
+  ClockRamDumpLib 
+  QusbLib
+  CryptoRDILib
+  HSUartLib  
+  ServicesUtilsLib
+
+[Guids]

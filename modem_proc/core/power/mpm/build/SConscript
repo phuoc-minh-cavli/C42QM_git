@@ -1,0 +1,145 @@
+#===============================================================================
+#
+# MAO Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2017 by QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/power/mpm/build/SConscript#6 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#  $Change: 20199023 $
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Build options
+#-------------------------------------------------------------------------------
+# Disabling compiler warnings for unused functions 
+# needed due to DAL interface unused functions
+if env.CheckAlias('devcfg_img'):
+   env.Append(CFLAGS = ' -Wno-unused-function')  
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/power/mpm/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('POWER_MPM', [
+   "${INC_ROOT}/core/power/mpm/inc",
+   "${INC_ROOT}/core/power/mpm/inc/dal",
+   "${INC_ROOT}/core/power/mpm/src",
+   "${INC_ROOT}/core/power/mpm/src/hal",
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+DALMPM_SOURCES = [
+   '${BUILDPATH}/dal/Dalmpm.c',
+   '${BUILDPATH}/dal/DalmpmFwk.c',
+   '${BUILDPATH}/dal/DalmpmInfo.c',
+ ]
+
+dalmpm_obj = env.Object(DALMPM_SOURCES)
+dalmpm_lib = env.Library('${BUILDPATH}/Dalmpm', dalmpm_obj)
+
+
+VMPM_SOURCES =  [
+   '${BUILDPATH}/vmpm.c',
+   '${BUILDPATH}/vmpm_internal.c',
+   '${BUILDPATH}/mpmint.c',
+   '${BUILDPATH}/vmpm_utils.c',
+   '${BUILDPATH}/vmpm_log.c',
+   '${BUILDPATH}/os/default/vmpm_os.c',
+   '${BUILDPATH}/os/default/vmpm_target.c',
+   '${BUILDPATH}/hal/vmpm_HAL.c',
+   '${BUILDPATH}/hal/vmpm_HAL_IPC.c',
+]
+
+vmpm_obj = env.Object(VMPM_SOURCES)
+vmpm_lib = env.Library('${BUILDPATH}/vmpm', vmpm_obj)
+
+#-------------------------------------------------------------------------------
+# Add device config information
+#-------------------------------------------------------------------------------
+if 'USES_DEVCFG' in env or 'USES_DEVCFG_PAGEONLY' in env or 'USES_DEVCFG_SENSORONLY' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG', 'DAL_DEVCFG_PAGEONLY_IMG','DAL_DEVCFG_SENSORONLY_IMG']
+   default_devcfg_xml = '${BUILD_ROOT}/core/power/mpm/config/MPMDevCfg.xml'
+   default_dalmpm_xml = '${BUILD_ROOT}/core/power/mpm/config/dalmpm.xml'
+
+   # Providing DevCfg information about our xml file and source code files.
+   # Change files or add targets as required.
+   env.AddDevCfgInfo(
+      DEVCFG_IMG,
+      {
+         	
+         '9607_xml' : [ default_devcfg_xml,
+                        default_dalmpm_xml,
+                        '${BUILD_ROOT}/core/power/mpm/config/asic/9607/MPMIntDevCfgData.c' ],				
+         '9205_xml' : [ default_devcfg_xml,
+                        default_dalmpm_xml,
+                        '${BUILD_ROOT}/core/power/mpm/config/asic/9205/MPMIntDevCfgData.c' ],
+	 
+						
+      }
+   )
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE',
+            'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'MODEM_MODEM', 'MODEM_PAGEONLY','MODEM_SENSORONLY']
+
+env.AddLibrary(IMG_LIST, '${BUILDPATH}/vmpm', VMPM_SOURCES)
+env.AddLibrary(IMG_LIST, '${BUILDPATH}/Dalmpm', DALMPM_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Add vmpm_init function to RCINIT
+#-------------------------------------------------------------------------------
+if 'USES_BUILD_PAGEONLY_IMAGE' in env:
+# mpm driver properties
+  RCINIT_PROPS = {
+   'sequence_group'             : 'RCINIT_GROUP_0',
+   'init_name'                  : 'vmpm',
+   'init_function'              : 'vmpm_init',
+   'dependencies'               : ['dalsys'],
+  }
+else:
+  RCINIT_PROPS = {
+   'sequence_group'             : 'RCINIT_GROUP_0',
+   'init_name'                  : 'vmpm',
+   'init_function'              : 'vmpm_init',
+   'dependencies'               : ['GPIOInt', 'dalsys'],
+  }
+
+if 'USES_RCINIT' in env:
+  env.AddRCInitFunc(IMG_LIST, RCINIT_PROPS)

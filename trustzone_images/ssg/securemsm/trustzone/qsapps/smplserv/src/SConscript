@@ -1,0 +1,107 @@
+#===========================================================================
+#  Copyright (c) 2011-2014, 2017 QUALCOMM Technologies Incorporated.
+#  All Rights Reserved.
+#  Qualcomm Confidential and Proprietary
+#===========================================================================
+#
+# App Core
+#
+# GENERAL DESCRIPTION
+#    build script
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains schedulerents describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+#===============================================================================
+import os
+
+Import('env')
+env = env.Clone()
+
+aliases = ['smplserv', 'uefitzt', 'deploy','allapps']
+env.Replace(OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/smplserv/build')
+
+
+if not env.CheckAlias(aliases):
+ Return()
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+includes = [
+  "${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/smplserv/idl",
+  "${BUILD_ROOT}/ssg/securemsm/trustzone/qsapps/smplserv/src",
+  "${BUILD_ROOT}/ssg/securemsm/trustzone/unittest/idl",
+  "${BUILD_ROOT}/core/api/kernel/libstd/stringl",
+  '${BUILD_ROOT}/core/api/services',
+]
+
+#------------------------------------------------------------------------------
+# We need to specify "neon" to generate SIMD instructions in 32-bit mode
+#------------------------------------------------------------------------------
+if env['PROC'] == 'scorpion':
+  env.Append(CCFLAGS = " -mfpu=neon ")
+
+#----------------------------------------------------------------------------
+# App core Objects
+#----------------------------------------------------------------------------
+sources = [
+  'app_main.c',
+  'COEMUnwrapKeys.c',
+  'CTestSandbox.c',
+  'CTestSMCInvoke.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add metadata to image
+#-------------------------------------------------------------------------------
+md = {
+   'appName':           'smplserv',
+   'privileges':        ['default', 'SPI', 'I2C', 'HwFuse', 'LegacySandbox'],
+   'services':          ['OEMUnwrapKeys', 'TestSandbox', 'TestSMCInvoke'],
+   'acceptBufSize':     16384,
+   #'memoryType':       'Unprotected',
+}
+
+sec_xml_config = '../${SECIMAGE_CONFIG}'
+
+deploy_header_files = env.Glob('../inc/*') + env.Glob('*.h')
+
+deploy_idl_files = [
+  '../idl/CTestSandbox.idl',
+  '../idl/ITestSandbox.idl',
+  '../idl/CTestSMCInvoke.idl',
+  '../idl/ITestSMCInvoke.idl',
+]
+
+smplserv_units = env.SecureAppBuilder(
+  sources = sources,
+  includes = includes,
+  metadata = md,
+  image = 'smplserv',
+  sec_xml_config = sec_xml_config,
+  deploy_sources = [sources , 'SConscript', env.subst(sec_xml_config), deploy_header_files, deploy_idl_files],
+  deploy_variants = env.GetDefaultPublicVariants(),
+)
+
+env.Alias(aliases, smplserv_units)
+
+
+env.Deploy(['SConscript',
+            '../data_prov_assets/Encryption/Unified/default/l3_key.bin',
+            '../data_prov_assets/Encryption/Unified/default/l1_key.bin',
+            '../data_prov_assets/Encryption/Unified/default/l2_key.bin',
+            '../data_prov_assets/Encryption/Unified/default/config.xml',
+            '../data_prov_assets/General_Assets/Signing/openssl/opensslroot.cfg',
+            '../data_prov_assets/General_Assets/Signing/openssl/v3.ext',
+            '../data_prov_assets/General_Assets/Signing/openssl/v3_attest.ext',
+            '../data_prov_assets/General_Assets/Signing/openssl/config.xml',
+            '../data_prov_assets/Signing/Local/default/oem_secapp.key',
+            '../data_prov_assets/Signing/Local/default/sha256rootcert.key',
+            '../data_prov_assets/Signing/Local/default/oem_secapp.crt',
+            '../data_prov_assets/Signing/Local/default/config.xml',
+           ])

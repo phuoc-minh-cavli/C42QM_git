@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="lte.0.0" type="1"/>
+	<NvEfsFile name="fgi" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/cap/fgi" buildPath="modem_proc/lte/configs/efs_files/vzw/fgi"/>
+    <NvEfsFile name="lte_deprio_supported" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/lte/rrc/lte_deprio_supported" buildPath="modem_proc/lte/configs/efs_files/vzw/lte_deprio_supported"/>
+</NvData>

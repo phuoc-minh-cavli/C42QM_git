@@ -1,0 +1,681 @@
+/**
+ * Copyright (c) 2018 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+*/
+
+
+interface IPFM  {
+
+    /* Options to Select */
+    const uint64 OPT_NO_OEMID_CHECK                        = 0x00000001;
+    const uint64 OPT_NO_HWVERSION_CHECK                    = 0x00000002;
+    const uint64 OPT_NO_FEATUREID_CHECK                    = 0x00000004;
+    const uint64 OPT_NO_TIME_CHECK                         = 0x00000008;
+    const uint64 OPT_CLOCK_NOT_SET_OK                      = 0x00000010;
+    const uint64 OPT_SELECT_TEST_ROOT                      = 0x00000020;
+    const uint64 OPT_USAGE_ENCRYPT                         = 0x00000040;
+    const uint64 OPT_NO_PKHASH_CHECK                       = 0x00000080; 
+    const uint64 OPT_NO_DEVICE_ID_CHECK                    = 0x00000100;
+    const uint64 OPT_NO_START_LICENSE_DATE_CHECK           = 0x00000200;
+    const uint64 OPT_TRUST_INSECURE_CLK                    = 0x00000400;
+
+    const uint64 LICENSE_HAS_OEMID                         = 0x00000001;
+    const uint64 LICENSE_HAS_HWVERSION                     = 0x00000002;
+    const uint64 LICENSE_HAS_DEVICEID                      = 0x00000004;
+    const uint64 LICENSE_HAS_PKHASH                        = 0x00000008;
+    const uint64 LICENSE_HAS_LICENSEEHASH                  = 0x00000010;
+    const uint64 LICENSE_HAS_VALIDTIME                     = 0x00000020;
+    
+    
+    /* Platform Feature Manager Error Codes */
+    error ERROR_NOMEM;                            /* Memory is full, can't store any more licenses */
+    error ERROR_INVALID_PFM_EXTENSION;            /* Invalid PFM extension */
+    error ERROR_CBOR_ENCODE_ERR;                  /* Error creating CBOR encoding, possible due to bad raw CBOR added */
+    error ERROR_CERT_PKHASH;                      /* The license certificate is not valid for this PKHash (Device PKHash) */
+    error ERROR_INVALID_CERT;                     /* License cannot be parsed or is corrupt */
+    error ERROR_CERT_FEATUREID;                   /* The Feature ID is not found and hence not valid to run */
+    error ERROR_CERT_EXPIRED;                     /* The license certificate is expired. */
+    error ERROR_CERT_OEM;                         /* License is not allowed for the particular OEM ID (this handset vendor) */
+    error ERROR_CERT_HWVERSION;                   /* License is not allowed for the particular CHIP ID (chip family) */
+    error ERROR_CERT_LICENSEE_HASH;               /* Invalid Licensee Hash */
+    error ERROR_PFMFILER_FAILED;                  /* General PFMFiler failure */
+    error ERROR_HASH_GENERATION;                  /* Error during generation of hash. */
+    error ERROR_CERT_NOT_TRUSTED;                 /* The root CA is not marked as trusted */
+    error ERROR_CERT_GENERAL_ERR;                 /* Error while verifying the cert chain */
+    error ERROR_CBOR_DECODE_ERR;                  /* QCBOR decode failed */
+    error ERROR_CBOR_DECODE_DATATYPE_ERR;         /* QCBOR decode data type error */
+    error ERROR_PFMFILER_FILE_REMOVE_FAILED;      /* PFMFiler file remove failed */
+    error ERROR_PFMCACHE_REMOVE_FAILED;           /* PFMCache slot remove failed */
+    error ERROR_RPMB_ERR;                         /** Error while accessing RPMB partition. */ 
+    error ERROR_FILE_NOT_FOUND;                   /* File cannot be found to process the license */
+    error ERROR_PFMFILER_GETFILECONTENTS_FAILED;  /* PFMFailer failed in getting file contents */
+    error ERROR_LICENSE_TOO_BIG;                  /* The input license is too large to process */
+    error ERROR_PRIVILEGE_ERR;                    /* Client App is not having enough privileges for the requested Haven Options. */ 
+    error ERROR_LICENSE_STORE_FULL;               /* License Store is full */
+    error ERROR_CERT_FIELD_TOO_BIG;               /* Certification Field is too big */
+    error ERROR_INVALID_CURRENT_TIME;             /* Invalid current time */
+    error ERROR_FID_LIST_TRUNCATED;               /* FID lis t is truncated */
+    error ERROR_BLOB_ENCAP_FAILED;                /* Failure of the encapsulation of the check response blob */
+    error ERROR_BLOB_DECAP_FAILED;                /* Failure of the decapsulation of the check request blob */
+    error ERROR_CERT_DEVICEID;                    /* License is not allowed for the particular DEVICE ID */
+    error ERROR_SFS_ERR;                          /* Error while accessing SFS. */
+    error ERROR_CERT_NOTYETVALID;                 /* The license certificate is not yet valid. */
+    error ERROR_OPTS_NOT_SUPPORTED;               /* One of the options selected to install/validate the licenses is not supported*/
+    error ERROR_OVERFLOW;                         /* Failed due to numeric overflow */
+    error ERROR_CERT_RESERVE2;                    /* Reserve Error code to keep it in sync up with IHavenTokenApp.idl */
+    error ERROR_CERT_PRODUCTID;                   /* License is not allowed for the particular PRODUCT/MODEL ID (this Model of handset) */
+
+
+         /**  This API is called by the CaaS/QWES application to install new licenses. The license is evaluated to be valid  based on OEM ID, the Chip ID/
+
+         * Device ID and not on the Licensee ID or Feature ID. The beginning of the expiration range is not checked and the end of the expiration range is only checked if
+
+         * SetOptions() method is used to set it.
+
+         * @param[in] PFMLicense --- Actual PFM license certificate file
+
+         * @param[out] LicenseSerialNumber --- Gives the serial number of the license
+
+         * @param[out] FeatureIDsCBOR - FeatureIds corresponding to the license
+
+         * CDDL for FeatureIDsCBOR
+         * -----------------------
+
+         * FeatureIDsCBOR = {
+         *      FIDs: [*uint32],
+         *      FIDRanges: [*[uint32, uint32]]
+         * }
+
+         * FeatureIDsCBOR Format
+         * ---------------------
+         * FeatureIDsCBOR = {
+         *  "FIDs" : [1,2,3],
+         *  "FIDRanges" : [[1,2],[3,4]]
+         * }
+
+         * @param[out] LicenseRestrictions - Output for License Restrictions for OEMID, DeviceID, HWVersion, PKHash, LicenseeHash
+
+         * @result
+         *       - Object_OK on success else error out
+
+         */
+
+        method InstallLicense(in buffer PFMLicense, out buffer LicenseSerialNumber, out buffer FeatureIDsCBOR, out uint64 LicenseRestrictions);
+
+
+
+
+        /**  This API is called when Licenses are already installed and when the licensee wants to check if any individual features can run on the device
+
+        * i.e. if they have access/privilege to use the particular feature on the device. This API is also called when the device re-boots
+
+        * @param[in] FeatureID --- The feature ID of the feature that wants to run
+
+        * @param[in] LicenseeHash ---  It is optional.Used when feature is licensed to individual Android apps(LicenseeCertHash). SHA256 hash of the licensee's Android Code
+
+        * Signing Certificate. Length is 0 if absent
+
+        * @param[out] LicenseSerialNumber --- Serial Number of the license
+
+        * @return
+        *        -  Object_OK on success else error out
+        */
+
+        method CheckInstalledLicense(in uint32 FeatureID, in buffer LicenseeHash, out buffer LicenseSerialNumber);
+
+
+
+
+
+
+        /** This API returns the important license information based on the given License Serial Number as input
+
+        * @param[in] LicenseSerialNumber --- identifies a particular license
+
+        * @param[out] LicenseInfoCBOR
+
+        * pFileName --- name of the file where license might be stored
+
+
+        * PublicKey --- Public key of the license certificate. It is returned in case the caller wants to use it for encryption or signature verification.
+
+        * For example Haven Token uses it to encrypt in CMS format and QSSP uses it to verify signatures.
+
+        * Issuer --- Issuer of the license certificate. This is the Issuer DN untransformed in binary form out of the X.509 certificate.
+
+        * It will always will be "Qualcomm". This along with the serial number is needed as input for the CMS encryption format
+
+        * to identify the key to use for decryption.
+
+        * SubjectKeyID --- Needed for COSE-format encryption to identify the encrypting key
+
+        * SubjectDN --- This is the Subject DN untransformed in binary form out of the X.509 certificate. It contains the name of the licensee.
+
+        * It is also referred to as the CCN, the Company Canonical Name. Its main use is to create privacy-preserving device IDs. (They are not created here).
+
+        * It is also used as part of Licensee Data Protection.
+
+        * Expiration --- Expiration date of the license.
+
+        * LicenseeHashes - LicenseeHashes corresponding to the license.
+
+        * FIDs - FIDs corresponding to the license
+
+        * FIDRanges - FID Ranges corresponding to the license
+
+        * LicenseRestrictions - Output for License Restrictions for OEMID, DeviceID, HWVersion, PKHash, LicenseeHash
+
+        *CDDL Format for LicenseInfoCBOR
+        *-------------------------------
+        * {
+        * "FileName" : string
+        * "SerialNumber" : buffer
+        * "Issuer" : string
+        * "SubjectKeyID" : buffer
+        * "SubjectDN" : string
+        * "Expiration" : buffer
+        * "LicenseeHashes" : buffer
+        * "FIDs" : [*uint32]
+        * "FIDRanges" : [*[uint32, uint32]]
+        * "LicenseRestrictions" : uint64
+        *  "Flag" : uint64_t
+        *}
+
+        * LicenseInfoCBOR Example
+        * ----------------------
+
+        * {
+        * "FileName" : 100-100-876548971.pfm
+        * "SerialNumber" :3456781
+        * "Issuer" : 2561781
+        * "SubjectKeyID" : 156788
+        * "SubjectDN" : 78900
+        * "Expiration" : 1789900
+        * "LicenseeHashes" : 1223333
+        * "FIDs" : [1,2,3]
+        * "FIDRanges" : [[2,3], [10,15]]
+        * "LicenseRestrictions" : 1
+        * "Flag" : 8
+        * }
+
+        * @return
+        *        - Object_OK on success else error out
+
+        */
+        method GetInstalledLicenseInfo(in buffer LicenseSerialNumber, out buffer LicenseInfoCBOR);
+
+
+
+
+
+
+        /**  This API is called when the user passes the License buffer and also an individual feature to determine if they can run on the device i.e. if they have
+
+        * access/privilege to use the particular feature on the device
+
+        * @param[in] PFMLicense --- Actual license certificate file
+
+        * @param[in] FeatureID --- The feature ID of the feature that wants to run
+
+        * @param[in] LicenseeHash --- Optional. Used when feature is licensed to individual Android apps(LicenseeCertHash). SHA256 hash of the licensee's Android Code Signing
+
+        * Certificate.Length is 0 if absent
+
+        * @param[out] LicenseBufferCBOR
+
+        * LicenseSerialNumber --- serial number of the license
+
+        * PublicKey --- Public key of the license certificate. It is returned in case the caller wants to use it for encryption or signature verification.
+
+        * For example Haven Token uses it to encrypt in CMS format and QSSP uses it to verify signatures.
+
+        * Issuer --- Issuer of the license certificate. This is the Issuer DN untransformed in binary form out of the X.509 certificate.
+
+        * It always will be "Qualcomm". This along with the serial number is needed as input for the CMS encryption format to identify the key to use for decryption.
+
+        * SubjectKeyID --- Needed for COSE-format encryption to identify the encrypting key
+
+        * SubjectDN --- This is the Subject DN untransformed in binary form out of the X.509 certificate. It contains the name of the licensee.
+
+        * It is also referred to as the CCN, the Company Canonical Name. Its main use is to create privacy-preserving device IDs. (They are not created here).
+
+        * It is also used as part of Licensee Data Protection.
+
+        * Expiration --- Expiration date of the license.
+
+        * LicenseeHashes - LicenseeHashes corresponding to the license.
+
+        * FIDs - FIDs corresponding to the license
+
+        * FIDRanges - FID Ranges corresponding to the license
+
+        * LicenseRestrictions - Output for License Restrictions for OEMID, DeviceID, HWVersion, PKHash, LicenseeHash
+
+        *CDDL Format for LicenseInfoCBOR
+        *-------------------------------
+        * {
+        * "SerialNumber" : buffer
+        * "Issuer" : string
+        * "SubjectKeyID" : buffer
+        * "SubjectDN" : string
+        * "Expiration" : buffer
+        * "LicenseeHashes" : buffer
+        * "FIDs" : [*uint32]
+        * "FIDRanges" : [*[uint32, uint32]]
+        * "LicenseRestrictions" : uint64
+        *  "Flag" : uint64_t
+        *}
+
+        * LicenseInfoCBOR Example
+        * ----------------------
+
+        * {
+        * "SerialNumber" :3456781
+        * "Issuer" : 2561781
+        * "SubjectKeyID" : 156788
+        * "SubjectDN" : 78900
+        * "Expiration" : 1789900
+        * "LicenseeHashes" : 1223333
+        * "FIDs" : [1,2,3]
+        * "FIDRanges" : [[2,3], [10,15]]
+        * "LicenseRestrictions" : 1
+        * "Flag" : 8
+        * }
+
+        * @return
+        *         - Object_OK on success else error out
+
+        */
+        method CheckLicenseBuffer(in buffer PFMLicense, in uint32 FeatureID, in buffer LicenseeHash, out buffer LicenseBufferCBOR);
+
+
+
+
+
+
+        /** This API is similar to check() API except that it does not support LicenseeHash option. This is called from a feature in modem and uses QSEE encap/decap facility
+
+        * to sign and encrypt the messages to/from HLOS
+
+        * @param[in] SecuredRequest --- request is sent in a buffer
+
+        * @param[out] SecuredResponse --- response is sent in a buffer
+
+        * @result
+        *        - Object_OK on success else error out
+        */
+
+        method CheckSecured(in buffer SecuredRequest, out buffer SecuredResponse);
+
+
+
+
+
+
+        /** This API examines and verifies every license, and returns an aggregate list of featured IDs across all installed licenses. During this API call,
+
+        * all invalid licenses are deleted.
+
+        * @param[out] FeatureIDsCBOR --- CBOR formatted data out for FIDs and FIDRanges
+
+        * @return
+        *       - Object_OK on success else error out
+
+        * CDDL for FeatureIDsCBOR
+        * -----------------------
+
+        * FeatureIDsCBOR = {
+        *      FIDs: [*uint32],
+        *      FIDRanges: [*[uint32, uint32]]
+        * }
+
+        * This is the format and fields for the FeatureIDsCBOR data. The actual data returned is binary
+
+        * CBOR. What's shown here is CBOR diagnostic, a JSON-like text version  of it.
+
+        * FeatureIDsCBOR Example
+        * -----------------------
+        * FeatureIDsCBOR = {
+        *   "FIDs" : [1,2,3],
+        *   "FIDRanges" : [[1,2],[3,4]]
+        * }
+
+        */
+        method GetAllInstalledFeatureIDs(out buffer FeatureIDsCBOR);
+
+
+
+
+
+
+        /** This API iterates over all the licenses in the license store and gives the caller a list of serial numbers, one for each license.
+
+        * Then use the list to report the list of licenses present, to get the details of the licenses, to know which license to remove, etc...
+
+        * @param[out] SerialNumbersCBOR - Gives out all the serial numbers in CBOR format corresponding to all the licenses that are installed
+
+        * @return
+        *         - Object_OK on success else error out
+
+
+        * This is the format and fields for the SerialNumbersCBOR data. The actual data returned is binary
+
+        * CBOR. What's shown here is CBOR diagnostic, a JSON-like text version  of it.
+
+        * CDDL for SerialNumbersCBOR
+        * -----------------------
+        * SerialNumbersCBOR data
+        * [*buffer]
+
+        * SerialNumbersCBOR Example
+        * -----------------------
+
+        * SerialNumbersCBOR data
+        * [1234561, 34345098, 567456]
+
+        */
+
+        method GetAllInstalledSerialNumbers(out buffer SerialNumbersCBOR);
+
+
+
+
+
+
+       /** This API checks whether a list of Feature IDs are valid or not and returns the corresponding License serial numbers
+
+        * @param[in] RequestCBOR --- CBOR formatted data for FeatureID and LicenseeHash
+
+        * @param[out] ResponseCBOR --- Gives out all the serial numbers in CBOR format and the error codes correspong to the feature ID
+
+        * @return
+        *         - Object_OK on success else error out
+
+       * CDDL for RequestCBOR for version 0
+       *-----------------------------------
+
+       * RequestCBOR =
+
+       * {
+       *   "version" : "0000"
+       * [
+       *  *[uint32, buffer]
+       * ]
+       * }
+
+       * FeatureIDs = (HavenToken, PVC, SecureCamera, QSSP, App protect, Access protect, SecureProcessor)
+
+       *   RequestCBOR Format for version 0
+       *   --------------------------------
+
+       *  RequestCBOR =
+       *  {
+       *   "blobVersion" : "0000"
+       *  [
+       *     *[FeatureIDs, LicenseeHash],
+       *  ]
+       * }
+
+
+       * Example :
+       * This is the format and fields for the RequestCBOR data (Feature ID and LicenseeHash). The actual data returned is binary
+       * CBOR. What's shown here is CBOR diagnostic, a JSON-like text version  of it.
+
+       * [ [1,1223456766],
+       *   [2,1003008900],
+       *   [3,1502005678]
+       * ]
+
+
+       * ResponseCBOR Format for version 0
+       *  ---------------------------------
+
+       * ResponseCBOR = [
+       *  *[uint32, buffer, buffer, uint32, uint64_t]
+       * ]
+
+       * ResponseCBOR = [
+       *  *[FeatureID, LicenseeHash, SerialNumber, ResponseCode, Flag]
+       * ]
+
+       * Example :
+
+       * This is the format and fields for the ResponseCBOR data (FeatureID, LicenseeHash, SerialNumber and ResponseCode). The actual data returned is binary CBOR. What's shown here is CBOR diagnostic, a JSON-like text version  of it.
+
+
+       * [[1, 122344, 123456, ResponseCode], [100, 178930903, 34345098,ResponseCode], [800, 45678909, 56745,ResponseCode]]
+
+       * CDDL for RequestCBOR for version 1
+       *-----------------------------------
+
+       * RequestCBOR =
+
+       * {
+       *   "version" : "1"
+       * [
+       *  *[uint32, buffer]
+       * ]
+       * }
+
+       * FeatureIDs = (HavenToken, PVC, SecureCamera, QSSP, App protect, Access protect, SecureProcessor)
+
+       *   RequestCBOR Format for version 1
+       *   --------------------------------
+
+       *  RequestCBOR =
+       *  {
+       *   "blobVersion" : "1"
+       *  [
+       *     *[FeatureIDs, LicenseeHash],
+       *  ]
+       * }
+
+       * ResponseCBOR Format for version 1
+       *  ---------------------------------
+
+       * ResponseCBOR = [
+       *  *[uint32, buffer, buffer, uint32, buffer, uint64_t]
+       * ]
+
+       * ResponseCBOR = [
+       *  *[FeatureID, LicenseeHash, SerialNumber, ResponseCode, ExtraData, Flag]
+       * ]
+
+       */
+       method CheckFeatureIds(in buffer RequestCBOR, out buffer ResponseCBOR);
+
+
+
+
+
+
+       /** This API checks for a FeatureID is valid or not and returns the corresponding License serial numbers and LicenseRestrictions
+
+        * @param[in] RequestCBOR --- CBOR formatted data for FeatureID and LicenseeHash
+
+        * @param[out] SerialNumAndLicRestrictionCBOR --- Gives out all the serial numbers and LicenseRestrictions in CBOR format corresponding to the FeatureID
+
+        * @return
+        *         - Object_OK on success else error out
+
+       * CDDL for RequestCBOR
+
+       * FeatureIDs = (HavenToken, PVC, SecureCamera, QSSP, App protect, Access protect, SecureProcessor)
+
+       *   RequestCBOR Format for version 0
+       *   --------------------------------
+
+       *  RequestCBOR =
+       *  {
+       *   "version" : "0000"
+       *  [
+       *     *[FeatureIDs, LicenseeHash],
+       *  ]
+       * }
+
+       * RequestCBOR =
+
+       * {
+       *   "version" : "0000"
+       * [
+       *  *[uint32, buffer]
+       * ]
+       * }
+
+       * CDDL for SerialNumAndLicRestrictionCBOR for version 0
+       *  ----------------------------------------------------
+
+       * SerialNumAndLicRestrictionCBOR =
+       *  [*{
+       *      uint32
+       *      buffer
+       *      [*{buffer, uint64}]
+       *      uint32
+       *      uint64
+       *    }
+       * ]
+
+       * SerialNumAndLicRestrictionCBOR =
+       *  [*{
+       *    FID
+       *    LicenseeHash
+       *    [{SerialNum, LicenseRestrictions}]
+       *    Response
+       *    Flag
+       *   }
+       * ]
+
+       * Example :
+
+       * This is the format and fields for the SerialNumAndLicRestrictionCBOR data (FeatureID, LicenseeHash, SerialNumber, LicenseRestrictions and Response). The actual data returned is binary CBOR. What's shown here is CBOR diagnostic, a JSON-like text version  of it.
+
+
+       * [
+       *   {"FID" : 100
+       *    "LicenseeHash" : NULLUsefulBufC
+       *    "Result" : [{"SerialNum" : 23456
+       *                  "LicenseRestrictions" : 1200
+       *                },
+       *                {"SerialNum" : 234534
+       *                  "LicenseRestrictions" : 1200
+       *                }
+       *               ]
+       *    "Response" : 0
+       *     "Flag" : 8
+       *    },
+
+       *    {"FID" : 200
+       *     "LicenseeHash" : 234568
+       *     "Result" : [{"SerialNum" : 23454
+       *                  "LicenseRestrictions" : 1200
+       *                 },
+       *                 {"SerialNum" : 234123
+       *                   "LicenseRestrictions" : 1200
+       *                 }
+       *                ]
+       *    "Response" : 0
+       *    "Flag" : 8
+       *     },
+
+       *   .......
+       * ]
+
+
+       *   RequestCBOR Format for version 1
+       *   --------------------------------
+
+       *  RequestCBOR =
+       *  {
+       *   "version" : "1"
+       *  [
+       *     *[FeatureIDs, LicenseeHash],
+       *  ]
+       * }
+
+       * RequestCBOR =
+
+       * {
+       *   "version" : "1"
+       * [
+       *  *[uint32, buffer]
+       * ]
+       * }
+
+       * CDDL for SerialNumAndLicRestrictionCBOR for version 1
+       *  ----------------------------------------------------
+
+       * SerialNumAndLicRestrictionCBOR =
+       *  [*{
+       *      uint32
+       *      buffer
+       *      [*{buffer, uint64, buffer}]
+       *      uint32
+       *      uint64
+       *    }
+       * ]
+
+       * SerialNumAndLicRestrictionCBOR =
+       *  [*{
+       *    FID
+       *    LicenseeHash
+       *    [{SerialNum, LicenseRestrictions, ExtraData}]
+       *    Response
+       *    Flag
+       *   }
+       * ]
+
+
+       */
+       method CheckFIDAndGetAllSerialNums(in buffer RequestCBOR, out buffer SerialNumAndLicRestrictionCBOR);
+
+
+
+       /** This API sets the required option
+
+       * @param[in] uOpts ---  sets the Options such as LICENSE_OPT_NO_OEMID_CHECK , LICENSE_OPT_TRUST_INSECURE_CLK etc
+
+       * @result
+       *        - Object_OK on success else error out
+
+       */
+
+       method SetOptions(in uint64 uOpts);
+
+
+      /** This API removes all installed licenses.
+
+      * @param[in] LicenseSerialNumber --- Serial number of the license
+
+      * @result
+      *       - Object_OK on success else error out
+
+      */
+
+      method RemoveLicense(in buffer LicenseSerialNumber);
+
+
+
+      /** This API removes any installed licenses that have expiration date before the current date known by the license manager
+
+       * @result
+       *       - Object_OK on success else error out
+
+      */
+
+      method RemoveLicenseExpired();
+
+
+      /** This API returns the license that was installed in PFM format
+
+      * @param[in] LicenseSerialNumber --- Serial Number of the license
+
+      * @param[out] PFMLicense --- License Info in PFM format
+
+      * @result
+      *        - Object_OK on success else error out
+
+       */
+      method GetLicenseCertPFM(in buffer LicenseSerialNumber, out buffer PFMLicense);
+
+};

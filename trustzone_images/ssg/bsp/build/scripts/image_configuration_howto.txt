@@ -1,0 +1,74 @@
+How to use new image configuration APIs:
+
+env.FeatureIsEnabled(feature)
+  - returns True if feature is enabled
+  - Specifically, returns True if feature in `env['enabled_features'] and feature not in env['disabled_features']`
+  - these env values must be set through config files.
+env.AddFeatureSources(images, feature, sources, stubs)
+  - Wrapper around env.AddObject
+  - if feature is enabled, the implementing files (sources) are used to build with
+  - if feature is disabled, the stubs files are used to build with
+env.AddFeatureLibrary(images, libpath, feature, sources, stubs)
+  - Wrapper around env.AddLibrary
+  - if feature is enabled, the implementing files (sources) are used to build with
+  - if feature is disabled, the stubs files are used to build with
+env.UIDToClassNum(uid_str)
+  - returns and int value of the given uid_str.
+  - uid_str can be either long form
+    - e.g.
+      - 'CApp_UID'
+      - 'CSecureCamera_UID'
+  - or short fold
+    - e.g.
+      - 'app'
+      - 'securecamera'
+env.AddBoolConfigVar(config_name,
+                        help="",
+                        default_value=None,
+                        enable_map={},
+                        disable_map={},
+                        enable_if=None)
+  - wrapper around SCons BoolVariable
+  - supports setting environment vars in case of the variable itself being enabled/disabled through the commandline
+    or config file
+  - enable_map, disable_map
+    - dictionaries of environment variable string to value
+    - enable_map is added to env if config_name is set to true AND (enable_if(env) returns True or enable_if is None)
+    - disable_map is added to env if config_name is set to false OR enable_if(env) returns False
+  - enable_if
+    - function with following signature
+      enable_if(env) --> Bool
+    - allows for more complex decision making to enable/disable features than simple on/off switch
+  - works in conjunction with env.AddConfigVars(files, args)
+  - see env.AddConfigVars(files, args) for example usage
+
+env.AddConfigVars(files, args)
+  - takes in config files to read, as well as the scons variables / BoolConfigVars to configure
+  - multiple files may be read. later files in list have higher priority when configuring the same variable
+  - args must be a list of tuples of scons config files as documented here: https://scons.org/doc/3.0.1/HTML/scons-user/ch10s02.html
+    - can also be the return value from env.AddBoolConfigVar
+  - example usage:
+  env.AddConfigVars(['/path/to/my/config/file.conf'],
+  [
+    env.AddBoolConfigVar('debug','debug',0,{'CCFLAGS':' -g ','CPPDEFINES':'DEBUG'},{'CPPDEFINES':'NDEBUG'}),
+    ('lib_path','path to user libraries','/bad/path/must/be/in/config/file'),
+  ])
+  - in this case, if debug=1 is specified on the commandline or file.conf, DEBUG is added to CPPDEFINES and -g is added to CCFLAGS
+  - otherwise, NDEBUG is added to CPPDEFINES
+
+env.AddCommandlineArgument(variable)
+  - Takes in a SCons Variable (documented below), parses ARGUMENTS for it, and adds result to the env.
+  - example usage:
+  
+  env.AddCommandlineArgument(env.BoolVariable('enable_debug','compile with -Og',0))
+  if env.get('enable_debug'):
+    env.Append(CCFLAGS=' -g ')
+    
+    
+    
+These are all wrappers around the builtin SCons methods. See https://scons.org/doc/3.0.1/HTML/scons-user/ch10s02.html for more info.
+  env.BoolVariable(key, help, default)
+  env.EnumVariable(key, help, default, allowed_values, map={}, ignorecase=0)
+  env.ListVariable(key, help, default, names, map={})
+  env.PackageVariable(key, help, default, searchfunc=None)
+  env.PathVariable(key, help, default, validator=None)

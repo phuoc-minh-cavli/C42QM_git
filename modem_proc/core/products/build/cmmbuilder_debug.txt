@@ -1,0 +1,8 @@
+Dictionary Debug:image:MPSS
+ 
+scripts:{'core/systemdrivers/vcs/scripts/VCS.cmm': ['VCS'], 'core/systemdrivers/pmic/scripts/PMICPeek.cmm': 'PMIC Peek/Poke', 'core/systemdrivers/pmic/scripts/PMICDump.cmm': 'PMIC Dump', 'core/systemdrivers/clock/scripts/Clock.cmm': ['Clocks', 'mdm9205'], 'core/systemdrivers/hwio/scripts/mdm9205/hwioreg.per': ['HWIO', '']}
+ 
+Arguments:[]
+ 
+area:Systemdrivers
+ 

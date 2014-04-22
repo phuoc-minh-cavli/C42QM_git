@@ -1,0 +1,473 @@
+;============================================================================
+;  Name:
+;    BLOCKUTIL.CMM
+;
+;  Description:
+;    NAND block utility for Lauterbach JTAG/ICD TRACE32.
+;
+;  Execution:
+;    Inside the debugger, type at the command line: "do blockutil".  Make
+;    menu choices as directed.
+;
+;  Copyright (c) 2008-2011, 2014-2016, 2019 Qualcomm Technologies, Incorporated.  
+;  All Rights Reserved.
+;  Qualcomm Confidential and Proprietary
+;----------------------------------------------------------------------------
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+;
+; when       who     what, where, why
+; -------    ---     --------------------------------------------------------
+; 11/06/19   sl     Added Hidden option to mark all blocks as good
+; 04/16/19   sl     Remove any reference to "0:"
+; 08/17/16   eo     Fix WinPOS compatibility issue with latest t32 builds 
+; 05/07/15   sb     Update settings for 9x55 Virtio
+; 06/04/14   sb     Update to support 9x45
+; 03/21/11   jz     Updated to support new T32 versions
+; 04/15/10   jz     Added 2X support
+; 03/30/10   bb     Fix for nand_error.cmm call when erase fails
+; 05/04/09   eo     Move terminal view setup after script variables are set.
+; 10/30/08   mm     Created
+;============================================================================;
+
+
+
+;============================================================================
+; Declare variables used
+;============================================================================
+local &DoDebug
+local &Verbose
+local &ClearWin
+local &Choice
+local &HideWarning
+local &PauseTime
+local &BlockToMark
+local &BlockToErase
+local &CurrentCmd
+local &DefaultMode
+
+;============================================================================
+; Set up some defaults for some variables
+;============================================================================
+&DoDebug="no"         ; Do not do debugging
+&Verbose="yes"        ; Do not present status messages as we process
+&ClearWin="yes"       ; Remove all windows before starting
+&PauseTime="10.ms"    ; Time to pause without action
+&HideWarning="no"     ; Set to "no" to show warning message at least once
+&ResetPartitionConfig=0 ; Default to not reconfigure partition
+
+;============================================================================
+; For normal use set up the screen with only area window for reports
+; For debug purposes, don't clear
+; In both cases, make sure we have an area window
+;============================================================================
+if "&ClearWin"=="yes"
+(
+  WinCLEAR
+  WinPage.Reset
+)
+
+;============================================================================
+; Set some MSM specific variables used later in flash.target command
+;    &NandCodeAddr=
+;    &NandParamAddr=
+;    &NandCpuType=
+;============================================================================
+do nand_param
+
+;============================================================================
+; 1) Set variables used to set up the JTAG debugger for this MSM
+; 2) Init important MSM/ASB registers
+;    use existing external script that is MSM specific
+;============================================================================
+do &NandConfigDir/nand_msm_init
+
+
+;-------------------------------------------------------------------------------
+; Set some variables used later on to peek and poke parameter block
+;   This script file is sourced by both nand.cmm and nandtest.cmm
+;-------------------------------------------------------------------------------
+do nand_init.cmm
+
+;-------------------------------------------------------------------------------
+; Initialize 2X mode to Disabled
+;-------------------------------------------------------------------------------
+&DefaultMode=&Mode2XDisabled
+
+;======================================================
+; Load our flash programming routine and prepare flash
+;======================================================
+d.load.elf "&NandJtagToolsDir/NandJtagTools.elf"
+
+; need this breakpoint as per Lauterbach Spec so that we
+; can hand back control to the Debugger
+break.delete /ALL
+break.set hanghere /onchip /program
+
+;============================================================================
+; Present user with normal main menu for NAND.  Manual selection is done.
+;============================================================================
+area.clear NAND
+
+MainMenu:
+  print
+  print
+        print "------------------------------------------------"
+        print "|           _   _    _    _   _ ____           |"
+        print "|          | \ | |  / \  | \ | |  _ \          |"
+        print "|          |  \| | / _ \ |  \| | | | |         |"
+        print "|          | |\  |/ ___ \| |\  | |_| |         |"
+        print "|          |_| \_/_/   \_\_| \_|____/          |"
+        print "|                                              |"
+        print "|                                              |"
+        print "|                Block Utility                 |"
+        print "|                                              |"
+        print "|                                              |"
+        print "|     Copyright (c) 2004 by QUALCOMM, Inc.     |"
+        print "|                                              |"
+        print "------------------------------------------------"
+        print
+  print
+  print " 0: Exit"
+  print " 1: Print list of bad blocks"
+  print " 2: Mark block as bad"
+  print " 3: Mark block as good"
+  print " 4: Erase block"
+  print
+  print " Please make a choice: "
+
+  &t32_cmm_stopped=1
+  enter &Choice
+  &t32_cmm_stopped=0
+  print
+  print
+
+  if "&Choice"=="" 
+  (
+    goto MainMenu
+  )
+
+  if &Choice==0
+  (
+    print "...exiting NAND Flash Programmer"
+    gosub CleanUpExit
+    enddo
+  )
+
+  if &Choice==1
+  (
+    ;print "Printing list of bad blocks"
+    print
+    print
+    gosub PrintBadBlocks
+  )
+
+  if &Choice==2
+  (
+    ;print "Mark block as bad"
+    if "&HideWarning"=="no"
+    (
+      gosub WarnUser
+    )
+    print
+    print
+    gosub MarkBlockBad
+  )
+
+  if &Choice==3
+  (
+    ;print "Mark block as good"
+    if "&HideWarning"=="no"
+    (
+      gosub WarnUser
+    )
+    print
+    print
+    gosub MarkBlockGood
+  )
+
+
+  if &Choice==4
+  (
+    print
+    print
+    gosub EraseBlock
+  )
+
+  if &Choice==0xDEAD
+  (
+    print " !!!! You are about to mark all blocks as good !!!!"
+    print " !!!! if you don't know what you are doing enter no !!!!"
+    if "&HideWarning"=="no"
+    (
+      gosub WarnUser
+    )
+    print
+    print
+    gosub MarkAllBlockGood
+  )
+
+ goto MainMenu
+
+enddo
+
+
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+;
+;  SUBROUTINES
+;
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+;=====================================================
+; --- Function to clean up just before exit
+;=====================================================
+CleanUpExit:
+   ;--------------------------------------------------------
+   ; ok we're finished completely, clean up for exit
+   ;--------------------------------------------------------
+   winclear
+   ;sys.d
+   b.delete /all
+   ;sys.u
+return
+
+
+;=====================================================
+; --- Function to check command status return
+;       and exit if 0x100
+;=====================================================
+check_status:
+   wait !run()
+   do print_output_buffer
+   &Result=data.long(A:&ParmStatus)
+   if &Result==0x100
+   (
+     print " "
+     print "---- &Command failed"
+     &Result=data.long(A:&ParmReserved)
+     do flash_prog_error &Result
+     print " "
+     print "EXITING due to failed command:: &Command"
+     end
+   )
+   else
+   (
+     if (&Result==&CurrentCmd)
+     (
+       print " "
+       print "----  DID NOT COMPLETE &Command"
+       print " "
+       print "EXITING due to failed command:: &Command"
+       end
+     )
+     else
+     (
+       if "&Verbose"=="yes"
+       (
+         print "+++++ &Command Succeeded"
+       )
+     )
+   )
+return
+
+;=====================================================
+; --- Function to print bad block list
+;=====================================================
+PrintBadBlocks:
+  &Command="Print bad block list"
+  data.set &ParmCmd %LONG &BadBlockCmd
+  &CurrentCmd=&BadBlockCmd
+  r.s pc &StartAddr
+  go
+  if &ResetPartitionConfig==1
+  (
+    gosub reconfigure_partition
+    go
+  )
+  gosub check_status  ;; will not return if error
+
+return
+
+
+;=====================================================
+; --- Function to mark a block as bad
+;=====================================================
+MarkBlockBad:
+  &Command="Mark Block Bad"
+  print
+  print " Please Enter block number to mark as BAD:   "
+
+  &t32_cmm_stopped=1
+  enter &BlockToMark
+  &t32_cmm_stopped=0
+  print
+  print "Block &BlockToMark will be marked BAD"
+
+  data.set &ParmAddr %LONG &BlockToMark
+  data.set &ParmCmd %LONG &MarkBlockBadCmd
+  &CurrentCmd=&MarkBlockBadCmd
+  r.s pc &StartAddr
+  go
+  if &ResetPartitionConfig==1
+  (
+    gosub reconfigure_partition
+    go
+  )
+  gosub check_status  ;; will not return if error
+
+return
+
+
+;=====================================================
+; --- Function to mark a block as good
+;=====================================================
+MarkBlockGood:
+  &Command="Mark Block Good"
+  print
+  print " Please Enter block number to mark as GOOD:   "
+
+  &t32_cmm_stopped=1
+  enter &BlockToMark
+  &t32_cmm_stopped=0
+  print
+  print "Block &BlockToMark will be marked GOOD"
+
+  data.set &ParmAddr %LONG &BlockToMark
+  data.set &ParmCmd %LONG &MarkBlockGoodCmd
+  &CurrentCmd=&MarkBlockGoodCmd
+  r.s pc &StartAddr
+  go
+  if &ResetPartitionConfig==1
+  (
+    gosub reconfigure_partition
+    go
+  )
+  gosub check_status  ;; will not return if error
+
+return
+
+;=====================================================
+; --- Function to mark all blocks as good
+;=====================================================
+MarkAllBlockGood:
+  &Command="Mark Block Good"
+  print
+  &t32_cmm_stopped=1
+  &EndBlock=0x200
+  &BlockToMark=0
+  print " Please Enter start block number to mark as GOOD:   "
+  enter &BlockToMark
+
+  print " Please Enter end block number to mark as GOOD:   "
+  enter &EndBlock
+  &t32_cmm_stopped=0
+  while &BlockToMark<&EndBlock
+  (
+    print
+    ;print "Block &BlockToMark will be marked GOOD"
+
+    data.set &ParmAddr %LONG &BlockToMark
+    data.set &ParmCmd %LONG &MarkBlockGoodCmd
+    &CurrentCmd=&MarkBlockGoodCmd
+    r.s pc &StartAddr
+    go
+    if &ResetPartitionConfig==1
+    (
+      gosub reconfigure_partition
+      go
+    )
+    gosub check_status  ;; will not return if error
+    &BlockToMark=&BlockToMark+1
+  )
+return
+
+
+
+;=====================================================
+; --- Function to print warning to user and confirm
+;=====================================================
+
+WarnUser:
+
+print "      "
+print "      __        __               _             "
+print "      \ \      / /_ _ _ __ _ __ (_)_ __   __ _ "
+print "       \ \ /\ / / _` | '__| '_ \| | '_ \ / _` |"
+print "        \ V  V / (_| | |  | | | | | | | | (_| |"
+print "         \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |"
+print "                                         |___/ "
+print " "
+print
+print
+print
+print " You are about to do an operation that may render"
+print " the NAND flash unusable permanantly !!!"
+print " "
+print " If you are not sure about what you are doing"
+print " please ask someone who does."
+print
+print " "
+print " Please enter YES to continue, any other value will abort::     "
+
+&t32_cmm_stopped=1
+enter &HideWarning
+&t32_cmm_stopped=0
+print
+print
+
+if "&HideWarning"=="YES"
+(
+  return
+)
+else
+(
+  print "Bailed out! Returning to Main Menu..."
+  gosub MainMenu
+)
+
+return
+
+
+
+;=====================================================
+; --- Function to erase a block
+;=====================================================
+EraseBlock:
+  &Command="Erase Block"
+  print
+  print " Please Enter block number to be erased:   "
+
+  &t32_cmm_stopped=1
+  enter &BlockToErase
+  &t32_cmm_stopped=0
+  print
+  print "Block &BlockToErase will be erased"
+
+  data.set &ParmAddr %LONG &BlockToErase
+  data.set &ParmCmd %LONG &EraseBlockCmd
+  &CurrentCmd=&EraseBlockCmd
+  r.s pc &StartAddr
+  go
+  if &ResetPartitionConfig==1
+  (
+    gosub reconfigure_partition
+    go
+  )
+  gosub check_status  ;; will not return if error
+
+return
+
+;=====================================================
+; --- Function to reset ECC state of all partition
+;=====================================================
+reconfigure_partition:
+  wait !run()
+  V client_ctxt->client_data.mode_2x_enabled = &DefaultMode
+  break.set hanghere /onchip /program
+  &ResetPartitionConfig=0
+
+return
+
+END

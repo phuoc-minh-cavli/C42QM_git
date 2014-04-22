@@ -1,0 +1,139 @@
+#===============================================================================
+#
+# Network Service AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2019 by QUALCOMM Technologies, Inc. All Rights Reserved.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = " --diag_suppress=66 ")
+	env.Append(CCFLAGS = " --diag_suppress=550 ")
+
+#env.Append(CCFLAGS = ' -DHAS_PKA')
+#env.Append(CPPDEFINES = 'HAS_PKA')
+#if env.get('USES_CORTEXM4') :
+
+#------------------------------------------------------------------
+# Setup source PATH
+#------------------------------------------------------------------
+SRCPATH = "${SHARKSSL_ROOT}/"
+SRCPATH_DTLS = "${SHARKSSL_DTLS_ROOT}/"
+
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.VariantDir('${BUILDPATH}/DTLS', SRCPATH_DTLS, duplicate=0)
+
+##------------------------------------------------------------------
+## Necessary Public and Restricted API's
+##------------------------------------------------------------------
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi('NICHESTACK')
+
+#env.RequirePublicApi('NICHESTACK_PORT'),
+#    area=env.subst("${NETSERVICE_PORTING_AU}"))
+env.RequirePublicApi('NICHESTACK_PORT')
+env.RequirePublicApi(['NICHESTACK'])
+#env.RequirePublicApi('SHARKSSL_PORT',
+#    area='quartz' )
+env.RequirePublicApi('SHARKSSL_PORT')
+
+#env.RequirePublicApi('SHARKSSL', area='netservice')
+env.RequirePublicApi('SHARKSSL')
+env.RequireRestrictedApi(['PICOTLS'])
+
+#env.RequirePublicApi('PKA', area='crypto')
+#env.RequirePublicApi('PKA')
+
+#env.RequirePublicApi('CRYPTOLIB', area='crypto')
+#env.RequirePublicApi('CRYPTO_QAPI', area='crypto')
+#env.RequirePublicApi('CRYPTO_PORT', area='quartz')
+env.RequirePublicApi('CRYPTOLIB')
+env.RequirePublicApi('CRYPTO_QAPI')
+env.RequirePublicApi('CRYPTO_PORT')
+env.RequireRestrictedApi(['DS_UTILS'])
+#env.Append(CCFLAGS = '-Werror-all')
+#env.Append(CCFLAGS  = ' -std=c99')
+if 'USES_MOB' not in env:
+	env.Append(CFLAGS = " --c99 ")
+
+#------------------------------------------------------------------
+# Generate the library and add to an image
+#------------------------------------------------------------------
+
+SHARKSSL_TOOLS_SRC = [
+    '${BUILDPATH}/tools/SharkSSLParseCAList.c',
+    '${BUILDPATH}/tools/SharkSSLParseCert.c',
+    '${BUILDPATH}/tools/SharkSSLParseKey.c',
+    '${BUILDPATH}/tools/SharkSSLParsePSKTable.c',
+    ]
+
+ROM_SOURCES = [ '${BUILDPATH}/src/SharkSSL.c',
+                '${BUILDPATH}/src/SharkSslCipher.c',
+                '${BUILDPATH}/src/SharkSslCon.c',
+                '${BUILDPATH}/src/SharkSslCrypto.c',
+                '${BUILDPATH}/src/SharkSslCryptoLib.c',
+                '${BUILDPATH}/src/SharkSslEx.c',
+                '${BUILDPATH}/src/util/SharkSslSCMgr.c',
+                '${BUILDPATH}/src/util/SplayTree.c',                    
+                '${BUILDPATH}/DTLS/src/SharkSslCon_DTLS.c',
+                ]
+
+RAM_SOURCES = [ '${BUILDPATH}/src/SharkSslCert.c',
+                '${BUILDPATH}/src/SharkSslCon_hs.c',
+                '${BUILDPATH}/src/SharkSslBigInt.c',
+                '${BUILDPATH}/src/SharkSslECC.c',
+                '${BUILDPATH}/src/SharkSslPublic.c',
+                '${BUILDPATH}/src/SharkSslPublicHwAccelerated.c',
+                '${BUILDPATH}/DTLS/src/SharkSslCon_DTLS_hs.c',
+                ]
+    
+# The following objects are to be placed in XIP
+
+DATASERVICES_SOURCES = [
+                ROM_SOURCES,
+                RAM_SOURCES,
+                ]
+
+IMAGES = ['DATA_TN', 'APPS_PROC', 'APPS_IMAGE','MOB_DATASERVICES']
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/sharkssl'), DATASERVICES_SOURCES)
+
+#XIP_SOURCES = RAM_SOURCES
+
+# Compile the source and convert to a binary library
+#env.AddObject(['IOE_ROM'], ROM_SOURCES)
+#env.AddIndirectionObject(['IOE_ROM_IPT'], ROM_SOURCES)
+
+#env.AddBinaryLibrary(['IOE_RAM','IOE_RAM_IPT'],
+#                     '${BUILDPATH}/sharkssl', RAM_SOURCES)
+#if 'USES_AUTOSCL' in env:
+#    env.AddScatterObj(['IOE_RAM','IOE_RAM_IPT'], XIP_SOURCES, 'XIP_OEM_RO_REGION')
+
+#------------------------------------------------------------------
+# Instruct build system to look for files at the next level down
+#------------------------------------------------------------------
+env.LoadSoftwareUnits()

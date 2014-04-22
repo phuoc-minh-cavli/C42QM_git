@@ -1,0 +1,41 @@
+#===============================================================================
+#
+# Dataservices APSS TX Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/netservice/build/dataservices_netservice.api#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('NICHESTACK_PORT', [
+    "${INC_ROOT}/dataservices/netservice/net/ipstack/port",
+])
+
+env.PublishPublicApi('SHARKSSL_PORT', [
+    "${INC_ROOT}/dataservices/netservice/net/ssl/port",
+    "${INC_ROOT}/dataservices/netservice/net/ssl/src",
+])
+
+env.PublishPublicApi('DATASERVICES_NET_IPSTACK', [
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/port",
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/socket/include",
+   ])
+   
+env.PublishPublicApi('NICHESTACK', [
+   "${NICHESTACK_INC_ROOT}/h",
+   "${NICHESTACK_INC_ROOT}/tcp",
+])
+
+env.LoadAPIUnits()

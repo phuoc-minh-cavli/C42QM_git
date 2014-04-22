@@ -1,0 +1,31 @@
+
+#===============================================================================
+#
+# RTOS Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+
+Import('env')
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qtee_invoke/driver/src/")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy/src/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+env.LoadSoftwareUnits()

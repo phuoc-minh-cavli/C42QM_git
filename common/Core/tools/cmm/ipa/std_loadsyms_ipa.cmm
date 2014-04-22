@@ -1,0 +1,125 @@
+//============================================================================
+//  Name:                                                                     
+//    std_loadsyms_mpss.cmm 
+//
+//  Description:                                                              
+//    Script to load MPSS symbols
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who           what, where, why
+// --------   ---           ---------------------------------------------------------
+// 08/11/2014 JBILLING      Various logic updates. Use std_intercom_do for better file access
+// 02/18/2014 JBILLING      Logic change to work whether attached or not
+// 09/10/2012 AJCheriyan    Added call to setup breakpoints while loading symbols
+// 08/21/2012 AJCheriyan    Refactored things a bit to override meta build options for simulator
+// 07/10/2012 AJCheriyan    Created for B-family 
+//
+
+// ARG0 - Build from which symbols have to loaded
+//
+//
+LOCAL &ELFFILE  &LOCAL_BUILDROOT 
+
+LOCAL &targetprocessorport
+
+
+&ELFFILE="NONE" 
+&LOCAL_BUILDROOT="NONE"
+LOCAL &file &filename &what_to_cut &location &filepath
+
+LOCAL &LocalSubSystem &MPSSBUILD &RemoteOption &LiveAttach
+ENTRY &LocalSubSystem &MPSSBUILD &RemoteOption &LiveAttach
+
+LOCAL &image &targetprocessor &targetprocessorport &bootprocessor &bootprocessorport &peripheral_processor &processortimeoutvalue &debugscript &symbolloadscript &imagebuildroot &entry_bkpt &error_bkpts &lpm_option &sleep_disable_command &cti_enable &multi_elf_option &alternateelf &extraoption
+&image="ipa"
+do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &image &lpm_option &cti_enable &alternateelf &extraoption
+    ENTRY &image &targetprocessor &targetprocessorport &bootprocessor &bootprocessorport &peripheral_processor &processortimeoutvalue &debugscript &symbolloadscript &imagebuildroot &entry_bkpt &error_bkpts &lpm_option &sleep_disable_command &cti_enable &multi_elf_option &alternateelf &extraoption
+
+    
+MAIN:
+    GOSUB SELECT_ELF_FILE
+    
+    IF ("&RemoteOption"=="remotely")
+    (
+        &targetprocessorport=&MPSS_PORT
+        GOSUB LOAD_SYMBOLS_ON_REMOTE_T32
+    )
+    ELSE
+    (
+        GOSUB LOAD_SYMBOLS_ON_THIS_T32
+    )
+    
+    GOTO EXIT
+
+    
+    
+SELECT_ELF_FILE:
+            PRINT "Select ELF"
+            
+
+            IF (OS.DIR("&MPSSBUILD/modem_proc/build/ms"))
+            (
+                DIALOG.FILE "&MPSSBUILD/modem_proc/build/ms/*.elf" 
+                ENTRY &ELFFILE
+            )
+            ELSE //last resort, point to a default directory
+            (
+                DIALOG.FILE "*.elf" 
+                ENTRY &ELFFILE
+            )
+            
+            //Check if an elf was given
+            IF ("&ELFFILE"=="")
+            (
+                PRINT "No Elf File selected. Exiting"
+                GOTO EXIT
+            )
+            
+            &location=STRING.SCAN("&ELFFILE","modem_proc",0)
+            &what_to_cut=&location-STRING.LENGTH("&ELFFILE")
+            &filepath=STRING.CUT("&ELFFILE",&what_to_cut)
+
+            &LOCAL_BUILDROOT=OS.FILE.PATH(&filepath)
+            
+            &MPSS_BUILDROOT="&LOCAL_BUILDROOT"
+            
+    RETURN
+
+LOAD_SYMBOLS_ON_REMOTE_T32:
+            PRINT "Loading Elf on remote T32 Session"
+
+            
+            
+            INTERCOM.EXECUTE &targetprocessorport d.load.elf &ELFFILE /nocode /strippart "modem_proc" /sourcepath "&LOCAL_BUILDROOT/modem_proc"
+            INTERCOM.WAIT &targetprocessorport
+
+    RETURN
+
+LOAD_SYMBOLS_ON_THIS_T32:
+
+            PRINT "Loading Elf"
+            
+            d.load.elf &ELFFILE /nocode /strippart "modem_proc" /sourcepath "&LOCAL_BUILDROOT/modem_proc"
+
+    RETURN
+
+
+
+EXIT:
+    ENDDO
+
+FATALEXIT:
+    END
+
+
+
+
+

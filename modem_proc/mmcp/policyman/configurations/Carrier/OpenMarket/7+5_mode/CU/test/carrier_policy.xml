@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Policy for CU CSFB+G DSDS 
+$Header: //components/rel/mmcp.mpss/6.1.10/policyman/configurations/Carrier/OpenMarket/7+5_mode/CU/test/carrier_policy.xml#1 $
+-->
+<policy name        = "generic"
+        changelist  = "$Change: 46174567 $"
+        schema_ver  = "1"
+        policy_ver  = "75.3.9"
+>
+
+  <initial>
+    <actions>
+      <!-- Define the MCCs in which FDD LTE is to be disabled -->
+      <mcc_list name="home_mccs">
+        404 460 310 001
+      </mcc_list>
+	  
+      <!-- Define the OOS timer with a 20 minute interval -->
+      <define_timer name = "noservice" interval = "20" units = "min" id = "1" />
+
+      <!-- All bands list -->
+      <rf_band_list name="rf_bands_gwl">
+        <gw_bands  base="hardware" />
+        <lte_bands base="hardware" />
+        <tds_bands base="none" />
+      </rf_band_list>
+
+      <!-- Set initial RAT Capability and RF bands -->
+      <rat_capability base="none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+      <rf_bands_if list="rf_bands_gwl" />
+
+      <!-- Set UE mode to CSFB -->
+      <ue_mode> CSFB </ue_mode>
+
+      <feature> dualmmode </feature>
+
+      <boolean_define name="full_rat_eval" initial="false" />
+
+    </actions>
+  </initial>
+
+  <!--
+  ===========================================================================  
+    Rules to handle OOS situations.
+  ===========================================================================  
+  -->
+
+  <!-- RULE #1 -->
+  <!-- If we are not in ONLINE, stop the OOS timer.
+  -->
+  <rule precond="none">
+    <conditions>
+      <not> <phone_operating_mode> ONLINE </phone_operating_mode> </not>
+    </conditions>
+    <actions>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #2 -->
+  <rule precond="none">
+    <conditions>
+      <true/>
+    </conditions>
+    <actions>
+      <boolean_set name="full_rat_eval">
+        <any_of>
+          <timer_expired name="noservice" />
+          <all_of>
+            <oos_scan_cnt test=">=" value="1" />
+            <not> <have_service /> </not>
+          </all_of>        
+        </any_of>
+      </boolean_set>
+      <if>
+        <cond> <timer_expired name="noservice" /> </cond>
+        <then> <expired_timer_handled name="noservice" /> </then>
+      </if>
+      <continue />
+    </actions>
+  </rule>
+  
+  <!-- RULE #3 -->
+  <!-- If the oos timer has expired and there is no service on other
+       subscriptions, enable Full RAT mode.
+  -->
+  <rule precond="none">
+    <conditions>
+      <boolean_test name="full_rat_eval" />
+      <not> <have_service /> </not>
+    </conditions>
+    <actions>
+      <rat_capability base="none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+      <rf_bands list = "rf_bands_gwl" />
+      <svc_mode> LIMITED </svc_mode>
+    </actions>
+  </rule>
+
+  <!-- RULE #4 -->
+  <!-- Wait if we don't have service -->
+  -->
+  <rule precond="none">
+    <conditions>
+      <not> <have_service /> </not>
+    </conditions>
+    <actions>
+      <if>
+        <cond> <phone_operating_mode> ONLINE </phone_operating_mode> </cond>
+        <then> <timer_start name="noservice" /> </then>
+      </if>
+    </actions>
+  </rule>
+
+  <!--
+  ===========================================================================  
+    Rules where location info can be used.
+  ===========================================================================  
+  -->
+  
+  <!-- RULE #5 -->
+  <!-- If we are Home, stay in GWL with Home bands.
+  -->
+  <rule precond="none">
+    <conditions>
+     <have_service />
+     <location_mcc_in list="home_mccs" />
+    </conditions>
+    <actions>
+      <rat_capability base="none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+      <rf_bands list="rf_bands_gwl" />
+      <svc_mode> FULL </svc_mode>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #6 -->
+  <!-- If we are Roaming, stay in GWL with roaming bands.
+  -->
+  <rule precond="none">
+    <conditions>
+     <have_service />
+    </conditions>
+    <actions>
+      <rat_capability base="none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+      <rf_bands list="rf_bands_gwl" />
+      <svc_mode> FULL </svc_mode>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+</policy>

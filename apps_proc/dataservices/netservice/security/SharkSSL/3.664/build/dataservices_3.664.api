@@ -1,0 +1,24 @@
+#===============================================================================
+#
+# Network Service APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('SHARKSSL', [
+   "${SHARKSSL_INC_ROOT}/inc",
+   '${SHARKSSL_INC_ROOT}/inc/arch/QuRT',  # TODO
+   "${SHARKSSL_INC_ROOT}/src",
+   "${SHARKSSL_DTLS_INC_ROOT}/include",
+   "${SHARKSSL_DTLS_INC_ROOT}/src",
+])
+
+env.LoadAPIUnits()

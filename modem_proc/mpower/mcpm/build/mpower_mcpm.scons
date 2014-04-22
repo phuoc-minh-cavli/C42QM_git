@@ -1,0 +1,226 @@
+#===============================================================================
+#
+# MPOWER MCPM scon script.
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+#  Copyright (c) 2019 by QUALCOMM Technologies Inc.  All Rights Reserved.
+# 
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mpower.mpss/11.0/mcpm/build/mpower_mcpm.scons#16 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 02/15/13   vs      Ported from Dime release branch.
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+if 'USES_BUILD_PAGEONLY_IMAGE' in env:
+  SRCPATH = "../pageonly"
+else:  
+  SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all MCPM components
+#-------------------------------------------------------------------------------
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+#import os
+#if not os.environ.get('HEXAGON_RTOS_RELEASE').startswith('6'):
+#
+hexagon_rtos_release = env.get('HEXAGON_RTOS_RELEASE')
+hexagon_major_release = hexagon_rtos_release.split(".")[0]
+if hexagon_major_release == "6":
+  env.Append(HEXAGON_WARN = " -Werror-high -Werror-medium ")
+
+CHIPSET = env.get('CHIPSET')
+
+  
+  
+if 'USES_MCPM_NV' in env:
+  env.Append(CFLAGS = " -DMCPM_NV_CONFIG_FEATURE_ENABLED ")
+
+if 'USES_MCPM_UT' in env:
+  env.Append(CFLAGS = " -DMCPM_NV_CONFIG_FEATURE_ENABLED ")
+  env.Append(CFLAGS = "-DMCPM_UT_ENABLED")
+  
+if 'USES_INTERNAL_BUILD' in env:
+  env.Append(CFLAGS = "-DMCPM_INTERNAL_BUILD")
+  
+if 'USES_MCPM_GPIO' in env:
+  env.Append(CFLAGS = "-DMCPM_GPIO_ENABLED")
+  
+if 'USES_MCPM_LOCAL_UT' in env:
+  env.Append(CFLAGS = "-DMCPM_LOCAL_UT_ENABLED")  
+  
+if 'USES_MCPM_POI_DBG' in env:
+  env.Append(CFLAGS = "-DMCPM_POI_DEBUG_ENABLED")    
+#-------------------------------------------------------------------------------
+# QDSS Tracer definitions
+#-------------------------------------------------------------------------------
+if 'USES_QDSS_SWE' in env:
+  QDSS_IMG = ['QDSS_EN_IMG']
+  env.Append(CCFLAGS = " -DMCPM_TRACER_SW_EVT")
+
+  events = [['MCPM_GERAN_START_EVT','MCPM_GERAN_START_EVT'],
+        ['MCPM_GERAN_STOP_EVT','MCPM_GERAN_STOP_EVT'],
+        ['MCPM_GERAN_WAKE_UP_EVT','MCPM_GERAN_WAKE_UP_EVT'],
+        ['MCPM_GERAN_GO_TO_SLEEP_EVT','MCPM_GERAN_GO_TO_SLEEP_EVT'],
+        ['MCPM_GERAN_IDLE_EVT','MCPM_GERAN_IDLE_EVT'],
+        ['MCPM_GERAN_VOICE_START_EVT','MCPM_GERAN_VOICE_START_EVT'],
+        ['MCPM_GERAN_VOICE_STOP_EVT','MCPM_GERAN_VOICE_STOP_EVT'],
+        ['MCPM_GERAN_DATA_START_EVT','MCPM_GERAN_DATA_START_EVT'],
+        ['MCPM_GERAN_DATA_STOP_EVT','MCPM_GERAN_DATA_STOP_EVT'],
+        ['MCPM_GERAN_PARMS_UPDATE_EVT','MCPM_GERAN_PARMS_UPDATE_EVT'],        
+        ['MCPM_LTE_START_EVT','MCPM_LTE_START_EVT'],
+        ['MCPM_LTE_STOP_EVT','MCPM_LTE_STOP_EVT'],
+        ['MCPM_LTE_ACQ_EVT','MCPM_LTE_ACQ_EVT'],
+        ['MCPM_LTE_WAKE_UP_EVT','MCPM_LTE_WAKE_UP_EVT'],
+        ['MCPM_LTE_GO_TO_SLEEP_EVT','MCPM_LTE_GO_TO_SLEEP_EVT'],
+        ['MCPM_LTE_IDLE_EVT','MCPM_LTE_IDLE_EVT'],
+        ['MCPM_LTE_DATA_START_EVT','MCPM_LTE_DATA_START_EVT'],
+        ['MCPM_LTE_FDD_DATA_START_EVT','MCPM_LTE_FDD_DATA_START_EVT'],
+        ['MCPM_LTE_TDD_DATA_START_EVT','MCPM_LTE_TDD_DATA_START_EVT'],
+        ['MCPM_LTE_FDD_VOLTE_DATA_START_EVT','MCPM_LTE_FDD_VOLTE_DATA_START_EVT'],
+        ['MCPM_LTE_TDD_VOLTE_DATA_START_EVT','MCPM_LTE_TDD_VOLTE_DATA_START_EVT'],
+        ['MCPM_LTE_GO_TO_LIGHT_SLEEP_EVT','MCPM_LTE_GO_TO_LIGHT_SLEEP_EVT'],
+        ['MCPM_LTE_GO_TO_LONG_LIGHT_SLEEP_EVT','MCPM_LTE_GO_TO_LONG_LIGHT_SLEEP_EVT'],
+        ['MCPM_LTE_GO_TO_LIGHT_SLEEP_NO_MODEM_FREEZE_EVT','MCPM_LTE_GO_TO_LIGHT_SLEEP_NO_MODEM_FREEZE_EVT'],
+        ['MCPM_LTE_DATA_STOP_EVT','MCPM_LTE_DATA_STOP_EVT'],
+        ['MCPM_LTE_PARMS_UPDATE_EVT','MCPM_LTE_PARMS_UPDATE_EVT'],        
+        ['MCPM_GPS_STOP_EVT','MCPM_GPS_STOP_EVT'],
+        ['MCPM_GPS_ACQ_EVT','MCPM_GPS_ACQ_EVT'],
+        ['MCPM_GPS_NON_DPO_EVT','MCPM_GPS_NON_DPO_EVT'],
+        ['MCPM_GPS_DPO_ON_EVT','MCPM_GPS_DPO_ON_EVT'],
+        ['MCPM_GPS_PARMS_UPDATE_EVT','MCPM_GPS_PARMS_UPDATE_EVT'],
+        ['MCPM_RF_START_EVT','MCPM_RF_START_EVT'],
+        ['MCPM_RF_STOP_EVT','MCPM_RF_STOP_EVT'],
+        ['MCPM_A2_START_EVT','MCPM_A2_START_EVT'],
+        ['MCPM_A2_STOP_EVT','MCPM_A2_STOP_EVT'],
+        ['MCPM_GSM_CIPHERING_START_EVT','MCPM_GSM_CIPHERING_START_EVT'],
+        ['MCPM_GSM_CIPHERING_STOP_EVT','MCPM_GSM_CIPHERING_STOP_EVT'],
+        ['MCPM_GSM_CIPHERING1_START_EVT','MCPM_GSM_CIPHERING1_START_EVT'],
+        ['MCPM_GSM_CIPHERING1_STOP_EVT','MCPM_GSM_CIPHERING1_STOP_EVT'],]
+  env.AddSWEInfo(QDSS_IMG,events)
+
+if 'QDSS_TRACER_SWE' in env:
+  env.SWEBuilder(['${BUILDPATH}/mcpm_tracer_evt_ids.h'], None)
+  env.Append(CPPPATH = ['${BUILD_ROOT}/mpower/mcpm/build/$BUILDPATH'])
+ 
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last 
+    ], area='core')
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi([
+    'ONEX',
+    'GPS',      
+    'HDR',      
+    'MCS',
+    'MMODE',    
+    'UTILS',
+    'RFA',      
+    'UIM',      
+    'GERAN',
+    'FW',
+    ])
+
+# Need get access to Modem Restricted headers
+env.RequireRestrictedApi([
+    'MMODE',    
+    'NAS',      
+    'RFA',      
+    'MDSP',     
+    'MDSPSVC',  
+    'GERAN',    
+    'GPS',      
+    'ONEX',     
+    'HDR',      
+    'UTILS',
+    'MCS',
+    'FW',
+    ])
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Construct the list of source files by looking for *.c
+MCPM_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                    for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+
+# Compile sources and convert to a binary library
+if 'USES_BUILD_PAGEONLY_IMAGE' in env:
+  env.AddBinaryLibrary(['MODEM_PAGEONLY'], '${BUILDPATH}/mpower_mcpm', MCPM_SOURCES)
+else:
+  env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/mpower_mcpm', MCPM_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Defining Sleep LPR
+#-------------------------------------------------------------------------------
+if 'USES_CORESLEEP_TOOL' in env:
+  xml_file = '${MPOWER_ROOT}/mcpm/doc/mcpm_lpr.xml'
+  env.AddCoreSleepLPR('CORE_QDSP6_SW', {'sleep_lpr_xml' : [xml_file]})
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for MPOWER MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_MPOWER_MCPM",
+])
+
+#-------------------------------------------------------------------------------
+#  RC INIT
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['MODEM_MODEM', 'CORE_QDSP6_SW', 'MODEM_PAGEONLY']
+    
+  env.AddRCInitFunc(       # Code Fragment in TMC: NO
+  RCINIT_IMG,              # define TMC_RCINIT_INIT_BUSYWAIT_INIT
+  {
+    'sequence_group'             : 'RCINIT_GROUP_3',       # required
+    'init_name'                  : 'mcpm',              # required
+    'init_function'              : 'MCPM_Init',         # required
+  })
+	
+#------------------------------------------------------------------------------
+# Invoke sub build files
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+

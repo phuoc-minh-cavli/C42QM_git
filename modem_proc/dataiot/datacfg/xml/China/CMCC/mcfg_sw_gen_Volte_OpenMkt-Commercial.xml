@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="data.0.0" type="1"/>
+  <GroupFile name="mcfg_sw_gen_DeleteROW.xml" description="" comment="" category="" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/Common/ROW/mcfg_sw_gen_DeleteROW.xml"/>
+  <NvEfsItemData name="dual_ip_fallback" id="72604" description="Stores fallback IP type and Feature enable/disable information" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/dual_ip_fallback">
+    <Member name="fallback_enabled" description="Stores fallback IP type and Feature enable/disable information" comment="" sizeOf="1" type="uint8">1 </Member>
+    <Member name="fallback_ip_type" description="Enum storing fallback IP type" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvEfsItemData>
+  <NvEfsItemData name="disable_apn_matching" id="73529" description="Disable APN name matching" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/lteps/disable_apn_matching">
+    <Member name="disable_apn_matching" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvEfsItemData>
+   <NvEfsFile name="ds_dsd_attach_profile.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/ds_dsd_attach_profile.txt" buildPath="modem_proc/dataiot/datacfg/efs/CMCC/ds_dsd_attach_profile.txt"/>
+   <NvEfsFile name="Profile1" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile1" buildPath="modem_proc/dataiot/datacfg/efs/CMCC/Profile1"/>
+   <NvEfsFile name="Profile2" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile2" buildPath="modem_proc/dataiot/datacfg/efs/CMCC/Profile2"/>
+   <NvEfsFile name="Profile3" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile3" buildPath="modem_proc/dataiot/datacfg/efs/CMCC/Profile3"/>
+   <NvEfsFile name="Profile4" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile4" buildPath="modem_proc/dataiot/datacfg/efs/CMCC/Profile4"/>
+  </NvData>

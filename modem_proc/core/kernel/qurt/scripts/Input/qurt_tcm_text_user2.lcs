@@ -1,0 +1,17 @@
+/*=============================================================================
+
+                                    qurt_tcm_text_user2.lcs
+
+GENERAL DESCRIPTION
+
+EXTERNAL FUNCTIONS
+        None.
+
+INITIALIZATION AND SEQUENCING REQUIREMENTS
+        None.
+
+             Copyright (c) 2019  by Qualcomm Technologies, Inc.  All Rights Reserved.
+=============================================================================*/
+    *libqurt.a:qurt_signal.o(.text)
+    *libqurt.a:qurt_pimutex_asm_island.o(.text)
+    

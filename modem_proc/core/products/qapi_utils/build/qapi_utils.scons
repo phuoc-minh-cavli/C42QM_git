@@ -1,0 +1,92 @@
+#	Title: Sconscript
+
+#	License: License
+#	Copyright 2022 Qualcomm Technologies Inc
+
+#	Description: General Description
+#	Sconscript for CoreBSP Products CMM scripts
+
+#	Team: Functional Area
+#	CoreBSP Products 9205
+
+#	Target: Target
+#	MDM9205
+
+#	Author: Author
+#  	$Author: snanaval $
+
+#	Location: Perforce Revision
+#   $Header: //components/dev/core.mpss/3.10/snanaval.CORE.MPSS.3.5.mpss_efs/products/qapi_utils/build/qapi_utils.scons#2 $
+
+#	Edits: Edits
+#	sna	: First cut for Badger MPSS 2.0			: 01/04/22
+# ------------------------------------------------------------------------------------------
+
+# Technically, the sconscript starts here	
+import os.path
+Import('env')
+env = env.Clone()
+#import pdb;pdb.set_trace()
+
+QAPI_FLASH_UTIL = False
+
+if env['MSM_ID'] in ['8926', '8916','8936','8909','9609','8952','8976','8937']:
+  Return()
+
+#if env['MSM_ID'] == '9607' in env:
+QAPI_FLASH_UTIL = True
+
+env.VariantDir('${BUILDPATH}', "${BUILD_ROOT}/core/products/qapi_utils", duplicate=0)
+
+
+
+CBSP_API = [
+   'DAL',
+   'SECUREMSM',
+   'SERVICES',
+   'MPROC',
+   'WIREDCONNECTIVITY',
+   'KERNEL',
+   'MEMORY',
+   'STORAGE',
+   'DEBUGTOOLS',
+   'SYSTEMDRIVERS',
+   'POWER',
+   'PRODUCTS_UTILITY',
+   'MPROC_QMI_PRIVATE',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequirePublicApi(['SAP','UTIL','COMMON'], area='QMIMSGS')
+env.RequireRestrictedApi(CBSP_API)
+
+
+CBSP_FULL_IMG_COMMON = [
+ 
+  '${BUILDPATH}/src/qmi_utils_svc.c',
+  '${BUILDPATH}/src/qmi_utils_svc_main.c',
+]
+
+CBSP_FULL_IMG = [
+   'CORE_MODEM',
+   'CORE_QDSP6_SW',
+   'MODEM_MODEM',
+   'MBA_CORE_SW',
+]
+
+if QAPI_FLASH_UTIL == True:
+	env.AddLibrary(CBSP_FULL_IMG, '${BUILDPATH}/products/flash_monitor', CBSP_FULL_IMG_COMMON)
+
+RCINIT_IMG = ['CORE_MODEM','CORE_QDSP6_SW', 'CBSP_QDSP_SW_IMAGE', 'QDSP6_SW_IMAGE']
+
+
+if 'USES_RCINIT' in env and 'USES_DISABLE_BIMC_PC' not in env :
+      env.AddRCInitFunc(
+          RCINIT_IMG,
+          {
+              'sequence_group'             : 'RCINIT_GROUP_7',                
+              'init_name'                  : 'QMI_UTIL_SVC',                   
+              'init_function'              : 'qmi_util_service_start',             
+          })
+	
+env.LoadSoftwareUnits()

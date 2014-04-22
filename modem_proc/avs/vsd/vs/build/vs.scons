@@ -1,0 +1,104 @@
+#=================================================================
+# VS SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+VSSRCPATH = ".."
+env.VariantDir('${BUILDPATH}', VSSRCPATH, duplicate=0)
+
+#Uncomment below feature flag definition if PCM vocoder support is needed. 
+#env.Append(CFLAGS = '-DVS_PCM_VOCODER')
+
+env.PublishPrivateApi('VS', [
+    "${AVS_ROOT}/vsd/vs/inc/private",
+    "${AVS_ROOT}/vsd/vs/stubs"
+])
+
+if env['PRODUCT_LINE'].startswith("MPSS.CT"):
+  env.Append(CFLAGS = '-DSERVREG_STUB')
+  env.Append(CFLAGS = '-DIPA_STUB')
+  print 'Compiling vs_servreg_stub.c and vs_ipa_stub.c as PRODUCT_LINE starts with MPSS.CT'
+  VS_SOURCES_2 = [
+    '${BUILDPATH}/stubs/vs_servreg_stub.c',
+    '${BUILDPATH}/stubs/vs_ipa_stub.c'
+  ]
+else: 
+  if env['MSM_ID'] in ['55']:
+    print 'ipa_dma APIs available as MSM_ID is matching 55'
+  else:
+    env.Append(CFLAGS = '-DIPA_STUB')
+    print 'Compiling vs_ipa_stub.c as MSM_ID is not matching 55'
+    VS_SOURCES_2 = [
+      '${BUILDPATH}/stubs/vs_ipa_stub.c'
+    ]
+
+if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:
+  print 'Compiling stubs for VS as USES_FEATURE_VS_MEMORY_OPTIMISED flag is defined'
+  VS_SOURCES = [
+    '${BUILDPATH}/stubs/vs.c'
+  ]
+else:
+  VS_SOURCES = [
+    '${BUILDPATH}/src/vs.c',
+    '${BUILDPATH}/src/vs_ssr_pdr.c',
+    '${BUILDPATH}/src/vs_cmd_handlers.c',
+    '${BUILDPATH}/src/vs_event_handlers.c',
+    '${BUILDPATH}/src/vs_state_control.c',
+    '${BUILDPATH}/src/vs_actions.c',
+    '${BUILDPATH}/src/vs_vocamr.c',
+    '${BUILDPATH}/src/vs_vocamrwb.c',
+    '${BUILDPATH}/src/vs_vocefr.c',
+    '${BUILDPATH}/src/vs_vocfr.c',
+    '${BUILDPATH}/src/vs_vochr.c',
+    '${BUILDPATH}/src/vs_vocevrca.c', 
+    '${BUILDPATH}/src/vs_vocevrcb.c',
+    '${BUILDPATH}/src/vs_vocevrcwb.c',
+    '${BUILDPATH}/src/vs_vocevrcnw.c',
+    '${BUILDPATH}/src/vs_vocevrcnw2k.c',
+    '${BUILDPATH}/src/vs_vocqcelp13k.c',
+    '${BUILDPATH}/src/vs_vocevs.c',
+    '${BUILDPATH}/src/vs_vocg711alaw_v2.c',
+    '${BUILDPATH}/src/vs_vocg711mulaw_v2.c',
+    '${BUILDPATH}/src/vs_vocamrwb2.c'
+  ]
+
+if 'AVS_MPSS_TEST' in env:
+  IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+  IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+if env['PRODUCT_LINE'].startswith("MPSS.CT") or env['MSM_ID'] not in ['55']:
+  env.AddLibrary(IMAGES, ('${BUILDPATH}/vs/vs'), [VS_SOURCES, VS_SOURCES_2])
+else:
+  env.Append(CFLAGS = '-DVS_PROFILING')
+  env.Append(CFLAGS = '-DVS_PROFILING_DATA_PCIE')
+  env.AddLibrary(IMAGES, ('${BUILDPATH}/vs/vs'), VS_SOURCES)
+
+#end else of if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:
+
+#-------------------------------------------------------------------------------
+# RCINIT_GROUP_6 is only for logging purpose. It does not dictate the actual start sequence.
+# RCINIT_TASK_QURTTASK is also only for logging purpose.
+
+if 'AVS_MPSS_TEST' in env or 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env or env['PRODUCT_LINE'].startswith("MPSS.BO"):
+  print "Skipping RCINIT Registration of VSERVICE Tasks"
+else:
+  print "RCINIT Registration of VSERVICE Tasks"
+  if 'USES_RCINIT' in env:
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'VS_HIGH',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'thread_entry'               : 'RCINIT_NULL',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+
+        }
+    )
+#------------------------------------------------------------------------------- 
+#end else of if 'AVS_MPSS_TEST' in env or if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env or env['PRODUCT_LINE'].startswith("MPSS.BO"):
+

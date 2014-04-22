@@ -1,0 +1,153 @@
+#===============================================================================
+#
+# HAL HSUSB Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2011 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/wiredconnectivity/hsusb/hal/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+if env['HAL_PLATFORM'] in ['9205']:
+   env.Replace(HAL_PLATFORM = '9205')
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+if env.PathExists( "${BUILD_ROOT}/core/hal/hsusb/build/SConscript" ):
+   SRCPATH = "${BUILD_ROOT}/core/hal/hsusb/src"
+elif env.PathExists( "${BUILD_ROOT}/core/wiredconnectivity/hsusb/hal/build/SConscript" ):
+   SRCPATH = "${BUILD_ROOT}/core/wiredconnectivity/hsusb/hal/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'MODEM_PMIC',
+   'MODEM_RF',
+   'MODEM_SERVICES',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'MPROC',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('HAL_HSUSB', SRCPATH)
+
+#-------------------------------------------------------------------------------
+# Source Code
+#-------------------------------------------------------------------------------
+
+HSUSB_HAL_SOURCES =  [
+   '${BUILDPATH}/HAL_hsusb_impl.c',
+   '${BUILDPATH}/${HAL_PLATFORM}/HAL_hsusb_target.c',
+   '${BUILDPATH}/HAL_hsusb_impl_Default.c'
+]
+
+
+HSUSB_HAL_SOURCES += [
+     '${BUILDPATH}/HAL_hsusb_MDM9x06.c',
+     '${BUILDPATH}/HAL_hsusb_impl_p3q3r50.c',
+     '${BUILDPATH}/HAL_hsusb_impl_p3q2r13.c',
+     '${BUILDPATH}/HAL_hsusb_impl_3r0.c',
+     '${BUILDPATH}/HAL_hsusb_impl_2r10.c',
+     '${BUILDPATH}/HAL_hsusb_impl_2r9.c',
+     '${BUILDPATH}/HAL_hsusb_impl_2r8.c',
+     '${BUILDPATH}/HAL_hsusb_impl_ChipIdea.c'
+]
+
+if env.has_key('USES_HSU_SNPS_CORE'):
+   HSUSB_HAL_SOURCES += [
+     '${BUILDPATH}/HAL_ssusb_impl.c',
+     '${BUILDPATH}/HAL_ssusb_target.c'
+   ]
+
+halhsusb_obj = env.Object(HSUSB_HAL_SOURCES)
+halhsusb_lib = env.Library('${BUILDPATH}/HALhsusb', halhsusb_obj)
+
+HSUSB_HAL_ALL_SOURCES =  [
+   '${BUILDPATH}/HAL_hsusb_impl.c',
+   '${BUILDPATH}/HAL_hsusb_targets.c',
+   '${BUILDPATH}/HAL_hsusb_MDM1000.c',
+   '${BUILDPATH}/HAL_hsusb_MDM2000.c',
+   '${BUILDPATH}/HAL_hsusb_QSC1100.c',
+   '${BUILDPATH}/HAL_hsusb_MSM6246.c',
+   '${BUILDPATH}/HAL_hsusb_MSM7600.c',
+   '${BUILDPATH}/HAL_hsusb_MSM7625.c',
+   '${BUILDPATH}/HAL_hsusb_MSM7800.c',
+   '${BUILDPATH}/HAL_hsusb_MDM8900.c',
+   '${BUILDPATH}/HAL_hsusb_QSD8650.c',
+   '${BUILDPATH}/HAL_hsusb_MSM7x30.c',
+   '${BUILDPATH}/HAL_hsusb_QSC6695.c',
+   '${BUILDPATH}/HAL_hsusb_MDM9x00.c',
+   '${BUILDPATH}/HAL_hsusb_MSM8660.c',
+   '${BUILDPATH}/HAL_hsusb_MDM8200A.c',
+   '${BUILDPATH}/HAL_hsusb_QSC1105.c',
+   '${BUILDPATH}/HAL_hsusb_MSM7x27A.c',
+   '${BUILDPATH}/HAL_hsusb_impl_p3q3r26.c',
+   '${BUILDPATH}/HAL_hsusb_impl_p3q2r13.c',
+   '${BUILDPATH}/HAL_hsusb_impl_3r0.c',
+   '${BUILDPATH}/HAL_hsusb_impl_2r10.c',
+   '${BUILDPATH}/HAL_hsusb_impl_2r9.c',
+   '${BUILDPATH}/HAL_hsusb_impl_2r8.c',
+   '${BUILDPATH}/HAL_hsusb_impl_1r8.c',
+   '${BUILDPATH}/HAL_hsusb_impl_ChipIdea.c',
+   '${BUILDPATH}/HAL_hsusb_impl_Legacy.c',
+   '${BUILDPATH}/HAL_hsusb_impl_Default.c'
+]
+
+
+halhsusb_all_obj = env.Object(HSUSB_HAL_ALL_SOURCES)
+halhsusb_all_lib = env.Library('${BUILDPATH}/HALhsusb_all', halhsusb_all_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+if env.has_key('USES_HSU'):
+   env.AddLibsToImage(
+      ['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE',
+       'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+       'OSBL_BOOT_IMAGE', 'HOSTDL_IMAGE', 'EHOSTDL_IMAGE', 'EMMCBLD_IMAGE',
+       'SBL3_BOOT_IMAGE'],
+      halhsusb_lib)
+   
+   if env.has_key('USES_SAHARA_BOOT'):
+      env.AddLibsToImage(['DBL_BOOT_IMAGE'], halhsusb_lib)
+

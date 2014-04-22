@@ -1,0 +1,116 @@
+#===============================================================================
+#
+# CSD Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: fzhou $
+#  $Change: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 08/04/2010    fzhou       Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('CSD_COMMON')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('CSD_DEV')
+env.RequireRestrictedApi('CSD_UTILS')
+env.RequireRestrictedApi('APR')
+env.RequireRestrictedApi('CSD_VOICE')
+
+env.RequirePublicApi('MMUTILS')
+env.RequirePublicApi('APR')
+env.RequirePublicApi('AUDIO')
+
+env.RequireRestrictedApi('ACDB')
+env.RequireRestrictedApi('ACDBDATA')
+env.RequireRestrictedApi('ACPH')
+env.RequireRestrictedApi('AUDIOTESTSERVICES')
+env.RequireRestrictedApi('ADIECODEC')
+env.RequireRestrictedApi('AUDIOHWSERVICESINIT')
+env.RequireRestrictedApi('ADIECODECDB')
+
+#env.RequireExternalApi('MODEM_API')
+
+
+# CsdVoice.lib 
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+csd_voice_SOURCES = [
+	'${BUILDPATH}/voice/src/csd_voc_common.c',
+	'${BUILDPATH}/voice/src/csd_vs.c',
+	'${BUILDPATH}/voice/src/csd_vc.c',
+	'${BUILDPATH}/voice/src/csd_vm.c',
+	'${BUILDPATH}/voice/src/csd_voice_debug.c',
+]
+
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+csd_voice_obj = env.Object(csd_voice_SOURCES)
+csd_voice_lib = env.Library('${BUILDPATH}/csd_voice', csd_voice_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+   ['MULTIMEDIA_APPS'],
+   csd_voice_lib)
+

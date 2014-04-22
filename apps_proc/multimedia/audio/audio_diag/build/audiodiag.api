@@ -1,0 +1,36 @@
+#===============================================================================
+#
+# Core APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM, Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/audio_diag/build/audiodiag.api#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Author: pwbldsvc $
+#  $Change: 17929171 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+
+
+env.PublishRestrictedApi('AUDIO_DIAG', [
+   "${INC_ROOT}/multimedia/audio/audio_diag/inc"
+])
+
+env.LoadAPIUnits()
+

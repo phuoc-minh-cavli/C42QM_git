@@ -1,0 +1,58 @@
+#===============================================================================
+#
+# INTEGRITY_CHECK Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:
+#  $DateTime: 
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 01/20/16   rr     added build dependencies for err_crash_register_cb
+# 10/26/15   rr     Changed file to include header perf_err_cb.h
+# 06/30/15   rr     Created module
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+CBSP_API = [ 'KERNEL' , 'DAL', 'POWER','SERVICES','DEBUGTOOLS' ]
+env.RequirePublicApi(CBSP_API, area='CORE')
+env.RequirePublicApi(['PERF'], area='PERF')
+
+
+SRCPATH = "${BUILD_ROOT}/perf/integritycheck/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.Replace(HEXAGONCC_OPT = " -O3 ")
+
+INTEGRITY_CHECK_SOURCES = [
+    '${BUILDPATH}/integrity_check.c',
+]
+
+env.AddLibrary(['CORE_QDSP6_SW' , 'MODEM_PAGEONLY' , 'MODEM_SENSORONLY'], '${BUILDPATH}/integritycheck', INTEGRITY_CHECK_SOURCES)
+
+RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW' , 'MODEM_PAGEONLY' , 'MODEM_SENSORONLY']
+env.AddRCInitFunc(         # Code Fragment in TMC: YES
+    RCINIT_IMG,               # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',              # required
+      'init_name'                  : 'integrity_check',              # required
+      'init_function'              : 'init_integrity',             # required
+    })	
+
+env.LoadSoftwareUnits()
+

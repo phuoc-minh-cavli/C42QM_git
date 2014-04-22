@@ -1,0 +1,36 @@
+TypicalSIB4:value BCCH-DL-SCH-Message ::= 
+{
+  message c1 : systemInformation : 
+      {
+        criticalExtensions systemInformation-r8 : 
+          {
+            sib-TypeAndInfo 
+            {
+              sib4 : 
+                {
+                  intraFreqNeighbouringCellList 
+                  {
+                    {
+                      physicalCellIdentity 1,
+                      q-OffsetCell dB-22
+                    },
+                    {
+                      physicalCellIdentity 2,
+                      q-OffsetCell dB-20
+                    }
+                  },
+                  intraFreqBlacklistedCellList 
+                  {
+                    {
+                      physicalCellIdentityAndRange singlePCI : 10
+                    },
+                    {
+                      physicalCellIdentityAndRange singlePCI : 11
+                    }
+                  },
+                  csg-PCI-Range singlePCI : 4
+                }
+            }
+          }
+      }
+}

@@ -1,0 +1,117 @@
+#===============================================================================
+#
+# QMIMSGS APSS TN
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016,2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/tethering/qti/build/dataservices_qti.scons#3 $
+#  $DateTime: 2021/04/14 05:32:40 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 3/28/12   sdt     Baseline
+#===============================================================================
+Import('env')
+
+if 'USES_QTI' not in env:
+	Return()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('QAPI')
+	env.RequirePublicApi('DPM', area='qmimsgs')
+	env.RequirePublicApi('WDA', area='qmimsgs')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('DPM', area='API')
+env.RequirePublicApi('WDA', area='API')
+env.RequirePublicApi('WDS', area='API')
+env.RequirePublicApi('QAPI')
+env.RequirePublicApi('NICHESTACK_PORT')
+env.RequirePublicApi(['UTILS'], area='dataservices')
+env.RequirePublicApi('QCMAP')
+env.RequirePublicApi('QCMAP_EXT') 
+
+
+
+env.PublishPrivateApi('QTI', [
+   "${INC_ROOT}/dataservices/tethering/qti/inc", 
+   ], auto_require=True)
+
+
+
+SRCPATH = '${BUILD_ROOT}/dataservices/tethering/qti/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+QTI_SOURCES = [
+	'${BUILDPATH}/qti_main.c',
+	'${BUILDPATH}/qti_rmnet_peripheral.c',
+	'${BUILDPATH}/qti_rmnet_dpm.c',
+	'${BUILDPATH}/qti_cmdq.c',
+	'${BUILDPATH}/qti_rmnet_modem.c',
+	'${BUILDPATH}/qti_rmnet_qmi.c'	
+]
+
+QTI_SHIP = [
+	'${BUILDPATH}/qti_qcmap.c'	
+]
+
+IMAGES = ['APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/tethering/qti'), QTI_SOURCES)
+env.AddLibrary(IMAGES, ('${BUILDPATH}/tethering/qti_qcmap'), QTI_SHIP)
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_2',           # required
+  'init_name'                  : 'qti',                      # required
+  'init_function'              : 'qti_task_init',           # required
+  'dependencies'               : ['smd','rdm_issues_open']
+}
+
+RCINIT_INIT_QTI_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_2',          # required
+  'thread_name'                : 'qti_task',                 # required
+  'thread_entry'               : 'qti_task_entry',           
+  'stack_size_bytes'           : '8192',
+  'priority_amss_order'        : 'QTI_PRI_ORDER'
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QTI_TASK )
+  
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = "--diag_error=warning")

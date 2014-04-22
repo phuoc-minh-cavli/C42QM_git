@@ -1,0 +1,53 @@
+handover_no_ncc_change:value DL-DCCH-Message ::= 
+{
+  message c1 : rrcConnectionReconfiguration : 
+      {
+        rrc-TransactionIdentifier 3,
+        criticalExtensions c1 : rrcConnectionReconfiguration-r8 : 
+            {
+              mobilityControlInfo 
+              {
+                targetPhysCellId 0,
+                t304 ms50,
+                newUE-Identity '00000000 00000001'B,
+                radioResourceConfigCommon 
+                {
+                  prach-Config 
+                  {
+                    rootSequenceIndex 0
+                  },
+                  pusch-ConfigCommon 
+                  {
+                    pusch-ConfigBasic 
+                    {
+                      n-SB 1,
+                      hoppingMode interSubFrame,
+                      pusch-HoppingOffset 0,
+                      enable64QAM FALSE
+                    },
+                    ul-ReferenceSignalsPUSCH 
+                    {
+                      groupHoppingEnabled FALSE,
+                      groupAssignmentPUSCH 0,
+                      sequenceHoppingEnabled FALSE,
+                      cyclicShift 0
+                    }
+                  },
+                  ul-CyclicPrefixLength len1
+                }
+              },
+              securityConfigHO 
+              {
+                handoverType interRAT : 
+                  {
+                    securityAlgorithmConfig 
+                    {
+                      cipheringAlgorithm eea1,
+                      integrityProtAlgorithm eia1
+                    },
+                    nas-SecurityParamToEUTRA '000011000000'H
+                  }
+              }
+            }
+      }
+}

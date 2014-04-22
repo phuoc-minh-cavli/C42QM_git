@@ -1,0 +1,112 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename
+
+
+#turn off debug if requested  
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2") 
+    env.Replace(HEXAGON_DBG = "-g")  
+    env.Replace(GCC_DBG = "-g")
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'STORAGE',
+    'SECUREMSM',
+    'BUSES',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+#import pdb;pdb.set_trace() 
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_PUBLIC_APIS = [
+    'MMODE',
+    'DATAMODEM',
+    ]
+
+env.RequirePublicApi(MODEM_PUBLIC_APIS)
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'MMODE',
+    'MODEM_DATA',
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+#code shipped as source
+
+DATAMODEM_UTILS_COMMON_C_SOURCES = [
+   '${BUILDPATH}/src/ps_handle_mgr.c',
+   '${BUILDPATH}/src/ps_mem.c',
+   '${BUILDPATH}/src/pstimer.c',
+   '${BUILDPATH}/src/ds_system_heap.c',
+   '${BUILDPATH}/src/qmi_crit_sect_rex.c',
+   '${BUILDPATH}/src/data_msg.c',
+   '${BUILDPATH}/src/ps_logging_diag.c',
+   '${BUILDPATH}/src/ps_logging_helper.c',
+   '${BUILDPATH}/src/ps_stat_common.c',
+   '${BUILDPATH}/src/ps_stat_commoni.c',
+   '${BUILDPATH}/src/ps_stat_logging.c',
+   '${BUILDPATH}/src/ps_stat_mem.c',
+   '${BUILDPATH}/src/ps_utils.c',
+   '${BUILDPATH}/src/ps_timer_rex.c',
+   '${BUILDPATH}/src/ds_crit_sect_rex.c',
+   '${BUILDPATH}/src/ps_utils_init.c',
+   ] 
+
+
+DATAMODEM_UTILS_SOURCES = []
+
+if 'USES_DATAMODEM_UTILS' in env:
+   DATAMODEM_UTILS_SOURCES += DATAMODEM_UTILS_COMMON_C_SOURCES
+
+if 'USES_MOB' in env:
+   DATAMODEM_UTILS_SOURCES += ['${BUILDPATH}/src/ds_crit_sect_qtf.c']
+
+env.AddLibrary(['MODEM_MODEM', 'MOB_DATAMODEM'], '${BUILDPATH}/utils', [DATAMODEM_UTILS_SOURCES])
+
+env.LoadSoftwareUnits()  

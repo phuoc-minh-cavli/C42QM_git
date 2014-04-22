@@ -1,0 +1,157 @@
+#===============================================================================
+#
+# PWM LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/pwm/build/pwm.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+import os
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Add API folders
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('SYSTEMDRIVERS_PWM', [
+  "${BUILD_ROOT}/core/systemdrivers/pwm/config/${CHIPSET}",
+])
+
+SRCPATH = "../"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Extend include path for internal includes
+#-------------------------------------------------------------------------------
+
+env.Append(CPPPATH = [
+  "${INC_ROOT}/core/systemdrivers/pwm/src",
+  "${INC_ROOT}/core/systemdrivers/pwm/hal/inc"
+  # "${INC_ROOT}/core/systemdrivers/pwm/config",
+])
+
+#-------------------------------------------------------------------------------
+# Internal Defines
+#-------------------------------------------------------------------------------
+
+env.Append(CPPDEFINES = ["PWM_LOG_SIZE=512"])
+env.Append(CPPDEFINES = ["DALPWM_NUM_DEVICES=1"])
+#env.Append(CPPDEFINES = ["QAPI_TXM_SOURCE_CODE"])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+  'HAL',
+  'SERVICES',
+  'DEBUGTOOLS',
+  'SYSTEMDRIVERS',
+  'DAL',
+  'QAPI',
+  'KERNEL'
+  # needs to be last also contains wrong comdef.h
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.RequirePrivateApi(['SYSTEMDRIVERS_PWM_HAL'])
+
+
+#-------------------------------------------------------------------------------
+# Build Images
+#-------------------------------------------------------------------------------
+
+PWM_IMAGES = ['CORE_APPS']
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+PWM_COMMON_SOURCES = [
+  '${BUILDPATH}/src/DalPWMFwk.c',
+  '${BUILDPATH}/src/DalPWM.c',
+  '${BUILDPATH}/src/DalPWMInfo.c',
+]
+
+
+#-------------------------------------------------------------------------------
+# Add libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(PWM_IMAGES, '${BUILDPATH}/DALpwm', PWM_COMMON_SOURCES)
+
+#-------------------------------------------------------------------------------
+# QAPI
+#-------------------------------------------------------------------------------
+# Creating a separate library QAPI source files to be shipped as binary
+
+PWM_QAPI_SOURCES = [
+  '${BUILDPATH}/src/qapi_pwm.c',
+]
+
+env.AddLibrary('CORE_APPS', '${BUILDPATH}/pwm_qapi', PWM_QAPI_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Register initialization function and dependencies.
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CORE_APPS']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_0',                    # required
+      'init_name'      : 'qapi_pwm',                          # required
+      'init_function'  : '__qapi_PWM_Module_Init',            # required
+      'dependencies'   : ['dalsys']
+    })
+
+#---------------------------------------------------------------------------
+# Add DAL XML file
+#---------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env:
+  DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+  env.AddDevCfgInfo(DEVCFG_IMG,
+  {
+    'devcfg_xml'    : '${BUILD_ROOT}/core/systemdrivers/pwm/config/DalPWM.xml'
+  })
+
+#---------------------------------------------------------------------------
+# Pack out target specific files not needed
+#---------------------------------------------------------------------------
+
+# Remove target config files
+ALL_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../config/')
+SHARED_CONFIG_FILES = env.FindFiles(
+  ['DALPWMPropDef.h', 'DalPWM.xml'],
+  '../config/')
+MY_CONFIG_FILES = env.FindFiles(
+  ['*'],
+  '../config/${CHIPSET}')
+PACK_CONFIG_FILES = list(set(ALL_CONFIG_FILES) - set(SHARED_CONFIG_FILES) - set(MY_CONFIG_FILES))
+env.CleanPack(PWM_IMAGES, PACK_CONFIG_FILES)
+
+#-------------------------------------------------------------------------------
+# Invoke HAL build file
+#-------------------------------------------------------------------------------
+
+env.LoadSoftwareUnits()

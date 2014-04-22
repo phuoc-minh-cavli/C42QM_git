@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Carrier Policy with DoCoMo requirements 
+$Header: //components/rel/mmcp.mpss/6.1.10/policyman/configurations/Carrier/Docomo/subsidized/carrier_policy.xml#1 $
+-->
+
+<policy name        = "generic"
+        changelist  = "$Change: 46174567 $" 
+        enabled     = "true"
+        schema_ver  = "1"
+        policy_ver  = "55.1.2"
+>
+
+  <initial>
+    <actions>
+
+      <!-- These are the HOME MCCs -->
+      <mcc_list name="home_mccs"> 440 441 </mcc_list>
+
+      <!-- Define the OOS timer with a 2 minute interval -->
+      <define_timer name = "noservice" id = "2" interval = "2" units = "min" />
+
+      <!-- Boolean: Is UE in home ? -->
+      <boolean_define name="home" initial="false" />
+
+      <!-- RF Bands with GWL enabled -->
+      <rf_band_list name = "rf_bands_gwl">
+        <gw_bands base = "hardware" />
+        <lte_bands base = "hardware" />
+        <tds_bands base = "none" />
+      </rf_band_list>
+
+      <!-- Define intial RAT capability as GSM, WCDMA and LTE -->
+      <rat_capability_if base = "none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability_if>
+
+      <!-- Define intial RF bands as GWL bands -->
+      <rf_bands list = "rf_bands_gwl" />
+
+      <!-- Define intial UE mode as NORMAL -->
+      <ue_mode> NORMAL </ue_mode>
+
+      <feature> normal </feature>
+
+    </actions>
+  </initial>
+
+  <!--
+  ====================================================================
+    Rules for timer handling
+  ====================================================================
+  -->
+
+  <!-- RULE #1: If the noservice timer has expired, enable Full RAT mode and restart timer -->
+  <rule precond="none">
+    <conditions>
+      <phone_operating_mode> ONLINE </phone_operating_mode>
+      <timer_expired name="noservice" />
+    </conditions>
+
+    <actions>
+      <expired_timer_handled name="noservice" />
+      <rat_capability base = "none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+      <svc_mode> LIMITED </svc_mode>
+      <timer_start name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #2 -->
+  <!-- If we are in LPM, stop the all timers.
+  -->
+  <rule precond="none">
+    <conditions>      
+      <phone_operating_mode> SLEEP </phone_operating_mode>
+    </conditions>
+    <actions>
+      <timer_stop name="noservice" />
+    </actions>
+  </rule>
+
+  <!-- RULE #3 -->
+  <!-- Wait if we don't have service -->
+  <rule precond="none">
+    <conditions>
+      <not> <have_service /> </not>
+    </conditions>
+    <actions>
+      <if>
+        <cond> <phone_operating_mode> ONLINE </phone_operating_mode> </cond>
+        <then> <timer_start name="noservice" /> </then>
+      </if>
+    </actions>
+  </rule>
+
+  <!-- RULE #4: If we have service, stop the noservice timer and update home boolean -->
+  <rule precond="SS">
+    <conditions>
+      <have_service />
+    </conditions>
+
+    <actions>
+      <timer_stop name="noservice" />
+      <boolean_set name="home">
+        <location_mcc_in list="home_mccs" />
+      </boolean_set>
+      <svc_mode> FULL </svc_mode>
+      <continue />
+    </actions>
+  </rule>
+
+  <!--
+  ===========================================================================
+    Rules to allow UE to to camp on HOME/overseas network
+  ===========================================================================
+  -->
+
+  <!-- Rule#5: If the Serving MCC is HOME with some service, remove GSM -->
+  <rule precond="SS">
+    <conditions>
+      <boolean_test name="home" />
+    </conditions>
+
+    <actions>
+      <rat_capability base = "none" >
+        <include> LTE WCDMA </include>
+      </rat_capability>
+    </actions>
+  </rule>
+
+  <!-- Rule#6: If the Serving MCC is Overseas, allow GSM -->
+  <rule precond="SS">
+    <conditions>
+      <true />
+    </conditions>
+
+    <actions>
+      <rat_capability base = "none" >
+        <include> GSM WCDMA LTE </include>
+      </rat_capability>
+    </actions>
+  </rule>
+
+</policy>

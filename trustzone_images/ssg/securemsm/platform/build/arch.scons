@@ -1,0 +1,70 @@
+#===============================================================================
+#
+# Platform configurations/detection.
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright 2016 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ssg.tz/1.1.3/securemsm/platform/build/arch.scons#1 $
+#  $DateTime: 2019/05/23 05:32:51 $
+#  $Author: pwbldsvc $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who       what, where, why
+# ----------  ---       --------------------------------------------------------
+# 11/20/2016  pre       Initial revision
+#===============================================================================
+Import('env')
+#env = env.Clone()
+
+CPUS = []
+WAS = []
+
+if env['MSM_ID'] in ['845', '670']:
+   CPUS = ['kryo300gold', 'kryo300silver']
+elif env['MSM_ID'] in ['855', '1000', '6150', '7150','saipan']:
+   CPUS = ['kryo400gold', 'kryo400silver', 'kryo300silver']
+elif env['MSM_ID'] in ['8250']:
+   CPUS = ['kryo500gold', 'kryo500silver', 'kryo400silver']
+elif env['MSM_ID'] in ['24','55','9205']:
+   CPUS = ['cortex_a7']
+elif env['CHIPSET'] in ['qcs405']:
+   CPUS = ['cortex_a53']
+elif env['CHIPSET'] in ['nicobar','kamorta']:
+   CPUS = ['kryo200gold', 'kryo200silver']
+elif env['MSM_ID'] in ['lahaina']:
+   CPUS = ['kryo600gold', 'kryo600silver']   
+
+#===============================================================
+# Setting up workarounds required for the platform & CPU.
+#===============================================================
+# CVE_2017_5715_WA:
+#      CVE-2017-5715 Workaround/Spectre V2 Workaround/SMCC_ARCH_WA_1.
+# CVE_2018_3639_WA:
+#      CVE-2018-3639 Workaround/Spectre V4 Workaround/SMCC_ARCH_WA_2.
+#
+# DCC_ACCESS_TO_APCS_RSC_WA:
+#      Workaround for h/w bug QCTDD05443749.
+#===============================================================
+
+if env['MSM_ID'] in ['8250', 'saipan', 'rennell', 'lahaina']:
+   WAS += ['CVE_2018_3639_WA']                         
+elif env['MSM_ID'] in ['845', '670', '855', '1000', '6150', '7150', 'nicobar','kamorta']:
+   WAS += ['CVE_2017_5715_WA', 'CVE_2018_3639_WA']
+
+elif env['MSM_ID'] in ['24', '55']:
+   WAS += ['DCC_ACCESS_TO_APCS_RSC_WA']
+
+env.Replace(PLATFORM_CPUS = CPUS)
+env.Replace(PLATFORM_WAS = WAS)
+
+

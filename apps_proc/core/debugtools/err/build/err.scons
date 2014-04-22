@@ -1,0 +1,122 @@
+#===============================================================================
+#
+# ERR Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2015,2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/err/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# local image definitions
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES=['ERR_IMG_APSS'])
+env.Append(CPPDEFINES=['FEATURE_ERR_DISABLE_EFS'])
+
+if 'USES_DEVCFG' in env:
+    env.Append(CPPDEFINES=['ERR_USES_DEVCFG'])
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'MODEM_MDSP',
+   'MODEM_PMIC',
+   'MULTIMEDIA_DISPLAY',
+   'MODEM_1X',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'SECUREMSM',
+   'PRODUCTS_SCM',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['TMS_INTERNAL'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+ERR_SOURCES =  [
+   '${BUILDPATH}/err.c',
+   '${BUILDPATH}/err_action.c',
+   '${BUILDPATH}/err_nzi.c',
+   '${BUILDPATH}/err_nv_log.c',
+   '${BUILDPATH}/err_exception_handler.c',
+   '${BUILDPATH}/err_nv_efs.c',
+   '${BUILDPATH}/err_reset_detect.c',
+   '${BUILDPATH}/arm/err_jettison_core.s'
+]
+
+VERSION_IMG = [
+   'IMAGE_TREE_VERSION_AUTO_GENERATE',
+]
+
+if env.IsTargetEnable(VERSION_IMG):
+   ERR_SOURCES.append('${BUILDPATH}/err_image_version.c')
+else:
+   ERR_SOURCES.append('${BUILDPATH}/err_image_version_void.c')
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_APPS'],
+   '${BUILDPATH}/err',
+   ERR_SOURCES )
+
+if 'USES_RCINIT' in env:
+ env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    ['CORE_APPS'],                 # define TMC_RCINIT_INIT_ERR_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_1',                   # required
+     'init_name'                  : 'err_init',                         # required
+     'init_function'              : 'err_init',                         # required
+    })
+

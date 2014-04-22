@@ -1,0 +1,35 @@
+#===============================================================================
+#
+# Audio Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/multimedia2/Audio/AudSA/msm7x30/main/latest/multimedia/audio/build/SConscript#1 $
+#  $DateTime: 2009/11/12 20:44:32 $
+#  $Author: dfrancis $
+#  $Change: 1084171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/22/13   unni    Treating all warnings as error in Audio
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Convert all warnings to errors in entire audio module
+#-------------------------------------------------------------------------------
+env.Append(CFLAGS = " --diag_error=warning ")
+
+env.LoadSoftwareUnits()

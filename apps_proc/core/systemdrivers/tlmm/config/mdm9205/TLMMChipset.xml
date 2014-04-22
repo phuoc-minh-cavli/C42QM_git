@@ -1,0 +1,37 @@
+  #include "msmhwiobase.h"
+  #include "TlmmDefs.h"
+  #include "DALTLMMPropDef.h"
+  #include "PlatformIO_IDP.xml"
+  #include "PlatformIO_CDP.xml"
+  #include "PlatformIO_QRD.xml"
+  <global_def>
+    <var_seq name="tlmm_port_cfg" type=DALPROP_DATA_TYPE_UINT32_SEQ>
+      0xFFFFFFFF, 0, 0, 0, 0,
+      end
+    </var_seq>
+  </global_def>
+  <device id=DALDEVICEID_TLMM>
+    <props name="tlmm_base" type=DALPROP_ATTR_TYPE_UINT32>
+      TLMM_BASE_PHYS
+    </props>
+    <props name="tlmm_offset" type=DALPROP_ATTR_TYPE_UINT32>
+      0x0
+    </props>
+    <props name="tlmm_total_gpio" type=DALPROP_ATTR_TYPE_UINT32>
+      63
+    </props>
+    <props name="tlmm_ports" type=DALPROP_ATTR_TYPE_UINT32_SEQ_PTR>
+      tlmm_port_cfg
+    </props>
+    <props name="IsRemotable" type=DALPROP_ATTR_TYPE_UINT32>
+      0x1
+    </props>
+    <props name="TLMMDefaultPlatformGroup" type="TLMMPlatformMapType">
+      {{DALPLATFORMINFO_TYPE_IDP, 1, 0, 0}, 0, 0, "TLMMPlatformIO_IDP", "/tlmm/idpcfgs"}
+    </props>
+    <props name="TlmmPlatformGroups" type="TLMMPlatformMapType" array="True">
+      {{{DALPLATFORMINFO_TYPE_IDP,     1, 0, 0}, 0, 0, "TLMMPlatformIO_IDP",     "/tlmm/idpcfgs"},
+       {{DALPLATFORMINFO_TYPE_CDP,     1, 0, 0}, 0, 0, "TLMMPlatformIO_CDP",     "/tlmm/cdpcfgs"},
+       {{DALPLATFORMINFO_TYPE_QRD,     1, 0, 0}, 0, 0, "TLMMPlatformIO_QRD",     "/tlmm/qrdcfgs"}}
+    </props>
+  </device>

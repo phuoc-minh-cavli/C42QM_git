@@ -1,0 +1,347 @@
+;=====================================================================
+;
+;       AutoStack V2 Debug Script
+;
+; Usage: do stack_split.cmm [optional:output_log.txt]
+;===================================================================== 
+
+Area.Create IO 1000. 5000.
+Area.Select IO
+Area IO 
+
+Frame.config.EABI on
+
+ENTRY &log_file
+
+if ("&log_file"!="")
+(
+    AREA.open IO &log_file
+)
+
+local &num_pools
+&num_pools = v.value(sizeof(qurt_stack_pool_buffer_size)/sizeof(qurt_stack_pool_buffer_size[0]))
+
+var.newlocal int[&num_pools] \pool_buff_num
+var.newlocal int[&num_pools] \pool_total_size
+; Set num Buffers
+var.set \pool_buff_num[0] = (sizeof(qurt_stack_pool_0)/qurt_stack_pool_buffer_size[0])
+var.set \pool_buff_num[1] = (sizeof(qurt_stack_pool_1)/qurt_stack_pool_buffer_size[1])
+var.set \pool_buff_num[2] = (sizeof(qurt_stack_pool_2)/qurt_stack_pool_buffer_size[2])
+var.set \pool_buff_num[3] = (sizeof(qurt_stack_pool_3)/qurt_stack_pool_buffer_size[3])
+; Set Pool sizes
+var.set \pool_total_size[0] = (sizeof(qurt_stack_pool_0))
+var.set \pool_total_size[1] = (sizeof(qurt_stack_pool_1))
+var.set \pool_total_size[2] = (sizeof(qurt_stack_pool_2))
+var.set \pool_total_size[3] = (sizeof(qurt_stack_pool_3))
+
+
+
+local &pool_idx
+
+var.newlocal int[&num_pools] \pool_used
+&pool_idx = 0
+while (&pool_idx<&num_pools)  
+( 
+    var.set \pool_used[&pool_idx] = 0
+    &pool_idx=&pool_idx+1
+)
+
+
+; CANARY Check
+local &warning
+&warning = 0
+&pool_idx = 0
+while (&pool_idx<&num_pools)  
+( 
+    local &temp_pool_ptr
+    local &temp_buffer_size
+    local &temp_idx_buff 
+    local &temp_buff_addr
+    local &temp_buff_num  
+    local &temp_canary
+
+
+    &temp_pool_ptr = v.value(qurt_stack_pool_addr[&pool_idx])
+    &temp_bufer_size = v.value(qurt_stack_pool_buffer_size[&pool_idx])
+    &temp_buff_num =  v.value(\pool_buff_num[&pool_idx])
+
+    &temp_idx_buff=0
+    while (&temp_idx_buff<&temp_buff_num)
+    (
+      &temp_buff_addr = v.value( (&temp_pool_ptr)+((&temp_idx_buff)*(&temp_bufer_size)) )
+      &temp_canary = v.value(((unsigned int*)&temp_buff_addr)[0])
+      if (&temp_canary!=0xDEADBEEF)
+      (
+          printf "WARNING: Canary (buffer[0]) corrupted at pool_idx[%d] buffer_idx[%d] " &pool_idx, &temp_idx_buff
+          &warning=&warning+1
+      )
+      &temp_canary = v.value(((unsigned int*)&temp_buff_addr)[1])
+      if (&temp_canary!=0xDEADBEEF)
+      (
+          printf "WARNING: Canary (buffer[1]) corrupted at pool_idx[%d] buffer_idx[%d] " &pool_idx, &temp_idx_buff
+          &warning=&warning+1
+      )
+      &temp_buff_addr = v.value( (&temp_pool_ptr)+((&temp_idx_buff+1)*(&temp_bufer_size)) )
+      &temp_canary = v.value(((unsigned int*)&temp_buff_addr)[-1])
+      if (&temp_canary!=0xDEADBEEF)
+      (
+          printf "WARNING: Canary (buffer[end-1]) corrupted at pool_idx[%d] buffer_idx[%d] " &pool_idx, &temp_idx_buff
+          &warning=&warning+1
+      )
+
+      &temp_idx_buff=&temp_idx_buff+1
+    )
+
+    &pool_idx=&pool_idx+1
+)
+
+if (&warning>0)
+(
+    local &input
+    printf "[%d] warning(s) occured, still continue? (Y/N)" &warning
+    ENTER &input
+    IF ("&input"!="Y")
+    ( 
+      ENDDO
+    )
+)
+else
+(
+    printf "================================="
+    printf "|     Canary check passed !!    |"
+    printf "================================="
+    printf ""
+    printf ""
+)
+
+; TCB based Thread Status
+local &count
+local &max_thread
+local &thread_list
+local &tcb_size
+
+&max_thread = v.value(QURTK_MAX_THREADS) 
+&thread_list = v.value(QURTK_thread_contexts) 
+&tcb_size = v.value(QURTK_CONTEXT_SIZE) 
+
+print "=========================================================================================================="
+print "|            |                  |              |              | Free space |  Current Buffer Stats  |"
+print "|            |                  |  Base Stack  |  AutoStack   | SP - FLMT  | Pool  | Buffer | Reuse |" 
+print "|    TCB     |    Thread name   | Size (bytes) | Used (bytes) | (bytes)    | Index | Index  | Count |" 
+print "=========================================================================================================="
+&count = 0
+while (&count<&max_thread)
+(
+    local &valid
+    local &tcb
+    local &ugp
+    local &sp
+    local &framelimit
+    local &base_stack_size
+    local &thread_name
+    local &autostack_size
+    local &curr_pool
+    local &curr_buf_idx
+
+    &tcb = v.value(&thread_list + (&tcb_size*&count)) 
+    &valid = v.value(((QURTK_thread_context*)&tcb)->valid) 
+    
+    if (&valid==1) 
+    ( 
+      &ugp = v.value(((QURTK_thread_context*)&tcb)->ugp) 
+      &sp = v.value(((QURTK_thread_context*)&tcb)->r29)
+      &framelimit = v.value(((QURTK_thread_context*)&tcb)->framelimit)
+      &base_stack_size = v.value(((QURT_utcb_t)&ugp).attr.stack_size)
+      &thread_name = v.string(((QURT_utcb_t)&ugp).attr.name)
+      
+      local &pool_idx
+      local &free_space
+      &pool_idx = 0
+      &curr_pool = "      |        |          "
+      &autostack_size = 0    
+      &free_space = &sp-&framelimit
+      while (&pool_idx<&num_pools)
+      (
+          local &pool_start
+          local &pool_size
+          local &buff_size          
+          &pool_start = v.value(qurt_stack_pool_addr[&pool_idx])
+          &pool_size = v.value(\pool_total_size[&pool_idx])
+          &buff_size = v.value(qurt_stack_pool_buffer_size[&pool_idx])
+          &autostack_size = &autostack_size+&buff_size
+
+          if (&framelimit>=&pool_start)&&(&framelimit<&pool_start+&pool_size)
+          (
+             local &buff_index
+             local &pool_up_ctr_array 
+             local &hits
+
+             &buff_index = v.value((unsigned int)(&framelimit-&pool_start)/&buff_size)
+             &pool_up_ctr_array = var.value(qurt_stack_pool_up_ctr[&pool_idx])
+             &hits = v.value(((unsigned int*)&pool_up_ctr_array)[&buff_index])
+
+             sprintf &curr_pool "%-5d | %-6d | %-10d" , &pool_idx, &buff_index, &hits
+             var.set \pool_used[&pool_idx] = \pool_used[&pool_idx]+1
+             &pool_idx = &num_pools
+          )
+
+          &pool_idx = &pool_idx+1
+      )
+      if (&pool_idx!=(&num_pools+1))
+      (
+          ; Not AutoStacked
+          &autostack_size = 0
+      )
+      
+      printf "| 0x%x | %-16s | %-12d | %-12d | %-10d | %s |" &tcb, "&thread_name", &base_stack_size, &autostack_size, &free_space, "&curr_pool"
+    ) 
+
+    &count=&count+1 
+)
+
+print "=========================================================================================================="
+print ""
+print ""
+
+
+; Bit MASK Tally
+&pool_idx = 0
+&warning = 0
+while (&pool_idx<&num_pools)  
+(
+    local &temp_x
+    local &bit_count
+
+    &temp_x = var.value(\pool_buff_num[&pool_idx])
+    &temp_x = var.value((~(unsigned long long)0)<<&temp_x)
+
+    ; Init MASK check
+    &temp_x = ~&temp_x
+    &temp_x = var.value((qurt_stack_pool_bitmask[&pool_idx])|(&temp_x))
+    &temp_x = ~&temp_x
+    if (&temp_x!=0)
+    (
+        &temp_x = var.value(\pool_buff_num[&pool_idx])
+        &temp_x = var.value((~(unsigned long long)0)<<&temp_x)
+        printf "WARNING: Pool[%d]'s bit_mask[0x%x] doesn't match initial value[0x%x]" &pool_idx, var.value(qurt_stack_pool_bitmask[&pool_idx]), &temp_x
+        &warning = &warning+1
+    )
+
+    ; Count Bit check
+    &temp_x = var.value(\pool_buff_num[&pool_idx])
+    &temp_x = var.value((~(unsigned long long)0)<<&temp_x) 
+    &temp_x = ~&temp_x                                   
+    &temp_x = var.value(qurt_stack_pool_bitmask[&pool_idx]&(&temp_x))
+    &bit_count = 0
+    while (&temp_x!=0)
+    (
+      local &temp_bit
+      &temp_bit = (&temp_x)&(0x1)
+      if (&temp_bit==0x1)
+      (
+         &bit_count=&bit_count+1
+      )
+      &temp_x = var.value(&temp_x>>1)
+    )
+
+    local &temp_pool_used
+    &temp_pool_used = var.value(\pool_used[&pool_idx])
+    if (&bit_count!=&temp_pool_used)
+    (
+       printf "WARNING: Pool[%d]'s bit_mask[0x%x] didn't match count [%d] got via TCB-SP travesal" &pool_idx, var.value(qurt_stack_pool_bitmask[&pool_idx]), var.value(\pool_used[&pool_idx])
+       &warning = &warning+1
+    )
+
+    &pool_idx = &pool_idx+1
+)
+if (&warning==0)
+(
+    printf "=============================================="
+    printf "|   qurt_stack_pool_bitmask Check Passed !!  |"
+    printf "=============================================="
+    printf ""
+    printf ""
+)
+
+print "======================================================================="
+print "| Pool  | Buffer Size | Total Available | Buffers Used | Buffers Used |"
+print "| Index | (in Bytes)  | Buffers         | (Currently)  | (Worst Case) |"
+print "======================================================================="
+&pool_idx = 0
+while (&pool_idx<&num_pools)  
+(
+    local &buffer_size
+    local &total_available_buffers
+    local &buffers_used_currently
+    local &buffers_used_worst_case
+    local &pool_up_ctr_array
+    local &temp_idx_buff
+    
+    &buffer_size = var.value(qurt_stack_pool_buffer_size[&pool_idx])
+    &total_available_buffers =  var.value(\pool_buff_num[&pool_idx])
+    &buffers_used_currently = var.value(\pool_used[&pool_idx])
+    
+    &buffers_used_worst_case = 0
+    &pool_up_ctr_array = var.value(qurt_stack_pool_up_ctr[&pool_idx])
+    &temp_idx_buff = 0
+    while (&temp_idx_buff<&total_available_buffers)
+    (
+        local &temp_hits
+        &temp_hits = v.value(((unsigned int*)&pool_up_ctr_array)[&temp_idx_buff])
+        if (&temp_hits>0)
+        (  
+            &buffers_used_worst_case = &buffers_used_worst_case+1
+        )
+        &temp_idx_buff = &temp_idx_buff+1
+    )
+
+    printf "| %5d | %11d | %15d | %12d | %12d |" &pool_idx, &buffer_size, &total_available_buffers, &buffers_used_currently, &buffers_used_worst_case
+
+    &pool_idx = &pool_idx+1
+)
+print "======================================================================="
+print ""
+print ""
+
+print "====================================="
+print "| Buffer Size | Buffer | Reuse |"
+print "| (in Bytes)  | Index  | Count |"
+print "====================================="
+&pool_idx = 0
+while (&pool_idx<&num_pools)  
+(
+    local &buffer_size
+    local &total_available_buffers
+    local &pool_up_ctr_array
+    local &temp_idx_buff
+    
+    &buffer_size = var.value(qurt_stack_pool_buffer_size[&pool_idx])
+    &total_available_buffers =  var.value(\pool_buff_num[&pool_idx])
+
+    &pool_up_ctr_array = var.value(qurt_stack_pool_up_ctr[&pool_idx])
+    &temp_idx_buff = 0
+    while (&temp_idx_buff<&total_available_buffers)
+    (
+        local &temp_hits
+        &temp_hits = v.value(((unsigned int*)&pool_up_ctr_array)[&temp_idx_buff])
+        if (&temp_hits>0)
+        (  
+            printf "| %11d | %6d | %10d |" &buffer_size, &temp_idx_buff, &temp_hits
+        )
+        &temp_idx_buff = &temp_idx_buff+1
+    )    
+    &pool_idx = &pool_idx+1
+    if (&pool_idx<&num_pools)
+    (
+      print "-------------------------------------"
+    )
+)
+print "====================================="
+print ""
+print ""
+
+
+if ("&log_file"!="")
+(
+    AREA.close IO 
+)

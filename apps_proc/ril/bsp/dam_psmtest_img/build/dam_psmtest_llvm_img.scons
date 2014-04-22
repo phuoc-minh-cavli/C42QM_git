@@ -1,0 +1,207 @@
+#===============================================================================
+#
+# Target-Level Build Script for ThreadX DAM modules
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  
+#  
+#  
+#===============================================================================
+import sys
+import os
+Import('env')
+
+env = env.Clone()
+
+#define PSMTEST DAM module bin creation builder from mbn
+bin_bld = Builder(action = '${PYTHONCMD} ${BINTOOL} --bin M9x06_DAM_PSMTEST_LLVM.elf --output $TARGET')
+#bin_bld = Builder(action = '${BINTOOL} --bincombined $SOURCE --output $TARGET')
+env.Append(BUILDERS = {'BinBuilder' : bin_bld})
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+aliases = ['dam_psmtest_llvm','llvm_dam']
+
+build_tags = ['DAM_PSMTEST_LLVM','TXM_MODULES_LLVM']
+
+# init environment variables
+env.InitImageVars(
+   alias_list=aliases,           # aliases
+   proc='cortex-a7',             # proc
+   config='apps',                # config type, proc_name
+   plat='tx',
+   build_tags = build_tags,
+   tools = ['${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py','${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py']
+                                           
+   )
+
+if not env.CheckAlias():
+   Return()
+#----------------------------------------------------------------------------------
+# Suppress non-critical ARM license error to warning
+# C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
+#-----------------------------------------------------------------------------------
+env.Append(CFLAGS = "-Wno-9931 ")
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+
+env.Append(CPPDEFINES = ["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+#Here is where we change the COMPILER
+env.LoadToolScript('llvm_dam', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+#To be removed
+#env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+
+#Statically linking module at fixed virtual address which will be mapped to actual load address at run time
+#TODO: How to make this unique across modules and how to take it from some common location
+env.Append(CCFLAGS = " -marm ")
+env.Append(ASMFLAGS = " -marm ")
+
+env.Replace(LINKFLAGS = "-Wl,-mno-unaligned-access -fuse-baremetal-sysroot -fno-use-baremetal-crt \
+                         -Wl,-entry=0x42000000 \
+                         -W1,-T demo.ld \
+                         -Wl,-Map,${TARGET.base}.Map \
+                         -Wl,-gc-sections $LFLAGS")
+#---------------------------------------------------------------------------
+# Libs/Objs
+#--------------------------------------------------------------
+image_libs = []
+image_objs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+# load Build Test libs/objs build rules.
+au_items = env.LoadAreaSoftwareUnits('build')
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+au_items = env.LoadAreaSoftwareUnits('api' , [ "common", "time","nas","voice_nas_service_common"])
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+#LOAD PSM_CLIENT PATH:
+modules_path = env.RealPath('${BUILD_ROOT}/ril/psm/qapi_lib')
+if env.PathExists(modules_path): 
+   au_items = env.LoadAreaSoftwareUnits('ril' , ["psm/qapi_lib"])
+   image_objs.extend(au_items['OBJS'])
+else:
+    "psm_client Library doesn't exist"
+
+#Link TXM module library
+image_libs.extend(['$BUILD_ROOT/core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib'])
+image_libs.extend(['${BUILD_ROOT}/core/mproc/qmi/build/LLVM/qcci_dam_lib.lib'])
+image_libs.extend(['${BUILD_ROOT}/core/mproc/qmi/build/LLVM/IDL_DAM_LIB.lib'])
+image_libs.extend(['$BUILD_ROOT/core/services/time_qapi/build/LLVM/timer_dam_lib.lib'])
+image_libs.extend(['$BUILD_ROOT/ril/psm/qapi_lib/build/LLVM/qapi_psm_lib.lib'])
+
+#load PSMTEST module libraries build rules.
+modules_path = env.RealPath('${BUILD_ROOT}/ril/psm/dam_psmtest')
+if env.PathExists(modules_path): 
+   au_items = env.LoadAreaSoftwareUnits('ril' , ["psm/dam_psmtest"])
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+#-------------------------------------------------------------------------
+# Libs/Objs
+#-------------------------------------------------------------------------
+image_libs_path = env.get('INSTALL_LIBPATH')
+
+image_units = [image_libs, image_objs]
+
+if 'IMAGE_BUILD_LOCAL_FILES' in env:
+   #=========================================================================
+   # CBSP Image section
+   #=========================================================================
+
+   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # should of clone, but just to be on the safe side.
+   env = env.Clone()
+   
+   #-------------------------------------------------------------------------
+   # Internal depends within CoreBSP
+   #-------------------------------------------------------------------------
+   CBSP_QAPI = [
+      'BOOT',
+      'BUSES',
+      'DAL',
+      'DEBUGTOOLS',
+      'HAL',      
+      'HWENGINES',
+      'IODEVICES',
+      'MPROC',
+      'POWER',
+      'SECUREMSM',
+      'SERVICES',
+      'STORAGE',
+      'SYSTEMDRIVERS',
+      'WIREDCONNECTIVITY',
+      'PRODUCTS', 
+      # needs to be last also contains wrong comdef.h
+      'KERNEL',
+   ]
+
+   env.RequirePublicApi(CBSP_QAPI)
+
+   #----------------------------------------------------------------------------
+   # Sources, libraries
+   #----------------------------------------------------------------------------
+
+if 'IMAGE_BUILD_LINK' in env:
+   # actually doing link, reset image_units
+   image_units = []
+   
+   #-------------------------------------------------------------------------
+   # Build env QCOREIMG
+   #-------------------------------------------------------------------------
+   if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM= sh_libs_dynsyms_fname)
+   else:
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
+   
+if 'IMAGE_BUILD_POST_LINK' in env:
+   # #-------------------------------------------------------------------------
+   # # Build env mbn files
+   # #-------------------------------------------------------------------------
+   target_mbn = env.MbnBuilder('${SHORT_BUILDPATH}/${TARGET_NAME}', image_elf, IMAGE_TYPE="dam_psmtest_llvm_module", MBN_TYPE="elf", FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+   install_target_mbn = env.InstallAs('${MBN_ROOT}/dam_psmtest_llvm.mbn', target_mbn)
+   target_bin = env.BinBuilder("${MBN_ROOT}/dam_psmtest_llvm.bin", "${MBN_ROOT}/dam_psmtest_llvm.mbn")
+
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+
+   # copy elf and reloc to needed locations for AMSS tools to load on target
+   # install_target_elf = env.InstallAs(
+      # "${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf", image_elf)
+   install_target_elf = env.InstallAs(
+      "${BUILD_MS_ROOT}/M9x06_DAM_PSMTEST_LLVM.elf", image_elf)
+
+   #=========================================================================
+   # Define targets needed QCOREIMG
+   #
+   image_units += [
+      install_target_elf,
+      target_bin,
+   ]
+
+
+#=========================================================================
+# Finish up...
+env.BindAliasesToTargets(image_units)

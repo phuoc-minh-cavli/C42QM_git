@@ -1,0 +1,62 @@
+#===============================================================================
+#
+# MCS profile Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+
+# All ideas, data and information contained in or disclosed by this document
+# are confidential and proprietary information of Qualcomm Technologies
+# Incorporated and all rights therein are expressly reserved.  By accepting
+# this material the recipient agrees that this material and the information
+# contained therein are held in confidence and in trust and will not be used,
+# copied, reproduced in whole or in part, nor its contents revealed in any
+# manner to others without the express written permission of Qualcomm
+# Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcs.mpss/5.1/mcsprofile/build/mcsprofile.scons#3 $
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Exit immediately for PLT builds
+#-------------------------------------------------------------------------------
+if 'USES_PLT' in env:
+    Return()
+
+#-------------------------------------------------------------------------------
+# Necessary API's for test purposes
+#-------------------------------------------------------------------------------
+env.RequirePublicApi('QTF', area='mob')
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+MCSPROFILE_SRC = [
+    '${BUILDPATH}/mcsprofile.c',
+]
+
+env.AddLibrary(['MODEM_MODEM','MOB_MCS_COPPER','MODEM_PAGEONLY'],
+               '${BUILDPATH}/mcsprofile',
+               MCSPROFILE_SRC)
+
+# Load test units
+env.LoadSoftwareUnits()

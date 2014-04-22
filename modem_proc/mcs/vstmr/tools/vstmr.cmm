@@ -1,0 +1,743 @@
+; --------------------------------------------------------------------------- #
+; File Name :: vstmr.cmm
+; --------------------------------------------------------------------------- #
+
+; Copyright (c) 2018 Qualcomm Technologies Incorporated.
+; All Rights Reserved.
+; Qualcomm Confidential and Proprietary
+
+; Export of this technology or software is regulated by the U.S. Government.
+; Diversion contrary to U.S. law prohibited.
+
+; All ideas, data and information contained in or disclosed by
+; this document are confidential and proprietary information of
+; Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+; By accepting this material the recipient agrees that this material
+; and the information contained therein are held in confidence and in
+; trust and will not be used, copied, reproduced in whole or in part,
+; nor its contents revealed in any manner to others without the express
+; written permission of Qualcomm Technologies Incorporated.
+; --------------------------------------------------------------------------- #
+
+;==============================================================================
+;
+; $Header: //components/rel/mcs.mpss/5.1/vstmr/tools/vstmr.cmm#1 $
+;
+;==============================================================================
+
+; Version number for this script
+&version_number=1.2
+
+; USAGE for this script
+; To run this script, use the following command
+;  do vstmr.cmm <dump_dir>
+;    e.g. do vstmr c:\temp
+;    Note: <dump_dir> is optional. If not specified, dump_dir=c:\temp
+
+; Get arguments for the script
+ENTRY &dump_dir
+
+Area.Reset
+Area.Create VSTMR_DUMP 300. 1000.
+Area.Select VSTMR_DUMP
+Area VSTMR_DUMP
+
+; Check if VSTMR was compiled and its symbols are loaded. The check is done
+; for a random vstmr symbol to make sure it exists. Others should also exist
+; if this one was found
+IF (!Y.EXIST("geran_view"))
+(
+  print "Please load symbols before running script."
+  enddo
+)
+
+; Check if dump directory was specified. If not, set it to default
+if "&dump_dir"==""
+(
+  &dump_dir="c:\temp"
+)
+
+;print log contents to a text file
+&out_file="&dump_dir\vstmr_dump.txt"
+
+OPEN  #1 &out_file /CREATE
+WRITE #1
+WRITE #1 "#####################################  VSTMR INTERNAL DEBUG DATA  #####################################"
+WRITE #1
+CLOSE #1
+
+;####################################################
+;            Print COMP USED data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################     COMPARATORS IN USE       #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.1 %r.1 %h vstmr_comp_used
+printer.close
+
+; Check if vstmr_crash_dump exists. If yes, log the same.
+IF Y.EXIST("vstmr_crash_dump")
+(
+  ;####################################################
+  ;      Print VSTMR related HW state information
+  ;####################################################
+
+  OPEN  #1 &out_file /A
+  WRITE #1
+  WRITE #1 "#####################################        HW STATE DUMP         #####################################"
+  WRITE #1
+  CLOSE #1
+
+  printer.open &out_file /A
+  wp.v.v %open.2 %h %i vstmr_crash_dump
+  printer.close
+)
+
+;####################################################
+;            Print EVENT TABLE data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################        EVENT TABLES         #####################################"
+WRITE #1
+CLOSE #1
+
+;Get total number of comparators
+&num_comparators=v.value(sizeof(vstmr_comp_owner)/sizeof(vstmr_event_tbl_s *))
+
+&comp_owner_idx=0
+while (&comp_owner_idx!=&num_comparators)
+(
+  &table_ptr=v.value(vstmr_comp_owner[&comp_owner_idx])
+
+  ; if table is registered parse it. Else the entry would be NULL, so skip it
+  if &table_ptr!=0
+  (
+    ;Get the tech's event table symbol name
+    &evt_tbl_sym=SYmbol.VARNAME(D:&table_ptr)
+
+    ; Event tables could be registered as tech event table type (e.g. vstmr_lte_event_tbl_s)
+    ; or vstmr generic event table type (vstmr_event_tbl_s). First split the string to remove
+    ; the portion from ".events[0]" which is common to both. And then search for (".event_tbl_data")
+    ; and if it exists, remove it. The latter should only apply to tech event table types.
+    ;
+    ; Here is an example:
+    ; For <table_symbol_name>.event_tbl_data.events[0].atomic.value (tech type),
+    ; we would remove ".event_tbl_data.events[0].atomic.value", to
+    ; get the event table symbol name.
+    ;
+    ; For <table_symbol_name>.events[0].atomic.value (tech type), we would remove
+    ; ".events[0].atomic.value", to get the event table symbol name.
+
+    &evt_tbl_sym=STRing.SPLIT("&evt_tbl_sym",".events[0]",0)
+    &evt_tbl_symbol_tech=STRing.Replace("&evt_tbl_sym",".event_tbl_data","",0)
+
+    printer.open &out_file /A
+    if "&evt_tbl_symbol_tech"=="&evt_tbl_sym"
+      wp.v.v %open.2 %y %h &evt_tbl_sym
+    else
+      wp.v.v %open.3 %y %h &evt_tbl_symbol_tech
+    printer.close
+
+    OPEN  #1 &out_file /A
+    WRITE #1
+    WRITE #1 "--------------------------------------------------------------------------------------------------------"
+    WRITE #1
+    CLOSE #1
+  )
+
+  ; Go to the next index
+  &comp_owner_idx=&comp_owner_idx+1
+)
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          EPOCH LOG          #####################################"
+WRITE #1
+CLOSE #1
+
+;####################################################
+;            Print EPOCH data
+;####################################################
+
+&epoch_tbl_size=v.value(sizeof(vstmr_epoch_log)/sizeof(vstmr_epoch_log_t))
+; Subtract 1 as index starts at 0
+&epoch_tbl_size=&epoch_tbl_size-1
+
+; Grab epoch log index
+&epoch_log_idx=v.value(vstmr_epoch_log_idx)
+
+; Make sure to wrap log index within bounds (in case its corrupted)
+GOSUB VSTMR_WRAP_CHECK &epoch_log_idx &epoch_tbl_size
+ENTRY &epoch_log_idx
+
+&epoch_seq=&epoch_log_idx
+
+;Print only last 5 entries of the epoch log table
+&epoch_seq=&epoch_seq+(&epoch_tbl_size-5)
+&epoch_seq=&epoch_seq%(&epoch_tbl_size)
+
+printer.open &out_file /A
+wp.v.v %open.1 %h vstmr_epoch_log_idx
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+WRITE #1
+CLOSE #1
+
+while (&epoch_seq!=&epoch_log_idx)
+(
+  printer.open &out_file /A
+  wp.v.v %open.2 %h vstmr_epoch_log[&epoch_seq]
+  printer.close
+
+  OPEN  #1 &out_file /A
+  WRITE #1
+  WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+  WRITE #1
+  CLOSE #1
+
+  ;Increment index to point to the next location
+  &epoch_seq=&epoch_seq+1
+
+  ;If we have wrapped, reset the index
+  if &epoch_seq==(&epoch_tbl_size+1)
+    &epoch_seq=0x00
+)
+
+
+;####################################################
+;            Print GERAN View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################     GERAN VIEW SUB 0   #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &geran_view[0]
+wp.v.v %open.4 %r.4 %i %h geran_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################     GERAN VIEW SUB 1   #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &geran_view[1]
+wp.v.v %open.4 %r.4 %i %h geran_view[1]
+printer.close
+
+;####################################################
+;            Print WCDMA View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          WCDMA VIEWS SUB 0     #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &wcdma_view[0]
+wp.v.v %open.4 %r.4 %i %h wcdma_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          WCDMA VIEWS SUB 1     #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &wcdma_view[1]
+wp.v.v %open.4 %r.4 %i %h wcdma_view[1]
+printer.close
+
+;####################################################
+;            Print TDS View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          TDS VIEWS SUB 0       #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &tds_view[0]
+wp.v.v %open.4 %r.4 %i %h tds_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          TDS VIEWS SUB 1       #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &tds_view[1]
+wp.v.v %open.4 %r.4 %i %h tds_view[1]
+printer.close
+
+;####################################################
+;            Print LTE View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          LTE VIEWS SUB 0        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &lte_view[1]
+wp.v.v %open.4 %r.4 %i %h lte_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          LTE VIEWS SUB 1        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &lte_view[1]
+wp.v.v %open.4 %r.4 %i %h lte_view[1]
+printer.close
+
+;####################################################
+;            Print 1X View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          1X VIEWS SUB 0        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &onex_view[0]
+wp.v.v %open.4 %r.4 %i %h onex_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          1X VIEWS SUB 1        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &onex_view[1]
+wp.v.v %open.4 %r.4 %i %h onex_view[1]
+printer.close
+
+;####################################################
+;            Print HDR View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          HDR VIEWS SUB 0        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &hdr_view[0]
+wp.v.v %open.4 %r.4 %i %h hdr_view[0]
+printer.close
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          HDR VIEWS SUB 1        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &hdr_view[1]
+wp.v.v %open.4 %r.4 %i %h hdr_view[1]
+printer.close
+
+;####################################################
+;            Print NB1 View data
+;####################################################
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1 "#####################################          NB1 VIEWS SUB 0        #####################################"
+WRITE #1
+CLOSE #1
+
+printer.open &out_file /A
+wp.v.v %open.OFF %l &nb1_view[0]
+wp.v.v %open.4 %r.4 %i %h nb1_view[0]
+printer.close
+
+;####################################################
+;            Print VSTMR LOG data
+;####################################################
+
+; Make sure to check if log table exists.
+IF Y.EXIST("vstmr_log_table")
+(
+  OPEN  #1 &out_file /A
+  WRITE #1
+  WRITE #1 "###############################################          VSTMR LOG TABLE        ###################################################"
+  WRITE #1
+  CLOSE #1
+
+  ; Get the log sequence number to start printing the values from
+  &log_tbl_size=((v.value(sizeof(vstmr_log_table)/sizeof(vstmr_log_data_u)))-1)
+  &log_seq=v.value(vstmr_log_seq.value)
+  &log_seq=(&log_seq)&(&log_tbl_size)
+  &log_tbl_idx=&log_seq
+  &dump_cnt=0
+  ; Parse through each entry of the log table
+  while (&dump_cnt!=(&log_tbl_size))
+  (
+    ;Extract log entry
+    &msg_seq=v.value(vstmr_log_table[&log_tbl_idx].msg_seq)
+    &tech=v.value(vstmr_log_table[&log_tbl_idx].tech)
+    &msg_type=v.value(vstmr_log_table[&log_tbl_idx].msg_type)
+    &log_val0=v.value(vstmr_log_table[&log_tbl_idx].log_data_0)
+    &log_val1=v.value(vstmr_log_table[&log_tbl_idx].log_data_1)
+    &log_val2=v.value(vstmr_log_table[&log_tbl_idx].log_data_2)
+    &timestamp=v.value(vstmr_log_table[&log_tbl_idx].timestamp)
+
+    ; Fill in tech and stmr type
+    &stmr_type="  "
+
+    if &tech==0x00
+    (
+      &tech="WCDMA"
+      &stmr_type="(vstmr_wstmr_t)"
+    )
+    else if &tech==0x01
+    (
+      &tech="LTE"
+      &stmr_type="(vstmr_ostmr_t)"
+    )
+    else if &tech==0x02
+    (
+      &tech="GERAN"
+      &stmr_type="(vstmr_gstmr_t)"
+    )
+    else if &tech==0x03
+    (
+      &tech="HDR"
+      &stmr_type="(vstmr_hstmr_t)"
+    )
+    else if &tech==0x04
+    (
+      &tech="1X"
+      &stmr_type="(vstmr_1xframe_t)"
+    )
+    else if &tech==0x05
+    (
+      &tech="TDS"
+      &stmr_type="(vstmr_tdsstmr_t)"
+    )
+    else if &tech==0x06
+    (
+      &tech="XO"
+      &stmr_type=" "
+    )
+    else if &tech==0x07
+    (
+      &tech="NB1"
+      &stmr_type="(vstmr_nb1_stmr_t)"
+    )
+
+    ; View initialization
+    if &msg_type==0x01
+    (
+      &log_val0=v.string((vstmr_rtc_id)&log_val0)
+      &log_val0=STRING.UPR("&log_val0")
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   VIEW_INIT   RTC=&log_val0   VIEW=&log_val1   OFFSET=&log_val2"
+      CLOSE #1
+
+      printer.open &out_file /A
+      &log_val2=&log_val2<<0x20
+      wp.v.v %open.1 %h &stmr_type&log_val2
+      printer.close
+    )
+    ; View update
+    else if &msg_type==0x02
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   VIEW_UPDATE  EVT_TABLE=&log_val0  VIEW=&log_val1"
+      CLOSE #1
+    )
+    ; Adjust view offset
+    else if &msg_type==0x03
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   ADJUST_OFFSET  VIEW=&log_val0   NEW_OFFSET=&log_val1  ADJUST=&log_val2"
+      CLOSE #1
+    )
+    ; Set view offset
+    else if &msg_type==0x04
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   SET_OFFSET  VIEW=&log_val0   OFFSET=&log_val1"
+      CLOSE #1
+    )
+    ; Update FCW
+    else if &msg_type==0x05
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   UPDATE_FCW  FCW=&log_val0   VIEW=&log_val1"
+      CLOSE #1
+    )
+    ; STMR sync
+    else if &msg_type==0x06
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   STMR_SYNC  VIEW=&log_val0   STMR=&log_val1   XO=&log_val2"
+      CLOSE #1
+
+      printer.open &out_file /A
+      &log_val1=&log_val1<<0x20
+      wp.v.v %open.1 %h &stmr_type&log_val1
+      printer.close
+    )
+    ; Event schedule
+    else if &msg_type==0x07
+    (
+      ; Extract event expiration count in XO and event index
+      GOSUB VSTMR_EXTRACT_XO_EVTIDX &log_val1
+      ENTRY &exp_xo &event_idx
+
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   EVENT_SCHED  EVT_STMR_EXP=&log_val0   EVT_XO_EXP=&exp_xo  EVT_IDX=&event_idx  LOG_ENTRY2=&log_val2"
+      CLOSE #1
+
+      ; Print expiration count in tech STMR format
+      GOSUB VSTMR_PRINT_STMR &log_val0 &stmr_type &tech
+    )
+    ; Apply frame extension to the offset for Geran
+    else if &msg_type==0x08
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   XO_TO_STMR  VIEW=&log_val0   OFFSET=&log_val1   EXTENDED_FRAME_TC=&log_val2"
+      CLOSE #1
+    )
+    ; Extend Geran frame
+    else if &msg_type==0x09
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   SET_FRAME_TC VIEW=&log_val0   EXTENDED_FRAME_NUM=&log_val1   EXTENDED_FRAME_TC=&log_val2"
+      CLOSE #1
+    )
+    ; Event cancellation
+    else if &msg_type==0x0a
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   EVENT_CANCEL EVT_TABLE=&log_val0   EVT_IDX=&log_val1"
+      CLOSE #1
+    )
+    ; VFR alloc'ed
+    else if &msg_type==0x0b
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   VFR_ALLOC  LOG0=&log_val0   LOG1=&log_val1   LOG2=&log_val2"
+      CLOSE #1
+    )
+    ; VFR sync
+    else if &msg_type==0x0c
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   VFR_SYNC  LOG0=&log_val0   LOG1=&log_val1   LOG2=&log_val2"
+      CLOSE #1
+    )
+    ; VFR release
+    else if &msg_type==0x0d
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   VFR_RELEASE  LOG0=&log_val0   LOG1=&log_val1   LOG2=&log_val2"
+      CLOSE #1
+    )
+    ; Complete frame extension
+    else if &msg_type==0x0e
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   COMPLETE_FEXT  VIEW=&log_val0   NEW_OFFSET=&log_val1   EXT_FRAME=&log_val2"
+      CLOSE #1
+    )
+    ; Event servicing
+    else if &msg_type==0x0f
+    (
+      GOSUB VSTMR_EXTRACT_XO_EVTIDX &log_val1
+      ENTRY &exp_xo &event_idx
+
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   EVENT_SERVICE  NEXT_STMR_EXP=&log_val0   NEXT_XO_EXP=&exp_xo  EVT_IDX=&event_idx  EVT_TBL=&log_val2"
+      CLOSE #1
+
+      ; Print expiration count in tech STMR format
+      GOSUB VSTMR_PRINT_STMR &log_val0 &stmr_type &tech
+    )
+    ; Event not pending
+    else if &msg_type==0x10
+    (
+      GOSUB VSTMR_EXTRACT_XO_EVTIDX &log_val1
+      ENTRY &exp_xo &event_idx
+
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   EVENT_NOT_PENDING  NEXT_STMR_EXP=&log_val0   NEXT_XO_EXP=&exp_xo  EVT_IDX=&event_idx  EVT_TBL=&log_val2"
+      CLOSE #1
+
+      ; Print expiration count in tech STMR format
+      GOSUB VSTMR_PRINT_STMR &log_val0 &stmr_type &tech
+    )
+    ;Update ERR_RATIO
+    else if &msg_type==0x16
+    (
+      OPEN  #1 &out_file /A
+      WRITE #1
+      WRITE #1 "-----------------------------------------------------------------------------------------------------------------------------------"
+      WRITE #1 "&timestamp:  SEQ=&msg_seq   TECH=&tech   UPDATE_ERR_RATIO  ERR_RATIO=&log_val0   VIEW=&log_val1   FCW=&log_val2"
+      CLOSE #1
+    )
+
+    ;Increment index to point to the next location
+    &log_tbl_idx=&log_tbl_idx+1
+    &dump_cnt=&dump_cnt+1
+
+    ;If we have wrapped, reset the index
+    if &log_tbl_idx==&log_tbl_size
+      &&log_tbl_idx=0x00
+  )
+)
+
+OPEN  #1 &out_file /A
+WRITE #1
+WRITE #1
+WRITE #1 "###########################################         VSTMR DUMP COMPLETE                ############################################"
+WRITE #1
+CLOSE #1
+
+print "VSTMR logs have been collected at &out_file"
+; End the script
+enddo
+
+;####################################################
+;             List of Procedures
+;####################################################
+
+; If provided count is outside limits, wrap it.
+VSTMR_WRAP_CHECK:
+ENTRY &chk_value &max_limit_mask
+  ; If value is outside limits, log a message indicating of possible corruption
+  if ((&chk_value)&(~(&max_limit_mask)))!=0x0
+  (
+    OPEN  #1 &out_file /A
+    WRITE #1
+    WRITE #1 "NOTE- There may be possible corruption in the data that is being dumped below. You may need to sanity check the relevant memory region !!!!"
+    WRITE #1
+    CLOSE #1
+  )
+  &chk_value=(&chk_value)&(&max_limit_mask)
+
+  ; End of VSTMR_WRAP_CHECK
+  RETURN &chk_value
+
+; Print STMR in tech resolution.
+VSTMR_PRINT_STMR:
+ENTRY &stmr_val &stmr_type &tech
+  printer.open &out_file /A
+  &stmr_val=&stmr_val<<0x20
+
+  if "&tech"=="WCDMA"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).frame_no
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).subframecx8
+  )
+  else if "&tech"=="LTE"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).ostmr_cnt
+  )
+  else if "&tech"=="GERAN"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).frame_num
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).raw_13M
+  )
+  else if "&tech"=="HDR"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).cx8
+  )
+  else if "&tech"=="1X"
+  (
+    wp.v.v %open.1 %h %d &stmr_type&stmr_val
+  )
+  else if "&tech"=="TDS"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).subframe_no
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).subframecx8
+  )
+  else if "&tech"=="NB1"
+  (
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).subFrCnt
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).subFrNum
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).sFrNum
+    wp.v.v %open.1 %h %d (&stmr_type&stmr_val).hFrNum
+  )
+  printer.close
+
+  ; End of VSTMR_PRINT_STMR
+  RETURN
+
+; Procedure to extract event index and its expiration count in XO.
+VSTMR_EXTRACT_XO_EVTIDX:
+ENTRY &log_val
+  ; Extract event expiration count in XO and event index
+  &exp_xo=&log_val>>8
+  &event_idx=&log_val&0x000000FF
+
+  ; End of VSTMR_PRINT_STMR
+  RETURN &exp_xo &event_idx

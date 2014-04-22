@@ -1,0 +1,136 @@
+#===============================================================================
+#
+# Modem wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load modem data software units
+#
+# Copyright (c) 2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/build/datamodem.scons#5 $
+#  $DateTime: 2023/05/19 01:10:20 $
+#
+#===============================================================================
+import os
+
+Import('env')
+
+if env.PathExists('${BUILD_ROOT}/dataiot'):
+  env.Replace(DATAMODEM_ROOT = '${INC_ROOT}/dataiot')
+   
+else:    
+  env.Replace(DATAMODEM_ROOT = '${INC_ROOT}/modem/dataiot')
+
+if 'USES_MOB' not in env:
+  # Set -Wdeclaration-after-statement to disallow C99 style variable declarations
+  env.Append(HEXAGONCC_WARN = ' -Wdeclaration-after-statement ')
+
+  env.Append(HEXAGONCC_WARN = ' -Wno-typedef-redefinition -Wno-enum-compare -Wno-c++11-narrowing -Wno-deprecated-register')
+  env.Append(HEXAGONCXX_WARN = ' -Wno-typedef-redefinition -Wno-enum-compare -Wno-c++11-narrowing -Wno-deprecated-register')
+  
+  #----------------------------------------------------------------------------#
+  # LLVM Static Analyzer! 
+  #----------------------------------------------------------------------------#
+  if 'DATA_ENABLE_LLVM_STATIC_ANALYZER' in env:
+    env.Replace(DATAMODEM_SA_DIR = '${INC_ROOT}/datamodem/sa/')
+    env.Append(CFLAGS = '--compile-and-analyze ${DATAMODEM_SA_DIR}')
+
+  
+  #----------------------------------------------------------------------------#
+  # LLVM - Enable Compiler Warnings to Errors (All Categories!)
+  #----------------------------------------------------------------------------#
+  #env.Append(CCFLAGS = '-Werror-all')
+  #env.Append(CXXFLAGS = '-Werror-all')
+  env.Append(HEXAGONCXX_WARN = ' -Wno-deprecated-declarations -Wno-error-deprecated-declarations -Werror -Werror-all')
+  env.Append(HEXAGONCC_WARN = ' -Wno-deprecated-declarations -Wno-error-deprecated-declarations -Werror -Werror-all')
+  env.Append(HEXAGON_WARN = ' -Wno-deprecated-declarations -Wno-error-deprecated-declarations -Werror -Werror-all')
+  env.Append(CPPDEFINES = ['FEATURE_DATA_LLVM_7x'])
+
+env.RequirePublicApi(['PUBLIC','DATAMODEM'], area='DATAIOT')
+env.RequirePublicApi(['PUBLIC','MMCP'], area='MMCP')
+env.RequirePublicApi(['PUBLIC','ONEX'], area='ONEX')
+env.RequirePublicApi(['PUBLIC','HDR'], area='HDR')
+env.RequirePublicApi(['PUBLIC','UIM'], area='UIM')
+env.RequirePublicApi(['MCS'], area='MCS')
+env.RequirePublicApi(['LTE'], area='LTE')
+env.RequirePublicApi(['NB1'], area='NB1')
+env.RequirePublicApi(['OSYS','A2','PUBLIC','COMMON','FC','PUBLIC','QSH','MUTILS_DSM'], area='UTILS')
+env.RequirePublicApi(['MVS'], area='AVS')
+env.RequirePublicApi(['WCDMA'], area='FW')
+env.RequirePublicApi(['PUBLIC','WCDMA'], area='WCDMA')
+#env.RequirePublicApi(['IPSEC'], area='SEC')
+env.RequirePublicApi(['PUBLIC','GERAN'], area='GERAN')
+env.RequirePublicApi(['PUBLIC','TDSCDMA'], area='TDSCDMA')
+env.RequirePublicApi(['COMMON'], area='RFA')
+env.RequirePublicApi(['WCDMA'], area='RFA')
+env.RequirePublicApi(['NAS','AUTH','CSVT','DMS','WDA','WDS','OTDT'], area='QMIMSGS')
+env.RequirePublicApi(['MYPS'], area='MYPS')
+env.RequirePublicApi(['COMPRESSED_HEAP'], area='PERF')
+env.RequirePublicApi(['MCFG'], area='mcfg_fwk')
+
+env.RequireRestrictedApi(['VIOLATIONS'])
+
+env.PublishProtectedApi('DATAMODEM', [
+        '${DATAMODEM_ROOT}/cust/inc',
+        '${DATAMODEM_ROOT}/variation/inc',
+        '${DATAMODEM_ROOT}/common/utils/inc',
+        '${DATAMODEM_ROOT}/3gpp/ds_profile/inc',
+        '${DATAMODEM_ROOT}/3gpp/pdnmgr/inc',
+        '${DATAMODEM_ROOT}/3gpp/tasks/inc',
+        '${DATAMODEM_ROOT}/interface/dsfwk/inc',
+        '${DATAMODEM_ROOT}/protocols/api',
+        '${DATAMODEM_ROOT}/interface/atcop/inc',
+        '${DATAMODEM_ROOT}/interface/api',
+   ])
+
+env.RequireProtectedApi(['DATAMODEM'])
+
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+    'STORAGE',
+    'SECUREMSM',
+    'BUSES',
+    'DAL',
+    'MPROC',
+    'POWER',
+	'MEMORY',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+env.RequirePublicApi(['WDS'], area='API')
+
+
+env.RequirePublicApi(['DATAMODEM'], area='DATAIOT')
+
+env.RequireRestrictedApi(['DATAMODEM'])
+
+# Only supported for MOB builds
+if 'USES_MOB' in env:
+  env.RequirePublicApi(['QTF'], area ='MOB')
+  env.RequireRestrictedApi(['MOB'])
+# Enable RMSM for NTN 
+if 'USES_FEATURE_AWARE_CT21' not in env or 'USES_FEATURE_NBIOT_NTN' in env:
+  env.Append(CPPDEFINES = ['FEATURE_DATA_RMSM'])
+
+
+#-------------------------------------------------------------------------------
+# Load cleanpack script for pack process to kick in!
+#-------------------------------------------------------------------------------
+if os.path.exists('datamodem_cleanpack.py'):
+   env.LoadToolScript('datamodem_cleanpack.py')
+   
+env.LoadSoftwareUnits()

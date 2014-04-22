@@ -1,0 +1,87 @@
+# -------------------------------------------------------------------------------- #
+#                          G N S S _ L O W I C L I E N T. S C O N S
+#
+# DESCRIPTION
+#   SCons file for the LOWI subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+# @COPYRIGHT Copyright (c) 2014-2015 Qualcomm Technologies, Inc.
+#  All rights reserved.
+# --------------------------------------------------------------------------------- #
+
+# --------------------------------------------------------------------------------- #
+#
+#                      EDIT HISTORY FOR FILE
+#
+# This section contains comments describing changes made to this file.
+# Notice that changes are listed in reverse chronological order.
+#
+# $Header:
+# $DateTime:
+# 
+# when         who     what, where, why
+# ---------    ---     ------------------------------------------------------------
+# 06/11/14     amahesh      Initial Version
+#
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+
+#--------------------------------------------------------------------------------
+# Check USES flags and return if library isn't needed
+#--------------------------------------------------------------------------------
+if 'USES_CGPS' not in gps_env:
+    Return()
+
+gps_env.PublishProtectedApi('LOWI',[
+                              '${GPS_ROOT}/gnss/lowi_client/inc',
+                             ])
+
+gps_env.PublishPrivateApi('LOWI',[
+                            '${GPS_ROOT}/gnss/lowi_client/src',
+                           ])
+
+gps_env.RequireProtectedApi('LOWI')                           
+gps_env.RequirePrivateApi('LOWI')
+gps_env.RequirePublicApi(['TEST','COMMON','LOWI'], area='QMIMSGS')
+
+#--------------------------------------------------------------------------------
+# Setup source PATH
+#--------------------------------------------------------------------------------
+SRCPATH = '../src'
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#--------------------------------------------------------------------------------
+# Name of the subsystem to which this unit belongs
+#--------------------------------------------------------------------------------
+LIB_TARGET = '${BUILDPATH}/' + 'gnss_lowi'
+
+#--------------------------------------------------------------------------------
+# Images that this VU is added
+#--------------------------------------------------------------------------------
+IMAGES = ['MODEM_MODEM']
+
+LOWI_CLIENT_LIB_CPP_SOURCES = gps_env.GenerateCompileList(SRCPATH, ['lowi_log.cpp',
+                                                                    'lowi_request.cpp',
+                                                                    'lowi_response.cpp',
+                                                                    'lowi_scan_measurement.cpp',
+                                                                    'lowi_mac_address.cpp',
+                                                                    'lowi_ssid.cpp',
+                                                                    'lowi_utils.cpp',
+                                                                    'lowi_qmi_client.cpp',
+                                                                    'lowi_qmi_wrapper.cpp',
+                                                                    'lowi_client.cpp',
+                                                                   ])
+
+# Create the library with the specified name and path with the list of objects to be added to that library
+# and add the library to the Apps Image
+
+gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), [LOWI_CLIENT_LIB_CPP_SOURCES])
+

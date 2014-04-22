@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="data.0.0" type="1"/>
+    <GroupFile name="mcfg_sw_gen_DeleteROW.xml" description="" comment="" category="" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/Common/ROW/mcfg_sw_gen_DeleteROW.xml"/>
+	<NvEfsItemData name="ds_3gpp_mtu" id="65814" description="3GPP Maximum Transmission Unit" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/ds_3gpp_mtu">
+		<Member name="ds_3gpp_mtu" description="3GPP Maximum Transmission Unit" comment="" sizeOf="1" type="uint16">1428 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="tcp_ack_prio" id="67208" description="TCP ACK Priority" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/protocols/tcp_ack_prio">
+		<Member name="tcp_ack_priority" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="allow_infinite_throt" id="67344" description="Allow Infinite Throttling" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/allow_infinite_throt">
+		<Member name="DS_3GPP_CFG_ALLOW_INFINITE_THROT" description="Allow Infinite Throttling" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="ds_apn_switching" id="69679" description="To enable LTE attach apn switching" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/dsd/ds_apn_switching">
+		<Member name="ds_apn_switching" description="To enable LTE attach apn switching" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="ip6_default_mtu" id="69749" description="Default IPv6 MTU" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/datamodem/protocols/ip6_default_mtu">
+		<Member name="ip6_default_mtu" description="Default IPv6 MTU" comment="" sizeOf="1" type="uint16">1428 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="pdn_conn_limit_handling" id="71517" description="PDN Connection Limit Handler" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/lteps/pdn_conn_limit_handling">
+		<Member name="pdn_limit_is_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="pdn_req_throttling_time" description="" comment="" sizeOf="1" type="uint16">15 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="rel_10_throttling_per_plmn" id="72551" description="Set to indicate  Release 10 Thtottling per Plmn" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/rel_10_throttling_per_plmn">
+		<Member name="rel_10_throttling_per_plmn" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="enable_apn_param_chg" id="72603" description="'Enable/Disable APN PARAM CHG'" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/enable_apn_param_chg">
+		<Member name="apn_param_chg_cfg" description="Determine if apn_param_chg should be enabled or disabled" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+    <NvEfsItemData name="check_ehplmn_list" id="73590" description="Whether EHPLMN List shall be considered to determine Home/Roaming" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/check_ehplmn_list">
+		<Member name="check_ehplmn_list" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+  <NvEfsItemData name="max_rab_reestab_retry_cnt" id="65780" description="Max retries for RAB_REESTAB" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/data/3gpp/max_rab_reestab_retry_cnt">
+    <Member name="max_rab_reestab_retry_cnt" description="Max retries for RAB_REESTAB" comment="" sizeOf="1" type="uint32">4 </Member>
+  </NvEfsItemData>
+    <NvEfsItemData name="profile_pdn_type_override" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/lteps/profile_pdn_type_override">
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsFile name="profile_list" id="65884" description="List of profiles that must be enabled on the device" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/3gpp/lteps/profile_list" buildPath="modem_proc/dataiot/datacfg/efs/vzw/profile_list"/>
+    <NvEfsFile name="home_plmn_list" id="72561" description="Lists all the Home PLMNs" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/3gpp/ps/home_plmn_list" buildPath="modem_proc/dataiot/datacfg/efs/vzw/home_plmn_list"/>
+    <NvEfsFile name="ds_dsd_attach_profile.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/ds_dsd_attach_profile.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/ds_dsd_attach_profile.txt"/>
+	<NvEfsFile name="ds_dsd_apm_rules.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/ds_dsd_apm_rules.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/ds_dsd_apm_rules.txt"/>
+	<NvEfsFile name="ds3g_carrier_config.xml" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/3gpp/ds3g_carrier_config.xml" buildPath="modem_proc/dataiot/datacfg/efs/vzw/ds3g_carrier_config.xml"/>
+	<NvEfsFile name="srv_req_throt_config.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/3gpp/throttling/srv_req_throt_config.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/srv_req_throt_config.txt"/>
+    <NvEfsFile name="pdn_throttling_config.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/epc/pdn_throttling_config.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/pdn_throttling_config.txt"/>
+    <NvEfsFile name="apn_disconnect_priority.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/data/3gpp/ps/apn_disconnect_priority.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/apn_disconnect_priority.txt"/>
+	<NvEfsFile name="Profile1" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile1" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile1"/>
+	<NvEfsFile name="Profile2" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile2" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile2"/>
+	<NvEfsFile name="Profile3" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile3" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile3"/>
+	<NvEfsFile name="Profile4" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile4" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile4"/>
+	<NvEfsFile name="Profile5" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile5" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile5"/>
+    <NvEfsFile name="Profile6" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile6" buildPath="modem_proc/dataiot/datacfg/efs/vzw/3gpp_profiles/Profile6"/>
+	<NvItemData name="Ipv6 Enabled" id="1896" description="" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="ipv6_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+<NvItemData name="CSIM Support" id="6253" description="AT+CSIM support" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="csim_support" description="AT+CSIM support" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvEfsFile name="embedded_call_prof_num" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/pdp_profiles/embedded_call_prof_num" buildPath="modem_proc/dataiot/datacfg/efs/vzw/embedded_call_prof_num"/>
+	<NvEfsFile name="embedded_call_prof_nums" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/pdp_profiles/embedded_call_prof_nums" buildPath="modem_proc/dataiot/datacfg/efs/vzw/embedded_call_prof_nums"/>
+	<NvEfsFile name="tethered_call_prof_num" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/pdp_profiles/tethered_call_prof_num" buildPath="modem_proc/dataiot/datacfg/efs/vzw/tethered_call_prof_num"/>
+	<NvEfsFile name="tethered_call_prof_nums" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/pdp_profiles/tethered_call_prof_nums" buildPath="modem_proc/dataiot/datacfg/efs/vzw/tethered_call_prof_nums"/>
+<NvEfsFile name="rmnet_config.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/rmnet_config.txt" buildPath="modem_proc/dataiot/datacfg/efs/vzw/rmnet_config.txt"/>
+	</NvData>

@@ -1,0 +1,15 @@
+<test_case>
+  <connection>
+    <stream>
+      <sensor>accel</sensor>
+      <sample_rate>10</sample_rate>
+      <batch_period>500000</batch_period>
+      <flush_period>500000</flush_period>
+      <flush_only>0</flush_only>
+      <max_batch>0</max_batch>
+      <passive>0</passive>
+      <use_resampler>0</use_resampler>
+      <duration>5000000</duration>
+    </stream>
+  </connection>
+</test_case>

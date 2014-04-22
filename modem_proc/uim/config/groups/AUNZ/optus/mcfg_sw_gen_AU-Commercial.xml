@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+  <NvEfsFile name="slot_features_status_list" id="73764" description="MMGSDI slot features status list" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" targetPath="/nv/item_files/modem/uim/mmgsdi/slot_features_status_list" buildPath="modem_proc/uim/config/efs_files/optus/slot_features_status_list"/>
+</NvData>

@@ -1,0 +1,61 @@
+#===============================================================================
+#
+# Debug and Tools INC PATHs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtools/build/tms.api#1 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Publish Public APIs
+# these are aaccessible internal or external to CoreBSP
+#-------------------------------------------------------------------------------
+env.PublishPublicApi('DEBUGTOOLS', [
+   "${INC_ROOT}/core/api/debugtools",
+])
+
+#-------------------------------------------------------------------------------
+# Publish Restricted APIs
+# these are accessible only within CoreBSP
+#-------------------------------------------------------------------------------
+env.PublishRestrictedApi('DEBUGTOOLS', [
+   "${INC_ROOT}/core/api/debugtools",
+   "${INC_ROOT}/core/debugtools/api",
+   "${INC_ROOT}/core/debugtools/dog/src",
+   "${INC_ROOT}/core/debugtools/err/src",
+   "${INC_ROOT}/core/debugtools/rcevt/src",
+   "${INC_ROOT}/core/debugtools/rcinit/src",
+   "${INC_ROOT}/core/debugtools/sys_m/src",
+   "${INC_ROOT}/core/debugtools/task/src",
+   "${INC_ROOT}/core/debugtools/tmc/src",
+   "${INC_ROOT}/core/debugtools/utils/src",
+   "${INC_ROOT}/core/debugtools/subsys/src",
+])
+
+env.PublishRestrictedApi('DEBUGTOOLS_RAPI', [
+   "${INC_ROOT}/core/api/rapi/debugtools/inc",
+   "${INC_ROOT}/core/services/tms/utils/src",
+])
+
+
+
+
+
+

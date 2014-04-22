@@ -1,0 +1,67 @@
+#===============================================================================
+# qca4004 driver Test App
+#
+# GENERAL DESCRIPTION
+# QCLI based qca4004 driver validation test app.
+#
+# Copyright (c) 2017-2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+Import('env')
+import os
+env = env.Clone()
+
+if 'USES_QCLI' not in env:
+        env.AddUsesFlags('QCLI_DISABLED')
+
+if 'QCLI_DISABLED' in env:
+        Return()
+#env.Append(CPPDEFINES = ["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/kingfisherhost/test/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'BUSES',
+   'KERNEL',
+   'QAPI'
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+
+#-------------------------------------------------------------------------------
+# QCA4004 DRIVER API
+#-------------------------------------------------------------------------------
+env.RequirePublicApi('QCA4004_DRIVER_API', area='kingfisherhost')
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/qcli',
+]
+
+env.PublishPrivateApi('QCA4004_DRIVER_TEST', INC_DIRS)
+
+QCA4004_TEST_SOURCES_NOSHIP =  [
+   '${BUILDPATH}/qca4004_driver_qcli_iface.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/qca4004_test_noship'), QCA4004_TEST_SOURCES_NOSHIP)

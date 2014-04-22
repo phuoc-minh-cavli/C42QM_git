@@ -1,0 +1,139 @@
+#===============================================================================
+# location_flp Libs
+#
+# GENERAL DESCRIPTION
+#    location_flp Build Script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/location.tx/3.0/api/build/SConscript#2 $
+#  $DateTime: 2021/07/31 15:03:09 $
+#  $Change: 32133230 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# Create a processor specific macro which can be (ab)used for feature-ization.  
+#env.Append(CPPDEFINES = [( 'MPMINT_RPM_WAKEUP_IRQ', '201' ),         
+#                         ( 'HAL_MPMINT_TARGET_H', '\\"HALmpmint${MSM_ID}.h\\"' ),
+#                        ])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/api/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi('OSYS')
+env.RequirePublicApi('SERVER_PROTOCOL')
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+DS_API = [
+    'NICHESTACK',
+    'QAPI',
+    'DSS_NET',
+    'DATASERVICES_NET_IPSTACK',
+    'CRYPTOLIB',
+]
+env.RequirePublicApi(DS_API, area='dataservices')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/api/qapi',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/flp/inc',
+   '${INC_ROOT}/location/geofence/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/pcid/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/xtra/inc',
+   '${INC_ROOT}/location/osys',
+   '${INC_ROOT}/location/gtpwwan/inc',
+   '${INC_ROOT}/location/wifipositioning/positioningEngine/inc',
+   '${INC_ROOT}/location/slim/qmimsgs/inc',
+   '${INC_ROOT}/location/slim/client/inc',
+   '${INC_ROOT}/location/slim/client/src',
+   '${INC_ROOT}/location/slim/provider/qmislim/inc',
+   '${INC_ROOT}/location/slim/common/core/inc',
+   '${INC_ROOT}/location/slim/common/osal/inc',
+   '${INC_ROOT}/location/slim/common/client/inc',
+   '${INC_ROOT}/location/slim/utils/inc',
+   '${INC_ROOT}/location/slim/qmislim/common/inc',
+   '${INC_ROOT}/location/slim/qmislim/qmiclient/inc',
+   '${INC_ROOT}/location/slim/qmislim/qmiservice/inc',
+   '${INC_ROOT}/location/slim/qmislim/monitor/inc',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+]
+
+env.PublishPrivateApi('LOCATION', INC_DIRS)
+
+LOC_API_SOURCES =  [
+   '${BUILDPATH}/LocationAPI.cpp',
+   '${BUILDPATH}/qapi_location.cpp',
+   '${BUILDPATH}/location_module_manager.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILDPATH}/api'), LOC_API_SOURCES)
+
+#RCINIT_INIT_LOC_TASK = {
+#  'sequence_group'             : 'RCINIT_GROUP_3',          # required
+#  'thread_name'                : 'LOCATION_HAL_TEST',                 # required
+#  'thread_entry'               : 'qapi_location_init',           
+#  'stack_size_bytes'           : '8192',
+#  'priority_amss_order'        : 'LOCATION_PRI_ORDER'
+#}
+
+#if 'USES_RCINIT' in env:
+#  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+#  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_LOC_TASK )
+
+RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+if 'USES_RCINIT' in env:
+   env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',    # required
+     'init_name'                  : 'init_location_hal_test', # required
+     'init_function'              : 'qapi_location_init',     # required
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'LOCATION_HAL_TEST',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'LOCATION_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })

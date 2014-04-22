@@ -1,0 +1,260 @@
+#===============================================================================
+#
+# Tsens Libs
+#
+# GENERAL DESCRIPTION
+#    Tsens Libs build script
+#
+# Copyright (c) 2014-2015, 2019 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Qualcomm Technologies Confidential and Proprietary.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/hwengines/tsens/build/SConscript#6 $
+#  $DateTime: 2019/04/03 07:11:01 $
+#  $Author: pwbldsvc $
+#  $Change: 18781537 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when         who     what, where, why
+# --------     ---     ---------------------------------------------------------
+# 2019-03-04   AY      updated for MDM9205
+# 2015-12-30   SA      Enable SW WA for 9x07 (CR 782238).
+# 2015-07-17   SA      Added 9607.
+# 2014-07-09   SA      Added 8909.
+# 2014-02-20   jjo     Ported to 8916.
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+if env['MSM_ID'] not in ['9205']:
+   Return()
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('HWENGINES_TSENS', [
+   "${INC_ROOT}/core/hwengines/tsens/dal/src",
+   "${INC_ROOT}/core/hwengines/tsens/hal/common",
+   "${INC_ROOT}/core/hwengines/tsens/diag/protected",
+])
+
+#-------------------------------------------------------------------------------
+# SRC PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/hwengines/tsens"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'DAL',
+    'BUSES',
+    'HWENGINES',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'POWER'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Configuration
+#-------------------------------------------------------------------------------
+
+# Default settings
+TSENS_TEST_SUPPORT = 'NO'
+TSENS_DIAG_SUPPORT = 'YES'
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+# Common sources
+
+TSENS_DAL_SOURCES = [
+    '${BUILDPATH}/dal/src/DALTsens.c',
+    '${BUILDPATH}/dal/src/DALTsensFwk.c',
+    '${BUILDPATH}/dal/src/DALTsensInfo.c',
+    '${BUILDPATH}/config/${MSM_ID}/TsensiConversion.c',
+]
+
+# Target sources
+
+TSENS_HAL_SOURCES = [
+   '${BUILDPATH}/hal/${MSM_ID}/HALtsens.c',
+]
+
+# Test sources
+
+TSENS_TEST_SOURCES = [
+   '${BUILDPATH}/test/src/TsensTest.c',
+]
+
+TSENS_DIAG_SOURCES = [
+   '${BUILDPATH}/diag/src/TsensDiag.c'
+]
+
+#-------------------------------------------------------------------------------
+# XML files
+#-------------------------------------------------------------------------------
+
+TSENS_CONFIG_FILE_XML = '${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/tsens_props.xml'
+
+if TSENS_CONFIG_FILE_XML:
+   if 'USES_DEVCFG' in env or 'USES_DEVCFG_PAGEONLY' in env:
+      devcfg_name = env['MSM_ID'] + '_xml' 
+      env.AddDevCfgInfo(['DAL_DEVCFG_IMG', 'DAL_DEVCFG_PAGEONLY_IMG'],
+      {
+            devcfg_name:  ['${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/tsens_props.xml',
+                          '${BUILD_ROOT}/core/hwengines/tsens/config/${MSM_ID}/TsensBsp.c']                                                                                                   
+      })
+
+#-------------------------------------------------------------------------------
+# Libraries
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'APPS_IMAGE',
+	'MODEM_PAGEONLY',
+    'CBSP_APPS_IMAGE'],
+    '${BUILDPATH}/tsens', [TSENS_DAL_SOURCES, TSENS_HAL_SOURCES])
+	
+if TSENS_DIAG_SUPPORT in ['YES']:
+   env.AddLibrary(
+      ['SINGLE_IMAGE',
+       'CBSP_SINGLE_IMAGE',
+       'MODEM_IMAGE',
+       'CBSP_MODEM_IMAGE',
+       'QDSP6_SW_IMAGE',
+       'CBSP_QDSP6_SW_IMAGE',
+       'QDSP6_SW_IMAGE',
+       'APPS_IMAGE',
+	   'MODEM_PAGEONLY',
+       'CBSP_APPS_IMAGE'],
+       '${BUILDPATH}/tsens_diag', [TSENS_DIAG_SOURCES])
+
+if TSENS_TEST_SUPPORT in ['YES']:
+   env.AddLibrary(
+      ['SINGLE_IMAGE',
+       'CBSP_SINGLE_IMAGE',
+       'MODEM_IMAGE',
+       'CBSP_MODEM_IMAGE',
+       'QDSP6_SW_IMAGE',
+       'CBSP_QDSP6_SW_IMAGE',
+       'QDSP6_SW_IMAGE',
+       'APPS_IMAGE',
+	   'MODEM_PAGEONLY',
+       'CBSP_APPS_IMAGE'],
+       '${BUILDPATH}/tsens_test', [TSENS_TEST_SOURCES])
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+#env.LoadSoftwareUnits(level=1)
+
+#-------------------------------------------------------------------------------
+# RCINIT
+#-------------------------------------------------------------------------------
+# Put TSENS test in RCINIT if test mode on
+
+RCINIT_IMAGES = ['APPS_IMAGE', 'CBSP_APPS_IMAGE', 'CORE_MODEM', 'CORE_QDSP6_SW', 'MODEM_PAGEONLY']
+
+RCINIT_INIT_FUNC_1 = {
+   'sequence_group'             : 'RCINIT_GROUP_2',
+   'init_name'                  : 'tsens_diag',
+   'init_function'              : 'TsensDiagInit',
+   'dependencies'               : ['npa'],
+}
+
+RCINIT_INIT_FUNC_2 = {
+   'sequence_group'             : 'RCINIT_GROUP_2',             # required
+   'init_name'                  : 'tsens_test',                 # required
+   'init_function'              : 'tsens_test',
+   'dependencies'               : ['npa'],
+}
+
+if 'USES_RCINIT' in env:
+   if TSENS_DIAG_SUPPORT in ['YES']:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_1)
+   if TSENS_TEST_SUPPORT in ['YES']:
+      env.AddRCInitFunc(RCINIT_IMAGES, RCINIT_INIT_FUNC_2)
+
+#-------------------------------------------------------------------------------
+# Pack files (files to remove)
+#-------------------------------------------------------------------------------
+
+# Remove test files
+env.CleanPack(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'QDSP6_SW_IMAGE',
+	'MODEM_PAGEONLY',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE'],
+    TSENS_TEST_SOURCES)
+	
+# Remove diag files
+if not TSENS_DIAG_SUPPORT:
+   DIAG_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/diag/')
+   env.CleanPack(TSENS_IMAGES, DIAG_FILES)
+
+# Remove BSP files
+BSP_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/config/')
+
+BSP_FILES = filter(lambda BSP_FILES: env['MSM_ID'] not in BSP_FILES[:], BSP_FILES)
+
+env.CleanPack(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'QDSP6_SW_IMAGE',
+	'MODEM_PAGEONLY',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE'],
+    BSP_FILES)
+
+# Remove HAL files
+HAL_FILES = env.FindFiles(['*'], '${BUILD_ROOT}/core/hwengines/tsens/hal/')
+
+HAL_FILES = filter(lambda HAL_FILES: env['MSM_ID'] not in HAL_FILES[:], HAL_FILES)
+
+HAL_FILES = filter(lambda HAL_FILES: 'common' not in HAL_FILES[:], HAL_FILES)
+
+env.CleanPack(
+   ['SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'QDSP6_SW_IMAGE',
+	'MODEM_PAGEONLY',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE'],
+    HAL_FILES)

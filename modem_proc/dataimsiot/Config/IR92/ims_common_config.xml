@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+    <NvConfigurationData carrierIndex="0" version="" type="1"/>
+  <NvEfsItemData name="ims_iot_common_config" id="74128" description="IMS IOT Common configuration" comment="" category="" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/ims/ims_iot_common_config">
+    <Member name="Version" description="Version History" comment="" sizeOf="1" type="uint32">0</Member>
+		<Member name="IMS_Enable" description="IMS Enable/Disable flag" comment="" sizeOf="1" type="uint32">1</Member>
+		<Member name="Operator_Mode" description="Operator mode for IMS" comment="" sizeOf="1" type="uint32">2</Member>
+    <Member name="Sub_Operator_Mode" description="Sub Operator mode for IMS" comment="" sizeOf="1" type="uint32">1</Member>
+    <Member name="Test_Task_Delay" description="Delaying task by secs, only for test purpose" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="User_Agent" description="User Agent string using in IMS signalling" comment="" sizeOf="128" type="string">Qualcomm_IMS</Member>
+    <Member name="FW_Reserved" description="Reserved bytes" comment="" sizeOf="28" type="string"></Member>
+    <Member name="QDJ_Max_Target_Delay" description="This config item specifies Maximum value beyond which the de-jitter delay is not increased" comment="" sizeOf="1" type="uint32">100</Member>
+    <Member name="QDJ_Min_Target_Delay" description="This config item specifies Minimum value beyond which the de-jitter delay is not decreased" comment="" sizeOf="1" type="uint32">40</Member>
+    <Member name="QDJ_Disable_Drop_Speech" description="This config item specifies disabling qdj opt2" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="QDJ_Default_Target_Delay" description="This config item specifies target delay to start with" comment="" sizeOf="1" type="uint32">60</Member>
+    <Member name="QDJ_Disable_Early_Play" description="This config item disables qdj opt1" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="QDJ_Disable_Mean_Delay" description="This config item specifies to disable mean delay optimization" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="QDJ_Max_Target_Delay_Mean" description="This config item specifies Max target delay for config value 1" comment="" sizeOf="1" type="uint32">100</Member>
+    <Member name="QDJ_Min_Target_Delay_Mean" description="This config item specifies Min delay for config value 1" comment="" sizeOf="1" type="uint32">40</Member>
+    <Member name="QDJ_Playout_Window" description="This config item specifies how early could IMS playout audio packets. The value specifies the time in msecs." comment="" sizeOf="1" type="uint32">9</Member>
+    <Member name="QDJ_Disable_Frame_Skipping_BW_Talkspurt" description="This config item specifies to disable frame skipping in middle of talkspurt" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="QDJ_Playout_Window_Mean" description="This config item specifies play out window added to target delay when mean is converged. The value specifies the time in msecs." comment="" sizeOf="1" type="uint32">5</Member>
+    <Member name="Audio_Media_DSCP" description="This config item specifies dscp value for audio" comment="" sizeOf="1" type="uint32">46</Member>
+    <Member name="Enable_Mailbox" description="This config item specifies to enable/disable mailbox packet exchange mode" comment="" sizeOf="1" type="uint32">1</Member>
+    <Member name="Mailbox_Tx_Ref_Margin" description="This config item specifies TX margin in enc packet processing" comment="" sizeOf="1" type="uint32">14</Member>
+    <Member name="Malibox_Rx_Ref_Margin" description="This config item specifies RX margin in dec packet processing" comment="" sizeOf="1" type="uint32">5</Member>
+    <Member name="Mailbox_VFR_Cycle" description="This config item specifies VFR cycle configuration: default/20 or CDRX equilavent VFR cycle" comment="" sizeOf="1" type="uint32">1</Member>
+    <Member name="Enable_Rtp_No_Data_Send_During_Gap" description="This config item specifies if NO_DATA format rtp pkts send is enabled or not" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="Disable_Rtp_Tx_Until_Rx_PEM" description="This config item specifies contrl UL RTP send on receive DL RTP during P-Early-Media stage is enabled or not" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="Disable_Var_Djtr_Opt" description="This config item specifies to disable Variance based dejitter calculation" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="DL_DTMF_PB_Mode" description="This config is DL DTMF Mode. enum - QP_DTMF_PB_NONE = 0, QP_DTMF_PB_ADSP = 1, QP_DTMF_PB_HLOS = 2, QP_DTMF_PB_ADSP_HLOS = 3, QP_DTMF_PB_MAX" comment="" sizeOf="1" type="uint32">2</Member>
+    <Member name="Media_Reserved" description="Reserved bytes" comment="" sizeOf="120" type="string"></Member>
+    <Member name="SIP_Timer_T1_Msec" description="SIP Timer T1 in millisec" comment="" sizeOf="1" type="uint32">2000</Member>
+    <Member name="SIP_Timer_T2" description="SIP Timer T2 in sec" comment="" sizeOf="1" type="uint32">16</Member>
+    <Member name="SIP_Timer_T4" description="SIP Timer T4 in sec" comment="" sizeOf="1" type="uint32">17</Member>
+    <Member name="SIP_Timer_TA" description="INVITE request retransmit interval in millisec, for UDP Only" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TB" description="INVITE transaction timeout timer in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TC" description="Proxy invite transaction timeout in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TD" description="wait time for sip response retransmits in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TE" description="Non-INVITE request retransmit interval in millisec, for UDP Only" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TF" description="Non invite transaction timeout timer in sec" comment="" sizeOf="1" type="uint32">32</Member>
+    <Member name="SIP_Timer_TG" description="INVITE response retransmit interval in millisec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TH" description="Wait Time for ACK receipt in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TI" description="Wait Time for ACK retransmits in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_TJ" description="wait time for non-invite request retransmits in sec" comment="" sizeOf="1" type="uint32">32</Member>
+    <Member name="SIP_Timer_TK" description="Wait time for response retransmits in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Timer_RelResponse_Retry" description="TImeout time for reliable response in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Stop_TimerB_On1xx" description="Flag to stop timer B on reception of 1xx" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Listening_Port" description="SIP Server Port" comment="" sizeOf="1" type="uint32">5060</Member>
+    <Member name="SIP_TCP_MaxBackOff_Timer" description="Max backoff timer for TCP in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_TCP_Threshold" description="Flag to enable static TCP threshold" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_TCP_Threshold" description="Max SIP UDP packet size on which it will be switched to TCP" comment="" sizeOf="1" type="uint32">1230</Member>
+    <Member name="SIP_Enable_Transport_Switch" description="Flag to enable transport switch from TCP to UDP" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_IPSec_Int_Scheme" description="IPSEC Authentication Algorithm" comment="" sizeOf="1" type="uint32">3</Member>
+    <Member name="SIP_IPSec_Enc_Algo" description="IPSEC Encryption Algorithm" comment="" sizeOf="1" type="uint32">7</Member>
+    <Member name="SIP_Enable_Compact_Header" description="SIP Compact Header Support" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_Sip_Instance" description="Flag to enable SIP instance in contacts headers" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_Route_Header" description="Flag to enable route header in register" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_GRUU" description="Flag to enable GRUU extention" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_Imsi_In_Contact" description="Flag to add IMSI in contact username" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Enable_Keep_Alive" description="To determine if NAT keepalive is enabled" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SIP_Reserved" description="Reserved bytes" comment="" sizeOf="532" type="string"></Member>
+  </NvEfsItemData> 
+</NvData>    

@@ -1,0 +1,106 @@
+Import( 'env' )
+
+# 86 tasks 
+# Entry wasn't RCINIT_NULL and Stack size wasn't RCINIT_STKSZ_ZERO
+# Total size = 1,117,992
+tasks = [ 
+  "a2", #orig stack size  16384
+  "a2_ul_per", #orig stack size 16384
+  "adsppm_asyncmgr", #orig stack size 4096
+  "adsppm_cb", #orig stack size 4096
+  "cc", #orig stack size  12288
+  "cd", #orig stack size  24576
+  "cfcm", #orig stack size  4096
+  "cm", #orig stack size  16384
+  "comp", #orig stack size  16384
+  "cta", #orig stack size 16384
+  #"diag", #orig stack size  16384
+  "dmm", #orig stack size 4096
+  "dog", #orig stack size 4096
+  "ds", #orig stack size  16384
+  "dsm_task", #orig stack size  2048
+  "fds", #orig stack size 4096
+  #"flash_scrub", #orig stack size 4096
+  "fs", #orig stack size  8192
+  #"fs_async_put", #orig stack size  4096
+  "ftm", #orig stack size 16384
+  "gps_fs", #orig stack size  16384
+  "gpsfft", #orig stack size  8192
+  "gsdi", #orig stack size  8192
+  #"gsm_l1_t_1", #orig stack size  8000
+  "gsm_l2", #orig stack size  4000
+  "gsm_llc_1", #orig stack size 8192
+  "gsm_mac1", #orig stack size  8192
+  "gsm_msgr_t1", #orig stack size 4096
+  #"gsm_rlcd_1", #orig stack size  8192
+  "gsm_rlcu_1", #orig stack size  8192
+  "gsm_rr", #orig stack size  32768
+  "gstk", #orig stack size  16384
+  "ims", #orig stack size 32768
+  "limitsmgr", #orig stack size 8192
+  "memshare_qmiclient", #orig stack size  4096
+  "mgpmc", #orig stack size 16384
+  "mlog_task", #orig stack size 6144
+  "mm", #orig stack size  28672
+  "mmgsdi_1", #orig stack size  8192
+  "modem_cfg", #orig stack size 16384
+  #"nf", #orig stack size  131072
+  "npascheduler", #orig stack size  8192
+  #"nv", #orig stack size  4096
+  "pbm", #orig stack size 8192
+  "policyman", #orig stack size 4096
+  "ps", #orig stack size  8192
+  "ps_rm", #orig stack size 4096
+  "qdssc_svc_task", #orig stack size  4096
+  "qmi_modem", #orig stack size 16384
+  "qmi_pbm", #orig stack size 8192
+  "reg", #orig stack size 16384
+  "rf", #orig stack size  16384
+  "rf_1", #orig stack size  16384
+  "rf_2", #orig stack size  16384
+  "rf_apps", #orig stack size 16384
+  "rf_fed_lte", #orig stack size  16384
+  "rf_fwrsp", #orig stack size  16384
+  "rfa_fwsw", #orig stack size  2048
+  "rflte_core", #orig stack size  16384
+  "rfs", #orig stack size 4096
+  "sec", #orig stack size 16384
+  "seccryptarm", #orig stack size 16384
+  "secrnd", #orig stack size  16384
+  "secssl", #orig stack size  16384
+  "sectestapp", #orig stack size  16384
+  "simlock", #orig stack size 4096
+  "sleep", #orig stack size 8192
+  "sleep_test", #orig stack size  2048
+  "sleepsolver", #orig stack size 2048
+  "slpc_gsm", #orig stack size  4096
+  "slpc_gsm2", #orig stack size 4096
+  "slpc_gsm3", #orig stack size 4096
+  "slpc_lte", #orig stack size  4096
+  "slpc_nb1", #orig stack size  4096
+  "sm_tm", #orig stack size 32768
+  "ssm", #orig stack size 4096
+  "ssreq_svc_poll", #orig stack size  4096
+  "sys_m_qmi", #orig stack size 4096
+  "sys_m_smsm", #orig stack size  4096
+  "tcxomgr", #orig stack size 8192
+  "thermal", #orig stack size 8192
+  "time_ipc", #orig stack size  4096
+  "time_srv", #orig stack size  2048
+  "tle", #orig stack size 81992
+  "ui", #orig stack size  10240
+  "uim", #orig stack size 4096
+  "wms", #orig stack size 14336
+  "wwanmectrl", #orig stack size  16384
+  "wwanmemp", #orig stack size  16384
+]
+
+#changing Thread size to 576
+for name in tasks:
+    env.PatchRCInitTask(
+      [ 'CORE_QDSP6_SW', 'MODEM_MODEM', 'QDSP6_SW_IMAGE' ], #SDX24 reference
+      {
+          'thread_name'    : name,
+          'stack_size_bytes' : '576', # Setting all above task to use 576 Base Stack Size
+      }
+    )

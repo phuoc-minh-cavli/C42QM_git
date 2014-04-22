@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# QCA4004 DRIVER APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/kingfisherhost.tx/1.0/build/qca4004_driver.api#2 $
+#  $DateTime: 2019/05/13 23:39:04 $
+#  $Author: pwbldsvc $
+#  $Change: 19179468 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+INC_DIRS = [
+   '${INC_ROOT}/kingfisherhost/api/inc',
+]
+
+env.PublishPublicApi('QCA4004_DRIVER_API', INC_DIRS)
+
+env.LoadAPIUnits()

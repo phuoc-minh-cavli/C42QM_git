@@ -1,0 +1,176 @@
+#===============================================================================
+#
+# MAO Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/power/mpm/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# Create a processor specific macro which can be (ab)used for feature-ization.  
+env.Append(CPPDEFINES = [( 'MPMINT_RPM_WAKEUP_IRQ', '201' ),         
+                         ( 'HAL_MPMINT_TARGET_H', '\\"HALmpmint${MSM_ID}.h\\"' ),
+                        ])
+
+if env['MSM_ID'] in ['9x25']:
+  env.Append(CPPDEFINES = [
+    '-DMPM_BASE_NAME=ELAN_A5SS', 
+    '-DVMPM_MSG_RAM_OFFSET=0x1D0',
+    '-DHAL_MPMINT_PHYS_INTS=64'])
+
+elif env['MSM_ID'] in ['9x35', '9x45']:
+  env.Append(CPPDEFINES = [
+    '-DMPM_BASE_NAME=A7SS', 
+    '-DVMPM_MSG_RAM_OFFSET=0x1D0',
+    '-DHAL_MPMINT_PHYS_INTS=64'])
+
+elif env['MSM_ID'] in ['9x55','9x65']:
+  env.Append(CPPDEFINES = [
+    '-DMPM_BASE_NAME=A7SS', 
+    '-DVMPM_MSG_RAM_OFFSET=0x1B8',
+    '-DHAL_MPMINT_PHYS_INTS=96'])
+elif env['MSM_ID'] in ['9205']:
+  env.Append(CPPDEFINES = [
+    '-DMPM_BASE_NAME=A7SS', 
+    '-DVMPM_MSG_RAM_OFFSET=0x1C0',
+    '-DHAL_MPMINT_PHYS_INTS=64'])
+elif env['MSM_ID'] in ['9x06']:
+  env.Append(CPPDEFINES = [
+    '-DMPM_BASE_NAME=A7SS', 
+    '-DVMPM_MSG_RAM_OFFSET=0x1D0',
+    '-DHAL_MPMINT_PHYS_INTS=64'])
+	
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/power/mpm/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('POWER_MPM', [
+   "${INC_ROOT}/core/power/mpm/inc",
+   "${INC_ROOT}/core/power/mpm/inc/asic/${MSM_ID}",
+   "${INC_ROOT}/core/power/mpm/src",
+   "${INC_ROOT}/core/power/mpm/src/hal",
+   "${INC_ROOT}/core/power/mpm/src/hal/asic/${MSM_ID}"
+])
+
+env.PublishPrivateApi('POWER_MPM_INTERNAL', [
+   "${INC_ROOT}/core/power/mpm/src",
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# for mpmint_internal.c below, right now all scon targets have 
+# tramp functionality available. If we ever have a target on 
+# scons that does not have tramp functions, we will need some
+# new definition to differentiate it
+#-------------------------------------------------------------------------------
+
+MPMINT_SOURCES =  [
+   '${BUILDPATH}/mpmint.c',
+   '${BUILDPATH}/mpm_utils.c',
+   '${BUILDPATH}/mpmint_log.c',
+   '${BUILDPATH}/os/default/mpmint_os.c',
+   '${BUILDPATH}/asic/${MSM_ID}/mpmint_map.c',
+   '${BUILDPATH}/hal/HALmpmint.c',
+   '${BUILDPATH}/hal/HALmpmmmap.c',
+   '${BUILDPATH}/hal/HALmpmintIPC.c',
+   '${BUILDPATH}/hal/asic/${MSM_ID}/HALmpmintTable.c',
+]
+
+mpmint_obj = env.Object(MPMINT_SOURCES)
+mpmint_lib = env.Library('${BUILDPATH}/mpmint', mpmint_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibsToImage(IMG_LIST,[mpmint_lib])
+
+#-------------------------------------------------------------------------------
+# Add mpmint_init function to RCINIT
+#-------------------------------------------------------------------------------
+
+# rpm driver properties
+RCINIT_PROPS = {
+  'sequence_group'             : 'RCINIT_GROUP_0',
+  'init_name'                  : 'mpmint',
+  'init_function'              : 'mpmint_init',
+  'dependencies'               : ['GPIOInt', 'dalsys'],
+}
+
+if 'USES_RCINIT' in env: 
+  env.AddRCInitFunc(IMG_LIST, RCINIT_PROPS)
+
+#-------------------------------------------------------------------------------
+# Pack out files 
+#-------------------------------------------------------------------------------
+def FindFiles( pattern_list, paths ):
+   '''
+   Returns list of all files whose name matches one of the patterns at one of
+   the paths
+   '''
+   files_found = []
+   for path in paths:
+      files_found.extend(env.FindFiles(pattern_list, path))
+
+   return files_found
+
+
+# All paths containing target specific files
+MPMINT_ALL_MSM_PATHS = [
+   '../inc/asic/',
+   '../src/asic/',
+   '../src/hal/asic/',
+   #add more directory paths if necessary
+]
+
+# Paths containing files for target being built
+MPMINT_THIS_MSM_PATHS = [ path+'${MSM_ID}/' for path in MPMINT_ALL_MSM_PATHS ]
+
+# Get all MSM/MDM specific files
+MPMINT_ALL_MSM_FILES = FindFiles(['*'], MPMINT_ALL_MSM_PATHS)
+
+# Get files which are used for MSM/MDM being built
+MPMINT_THIS_MSM_FILES = FindFiles(['*'], MPMINT_THIS_MSM_PATHS)
+
+MPMINT_PACKOUT_FILES = list(set(MPMINT_ALL_MSM_FILES) - set(MPMINT_THIS_MSM_FILES))
+env.CleanPack(IMG_LIST, MPMINT_PACKOUT_FILES)

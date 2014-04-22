@@ -1,0 +1,184 @@
+#====include path optimized=====================================================
+#
+#
+# GENERAL DESCRIPTION
+#
+# Copyright (c) 2016 - 2019 Qualcomm Technologies Incorporated. All Rights Reserved
+#
+# Qualcomm Proprietary
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/rffactory.mpss/1.0/build/modem_rffactory.scons#16 $
+# $DateTime: 2022/01/21 17:21:19 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/05/19   sk      RF PAGE ONLY changes for NB/CATM
+# 09/30/16   vv      Updated for RFC oft build
+# 07/25/16   mpt     fixed indent bug that caused multiple calls to addLibrary
+# 03/31/16   zhw     Initial version
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+import os
+import re
+
+if re.search('MPSS\.NI\.[^1]\..*',  env['PRODUCT_LINE']):
+  Return()
+
+env.LoadSoftwareUnits( )
+
+LIB_NAME        = 'modem_rffactory'
+IMAGE_SOURCES   = ['MODEM_MODEM','MOB_RFA','MOB_RFDEVICE']
+IMAGE_SOURCES_OFT = ['MOB_FTM']
+
+LIB_SRC         = 'src'
+LIB_PROTECTED   = 'protected'
+
+from glob import glob
+
+env = env.Clone()
+
+if 'MODEM_PAGEONLY' in env['BUILD_TAGS']:
+	env.Append(CPPDEFINES = 'FEATURE_RF_LTE_PAGE_ONLY')
+	if('USES_GSM' in env):
+		del env['USES_GSM']
+	build_tags = ['MODEM_MODEM', 'MOB_RFA', 'MOB_RFDEVICE']
+	for tag in build_tags:
+		env[tag] = True
+
+#-------------------------------------------------------------------------------
+# Enable warnings -> errors
+if 'USES_INTERNAL_BUILD' in env:
+   env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror",
+                   HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+
+#-------------------------------------------------------------------------------
+# Source PATH:
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+#BUILDPATH =  image_name / processor_name, eg modem_libs / arm11 = directory where built objects stored
+env.VariantDir('${BUILDPATH}', SRCPATH , duplicate=0)
+
+env.Append(CPPDEFINES = ['MSG_BT_SSID_DFLT=MSG_SSID_RF',])
+
+if env['PRODUCT_LINE'].startswith(("MPSS.DE.1.0")):
+   env.Append(CPPDEFINES = 'FEATURE_RFA_DE10')
+
+env.RequirePublicApi(['RFMODEM', 'RFMODEM_LM_INC'],area=env.get('RF_GLOBALS')['RFMODEM_AREA'])
+
+env.RequirePublicApi([
+        'COMMON',
+        ],
+        area='RF')
+
+env.RequirePublicApi(['RFLM'],area='RF')
+
+env.RequirePublicApi(['RFMODEM', 'RFMODEM_LM_INC'],area=env.get('RF_GLOBALS')['RFMODEM_AREA'])
+
+env.RequirePublicApi([
+        'COMMON',
+        ],
+        area='RFA')
+
+# Making sure we include stubs in GTEST targets, in order
+# to enable Modem_mem_monitor
+if 'USES_STANDALONE_FW' in env:
+	env.RequirePublicApi(['CORE_STUBS'],area='GTEST_STUBS')
+
+env.RequirePublicApi([
+        'SERVICES',
+	'KERNEL',
+	'DAL',
+	'SYSTEMDRIVERS',
+	'DEBUGTOOLS',
+	'MPROC',
+	'MEMORY',
+	'POWER',
+	],
+	area='CORE')
+
+env.RequirePublicApi([
+	'WCDMA',
+	'GERAN',
+	'RF',
+	'COMMON',
+	'LTE',
+	],
+	area='FW')		
+
+env.RequirePublicApi([
+	'MCS',
+	],
+	area='MCS')	
+
+env.RequireProtectedApi([
+	'RF_COMMON_INC',
+    ])
+
+env.RequireProtectedApi([
+	'RFA',
+	])		
+
+env.RequirePublicApi(['RFLM'],area='RFLM')
+
+env.RequirePublicApi([
+	'RFFACTORY_INC',
+	])
+
+SOURCE_FILES = [ ]
+if 'MOB_RF_TRM' in env:
+	SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/ftm_rf_test_interface.c'))
+else:
+	#find all .c, .cpp, & .s files
+	SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.c'))
+	SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.cpp'))
+	SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.s'))
+
+LIB_SOURCES = [ ]  #empy list
+for filename in SOURCE_FILES:
+	LIB_SOURCES.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+env.AddLibrary(IMAGE_SOURCES, '${BUILDPATH}/'+LIB_NAME,[
+	LIB_SOURCES,
+	])
+
+
+# for off-target only
+LIB_SOURCES_OFT = [ ]  #empy list
+
+# manually list out the files we want
+SOURCE_FILES_OFT = [
+    '../src/ftm_rf_test_interface.c',
+	'../src/ftm_rf_debug_interface.c',
+     ]
+
+for filename in SOURCE_FILES_OFT:
+	LIB_SOURCES_OFT.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+env.AddLibrary(IMAGE_SOURCES_OFT, '${BUILDPATH}/'+LIB_NAME, [LIB_SOURCES_OFT])
+
+
+
+

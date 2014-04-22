@@ -1,0 +1,82 @@
+#/** @file DDRTargetLib.inf
+#
+#  DDR Lib
+#  
+#  Copyright (c) 2015 Qualcomm Technologies, Inc.  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 06/16/16   qbz     Added DDI support
+# 08/21/15   elt     Commented out ddr_log.c
+# 08/17/15   sr      Initial Revision
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DDRTargetLib
+  FILE_GUID                      = B90EACA0-47CE-79C4-C1BA-14A4973FF8BC
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DDRTargetLib
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -DDDRCC_PLL_EXTENSION_0 -DFEATURE_BOOT_EXTERN_DDR_COMPLETED -DSHARED_IMEM_DDR_PARAM_BASE=0x08628190 -DSHARED_IMEM_DDR_TRAINING_COOKIE=0x08628020 -DBUILD_BOOT_CHAIN -DUSE_LOADER_UTIL -DRPM_SHARED_IMEM_DDR_PARAM_BASE=0x68628190 -DSHARED_IMEM_DDR_TRAINING_BASE=0x08628300 -DRPM_SHARED_IMEM_DDR_TRAINING_BASE=0x68628300 -Wno-tautological-compare
+    
+[Sources.common]
+  ../../../Library/DDRLib/common/ddr_test.c
+  ../../../Library/DDRLib/common/ddr_drivers.c
+  ../../../Library/DDRLib/common/params/v1/ddr_params.c
+  ../../../Library/DDRLib/common/ddr_sync.c
+#  ../../../Library/DDRLib/common/ddr_log.c
+  
+# DDR Target Sources
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_target.c
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_rpm_target.c
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_external_api.c
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_config.c
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/mem_rdwr.s
+
+# Header file inclusions  
+  ../../../Library/DDRLib/common/params/v1/ddr_params.h
+  ../../../Library/DDRLib/common/HAL_DDR.h
+
+# SDI source
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_sdi_wrapper.c
+
+  
+#Target header inclusion
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_status_reg.h
+  ../../../Mdm9x05Pkg/Library/DDRTargetLib/ddr_target.h
+
+# Library definition
+  ../../../Include/Library/LoaderUtils.h
+  
+[Packages]
+  MdePkg/MdePkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/Mdm9x05Pkg/Mdm9x05Pkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  QcomPkg/Mdm9x05Pkg/Library/DDRTargetLib/DDRTargetLibPkg.dec
+  QcomPkg/Mdm9x05Pkg/Library/DSFTargetLib/DSFTargetLibPkg.dec
+  QcomPkg/Library/DDRLib/DDRLibPkg.dec
+  
+[LibraryClasses]
+  MuslLib
+  ServicesUtilsLib
+  DSFTargetLib
+  DDITargetLib
+  ClockTargetLib
+  
+[FeaturePcd]
+
+[FixedPcd]
+ gQcomTokenSpaceGuid.PcdBuildType
+[Guids]
+

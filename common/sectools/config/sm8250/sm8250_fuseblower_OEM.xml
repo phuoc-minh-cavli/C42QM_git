@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower.xsd">
+    <metadata>
+        <chipset>sm8250</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <module id="SECURITY_CONTROL_CORE">
+        <base_address>0x00780000</base_address>
+        <description/>
+
+        <fuse_region id="QFPROM_RAW_MRC_2_0">
+            <description>Rows 49 and 50</description>
+            <fuse ignore="false" n="0">
+                <address>0x00780188</address>
+                <operation>BLOW</operation>
+                <field id="ROOT_CERT_ACTIVATION_LIST">
+                    <value>0x0</value>
+                    <bits>3:0</bits>
+                </field>
+                <field id="CURRENT_UIE_KEY_SEL">
+                    <value>0x0</value>
+                    <bits>32</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x00780190</address>
+                <operation>BLOW</operation>
+                <field id="ROOT_CERT_REVOCATION_LIST">
+                    <value>0x0</value>
+                    <bits>3:0</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_FEC_EN">
+            <description>Row 59</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801D8</address>
+                <operation>BLOW</operation>
+                <field id="REGION23_FEC_EN">
+                    <description>OEM Secure Boot FEC Enable</description>
+                    <value>0x0</value>
+                    <bits>23</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_CONFIG">
+            <description>Rows 60, 61 and 62</description>
+            <fuse ignore="false" n="0">
+                <address>0x007801E0</address>
+                <operation>BLOW</operation>
+                <field id="WDOG_EN">
+                    <description>
+                        Prevents WDOG_DISABLE GPIO from disabling WDOG. Frees up the
+                        GPIO and prevents potential for abuse by attacker.
+                    </description>
+                    <value>0x0</value>
+                    <bits>14</bits>
+                </field>
+                <field id="ROOT_CERT_TOTAL_NUM">
+                    <description>
+                        Defines the total root cert number supported from the certificate
+                        (Upto 4 roots).
+                    </description>
+                    <value>0x0</value>
+                    <bits>18:17</bits>
+                </field>
+                <field id="SP_DISABLE">
+                    <description>
+                        Disables Secure Processor.
+                    </description>
+                    <value>0x0</value>
+                    <bits>27</bits>
+                </field>
+                <field id="APPS_DBGEN_DISABLE">
+                    <description>
+                        Blow this bit for secure solution. Disables the APPS global invasive
+                        (JTAG and monitor mode) debug capabilities. Can be overridden by
+                        OVERRIDE registers.
+                    </description>
+                    <value>0x0</value>
+                    <bits>38</bits>
+                </field>
+                <field id="APPS_NIDEN_DISABLE">
+                    <description>
+                        Blow this bit for secure solution. Disables the APPS global non-invasive
+                        (trace and performance monitoring) debug capabilities. Can be overridden
+                        with OVERRIDE registers.
+                    </description>
+                    <value>0x0</value>
+                    <bits>39</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x007801E8</address>
+                <operation>BLOW</operation>
+                <field id="SP_NVM_AR_CONFIG">
+                    <description>
+                        NVM configuration for SP-ARI
+                        00: [Default] SPU ARI not configured yet (SPU ARI feature is DISABLED)
+                        01: Caps not connected to PM8150 Vcoin pin. SPU ARI feature is DISABLED.
+                        10: 5x10uF caps connected to PM8150 Vcoin pin. SPU ARI feature is ENABLED.
+                        11: Reserved
+                    </description>
+                    <value>0x0</value>
+                    <bits>2:1</bits>
+                </field>
+                <field id="SP_FIPS_ENABLE">
+                    <description>
+                        ENABLE FIPS mode for SPU. Disable by Default and blow to enable.
+                    </description>
+                    <value>0x0</value>
+                    <bits>3</bits>
+                </field>
+                <field id="TZ_SW_CRYPTO_FIPS_ENABLE">
+                    <description>
+                        Enable FIPS mode for TZ software crypto. Disable by default and blow to enable.
+                    </description>
+                    <value>0x0</value>
+                    <bits>4</bits>
+                </field>
+                <field id="SPU_IAR_FEATURE_ENABLE">
+                    <description>
+                        Enable the activation of Insider Attack Resistance (IAR), a feature of Android's
+                        Keymaster strongbox in SPU. Blowing this fuse is a pre-requisite to enabling IAR
+                        through a SPU API.
+                    </description>
+                    <value>0x0</value>
+                    <bits>10</bits>
+                </field>
+                <field id="EKU_ENFORCEMENT_EN">
+                    <description>
+                        When this fuse is blown will enable enforcement of the EKU field in the certificate.
+                    </description>
+                    <value>0x0</value>
+                    <bits>30</bits>
+                </field>
+                <field id="OEM_HW_ID">
+                    <description>OEM hardware ID[15:0]</description>
+                    <value>0x0000</value>
+                    <bits>47:32</bits>
+                </field>
+                <field id="OEM_PRODUCT_ID">
+                    <description>OEM product ID[15:0]</description>
+                    <value>0x0000</value>
+                    <bits>63:48</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x007801F0</address>
+                <operation>BLOW</operation>
+                <field id="ANTI_ROLLBACK_FEATURE_ENABLE">
+                    <description>
+                        Bit 0 - BOOT_ANTI_ROLLBACK_EN
+                        Bit 1 - TZAPPS_ANTI_ROLLBACK_EN
+                        Bit 2 - PILSUBSYS_ANTI_ROLLBACK_EN
+                        Bit 3 - MSA_ANTI_ROLLBACK_EN
+                        Bit 4 - Reserved
+                        Bit 5 - Reserved
+                        Bit 6 - Reserved
+                        Bit 7 - Reserved
+                    </description>
+                    <value>0xf</value>
+                    <bits>39:32</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_PK_HASH0">
+            <description>Hash of OEM public key</description>
+            <fuse ignore="false" n="0">
+                <address>0x00780260</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW0">
+                    <description>PK Hash 0[63:0]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="1">
+                <address>0x00780268</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW1">
+                    <description>PK Hash 0[127:64]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="2">
+                <address>0x00780270</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW2">
+                    <description>PK Hash 0[191:128]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="3">
+                <address>0x00780278</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW3">
+                    <description>PK Hash 0[255:192]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="4">
+                <address>0x00780280</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW4">
+                    <description>PK Hash 0[319:256]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+            <fuse ignore="false" n="5">
+                <address>0x00780288</address>
+                <operation>BLOW</operation>
+                <field id="HASH0_DATA_ROW5">
+                    <description>PK Hash 0[383:320]</description>
+                    <value>0x0000000000000000</value>
+                    <bits>63:0</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+
+        <fuse_region id="QFPROM_RAW_OEM_SEC_BOOT">
+            <description/>
+            <fuse ignore="false" n="0">
+                <address>0x007805E8</address>
+                <operation>BLOW</operation>
+                <field id="SEC_BOOT1_ROM_PK_Hash_Index">
+                    <value>0x0</value>
+                    <bits>3:0</bits>
+                </field>
+                <field id="SEC_BOOT1_PK_Hash_in_Fuse">
+                    <value>0x0</value>
+                    <bits>4</bits>
+                </field>
+                <field id="SEC_BOOT1_Use_Serial_Num">
+                    <value>0x0</value>
+                    <bits>6</bits>
+                </field>
+                <field id="SEC_BOOT2_PK_Hash_in_Fuse">
+                    <value>0x0</value>
+                    <bits>12</bits>
+                </field>
+                <field id="SEC_BOOT3_PK_Hash_in_Fuse">
+                    <value>0x0</value>
+                    <bits>20</bits>
+                </field>
+                <field id="FEC_VALUE">
+                    <value>0x00</value>
+                    <bits>62:56</bits>
+                </field>
+            </fuse>
+        </fuse_region>
+    </module>
+</tns:fuseblower>

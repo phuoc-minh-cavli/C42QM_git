@@ -1,0 +1,429 @@
+#===============================================================================
+#
+# CoreBSP Scorpion build script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2015 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/nav/rel/1.0/nav_proc/core/bsp/coreimg/build/coreimg.scons#6 $
+#  $DateTime: 2012/01/06 14:30:31 $
+#  $Author: coresvc $
+#  $Change: 2129735 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+import os
+import sys
+
+Import('env')
+Return()
+env = env.Clone()
+
+install_cmm_scripts = None
+install_devcfg_elf = None
+elfmergeout = None
+install_merged_elf = None
+install_target_pbn = None
+install_target_mbn = None
+elfmergeout_dynamic = None
+elfmergeout_dynamic_modified = None
+install_merged_dynamic_mod_elf = None
+
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = [
+   'devcfg_img', 'all', 'apps_images'
+]
+
+# init environment variables
+env.InitImageVars(
+   alias_list = aliases,         # aliases
+   proc='sparrow',                 # proc
+   config='apps',            # config type, proc_name
+   plat='l4',
+   target='DEVCFGIMG_${BUILD_ID}',# target (elf, image file name)
+   build_tags = ['DAL_DEVCFG_IMG'],
+   tools = [
+        '${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/kernel_builders.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/scl_builder.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/devcfg_builder.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/gendevcfghdr.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/elfmergerutil.py',
+        # These builders are not really required for the DEVCFG image but have
+        # been added because all the scons files are parsed and they explicitly
+        # invoke the available builder methods. A way to fix this is to make sure 
+        # the calls to the builder methods have been guarded by a USES flag
+        # and the USES flag itself gets enabled only for images that require it.
+        '${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py',
+        '${BUILD_ROOT}/core/bsp/build/scripts/doc_builder.py',
+        '${BUILD_ROOT}/tools/build/scons/gensecimage/gensecimage_builder.py',  
+        '${BUILD_ROOT}/tools/build/scons/sectools/sectools_builder.py',    
+        ]
+   )
+
+if not env.CheckAlias():
+   Return()
+#----------------------------------------------------------------------------------
+# Suppress non-critical ARM license error to warning
+# C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
+#-----------------------------------------------------------------------------------
+env.Append(CFLAGS = "--diag_suppress=9931 ")
+
+#------------------------------------------------------------------------------
+# Setting up export paths for access to elfparserutil.py
+#------------------------------------------------------------------------------
+corebsp_scripts_path = env.RealPath('${BUILD_ROOT}/core/bsp/build/scripts/')
+sys.path.append(corebsp_scripts_path)
+
+#------------------------------------------------------------------------------
+# Init defualt values this PROC/Image
+#------------------------------------------------------------------------------
+
+# replace AMSS CUST file, add ours to #undef unwanted features
+env.Replace(AMSS_CUST_H = env.subst('CUST${BUILD_ID}.H').lower())
+
+# add define for original AMSS custfile
+env.Append(CPPDEFINES = [
+   "AMSS_CUST_H=\\\"${AMSS_CUST_H}\\\"",
+   "CUST_H=\\\"${CUST_H}\\\"",
+   "DAL_CONFIG_IMAGE_APPS",
+   "DAL_CONFIG_TARGET_ID=0x${MSM_ID}"
+])
+
+
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+env.Replace(USES_DEVCFG = True)
+env.Replace(USES_DEVCFG_IMG_ONLY = True)
+
+#USES_FEATURE_DYNAMIC_LOADING_GLOBAL is the global flag.
+#Needs to be enabled from tbc_core.builds to enable dynamic loading on this target.
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING_GLOBAL'):
+   env.Replace(USES_FEATURE_DYNAMIC_LOADING = True)
+   env.Replace(USES_FEATURE_DYNAMIC_LOADING_FIX_PADDING_SIZE = True)
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+env.LoadToolScript('arm', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+   env.LoadToolScript('${BUILD_ROOT}/core/bsp/build/scripts/elfmergerutildynamic.py')
+   env.LoadToolScript('${BUILD_ROOT}/core/bsp/build/scripts/elfdynamicutils.py')
+#---------------------------------------------------------------------------
+# Load in the compiler options for the devcfg image
+#---------------------------------------------------------------------------
+# This ensures that there is no .bss section created in the devcfg image (int max = 65535)
+env.Append(CFLAGS = "--bss_threshold=65535 ")
+
+#---------------------------------------------------------------------------
+# Libs/Objs
+#---------------------------------------------------------------------------
+devcfgimg_libs = []
+devcfgimg_objs = []
+
+primary_elf = env.RealPath('${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}_NODEVCFG.elf')
+devcfg_header = env.RealPath('${SHORT_BUILDPATH}/devcfg_def.h')
+devcfg_elf_name = env.RealPath('${BUILD_MS_ROOT}/DEVCFG_${BUILD_ID}${BUILD_VER}.elf')
+devcfg_scl_name = env.RealPath('${BUILD_MS_ROOT}/DEVCFG_${BUILD_ID}${BUILD_VER}.scl')
+merged_elf_name = env.RealPath('${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf')
+merged_dynamic_elf_name = env.RealPath('${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}' +'_DYNAMIC_MERGED.elf')
+merged_dynamic_mod_elf_name = env.RealPath('${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}' +'_DYNAMIC_MOD_FINAL.elf')
+AMSS_RELOC_LC = "build_${TARGET_BLD_KCFG}/amss/bin/${BUILD_ID}.reloc"
+AMSS_RELOC = "${L4_ROOT}/" + AMSS_RELOC_LC
+
+devcfg_units = []
+core_path = env.RealPath('${BUILD_ROOT}/core')
+if env.PathExists(core_path):
+  au_items = env.LoadAreaSoftwareUnits('core')
+  devcfgimg_libs.extend(au_items['LIBS'])
+  devcfgimg_objs.extend(au_items['OBJS'])
+  
+modem_path = env.RealPath('${BUILD_ROOT}/modem')
+if env.PathExists(modem_path):
+  au_items = env.LoadAreaSoftwareUnits('modem')
+  devcfgimg_libs.extend(au_items['LIBS'])
+  devcfgimg_objs.extend(au_items['OBJS'])
+
+#Commented out until MM team updates their SConscript files 
+#multimedia_path = env.RealPath('${BUILD_ROOT}/multimedia')
+#if env.PathExists(multimedia_path):
+# au_items = env.LoadAreaSoftwareUnits('multimedia')
+# devcfgimg_libs.extend(au_items['LIBS'])
+# devcfgimg_objs.extend(au_items['OBJS'])
+  
+#tools_path = env.RealPath('${BUILD_ROOT}/tools')
+#if env.PathExists(tools_path):
+# au_items = env.LoadAreaSoftwareUnits('tools')
+# devcfgimg_libs.extend(au_items['LIBS'])
+# devcfgimg_objs.extend(au_items['OBJS'])
+
+#api_path = env.RealPath('${BUILD_ROOT}/api')
+#if env.PathExists(api_path):
+# au_items = env.LoadAreaSoftwareUnits('api')
+# devcfgimg_libs.extend(au_items['LIBS'])
+# devcfgimg_objs.extend(au_items['OBJS'])
+
+devcfg_units = [devcfgimg_libs, devcfgimg_objs]
+  
+#------------------------------------------------------------------------------
+# Rule for compiling devcfg_main.c 
+#------------------------------------------------------------------------------
+if 'IMAGE_BUILD_LOCAL_FILES' in env:
+   env = env.Clone()
+   DEVCFGIMG_SRC = "${BUILD_ROOT}/build/bsp/devcfg_img/src"
+   env.VariantDir("${BUILDPATH}", DEVCFGIMG_SRC, duplicate=0)
+   env.RequirePublicApi(['DAL'])
+   env.RequireRestrictedApi(['DAL'])
+   DEVCFGIMG_SOURCES = [
+      '${BUILDPATH}/devcfg_main.c'
+   ]
+   devcfg_main_obj = env.Object(DEVCFGIMG_SOURCES)
+   devcfgimg_objs.extend(devcfg_main_obj)
+   env.Depends(devcfg_main_obj,primary_elf)
+   devcfg_main_lib = env.Library('${BUILDPATH}/devcfg_main_lib', devcfg_main_obj)
+   env.AddLibsToImage('DAL_DEVCFG_IMG', devcfg_main_lib)
+   devcfg_units += devcfg_main_obj
+   
+if 'IMAGE_BUILD_LINK' in env:
+   #----------------------------------------------------------------------------
+   # Generate devcfg elf
+   #----------------------------------------------------------------------------
+   #-------------------------------------------------------------------------
+   # quartz config XML files
+   #-------------------------------------------------------------------------
+   TCXO_SHUTDOWN_RELOC_LC="0"
+   quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}", 
+      "${BUILD_MS_ROOT}/quartz_cfg.xml", AMSS_RELOC_LC=AMSS_RELOC_LC)
+   #=========================================================================
+   # Beginning building DEVCFG Image
+   #-------------------------------------------------------------------------
+   devcfg_scl_hdr_file = env.GenerateDevCfgHdrs(devcfg_header,
+                         primary_elf, SECTION_NAME='DEVCFG_DATA')
+   target_scl = env.SclBuilder('${SHORT_BUILDPATH}/DEVCFG_${BUILD_ID}${BUILD_VER}.scl', [
+     "${BUILD_MS_ROOT}/devconfig_data.scl", 
+     devcfg_scl_hdr_file
+   ])
+   env.Depends(target_scl, primary_elf)
+   devcfg_units.extend(target_scl)
+   install_devcfg_scl = env.InstallAs(devcfg_scl_name, target_scl)
+   
+   libs_path = env['INSTALL_LIBPATH']
+   
+   devcfg_elf = env.Program('${SHORT_BUILDPATH}/DEVCFG_${BUILD_ID}${BUILD_VER}', source=[devcfgimg_objs], LIBS=[devcfgimg_libs], LIBPATH=libs_path)
+   env.Depends(devcfg_elf, target_scl)
+   env.Depends(devcfg_elf, primary_elf)
+   install_devcfg_elf = env.InstallAs(devcfg_elf_name, devcfg_elf)
+   
+   devcfg_map = env.SideEffect(env.subst('${SHORT_BUILDPATH}/DEVCFG_${BUILD_ID}${BUILD_VER}.map'), devcfg_elf)
+   devcfg_sym = env.SideEffect(env.subst('${SHORT_BUILDPATH}/DEVCFG_${BUILD_ID}${BUILD_VER}.sym'), devcfg_elf)
+
+# # create list of files used during link.
+#  objs_linker_file = env.ListFileBuilder(env.subst("${TARGET_NAME}_objs.lf"), 
+#   devcfgimg_objs, add_header=True, relative_path=os.getcwd())
+#   
+# libs_linker_file = env.ListFileBuilder(env.subst("${TARGET_NAME}_libs.lf"), 
+#   devcfgimg_libs, add_header=True, relative_path=os.getcwd())
+#   
+# env.Depends(devcfg_elf, objs_linker_file)
+# env.Depends(devcfg_elf, libs_linker_file)
+
+if 'IMAGE_BUILD_POST_LINK' in env:     
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+   # Merge elfs here
+   
+   elfmergeout = env.ElfMergerUtilBuilder('${SHORT_BUILDPATH}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf', [primary_elf, devcfg_elf_name], 
+                     PRIMARY_SECTION_NAME="DEVCFG_DATA", SECONDARY_SECTION_NAME="DEVCFG_DATA") 
+
+   #If dynamic loading is enabled, we have to copy/merge non loadable linker generated dynamic section with loadable segments we reserved through pad files.
+   #Finally we have to update .dynamic entries so that they point to corect addresses after merge is done.
+   if 'USES_FEATURE_DYNAMIC_LOADING' in env:
+     env.LoadToolScript('elfmergerutildynamic', toolpath = ["${BUILD_ROOT}/core/bsp/build/scripts"])
+     env.LoadToolScript('elfdynamicutils', toolpath = ["${BUILD_ROOT}/core/bsp/build/scripts"])     
+     #All dynamic sections merged in one go
+     elfmergeout_dynamic = env.ElfMergerUtilBuilderDynamic(merged_dynamic_elf_name, [elfmergeout[0], elfmergeout[0]])
+     #finally modify the dynamic section entries
+     elfmergeout_dynamic_modified = env.ElfDynamicUtilBuilder('${SHORT_BUILDPATH}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}' + '_DYNAMIC_MOD.elf',[elfmergeout_dynamic[0]])
+     #install
+     install_merged_dynamic_mod_elf = env.InstallAs(merged_dynamic_mod_elf_name, elfmergeout_dynamic_modified)
+     install_target_reloc = env.InstallAs(AMSS_RELOC, install_merged_dynamic_mod_elf)
+     install_merged_elf = env.InstallAs(merged_elf_name, elfmergeout_dynamic_modified)
+   else:
+     install_merged_elf = env.InstallAs(merged_elf_name, elfmergeout)
+
+     install_target_reloc = env.InstallAs(AMSS_RELOC, elfmergeout)
+
+   #-------------------------------------------------------------------------
+   # Build env pbn files
+   #-------------------------------------------------------------------------
+   target_pbn = env.PbnBuilder(
+      '${SHORT_BUILDPATH}/${TARGET_NAME}', [quartz_xml, install_target_reloc])
+
+   # Copy image_M.pbn to platform\l4\build_M\bootimg.pbn for RUMI */
+   install_target_pbn = env.InstallAs(
+      '${L4_ROOT}/build_${TARGET_BLD_KCFG}/${SHORT_BUILDPATH}/bootimg.pbn', target_pbn)
+      
+   #-------------------------------------------------------------------------
+   # Build CMM scripts
+   #-------------------------------------------------------------------------
+   quartz_constant_cmm = env.QuartzConstBuilder('${SHORT_BUILDPATH}/quartz_const_${TARGET_NAME}', [
+      "${L4_ROOT}/build_${TARGET_BLD_KCFG}/ms/quartz_constants_${TARGET_BLD_KCFG}.cmm",
+      install_target_pbn,
+      quartz_xml,
+   ])
+
+   # install scripts
+   install_quartz_constant_cmm = env.InstallAs(
+      '${BUILD_MS_ROOT}/${SHORT_BUILDPATH}/quartz_constants_${TARGET_BLD_KCFG}.cmm',
+      quartz_constant_cmm
+   )
+
+   install_loadsyms_cmm = env.Install('${BUILD_MS_ROOT}/${SHORT_BUILDPATH}',
+      "${L4_ROOT}/build_${TARGET_BLD_KCFG}/ms/loadsyms_${TARGET_BLD_KCFG}.cmm",
+   )
+
+   install_loadsyms_men = env.Install('${BUILD_MS_ROOT}/${SHORT_BUILDPATH}',
+      "${L4_ROOT}/build_${TARGET_BLD_KCFG}/ms/loadsyms_${TARGET_BLD_KCFG}.men",
+   )
+
+   install_cmm_scripts = [
+      install_quartz_constant_cmm,
+      install_loadsyms_cmm,
+      install_loadsyms_men,
+   ]
+    
+
+   #-------------------------------------------------------------------------
+   # Build env mbn files
+   #------------------------------------------------------------------------
+   if "USES_SEC_POLICY_DEFAULT_SIGN" in env: 
+    install_unsigned_root = env.SectoolGetUnsignedInstallPath(install_base_dir =env.subst('${MBN_ROOT}'))
+    env.Replace(MBN_FILE = os.path.join(install_unsigned_root, "apps.mbn"))
+
+
+
+   target_mbn = env.MbnBuilder('${SHORT_BUILDPATH}/${TARGET_NAME}', target_pbn, IMAGE_TYPE="amss_mbn",
+   FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+
+
+
+
+  #----------------------------------------------------------------------------
+  # Sectools signing
+  #----------------------------------------------------------------------------
+   
+
+   if "USES_SEC_POLICY_DEFAULT_SIGN" in env: 
+    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/apps.mbn', target_mbn)
+
+    sectools_signed_mbn = env.SectoolBuilder(
+         target_base_dir = '${SHORT_BUILDPATH}',
+         source=target_mbn,
+         sign_id="apps",
+         msmid = env['MSM_ID'],
+         sectools_install_base_dir = '${MBN_ROOT}', 
+         install_file_name = "apps.mbn")    
+
+    
+    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/apps.mbn', target_mbn)
+   else:
+    install_target_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', target_mbn)
+
+   #----------------------------------------------------------------------------
+   # Gensecimage signing 
+   #----------------------------------------------------------------------------    
+   # Template path for image format and signing attribute
+
+   #apps_gensecimage_path = env.RealPath('${BUILD_ROOT}/build/bsp/devcfg_img/build/gensecimage.cfg.template')
+
+   #apps_signingattr_qpsa_path = env.RealPath('${BUILD_ROOT}/build/bsp/devcfg_img/build/signingattr_qpsa.cfg.template')
+
+   #msm_jtag_mapping_path = env.RealPath('${BUILD_ROOT}/build/ms/msm_jtag_mapping.xml')
+   #msmid_jtagid_dict = env.GetMSMToJTAGDict(env['MSM_ID'], msm_jtag_mapping_path)   
+
+   # GensecimageMbnBuilder method invoke secure builder if USES_GENSECIMAGE is True else return None
+   # target_base_dir can be set to where the unsigned image is generated
+   # For example, if unsigned image is in ${SHORT_BUILDPATH}, target_base_dir = '${SHORT_BUILDPATH}/signed/'
+   #signed_mbn = env.GensecimageMbnBuilder(
+   #                         target_base_dir = 'signed/',
+   #                         source=target_mbn,                   
+   #                         gensecimage_section = "apps", 
+   #                         basic_cfg_template = apps_gensecimage_path,
+   #                         signing_cfg_template = apps_signingattr_qpsa_path,
+   #                         msmid_jtagid_dict = msmid_jtagid_dict
+   #                         )                
+
+   # Installation
+   #if signed_mbn is not None:
+   #  install_signed_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', signed_mbn[0])
+   #  install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/apps.mbn', target_mbn)
+   #else:
+   #  install_target_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', target_mbn) 
+
+   #-------------------------------------------------------------------------
+   # create FAT image
+   #-------------------------------------------------------------------------
+   if 'FatfsBuilder' in env.get('BUILDERS', []):
+      target_fatfs = env.FatfsBuilder('${MBN_ROOT}/fat.bin', target_mbn, TARGET_PATH='image')
+      devcfg_units += target_fatfs
+
+
+#=========================================================================
+# Define targets needed DEVCFGIMG
+#=========================================================================
+if "USES_SEC_POLICY_DEFAULT_SIGN" in env: 
+      devcfg_units += [
+        install_cmm_scripts,
+        install_devcfg_elf,
+        elfmergeout,
+        install_merged_elf,
+        install_target_pbn,
+        install_target_mbn,
+        sectools_signed_mbn,
+     ]
+
+else:
+      devcfg_units += [
+        install_cmm_scripts,
+        install_devcfg_elf,
+        elfmergeout,
+        install_merged_elf,
+        install_target_pbn,
+        install_target_mbn,
+        
+     ]
+
+if "USES_FEATURE_DYNAMIC_LOADING" in env:
+  devcfg_units += [elfmergeout_dynamic, elfmergeout_dynamic_modified, install_merged_dynamic_mod_elf]
+
+
+for alias in aliases:
+  env.Alias(alias, devcfg_units)
+
+   # Based on GensecimageMbnBuilder method, add install_signed_mbn to devcfg_units
+#if signed_mbn is not None:
+# devcfg_units += install_signed_mbn   
+
+#=========================================================================
+# Finish up...
+#=========================================================================
+env.BindAliasesToTargets(devcfg_units)

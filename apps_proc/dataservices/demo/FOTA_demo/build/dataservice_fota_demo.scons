@@ -1,0 +1,88 @@
+#===============================================================================
+#
+# Dataservices FOTA_DEMO
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_QCLI' not in env:
+	env.AddUsesFlags('QCLI_DISABLED')
+
+if 'QCLI_DISABLED' in env:
+	Return()
+	
+SRCPATH = '${BUILD_ROOT}/dataservices/demo/FOTA_demo'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Configure for high space optimizations
+#env.Replace(ARMCC_OPT="-Ospace -O3")
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('WDS', area='API')
+env.RequirePublicApi(['DSS_NET'],area='dataservices')
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi(['PSM_CLIENT'], area="ril")
+env.RequirePublicApi('UTILS_EXT')
+env.RequirePublicApi('LOCATION_API', area='location')
+
+FOTA_SOURCES = [
+    '${BUILDPATH}/src/fota_app.c',
+    '${BUILDPATH}/src/fota_main.c',
+	'${BUILDPATH}/src/cJSON.c',
+	'${BUILDPATH}/src/fota_util.c',
+]
+			
+IMAGES = ['DATA_TN', 'APPS_PROC']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/FOTA_demo'), FOTA_SOURCES)
+
+# Treat compiler warnings as errors!
+#env.Append(CCFLAGS = "--diag_error=warning")
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_FOTA_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_4',           # required
+  'init_name'                  : 'fota_app_start',           # required
+  'init_function'              : 'fota_app_start',           # required
+  'dependencies'               : ['']
+}
+RCINIT_INIT_FOTA_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_4',          # required
+  'thread_name'                : 'fota_app',                 # required
+  'thread_entry'               : 'fota_app_entry',           
+  'stack_size_bytes'           : '8192',
+  'priority_amss_order'        : '180'
+}
+
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_FOTA_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_FOTA_TASK )
+
+env.LoadSoftwareUnits()

@@ -1,0 +1,36 @@
+#===============================================================================
+# UtilsLib build script
+#
+# Copyright (c) 2020 QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+#
+# GENERAL DESCRIPTION
+#    build script
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+libname = 'utils_lib'
+
+includes = [
+   "../inc",
+   "../../HavenTUsefulBufLib/inc",
+]
+
+# Add path for stringl.h
+if env.StandaloneSdk():
+  includes.append('${BUILD_ROOT}/apps/securemsm/trustzone/qsapps/misc_headers')
+
+env.Append(CPPPATH = includes)
+
+# WARNING! The following 2 lines should be set to 0
+env.Append(CCFLAGS = ' -DLUA_RUNNER_MODE=0')
+env.Append(CCFLAGS = ' -DPRINT_HEAP_INFO=0')
+
+sources = Glob('*.c')
+
+lib = env.SecureAppLibBuilder(includes, sources, libname)
+env.DeploySdkLib(lib)
+env.Deploy([lib, 'SConscript'])
+Return('lib')

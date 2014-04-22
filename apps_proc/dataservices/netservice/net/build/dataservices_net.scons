@@ -1,0 +1,267 @@
+#===============================================================================
+#
+# Quartz AU, Net SU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019-2020 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+if env['CHIPSET'] in ['mdm9205','kuno']:
+    env.Append(CPPDEFINES = 'FEATURE_SSL_TA_KEYMASTER')
+
+if 'USES_MOB' not in env:
+	env.Append(CFLAGS = " --c99 ")
+	env.Append(CCFLAGS = " --diag_suppress=66 ")
+
+env.Append(CFLAGS = ['-DLWM2M_CLIENT_MODE','-DLWM2M_SERVER_OBJECT', '-DLWM2M_LITTLE_ENDIAN'])
+SRCPATH = '${BUILD_ROOT}/dataservices/netservice/net'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('DMS', area='qmimsgs')
+	env.RequirePublicApi('NAS', area='qmimsgs')
+	env.RequirePublicApi('UIM', area='qmimsgs')
+	env.RequirePublicApi('DSD', area='qmimsgs')
+	env.RequirePublicApi('WMS', area='qmimsgs')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+	env.RequirePublicApi('COMMON', area='qmimsgs')
+	env.RequirePublicApi('IMS_IOT', area='qmimsgs')
+	env.RequirePublicApi('VOICE', area='qmimsgs')
+
+
+INC_DIRS = [
+   '${INC_ROOT}/dataservices/netservice/services/coap/api',
+]
+
+# Configure for high space optimizations
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('PRODUCTS', area='core')
+env.RequirePublicApi('WDS', area='api')
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi(['QFLOG_EXT'])
+env.RequirePublicApi(['DATASERVICES_NET_IPSTACK'])
+env.RequireRestrictedApi(['PICOTLS'])
+env.RequirePublicApi([
+         'NICHESTACK',
+         'SHARKSSL',
+         'MISC_NETSERVICES',
+         ])
+ 
+env.RequirePublicApi('QCLI_DEMO', area='dataservices')
+env.RequirePrivateApi(['DATASERVICES_NET'])
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi(['CRYPTOLIB'])
+env.RequirePublicApi(['CRYPTO_PORT'])
+env.RequirePublicApi(['HTTPC'])
+env.RequirePublicApi('UTILS_EXT')
+env.RequireRestrictedApi(['COAP'])
+env.PublishPrivateApi('COAP_QAPI', INC_DIRS)
+env.RequireRestrictedApi(['MQTT_INC'])
+env.RequireRestrictedApi(['DS_UTILS'])
+env.RequireRestrictedApi(['TS_M2M_COMMON'])
+env.RequireRestrictedApi([
+	'LWM2M',
+	'M2M_CORE'
+])
+env.RequireRestrictedApi(['NET_UTILS'])
+# Needed for RNG
+#env.RequirePublicApi(['CRYPTOLIB'], area='crypto')
+#env.RequirePublicApi(['CRYPTO_PORT'], area='quartz')
+
+if 'ENABLE_SSL_NETLIB' in env:
+	env.Append(CPPDEFINES = 'ENABLE_SSL')
+
+env.Append(CPPDEFINES = 'SNTP_CLIENT')
+env.Append(CPPDEFINES = 'TIMER_OPERATION_API_AVAILABLE')
+env.RequireRestrictedApi(['QCLI_DEMO'])
+
+env.RequirePublicApi([
+    'SECUREMSM',
+    'QTEE_INVOKE_QAPI',
+    'USEFULBUF_QAPI',
+    'QCBOR_QAPI',
+    'MINK',
+], area='core')
+
+env.RequirePublicApi('CONSOLE_PRINTF', area='dataservices')
+
+env.RequirePublicApi(['PSM_CLIENT'], area='ril')
+env.RequirePublicApi(['QAPI'], area='ril')
+
+ROM_SOURCES = [
+    '${BUILDPATH}/ipstack/port/ininit.c',
+    '${BUILDPATH}/ipstack/port/inport.c',
+    '${BUILDPATH}/ipstack/port/intimer.c',
+    '${BUILDPATH}/ipstack/port/in_memory.c',
+    '${BUILDPATH}/ipstack/port/osporttk.c',
+    '${BUILDPATH}/ipstack/port/udpsend.c',
+    '${BUILDPATH}/ipstack/port/userdata.c',
+    '${BUILDPATH}/qapi/qapi_netprofile.c',
+    '${BUILDPATH}/ssl/src/ssl_process.c',
+    '${BUILDPATH}/ssl/src/shared_buffer.c',
+    '${BUILDPATH}/ssl/src/ssl_tzcrypto_services.c',
+]
+
+RAM_SOURCES = [
+    '${BUILDPATH}/ipstack/port/nsport.c',
+    '${BUILDPATH}/qapi/qapi_dnsc.c',
+	'${BUILDPATH}/qapi/qapi_dnsc_txm.c',
+    '${BUILDPATH}/qapi/qapi_ns_gen_v4.c',
+    '${BUILDPATH}/qapi/qapi_ns_gen_v6.c',
+    '${BUILDPATH}/qapi/qapi_ns_utils.c',
+    '${BUILDPATH}/qapi/qapi_socket.c',
+    '${BUILDPATH}/qapi/qapi_netstat.c',
+    '${BUILDPATH}/qapi/qapi_netfilter.c',
+	'${BUILDPATH}/qapi/qapi_socket_txm.c',
+	'${BUILDPATH}/qapi/qapi_net_txm.c',
+	'${BUILDPATH}/net_utils/src/net_utils.c',
+	'${BUILDPATH}/net_utils/src/ds_dpl_logging.c',
+	'${BUILDPATH}/net_utils/src/data_driver_access.c',
+	'${BUILDPATH}/net_utils/src/data_driver_access_txm.c',
+	'${BUILDPATH}/net_utils/src/console_printf.c',
+	'${BUILDPATH}/net_utils/src/mem_utility.c',
+	'${BUILDPATH}/qapi/qapi_httpc_txm.c',
+    '${BUILDPATH}/qapi/qapi_mqtt_txm.c',
+	'${BUILDPATH}/qapi/qapi_coap_txm.c',
+    '${BUILDPATH}/qapi/qapi_ssl_txm.c',
+    #'${BUILDPATH}/qapi/qapi_crypto.c',
+	'${BUILDPATH}/qapi/qapi_lwm2m_txm.c',
+	'${BUILDPATH}/qapi/qapi_cli_txm.c',
+]
+
+RAM_SOURCES_CLI = [
+	'${BUILDPATH}/qapi/qapi_cli.c',
+]
+
+
+if 'USES_MOB' not in env:
+	RAM_SOURCES = RAM_SOURCES + RAM_SOURCES_CLI
+
+TX_SOURCES_SSL_INTERNAL = [
+                            '${BUILDPATH}/ipstack/port/iprcv.c',
+                            '${BUILDPATH}/qapi/qapi_ssl.c',
+                            '${BUILDPATH}/qapi/qapi_ssl_cert.c',
+                            '${BUILDPATH}/ssl/src/ssl.c',
+                            '${BUILDPATH}/ssl/src/ssl_sharkssl.c',
+                            '${BUILDPATH}/ssl/src/ssl_picoTLS.c',
+                            '${BUILDPATH}/ssl/src/ssl_cert.c',
+                            '${BUILDPATH}/ssl/src/ssl_store_common.c',
+                            '${BUILDPATH}/ssl/src/ssl_cert_store.c',
+							'${BUILDPATH}/qapi/qapi_netbuf.c',
+			    	'${BUILDPATH}/qapi/loc_publicencrypt.c',
+				'${BUILDPATH}/qapi/loc_publicencrypt_txm.c',
+                          ]
+
+TX_SOURCES_SSL_EXT  = [
+                          '${BUILDPATH}/ipstack/port/iprcv_ext.c',
+						  '${BUILDPATH}/qapi_ssl/qapi_netbuf_ext.c',
+                      ]
+					  
+TX_SOURCES_SSL_EXT_SOURCE = [
+                               '${BUILDPATH}/qapi_ssl/qapi_ssl_ext.c',
+                               '${BUILDPATH}/qapi_ssl/qapi_ssl_cert_ext.c',       
+                             ]
+							 
+TX_SOURCES_LWM2M_INTERNAL = [
+						'${BUILDPATH}/qapi/qapi_lwm2m.c', 
+                      ]
+					  
+TX_SOURCES_LWM2M_EXT = [
+						'${BUILDPATH}/qapi_stub/qapi_lwm2m_ext.c', 
+                      ]					  
+					  
+TX_SOURCES_COAP_INTERNAL = [
+						'${BUILDPATH}/qapi/qapi_coap.c', 
+                      ]
+					  
+TX_SOURCES_COAP_EXT = [
+						'${BUILDPATH}/qapi_stub/qapi_coap_ext.c', 
+                      ]	
+					  
+TX_SOURCES_MQTT_INTERNAL = [
+						'${BUILDPATH}/qapi/qapi_mqtt.c', 
+                      ]
+					  
+TX_SOURCES_MQTT_EXT = [
+						'${BUILDPATH}/qapi_stub/qapi_mqtt_ext.c', 
+                      ]
+					  
+TX_SOURCES_HTTP_INTERNAL = [
+						'${BUILDPATH}/qapi/qapi_httpc.c', 
+                      ]
+					  
+TX_SOURCES_HTTP_EXT = [
+						'${BUILDPATH}/qapi_stub/qapi_httpc_ext.c', 
+                      ]
+					  
+TX_SOURCES = [
+                ROM_SOURCES,
+                RAM_SOURCES,
+                TX_SOURCES_SSL_INTERNAL,
+             ]
+
+TX_SOURCES_WO_SSL = [
+                      ROM_SOURCES,
+                      RAM_SOURCES,
+                      TX_SOURCES_SSL_EXT,
+                    ]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net'), TX_SOURCES)
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/netwossl'), TX_SOURCES_WO_SSL)
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/ssl_glue'), TX_SOURCES_SSL_EXT_SOURCE)
+
+if 'USES_ENABLE_SSL_NETLIB' not in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/netwossl'), TX_SOURCES_WO_SSL)
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/ssl_glue'), TX_SOURCES_SSL_EXT_SOURCE)
+
+if 'USES_ENABLE_COAP' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net_coap'), TX_SOURCES_COAP_INTERNAL)
+else:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/coap_qapi_stub'), TX_SOURCES_COAP_EXT)
+
+if 'USES_ENABLE_MQTT' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net_mqtt'), TX_SOURCES_MQTT_INTERNAL)
+else:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/mqtt_qapi_stub'), TX_SOURCES_MQTT_EXT)
+
+if 'USES_ENABLE_LWM2M' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net_lwm2m'), TX_SOURCES_LWM2M_INTERNAL)
+else:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/lwm2m_qapi_stub'), TX_SOURCES_LWM2M_EXT)
+
+if 'USES_ENABLE_HTTPC' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net_http'), TX_SOURCES_HTTP_INTERNAL)
+else:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/http_qapi_stub'), TX_SOURCES_HTTP_EXT)
+	
+env.LoadSoftwareUnits()
+
+# Treat compiler warnings as errors!
+#env.Append(CCFLAGS = "--diag_error=warning")
+

@@ -1,0 +1,34 @@
+#----------------------------------------------------------------------------
+# Copyright (c) 2015, 2019 Qualcomm Technologies Incorporated. All Rights Reserved.
+#
+# FILE:            core/debugtrace/tpdm/hal/build/tpdmhal.scons
+#
+# DESCRIPTION:     SCons for TPDM HAL Interface.
+#
+#
+# EDIT HISTORY FOR MODULE
+# ---------------------------------------------------------------------------
+#
+# when         who         what, where, why
+# ----------   -------     -----------------
+# 2015-09-01   ps     Initial revision.
+#
+#----------------------------------------------------------------------------
+
+Import('env')
+
+#----------------------------------------------------------------------------
+# Source PATH
+#----------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(['HAL','DAL','SERVICES','SYSTEMDRIVERS'])
+
+#----------------------------------------------------------------------------
+# Sources, libraries
+#----------------------------------------------------------------------------
+
+TPDM_HAL_SRC = ['${BUILDPATH}/halqdss_tpdm.c']
+
+env.AddLibrary(['APPS_PROC'], '${BUILDPATH}/tpdm_hal', TPDM_HAL_SRC)

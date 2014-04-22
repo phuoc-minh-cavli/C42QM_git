@@ -1,0 +1,32 @@
+#===============================================================================
+#
+# Data APSS TN Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2013 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/drivers/build/dataservices_drivers.api#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/28/13   tz     Added IPA data
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('DATASERVICES_NET', [
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/port",
+   "${INC_ROOT}/dataservices/netservice/net/ipstack/socket/include",
+   "${INC_ROOT}/dataservices/netservice/net/qapi",
+   "${INC_ROOT}/dataservices/drivers/rmnet_bam/inc",   
+   ])
+   
+env.LoadAPIUnits()

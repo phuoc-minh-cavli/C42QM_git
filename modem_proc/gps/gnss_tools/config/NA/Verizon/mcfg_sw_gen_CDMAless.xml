@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+	<NvItemData name="AAGPS Default Presupl Ue Timer2 Value" id="2788" description="PRESUPL UE Timer 2" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_default_presupl_ue_timer2_value" description="" comment="" sizeOf="1" type="uint32">10 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Default Presupl Ue Timer3 Value" id="2789" description="PRESUPL UE Timer 3" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_default_presupl_ue_timer3_value" description="" comment="" sizeOf="1" type="uint32">30 </Member>
+	</NvItemData>
+	<NvEfsItemData name="GNSS SM Lpp Rel12 2Timer Support" id="73897" description="Enable Lpp Rel12 2 Timer Support" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_sm_lpp_rel12_2timer_support">
+		<Member name="gnss_sm_lpp_rel12_2timer_support" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+	</NvEfsItemData>
+</NvData>

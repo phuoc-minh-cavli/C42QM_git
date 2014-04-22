@@ -1,0 +1,67 @@
+#/** @file HALMDSS3xx.inf
+#  
+#  MDSS 3.x.x Hardware library
+#  
+#      Copyright (c) 2015-2016, 2018 Qualcomm Technologies, Inc.  All Rights Reserved.
+#      Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 11/12/15   ml      Initial version
+# 05/25/18   sr      Changes for QCS405
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = HALMDSSLib
+  FILE_GUID                      = 6B4BEF92-1078-4022-900F-F50B44C90E6A
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = HALMDSSLib
+
+[DEFINES]
+DEFINE MDSS_VERSION = MDSS3xx
+
+[BuildOptions]
+RVCT:*_*_*_CC_FLAGS = -D$(MDSS_VERSION)
+
+[BuildOptions.AARCH64]
+GCC:*_*_*_CC_FLAGS = -D$(MDSS_VERSION)
+
+[Sources.common]
+ hal_mdss.c
+ hal_mdp.c
+ hal_mdp_control_path.c
+ hal_mdp_data_path.c
+ hal_mdp_destination.c
+ hal_mdp_format_info.c
+ hal_mdp_i.h
+ hal_mdp_interface.c
+ hal_mdp_layermixer.c
+ hal_mdp_smp.c
+ hal_mdp_source.c
+ hal_mdp_traffic_ctrl.c
+ hal_mdp_pingpong.c
+ hal_mdp_vbif.c
+ hal_mdp_histogram.c
+ hal_mdp_1_0_0.c
+ hal_mdp_1_16_0.c
+ 
+[LibraryClasses]
+  DebugLib
+
+[Protocols]
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  QcomPkg/QcomPkg.dec
+
+[Depex]
+ 

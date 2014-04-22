@@ -1,0 +1,179 @@
+#===============================================================================
+#
+# Target-Level Build Script for ThreadX DAM modules
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/bsp/com_test_app_img_llvm/build/com_test_app_img_llvm.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Change: 22400605 $
+#===============================================================================
+import sys
+import os
+Import('env')
+
+env = env.Clone()
+
+#define TXM module bin creation builder from mbn
+bin_bld = Builder(action = '${PYTHONCMD} ${BINTOOL} --bin $SOURCE --output $TARGET')
+env.Append(BUILDERS={'BinBuilder': bin_bld})
+
+#------------------------------------------------------------------------------
+# Image_cfg.xml setup
+#------------------------------------------------------------------------------
+#env.Replace(IMAGE_CONFIG_XML = env.subst("${BUILD_ROOT}/build/ms/image_cfg_apps.xml"))
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = ['llvm_dam']
+
+build_tags = ['LLVM_DAM']
+
+# init environment variables
+env.InitImageVars(
+    alias_list=aliases,           # aliases
+    proc='cortex-a7',             # proc
+    config='apps',                # config type, proc_name
+    plat='tx',
+    build_tags=build_tags,
+    tools=['${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py',
+           '${BUILD_ROOT}/core/bsp/build/scripts/dnt_builder.py']
+    )
+
+if not env.CheckAlias():
+    Return()
+#----------------------------------------------------------------------------------
+# Suppress non-critical ARM license error to warning
+# C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
+#-----------------------------------------------------------------------------------
+if 'USES_ARM' in env:
+    env.Append(CFLAGS = "--diag_suppress=9931 ")
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+#env.Replace(USES_DEVCFG = True)
+#env.Replace(USES_DEVCFG_IMG_ONLY = True)
+env.Append(CPPDEFINES=["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+
+if 'USES_QSEECOM' not in env:
+    Return()
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+#Here is where we change the COMPILER
+env.LoadToolScript('llvm_dam', toolpath=["${BUILD_ROOT}/tools/build/scons/scripts"])
+
+#env.Append(CCFLAGS = " -mno-unaligned-access ")
+env.Append(CCFLAGS = " -marm ")
+env.Append(ASMFLAGS = " -marm ")
+
+#Statically linking module at fixed virtual address which will be mapped to actual load address at run time
+#TODO: How to make this unique across modules and how to take it from some common location
+env.Replace(LINKFLAGS = "-Wl,-mno-unaligned-access -fuse-baremetal-sysroot -fno-use-baremetal-crt  -Wl,-entry=0x44000000 -W1,-T ${BUILD_ROOT}/core/bsp/com_test_app_img_llvm/build/com_test_app_img_llvm.ld -Wl,-Map,${TARGET.base}.Map  -Wl,-gc-sections $LFLAGS")
+
+
+#---------------------------------------------------------------------------
+# Libs/Objs
+#--------------------------------------------------------------
+image_libs = []
+image_objs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+# load Build Test libs/objs build rules.
+au_items = env.LoadAreaSoftwareUnits('build')
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+#Link TXM module library
+image_libs.extend(['$BUILD_ROOT/core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib'])
+
+#Link QSEECom and QTEE/SMCInvoke User space libraries
+image_libs.extend(['${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy/build/LLVM/qtee_invoke_proxy_user.lib'])
+
+#load COM TEST APP
+modules_path = env.RealPath('${BUILD_ROOT}/core/securemsm/com_test_app')
+if env.PathExists(modules_path):
+    au_items = env.LoadAreaSoftwareUnits('core', ["securemsm/com_test_app"])
+    image_libs.extend(au_items['LIBS'])
+    image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+
+
+#-------------------------------------------------------------------------
+# Libs/Objs
+#-------------------------------------------------------------------------
+image_libs_path = env.get('INSTALL_LIBPATH')
+
+image_units = [image_libs, image_objs]
+
+if 'IMAGE_BUILD_LOCAL_FILES' in env:
+   #=========================================================================
+   # CBSP Image section
+   #=========================================================================
+
+   # make our clone so we won't mess the lib rules, it shoun't because they
+   # should of clone, but just to be on the safe side.
+    env = env.Clone()
+
+if 'IMAGE_BUILD_LINK' in env:
+   # actually doing link, reset image_units
+    image_units = []
+
+   #-------------------------------------------------------------------------
+   # Build env QCOREIMG
+   #-------------------------------------------------------------------------
+    if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+        image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM=sh_libs_dynsyms_fname)
+    else:
+        image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
+
+if 'IMAGE_BUILD_POST_LINK' in env:
+   # #-------------------------------------------------------------------------
+   # # Build env mbn files
+   # #-------------------------------------------------------------------------
+    # import pdb; pdb.set_trace()
+    target_mbn = env.MbnBuilder('${SHORT_BUILDPATH}/${TARGET_NAME}', image_elf, IMAGE_TYPE="com_test_app_llvm_module", MBN_TYPE="elf", FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+
+    install_target_mbn = env.InstallAs('${MBN_ROOT}/com_test_app_llvm.mbn', target_mbn)
+
+    target_bin = env.BinBuilder("${MBN_ROOT}/com_test_app_llvm.bin", "${BUILD_MS_ROOT}/M9x06_COM_TEST_APP_LLVM.elf")
+
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+
+   # copy elf and reloc to needed locations for AMSS tools to load on target
+   # install_target_elf = env.InstallAs(
+      # "${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf", image_elf)
+    install_target_elf = env.InstallAs(
+        "${BUILD_MS_ROOT}/M9x06_COM_TEST_APP_LLVM.elf", image_elf)
+
+   #=========================================================================
+   # Define targets needed QCOREIMG
+   #
+    image_units += [
+        install_target_elf,
+        target_mbn,
+        install_target_mbn,
+        target_bin,
+    ]
+
+
+#=========================================================================
+# Finish up...
+env.BindAliasesToTargets(image_units)

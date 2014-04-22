@@ -1,0 +1,190 @@
+#===============================================================================
+#
+# NB1 RRC Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/RRC/build/nb1_rrc.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+
+# Remove this line and if statement once 6.4.04 toolchain has been released
+if env['HEXAGON_RTOS_RELEASE'] >= '6.4.04':
+   # Enable -O2 optimization
+   env.Replace(HEXAGONCC_OPT = "${HEXAGON_OPT_2}")
+
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+import os
+if not os.environ.get('HEXAGON_RTOS_RELEASE').startswith('6'):
+	env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror")
+	env = env.Clone(HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+
+from glob import glob
+from os.path import join, basename
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+if 'USES_FEATURE_DYNAMIC_LOADING_LTE' in env:
+  SRCPATH = ".."
+  RRCSRCPATH = "../src"
+else:
+  SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_LTE_RRC",
+])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last
+    ], area='core')
+
+env.RequireExternalApi(['BREW'])
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi([
+    'ONEX',
+    'GPS',
+    'HDR',
+    'MCS',
+    'MMODE',
+    'RFA',
+    'UIM',
+    'UTILS',
+	'WCDMA',
+	'LOC',
+    ])
+
+env.RequirePublicApi([
+        'LOC'
+        ],
+        area='qmimsgs')
+
+# Need get access to Modem Restricted headers
+env.RequireRestrictedApi([
+    'MMODE',
+    'NAS',
+    'RFA',
+    'MDSP',
+    'MDSPSVC',
+    'GERAN',
+    'GPS',
+    'WCDMA',
+    'TDSCDMA',
+    'ONEX',
+    'HDR',
+    'MCS',
+    'UTILS',
+    'LTE',
+    'NB1',
+    'QTF',
+    ])
+
+# Need to get access to NB1 protected headers
+env.RequireProtectedApi([
+    'NB1',
+    ])
+	
+env.RequirePublicApi([
+    'NB1',
+    ])
+
+env.RequirePrivateApi([
+    'NB1',
+    ])
+
+#L-TDD to W SRVCC. Needed only for BO.2.5, Jo, TH and TB
+if env['PRODUCT_LINE'] == 'MPSS.BO.2.5' or 'USES_FEATURE_JOLOKIA_MODEM' in env or 'USES_TABASCO_MODEM' in env or 'USES_FEATURE_THOR_MODEM' in env:
+	env.Append(CPPDEFINES = ["FEATURE_NB1_TDD_TO_UMTS_SRVCC"])
+
+# Allow us to see headers in src dir.
+env.PublishPrivateApi('RRC', '${NB1_ROOT}/RRC/src')
+if 'USES_MOB' in env:
+    env.PublishPrivateApi('RRC', '${INC_ROOT}/nb1/RRC/ASN1/off_target')
+else:
+	env.PublishPrivateApi('RRC', '${INC_ROOT}/nb1/RRC/ASN1/on_target')
+
+env.RequirePublicApi('QTF', area='mob')
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+if 'USES_FEATURE_DYNAMIC_LOADING_LTE' in env:
+  if 'USES_MOB' in env:
+    NB1_RRC_SOURCES = env.GlobSourceFiles(['src/*.c','ASN1/off_target/*.c'], SRCPATH, posix=True)
+  else:
+    NB1_RRC_SOURCES = env.GlobSourceFiles(['src/*.c','ASN1/on_target/*.c'], SRCPATH, posix=True)
+else:
+  # Construct the list of source files by looking for *.c
+  NB1_RRC_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                   for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+import re
+
+# STM Files
+if 'USES_FEATURE_DYNAMIC_LOADING_LTE' in env:
+  for stmname in glob(join(env.subst(RRCSRCPATH), '*.stm')):
+      match = re.search('([^\\\/]*)\.stm', stmname)
+      match.group(1)
+      env.STM2('${BUILDPATH}/__' + match.group(1) + '_int.c',
+              '${BUILDPATH}/src/' + match.group(1) + '.stm')
+      NB1_RRC_SOURCES.append('${BUILDPATH}/__' + match.group(1) + '_int.c')
+else:
+  for stmname in glob(join(env.subst(SRCPATH), '*.stm')):
+      match = re.search('([^\\\/]*)\.stm', stmname)
+      match.group(1)
+      env.STM2('${BUILDPATH}/__' + match.group(1) + '_int.c',
+              '${BUILDPATH}/' + match.group(1) + '.stm')
+      NB1_RRC_SOURCES.append('${BUILDPATH}/__' + match.group(1) + '_int.c')
+
+env.Append(CPPPATH = '${BUILDPATH}')
+env.Append(CPPPATH = '${NB1_ROOT}/RRC/build/${BUILDPATH}')
+
+# Compile the NB1 RRC source and convert to a binary library
+if 'USES_FEATURE_DYNAMIC_LOADING_LTE' not in env:
+	env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_rrc', NB1_RRC_SOURCES, pack_exception=['USES_COMPILE_LTE_L3_L2_PROTECTED_LIBS', 'USES_FEATURE_NB1_PACKBUILD_GENERATE_PROTECTED_LIBS', 'USES_CUST_1'])
+else:	
+    if 'USES_FEATURE_EXTERNAL_PAGING' in env:
+		env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_NB1'], '${BUILDPATH}/nb1_rrc_dmm', NB1_RRC_SOURCES, pack_exception=['USES_COMPILE_LTE_L3_L2_PROTECTED_LIBS', 'USES_FEATURE_NB1_PACKBUILD_GENERATE_PROTECTED_LIBS', 'USES_CUST_1'])
+    else:
+		SHARED_LIBRARY='nb1'
+		env.Append(CFLAGS='-DDYNAMIC_LINKING_ENABLED')
+		env.AddSharedLibrary(['MODEM_MODEM'], '${BUILDPATH}/'+SHARED_LIBRARY, NB1_RRC_SOURCES)
+
+#-------------------------------------------------------------------------------
+# avoid run-time errors when trying to send MSGR messages
+#-------------------------------------------------------------------------------
+
+#if 'USES_MOB' not in env:
+env.LoadSoftwareUnits()

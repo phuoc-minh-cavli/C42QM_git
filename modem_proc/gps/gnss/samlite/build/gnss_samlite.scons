@@ -1,0 +1,112 @@
+# -------------------------------------------------------------------------------- #
+#                         G N S S _ S A M L I T E . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the GNSS SAMLite subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+# Copyright (c) 2019 Qualcomm Atheros, Inc.
+# All Rights Reserved.
+# Qualcomm Atheros Confidential and Proprietary.
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/samlite/build/gnss_samlite.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# $Author: pwbldsvc $
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import and clone the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+from glob import glob
+from os.path import join, basename
+
+#--------------------------------------------------------------------------------
+# Setup source PATH
+#--------------------------------------------------------------------------------
+if 'USES_FEATURE_GNSS_DISABLE_SENSOR_ASSISTANCE' in gps_env or \
+   'USES_FEATURE_REF_TRACKER_LOC' in gps_env:
+    SRCPATH = '../stub'
+    if not 'USES_UNIFIED_SP_BUILD' in gps_env:
+        gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*', '../src'))
+else:
+    SRCPATH = '../src'
+    if not 'USES_UNIFIED_SP_BUILD' in gps_env:
+        gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*', '../stub'))
+
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#--------------------------------------------------------------------------------
+# Name of the subsystem to which this unit belongs
+#--------------------------------------------------------------------------------
+LIB_TARGET = '${BUILDPATH}/' + 'gnss_samlite'
+
+#--------------------------------------------------------------------------------
+# Images that this VU is added
+#--------------------------------------------------------------------------------
+IMAGES = ['MODEM_MODEM']
+
+#--------------------------------------------------------------------------------
+# Generate the library and add to an image
+#--------------------------------------------------------------------------------
+BINARY_LIB_SOURCES = gps_env.GenerateCompileList(SRCPATH, '*.c')
+
+#--------------------------------------------------------------------------------
+# Ship our code as binary library and add it to the Modem image
+#--------------------------------------------------------------------------------
+gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Publish these private APIs for the rest of SAMLITE
+#------------------------------------------------------------------------------- 
+GNSS_SAMLITE_PRIVATE_API = ['${GPS_ROOT}/gnss/samlite/sns_stubs/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/attitude_filter/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/csd/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/fmv/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/game_rotation_vector/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/gravity/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/gyro_cal/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/gyro_quaternion/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/orientation/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/ped_alignment/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/ped_context/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/pedometer/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/qmag_cal/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/rel_rest/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/rotation_vector/inc',
+                            '${GPS_ROOT}/gnss/samlite/algo/spi/inc',
+                            '${GPS_ROOT}/gnss/samlite/common/sam/algo/common/inc',
+                            '${GPS_ROOT}/gnss/samlite/common/util/mathtools/inc',
+                            '${GPS_ROOT}/gnss/samlite/src'
+                        ]
+
+gps_env.PublishPrivateApi('GNSS_SAMLITE', GNSS_SAMLITE_PRIVATE_API)
+gps_env.RequirePrivateApi('GNSS_SAMLITE')
+
+#--------------------------------------------------------------------------------
+# Remove all header and source files except for the samlite/inc folder
+#--------------------------------------------------------------------------------
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.c', '..'))
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.h', '../algo'))
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.h', '../build'))
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.h', '../common'))
+# Do not remove the samlite/inc folder
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.h', '../sns_stubs'))
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.h', '../src'))
+
+gps_env.LoadSoftwareUnits()

@@ -1,0 +1,97 @@
+#===============================================================================
+#
+# CHIP POWER LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+#Copyright (c) 2016 Qualcomm Technologies Incorporated.
+#All Rights Reserved.
+#QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/chippower/build/chippower.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#
+#===============================================================================
+
+import os
+
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/chippower/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireExternalApi([
+  'SYSTEMDRIVERS_PMIC'
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'HAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'HWENGINES',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'PRODUCTS_SCM',
+
+   # Must be last due to comdef.h issues
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+CHIPPOWER_SOURCES = [
+  '${BUILDPATH}/DalChipPower.c',
+  '${BUILDPATH}/DalChipPowerMaster.c'
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_APPS'], 
+   '${BUILDPATH}/DalChipPower',
+   CHIPPOWER_SOURCES)
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+      'devcfg_xml'    : '${BUILD_ROOT}/core/systemdrivers/chippower/config/DalChipPower.xml'
+   })
+
+#---------------------------------------------------------------------------
+# Invoke document generation SConscript
+#---------------------------------------------------------------------------
+
+if os.path.exists(env['BUILD_ROOT'] + '/core/api/systemdrivers/docsrc/chippower/SConscript') :
+  env.SConscript(
+    '${BUILD_ROOT}/core/api/systemdrivers/docsrc/chippower/SConscript',
+    exports='env')
+

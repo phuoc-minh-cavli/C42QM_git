@@ -1,0 +1,7 @@
+Import('env')
+
+env.PublishPublicApi('MMUTILS', [
+   "${INC_ROOT}/multimedia/mmutils/api",
+])
+
+env.LoadAPIUnits()

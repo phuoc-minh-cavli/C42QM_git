@@ -1,0 +1,79 @@
+#===============================================================================
+#
+# TMD2725 sensor implementation
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#
+#===============================================================================
+Import('env')
+import inspect
+
+# To add island support for drivers:
+# 1. Refactor driver files to separate all island mode functions in a separate
+#    file(s) with filenames ending in "_island". See 80-P9361-1 for details.
+#    Example: sns_lsm6ds3_hal_island.c
+# 2. Use a dedicated environment flag to check if island mode is enabled for the
+#    driver. Use format SNS_ISLAND_INCLUDE_<sensor_name>
+#    Example: SNS_ISLAND_INCLUDE_LSM6DS3.
+# 3. Use this flag to decide whether add_island_files is set to True ot False
+#    when env.AddSSCSU() is called.
+# 4. Include the flag in build flag options (-f) to enable island mode for
+#    the driver.
+
+if env['MSM_ID'] in ['855', '8250']:
+  env.Append( CPPDEFINES = ['TMD2725_FOR_SDM855_AND_LATER'] )
+
+tmd2725_island_enable = False
+
+if 'SNS_DISABLE_REGISTRY' not in env:
+  env.Append( CPPDEFINES = ['TMD2725_ENABLE_REGISTRY_ACCESS'])
+ 
+if 'SNS_ISLAND_INCLUDE_TMD2725' in env:
+  tmd2725_island_enable = True
+  
+if 'SSC_INCLUDE_SENS_VEND_LIBS' in env and ('sns_tmd2725' in env['SSC_INCLUDE_SENS_VEND_LIBS']):
+  # HY11 builds - ship as source
+  clean_pack_list = []
+  binary_lib = False
+  if 'SENSORS_DD_DEV_FLAG' in env:
+    # HD22 builds - ship as binary_lib
+    clean_pack_list = ['*.c','*.h','*.proto','*.json']
+    binary_lib = True
+else:
+  # Delete the NPOR driver from pack builds
+  clean_pack_list = ['*.c','*.h','*.proto','*.json','*.scons']
+  binary_lib = True    
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+    if 'SSC_TARGET_HEXAGON' in env['CPPDEFINES']:
+        env.AddSSCSU(inspect.getfile(inspect.currentframe()), 
+                     flavor = ["hexagon"],
+                     clean_pack_list = clean_pack_list,
+                     register_func_name = "sns_register_tmd2725", 
+                     binary_lib = binary_lib,
+                     registration_cnt = 1,
+                     add_island_files = tmd2725_island_enable, 
+                     diag_ssid = "MSG_SSID_SNS_SENSOR_EXT")
+        env.Append(CPPDEFINES = ["-DCONFIG_AMS_OPTICAL_SENSOR_ALS_CCB",
+#               "-DENABLE_DEBUG",
+#               "-DAMS_DEV_DEBUG_ENABLE",
+                "-DCONFIG_AMS_OPTICAL_SENSOR_ALS",
+#               "-DCONFIG_AMS_USE_ASIEN",
+                "-DCONFIG_AMS_OPTICAL_SENSOR_PROX_CCB",
+                "-DCONFIG_AMS_OPTICAL_SENSOR_PROX",
+                "-DCONFIG_AMS_USE_DRI=1",
+                "-DCONFIG_AMS_PROX_STATIC_MODE",
+                "-DQDSP6",
+                "-DCONFIG_AMS_OPTICAL_SENSOR_2725",
+#               "-DCONFIG_ALS_INCLUDE_IR_RESULTS",
+#               "-DCONFIG_PROX_INCLUDE_PROXIMITY_RESULTS",
+# This becomes the value (a string) of the ATTRID_NAME attribute:
+                "-DCONFIG_AMS_PART_NAME=tmd2725"])

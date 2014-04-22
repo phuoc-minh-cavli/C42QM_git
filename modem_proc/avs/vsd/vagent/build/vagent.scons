@@ -1,0 +1,51 @@
+#=================================================================
+# VAGENT SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+VAGENT_SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', VAGENT_SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('VAGENT', [
+    "${AVS_ROOT}/vsd/vagent/inc/private",
+])
+
+VAGENT_SRCPATH = [
+  '${BUILDPATH}/vagent.c',
+]
+
+if env['PRODUCT_LINE'].startswith("MPSS.CT"):
+  VAGENT_SRCPATH[0] =  '${BUILDPATH}/CT/vagent.c'
+  print 'Compiling voice agent source version for 9x05 chipset'
+  
+if 'AVS_MPSS_TEST' in env:
+ IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+ IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/vagent/vagent'), VAGENT_SRCPATH)
+
+#-------------------------------------------------------------------------------
+# RCINIT_GROUP_6 is only for logging purpose. It does not dictate the actual start sequence.
+# RCINIT_TASK_QURTTASK is also only for logging purpose.
+
+if 'AVS_MPSS_TEST' in env or env['PRODUCT_LINE'].startswith("MPSS.BO"):
+  print "Skipping RCINIT Registration of VAGENT Task"
+else:
+  print "RCINIT Registration of VAGENT Task"
+  if 'USES_RCINIT' in env:
+    env.AddRCInitTask(
+        IMAGES,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',
+            'thread_name'                : 'VAGENT',
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',
+            'thread_entry'               : 'RCINIT_NULL',
+            'stack_size_bytes'           : '2048',
+            'priority_amss_order'        : 'APR_VS_HIGH_PRI_ORDER',
+        }
+    )
+#end of if 'AVS_MPSS_TEST' in env or env['PRODUCT_LINE'].startswith("MPSS.BO")
+#------------------------------------------------------------------------------- 

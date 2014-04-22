@@ -1,0 +1,105 @@
+#===============================================================================
+#
+# NAS SM SCons 
+#
+# GENERAL DESCRIPTION
+#    SCons build script
+#
+# Copyright (c) 2010 - 2011 by Qualcomm Technologies INCORPORATED.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 
+#
+#===============================================================================
+#from glob import glob
+#from os.path import join, basename
+
+Import('env')
+env = env.Clone()
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+TESTPATH = "mmcp/nas/mm/test/ut_framework"			
+SRCPATH = "${BUILD_ROOT}/" + TESTPATH
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.Append(CPPDEFINES = 'COMPONENT_PATH=\\"'+TESTPATH+'/\\"')
+#-------------------------------------------------------------------------------
+# Necessary Public & Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+               'DAL',
+               'DEBUGTOOLS',
+               'MPROC',
+               'SERVICES',
+               'STORAGE',
+               'SYSTEMDRIVERS',
+               'KERNEL',          # needs to be last
+               ], area='core')
+
+# Need to get access to Modem Public headers
+env.RequirePublicApi('QTF', area='MOB')
+
+env.PublishPrivateApi('NAS_COMMON_UT', [
+    "${INC_ROOT}/mmcp/nas/test/common/inc",
+    "${INC_ROOT}/mmcp/nas/test/emulation/inc",
+    "${INC_ROOT}/datamodem/3gpp2/api",
+    "${INC_ROOT}/datamodem/3gpp2/1xrlp/inc",
+    "${INC_ROOT}/datamodem/3gpp2/doqos/inc",
+    "${INC_ROOT}/datamodem/3gpp2/ds707/inc",
+    "${INC_ROOT}/datamodem/3gpp2/dsmgr/inc",
+    "${INC_ROOT}/datamodem/3gpp2/hdrdata/inc",
+    "${INC_ROOT}/datamodem/protocols/api",
+    "${INC_ROOT}/datamodem/protocols/mip/inc",
+    "${INC_ROOT}/datamodem/interface/api",
+    "${INC_ROOT}/datamodem/interface/atcop/inc",
+    "${INC_ROOT}/datamodem/interface/sysapi/inc",
+    "${INC_ROOT}/mmcp/nas/mm/src",
+    "${INC_ROOT}/mmcp/nas/mm/test",
+    "${INC_ROOT}/mcs/cust/inc",
+    "${INC_ROOT}/mcs/variation/inc",
+    "${INC_ROOT}/rfa/rf/common/stubs/inc",
+    "${INC_ROOT}/core/api/securemsm/crypto",
+    "${INC_ROOT}/core/api/securemsm/smecom",
+    "${INC_ROOT}/core/api/securemsm/smeco",
+    "${INC_ROOT}/core/securemsm/cryptodrivers/prng/shared/inc",
+])
+
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+    'MSG_BT_SSID_DFLT=MSG_SSID_NAS_SM',
+])
+
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+
+MM_C_SOURCES = [
+	'${BUILDPATH}/emm_test_lib.cpp',    
+    '${BUILDPATH}/esm_emm_integration_test_suit_ut.cpp',
+    '${BUILDPATH}/emm_test_tau_lib.cpp',
+    '${BUILDPATH}/emm_test_attach_lib.cpp',
+    '${BUILDPATH}/emm_test_authentication_lib.cpp',
+    
+]
+
+env.AddObject(['MOB_NAS'], MM_C_SOURCES)
+
+env.LoadSoftwareUnits()
+

@@ -1,0 +1,97 @@
+#===============================================================================
+#
+# TCXOMGR Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/ML1/build/nb1_ml1.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+
+# Remove this line and if statement once 6.4.04 toolchain has been released
+if env['HEXAGON_RTOS_RELEASE'] >= '6.4.04':
+   # Enable -O2 optimization
+   env.Replace(HEXAGONCC_OPT = "${HEXAGON_OPT_2}")
+
+# Enable warnings -> errors for all, except LLVM toolchain (6.x.x) during migration
+import os
+if not os.environ.get('HEXAGON_RTOS_RELEASE').startswith('6'):
+	env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror")
+	env = env.Clone(HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+env.Replace(HEXAGONCC_OPT = "${HEXAGON_OPT_2}")
+#-------------------------------------------------------------------------------
+# Publish test paths (will only happen when the paths are present in tree)
+#-------------------------------------------------------------------------------
+env.PublishProtectedApi('NB1_ML1_TEST',
+                        ['${NB1_ROOT}/ML1/afc/test',
+                         '${NB1_ROOT}/ML1/bplmn/test',
+                         '${NB1_ROOT}/ML1/dlm/test',
+                         '${NB1_ROOT}/ML1/gapmgr/test/inc',
+                         '${NB1_ROOT}/ML1/gm/test',
+                         '${NB1_ROOT}/ML1/l1_common/test/inc',
+                         '${NB1_ROOT}/ML1/manager/test/inc',
+                         '${NB1_ROOT}/ML1/md/test',
+                         '${NB1_ROOT}/ML1/pos/test',
+                         '${NB1_ROOT}/ML1/rfmgr/test',
+                         '${NB1_ROOT}/ML1/schdlr/test',
+                         '${NB1_ROOT}/ML1/search/test',
+                         '${NB1_ROOT}/ML1/sleepmgr/test',
+                         '${NB1_ROOT}/ML1/ulm/test',
+                         ])
+
+env.RequireProtectedApi('NB1_ML1_TEST')
+
+env.PublishProtectedApi('NB1_ML1',
+                        ['${NB1_ROOT}/ML1/afc/src',
+                         '${NB1_ROOT}/ML1/bplmn/src',
+                         '${NB1_ROOT}/ML1/dlm/src',
+                         '${NB1_ROOT}/ML1/gapmgr/src',
+                         '${NB1_ROOT}/ML1/gm/src',
+                         '${NB1_ROOT}/ML1/l1_common/src',
+                         '${NB1_ROOT}/ML1/manager/src',
+                         '${NB1_ROOT}/ML1/md/src',
+                         '${NB1_ROOT}/ML1/pos/src',
+                         '${NB1_ROOT}/ML1/rfmgr/src',
+                         '${NB1_ROOT}/ML1/schdlr/src',
+                         '${NB1_ROOT}/ML1/search/src',
+                         '${NB1_ROOT}/ML1/sleepmgr/src',
+                         '${NB1_ROOT}/ML1/ulm/src',
+                         ])
+
+env.RequireProtectedApi('NB1_ML1')
+
+# Need to get access to NB1 protected headers
+env.RequireProtectedApi([
+    'NB1',
+    ])
+	
+env.RequirePublicApi([
+    'NB1',
+    ])
+
+env.RequirePrivateApi([
+    'NB1',
+    ])
+
+env.RequirePublicApi(['RFLM',],area='RFLM')
+
+#-------------------------------------------------------------------------------
+# Continue loading software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+

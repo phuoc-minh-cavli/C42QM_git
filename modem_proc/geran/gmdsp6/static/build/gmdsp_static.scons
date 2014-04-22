@@ -1,0 +1,126 @@
+#===============================================================================
+#
+#       G E R A N    G M D S P   S C O N S   C O N F I G U R A T I O N
+#
+# GENERAL DESCRIPTION
+#    SCons build script for the GMDSP VU
+#
+# Copyright (c) 2010-2015 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/geran.mpss/5.2.0/gmdsp6/static/build/gmdsp_static.scons#1 $
+#  $DateTime: 2018/04/30 09:42:45 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/01/18   hd        CR2167422 FR 46686: Support GERAN as dynamic module using DMM/External paging framework 
+#===============================================================================
+import sys
+
+def main(env):
+  # If USES_WPLT is set this library is required
+  if 'USES_WPLT' not in env:
+    # Otherwise verify that USES_GSM or USES_UMTS is set, if not bail out now
+    if 'USES_GSM' not in env and 'USES_UMTS' not in env:
+      return()
+
+  ################################################################
+  # SIMPLE CONFIGURABLE ITEMS:
+  #-------------------------------------------------------------------------------
+  # Name of the subsystem to which this unit belongs
+  #-------------------------------------------------------------------------------
+  SU_NAME = 'GERAN'
+
+  #-------------------------------------------------------------------------------
+  # Name of this unit
+  #-------------------------------------------------------------------------------
+  UNIT_NAME = 'GMDSP_STATIC'
+
+  #-------------------------------------------------------------------------------
+  # Source path
+  #-------------------------------------------------------------------------------
+  # The path to the source files
+  SRCPATH = '../src'
+
+  #-------------------------------------------------------------------------------
+  # Source files
+  #-------------------------------------------------------------------------------
+  # The source files. Either '*.c' or list the files individually.
+  # If listing the files individually, include any private files, they will be stripped later
+  # e.g. SRC_FILES = ['foo.c', 'bar.c']
+  SRC_FILES = '*.c'
+
+  PRIVATE_SRC_FILES = [
+  ]
+
+  #-------------------------------------------------------------------------------
+  # Required internal APIs
+  #-------------------------------------------------------------------------------
+  REQUIRED_SU_APIS = [
+      'GDRIVERS',
+      'GCOMMON',
+      'GDIAG',
+      'GL1',
+      'GL2',
+      'GMDSP',
+      'GMDSP_STAT',
+      'GMAC',
+      'GRLC',
+      'GRR'
+      ]
+
+  #-------------------------------------------------------------------------------
+  # Images the SU will be loaded into (MODEM_APPS and/or MODEM_MODEM)
+  #-------------------------------------------------------------------------------
+  IMAGES = ['MODEM_MODEM', 'MOB_GERAN']
+
+  ################################################################
+  ################################################################
+
+
+
+  ################################################################
+  # UNIT-SPECIFIC SCONS MAGIC
+  ################################################################
+  # (for build specialists to play their tricks)
+
+  ################################################################
+  # DATA ASSEMBLED, PUT IT INTO ACTION USING THE SHARED
+  # FUNCTIONS IN build/geran_build_tools.py
+  ################################################################
+  sys.path.append('${GERAN_BUILD_TOOLS}')
+  import geran_build_tools
+
+  geran_build_tools.set_up_component_build_config(
+    env,
+    SU_NAME=                  SU_NAME,
+    UNIT_NAME=                UNIT_NAME,
+    SRCPATH=                  SRCPATH,
+    SRC_FILES=                SRC_FILES,
+    PRIVATE_SRC_FILES=        PRIVATE_SRC_FILES,
+    REQUIRED_SU_APIS=         REQUIRED_SU_APIS,
+    IMAGES=                   IMAGES,
+    MSG_BT_SSID_DFLT=         'MSG_SSID_GSM_L1',      # Doesn't use the standard naming convention
+    DELIVER_SOURCE =          False                   # GMDSP6 is delivered as a binary to some customers
+  )
+
+  env.LoadSoftwareUnits()
+
+try:
+  Import('env') # Fails if used from SCons test harness
+  _usingTestHarness = False
+except:
+  _usingTestHarness = True
+
+if not _usingTestHarness:
+  main(env)
+#else: test harness calls main() directly with its own env
+

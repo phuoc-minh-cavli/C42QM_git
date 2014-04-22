@@ -1,0 +1,49 @@
+; Load DAM crash dump
+; AJ , 25/2/2019
+
+Area.Close
+Area.Reset
+Area.Create ST 100. 10.       ;create an AREA window              
+Area.Select ST                  ;select the AREA window as PRACTICE 
+                                ;input/output window                
+Area ST                         ;display the AREA window  
+
+&tcb_start=V.VALUE(_tx_thread_created_ptr)
+&curr=V.VALUE(((TX_THREAD*) &tcb_start)->tx_thread_created_next)
+&target_name="Module Start Thread"
+while (&curr!=&tcb_start)
+(
+	&instance_ptr=V.VALUE(((TX_THREAD*) &curr)->tx_thread_module_instance_ptr)
+	
+	if (&instance_ptr!=0x0)
+	(
+		;print "TCB : &curr"
+		gosub restoreDamMemory &instance_ptr
+		ENDDO
+	)
+	&curr=V.VALUE(((TX_THREAD*) &curr)->tx_thread_created_next)
+)
+if (&curr==&tcb_start)
+(
+	print "No DAM Module to be loaded..."
+)
+
+ENDDO
+
+restoreDamMemory:
+(
+	entry &instance_ptr
+	&virtStart=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_virt_base)
+	&physStart=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_phys_base)
+	
+	&virtEnd=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_data_end)
+	&moduleDataSize=&virtEnd-&virtStart
+	&physEnd=&physStart+&moduleDataSize
+	print "Virtual Start : &virtStart "
+	print "Physical Start : &physStart "
+	print "Module Data Size : &moduleDataSize "
+	
+	print "Copying module's physical addr data to module's virtual address..."
+	Data.copy &physStart--&physEnd &virtStart
+	print "Completed...!"
+)

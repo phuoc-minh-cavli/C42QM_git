@@ -1,0 +1,34 @@
+if sYmbol.EXIST(output_buffer_length)==FALSE()
+  enddo ;to handle case where NOISY is not defined or TNOISY<1
+
+local &outputBufferLength
+local &currentChar
+local &i
+&outputBufferLength=V.VALUE(output_buffer_length)
+area.select NAND_OUT
+&i=0.
+while &i<&outputBufferLength
+(
+    &currentChar=V.VALUE(output_buffer[&i])
+    if (&currentChar==0xA)
+    (
+        print
+    )
+    else if (&currentChar==0xD)
+    (
+        print %CONTINUE ""
+    )
+    else if (&currentChar==0x9)
+    (
+        print %CONTINUE "    "
+    )
+    else
+    (
+        print %CONTINUE conv.char(&currentChar)
+    )
+    &i=&i+1.
+)
+V output_buffer_length = 0
+area.select NAND
+;area.clear NAND
+enddo

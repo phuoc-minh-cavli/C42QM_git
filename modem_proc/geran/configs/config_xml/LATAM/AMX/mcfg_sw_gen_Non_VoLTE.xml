@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="geran.0.0" type="1"/>
+	<NvItemData name="DARP Feature Support" id="4117" description="DARP Feature Support (SAIC)" comment="" category="GPRS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="darp_feature_support" description="DARP Feature Support (SAIC)" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+<NvItemData name="GSM A5 Algorithms Supported" id="553" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gsm_a5_algorithms_supported" description="" comment="" sizeOf="1" type="uint8">5 </Member>
+	</NvItemData>
+	<NvItemData name="UIM First Instruction Class" id="896" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="uim_first_inst_class" description="" comment="" sizeOf="1" type="uint16">1 </Member>
+	</NvItemData>
+	<NvItemData name="GSM AMR Call Configuration" id="1302" description="" comment="" category="GSM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gsm_amr_call_config" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvEfsItemData name="vamos_support" id="67228" description="VAMOS support" comment="" category="GERAN" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/geran/vamos_support">
+		<Member name="vamos_support" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvEfsItemData>
+	</NvData>

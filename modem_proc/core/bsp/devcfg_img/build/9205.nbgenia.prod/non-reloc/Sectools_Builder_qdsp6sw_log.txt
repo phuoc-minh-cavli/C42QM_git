@@ -1,0 +1,6 @@
+Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.nbgenia.prod/non-reloc/Sectools_Builder_qdsp6sw_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.nbgenia.prod/Sectools_Builder_qdsp6sw_log.txt
+Sectools Builder config was provided using deprecated api
+Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.nbgenia.prod/non-reloc/Sectools_Builder_qdsp6sw_log.txt
+Sectools Builder config was provided using deprecated api

@@ -1,0 +1,577 @@
+;==============================================================================
+;
+;  FILE: extract_trace.cmm
+;
+;  DESCRIPTION: This script displays the ThreadX traces.
+;
+;==============================================================================
+;
+; Copyright (c) 2020 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Confidential and Proprietary - Qualcomm Technologies, Inc.
+;
+;==============================================================================
+
+; Trace buffer
+
+Area.Reset
+Area.Create ST 280. 1010.       ;create an AREA window              
+Area.Select ST                  ;select the AREA window as PRACTICE 
+                                ;input/output window                
+Area ST                         ;display the AREA window  
+
+
+Var.NEWGLOBAL char[15][20] \States
+
+Var.Set \States[0]="READY"       
+Var.Set \States[1]="COMPLETED"    
+Var.Set \States[2]="TERMINATED"   
+Var.Set \States[3]="SUSPENDED"     
+Var.Set \States[4]="SLEEP"         
+Var.Set \States[5]="QUEUE_SUSP"    
+Var.Set \States[6]="SEMAPHORE_SUSP"
+Var.Set \States[7]="EVENT_FLAG"    
+Var.Set \States[8]="BLOCK_MEMORY"  
+Var.Set \States[9]="BYTE_MEMORY"   
+Var.Set \States[10]="IO_DRIVER"     
+Var.Set \States[11]="FILE"          
+Var.Set \States[12]="TCP_IP"        
+Var.Set \States[13]="MUTEX_SUSP" 
+Var.Set \States[14]="RUNNING"    
+
+
+
+Var.NEWGLOBAL char[131][40] \myStr
+
+ Var.Set \myStr[1]="   Tx_RESUME"
+ Var.Set \myStr[2]="  Tx_SUSPEND"
+ Var.Set \myStr[3]="   ISR_ENTER"
+ Var.Set \myStr[4]="    ISR_EXIT"
+ Var.Set \myStr[5]="  TIME_SLICE"
+ Var.Set \myStr[6]=" < RUNNING >"
+Var.Set \myStr[10]=" BLOCK_ALLOC"
+Var.Set \myStr[11]=" POOL_CREATE"
+Var.Set \myStr[12]=" POOL_DELETE"
+Var.Set \myStr[13]="POOL_InfoGet"
+Var.Set \myStr[14]="TX_TRACE_BLOCK_POOL_PERFORMANCE_INFO_GET"
+Var.Set \myStr[15]="TX_TRACE_BLOCK_POOL__PERFORMANCE_SYSTEM_IN"
+Var.Set \myStr[16]="TX_TRACE_BLOCK_POOL_PRIORITIZE"
+Var.Set \myStr[17]="BlockRelease"
+Var.Set \myStr[20]="  BYTE_ALLOC"
+Var.Set \myStr[21]=" POOL_CREATE"
+Var.Set \myStr[22]=" POOL_DELETE"
+Var.Set \myStr[23]="Pool_InfoGet"
+Var.Set \myStr[24]="TX_TRACE_BYTE_POOL_PERFORMANCE_INFO_GET"
+Var.Set \myStr[25]="TX_TRACE_BYTE_POOL__PERFORMANCE_SYSTEM_INF"
+Var.Set \myStr[26]="TX_TRACE_BYTE_POOL_PRIORITIZE"
+Var.Set \myStr[27]="BYTE_RELEASE"
+Var.Set \myStr[30]="Signl_Create"
+Var.Set \myStr[31]="Signl_Delete"
+Var.Set \myStr[32]=" SIGNAL_WAIT"
+Var.Set \myStr[33]="Sig_INFO_GET"
+Var.Set \myStr[34]="TX_TRACE_EVENT_FLAGS_PERFORMANCE_INFO_GET"
+Var.Set \myStr[35]="TX_TRACE_EVENT_FLAGS__PERFORMANCE_SYSTEM_I"
+Var.Set \myStr[36]="  SIGNAL_SET"
+Var.Set \myStr[37]="TX_TRACE_EVENT_FLAGS_SET_NOTIFY"
+Var.Set \myStr[40]=" Int_Control"
+Var.Set \myStr[50]="Mutex_Create"
+Var.Set \myStr[51]="Mutex_Delete"
+Var.Set \myStr[52]="   MUTEX_GET"
+Var.Set \myStr[53]="TX_TRACE_MUTEX_INFO_GET"
+Var.Set \myStr[54]="TX_TRACE_MUTEX_PERFORMANCE_INFO_GET"
+Var.Set \myStr[55]="TX_TRACE_MUTEX_PERFORMANCE_SYSTEM_INFO_GET"
+Var.Set \myStr[56]="TX_TRACE_MUTEX_PRIORITIZE"
+Var.Set \myStr[57]="   MUTEX_PUT"
+Var.Set \myStr[60]="TX_TRACE_QUEUE_CREATE"
+Var.Set \myStr[61]="TX_TRACE_QUEUE_DELETE"
+Var.Set \myStr[62]="TX_TRACE_QUEUE_FLUSH"
+Var.Set \myStr[63]="TX_TRACE_QUEUE_FRONT_SEND"
+Var.Set \myStr[64]="TX_TRACE_QUEUE_INFO_GET"
+Var.Set \myStr[65]="TX_TRACE_QUEUE_PERFORMANCE_INFO_GET"
+Var.Set \myStr[66]="TX_TRACE_QUEUE_PERFORMANCE_SYSTEM_INFO_GET"
+Var.Set \myStr[67]="TX_TRACE_QUEUE_PRIORITIZE"
+Var.Set \myStr[68]="TX_TRACE_QUEUE_RECEIVE"
+Var.Set \myStr[69]="TX_TRACE_QUEUE_SEND"
+Var.Set \myStr[70]="TX_TRACE_QUEUE_SEND_NOTIFY"
+Var.Set \myStr[80]="TX_TRACE_SEMAPHORE_CEILING_PUT"
+Var.Set \myStr[81]="TX_TRACE_SEMAPHORE_CREATE"
+Var.Set \myStr[82]="TX_TRACE_SEMAPHORE_DELETE"
+Var.Set \myStr[83]="TX_TRACE_SEMAPHORE_GET"
+Var.Set \myStr[84]="TX_TRACE_SEMAPHORE_INFO_GET"
+Var.Set \myStr[85]="TX_TRACE_SEMAPHORE_PERFORMANCE_INFO_GET"
+Var.Set \myStr[86]="TX_TRACE_SEMAPHORE__PERFORMANCE_SYSTEM_INF"
+Var.Set \myStr[87]="TX_TRACE_SEMAPHORE_PRIORITIZE"
+Var.Set \myStr[88]="TX_TRACE_SEMAPHORE_PUT"
+Var.Set \myStr[89]="TX_TRACE_SEMAPHORE_PUT_NOTIFY"
+Var.Set \myStr[100]="ThreadCreate"
+Var.Set \myStr[101]="TX_TRACE_THREAD_DELETE"
+Var.Set \myStr[102]="TX_TRACE_THREAD_ENTRY_EXIT_NOTIFY"
+Var.Set \myStr[103]="TX_TRACE_THREAD_IDENTIFY"
+Var.Set \myStr[104]=" TH_INFO_GET"
+Var.Set \myStr[105]="TX_TRACE_THREAD_PERFORMANCE_INFO_GET"
+Var.Set \myStr[106]="TX_TRACE_THREAD_PERFORMANCE_SYSTEM_INFO_GE"
+Var.Set \myStr[107]="TX_TRACE_THREAD_PREEMPTION_CHANGE"
+Var.Set \myStr[108]=" PRIO_CHANGE"
+Var.Set \myStr[109]="TX_TRACE_THREAD_RELINQUISH"
+Var.Set \myStr[110]="TX_TRACE_THREAD_RESET"
+Var.Set \myStr[111]="Th_ResumeAPI"
+Var.Set \myStr[112]="Thread_Sleep"
+Var.Set \myStr[113]="TX_TRACE_THREAD_STACK_ERROR_NOTIFY"
+Var.Set \myStr[114]=" SUSPEND_API"
+Var.Set \myStr[115]="TH_TERMINATE"
+Var.Set \myStr[116]="TX_TRACE_THREAD_TIME_SLICE_CHANGE"
+Var.Set \myStr[117]="TX_TRACE_THREAD_WAIT_ABORT"
+Var.Set \myStr[120]="    TIME_GET"
+Var.Set \myStr[121]="    TIME_SET"
+Var.Set \myStr[122]="TimrACTIVATE"
+Var.Set \myStr[123]="TIMER_CHANGE"
+Var.Set \myStr[124]="TIMER_CREATE"
+Var.Set \myStr[125]="TX_TRACE_TIMER_DEACTIVATE"
+Var.Set \myStr[126]="TIMER_DELETE"
+Var.Set \myStr[127]="TMR_INFO_GET"
+Var.Set \myStr[128]="TX_TRACE_TIMER_PERFORMANCE_INFO_GET"
+Var.Set \myStr[129]="TX_TRACE_TIMER_PERFORMANCE_SYSTEM_INFO_GET"
+
+
+print "   TCB     | Timestamp      |     EVENT       |   Running TH          |    Event Specific Data  "
+print " ***************************************************************************************************************************"
+&buffStart=V.VALUE(_tx_trace_buffer_current_ptr)
+&buffEnd=V.VALUE(_tx_trace_buffer_start_ptr)
+&buffStart=&buffStart-0x20
+&current=&buffStart
+&maxVal=0xFFFFFFFF
+
+while  (&current>=&buffEnd)
+(
+	&saved_current=&current
+	&threadName=0xDEAD
+	&event=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_event_id)
+	&tcb_ptr=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_thread_pointer)
+	&timestamp_high=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_time_stamp_high)
+	&timestamp_high=format.DECIMAL(1,&timestamp_high)
+	&timestamp=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_time_stamp)
+	&timestamp=format.DECIMAL(1,&timestamp)
+	&threadPtr=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_thread_pointer)
+	if (&threadPtr==0x0)
+	(
+		if (&event!=0x6)
+		(
+			&current=&buffEnd
+		)
+	)
+	if (&event==3)
+	(
+			&IrqNo=Data.LONG(A:(&current+0x14))
+			&IsrAddress=V.VALUE(pInterruptData->pInterruptState[&IrqNo].Isr)
+			&IsrName=sYmbol.NAME(D:&IsrAddress)
+			&IsrName=STRing.SPLIT("&IsrName","\",-1)
+			print "&tcb_ptr  | &timestamp_high&timestamp  |IncomingInterrupt|   Irq No:  &IrqNo       || ## ISR scheduled: &IsrName "
+			&current=&current-0x20
+	)
+	ELSE
+	(
+	if (&threadPtr==&maxVal)
+	(
+		&threadName="ISR_CONTEXT"
+	)
+	ELSE
+	(
+			if (&event==0x6)
+			(
+				&threadPtr=Data.LONG(D:(&saved_current+0x10))
+			)
+			&namePtr=V.VALUE(((TX_THREAD*) &threadPtr)->tx_thread_name)
+			&threadName=Data.String(SD:&namePtr)
+	)
+	if (STRing.LENgth("&threadName")<2)
+	(
+		&threadName="  NA "
+	)
+		&threadName=FORMAT.STRing("&threadName",12,' ')
+	print "&tcb_ptr  | &timestamp_high&timestamp  |  ",Var.STRing(\myStr[&event]),"   |   &threadName  || "
+		if (&event==0x1)
+		(
+			gosub thread_resume &current
+		)
+		ELSE if (&event==0x2)
+		(
+			gosub thread_suspend &current
+		)
+		ELSE if (&event==0x6)
+		(
+			gosub thread_running
+		)
+		ELSE if (&event==0x34)
+		(
+			gosub mutex_get &current
+		)
+		ELSE if (&event==0x20)
+		(
+			gosub event_get &current
+		)
+		ELSE if (&event==0x24)
+		(
+			gosub event_set &current
+		)
+		ELSE if (&event==0x39)
+		(
+			gosub mutex_put &current
+		)
+		ELSE if (&event==0x32)
+		(
+			gosub mutex_create &current
+		)
+		ELSE if (&event==0x33)
+		(
+			gosub mutex_delete &current
+		)
+		ELSE if (&event==0x1E)
+		(
+			gosub event_create &current
+		)
+		ELSE if (&event==0x1F)
+		(
+			gosub event_delete &current
+		)
+		ELSE if (&event==0x6C)
+		(
+			gosub prio_change &current
+		)
+		ELSE if (&event==0x68)
+		(
+			gosub th_info_get &current
+		)
+		ELSE if (&event==0x6F)
+		(
+			gosub res_api &current
+		)
+		ELSE if (&event==0x70)
+		(
+			gosub thread_sleep &current
+		)
+		ELSE if (&event==0x28)
+		(
+			gosub int_control &current
+		)
+	&current=&current-0x20
+	)
+)
+;----------------from start to current traces------
+&buffStart=V.VALUE(_tx_trace_buffer_end_ptr)
+&buffEnd=V.VALUE(_tx_trace_buffer_current_ptr)
+&current=&buffStart-0x20
+
+while  (&current>=&buffEnd)
+(
+	&saved_current=&current
+	&threadName=0xDEAD
+	&event=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_event_id)
+	&tcb_ptr=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_thread_pointer)
+	&timestamp_high=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_time_stamp_high)
+	&timestamp_high=format.DECIMAL(1,&timestamp_high)
+	&timestamp=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_time_stamp)
+	&timestamp=format.DECIMAL(1,&timestamp)
+	&threadPtr=V.VALUE(((TX_TRACE_BUFFER_ENTRY*) &current)->tx_trace_buffer_entry_thread_pointer)
+	if (&threadPtr==0x0)
+	(
+		if (&event!=0x6)
+		(
+			&current=&buffEnd
+		)
+	)
+	if (&event==3)
+	(
+			&IrqNo=Data.LONG(A:(&current+0x14))
+			&IsrAddress=V.VALUE(pInterruptData->pInterruptState[&IrqNo].Isr)
+			&IsrName=sYmbol.NAME(D:&IsrAddress)
+			&IsrName=STRing.SPLIT("&IsrName","\",-1)
+			print "&tcb_ptr  | &timestamp_high&timestamp  |IncomingInterrupt|   Irq No:  &IrqNo       || ## ISR scheduled: &IsrName "
+			&current=&current-0x20
+	)
+	ELSE
+	(
+	if (&threadPtr==&maxVal)
+	(
+		&threadName="ISR_CONTEXT"
+		&prio=0x0
+	)
+	ELSE
+	(
+			if (&event==0x6)
+			(
+				&threadPtr=Data.LONG(D:(&saved_current+0x10))
+			)
+			&namePtr=V.VALUE(((TX_THREAD*) &threadPtr)->tx_thread_name)
+			&threadName=Data.String(SD:&namePtr)
+	)
+	
+	&threadName=FORMAT.STRing("&threadName",12,' ')
+	print "&tcb_ptr  | &timestamp_high&timestamp  |  ",Var.STRing(\myStr[&event]),"   |   &threadName  || "
+		if (&event==0x1)
+		(
+			gosub thread_resume &current
+		)
+		ELSE if (&event==0x2)
+		(
+			gosub thread_suspend &current
+		)
+		ELSE if (&event==0x6)
+		(
+			gosub thread_running
+		)
+		ELSE if (&event==0x34)
+		(
+			gosub mutex_get &current
+		)
+		ELSE if (&event==0x20)
+		(
+			gosub event_get &current
+		)
+		ELSE if (&event==0x24)
+		(
+			gosub event_set &current
+		)
+		ELSE if (&event==0x39)
+		(
+			gosub mutex_put &current
+		)
+		ELSE if (&event==0x32)
+		(
+			gosub mutex_create &current
+		)
+		ELSE if (&event==0x33)
+		(
+			gosub mutex_delete &current
+		)
+		ELSE if (&event==0x1E)
+		(
+			gosub event_create &current
+		)
+		ELSE if (&event==0x1F)
+		(
+			gosub event_delete &current
+		)
+		ELSE if (&event==0x6C)
+		(
+			gosub prio_change &current
+		)
+		ELSE if (&event==0x68)
+		(
+			gosub th_info_get &current
+		)
+		ELSE if (&event==0x6F)
+		(
+			gosub res_api &current
+		)
+		ELSE if (&event==0x70)
+		(
+			gosub thread_sleep &current
+		)
+		ELSE if (&event==0x28)
+		(
+			gosub int_control &current
+		)
+	&current=&current-0x20
+	;print " *********************"
+	)
+)
+
+enddo
+
+mutex_get:
+(
+entry &curr
+&mutex_ptr=Data.LONG(D:(&curr+0x10))
+&wait_option=Data.LONG(D:(&curr+0x14))
+&mutex_owner=Data.LONG(D:(&curr+0x18))
+
+if (&mutex_owner==0x0)
+(
+	&mutex_owner="NO OWNER"
+)
+ELSE
+(
+	&namePtr=V.VALUE(((TX_THREAD*) &mutex_owner)->tx_thread_name)
+	&mutex_owner=Data.String(SD:&namePtr)
+)
+PRINT %continue "## MutexPtr:&mutex_ptr ,Wait option:&wait_option ,Owner:&mutex_owner "
+RETURN
+)
+
+mutex_put:
+(
+entry &curr
+&mutex_ptr=Data.LONG(D:(&curr+0x10))
+&mutex_owner=Data.LONG(D:(&curr+0x14))
+&own_cnt=Data.LONG(D:(&curr+0x18))
+
+
+if (&mutex_owner==0x0)
+(
+	&mutex_owner="NO OWNER"
+)
+ELSE
+(
+	&namePtr=V.VALUE(((TX_THREAD*) &mutex_owner)->tx_thread_name)
+	&mutex_owner=Data.String(SD:&namePtr)
+)
+
+&event_ret_val="MUTEX PUT"
+print %continue "## MutexPtr:&mutex_ptr ,owner:&mutex_owner ,susp_count:&own_cnt "
+RETURN
+)
+
+mutex_create:
+(
+entry &curr
+&mutex_ptr=Data.LONG(D:(&curr+0x10))
+print %continue "## MutexPtr:&mutex_ptr "
+RETURN
+)
+mutex_delete:
+(
+entry &curr
+&mutex_ptr=Data.LONG(D:(&curr+0x10))
+print %continue "## MutexPtr:&mutex_ptr "
+RETURN
+)
+
+event_set:
+(
+entry &curr
+&grp_ptr=Data.LONG(D:(&curr+0x10))
+&flags_to_set=Data.LONG(D:(&curr+0x14))
+&suspended_count=Data.LONG(D:(&curr+0x1C))
+print %continue "## grp_ptr:&grp_ptr flags_to_set:&flags_to_set , susp_count:&suspended_count "
+RETURN
+)
+
+event_get:
+(
+entry &curr
+&grp_ptr=Data.LONG(D:(&curr+0x10))
+&requested_flag=Data.LONG(D:(&curr+0x14))
+&current_flag=Data.LONG(D:(&curr+0x18))
+&wait_op=Data.LONG(D:(&curr+0x1C))
+print %continue "## grp_ptr:&grp_ptr flags_requested:&requested_flag , curr_flag:&current_flag wait_option:&wait_op"
+RETURN
+)
+
+
+event_create:
+(
+entry &curr
+&group_ptr=Data.LONG(D:(&curr+0x10))
+print %continue "## GroupPtr:&group_ptr "
+RETURN
+)
+event_delete:
+(
+entry &curr
+&group_ptr=Data.LONG(D:(&curr+0x10))
+print %continue "## GroupPtr:&group_ptr "
+RETURN
+)
+
+thread_resume:
+(
+entry &curr
+&th_to_res="NAN"
+&thrd_ptr=Data.LONG(D:(&curr+0x10))
+&prev_state=Data.LONG(D:(&curr+0x14))
+&next_thrd=Data.LONG(D:(&curr+0x1C))
+
+if (&thrd_ptr==0x0)
+(
+	&th_to_res="NA"
+)
+ELSE
+(
+	&namePtr=V.VALUE(((TX_THREAD*) &thrd_ptr)->tx_thread_name)
+	&th_to_res=Data.String(SD:&namePtr)
+)
+
+print %continue "## thread_to_res:&th_to_res ::&thrd_ptr, prev_state:",Var.STRing(\States[&prev_state])
+RETURN
+)
+
+
+thread_suspend:
+(
+entry &curr
+&thrd_ptr=Data.LONG(D:(&curr+0x10))
+&new_state=Data.LONG(D:(&curr+0x14))
+&next_thrd=Data.LONG(D:(&curr+0x1C))
+print %continue "## new_state:",Var.STRing(\States[&new_state])
+RETURN
+)
+
+thread_running:
+(
+print %continue "## ---  RUNNING  ---"
+RETURN
+)
+
+th_info_get:
+(
+	entry &curr
+&thrd_ptr=Data.LONG(D:(&curr+0x10))
+&thrd_state=Data.LONG(D:(&curr+0x14))
+print %continue "## thread_ptr: &thrd_ptr , thread_state: ",Var.STRing(\States[&thrd_state])
+RETURN
+)
+
+prio_change:
+(
+	entry &curr
+&thrd_ptr=Data.LONG(D:(&curr+0x10))
+&new_prio=Data.LONG(D:(&curr+0x14))
+&old_prio=Data.LONG(D:(&curr+0x18))
+print %continue "## thread_ptr: &thrd_ptr , new_prio: &new_prio  ,old_prio= &old_prio"
+RETURN
+)
+
+res_api:
+(
+	entry &curr
+&thrd_ptr=Data.LONG(D:(&curr+0x10))
+&thrd_state=Data.LONG(D:(&curr+0x14))
+print %continue "## thread_ptr: &thrd_ptr , thread_state: ",Var.STRing(\States[&thrd_state])
+RETURN
+)
+
+thread_sleep:
+(
+entry &curr
+&sleep_val=Data.LONG(D:(&curr+0x10))
+&sleep_val=&sleep_val*0x2EE00		;0x2EE00 == 192000 == 1 timer_tick
+&sleep_val=format.DECIMAL(1.,&sleep_val)
+&thrd_state=Data.LONG(D:(&curr+0x14))
+print %continue "## sleep_value: &sleep_val , current_state: ",Var.STRing(\States[&thrd_state])
+RETURN
+)
+
+int_control:
+(
+entry &curr
+&new_posture=Data.LONG(D:(&curr+0x10))
+;&saved_posture=Data.LONG(D:(&curr+0x14))
+&int_trace_flag=Data.LONG(D:(&curr+0x18))
+if (&int_trace_flag==0x0)
+(
+	print %continue "## TX_INTERRUPT_CONTROL :: new state:- &new_posture "
+)
+else if (&int_trace_flag==0x1)
+(
+print %continue "## INTLOCK_SAVE :: saved_state:- &new_posture "
+)
+else if (&int_trace_flag==0x2)
+(
+print %continue "## INTLOCK_RESTORE :: restored_state:- &new_posture "
+)
+else
+(
+	print %continue "## ERROR ERROR ERROR "
+)
+RETURN
+)

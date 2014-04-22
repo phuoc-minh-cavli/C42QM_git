@@ -1,0 +1,13 @@
+#define lpaif_prop lpaif_prop_9205_xml
+#define audioif_dma_prop audioif_dma_prop_9205_xml
+#define hdmiout_dma_prop hdmiout_dma_prop_9205_xml
+#define genericclk_prop genericclk_prop_9205_xml
+#define avtimer_prop avtimer_prop_9205_xml
+#define resampler_prop resampler_prop_9205_xml
+#define vfr_prop vfr_prop_9205_xml
+#define afe_riva_prop afe_riva_prop_9205_xml
+#define afe_slimbus_prop afe_slimbus_prop_9205_xml
+#define lpass_prop lpass_prop_9205_xml
+#define spdiftx_prop spdiftx_prop_9205_xml
+#define hdmi_output_prop hdmi_output_prop_9205_xml
+#define lpm_prop lpm_prop_9205_xml

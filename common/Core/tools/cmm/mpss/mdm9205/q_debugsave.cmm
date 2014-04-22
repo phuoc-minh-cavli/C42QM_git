@@ -1,0 +1,487 @@
+;****************************************************************************
+;**         q_debugsave.cmm
+;**
+;**         This script saves the system state for later debug,
+;**         and is intended to be executed from the QDSP6SW Trace32 session.
+;**
+;****************************************************************************
+;**
+;**                        EDIT HISTORY FOR MODULE
+;**
+;**  $Header: //components/rel/core.glue/1.3/tools/cmm/mpss/mdm9205/q_debugsave.cmm#2 $
+;**
+;** when       who          what, where, why
+;** --------   ---          ------------------------------------------------------
+;** 11/26/15   c_akaki   Modified for 9x07
+;** 07/10/14   chens     Initial version for 9X45
+;****************************************************************************
+
+;****************************************************************************
+; Declare variables
+;****************************************************************************
+local &filename
+local &final_filename
+local &line
+local &position
+local &current_thread
+local &modectl
+
+local &NUM_HW_THREADS
+&NUM_HW_THREADS=4
+
+global &t32_flush_cache
+
+&t32_flush_cache=0
+
+ENTRY  &q6id &basename
+
+do ../../std_toolsconfig mdm9645 mpss
+
+do std_constants.cmm
+
+;****************************************************************************
+; Set up windows and get base file name if necessary
+;****************************************************************************
+print
+print "Begin debug save"
+
+do q_find_active_thread.cmm
+
+;****************************************************************************
+; Determine the value of the thread currently being displayed by T32
+; SSR bits 21...19 contain TNUM value
+;****************************************************************************
+&current_thread=register(HTID)
+;print "Current running thread is &current_thread"
+&modectl=register(MODECTL)
+
+;****************************************************************************
+; Save the Q6 breakpoint state
+;****************************************************************************
+&filename="&basename"+"\"+"&q6id"+"&bp_log"
+
+store &filename hex break tronchip 
+print "QDSP6SW breakpoint state saved to file &filename.cmm"
+
+;****************************************************************************
+; Save the Q6 register state
+;****************************************************************************
+local &thread
+&thread=0
+repeat
+(
+  if &thread==&NUM_HW_THREADS
+  (
+    goto endthreadloop
+  )
+ 
+  &filename="&basename"+"\"+"_Q6tmp_&thread"
+  thread &thread
+  store &filename hex register
+  &filename="&filename"+".cmm"
+  if !os.file(&filename) 
+  (
+    print "failed to create &filename"
+    enddo
+  )
+  if os.file.size(&filename)<100
+  (
+    print "&filename is not proper format. Thread &thread may be off"
+    open #2 &filename /create
+    write #2 "; NO_DATA_SAVED -- No data for thread &thread"
+    write #2 "ENDDO"
+    close #2
+  ) 
+  &thread=&thread+1
+)
+endthreadloop:
+
+
+; Open the register state temp files for read, and the final file for write
+
+&filename="&basename"+"\"+"&q6id"+"&regs_log"
+open #2 &filename /create
+&final_filename="&filename"
+
+write #2 ""
+
+&thread=0
+repeat
+(
+  if &thread==&NUM_HW_THREADS
+  (
+    goto endOuterLoop
+  )
+  &filename="&basename"+"\"+"_Q6tmp_&thread.cmm"
+  open #1 &filename /read
+
+  ; Copy the temp file contents up to the "ENDDO"
+  ; There appears to be no way to determine if end-of-file is encountered.
+  write #2 "; Switch to set registers for thread &thread"
+
+  write #2 "("
+
+  write #2 "thread &thread"
+  repeat
+  (
+    read #1 %LINE &line
+    &line=string.upr("&line")
+    &position=string.scan("&line", "ENDDO", 0)
+    if &position>=0
+    (
+      goto endInnerLoop
+    )
+    &position=string.scan("&line", "TRONCHIP.CONTEXTID", 0)
+    if &position>=0
+    (
+      ; Newer versions of Trace32 include a TRONCHIP command that is
+      ; incompatible with older versions.
+      print "skipping TRONCHIP.CONTEXTID"
+    )
+    else
+    (
+      &position=string.scan("&line", "NO_DATA_SAVED", 0)
+      if &position>=0
+      (
+        ; No data saved for this thread...write zeros
+        write #2 "; No registers saved for this thread"
+        write #2 "; Writing zeros"
+        GOSUB WRITE_ZEROS
+      )
+      else
+      (
+        write #2 "&line"
+      )
+    )
+  )
+endInnerLoop:
+  write #2 ")"
+  close #1
+  &thread=&thread+1
+)
+endOuterLoop:
+
+write #2 "; Switch to thread being viewed in T32 when logs were taken"
+write #2 "thread &current_thread"
+close #2
+
+print "Q6 register state (for all HW threads) saved to file &final_filename"
+
+&thread=0
+repeat
+(
+  if &thread==&NUM_HW_THREADS
+  (
+    goto endDelLoop
+  )
+  &filename="&basename"+"\"+"_Q6tmp_&thread.cmm"
+  del &filename
+  &thread=&thread+1
+)
+endDelLoop:
+
+
+
+;flush cache
+
+if (&t32_flush_cache==0x0)
+(
+
+; Return JTAG to original thread
+thread &current_thread
+	
+;****************************************************************************
+; Clean the data cache
+;****************************************************************************
+
+;set cpu to monitor mode by setting bit 17 EX to 1
+&ssr_old=register(SSR)
+r.s SSR &ssr_old|0x20000
+
+local &syscfg_old
+local &t0_pc
+local &t1_pc
+local &t2_pc
+local &t3_pc
+local &old_data
+
+&syscfg_old=register(SYSCFG)
+&pc_t0=0x0
+&pc_t1=0x0
+&pc_t2=0x0
+&pc_t3=0x0
+
+
+if (&syscfg_old&0x10)==0x10 ;if global interrupt is enabled
+(
+    r.s SYSCFG &syscfg_old&0xFFFFFFEF ;disable global interrupt
+)
+
+;let other 3 hw threads loop    
+&thread=0
+repeat
+(
+	  if &thread!=&current_thread
+	  (
+	     if ((1<<&thread)&(&modectl))!=0x0
+	     (
+	     thread &thread
+	     &hw_num=string.mid("&thread", 2, 1)
+	     &current_pc=register(PC)
+	     &pc_t&hw_num=data.long(d:&current_pc) ;backup the original data
+	     d.a P:&current_pc jump &current_pc  ;let PC loop
+	     )   
+	  )   
+	  &thread=&thread+1   
+	  if &thread==&NUM_HW_THREADS
+	  (
+	    goto endloop_save_pc
+	  )             
+)
+endloop_save_pc:
+
+; Return JTAG to original thread
+thread &current_thread
+
+;run qurt function to flush the cache
+r.s PC QURTK_flush_cache
+go.up
+
+r.s PC QURTK_save_tlb_entries
+go.up
+
+;restore original instruction pointed by PC
+&thread=0
+repeat
+(
+	  if &thread!=&current_thread
+	  (
+	     if ((1<<&thread)&(&modectl))!=0x0
+		 (
+	     thread &thread
+	     &hw_num=string.mid("&thread", 2, 1)
+	     &current_pc=register(PC)
+	     if &thread==0x0
+	     (
+	        &old_data=&pc_t0
+	     )
+	     if &thread==0x1
+	     (
+	        &old_data=&pc_t1
+	     )
+	     if &thread==0x2
+	     (
+	        &old_data=&pc_t2
+	     )
+		 if &thread==0x3
+	     (
+	        &old_data=&pc_t3
+	     )
+	     
+	     data.set &current_pc %long &old_data ;restore the original data
+	  )   
+	  )   
+	  &thread=&thread+1   
+	  if &thread==&NUM_HW_THREADS
+	  (
+	    goto endloop_restore_pc
+	  )             
+)
+endloop_restore_pc:
+
+;restore orginal registers
+do q_restore_cpu_regs.cmm &final_filename
+
+; Return JTAG to original thread
+thread &current_thread
+
+)
+else
+(
+   cache.flush DC
+   cache.flush L2
+)
+
+;save_mem_regions:
+;****************************************************************************
+; Save TCM memory on QDSPSW
+;****************************************************************************
+ 
+//tbd by script supplied by Remi
+
+  local &syscfg_orig
+  local &syscfg_new
+
+  ; Disable MMU on Q6
+  &syscfg_orig=register(SYSCFG)
+  ; Create new syscfg value (disable MMU)
+  &syscfg_new=&syscfg_orig&0xFFFFFFFE
+  print "SYSCFG is &syscfg_orig"
+  r.s SYSCFG &syscfg_new
+
+  ; disable MMU in T32
+  MMU.OFF
+
+
+ &syscfg_orig_val=r(syscfg)
+
+ &raw=((&syscfg_orig_val)&(0x70000))
+ &L2CFG=&raw>>0x10
+
+
+//if ("&L2CFG"=="0x4")  commented to dump 512kb by default
+//  (
+
+   //the last 512kb of l2 is configured as l2cache
+   // so save only the first 512 kb of l2
+
+ ; Dump TCM contents to file
+  &filename="&basename"+"\"+"&q6id"+"&TCM_log"
+  print "Saving &q6id TCM (512kb) contents to &filename ..."
+  ON ERROR GOSUB SW_TCM_SAVE_ERROR
+  data.save.binary &filename a:&TCM_Q6SW_DUMP_START_ADDR++&TCM_Q6SW_512K_DUMP_SIZE /long
+  ON ERROR
+  print "SW TCM saved."
+
+
+//  )
+//else if ("&L2CFG"=="0x0")
+//  (
+
+   //no part of l2 is used for cache. SO mba must be running
+   // so save 1MB of L2
+
+
+ ; Dump TCM contents to file
+ // &filename="&basename"+"\"+"&q6id"+"&TCM_log"
+ // print "Saving &q6id TCM (1 MB) contents to &filename ..."
+ // ON ERROR GOSUB SW_TCM_SAVE_ERROR
+ // data.save.binary &filename a:&TCM_Q6SW_DUMP_START_ADDR++&TCM_Q6SW_FULL_DUMP_SIZE /long
+ // ON ERROR
+ // print "SW TCM saved."
+ // )
+ 
+
+;// set bit MSAVAL to 1 in register QDSS_APB_DEC_CS_QDSSCSR_DAPMSAVAL, so QDSS has access to MSA protected memory
+;//QDSS_APB_DEC_CS_QDSSCSR_LOCKACCESS 0xC5ACCE55
+  D.S A:0x006001FB0 %LE %LONG 0xC5ACCE55 //unlock QDSS register
+  D.S EDAP:0x006001054 %LE %LONG 0x1
+  D.S A:0x006001FB0 %LE %LONG 0x0 //relock it
+ 
+  ; Dump MBA DDR contents to file
+   &filename="&basename"+"\"+"&q6id"+"&MBA_DDR_log"
+   print "Saving &q6id MBA DDR contents to &filename ..."
+   ON ERROR GOSUB SW_MBA_DDR_SAVE_ERROR
+   data.save.binary &filename eaxi:&MBA_DDR_Q6SW_DUMP_START_ADDR++&MBA_DDR_Q6SW_DUMP_SIZE /long
+   ON ERROR
+   print "MBA DDR region saved."
+
+
+//   Modem:
+   ; Dump Modem DDR contents to file
+  &filename="&basename"+"\"+"&q6id"+"&MODEM_DDR_log"+"_"+"&MODEM_DDR_Q6SW_DUMP_START_ADDR"+"&MODEM_DDR_logExtn"
+  print "Saving &q6id Modem DDR contents to &filename ..."
+  ON ERROR GOSUB SW_MODEM_DDR_SAVE_ERROR
+  data.save.binary &filename eaxi:&MODEM_DDR_Q6SW_DUMP_START_ADDR++&MODEM_DDR_Q6SW_DUMP_SIZE /long
+  ON ERROR
+  print "Modem DDR region saved."
+  
+
+;****************************************************************************
+; Save LPA memory 
+;****************************************************************************
+  ; Dump LPM contents to file
+ // &filename="&basename"+"\"+"&q6id"+"&LPM_log"
+ // print "Saving &q6id LPM contents to &filename ..."
+ // ON ERROR GOSUB LPASS_LPM_SAVE_ERROR
+ // data.save.binary &filename eaxi:&LPM_Q6LPASS_DUMP_START_ADDR++&LPM_Q6LPASS_DUMP_SIZE /long
+  //ON ERROR
+  //print "LPM saved."
+
+  
+  ; Restore MMU settings
+  //MMU.ON
+  //r.s SYSCFG &syscfg_orig
+
+
+//print "Debug save complete on &q6id"
+
+// Save IPA dumps from Q6 T32 window
+//do std_savelogs_ipa &basename
+
+ENDDO
+
+LPASS_LPM_SAVE_ERROR:
+print "ERROR saving LPASS LPM!"
+del &filename
+RETURN
+
+SW_TCM_SAVE_ERROR:
+print "ERROR saving SW TCM!"
+del &filename
+RETURN
+
+SW_MBA_DDR_SAVE_ERROR:
+print "ERROR saving MBA DDR !"
+del &filename
+RETURN
+
+SW_MODEM_DDR_SAVE_ERROR:
+print "ERROR saving MODEM DDR !"
+del &filename
+RETURN
+
+
+
+
+WRITE_ZEROS:
+ WRITE #2 "REGISTER.SET R0 0x0"
+ WRITE #2 "REGISTER.SET R1 0x0"
+ WRITE #2 "REGISTER.SET R2 0x0"
+ WRITE #2 "REGISTER.SET R3 0x0"
+ WRITE #2 "REGISTER.SET R4 0x0"
+ WRITE #2 "REGISTER.SET R5 0x0"
+ WRITE #2 "REGISTER.SET R6 0x0"
+ WRITE #2 "REGISTER.SET R7 0x0"
+ WRITE #2 "REGISTER.SET R8 0x0"
+ WRITE #2 "REGISTER.SET R9 0x0"
+ WRITE #2 "REGISTER.SET R10 0x0"
+ WRITE #2 "REGISTER.SET R11 0x0"
+ WRITE #2 "REGISTER.SET R12 0x0"
+ WRITE #2 "REGISTER.SET R13 0x0"
+ WRITE #2 "REGISTER.SET R14 0x0"
+ WRITE #2 "REGISTER.SET R15 0x0"
+ WRITE #2 "REGISTER.SET R16 0x0"
+ WRITE #2 "REGISTER.SET R17 0x0"
+ WRITE #2 "REGISTER.SET R18 0x0"
+ WRITE #2 "REGISTER.SET R19 0x0"
+ WRITE #2 "REGISTER.SET R20 0x0"
+ WRITE #2 "REGISTER.SET R21 0x0"
+ WRITE #2 "REGISTER.SET R22 0x0"
+ WRITE #2 "REGISTER.SET R23 0x0"
+ WRITE #2 "REGISTER.SET R24 0x0"
+ WRITE #2 "REGISTER.SET R25 0x0"
+ WRITE #2 "REGISTER.SET R26 0x0"
+ WRITE #2 "REGISTER.SET R27 0x0"
+ WRITE #2 "REGISTER.SET R28 0x0"
+ WRITE #2 "REGISTER.SET R29 0x0"
+ WRITE #2 "REGISTER.SET R30 0x0"
+ WRITE #2 "REGISTER.SET R31 0x0"
+ WRITE #2 "REGISTER.SET PC 0x0"
+ WRITE #2 "REGISTER.SET USR 0x0"
+ WRITE #2 "REGISTER.SET UGP 0x0"
+ WRITE #2 "REGISTER.SET GP 0x0"
+ WRITE #2 "REGISTER.SET LC0 0x0"
+ WRITE #2 "REGISTER.SET LC1 0x0"
+ WRITE #2 "REGISTER.SET SA0 0x0"
+ WRITE #2 "REGISTER.SET SA1 0x0"
+ WRITE #2 "REGISTER.SET M0 0x0"
+ WRITE #2 "REGISTER.SET M1 0x0"
+ WRITE #2 "REGISTER.SET P 0x0"
+ WRITE #2 "REGISTER.SET SGP 0x0"
+ WRITE #2 "REGISTER.SET SSR 0x0"
+ WRITE #2 "REGISTER.SET IMASK 0x0"
+ WRITE #2 "REGISTER.SET BADVA 0x0"
+ WRITE #2 "REGISTER.SET ELR 0x0"
+ WRITE #2 "REGISTER.SET TID 0x0"
+RETURN

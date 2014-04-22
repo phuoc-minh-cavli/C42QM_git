@@ -1,0 +1,107 @@
+;============================================================================
+;
+; SSC data parser
+;
+;   Parses a given ramdump and gets the statistics
+;
+; Version: 2.0
+;
+; Copyright (c) 2017-2019 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Confidential and Proprietary - Qualcomm Technologies, Inc.
+;============================================================================
+ENTRY
+
+GLOBAL &qtime
+GLOBAL &parser_ouput_dir
+GLOBAL &mem_block_header_size
+GLOBAL &heap_info_avail
+GLOBAL &fw_event_header_size
+
+&today=STRing.Replace(DATE.DATE()," ","_",0)
+&today=STRing.Replace("&today",".","",0)
+&tod=STRing.Replace(DATE.TIME(),":","_",0)
+&parser_ouput_dir=OS.PTD()+"\ssc_parser_"+"&today"+"_&tod"
+MKDIR &parser_ouput_dir
+
+&recover_f3_cmm=OS.PPD()+"\ssc_recover_f3.cmm"
+do &recover_f3_cmm
+
+&t32_session_tmp=OS.PTD()+"\t32_session_tmp.txt"
+if FILE.EXIST("&t32_session_tmp")
+(
+  RM "&t32_session_tmp"
+)
+OPEN  #1 "&t32_session_tmp" /Create
+WRITE #1 "&parser_ouput_dir"
+CLOSE #1
+
+&qurt_error_info=V.VALUE(&QURT_error_info)
+&timerhi=V.VALUE(((struct QURT_error*)&qurt_error_info)->globregs.timerhi)
+&timerlo=V.VALUE(((struct QURT_error*)&qurt_error_info)->globregs.timerlo)
+&qtime=(&timerhi<<32.)+&timerlo
+
+&mem_block_header_size=V.VALUE(sizeof(sns_mem_block_header_type))
+&mem_block_header_size=(&mem_block_header_size+7.)/8.
+&mem_block_header_size=&mem_block_header_size*8
+
+&use_event_clusters=1
+if !Y.exist(event_clusters)
+(
+  &use_event_clusters=0
+)
+
+&typeinfo=V.TYPEOF(&sns_main_heap_head)
+if "&typeinfo"=="void *"
+(
+  &heap_info_avail=0
+)
+else
+(
+  &heap_info_avail=1
+)
+
+&fw_event_header_size=V.VALUE(sizeof(sns_fw_sensor_event))
+
+if Y.exist(sdc_code_dump)
+(
+  MKDIR "&parser_ouput_dir\temp"
+  Data.SAVE.Binary "&parser_ouput_dir\temp\sdc_code_dump.bin" Var.RANGE(sdc_code_dump)
+  Data.SAVE.Binary "&parser_ouput_dir\temp\sdc_data_dump.bin" Var.RANGE(sdc_data_dump)
+  Data.SAVE.Binary "&parser_ouput_dir\temp\pram_dump.bin" Var.RANGE(pram_dump)
+  Data.LOAD.Binary "&parser_ouput_dir\temp\pram_dump.bin" a:0x02ba0000 /noclear
+)
+
+WINPOS 0. 0. 80% 102% 0. 0.
+Area.Delete SSC
+Area.Create SSC 200. 1000.       ;create an AREA window
+Area.Select SSC
+Area.View SSC
+
+&ssc_parser_out="&parser_ouput_dir\ssc_data.txt"
+Area.Open SSC &ssc_parser_out
+
+&ssc_libraries_walker=OS.PPD()+"\ssc_libraries_walker.cmm"
+&thread_manager_walker_cmm=OS.PPD()+"\ssc_thread_manager_walker.cmm"
+&event_service_walker_cmm=OS.PPD()+"\ssc_event_service_walker.cmm"
+if &use_event_clusters==0
+(
+  &event_service_walker_cmm=OS.PPD()+"\ssc_old_event_service_walker.cmm"
+)
+&diag_service_walker_cmm=OS.PPD()+"\ssc_diag_service_walker.cmm"
+&heaps_parser_cmm=OS.PPD()+"\ssc_heaps_parser.cmm"
+&find_locks_cmm=OS.PPD()+"\ssc_find_locks.cmm"
+
+do &ssc_libraries_walker
+do &thread_manager_walker_cmm
+do &event_service_walker_cmm
+do &diag_service_walker_cmm
+do &heaps_parser_cmm
+do &find_locks_cmm
+
+print "The output is saved in "+"&parser_ouput_dir"
+print "Script used is "+OS.PPF()
+
+Area.Close SSC
+enddo
+

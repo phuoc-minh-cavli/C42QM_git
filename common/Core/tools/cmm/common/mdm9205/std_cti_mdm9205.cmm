@@ -1,0 +1,142 @@
+//============================================================================
+//  Name:                                                                     
+//    std_cti_msm8994.cmm
+//
+//  Description:                                                              
+//    Script for CTI configurations specific to target
+//
+//  Usage
+//  do std_cti_msm8994 <Subroutine>
+//
+//  where <Subroutine> is one of the following:
+//      GETAPPSCORELIST - returns a string of all apps cores to be used in std_cti
+//      SETCTIGPIOS - Configures TLMM to map GPIO's to CTI's for this target
+//      HELP/help - prints help window
+//     
+//
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when         who     	what, where, why
+// --------     ---        --------------------------------------------------------
+// 05/21/2014   JBilling    Added subroutines appropriately
+// 10/29/2013   JBILLING    Created
+
+//###################Arguments passed #####################
+ENTRY %LINE &ArgumentLine
+ENTRY &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+
+
+//#####################Select Subroutine###################
+// Name of the utility we are calling
+LOCAL &SUBROUTINE
+// Any subroutine specific options
+// Default exists for each subroutine
+LOCAL &OPTION
+
+
+//#####################Select Subroutine###################
+// Name of the utility we are calling
+LOCAL &SUBROUTINE
+// Any subroutine specific options
+// Default exists for each subroutine
+LOCAL &OPTION
+
+// Input Argument 0 is the name of the utility
+&SUBROUTINE="&UTILITY"
+IF !(("&SUBROUTINE"=="GETAPPSCORELIST")||("&SUBROUTINE"=="GETCORETYPE")||("&SUBROUTINE"=="SETCTIGPIOS")||("&SUBROUTINE"=="GETALLCORELIST")||("&SUBROUTINE"=="SETUPCLOCKS")||("&SUBROUTINE"=="CLEARSENTINELS")||("&SUBROUTINE"=="HELP")||("&SUBROUTINE"=="help"))
+(
+	&SUBROUTINE="HELP"
+    PRINT %ERROR "std_cti_msm8994: Subroutine not found! Printing Help Window"
+)
+
+	// This should be created by some top level script. The setupenv for each proc would
+	// set this up
+ 	AREA.SELECT
+    // Call the required utility
+	GOSUB &SUBROUTINE &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+	LOCAL &Rvalue
+        ENTRY %LINE &Rvalue
+
+	GOSUB EXIT &Rvalue
+
+    
+GETAPPSCORELIST:
+    ENDDO "APPS0"
+RETURN
+
+GETALLCORELIST:
+	ENDDO "apps0,mpss,rpm"
+RETURN
+
+GETCORETYPE:
+
+	ENDDO "A7"
+	RETURN
+
+SETCTIGPIOS:
+entry &CTI_Functionality
+
+	//This is configuration for 8084
+	IF ("&CTI_Functionality"=="GPIO")
+	(
+		
+		//GPIO settings
+		&TLMM_GPIO_number=41.
+		&TLMM_GPIO_setting=0x210 //func 4
+		&Trigout_for_GPIO=0x4
+		//GPIO's on 8994 use CTI8
+		&CTI_Block="QDSS_CTI8"
+		if (!y.exist(HWIO_TLMM_GPIO_CFG1_ADDR))
+		(
+			do hwio.cmm
+		)
+		
+	        do std_utils HWIO_OUTI TLMM_GPIO_CFG &TLMM_GPIO_number &TLMM_GPIO_setting 
+	
+		
+		
+		
+		enddo &CTI_Block &Trigout_for_GPIO
+	)
+	
+	RETURN
+
+SETUPCLOCKS:
+    RETURN	
+
+CLEARSENTINELS:
+     RETURN
+
+
+RETURN
+help:
+HELP:
+    AREA.RESET
+    AREA.CREATE std_cti_target_help 125. 23.
+    AREA.SELECT std_cti_target_help
+    WINPOS 5. 39. 125. 23.
+    AREA.VIEW std_cti_target_help
+
+    PRINT " Description:                                       "                       
+    PRINT "   Script for CTI configurations specific to target"
+    PRINT " "
+    PRINT " Usage"
+    PRINT " do std_cti_msm8994 <Subroutine>"
+    PRINT " "
+    PRINT " where <Subroutine> is one of the following:"
+    PRINT "     GETAPPSCORELIST - returns a string of all apps cores to be used in std_cti"
+    PRINT "     SETCTIGPIOS - Configures TLMM to map GPIO's to CTI's for this target"
+    PRINT "     HELP/help - prints help window"
+
+enddo
+
+EXIT:
+    LOCAL &Rvalue
+    ENTRY %LINE &Rvalue
+    ENDDO &Rvalue	

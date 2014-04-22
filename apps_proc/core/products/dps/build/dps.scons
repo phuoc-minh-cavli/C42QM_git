@@ -1,0 +1,100 @@
+#=============================================================================
+# 
+# Target:    All
+# Processor: All
+#
+#=============================================================================
+# $Header: //components/rel/core.tx/6.0/products/dps/build/dps.scons#1 $
+#=============================================================================
+#  Copyright 2016 Qualcomm Technologies Incorporated.
+#  All Rights Reserved.
+#  QUALCOMM Proprietary/GTDR
+#=============================================================================
+from glob import glob
+from os.path import join, basename, exists
+
+import subprocess
+import os
+Return()
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "../src/"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'DEBUGTRACE',
+   'HAL',
+   'HWENGINES',
+   'MPROC',
+   'MEMORY',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',   
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('MHI',["${INC_ROOT}/core/hwengines/mhi"])
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+DPS_SOURCES = [
+   '${BUILDPATH}/dps.c',
+]
+
+#-------------------------------------------------------------------------------
+# Define objects
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibrary([
+    'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE'],
+    '${BUILDPATH}/dps',
+    DPS_SOURCES)
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitTask(
+        RCINIT_IMG,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_6',    # required
+            'thread_name'                : 'dps',               # required
+            'thread_entry'               : 'dps_task',
+            'stack_size_bytes'           : '4096',
+            'priority_amss_order'        : '100',               #same as diag
+            'cpu_affinity'               : 'REX_ANY_CPU_AFFINITY_MASK',
+            #'dependencies'               : ['',]
+        }
+    )
+    env.AddRCInitFunc(
+        RCINIT_IMG,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_7',
+            'init_name'                  : 'dps_reinitialize',
+            'init_function'              : 'dps_reinitialize'
+            #'dependencies'               : []
+        }
+    )
+

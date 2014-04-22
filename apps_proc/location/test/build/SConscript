@@ -1,0 +1,93 @@
+#===============================================================================
+# Location Test App
+#
+# GENERAL DESCRIPTION
+# QCLI based location validation test app.
+#
+# Copyright (c) 2017-2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+Import('env')
+import os
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/test/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'KERNEL',
+   'STORAGE',
+]
+
+env.RequirePublicApi([
+   'DLFWK',
+   'STDDEF',
+   'RTLD',
+  ])
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequirePublicApi('LOCATION_API', area='location')
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'NICHESTACK',
+    'QAPI',
+    'DSS_NET',
+    'DATASERVICES_NET_IPSTACK',
+    'CRYPTOLIB',
+    'QCLI_DEMO',
+    ], area='dataservices')
+    
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/dal',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/src',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/qcli',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/net',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/core',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/lwm2m',
+   '${INC_ROOT}/dataservices/demo/QCLI_demo/src/atfwd',
+]
+
+env.PublishPrivateApi('LOCATION', INC_DIRS)
+
+LOC_TEST_SOURCES_NOSHIP =  [
+   '${BUILDPATH}/loctest_qcli_iface.c',
+   '${BUILDPATH}/loctest_qapi.c',
+   '${BUILDPATH}/loctest_locapi.cpp',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddBinaryLibrary(IMG_LIST, ('${BUILDPATH}/test_noship'), LOC_TEST_SOURCES_NOSHIP)

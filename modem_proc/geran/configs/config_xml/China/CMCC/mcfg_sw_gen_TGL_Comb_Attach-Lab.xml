@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="geran.0.0" type="1" />
+  <NvEfsFile name="g2l_blind_redir_after_csfb_control" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/grr/g2l_blind_redir_after_csfb_control" buildPath="modem_proc/geran/configs/efs_files/cmcc/g2l_blind_redir_after_csfb_control" />
+  <NvEfsFile name="read_pch_during_transfer_whitelist" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/read_pch_during_transfer_whitelist" buildPath="modem_proc/geran/configs/efs_files/cmcc/read_pch_during_transfer_whitelist" />
+  <NvEfsFile name="use_bcch_priority" id="none" description="Use BCCH priority when dedicated priorty is valid but missing configured BCCH cell is ENABLED" comment="Default is DISABLED for this EFS-NV item" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/nv/item_files/modem/geran/use_bcch_priority" buildPath="modem_proc/geran/configs/efs_files/cmcc/use_bcch_priority" />
+</NvData>

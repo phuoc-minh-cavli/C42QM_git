@@ -1,0 +1,10 @@
+﻿<WorkSpace_Data WSVersID="Badger_3" ToolPlugin="QACT">
+  <ACDBFile_Paths>
+    <ACDBFile_Paths path="Handset_cal.acdb" />
+    <ACDBFile_Paths path="Headset_cal.acdb" />
+    <ACDBFile_Paths path="Speaker_cal.acdb" />
+    <ACDBFile_Paths path="Global_cal.acdb" />
+    <ACDBFile_Paths path="Codec_cal.acdb" />
+  </ACDBFile_Paths>
+  <GUI_Data />
+</WorkSpace_Data>

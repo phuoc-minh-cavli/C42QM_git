@@ -1,0 +1,93 @@
+#===============================================================================
+#
+# external page library
+#
+# GENERAL DESCRIPTION
+#   Build script to produce external pager library 
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/perf.mpss/2.1.2.0/extpl2/build/extpl2.scons#1 $
+#  $DateTime: 2021/08/30 05:42:52 $
+#  $Author: pwbldsvc $
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who      what, where, why
+# ---------- -------- ----------------------------------------------------------
+# 07-15-2017 che      Created
+#===============================================================================
+import os
+Import('env')
+env = env.Clone()
+
+if 'USES_FEATURE_EXTERNAL_PAGING' not in env:
+  Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/perf/extpl2"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.PublishPrivateApi( 'EXTPL2', [ '${INC_ROOT}/perf/extpl2/inc'] )
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'BREW',
+   'CS',
+   'MODEM_PMIC',
+   'MULTIMEDIA_DISPLAY',
+])
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'MPROC',
+   'MEMORY',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'SECUREMSM',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+EXTPL2_API = ['EXTPL2',]
+env.RequirePublicApi(CBSP_API,area='CORE')
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi(['MCFG'], area='MCFG')
+env.RequirePublicApi(['DMM'], area='MSF')
+env.RequirePublicApi('EXTPL', area='PERF')
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+EXTPL2_SRCS = [
+   '${BUILDPATH}/src/extpl_partition.c', 
+]
+
+sources = EXTPL2_SRCS
+
+if 'USES_FEATURE_EXTERNAL_PAGING' in env:
+  env.AddLibrary(['CORE_QDSP6_SW'], '${BUILDPATH}/extpl2', sources)
+ 

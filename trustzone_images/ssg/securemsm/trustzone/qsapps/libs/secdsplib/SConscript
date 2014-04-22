@@ -1,0 +1,56 @@
+#===============================================================================
+#
+# DSP Shared Channel Library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Inc. All Rights Reserved.
+# Qualcomm Technologies Proprietary and Confidential.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ssg.tz/1.1.3/securemsm/trustzone/qsapps/libs/secdsplib/SConscript#1 $
+#  $DateTime: 2019/05/23 05:32:51 $
+#  $Author: pwbldsvc $
+#  $Change: 19292046 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains schedulerents describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+if env['PROC'] == 'scorpion':
+   libname = 'dsc_lib'
+else:
+   libname = 'dsc_lib64'
+   
+sources_header = Glob('*.h')
+
+includes = [
+    "${BUILD_ROOT}/core/api/services",
+    "${BUILD_ROOT}/core/api/kernel/libstd/stringl",
+    "${BUILD_ROOT}/core/kernel/smmu/ACv3.0/common/inc",
+    "${BUILD_ROOT}/ssg/api/securemsm/trustzone/qsee",
+    "${BUILD_ROOT}/ssg/securemsm/accesscontrol/api",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/include",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/mink/include",
+]
+
+sources = Glob('*.c')
+
+lib = env.SecureAppLibBuilder(includes, sources, libname,
+    deploy_sources = ['SConscript', 'dsc_api.h'],
+    deploy_variants = env.GetDefaultPublicVariants(),
+    deploy_lib = True)
+
+env.Deploy([lib, 'SConscript', sources_header]) 
+
+env.DeploySdkLib(lib)
+
+Return('lib')

@@ -1,0 +1,162 @@
+#===============================================================================
+#
+# Bam Libs
+#
+# GENERAL DESCRIPTION
+#    BAM Libs build script
+#
+# Copyright (c) 2011-2012, 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:  $
+#  $DateTime:  $
+#  $Author:  $
+#  $Change:  $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/15/16   SS      Updated for 9x65
+# 05/08/15   SS      Added support for 9x55
+# 01/18/15   SS      Cleaned up for 9x45
+# 05/10/13   SS      Added 9x35 support
+# 10/30/12   SS      Made changes for B family binary compatibility
+# 09/13/11   MK      Created
+#===============================================================================
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in ['9205']:
+   env.PublishPrivateApi('HWENGINES_BAM', [
+       "${INC_ROOT}/core/hwengines/bam/core4",
+       "${INC_ROOT}/core/hwengines/bam"
+   ])
+   env.Append(CPPDEFINES= ['HWIO_CORE5'])
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+
+if env.has_key('MBA_CORE_SW'):
+    env.Append(CPPDEFINES = [ 'BAM_MBA' ])
+else :
+    env.Append(CPPDEFINES = [ 'BAM_XML_PROPS' ])
+
+#To enable debug messages uncomment the line below:
+if not (env.has_key('BUILD_TOOL_CHAIN') or env.has_key('BUILD_BOOT_CHAIN')):
+    env.Append(CPPDEFINES = ['BAM_OSAL_DEBUG'])
+    env.Append(CPPDEFINES = [ 'BAM_OSAL_MSG_LEVEL=MSG_HIGH' ])
+
+if env['MSM_ID'] in ['9x25']:
+    env.Append(CPPDEFINES = [ "BAM_PIPE_MEM_CLOCK_ID=\\\"cc_pmem_aclk\\\""  ])
+else:
+    env.Append(CPPDEFINES = [ "BAM_PIPE_MEM_CLOCK_ID=NULL"  ])
+
+# Bam config
+if env.has_key('APPS_PROC'):
+       env.Append(CPPDEFINES = ['BAM_APPS_CONFIG'])
+    
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/hwengines/bam/"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'HAL',
+   'HWENGINES',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DAL',   
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+   'POWER',
+   'PRODUCTS_DSR',
+]
+
+if env.has_key('TZOS_IMAGE'):
+    CBSP_API += ['SECUREMSM']
+else:
+    CBSP_API += ['DEBUGTOOLS']
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+if env['MSM_ID'] in ['9205']:
+    BAM_COMMON_SOURCES =  [
+       '${BUILDPATH}/bam.c',
+       '${BUILDPATH}/bamosal.c',
+       '${BUILDPATH}/core4/bamcore.c',
+       '${BUILDPATH}/${MSM_ID}/bamtgtcfg.c',
+       '${BUILDPATH}/debug/bam_debug.c',
+       '${BUILDPATH}/debug/bamcore_debug.c',
+    ]
+else:
+   BAM_COMMON_SOURCES =  [
+       '${BUILDPATH}/stub/bam_stub.c',
+    ]
+    
+bam_obj = env.Object([BAM_COMMON_SOURCES])
+bam_lib = env.Library('${BUILDPATH}/bam', bam_obj)
+
+env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE', 'MBA_CORE_SW','TZOS_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'], [bam_lib])
+
+if env['MSM_ID'] in ['9205']:
+  env.AddLibsToImage(['NAND_TOOLS_IMAGE', 'BAM_BOOT_DRIVER','EHOSTDL_IMAGE', 'HOSTDL_IMAGE'], [bam_lib])
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['MODEM_IMAGE',    'CBSP_MODEM_IMAGE',  'CORE_APPS',
+                'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'init_name'                  : 'bam_drv',
+      'init_function'              : 'bam_drv_init',
+      'dependencies'               : ['clk_regime']
+    })
+    
+#-------------------------------------------------------------------------------
+# DEVCFG - BAM XML
+#-------------------------------------------------------------------------------
+
+if ('USES_DEVCFG' in env) and not (env.has_key('BUILD_TOOL_CHAIN') or env.has_key('BUILD_BOOT_CHAIN')):
+   if env['MSM_ID'] in ['9205']:
+       DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+       env.AddDevCfgInfo(DEVCFG_IMG, 
+       {
+          'devcfg_xml'    : ['${BUILD_ROOT}/core/hwengines/bam/${MSM_ID}/bam_config.xml',
+                             '${BUILDPATH}/${MSM_ID}/bamconfig_props.c']
+       })
+       
+if env['MSM_ID'] in ['9205']:
+    BAM_CONFIG_SOURCES = ['${BUILDPATH}/${MSM_ID}/bamconfig_props.c']
+    bam_cfg_obj = env.Object([BAM_CONFIG_SOURCES])
+    bam_cfg_lib = env.Library('${BUILDPATH}/bam_cfg', bam_cfg_obj)
+    env.AddLibsToImage(['QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'CORE_APPS'], [bam_cfg_lib])
+
+#-------------------------------------------------------------------------------
+# Packout sources
+#-------------------------------------------------------------------------------
+if env.GetOption('cleanpack') and env['MSM_ID'] != '9205':
+    packout_sources = [ '${BUILDPATH}/core5/bamhwio.h']
+    packout_sources += env.FindFiles(["*"],"${BUILD_ROOT}/core/hwengines/bam/${MSM_ID}")
+    env.CleanPack(['CORE_APPS'],packout_sources)
+

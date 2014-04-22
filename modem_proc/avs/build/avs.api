@@ -1,0 +1,51 @@
+#===============================================================================
+# AVS PUBLIC APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (C) 2009, 2013 QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+#===============================================================================
+Import('env')
+
+if 'AVS_MPSS_TEST' in env:
+  env.Replace(AVS_MPSS_ROOT = '${INC_ROOT}/avs/main/avs_mpss')
+else:
+  env.Replace(AVS_MPSS_ROOT = '${INC_ROOT}/avs')
+#end if 'AVS_MPSS_TEST' in env
+
+###############################################################################
+# AVS/AUDIO SU
+# All Public APIs need to be published at AU level.
+###############################################################################
+if 'AVS_MPSS_TEST' in env:
+  env.PublishRestrictedApi('AVS_MPSS_PRIVATE',[
+   '${INC_ROOT}/avs/main/avs_mpss/vsd/voiceinit/inc/private',
+   ])
+
+env.PublishPublicApi('AVS_MPSS',[
+	'${AVS_MPSS_ROOT}/api/common',
+	'${AVS_MPSS_ROOT}/api/mmutils',
+	'${AVS_MPSS_ROOT}/api/cvd',
+	'${AVS_MPSS_ROOT}/api/vs',
+	'${AVS_MPSS_ROOT}/api/vagent',
+	'${AVS_MPSS_ROOT}/api/vadapter',
+	'${AVS_MPSS_ROOT}/api/voicemem',
+	'${AVS_MPSS_ROOT}/api/voicelog',
+	'${AVS_MPSS_ROOT}/api/voicecfg',
+	])
+
+#TBD: Clean to avoid multiple tag for AVS_MPSS APIs.
+env.PublishPublicApi('COMMON',           [ '${AVS_MPSS_ROOT}/api/common',])
+env.PublishPublicApi('CVD',              [ '${AVS_MPSS_ROOT}/api/cvd',])
+env.PublishPublicApi('MMUTILS',          [ '${AVS_MPSS_ROOT}/api/mmutils',])
+env.PublishPublicApi('VS',               [ '${AVS_MPSS_ROOT}/api/vs',])
+env.PublishPublicApi('VOICEMEM',         [ '${AVS_MPSS_ROOT}/api/voicemem',])
+env.PublishPublicApi('VOICECFG',         [ '${AVS_MPSS_ROOT}/api/voicecfg',])
+env.PublishPublicApi('VADAPTER',         [ '${AVS_MPSS_ROOT}/api/vadapter',])
+env.PublishPublicApi('VAGENT',           [ '${AVS_MPSS_ROOT}/api/vagent',])
+env.PublishPublicApi('VOICELOG',         [ '${AVS_MPSS_ROOT}/api/voicelog',])
+
+env.LoadAPIUnits()

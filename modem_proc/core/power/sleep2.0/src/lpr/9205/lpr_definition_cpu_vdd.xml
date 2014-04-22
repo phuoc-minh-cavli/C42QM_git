@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CPU VDD Sleep Low Power Resource/Mode definitions
+
+  Copyright (c) 2012-2015 Qualcomm Technologies, Inc. (QTI).
+  All Rights Reserved.
+  Qualcomm Technologies Confidential and Proprietary
+-->
+
+<!--
+Format of Enter/Exit/Backoff latency fields:
+"<Fixed>,<Scaled>"
+Fixed - Unscaled value that is always added to each frequency table entry
+Scaled - Value that will be scaled at 1:1 ratio according to frequency table entries
+         and the initial base profile frequency given via ProfileFreq
+
+Bitwise attribute values (see sleep_mode_attribute enum for full description):
+  0x01 - No reference count
+  0x02 - No function lock
+  0x04 - Force LPRM to contribute to QR event; All synth modes containing the component will be updated
+  0x08 - No automatic latency tracking
+  0x10 - LPRM is cacheable
+
+Order of LPRMs within the LPR should match any assumptions about order
+     in the node corresponding to the LPR
+-->
+
+<LPRDefinition>
+  <LPR Name="cpu_vdd" CoreMask="0xFFFFFFFF" InitFn="cpuVddLPR_initialize" ProfileFreq="576000">
+    <Mode Name="pc_noret"
+          Dependency="l2.noret + tcm.noret + rpm + CLM"
+          Order="LAST"
+          PowerSavings="0, 5"
+          EnterLat="5000, 1000"
+          ExitLat="15000, 2000"
+          Backoff="15000, 2000"
+          EnterFn="cpuVddLPR_fullNonRetentionEnter"
+          ExitFn="cpuVddLPR_fullNonRetentionExit"
+          Attributes="8"
+          Supported="TRUE"
+          >
+    </Mode>
+    <!-- Currently no uses cases require this mode -->
+    <Mode Name="pc_l2_noret"
+          Dependency="l2.noret + !tcm.noret"
+          Order="LAST"
+          PowerSavings="0, 5"
+          EnterLat="2000, 1000"
+          ExitLat="12000, 2000"
+          Backoff="12000, 2000"
+          EnterFn="cpuVddLPR_l2NonRetentionEnter"
+          ExitFn="cpuVddLPR_l2NonRetentionExit"
+          Attributes="8"
+          Supported="FALSE"
+          >
+    </Mode>
+	    <Mode Name="pc_ret"
+          Dependency="l2.ret + tcm.ret + CLM + rpm"
+          Order="LAST"
+          PowerSavings="0, 3"
+          EnterLat="2000, 1000"
+          ExitLat="10000, 2000"
+          Backoff="10000, 2000"
+          EnterFn="cpuVddLPR_l2tcmRetentionEnter"
+          ExitFn="cpuVddLPR_l2tcmRetentionExit"
+          Attributes="8"
+          Supported="TRUE"
+          >
+    </Mode>
+    <Mode
+         Name="clk_gate"
+         Dependency="!CLM + !LM + !mcpm_utils"
+         Order="LAST"
+         PowerSavings="0, 1"
+         EnterLat="0"
+         ExitLat="0"
+         Backoff="0"
+         EnterFn="cpuVddLPR_clkGatingEnter"
+         ExitFn="cpuVddLPR_clkGatingExit"
+         Attributes="16"
+         Supported="TRUE"
+         >
+    </Mode>
+  </LPR>
+</LPRDefinition>

@@ -1,0 +1,51 @@
+#===============================================================================
+#
+# tilt_to_wake 
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/sensors/wrist_tilt/build/sns_wrist_tilt.scons#2 $
+#  $DateTime: 2019/08/28 03:36:44 $
+#  $Change: 20349312 $
+#
+#===============================================================================
+Import('env')
+import inspect
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+
+if "SNS_ISLAND_INCLUDE_TILT_TO_WAKE" in env:
+  island_cfg = True
+else:
+  island_cfg = False
+
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SYSTEMDRIVERS',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequireRestrictedApi(CBSP_API)
+
+SENSORS_API = [
+  'SNS_FRAMEWORK',
+  'SNS_INTERNAL_INCLUDES',
+  ]
+env.RequireProtectedApi(SENSORS_API)
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             clean_pack_list = ['*.c','*.h','*.proto','*.json'],
+             ssc_protected_api = ['SNS_MATH_UTIL'],
+             register_func_name = "sns_register_wrist_tilt",
+             binary_lib = True,
+             add_island_files = island_cfg)

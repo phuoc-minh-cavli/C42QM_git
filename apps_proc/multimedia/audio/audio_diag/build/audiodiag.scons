@@ -1,0 +1,102 @@
+#===============================================================================
+#
+# AUDIO INIT
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by QUALCOMM, Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/audio_diag/build/audiodiag.scons#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Author: pwbldsvc $
+#  $Change: 17929171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/audio_diag"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'PWRDB',
+   'SECUREMSM',
+   'SERVICES',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequireRestrictedApi(CBSP_API)
+env.RequireRestrictedApi('AUDIO_DIAG')
+env.RequirePublicApi('APR')
+env.RequireRestrictedApi('APR')
+
+#env.RequireRestrictedApi('CSD_AUDIO')
+#env.RequireRestrictedApi('CSD_UTILS')
+#env.RequirePublicApi('AUDIO_INIT')
+
+#env.RequireRestrictedApi('CSDLITE')
+
+env.RequirePublicApi('MMUTILS')
+
+env.RequirePublicApi('AUDIO')
+#env.RequirePublicApi('CSD_QMI_SERVICES')
+#env.RequirePublicApi('CM_QMI_CLIENT')
+#env.RequirePublicApi('CSD_QMI_CLIENT')
+#env.RequireRestrictedApi('CSD_OS_DEP')
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+audiodiag_SOURCES = [
+    '${BUILDPATH}/src/audio_diag.c',
+]
+
+
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+audiodiag_obj = env.Object(audiodiag_SOURCES)
+audiodiag_lib = env.Library('${BUILDPATH}/audio_diag', audiodiag_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibsToImage(
+    ['MULTIMEDIA_APPS'],
+    audiodiag_lib)
+   
+env.LoadSoftwareUnits()
+

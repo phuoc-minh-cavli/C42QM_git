@@ -1,0 +1,79 @@
+#===============================================================================
+#                    Copyright 2011 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/dam_loader_driver/src/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/dam_loader_driver"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",            # needed for _txm_module_manager_file_load symbol visibility
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   ])
+   
+if 'USES_SECUREMSM_DEBUG_EXTN' in env:
+    env.Append(CPPDEFINES = [
+    "ENABLE_SECUREMSM_QCLI_HOOKS",
+    ])
+
+if 'USES_TZT' in env:
+    env.Append(CPPDEFINES = [
+    "TZBSP_WITH_TEST_SVC",
+    ])
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'PRODUCTS_DSR',
+   'PRODUCTS_SCM',
+   'QTEE_INVOKE_QAPI',
+   'MINK',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+RESTRICTED_API = [
+   'QSEECOM_DRIVER_API',
+   'SECUREMSM_QCLI',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+
+env.Append(CFLAGS=" --c99")
+
+#-------------------------------------------------------------------------------
+# Sources, librarie
+#-------------------------------------------------------------------------------
+DAM_LOADER_LIB_SOURCES =  [
+   '${BUILDPATH}/src/dam_loader_driver.c',
+]
+
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/build/dam_loader_driver', DAM_LOADER_LIB_SOURCES)

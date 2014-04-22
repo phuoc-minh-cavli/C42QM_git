@@ -1,0 +1,72 @@
+/* selectively place libqcc.a text */
+*hexagon_dfdiv.o(.text .text.*)
+*qdsp_divdi3.o(.text .text.*)
+*qdsp_divsi3.o(.text .text.*)
+*qdsp_moddi3.o(.text .text.*)
+*qdsp_modsi3.o(.text .text.*)
+*qdsp_sfdiv_opt.o(.text .text.*)
+*qdsp_udivdi3.o(.text .text.*)
+*qdsp_udivsi3.o(.text .text.*)
+*qdsp_umoddi3.o(.text .text.*)
+*qdsp_umodsi3.o(.text .text.*)
+*qdsp_divdf3.o(.text .text.*)
+*hexagon_udivsi3.o(.text .text.*)
+
+
+
+*(.text.memscpy)
+*(.text.cold.memscpy)
+*(.text.mem_heap_leave_crit_sect)
+*(.text.mem_heap_enter_crit_sect)
+*(.text.mem_free)
+*(.text.cold.mem_free)
+*(.text.mem_malloc)
+*(.text.cold.mem_malloc)
+
+*(.text.err_f3_save_msg)
+*(.text.cold.err_f3_save_msg)
+*(.text.hdlci_sw_frame)
+*(.text.cold.hdlci_sw_frame)
+*(.text.msgri_fifo_put_buf)
+*(.text.cold.msgri_fifo_put_buf)
+*(.text.msgri_msgq_receive)
+*(.text.cold.msgri_msgq_receive)
+*(.text.msgr_send)
+*(.text.cold.msgr_send)
+
+
+
+
+
+*(.text.lte_ml1_schdlr2_obj_list_get_info.llvmint.* .text.lte_ml1_schdlr2_obj_list_get_info )
+*(.text.cold.lte_ml1_schdlr2_obj_list_get_info.llvmint.* .text.cold.lte_ml1_schdlr2_obj_list_get_info )
+
+*(.text.lte_ml1_schdlr2_obj_list_get_info)
+*(.text.cold.lte_ml1_schdlr2_obj_list_get_info)
+*(.text.schdlr_event_list_get_cdw_priority)
+*(.text.cold.schdlr_event_list_get_cdw_priority)
+*(.text.schdlr_req_list_get_best_req)
+*(.text.cold.schdlr_req_list_get_best_req)
+*(.text.lte_ml1_schdlr2_obj_get_state_at_time)
+*(.text.cold.lte_ml1_schdlr2_obj_get_state_at_time)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

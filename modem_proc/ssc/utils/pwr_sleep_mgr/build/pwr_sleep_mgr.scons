@@ -1,0 +1,77 @@
+#===============================================================================
+#
+# Power sleep manager utility
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#  $Id: //components/rel/ssc.slpi/5.1/utils/pwr_sleep_mgr/build/pwr_sleep_mgr.scons#1 $
+#  $DateTime: 2019/04/24 05:02:39 $
+#  $Change: 18986584 $
+#
+#===============================================================================
+Import('env')
+import inspect
+import os, inspect
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+  'SERVICES',
+  'POWER',
+  'DAL',        # for DALSys.h included in npa.h
+  'DEBUGTOOLS',
+  'KERNEL',
+  'SYSTEMDRIVERS',
+]
+
+if 'SSC_TARGET_X86' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["x86"]
+if 'SSC_TARGET_HEXAGON_CORE_SLPI_1_0' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["hexagon", "hexagon_core_slpi_1.0"]
+if 'SSC_TARGET_HEXAGON_CORE_QDSP6_2_0' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["hexagon", "hexagon_core_qdsp6_2.0"]
+if 'SSC_TARGET_HEXAGON_CORE_QDSP6_3_0' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["hexagon", "hexagon_core_qdsp6_3.0"]
+if 'SSC_TARGET_HEXAGON_MDSP' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["hexagon", "hexagon_mdsp"]
+if 'SSC_TARGET_HEXAGON_NO_ISLAND' in env['CPPDEFINES']:
+  pwr_sleep_mgr_flavor = ["hexagon", "noisland"]
+
+if 'SENSORS_DD_DEV_FLAG' not in env:
+  pwr_sleep_cleanpack= []
+  binlib=False
+else:
+  pwr_sleep_cleanpack=['*.c','*.h']
+  binlib=True
+
+#-------------------------------------------------------------------------------
+# Adds self
+#-------------------------------------------------------------------------------
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+             flavor = pwr_sleep_mgr_flavor,
+             core_public_api = CBSP_API,
+             ssc_protected_api = ['SNS_FRAMEWORK','SNS_INTERNAL_INCLUDES'],
+             clean_pack_list = pwr_sleep_cleanpack,
+             binary_lib=binlib,
+             island_sections = ['.text.sns', '.data.sns'])
+
+if 'USES_QDSS_SWE' in env:
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [
+            ['SNS_PWR_SLEEP_MGR_REMOVE_INSTANCE_START', '', 'F'],
+            ['SNS_PWR_SLEEP_MGR_SET_Q6_WAKEUP_INTERVAL_USEC', 'Setting SSC Q6 wakeup interval to %d uS', 'F'],
+            ['SNS_PWR_SLEEP_MGR_REMOVE_INSTANCE_END', '', 'F'],
+            ['SNS_PWR_SLEEP_MGR_ADD_INSTANCE_START', '', 'F'],
+            ['SNS_PWR_SLEEP_MGR_ADD_INSTANCE_END', '', 'F'],
+           ]
+  env.AddSWEInfo(QDSS_IMG, events)
+
+REMOVE_FILES =  pwr_sleep_cleanpack
+env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)

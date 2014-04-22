@@ -1,0 +1,124 @@
+#===============================================================================
+#
+# QWES OS_ABSTRACTION Lib
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# Import SCons Environment
+Import('env')
+env = env.Clone()
+
+SRCPATH = '${BUILD_ROOT}/core/securemsm/qwes/os_abstraction'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_QSEE_LOG' in env:
+    env.Append(CPPDEFINES = [
+        "ENABLE_QSEE_LOGGING",            # QSEE logging
+    ])
+
+#-------------------------------------------------------------------------------
+# Dependency paths for include files
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'PSM_CLIENT',
+    'DAL',
+    'PRODUCTS_DSR',
+    'PRODUCTS_SCM',
+    'MMUTILS',
+    'QTEE_INVOKE_QAPI',
+    'QAPI',
+    'USEFULBUF_QAPI',
+    'QWES_QAPI',
+    'QCBOR_QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QTEE_INVOKE_DRIVER_API',
+    'SECUREMSM_DRIVER_OBJECT_API',
+    'QWES_COMMON',
+    'QWES_OS_ABSTRACTION',
+]
+
+QWES_API = [
+    'QWES_DAEMON',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.RequireProtectedApi(QWES_API)
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS=" --c99 --gnu")
+
+#-------------------------------------------------------------------------------
+# Sources, library
+#-------------------------------------------------------------------------------
+QWES_OS_ABSTRACTION_SOURCES_KERNEL =  [
+    '${BUILDPATH}/common/src/qwes_test_common.c',
+    '${BUILDPATH}/threadx/src/qwes_file.c',
+    '${BUILDPATH}/threadx/src/qwes_memory.c',
+    '${BUILDPATH}/threadx/src/qwes_log.c',
+    '${BUILDPATH}/threadx/src/qwes_psm_tx.c',
+    '${BUILDPATH}/threadx/src/client_env.c',
+    '${BUILDPATH}/threadx/src/time.c',
+    '${BUILDPATH}/threadx/src/http.c',
+    '${BUILDPATH}/threadx/src/qwes_ssl.c',
+    '${BUILDPATH}/threadx/src/qwes_service.c',
+    '${BUILDPATH}/threadx/src/qwes_netctrl.c',
+    '${BUILDPATH}/threadx/src/qwes_thread_utils_qurt.c',
+]
+
+QWES_OS_ABSTRACTION_SOURCES_USER =  [
+    '${BUILDPATH}/threadx/src/client_env.c',
+    '${BUILDPATH}/threadx/src/qwes_file.c',
+    '${BUILDPATH}/threadx/src/qwes_memory.c',
+    '${BUILDPATH}/threadx/src/qwes_log.c',
+    '${BUILDPATH}/threadx/src/qwes_psm_tx.c',
+    '${BUILDPATH}/threadx/src/client_env.c',
+    '${BUILDPATH}/threadx/src/qwes_netctrl.c',
+    '${BUILDPATH}/threadx/src/qwes_thread_utils_qurt.c',
+]
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+]
+
+USER_IMAGES = [
+    'CORE_TXM_LIBS',
+]
+
+env.AddBinaryLibrary(
+    IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/os_abstraction/build/qwes_tx_kernel',
+    QWES_OS_ABSTRACTION_SOURCES_KERNEL
+)
+
+env.AddBinaryLibrary(
+    USER_IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/os_abstraction/build/qwes_tx_user',
+    QWES_OS_ABSTRACTION_SOURCES_USER
+)
+
+QWES_OSAL_SRC_FILES = env.FindFiles(
+  ['*.c', '*.cpp', '*.h'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWES_OSAL_SRC_FILES)

@@ -1,0 +1,222 @@
+#===============================================================================
+#
+# Target-Level Build Script for ThreadX DAM modules
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataservices.tx/6.0/bsp/sensor_dam_demo_img/build/sensor_dam_demo_app_llvm_img.scons#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#  $Change: 21564418 $
+#===============================================================================
+import sys
+import os
+Import('env')
+
+env = env.Clone()
+
+#define SENSOR DAM module bin creation builder from mbn
+bin_bld = Builder(action = '${PYTHONCMD} ${BINTOOL} --bin M9x06_SENSOR_DAM_llvm.elf --output $TARGET')
+env.Append(BUILDERS = {'BinBuilder' : bin_bld})
+
+#------------------------------------------------------------------------------
+# Image_cfg.xml setup
+#------------------------------------------------------------------------------
+#env.Replace(IMAGE_CONFIG_XML = env.subst("${BUILD_ROOT}/build/ms/image_cfg_apps.xml"))
+
+#------------------------------------------------------------------------------
+# Check if we need to load this script or just bail-out
+#------------------------------------------------------------------------------
+# alias first alias is always the target then the other possibles
+aliases = ['sensor_dam_demo_llvm', 'llvm_dam']
+
+build_tags = ['SENSOR_DEMO']
+
+# init environment variables
+env.InitImageVars(
+   alias_list=aliases,           # aliases
+   proc='cortex-a7',             # proc
+   config='apps',                # config type, proc_name
+   plat='tx',
+   build_tags = build_tags,
+   tools = ['${BUILD_ROOT}/core/bsp/build/scripts/mbn_builder.py']
+   )
+
+if not env.CheckAlias():
+   Return()
+#----------------------------------------------------------------------------------
+# Suppress non-critical ARM license error to warning
+# C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
+#-----------------------------------------------------------------------------------
+env.Append(CFLAGS = "-Wno-9931 ")
+#---------------------------------------------------------------------------
+# Load in CBSP uses and path variables
+#---------------------------------------------------------------------------
+env.InitBuildConfig()
+
+env.Append(CPPDEFINES = ["QAPI_TXM_MODULE", "TXM_MODULE", "TX_DAM_QC_CUSTOMIZATIONS"])
+
+#---------------------------------------------------------------------------
+# Load in the tools scripts
+#---------------------------------------------------------------------------
+#Here is where we change the COMPILER
+env.LoadToolScript('llvm_dam', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+#To be removed
+#env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scripts"])
+
+#Statically linking module at fixed virtual address which will be mapped to actual load address at run time
+#TODO: How to make this unique across modules and how to take it from some common location
+
+env.Replace(LINKFLAGS = "-Wl,-mno-unaligned-access -fuse-baremetal-sysroot -fno-use-baremetal-crt \
+                         -Wl,-entry=0x43000000 \
+						 -Wl, ${BUILD_ROOT}/dataservices/sensor/build/sensor_dam_demo.ld \
+                         -Wl,-Map,${TARGET.base}.Map \
+                         -Wl,-gc-sections $LFLAGS")
+						 				 
+env.Append(CCFLAGS = "-marm")
+env.Append(ASMFLAGS = "-marm")
+
+#---------------------------------------------------------------------------
+# Libs/Objs
+#--------------------------------------------------------------
+image_libs = []
+image_objs = []
+
+#---------------------------------------------------------------------------
+# Libraries Section
+#---------------------------------------------------------------------------
+
+# load Build Test libs/objs build rules.
+au_items = env.LoadAreaSoftwareUnits('build')
+image_libs.extend(au_items['LIBS'])
+image_objs.extend(au_items['OBJS'])
+
+#Link TXM module library
+image_libs.extend(['$BUILD_ROOT/core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib'])
+image_libs.extend(['$BUILD_ROOT/core/services/time_qapi/build/LLVM/timer_dam_lib.lib'])
+
+#load Sensor module libraries build rules.
+modules_path = env.RealPath('${BUILD_ROOT}/dataservices/sensor')
+if env.PathExists(modules_path): 
+   au_items = env.LoadAreaSoftwareUnits('dataservices' , ["sensor"])
+   image_libs.extend(au_items['LIBS'])
+   image_objs.extend(au_items['OBJS'])
+else:
+    "doesn't exist"
+
+#-------------------------------------------------------------------------
+# Libs/Objs
+#-------------------------------------------------------------------------
+image_libs_path = env.get('INSTALL_LIBPATH')
+
+image_units = [image_libs, image_objs]
+
+if 'IMAGE_BUILD_LOCAL_FILES' in env:
+   #=========================================================================
+   # CBSP Image section
+   #=========================================================================
+
+   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # should of clone, but just to be on the safe side.
+   env = env.Clone()
+   
+   #-------------------------------------------------------------------------
+   # Internal depends within CoreBSP
+   #-------------------------------------------------------------------------
+   CBSP_QAPI = [
+      'BOOT',
+      'BUSES',
+      'DAL',
+      'DEBUGTOOLS',
+      'HAL',      
+      'HWENGINES',
+      'IODEVICES',
+      'MPROC',
+      'POWER',
+      'SECUREMSM',
+      'SERVICES',
+      'STORAGE',
+      'SYSTEMDRIVERS',
+      'WIREDCONNECTIVITY',
+      'PRODUCTS', 
+      # needs to be last also contains wrong comdef.h
+      'KERNEL',
+   ]
+
+   env.RequirePublicApi(CBSP_QAPI)
+
+   #----------------------------------------------------------------------------
+   # Sources, libraries
+   #----------------------------------------------------------------------------
+
+if 'IMAGE_BUILD_LINK' in env:
+   # actually doing link, reset image_units
+   image_units = []
+   
+   #-------------------------------------------------------------------------
+   # Build env QCOREIMG
+   #-------------------------------------------------------------------------
+   if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM= sh_libs_dynsyms_fname)
+   else:
+      image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
+      env.Depends(image_elf,image_objs)
+      env.Depends(image_elf,image_libs)
+   
+if 'IMAGE_BUILD_POST_LINK' in env:
+   # #-------------------------------------------------------------------------
+   # # Build env mbn files
+   # #-------------------------------------------------------------------------
+   target_mbn = env.MbnBuilder('${SHORT_BUILDPATH}/${TARGET_NAME}', image_elf, IMAGE_TYPE="sensor_dam_demo_module", MBN_TYPE="elf", FLASH_TYPE=env['TARGET_FLASH_TYPE'])
+
+  #----------------------------------------------------------------------------
+  # Sectools signing
+  #----------------------------------------------------------------------------
+#   if "USES_SEC_POLICY_DEFAULT_SIGN" in env: 
+#    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/apps.mbn', target_mbn)
+#
+#    sectools_signed_mbn = env.SectoolBuilder(
+#         target_base_dir = '${SHORT_BUILDPATH}',
+#         source=target_mbn,
+#         sign_id="apps",
+#         msmid = env['MSM_ID'],
+#         sectools_install_base_dir = '${MBN_ROOT}', 
+#         install_file_name = "apps.mbn")    
+
+    
+#    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/sensor_dam.mbn', target_mbn)
+#   else:
+   install_target_mbn = env.InstallAs('${MBN_ROOT}/sensor_dam_demo.mbn', target_mbn)
+
+   target_bin = env.BinBuilder("${MBN_ROOT}/sensor_dam_demo.bin", "${MBN_ROOT}/sensor_dam_demo.mbn")
+
+   #-------------------------------------------------------------------------
+   # Install ELF, reloc files
+   #-------------------------------------------------------------------------
+
+   # copy elf and reloc to needed locations for AMSS tools to load on target
+   # install_target_elf = env.InstallAs(
+      # "${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf", image_elf)
+   install_target_elf = env.InstallAs(
+      "${BUILD_MS_ROOT}/M9x06_SENSOR_DAM_llvm.elf", image_elf)
+
+   #=========================================================================
+   # Define targets needed QCOREIMG
+   #
+   image_units += [
+      install_target_elf,
+      target_mbn,
+      install_target_mbn,
+      target_bin,
+   ]
+
+
+#=========================================================================
+# Finish up...
+env.BindAliasesToTargets(image_units)

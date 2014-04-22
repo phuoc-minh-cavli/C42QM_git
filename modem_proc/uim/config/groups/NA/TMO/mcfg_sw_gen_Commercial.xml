@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="bsf_address" id="73676" description="GBA BSF Address" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gba/bsf_address">
+		<Member name="bsf_url" description="" comment="" sizeOf="251" type="string"></Member>
+		<Member name="bsf_port" description="" comment="" sizeOf="1" type="uint16">443 </Member>
+		<Member name="protocol" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="custom_realm" id="73758" description="GBA custom REALM" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gba/custom_realm">
+		<Member name="GBA_Custom_REALM" description="Customization of REALM name for GBA procedure" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="custom_user_agent_tmpi" id="73759" description="GBA custom TMPI support" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gba/custom_user_agent_tmpi">
+		<Member name="GBA_Custom_User_Agent_TMPI" description="Use '3gpp-gba-uicc' in place of '3gpp-gba-tmpi' to indicate TMPI support" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="http_header_imei" id="73760" description="GBA IMEI header" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gba/http_header_imei">
+		<Member name="header_name" description="" comment="" sizeOf="33" type="string">X-TMUS-IMEI</Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="access_point_name" id="73685" description="GBA Access point Name" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gba/access_point_name">
+		<Member name="apn" description="GBA Access point Name" comment="" sizeOf="101" type="string">tmus</Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="feature_bmsk" id="65674" description="" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/gstk/feature_bmsk">
+		<Member name="gstk_feature_bmask" description="" comment="" sizeOf="1" type="uint32">134217798 </Member>
+	</NvEfsItemData>
+	</NvData>

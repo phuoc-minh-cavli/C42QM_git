@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+  <NvItemData name="OTAPA Enabled" id="260" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x39" mcfgVariant="1">
+		<Member name="nam" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="OTASP SPC Change" id="296" description="" comment="" category="System" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="spc_change_enabled" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+  <NvEfsItemData name="GSTK Feature Bitmask 2 slot specific" id="73623" description="Status of ENS feature per slot" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" fullpathname="/nv/item_files/modem/uim/gstk/feature_bmsk_2">
+    <Member name="GSTK Feature Bitmask 2 slot specific" description="GSTK Feature Bitmask 2 slot specific" comment="" sizeOf="1" type="uint8">128 </Member>
+  </NvEfsItemData>
+</NvData>

@@ -1,0 +1,305 @@
+<build_cfg>
+
+  <environ version="1.0">
+    <tool name="python">
+      <windows_version> 2.7 </windows_version>
+      <linux_version>   2.7 </linux_version>
+    </tool>
+  </environ>
+
+  <build_data>
+    <pl_name>MPSS.CT.2.0</pl_name>
+  </build_data>
+
+  <variant_info>
+    <pl_name>           MPSS.CT.1.0 </pl_name>
+		<image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+    <parallel> True </parallel>
+    <uses_flags>    </uses_flags>	
+    <compiler_type>     Hexagon     </compiler_type>
+    <hexagon_rtos_release>  8.3.03 </hexagon_rtos_release>
+    <hexagon_q6version>    v67      </hexagon_q6version>
+    <env_flags>
+      <env_flag>
+        <name>SCONS_BUILD_SCRIPTS_PRODUCT_ROOT</name>
+        <value>${BUILD_ROOT}/config/default</value>
+      </env_flag>
+    </env_flags>
+ 
+    <chip_info>
+      <chip_name> 9205     </chip_name>
+      <chip_type> mdm      </chip_type>
+      <chip_id>   9205     </chip_id>
+      <chip_ver>  A        </chip_ver>
+      <hexagon_image_entry> 0x80000000 </hexagon_image_entry>			
+		<build_variant>
+    <variant_name> ltenbge </variant_name>
+		<image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbge.prod  </build_id>
+        </purpose>
+	</build_variant>
+	
+	<build_variant> 
+    <variant_name> ltenbgefi </variant_name>
+        <image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw</image>
+        <cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+        <lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbgefi.prod  </build_id>
+        </purpose>
+     </build_variant>
+
+	<build_variant>
+    <variant_name> ltenbgena </variant_name>
+		<image>mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbgena.prod  </build_id>
+        </purpose>
+	</build_variant>
+	
+	<build_variant>
+    <variant_name> ltenbena </variant_name>
+		<image>mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbena.prod  </build_id>
+        </purpose>
+	</build_variant>
+	
+	<build_variant>
+  	<variant_name> ltenbe </variant_name>
+		<image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+  		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+  		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+  		<purpose>
+			<purpose_name>prod</purpose_name>
+			<build_id>  9205.ltenbe.prod  </build_id>
+  		</purpose>
+  	</build_variant>
+
+	<build_variant>
+    <variant_name> lteena </variant_name>
+		<image>mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.lteena.prod  </build_id>
+        </purpose>
+	</build_variant>	
+	
+	<build_variant>
+  	<variant_name> ltee </variant_name>
+  		 <image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		 <cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+  		 <lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+  		 <purpose>
+			<purpose_name>prod</purpose_name>
+			<build_id>  9205.ltee.prod  </build_id>
+  		</purpose>
+  	</build_variant>
+	
+		<build_variant>
+    <variant_name> ltenbgeniag </variant_name>
+		<image>mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbgeniag.prod  </build_id>
+        </purpose>
+	</build_variant>
+	
+		<build_variant>
+    <variant_name> nbgenia </variant_name>
+		<image>mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.nbgenia.prod  </build_id>
+        </purpose>
+	</build_variant>
+	
+	<build_variant>
+    <variant_name> ltenbgetna </variant_name>
+		<image>platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,sensoronly,devcfg_sensoronly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbgetna.prod  </build_id>
+        </purpose>
+	</build_variant>
+
+	<build_variant>
+    <variant_name> ltenbetna </variant_name>
+		<image>platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,sensoronly,devcfg_sensoronly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbetna.prod  </build_id>
+        </purpose>
+	</build_variant>	
+
+	<build_variant>
+    <variant_name> ltenbgeng </variant_name>
+		<image>avs_libs,platform_libs,mapss_b,devcfg_img,efs_image_header,mcfg_hw,mcfg_sw,pageonly,devcfg_pageonly_img</image>
+		<cflags> -Wno-error -Wno-address-of-packed-member -Wno-parentheses-equality -fno-common -Wno-extern-c-compat -Wno-undefined-inline -Wno-comment -ffine-grained-bitfield-accesses </cflags>
+		<lflags> -flto-options=codegen="-fenable-pt-opts -fpartition-cold -enable-msg-v3-expand=true -use-profile-for-size=true" --gc-sections --hash-size=31 </lflags>
+       <purpose>
+          <purpose_name>prod</purpose_name>
+          <build_id>  9205.ltenbgeng.prod  </build_id>
+        </purpose>
+	</build_variant>	
+	
+	</chip_info>
+	</variant_info>	
+
+  <release_formats version="1.0">
+
+    
+
+    <format full_build="True" update_uses="True" do_compile_test="True" validate_rs_files="False" validate_private_files="True" qc_internal="False" source="True">
+      <name> SRC-No-TDSCDMA-or-L1 </name>
+      <build_flags> -USES_COMPILE_TDSCDMA_AND_ALL_L1_PROTECTED_LIBS </build_flags>
+    </format>
+
+    
+
+    </release_formats>
+
+  <description>
+     Out of date.
+
+     This configuration file consists of a series of "pl_info" elements
+     that define the configuration of each PL supported by this branch
+     of the Build component.
+
+     Each "pl_info" element can consist of the following fields, some of
+     which are required, and some of which are optional:
+
+        "pl_name"  Required:
+
+            This element identifies which PL is being built.  The string
+            must match what is specified in the "pl_cfg.xml" file for
+            the PL.  CPLs can inherit the name of the PL that they
+            branched from, in order to minimize the amount of work done
+            to branch a PL.
+            
+        "image"   Optional
+
+            This element defines the image, or list of images, that
+            need to be build.  For MPSS.NI.*, this will default to
+            'mpss'.
+
+            This element can be overridden on the command line with the
+            IMAGE= parameter.
+
+        "build_id"   Required:
+
+            This element defines the default set of build IDs to be built.
+
+            This element can be overridden on the command line with the
+            BUILD_ID= parameter.  It can be a single build ID, or a
+            comma-separated list of build IDs.
+
+        "chip_type"   Required:
+
+            This element is typically either 'msm' or 'mdm', and represents
+            the prefix to the Chip ID used by various tech teams in identifying
+            which chip is being built.
+
+        "chip_id"   Required:
+
+            This element is typically either '8960' or '9x15', and represents
+            the suffix to the Chip ID used by various tech teams in identifying
+            which chip is being built.
+
+        "chip_ver"   Optional:
+
+            This element is typically either 'A' or 'B' and represents the
+            version of the chip used by various tech teams in identifying
+            which chip is being built.  It defaults to 'A'.
+
+        "cflags"   Optional:
+
+            This element allows the PL to specify a set of compiler flags to
+            be used when compiling all objects for the PL.  The default is no
+            additional compiler flags.
+
+        "lflags"   Optional:
+
+            This element allows the PL to specify a set of linker flags to
+            be used when linking images for the PL.  The default is no
+            additional linker flags.
+
+        "compiler_type"   Optional:
+
+            This string identifies the type of compiler being used.  On
+            MPSS.NI.XXX PLs, it defaults to "Hexagon".
+
+        "hexagon_rtos_release"   Optional:
+
+            This element identifies the version of Hexagon compiler used.
+            On MPSS.DI.XXX PLs, this defaults to "5.0.07".
+
+        "hexagon_q6version"    Optional:
+
+            This element identifies the hardware that the Hexagon compiler
+            must compile for.  On MPSS.NI.XXX PLs, this defaults to 'v4'.
+
+        "hexagon_image_entry"    Required:
+
+            This element identifies address at which the Hexagon linker should
+            place the starting code for the image being built.
+
+        "uses_flags"   Optional:
+
+            This element allows the PL to define additional USES flags to
+            be defined for a build.
+
+        "build_variant"  Optional:
+
+            This element defines a particular variant of the build.  It
+            consists of sub-elements, which must include a "variant_name"
+            element that names the variant, and a list of any of the
+            above elements for the parent "pl_info" element that need to be 
+            overridden for the variant.
+
+            The variant name can be specifies on the build command line
+            as a stand-alone string, e.g. a variant named "release" could
+            be specified as follows:
+
+                build release
+
+            If a variant name is specifed on the command line that does
+            not match any of the variants specified in this file, it is
+            assumed to be a build ID.  Therefore, variants that differ
+            only in the build ID don't need to be explicitly defined in
+            this file.
+
+            Sub-elements include:
+
+                "variant_name"
+
+                    This element names the variant.
+
+                Any element from the "pl_info" element.
+
+
+  </description> 
+</build_cfg>

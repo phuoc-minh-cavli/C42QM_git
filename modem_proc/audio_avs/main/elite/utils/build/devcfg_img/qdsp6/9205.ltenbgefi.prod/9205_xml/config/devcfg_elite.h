@@ -1,0 +1,2 @@
+#define lpa_prop lpa_prop_9205_xml
+#define elite_thrd_prio_prop elite_thrd_prio_prop_9205_xml

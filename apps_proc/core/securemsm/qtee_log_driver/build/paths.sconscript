@@ -1,0 +1,33 @@
+#===============================================================================
+#
+# QTEE log API
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/qtee_log_driver/build/paths.sconscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#   when        who     what, where, why
+#   --------    -----   --------------------------------------------------------
+#   11/09/18    bs      QTEE log export paths draft
+#===============================================================================
+# Import SCons Environment
+Import('env')
+
+# TODO: Publish Restricted Include Paths
+env.PublishPublicApi('QTEE_LOG_API', [
+    "${INC_ROOT}/core/securemsm/qtee_log_driver/inc",
+])
+
+# Search for additional APIs
+env.LoadAPIUnits()

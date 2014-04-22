@@ -1,0 +1,82 @@
+#/** @file JtagProgrammer.inf
+#
+#  Jtag Programmer INF
+#  
+#  Copyright (c) 2014 - 2015, 2018, 2019 Qualcomm Technologies, Inc.  All Rights Reserved.
+#  Qualcomm Technologies Proprietary and Confidential.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 11/06/19   sl      add support for multipage
+# 12/04/18   sl      add exception so packit don't remove cmm scrips
+# 11/29/18   sl      clean up
+# 05/12/15   bh      Replace LoaderUtilsLib with MuslLib
+# 03/31/15   whc     SPI NOR support
+# 02/11/15   bn      Put back UfsJtagLib
+# 02/11/15   bn      Replace UfsJtagLib with UfsLoaderLib
+# 12/09/14   whc     Added UFS support
+# 11/04/14   bn      Initial Revision
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandJtagTools
+  FILE_GUID                      = 3cb0f525-8732-4fb8-8e6d-b118adb3a00a
+  MODULE_TYPE                    = SEC
+  VERSION_STRING                 = 1.0
+
+
+[Sources.common]
+  nand_dump.c
+  nand_wrapper.c
+  nand_utils.c
+  nand_mem_init.c
+  nand_param.c
+  nand_partition.c
+  nand_stubs.c
+  nand_core.c
+  nand_entry.c
+  flash_log.c
+  config_v2/nand_core_v2.c
+  nand_start.s | GCC
+
+[Sources.ARM]
+  ModuleEntryPoint.S | GCC
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -DBUILD_TOOL_CHAIN  -DNAND_PAGE_SIZE=4096  -DMAX_PAGE_SIZE=4096  -DFLASH_TOOLS_HEAP_SIZE=225696 -DBUILD_NAND -g -DFLASH_LOG_H="\"flash_log.h\"" -DFLASH_WATCHDOG_DISABLED -DNOISY -DTNOISY="3"
+  GCC:*_*_*_DLINK_FLAGS = --script=$(BUILD_DIR)/$(ARCH)/$(MODULE_NAME).ld
+  MSFT:*_*_*_CC_FLAGS = -DFEATURE_GPP
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  IntelFrameworkModulePkg/IntelFrameworkModulePkg.dec
+
+[LibraryClasses]
+  MuslLib
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  SmemLib
+  BamLoaderLib
+  DALCommonLoaderLib
+  DALConfigToolsLib
+  NandToolsLib
+  DALFwkLib
+
+[Guids]
+
+
+

@@ -1,0 +1,94 @@
+#===============================================================================
+#
+# Modem wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load modem data software units
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/protocols/build/datamodem_protocols.scons#1 $
+#  $DateTime: 2020/03/17 08:03:16 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/28/18    ds     Changes for chiltepin(9x05).
+# 08/31/10   ack     Initial revision
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+env.RequireRestrictedApi('DATAMODEM')
+env.RequireProtectedApi('DATAMODEM')
+env.RequirePublicApi('DATAMODEM')
+
+
+#env.Replace(MSVC_WARN = '/W3 /WX /wd4013 /wd4005')
+if 'USES_MOB' not in env:
+  hexagon_rtos_release = env.get('HEXAGON_RTOS_RELEASE')
+  hexagon_major_release = hexagon_rtos_release.split(".")[0]
+  if hexagon_major_release == "6":
+    env.Append(CCFLAGS = ' -Werror-high -Werror-medium')
+    env.Append(CXXFLAGS = ' -Werror-high -Werror-medium')
+
+import copy
+orig_env = env
+env = env.Clone()
+env['CFLAGS'] = copy.deepcopy(orig_env['CFLAGS'])
+
+# Set -Werror compiler flag to treat warnings as errors
+if env['CFLAGS'].count('-Wno-low') > 0:
+  env['CFLAGS'].remove('-Wno-low')
+
+if env['CFLAGS'].count('-Wno-medium') > 0:
+  env['CFLAGS'].remove('-Wno-medium')
+
+if env['CFLAGS'].count('-Wno-high') > 0:
+  env['CFLAGS'].remove('-Wno-high')
+
+if env['CFLAGS'].count('-Wno-error') > 0:
+  env['CFLAGS'].remove('-Wno-error')
+  
+env.Replace(USES_DATAMODEM_HC = True)
+env.Replace(USES_DATAMODEM_DC = True)
+env.Replace(USES_DATAMODEM_INET = True)
+env.Replace(USES_DATAMODEM_INET_SOCK_REARCH = True)
+env.Replace(USES_DATAMODEM_INET_DHCP_SERVER = True)
+env.Replace(USES_DATAMODEM_INET_DHCP_CLIENT = True)
+env.Replace(USES_DATAMODEM_INET_RSVP = True)
+env.Replace(USES_MODEM_DATAMODEM_IPV6 = True)
+env.Replace(USES_DATAMODEM_LINKLAYER = True)
+env.Replace(USES_DATAMODEM_LINKLAYER_PPP = True)
+env.Replace(USES_DATAMODEM_LINKLAYER_HDLC = True)
+env.Replace(USES_DATAMODEM_LINKLAYER_LLC = True)
+env.Replace(USES_DATAMODEM_LINKLAYER_EAP = True)
+env.Replace(USES_DATAMODEM_HC_ROHC = True)
+env.Replace(USES_DATAMODEM_HC_SLHC = True)
+env.Replace(USES_IPSEC = True)
+
+if 'USES_CDMA' in env:
+  env.Replace(USES_DATAMODEM_MIP = True)
+
+#if 'USES_DATAMODEM_ULT' not in env:
+#  if 'USES_DATA_IOE_LONLY' not in env and 'USES_DATA_IOE_LG' not in env:
+#    env.Replace(USES_DATAMODEM_DC_IPDC_V0 = True)
+
+#  if 'USES_DATA_IOE_LG' in env:
+#    env.Replace(USES_DATAMODEM_HC_SLHC = True)
+#    env.Replace(USES_DATAMODEM_HC_IPHC = True)
+  
+#  if 'USES_DATA_IOE_LWG' not in env and 'USES_DATA_IOE_LONLY' not in env:    
+#    env.Replace(USES_DATAMODEM_DC_IPDC_V1 = True)
+
+env.LoadSoftwareUnits()

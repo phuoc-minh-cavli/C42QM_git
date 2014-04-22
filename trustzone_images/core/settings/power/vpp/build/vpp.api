@@ -1,0 +1,38 @@
+#===============================================================================
+#
+# VPP API Registration
+#
+# GENERAL DESCRIPTION
+#    VPP API Registration
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/11/18   myun    Initial version. Starting Device Configuration settings for VPP in core/settings/
+#
+#===============================================================================
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Publish set of restricted APIs used just for the dal/config building.
+# These are directories containing headers required when compiling the DAL
+# properties.
+#-------------------------------------------------------------------------------
+env.PublishRestrictedApi('VPP_DEVCFG_INTERFACE', [
+   "${INC_ROOT}/core/settings/power/vpp/interface",
+])
+
+#--------------------------------------------------------------------------- #
+# Search for additional APIs                                                  #
+#--------------------------------------------------------------------------- #
+env.LoadAPIUnits()

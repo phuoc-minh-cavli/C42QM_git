@@ -1,0 +1,31 @@
+# =============================================================================
+#
+# GENERAL DESCRIPTION
+#    performance team build script
+#
+# Copyright (c) 2015 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# Qualcomm Technologies Proprietary/GTDR
+#
+# -----------------------------------------------------------------------------
+#
+#  $Header: //components/rel/perf.mpss/2.1.2.0/build/perf.scons#1 $
+#  $DateTime: 2020/06/15 08:17:52 $
+#  $Author: pwbldsvc $
+#  $Change: 24361405 $
+#
+# =============================================================================
+
+from os.path import join as pj
+from os.path import split as ps
+from os.path import exists as pe
+from os.path import abspath as ap
+
+Import('env')
+
+if pe('perf_cleanpack.py'):
+  env.LoadToolScript('perf_cleanpack.py')
+
+env.LoadSoftwareUnits()
+
+# vim: set ft=python et ai nosi ts=2 sw=2 fdm=marker:

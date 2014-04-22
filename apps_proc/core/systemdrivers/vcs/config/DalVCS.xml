@@ -1,0 +1,17 @@
+<!-- NOTE: DAL config has trouble parsing multi-line comment, so please put -->
+<!--       proper comment tags on each line                                 -->
+<!--                                                                        -->
+<!-- VCS Driver Properties file                                             -->
+<!-- Note we depend on the include path for the following directories to be -->
+<!-- available to the DAL config compiler:                                  -->
+<!-- "${INC_ROOT}/core/systemdrivers/vcs/src",​                              -->
+<!-- "${INC_ROOT}/core/systemdrivers/vcs/​config"                            -->
+<!-- "${INC_ROOT}/core/systemdrivers/vcs/​config/${CHIPSET}"                 -->
+<!-- "${INC_ROOT}/core/systemdrivers/vcs/​config/${CHIPSET}"                 -->
+   
+   
+<driver name="VCS">
+  <device id="VCS">
+    #include "VCSChipset.xml"
+  </device>
+</driver>

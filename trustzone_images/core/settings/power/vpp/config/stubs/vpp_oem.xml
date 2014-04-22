@@ -1,0 +1,48 @@
+//===========================================================================
+//
+// FILE:         vpp.xml
+//
+// DESCRIPTION:  This file contains the DAL XML properties for the VPP Library.
+//
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header:
+//
+// when       who     what, where, why
+// --------   ---     -------------------------------------------------------
+// 05/11/18   myun    Initial version. Starting Device Configuration settings for VPP in core/settings/
+//
+//===========================================================================
+//             Copyright c 2013-2018 QUALCOMM Technologies Incorporated.
+//                    All Rights Reserved.
+//                  QUALCOMM Proprietary/GTDR
+//===========================================================================
+//#include "vpp_prop.h"
+
+//<driver name="NULL">
+//  <device id="/dev/oem/vpp">
+//    <props name="Silver" type="vpp_prop_t" array="true">
+//      {
+//        //example:
+//        {0x7fffffff, 100, 0}, //-> uplift +100mV on all frequencies in Silver
+//        {1056000,    100, 0}, //-> uplift +100mV @ 1056000KHz
+//        {1132800,   -4,   0}, //-> ignored, -ve not allowed
+//        {1689600,    0,   1}, //-> 1689600KHz is removed from the VPP entry
+//      }
+//    </props>
+//    <props name="L3" type="vpp_prop_t" array="true">
+//      {
+//      }
+//    </props>
+//    <props name="Gold" type="vpp_prop_t" array="true">
+//      {
+//      }
+//    </props>
+//  </device>
+//</driver>
+
+
+

@@ -1,0 +1,92 @@
+; loads crash time cpu registers
+
+&err_info=V.ADDRESS(QURT_error_info)
+
+&r_0=Data.LONG(D:(&err_info+0xC))
+&r_1=Data.LONG(D:(&err_info+0x10))
+&r_2=Data.LONG(D:(&err_info+0x14))
+&r_3=Data.LONG(D:(&err_info+0x18))
+&r_4=Data.LONG(D:(&err_info+0x1C))
+&r_5=Data.LONG(D:(&err_info+0x20))
+&r_6=Data.LONG(D:(&err_info+0x24))
+&r_7=Data.LONG(D:(&err_info+0x28))
+&r_8=Data.LONG(D:(&err_info+0x2C))
+&r_9=Data.LONG(D:(&err_info+0x30))
+&r_10=Data.LONG(D:(&err_info+0x34))
+&r_11=Data.LONG(D:(&err_info+0x38))
+&r_12=Data.LONG(D:(&err_info+0x3C))
+&r_13=Data.LONG(D:(&err_info+0x40))
+&r_14=Data.LONG(D:(&err_info+0x44))
+&r_PC=Data.LONG(D:(&err_info+0x48))
+&r_cpsr=Data.LONG(D:(&err_info+0x4c))
+
+r.s r0 &r_0
+r.s r1 &r_1
+r.s r2 &r_2
+r.s r3 &r_3
+r.s r4 &r_4
+r.s r5 &r_5
+r.s r6 &r_6
+r.s r7 &r_7
+r.s r8 &r_8
+r.s r9 &r_9
+r.s r10 &r_10
+r.s r11 &r_11
+r.s r12 &r_12
+r.s r13 &r_13
+r.s r14 &r_14
+r.s pc	&r_PC
+r.s CPSR &r_cpsr
+
+Area.Reset
+Area.Create ST 100. 20.       	;create an AREA window              
+Area.Select ST                  ;select the AREA window as PRACTICE 
+                                ;input/output window                
+Area ST                         ;display the AREA window  
+
+print ""
+print ""
+print "Apps crash time registers loaded    "
+print ""
+print ""
+print "Loading any DAM module's data if any..."
+print ""
+&tcb_start=V.VALUE(_tx_thread_created_ptr)
+&curr=V.VALUE(((TX_THREAD*) &tcb_start)->tx_thread_created_next)
+&target_name="Module Start Thread"
+while (&curr!=&tcb_start)
+(
+	&instance_ptr=V.VALUE(((TX_THREAD*) &curr)->tx_thread_module_instance_ptr)
+	
+	if (&instance_ptr!=0x0)
+	(
+		;print "TCB : &curr"
+		gosub restoreDamMemory &instance_ptr
+		ENDDO
+	)
+	&curr=V.VALUE(((TX_THREAD*) &curr)->tx_thread_created_next)
+)
+if (&curr==&tcb_start)
+(
+	print "No DAM Module to be loaded..."
+)
+
+ENDDO
+
+restoreDamMemory:
+(
+	entry &instance_ptr
+	&virtStart=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_virt_base)
+	&physStart=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_phys_base)
+	
+	&virtEnd=V.VALUE(((TXM_MODULE_INSTANCE*) &instance_ptr)->txm_module_instance_data_end)
+	&moduleDataSize=&virtEnd-&virtStart
+	&physEnd=&physStart+&moduleDataSize
+	print "Virtual Start : &virtStart "
+	print "Physical Start : &physStart "
+	print "Module Data Size : &moduleDataSize "
+	
+	print "Copying module's physical addr data to module's virtual address..."
+	Data.copy &physStart--&physEnd &virtStart
+	print "Completed...!"
+)

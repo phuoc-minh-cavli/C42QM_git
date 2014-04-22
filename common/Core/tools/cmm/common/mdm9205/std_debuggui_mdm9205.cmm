@@ -1,0 +1,106 @@
+//============================================================================
+//  Name:                                                                     
+//    std_setuptarget.cmm 
+//
+//  Description:                                                              
+//    Target specific script to setup the target to load a build
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 02/06/2015 RSSRIDHA    Fix Flashless/PCIE debug options
+// 09/08/2014 rssridha    Created for 9x45 
+//
+
+MAIN:
+
+GLOBAL &Usb_Boot_Flashless 
+GLOBAL &Pcie_Boot_Flashless
+
+
+LOCAL &debugconfig
+    WINPOS 10. 5. 35. 13.
+    DIALOG
+    (
+        HEADER "std_debug options"
+        //POS width, height, length
+        POS 1. 0. 25
+        TEXT "Select the system to debug"
+
+        POS 10. 6. 14.
+        DEFBUTTON "Modem + APSS" "GOSUB STD_DEBUG_CALL_GUI apps,mpss"
+      
+ 	POS 20. 4. 14.
+       DEFBUTTON "TZ" "GOSUB STD_DEBUG_EXECUTE_DEBUG tz"  
+        
+	POS 1. 2. 14.
+        DEFBUTTON "APPS" "GOSUB STD_DEBUG_EXECUTE_DEBUG apps"
+       
+	POS 20. 2. 14.
+        DEFBUTTON "RPM" "GOSUB STD_DEBUG_CALL_GUI rpm" 
+        
+
+        POS 1. 4. 14.
+        DEFBUTTON "SBL1" "GOSUB STD_DEBUG_EXECUTE_DEBUG sbl1"
+        
+      	POS 10. 8. 14. 4.
+
+    BOX "Flashless:"
+        POS 11. 9. 10. 1.
+		Option9: CHECKBOX "USB"  
+		(
+			IF DIALOG.BOOLEAN(Option9)
+			(
+				&Usb_Boot_Flashless="True"
+				DIALOG.Disable Option10
+				DIALOG.SET Option10 FORMAT.DECIMAL(8,16.)  //turns it off
+				&Pcie_Boot_Flashless="False"
+			)
+			ELSE
+			(
+				DIALOG.Enable Option10
+				DIALOG.SET Option9 FORMAT.DECIMAL(8,16.)  //turns it off
+				DIALOG.SET Option10 FORMAT.DECIMAL(8,16.)  //turns it off
+				&Usb_Boot_Flashless="False"
+				&Pcie_Boot_Flashless="False"
+			)
+		)	
+		Option10: CHECKBOX "PCIE"  
+		(
+			IF DIALOG.BOOLEAN(Option10)
+			(
+				&Pcie_Boot_Flashless="True"
+				DIALOG.Disable Option9
+				DIALOG.SET Option9 FORMAT.DECIMAL(8,16.)  //turns it off
+				&Usb_Boot_Flashless="False"
+			)
+			ELSE
+			(
+				DIALOG.Enable Option9
+				DIALOG.SET Option9 FORMAT.DECIMAL(8,16.)  //turns it off
+				DIALOG.SET Option10 FORMAT.DECIMAL(8,16.)  //turns it off
+				&Pcie_Boot_Flashless="False"
+				&Usb_Boot_Flashless="False"
+			)
+		)
+        
+    )
+    
+    
+    
+    STOP
+
+    
+EXIT:
+	ENDDO
+
+
+

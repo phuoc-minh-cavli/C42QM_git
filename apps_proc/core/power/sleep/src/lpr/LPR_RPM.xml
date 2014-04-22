@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  RPM Sleep Low Power Resource/Mode definitions
+
+  Copyright (c) 2012 Qualcomm Technologies Incorporated.
+  All Rights Reserved.
+  Qualcomm Confidential and Proprietary
+-->
+
+<!--
+  Note: Adds 10msec delay (5ms enter + 5ms exit) for any rpm
+        assisted mode until RPM portion of those modes are
+        profiled.
+-->
+
+<LPRDefinition>
+  <!-- The LPR defintion for RPM -->
+  <LPR Name="rpm" CoreMask="0xFFFFFFFF" InitFn="rpm_sync_init" ProfileFreq="300000">
+    <!-- sync LPRM -->
+    <Mode Name="sync"
+          Dependency="cpu_vdd"
+          Order="BEFORE DEP rpm.sync"
+          PowerSavings="0"
+          EnterLat="48000"
+          ExitLat="48000"
+          Backoff="148"
+          EnterFn="rpm_sync_enter"
+          ExitFn="rpm_sync_exit"
+          >
+    </Mode>
+  </LPR>
+</LPRDefinition>

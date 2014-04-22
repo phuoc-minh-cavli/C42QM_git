@@ -1,0 +1,180 @@
+#===============================================================================
+#
+# PCIE Libs
+#
+# GENERAL DESCRIPTION
+#    PCIE Libs build script
+#
+# Copyright (c) 2011-2015 by QUALCOMM Technology Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+#
+#Edit History
+#
+#$Header: 
+#
+#Change revision history maintained in version system
+#===============================================================================
+import os;
+Import('env')
+env = env.Clone()
+if env['MSM_ID'] in ['9205']:
+  Return()
+#Set debug log level
+env.Append(CPPDEFINES=["PCIE_OSAL_MSG_LEVEL=MSG_MEDIUM"])
+
+#-------------------------------------------------------------------------------
+# Publish Private APIs
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('HWENGINES_PCIE', [
+       "${INC_ROOT}/core/hwengines/pcie"
+])
+
+env.RequirePublicApi('IPA', area='data')
+env.RequirePublicApi('MEMORY', area='core')
+
+#PLATFORM VIRTIO 
+#env.Append(CPPDEFINES=["PCIE_VIRTIO"])
+
+#env.Append(CPPDEFINES=["PCIE_OSAL_DEBUG"])
+#env.Append(CPPDEFINES=["PCIE_BOOT"])
+
+#uncomment if enabling PCIe in Boot
+#env.Append(CPPDEFINES=["PCIE_BOOT_ENABLED"])
+
+#PLATFORM RUMI
+#env.Append(CPPDEFINES=["FEATURE_PCIE_RUMI_BRINGUP"])
+
+#Clock check for debug 
+#env.Append(CPPDEFINES=["PCIE_AHB_AXI_CLK_CHECK"])
+
+#Set target speed
+env.Append(CPPDEFINES=["PCIE_CORE_TARGETSPEED=PCIE_CORE_TARGETSPEED_GEN2"])
+#Gen1 for RUMI
+#env.Append(CPPDEFINES=["PCIE_CORE_TARGETSPEED=PCIE_CORE_TARGETSPEED_GEN1"])
+
+#Type of coredump
+env.Append(CPPDEFINES=["PCIE_ERROR_FATAL_DUMP_TYPE=PCIE_PARTIAL_DUMP"])
+
+#Use IPA
+#env.Append(CPPDEFINES=["PCIE_USE_IPA"])
+
+#CLKREQ Interrupt Support
+env.Append(CPPDEFINES=["PCIE_CLKREQ_INTR_SUPPORTED"])
+
+#Use PCIe Peripheral memory lock feature 
+#env.Append(CPPDEFINES=["PCIE_PERIPH_MEM_LOCK_ENABLED"])
+
+#Use NO_SUBMIT option for DMA
+#env.Append(CPPDEFINES=["PCIE_DMA_USE_NOSUBMIT"])
+
+#XML props for PCIe
+env.Append(CPPDEFINES=["PCIE_XML_PROPS"])
+
+#Enable priority for read/write requests 
+#env.Append(CPPDEFINES=["PCIE_ENABLE_HIGH_PRIORITY_MSG"])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/hwengines/pcie/"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'HAL',
+   'HWENGINES',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DAL',   
+   'SECUREMSM',
+   'KERNEL',
+   'POWER',
+   'DEBUGTOOLS',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+PCIE_COMMON_SOURCES =  [
+	   '${BUILDPATH}/pcie.c',
+	   '${BUILDPATH}/pcie_osal.c',
+	   '${BUILDPATH}/pcie_core.c',
+           '${BUILDPATH}/pcie_phy.c',
+           '${BUILDPATH}/pcie_tgt.c',
+           '${BUILDPATH}/pcie_interrupt.c',
+           '${BUILDPATH}/pcie_gpio.c',
+           '${BUILDPATH}/pcie_res.c',
+           '${BUILDPATH}/pcie_i.c',
+           '${BUILDPATH}/pcie_dma.c',
+	]
+
+
+pcie_obj = env.Object([PCIE_COMMON_SOURCES])
+pcie_lib = env.Library('${BUILDPATH}/pcie', pcie_obj)
+
+if env['MSM_ID'] in ['9x45','9x55']:
+  env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], pcie_lib)
+#  env.AddLibsToImage(['PCIE_BOOT_DRIVER'], pcie_lib)
+
+if env['MSM_ID'] in ['9x45','9x55']:
+  if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['MODEM_IMAGE',    'CBSP_MODEM_IMAGE',  'CORE_APPS','APPS_IMAGE',
+                  'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+    env.AddRCInitFunc(
+      RCINIT_IMG,
+      {
+        'sequence_group'             : 'RCINIT_GROUP_2',
+        'init_name'                  : 'pcie_drv',
+        'init_function'              : 'pcie_init',
+        'dependencies'               : ['clk_regime','GPIOInt','pm','sys_m_gpio_init','ipa_init','time_init_config_function']
+      })
+
+#-------------------------------------------------------------------------------
+# Set the path to the PCIe config file.
+#-------------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env and env['MSM_ID'] in ['9x45','9x55']:
+
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+
+   #  If there is a processor specific .xml file use that.  
+   #  Otherwise, use the generic .xml file for the MSM.
+   
+   config_dir = "%s/core/hwengines/pcie" % ( env['BUILD_ROOT']  )
+
+   msm_xml    = "%s/pcie_config.xml"    % ( config_dir ) 
+
+   print "msm_xml = %s" % msm_xml
+
+   if( os.path.exists( msm_xml )):
+      devcfg_xml = msm_xml
+   else:
+      devcfg_xml = '';
+
+   env.AddDevCfgInfo( DEVCFG_IMG, 
+   {
+      'devcfg_xml': ['${BUILDPATH}/pcie_config.xml',
+                     '${BUILDPATH}/pcie_tgt_config.c']
+   })
+
+   print "devcfg_xml = %s" % ( devcfg_xml )
+
+if env['MSM_ID'] in ['9x45','9x55']:
+    PCIE_CONFIG_SOURCES = ['${BUILDPATH}/pcie_tgt_config.c']
+    pcie_cfg_obj = env.Object([PCIE_CONFIG_SOURCES])
+    pcie_cfg_lib = env.Library('${BUILDPATH}/pcie_cfg', pcie_cfg_obj)
+    env.AddLibsToImage(['QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'CORE_APPS'], [pcie_cfg_lib])
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+#env.LoadSoftwareUnits(level=1)

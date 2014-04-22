@@ -1,0 +1,25 @@
+<driver name="Timetick">
+  <device id="SystemTimer">
+    <props name="QTIMER_BASE" type=DALPROP_ATTR_TYPE_UINT32>
+      0x0B000000
+    </props>
+    <props name="QTIMER_OFFSET" type=DALPROP_ATTR_TYPE_UINT32>
+      0x00021000
+    </props>
+    <props name="QTIMER_FRAME" type=DALPROP_ATTR_TYPE_UINT32>
+      0
+    </props>
+    <props name="QTIMER_AC_OFFSET" type=DALPROP_ATTR_TYPE_UINT32>
+      0x00020000
+    </props>
+    <props name="QTIMER_INTVECTNUM" type=DALPROP_ATTR_TYPE_UINT32>
+      38
+    </props>
+    <props name="QTIMER_CNT_VIRTUAL_OFFSET" type=DALPROP_ATTR_TYPE_UINT32>
+      0x8
+    </props>
+    <props name="QTIMER_CVAL_VIRTUAL_OFFSET" type=DALPROP_ATTR_TYPE_UINT32>
+      0x10
+    </props>
+  </device>
+</driver>

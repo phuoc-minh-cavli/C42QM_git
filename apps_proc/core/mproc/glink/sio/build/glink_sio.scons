@@ -1,0 +1,122 @@
+#===============================================================================
+#
+# SMD Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2014 - 2015,2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/13/15   db        Updated build tag from 'MODEM_PROC' to 'CORE_MODEM'
+#                       for adding glink sio task in 9x55
+# 12/09/14   db        Added dependecy on SIO layer.
+#                      Added compilation condition based on MSM_ID
+# 08/29/14   db        Initial version for glink sio scons
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/mproc/glink/sio/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+#  Publish Private APIs
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('MPROC_GLINK', [
+   "${BUILD_ROOT}/core/mproc/glink/os/inc",
+   "${BUILD_ROOT}/core/mproc/glink/sio/inc"
+] )
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DEBUGTOOLS',
+   'HAL',
+   'DAL',
+   'HWENGINES',
+   'MPROC',
+   'MEMORY',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['MPROC_GLINK'])
+
+if env.has_key('MODEM_PROC'):
+  env.Append(CPPDEFINES=['FEATURE_RCINIT'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+GLINK_SIO = [
+   '${BUILDPATH}/glink_sio.c',
+   '${BUILDPATH}/glink_sio_task.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+# Add Image-specific Libraries, whose sources should be packed out.
+env.AddBinaryLibrary(['WCN_IMAGE', 'CORE_QDSP6_SW', 'CBSP_APPS_IMAGE', 'APPS_IMAGE'],
+                     '${BUILDPATH}/glink_sio',
+                     [GLINK_SIO])
+
+                     
+#-------------------------------------------------------------------------------
+# CleanPack (Remove) all remaining files for peripheral processors
+#-------------------------------------------------------------------------------
+PACK_OUT = env.FindFiles(['*.h', '*.c', '*.s'], SRCPATH)
+# Don't include RPM in this list, because it already does we want automatically.
+env.CleanPack(['CORE_QDSP6_SW', 'WCN_IMAGE'], PACK_OUT)
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_GLINK_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_0',           # required
+  'init_name'                  : 'glink_sio',                # required
+  'init_function'              : 'glink_sio_task_init',      # required
+  'dependencies'               : ['glink','sio']
+}
+
+RCINIT_GLINK_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_0',          # required
+  'thread_name'                : 'glink_sio_task',                 # required
+  'thread_entry'               : 'RCINIT_NULL',             # NOT AVAILABLE
+  'stack_size_bytes'           : '8192',
+  'priority_amss_order'        : 'SMD_PRI_ORDER',
+  'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+  'tcb_name'                   : 'glink_tcb',
+}
+
+if 'USES_RCINIT' in env and (env['MSM_ID'] not in ['9x45']):
+  RCINIT_IMG = ['CORE_MODEM', 'CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_GLINK_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_GLINK_TASK )

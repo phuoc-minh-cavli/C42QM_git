@@ -1,0 +1,127 @@
+*asm:
+%{v} %{march=*} %{G*:-G%*;:%{mbuilding-multilib:%{mG0lib:-G0}}}
+
+*asm_debug:
+
+
+*asm_final:
+
+
+*asm_options:
+%{--target-help:%:print-asm-header()} %a %Y %{c:%W{o*}%{!o*:-o %w%b%O}}%{!c:-o %d%w%u%O}
+
+*invoke_as:
+%{!S:-o %|.s |
+ as %(asm_options) %|.s %A }
+
+*cpp:
+
+
+*cpp_options:
+%(cpp_unique_options) %1 %{m*} %{std*&ansi&trigraphs} %{W*&pedantic*} %{w} %{f*} %{g*:%{!g0:%{g*} %{!fno-working-directory:-fworking-directory}}} %{O*} %{undef} %{save-temps:-fpch-preprocess}
+
+*cpp_debug_options:
+%{d*}
+
+*cpp_unique_options:
+%{C|CC:%{!E:%eGCC does not support -C or -CC without -E}} %{!Q:-quiet} %{nostdinc*} %{C} %{CC} %{v} %{I*&F*} %{P} %I %{MD:-MD %{!o:%b.d}%{o*:%.d%*}} %{MMD:-MMD %{!o:%b.d}%{o*:%.d%*}} %{M} %{MM} %{MF*} %{MG} %{MP} %{MQ*} %{MT*} %{!E:%{!M:%{!MM:%{!MT:%{!MQ:%{MD|MMD:%{o*:-MQ %*}}}}}}} %{remap} %{g3|ggdb3|gstabs3|gcoff3|gxcoff3|gvms3:-dD} %{H} %C %{D*&U*&A*} %{i*} %Z %i %{fmudflap:-D_MUDFLAP -include mf-runtime.h} %{fmudflapth:-D_MUDFLAP -D_MUDFLAPTH -include mf-runtime.h} %{E|M|MM:%W{o*}}
+
+*trad_capable_cpp:
+cc1 -E %{traditional|ftraditional|traditional-cpp:-traditional-cpp}
+
+*cc1:
+%{G*:-G%*;:%{mbuilding-multilib:%{mG0lib:-G0}}} -funsigned-bitfields
+
+*cc1_options:
+%{pg:%{fomit-frame-pointer:%e-pg and -fomit-frame-pointer are incompatible}} %1 %{!Q:-quiet} -dumpbase %B %{d*} %{m*} %{a*} %{c|S:%{o*:-auxbase-strip %*}%{!o*:-auxbase %b}}%{!c:%{!S:-auxbase %b}} %{g*} %{O*} %{W*&pedantic*} %{w} %{std*&ansi&trigraphs} %{v:-version} %{pg:-p} %{p} %{f*} %{undef} %{Qn:-fno-ident} %{--help:--help} %{--target-help:--target-help} %{--help=*:--help=%(VALUE)} %{!fsyntax-only:%{S:%W{o*}%{!o*:-o %b.s}}} %{fsyntax-only:-o %j} %{-param*} %{fmudflap|fmudflapth:-fno-builtin -fno-merge-constants} %{coverage:-fprofile-arcs -ftest-coverage}
+
+*cc1plus:
+%{G*:-G%*;:%{mbuilding-multilib:%{mG0lib:-G0}}} -funsigned-bitfields
+
+*link_gcc_c_sequence:
+--section-start .start=0x40000000 --start-group %{moslib=*:-l%*; :-lstandalone} %L %G --end-group
+
+*link_ssp:
+%{fstack-protector:}
+
+*endfile:
+fini.o%s
+
+*link:
+%{h*} %{v:-V} 		   %{static:-dn -Bstatic} 		   %{shared:-G -dy -z text} 		   %{symbolic:-Bsymbolic -G -dy -z text} 		   %{G*:-G%*;:%{mbuilding-multilib:%{mG0lib:-G0}}} 		   %{YP,*} 		   %{!YP,*:%{p:-Y P,/usr/ccs/lib/libp:/usr/lib/libp:/usr/ccs/lib:/usr/lib} 		    %{!p:-Y P,/usr/ccs/lib:/usr/lib}} 		   %{Qy:} %{!Qn:-Qy}
+
+*lib:
+%{!shared:%{!symbolic:-lc}}
+
+*mfwrap:
+ %{static: %{fmudflap|fmudflapth:  --wrap=malloc --wrap=free --wrap=calloc --wrap=realloc --wrap=mmap --wrap=munmap --wrap=alloca} %{fmudflapth: --wrap=pthread_create}} %{fmudflap|fmudflapth: --wrap=main}
+
+*mflib:
+%{fmudflap|fmudflapth: -export-dynamic}
+
+*link_gomp:
+
+
+*libgcc:
+-lgcc
+
+*startfile:
+%{moslib=standalone:crt0_standalone.o%s} %{!moslib=*:crt0_standalone.o%s} crt0.o%s init.o%s
+
+*switches_need_spaces:
+
+
+*cross_compile:
+1
+
+*version:
+4.4.0
+
+*multilib:
+. !march=hexagonv3 !march=hexagonv4 !mG0lib;v3 march=hexagonv3 !march=hexagonv4 !mG0lib;v4 !march=hexagonv3 march=hexagonv4 !mG0lib;G0 !march=hexagonv3 !march=hexagonv4 mG0lib;v3/G0 march=hexagonv3 !march=hexagonv4 mG0lib;v4/G0 !march=hexagonv3 march=hexagonv4 mG0lib;
+
+*multilib_defaults:
+
+
+*multilib_extra:
+mbuilding-multilib
+
+*multilib_matches:
+march=hexagonv3 march=hexagonv3;march=hexagonv4 march=hexagonv4;mG0lib mG0lib;
+
+*multilib_exclusions:
+
+
+*multilib_options:
+march=hexagonv3/march=hexagonv4 mG0lib
+
+*linker:
+collect2
+
+*link_libgcc:
+%D
+
+*md_exec_prefix:
+
+
+*md_startfile_prefix:
+
+
+*md_startfile_prefix_1:
+
+
+*startfile_prefix_spec:
+
+
+*sysroot_spec:
+--sysroot=%R
+
+*sysroot_suffix_spec:
+
+
+*sysroot_hdrs_suffix_spec:
+
+
+*link_command:
+%{!fsyntax-only:%{!c:%{!M:%{!MM:%{!E:%{!S:    %(linker) %l %{pie:-pie} %X %{o*} %{A} %{d} %{e*} %{m} %{N} %{n} %{r}    %{s} %{t} %{u*} %{x} %{z} %{Z} %{!A:%{!nostdlib:%{!nostartfiles:%S}}}    %{static:} %{L*} %(mfwrap) %(link_libgcc) %o    %{fopenmp|ftree-parallelize-loops=*:%:include(libgomp.spec)%(link_gomp)} %(mflib)    %{fprofile-arcs|fprofile-generate|coverage:-lgcov}    %{!nostdlib:%{!nodefaultlibs:%(link_ssp) %(link_gcc_c_sequence)}}    %{!A:%{!nostdlib:%{!nostartfiles:%E}}} %{T*} }}}}}}
+

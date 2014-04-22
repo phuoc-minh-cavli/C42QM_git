@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CPU VDD Sleep Low Power Resource/Mode definitions
+
+  Copyright (c) 2012 Qualcomm Technologies Incorporated.
+  All Rights Reserved.
+  Qualcomm Confidential and Proprietary
+-->
+
+<!--
+  Note: Update enter/exit latencies once rpm portion is 
+        profiled. Right now the values are based on apps side
+        ulog profiling.
+-->
+
+<LPRDefinition>
+  <LPR Name="vdd_dig" CoreMask="0xFFFFFFFF" InitFn="vdd_dig_init" ProfileFreq="300000">
+    <Mode 
+      Name="min"
+      Dependency="cxo.shutdown + rpm.sync"
+      Order="BEFORE rpm.sync"
+      PowerSavings="0, 1000"
+      EnterLat="649"
+      ExitLat="126"
+      Backoff="126"
+      EnterFn="vdd_dig_min_enter"
+      ExitFn="vdd_dig_min_exit"
+    >
+    </Mode>
+  </LPR>
+</LPRDefinition>

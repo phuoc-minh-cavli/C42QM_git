@@ -1,0 +1,99 @@
+#===============================================================================
+#
+# Zlib Library
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2013-2017, 2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary and Confidential.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/services/compression/zlib/build/zlib.scons#3 $
+#  $DateTime: 2019/08/14 00:45:33 $
+#  $Author: pwbldsvc $
+#  $Change: 20199023 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# 02/20/19   kdey    Added compilation flag for page-only image
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/services/compression/zlib/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+#env.AddUsesFlags('USES_SERVICES_ZLIB')
+#env.Replace(USES_SERVICES_ZLIB = 'yes')
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireRestrictedApi([
+   'SERVICES',
+])
+
+env.PublishPrivateApi('SERVICES_ZLIB_INC', [
+   "${INC_ROOT}/core/services/compression/zlib/inc",
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SERVICES',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+ZLIB_SOURCES = [
+   '${BUILDPATH}/adler32.c',
+   '${BUILDPATH}/compress.c',
+   '${BUILDPATH}/crc32.c',
+   '${BUILDPATH}/deflate.c',
+   '${BUILDPATH}/infback.c',
+   '${BUILDPATH}/inffast.c',
+   '${BUILDPATH}/inflate.c',
+   '${BUILDPATH}/inftrees.c',
+   '${BUILDPATH}/trees.c',
+   '${BUILDPATH}/uncompr.c',   
+   '${BUILDPATH}/zutil.c',   
+]
+
+ZLIB_IMAGES = [
+	'MODEM_IMAGE', 
+	'CBSP_MODEM_IMAGE',
+	'APPS_IMAGE',
+	'CBSP_APPS_IMAGE',
+	'SINGLE_IMAGE',
+	'CBSP_SINGLE_IMAGE',
+	'QDSP6_SW_IMAGE',
+	'CBSP_QDSP6_SW_IMAGE',
+	'MODEM_PAGEONLY','MODEM_SENSORONLY',
+]
+
+env.AddLibrary(ZLIB_IMAGES,'${BUILDPATH}/zlib',ZLIB_SOURCES)

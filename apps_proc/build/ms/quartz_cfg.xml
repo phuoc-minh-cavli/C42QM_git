@@ -1,0 +1,139 @@
+#include "customer.h"
+<?xml version="1.0" ?>
+<image>
+    <machine>
+        <cpu name="cortex-a7_r0p0" num="1"/>
+        <!-- <platform name="9x25"/> -->
+        <cache_attribute l1_dcache_way_size="0x2000"/>
+        <virtual_memory name="virtual" >
+        <region base="0x00001000" size="0x0FFFF000" />
+            <region base="0x60000000" size="0x90000000" />
+    </virtual_memory>
+        <physical_memory name="physical">
+            <region base=SCL_APPS_CODE_USER_BASE size=SCL_APPS_CODE_USER_SIZE />
+    </physical_memory>
+        
+        <physical_memory name="physical_kernel" >
+            <region base=SCL_APPS_KERNEL_BASE size=SCL_APPS_KERNEL_SIZE />
+    </physical_memory>
+        
+        <physical_memory name="physical_shared" >
+            <region base=SCL_SHARED_RAM_BASE size=SCL_SHARED_RAM_SIZE />
+        </physical_memory>
+      
+        <physical_memory name="physical_imem" >
+            <region base=SCL_OCIMEM_BASE_PHYS size="0xC000" />
+        </physical_memory>
+
+        <physical_memory name="physical_acdb" >
+            <region base=ACDB_RAM_BASE_PHYS size=ACDB_RAM_SIZE />
+        </physical_memory>
+      
+        <physical_memory name="physical_efs" >
+            <region base=EFS_RAM_BASE_PHYS size=EFS_RAM_SIZE />
+        </physical_memory>
+
+       <physical_memory name="physical_qdss_stm" >
+            <region base="0x09000000" size="0x1000000" />
+        </physical_memory>
+        
+#ifdef SCL_APPS_DIAG_LOG_BASE
+        <physical_memory name="physical_diag_log" >
+            <region base=SCL_APPS_DIAG_LOG_BASE size=SCL_APPS_DIAG_LOG_SIZE />
+        </physical_memory>
+#endif
+      
+#include "../../core/api/systemdrivers/hwio/mdm9x55/msmhwioplat_machine.xml"
+    <phys_device name="timer_dev">
+            <physical_memory name="timer_mem0">
+                <region base="0x0B020000" cache_policy="device" rights="all" size="0x3000" overlap="True" /> 
+            </physical_memory>
+            <interrupt name="int_timer0" number="1"/>
+        </phys_device>
+        
+        <phys_device name="serial_dev">
+            <physical_memory name="serial_mem0">
+               <region base=SCL_APPS_SERIAL_DEV_BASE cache_policy="device" rights="all" size=SCL_APPS_SERIAL_DEV_SIZE />
+            </physical_memory>
+            <interrupt name="int_serial0" number="45"/>
+        </phys_device>
+        
+        <phys_device name="kinterrupt_dev">
+            <physical_memory name="kinterrupt_mem0">
+                <region base="0x0B000000" cache_policy="device" rights="all" size="0x8000" overlap="True" />
+            </physical_memory>
+        </phys_device>
+         
+        <phys_device name="etm_dev">
+            <physical_memory name="etm_mem0">
+                <region base="0x00842000" cache_policy="device" rights="all" size="0x1000" overlap="True" />
+            </physical_memory>
+        </phys_device>
+    
+        <phys_device name="cti_dev">
+            <physical_memory name="cti_mem0">
+                <region base="0x00843000" cache_policy="device" rights="all" size="0x1000" overlap="True" />
+           </physical_memory>
+        </phys_device>
+
+       
+    </machine>
+
+    <virtual_pool name="virtual">
+        <memory src="virtual" />
+    </virtual_pool>
+
+    <virtual_pool name="virtual_hwio">
+        <memory src="virtual_hwio" />
+    </virtual_pool>
+    
+    <physical_pool name="physical">
+        <memory src="physical" />
+        <memory src="physical_shared" />
+        <memory src="physical_imem" />
+        <memory src="physical_acdb" />
+        <memory src="physical_efs" />
+        <memory src="physical_qdss_stm" />
+#ifdef SCL_APPS_DIAG_LOG_BASE
+        <memory src="physical_diag_log" />
+#endif
+    </physical_pool>
+
+    <physical_pool name="physical_k">
+        <memory src="physical_kernel" />
+    </physical_pool>
+    
+    <physical_pool name="physical_hwio">
+    <memory src="physical_hwio" />
+    </physical_pool>
+    
+    <kernel configuration="okl4extras-debug" platform="9x55" physpool="physical_k" virtpool="virtual">
+        <use_device name="timer_dev"/>
+            <use_device name="kinterrupt_dev"/>
+            <use_device name="etm_dev"/>
+            <use_device name="cti_dev"/>
+
+        <patch address="_kernel_base_addr" value=SCL_APPS_KERNEL_BASE bytes="4"/>
+    <patch address="is_trustzone_enabled" value="0x1" bytes="4"/>
+    </kernel>
+    
+    <program_cell file=AMSS_RELOC_LC physpool="physical" virtpool="virtual" kernel_heap="256K" name="AMSS" caps="1000" threads="200" priority="100" start="__main" direct="true">
+        <tracebuffer size="4096"/>
+        <stack size="64K" align="4k"/>
+        <heap size=USER_HEAP_SIZE align=USER_HEAP_ALIGNMENT />
+        <irq value="-0x1"/>
+        <use_device name="serial_dev"/>
+        <platform_control name="PLATFORM_CONTROL"/>
+        <intlock_control name="INTLOCK_CONTROL"/>
+        <profile_control name="PROFILE_CONTROL"/>
+      <memsection name="SMEM" direct="false" virt_addr=SCL_SHARED_RAM_BASE phys_addr=SCL_SHARED_RAM_BASE_PHYS size=SCL_SHARED_RAM_SIZE attach="rw" cache_policy="uncached_shared" virtpool="virtual" physpool="physical" zero="false" />    
+      <memsection name="IMEM" direct="false" virt_addr=SCL_OCIMEM_BASE phys_addr=SCL_OCIMEM_BASE_PHYS size="0xC000" attach="rwx" cache_policy="uncached" virtpool="virtual" physpool="physical" zero="false" />  
+      <memsection name="ACDB" direct="true" virt_addr=ACDB_RAM_BASE_PHYS size=ACDB_RAM_SIZE attach="rw" cache_policy="uncached" virtpool="virtual" physpool="physical" zero="false" />   
+      <memsection name="EFSS" direct="true" virt_addr=EFS_RAM_BASE_PHYS size=EFS_RAM_SIZE attach="rw" cache_policy="uncached" virtpool="virtual" physpool="physical" zero="false" />
+      <memsection name="QDSS_STM" direct="false" virt_addr="0xD0200000" phys_addr="0x09000000" size="0x1000000" attach="rw" cache_policy="uncached" virtpool="virtual" physpool="physical" zero="false" />
+      <memsection name="AMSS_QDSS_APB_DEC_QDSS_APB_BASE2" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x12030000" size="0x20000" phys_addr="0x00830000" cache_policy="device" zero="false"/>
+      <memsection name="AMSS_QDSS_APB_DEC_QDSS_APB_BASE3" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x1206C000" size="0x2000" phys_addr="0x0086C000"  cache_policy="device" zero="false"/>
+      <memsection name="RPM_RAM"  direct="false" virt_addr="0xD21A0000" phys_addr="0x002A0000" size="0x2000" attach="rw" cache_policy="uncached_shared" virtpool="virtual" physpool="physical_hwio" zero="false" />
+#include "../../core/api/systemdrivers/hwio/mdm9x55/msmhwioplat_memsection.xml" 
+    </program_cell>
+</image>

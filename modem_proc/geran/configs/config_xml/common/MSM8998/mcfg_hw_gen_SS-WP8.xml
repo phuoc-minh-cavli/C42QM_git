@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="geran.0.0" type="1"/>
+<NvEfsItemData name="gsm_rx_diversity" id="71588" description="This EFS item controls GSM Rx diversity feature" comment="" category="GSM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/gsm/gl1/gsm_rx_diversity">
+		<Member name="GSMRxDivCtlFlag" description="This EFS item controls GSM Rx diversity feature" comment="" sizeOf="1" type="uint32">31 </Member>
+	</NvEfsItemData>
+	</NvData>

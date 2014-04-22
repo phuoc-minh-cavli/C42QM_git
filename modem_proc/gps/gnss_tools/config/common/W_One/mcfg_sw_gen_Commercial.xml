@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+<NvItemData name="GPSOne Lock" id="452" description="" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gps1_lock" description="" comment="" sizeOf="1" type="uint32">0 </Member>
+	</NvItemData>
+	</NvData>

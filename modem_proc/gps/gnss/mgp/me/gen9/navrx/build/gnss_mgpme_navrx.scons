@@ -1,0 +1,140 @@
+# -------------------------------------------------------------------------------- #
+#                         G N S S _ M G P M E _ N A V R X . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the NavRX module.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+#  Copyright (c) 2015 Qualcomm Atheros, Inc.
+#  Qualcomm Atheros Confidential and Proprietary. All Rights Reserved. 
+#  Copyright (c) 2013 - 2017 Qualcomm Technologies, Inc. 
+#  All Rights Reserved.
+#  Confidential and Proprietary - Qualcomm Technologies, Inc.
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+# --------------------------------------------------------------------------------- #
+
+# --------------------------------------------------------------------------------- #
+#
+#                      EDIT HISTORY FOR FILE
+#
+# This section contains comments describing changes made to this file.
+# Notice that changes are listed in reverse chronological order.
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/mgp/me/gen9/navrx/build/gnss_mgpme_navrx.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# $Author: pwbldsvc $
+#
+#  when        who  what, where, why
+#  ----------  ---  -----------------------------------------------------------
+#  2015-02-10  dmc  Initial revision.
+#
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+from glob import glob
+from os.path import join, basename
+
+# Helper function to define necessary NavRX configuration
+def AddSupportedChipset(chipset, digital, adc, analog, hwio, family):
+    # All Inputs should be be Arrays
+    if type(chipset) is not list:
+        chipset = [chipset]
+    if type(digital) is not list:
+        digital = [digital]
+    if type(adc) is not list:
+        adc = [adc]
+    if type(analog) is not list:
+        analog = [analog]
+    if type(hwio) is not list:
+        hwio = [hwio]
+    if type(family) is not list:
+        family = [family]
+    
+    # If the current build chipset matches the chipset
+    PATH_TO_VERIFY = []
+    CURRENT_CHIPSET = gps_env['CHIPSET']
+    
+    if CURRENT_CHIPSET in chipset:
+        # Go through all the FLAGS
+        for submodule in digital + adc + analog + hwio + family:
+            # Generate the necessary Flags
+            gps_env.PrintInfo('NavRX: FEATURE_GNSS_NAVRX_' + submodule)
+            gps_env.Append(CPPDEFINES = ' FEATURE_GNSS_NAVRX_' + submodule)
+            gps_env.AddUsesFlags('USES_FEATURE_GNSS_NAVRX_'  + submodule)
+            
+            # Compile the Paths to verify.
+            [NAVRX_MODULE, NAVRX_SUBMODULE] = submodule.split('_')
+            PATH_TO_VERIFY.append('${GPS_ROOT}/gnss/mgp/me/gen9/navrx/' + \
+                                  NAVRX_MODULE.lower() + '/src/' + \
+                                  NAVRX_SUBMODULE.lower())
+            
+        # Verify that all paths are present.  
+        for subpath in PATH_TO_VERIFY:
+            if gps_env.PathExists(subpath) is False:
+                gps_env.PrintWarning('NavRX: Missing ' + subpath)
+    
+    return None
+AddMethod(gps_env, AddSupportedChipset)  #TODO: Investigate distribution of Method to submodules
+
+#--------------------------------------------------------------------------------
+# Check USES flags and return if library isn't needed
+#--------------------------------------------------------------------------------
+if 'USES_CGPS' not in gps_env:
+    Return()
+
+# Workaround for C++ compile failures due to inline C functions
+gps_env.Append(CFLAGS="-D_NO_CPP_INLINES ")
+
+#--------------------------------------------------------------------------------
+# Enable NavRX features based on the chipset
+#--------------------------------------------------------------------------------
+AddSupportedChipset(['mdm9x65',
+                     'mdm9x55',
+                     'msm8998',
+                     'sdm845', 
+                     'sdm660',
+                     'sdm670',
+                     'sm6150'], ['DIGITAL_GEN9','DIGITAL_WTR5975V2','DIGITAL_SDR660'], ['ADC_ARCHE'], ['ANALOG_WTR5975','ANALOG_SDR660','ANALOG_SDR845'], ['HWIO_QLINK'], ['CONFIG_ATLAS'])
+AddSupportedChipset(['sdx24',
+                     'sdm855',
+                     'sm8150',
+                     'sdm1000',], ['DIGITAL_GEN9VTV2'], ['ADC_ARCHE14'], ['ANALOG_WTR5975','ANALOG_SDR855'], ['HWIO_QLINKV2'], ['CONFIG_HERCULES'])
+AddSupportedChipset(['mdm9205',
+                     'mdm9607',], ['DIGITAL_GEN9VTV3'], ['ADC_MANTICORE'], ['ANALOG_SDR105'], [], ['CONFIG_CHILTEPIN'])                     
+AddSupportedChipset(['sdx55',], ['DIGITAL_GEN9VTV4'], [], [], ['HWIO_QLINKV2'], ['CONFIG_HIMALAYA'])
+ 
+#-------------------------------------------------------------------------------
+# Publish these private APIs for the rest of Nav Rx
+#------------------------------------------------------------------------------- 
+NAVRX_PRIVATE_API = ['${GPS_ROOT}/gnss/mgp/me/gen9/navrx/adc/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/analog/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/common/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/config/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/digital/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/hwio/inc',
+                     '${GPS_ROOT}/gnss/mgp/me/gen9/navrx/inc'
+                  ]   
+
+gps_env.PublishPrivateApi('NAVRX', NAVRX_PRIVATE_API)
+gps_env.RequirePrivateApi('NAVRX')
+
+gps_env.LoadSoftwareUnits()
+

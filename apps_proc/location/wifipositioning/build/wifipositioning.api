@@ -1,0 +1,22 @@
+#===============================================================================
+#
+# GPS API wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load API's for GPS
+#
+# Copyright (c) 2010 - 2012 Qualcomm Technologies Incorporated.
+# Qualcomm Confidential and Proprietary. All Rights Reserved.
+# Copyright (c) 2013 - 2015 Qualcomm Atheros, Inc.
+# Qualcomm Atheros Confidential and Proprietary. All Rights Reserved. 
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/location.tx/3.0/wifipositioning/build/wifipositioning.api#1 $
+#  $DateTime: 2020/06/04 04:30:35 $
+#
+#===============================================================================
+Import('env')
+env.LoadAPIUnits()

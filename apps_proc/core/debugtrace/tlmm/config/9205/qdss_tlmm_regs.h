@@ -1,0 +1,102 @@
+#ifndef __QDSS_TLMM_REGS_H__
+#define __QDSS_TLMM_REGS_H__
+/*
+===========================================================================
+*/
+/**
+  @file qdss_tlmm_regs.h
+  @brief Auto-generated HWIO interface include file.
+
+  Reference chip release:
+    MDM9x07 (Lykan) [lykan_v1.0_p3q3r163]
+ 
+  This file contains HWIO register definitions for the following modules:
+    TLMM_CSR
+
+  'Include' filters applied: TLMM_ETM_MODE*[TLMM_CSR] TLMM_SDC2_HDRV*[TLMM_CSR] 
+  'Exclude' filters applied: RESERVED DUMMY 
+*/
+/*
+  ===========================================================================
+
+  Copyright (c) 2016 Qualcomm Technologies Incorporated.
+  All Rights Reserved.
+  Qualcomm Confidential and Proprietary
+
+  Export of this technology or software is regulated by the U.S. Government.
+  Diversion contrary to U.S. law prohibited.
+
+  All ideas, data and information contained in or disclosed by
+  this document are confidential and proprietary information of
+  Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+  By accepting this material the recipient agrees that this material
+  and the information contained therein are held in confidence and in
+  trust and will not be used, copied, reproduced in whole or in part,
+  nor its contents revealed in any manner to others without the express
+  written permission of Qualcomm Technologies Incorporated.
+
+  ===========================================================================
+
+  $Header: //components/rel/core.tx/6.0/debugtrace/tlmm/config/9205/qdss_tlmm_regs.h#1 $
+  $DateTime: 2020/01/30 22:49:35 $
+  $Author: pwbldsvc $
+
+  ===========================================================================
+*/
+
+/*----------------------------------------------------------------------------
+ * MODULE: TLMM_CSR
+ *--------------------------------------------------------------------------*/
+
+#define TLMM_CSR_REG_BASE                                                                   (TLMM_BASE      + 0x00000000)
+
+#define HWIO_TLMM_ETM_MODE_ADDR                                                             (TLMM_CSR_REG_BASE      + 0x00110004)
+#define HWIO_TLMM_ETM_MODE_RMSK                                                                    0x3
+#define HWIO_TLMM_ETM_MODE_POR                                                              0x00000000
+#define HWIO_TLMM_ETM_MODE_POR_RMSK                                                         0xffffffff
+#define HWIO_TLMM_ETM_MODE_IN          \
+        in_dword_masked(HWIO_TLMM_ETM_MODE_ADDR, HWIO_TLMM_ETM_MODE_RMSK)
+#define HWIO_TLMM_ETM_MODE_INM(m)      \
+        in_dword_masked(HWIO_TLMM_ETM_MODE_ADDR, m)
+#define HWIO_TLMM_ETM_MODE_OUT(v)      \
+        out_dword(HWIO_TLMM_ETM_MODE_ADDR,v)
+#define HWIO_TLMM_ETM_MODE_OUTM(m,v) \
+        out_dword_masked_ns(HWIO_TLMM_ETM_MODE_ADDR,m,v,HWIO_TLMM_ETM_MODE_IN)
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_BMSK                                                    0x3
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_SHFT                                                    0x0
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_MODE0_FVAL                                              0x0
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_MODE1_FVAL                                              0x1
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_MODE2_FVAL                                              0x2
+#define HWIO_TLMM_ETM_MODE_TRACE_OVER_SDC2_MODE3_FVAL                                              0x3
+
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_ADDR                                                   (TLMM_CSR_REG_BASE      + 0x00109000)
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_RMSK                                                       0xffff
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_POR                                                    0x00000bdb
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_POR_RMSK                                               0xffffffff
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_IN          \
+        in_dword_masked(HWIO_TLMM_SDC2_HDRV_PULL_CTL_ADDR, HWIO_TLMM_SDC2_HDRV_PULL_CTL_RMSK)
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_INM(m)      \
+        in_dword_masked(HWIO_TLMM_SDC2_HDRV_PULL_CTL_ADDR, m)
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_OUT(v)      \
+        out_dword(HWIO_TLMM_SDC2_HDRV_PULL_CTL_ADDR,v)
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_OUTM(m,v) \
+        out_dword_masked_ns(HWIO_TLMM_SDC2_HDRV_PULL_CTL_ADDR,m,v,HWIO_TLMM_SDC2_HDRV_PULL_CTL_IN)
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CLK_PULL_BMSK                                         0xc000
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CLK_PULL_SHFT                                            0xe
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_HYS_CTL_BMSK                                          0x2000
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_HYS_CTL_SHFT                                             0xd
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_HYS_CTL_DISABLE_FVAL                                     0x0
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_HYS_CTL_ENABLE_FVAL                                      0x1
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CMD_PULL_BMSK                                         0x1800
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CMD_PULL_SHFT                                            0xb
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_DATA_PULL_BMSK                                         0x600
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_DATA_PULL_SHFT                                           0x9
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CLK_HDRV_BMSK                                          0x1c0
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CLK_HDRV_SHFT                                            0x6
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CMD_HDRV_BMSK                                           0x38
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_CMD_HDRV_SHFT                                            0x3
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_DATA_HDRV_BMSK                                           0x7
+#define HWIO_TLMM_SDC2_HDRV_PULL_CTL_SDC2_DATA_HDRV_SHFT                                           0x0
+
+
+#endif /* __QDSS_TLMM_REGS_H__ */

@@ -1,0 +1,84 @@
+#/** @file DevPrgSblNLib.inf
+#
+#  DevPrgSblN Lib.
+#
+#  Copyright (c) 2019-2020 Qualcomm Technologies, Inc . All rights reserved.
+#
+#**/
+
+#===========================================================================
+#
+#                              EDIT HISTORY
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#  $Header: $
+#  $DateTime: $
+#  $Author: $
+
+#when         who   what, where, why
+#----------   ---   ---------------------------------------------------------
+# 2020-01-07   as   Add enhancements in hsuart transport layer
+# 2019-04-30   as   Initial Revision.
+#
+
+#==============================================================================
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DevPrgSblNLib
+  FILE_GUID                      = ab0e28a3-dd07-4d9a-a748-f9166514d13d
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DevPrgSblNLib
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS= -Wno-address-of-packed-member
+
+[Sources]
+  DevPrgSblNLib.c
+  ../../../XBLLoader/boot_sbl_if.h
+  ../../../XBLRamDump/boot_sahara.h
+  ../XBLLoaderLib/boot_target.h
+  ../../../Library/SerialPortLib/Uart.h
+  ../../../Library/DevPrgLib/devprgb_buffers_ddr.c
+  ../../../Library/DevPrgLib/devprgb_buffers_lite.c
+  ../../../Library/DevPrgLib/devprg_firehose.c
+  ../../../Library/DevPrgLib/devprg_gpt.c
+  ../../../Library/DevPrgLib/devprg_log.c
+  ../../../Library/DevPrgLib/devprg_security.c
+  ../../../Library/DevPrgLib/devprg_sha.c
+  ../../../Library/DevPrgLib/devprg_utils.c
+  ../../../Library/DevPrgLib/devprg_storage.c
+  ../../../Library/DevPrgLib/devprg_storage_nand.c
+  ../../../Library/DevPrgLib/devprg_storage_null.c
+  ../../../Library/DevPrgLib/devprg_storage_sdcc.c
+  ../../../Library/DevPrgLib/devprg_storage_spinor.c
+  ../../../Library/DevPrgLib/devprg_storage_ufs.c
+  ../../../Library/DevPrgLib/devprg_target.c
+  ../../../Library/DevPrgLib/devprg_transfer.c
+  ../../../Library/DevPrgLib/devprg_transport.c
+  ../../../Library/DevPrgLib/devprg_xml.c
+  ../../../Library/DevPrgLib/devprg_transport_hsuart.c
+  ../../../Library/DevPrgLib/devprg_hsuart.c
+  ../../../Library/DevPrgLib/devprg_cobs.c
+  ../../../Library/DevPrgLib/devprg_hsuart_pkt.c
+
+  ../TLMMTargetLib/HALtlmmtileHWIO.h
+  # Library definition
+  ../../../Include/Library/LoaderUtils.h
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -Werror -DBOOT_PBL_H=\"pbl_sbl_shared.h\" -DFEATURE_BOOT_EXTERN_SECBOOT_COMPLETED -DUSE_LOADER_UTILS -DFIREHOSE_LITE_CHANNEL_BUFFER_SIZE=4096 -DFIREHOSE_DDR_CHANNEL_BUFFER_SIZE=32768 -DDEVICEPROGRAMMER_SW_ID=3 -DFEATURE_DEVPRG_DDR -DFEATURE_DEVPRG_NAND -DFLASH_TOOLS_HEAP_SIZE=600000 -DFEATURE_DEVPRG_TRANSPORT_UART -DFEATURE_SBL_DEVICEPROGRAMMER_IMAGE
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+  QcomPkg/Library/MuslLib/MuslLib.dec
+
+[LibraryClasses]
+  DebugLib
+  UsbWrapperLayerLib
+  HSUartLib  
+  FlashCommonLoaderLib

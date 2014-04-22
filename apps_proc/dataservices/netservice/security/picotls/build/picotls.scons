@@ -1,0 +1,85 @@
+#===============================================================================
+#
+# PicoTLS AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2019 by QUALCOMM Technologies, Inc. All Rights Reserved.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+SRCPATH = '${BUILD_ROOT}/dataservices/netservice/security/picotls'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = " --diag_suppress=66 ")
+	env.Append(CCFLAGS = " --diag_suppress=550 ")
+
+
+#------------------------------------------------------------------
+# Setup source PATH
+#------------------------------------------------------------------
+
+##------------------------------------------------------------------
+## Necessary Public and Restricted API's
+##------------------------------------------------------------------
+env.RequirePublicApi(['KERNEL'], area='core')
+env.RequirePublicApi(['SERVICES'], area='core')
+env.RequirePublicApi(['DEBUGTOOLS'], area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+
+env.RequirePublicApi('SHARKSSL_PORT')
+env.RequirePublicApi('SHARKSSL')
+env.RequirePublicApi('NICHESTACK')
+env.RequirePublicApi(['QAPI'])
+env.RequireRestrictedApi('PICOTLS')
+
+env.RequirePublicApi('CRYPTOLIB', area='crypto')
+env.RequirePublicApi('CRYPTOLIB')
+env.RequireRestrictedApi(['DS_UTILS'])
+
+if 'USES_MOB' not in env:
+	env.Append(CFLAGS = " --c99 ")
+
+#------------------------------------------------------------------
+# Generate the library and add to an image
+#------------------------------------------------------------------
+
+PICOTLS_SOURCES = [ '${BUILDPATH}/src/picotls.c',
+                '${BUILDPATH}/src/sharkssl_hal_cert.c',
+                '${BUILDPATH}/src/sharkssl_hal_cipher.c',
+                '${BUILDPATH}/src/sharkssl_hal_keyexchange.c',
+                ]
+    
+# The following objects are to be placed in XIP
+
+DATASERVICES_SOURCES = [
+                PICOTLS_SOURCES
+                ]
+
+IMAGES = ['DATA_TN', 'APPS_PROC', 'APPS_IMAGE', 'MOB_DATASERVICES']
+
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/picotls'), DATASERVICES_SOURCES)
+
+
+#------------------------------------------------------------------
+# Instruct build system to look for files at the next level down
+#------------------------------------------------------------------
+env.LoadSoftwareUnits()

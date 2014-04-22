@@ -1,0 +1,43 @@
+#===============================================================================
+#
+# ADIE INC PATHs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/audio.tx/2.0/audio/adie/driver/build/wcd_codec.api#1 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 12/10/10   OA     Initial version.
+#===============================================================================
+
+Import('env')
+
+# ------------------------------------------------------------------------------
+# Publish Restricted Include Paths for the rest of Multimedia
+# ------------------------------------------------------------------------------
+#used to avoid modifying CSD build scripts
+env.PublishRestrictedApi('ADIECODEC', [ 
+  "${INC_ROOT}/multimedia/audio/adie/driver/inc"
+  ])
+
+env.PublishRestrictedApi('WCD_CODEC', [ 
+  "${INC_ROOT}/multimedia/audio/adie/driver/inc"
+  ])
+env.PublishRestrictedApi('WCD_CODEC_INTERNAL', [ 
+  "${INC_ROOT}/multimedia/audio/adie/driver/src"
+])
+  
+  
+env.LoadAPIUnits()

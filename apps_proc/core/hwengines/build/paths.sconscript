@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# HWENGINES Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#  $DateTime: 2009/07/04 17:43:09 $
+#  $Author: wduembeg $
+#  $Change: 958523 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/13/12   gps     Updated for 9x25
+#===============================================================================
+Import('env')
+
+
+# Public APIs these are accecible by anyone internal or external to CoreBSP
+env.PublishPublicApi('HWENGINES', [
+   "${INC_ROOT}/core/api/hwengines",
+])
+
+env.PublishPublicApi('HWENGINES_PCIE', "${INC_ROOT}/core/hwengines/pcie",)
+
+# Restricted APIs these are accecible by anyone within CoreBSP
+env.PublishRestrictedApi('HWENGINES', [
+])
+

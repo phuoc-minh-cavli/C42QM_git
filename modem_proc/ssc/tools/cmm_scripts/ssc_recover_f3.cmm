@@ -1,0 +1,46 @@
+;============================================================================
+;
+; SSC recover F3
+;
+;   Extracts F3 messages
+;
+; Version: 1.0
+;
+; Copyright (c) 2018-2019 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Confidential and Proprietary - Qualcomm Technologies, Inc.
+;============================================================================
+ENTRY
+
+&home=OS.PWD()
+&f3_script_path="\slpi_proc\qdsp6\scripts\crashman\recover_f3_new.cmm"
+&recover_f3_script="&home"+"&f3_script_path"
+
+if !OS.FILE(&recover_f3_script)
+(
+  &ppd=OS.PPD()
+  &slpi_build_path=""
+  if STRing.SCAN("&home","\slpi_proc",0)!=-1
+  (
+    &slpi_build_path=STRing.SPLIT("&home", "\slpi_proc", 0)
+  )
+  else if STRing.SCAN("&ppd","\slpi_proc",0)!=-1
+  (
+    &slpi_build_path=STRing.SPLIT("&ppd", "\slpi_proc", 0)
+  )
+  if "&slpi_build_path"!=""
+  (
+    &recover_f3_script="&slpi_build_path"+"&f3_script_path"
+  )
+)
+
+if OS.FILE(&recover_f3_script)
+(
+  MKDIR &parser_ouput_dir\F3Logs
+  ON ERROR inherit
+  cd.do &recover_f3_script &parser_ouput_dir\F3Logs
+  cd &home
+  print "Done!"
+)
+enddo
+

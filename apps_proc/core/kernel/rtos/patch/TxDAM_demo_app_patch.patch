@@ -1,0 +1,751 @@
+diff -au --ignore-file-name-case ../../ExpressLogic/tx_DAM_demo_app/demo_threadx_module.c ../../threadx/txm_demo_app/src/demo_threadx_module.c
+--- ../../ExpressLogic/tx_DAM_demo_app/demo_threadx_module.c	2023-07-23 23:36:32.146964900 -0700
++++ ../../threadx/txm_demo_app/src/demo_threadx_module.c	2023-07-23 23:36:33.039815400 -0700
+@@ -1,16 +1,64 @@
++/*======================================================================
++                        demo_threadx_module.c 
++
++GENERAL DESCRIPTION
++  Example ThreadX Module application for demonstration purpose
++
++ Copyright (c) 2020 by Qualcomm Technologies, Inc.  All Rights Reserved.
++ ======================================================================*/
++ 
++
+ /* This is a small demo of the high-performance ThreadX kernel running as a module. It includes 
+    examples of eight threads of different priorities, using a message queue, semaphore, mutex, 
+    event flags group, byte pool, and block pool.  */
+ 
+ /* Specify that this is a module!  */
+ 
+-#define TXM_MODULE
++//#define TXM_MODULE
+ 
+ 
+ /* Include the ThreadX module definitions.  */
+ 
+ #include "txm_module.h"
++#include "qurt_timetick.h"
++
++//*** [MB] QAPI custom CB test code
+ 
++int qapi_user_cb1(UINT param1, UINT param2);
++int qapi_user_oem_cb2(UINT param1, UINT param2, UINT param3, UINT param4, UINT param5);
++int qapi_custom_cb_uspace_dispatcher(UINT cb_id, void *app_cb, 
++									 UINT cb_param1, UINT cb_param2, 
++									 UINT cb_param3, UINT cb_param4,
++									 UINT cb_param5, UINT cb_param6,
++									 UINT cb_param7, UINT cb_param8);
++void user_timer_cb(TX_TIMER *timer);
++int timer_cb_pending = 0;
++int invoke_txm_cust_cb_qapi1 = 0;
++int invoke_txm_cust_cb_qapi2 = 0;
++TX_TIMER *test_tx_timer_info;
++UINT count;
++
++#define txm_qapi_custom_cb_example1(a, user_cb) \
++    (ULONG) _txm_module_system_call12(CUSTOM_CB_QAPI_EXAMPLE1,\
++    (ULONG) a,(ULONG) user_cb, (ULONG) qapi_custom_cb_uspace_dispatcher, (ULONG) 0,(ULONG) 0,\
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, \
++    (ULONG) 0)
++#define txm_qapi_custom_oem_cb_example2(a, b, user_cb) \
++    (ULONG) _txm_module_system_call12(CUSTOM_OEM_CB_QAPI_EXAMPLE2,\
++    (ULONG) a,(ULONG) b, (ULONG) user_cb, (ULONG) qapi_custom_cb_uspace_dispatcher, (ULONG) qapi_custom_cb_uspace_dispatcher,\
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, \
++    (ULONG) 0)
++#define txm_qapi_do_nothing_example() \
++    (ULONG) _txm_module_system_call12(CUSTOM_CB_QAPI_EXAMPLE3,\
++    (ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0,(ULONG) 0,\
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, \
++    (ULONG) 0)
++#define txm_qapi_get_count(a) \
++    (ULONG) _txm_module_system_call12(CUSTOM_CB_QAPI_EXAMPLE4,\
++    (ULONG) a,(ULONG) 0, (ULONG) 0, (ULONG) 0,(ULONG) 0,\
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, \
++    (ULONG) 0)
++// ***
+ 
+ /* Define constants.  */
+ 
+@@ -25,7 +73,6 @@
+ 
+ ULONG                   demo_module_pool_space[DEMO_BYTE_POOL_SIZE / 4];
+ 
+-
+ /* Define the ThreadX object control blocks...  */
+ 
+ TX_THREAD               *thread_0;
+@@ -46,19 +93,19 @@
+ 
+ /* Define the counters used in the demo application...  */
+ 
+-ULONG           thread_0_counter;
+-ULONG           thread_1_counter;
+-ULONG           thread_1_messages_sent;
+-ULONG           thread_2_counter;
+-ULONG           thread_2_messages_received;
+-ULONG           thread_3_counter;
+-ULONG           thread_4_counter;
+-ULONG           thread_5_counter;
+-ULONG           thread_6_counter;
+-ULONG           thread_7_counter;
+-ULONG           semaphore_0_puts;
+-ULONG           event_0_sets;
+-ULONG           queue_0_sends;
++ULONG                   thread_0_counter;
++ULONG                   thread_1_counter;
++ULONG                   thread_1_messages_sent;
++ULONG                   thread_2_counter;
++ULONG                   thread_2_messages_received;
++ULONG                   thread_3_counter;
++ULONG                   thread_4_counter;
++ULONG                   thread_5_counter;
++ULONG                   thread_6_counter;
++ULONG                   thread_7_counter;
++ULONG                   semaphore_0_puts;
++ULONG                   event_0_sets;
++ULONG                   queue_0_sends;
+ 
+ /* Define thread prototypes.  */
+ 
+@@ -71,7 +118,6 @@
+ 
+ void  semaphore_0_notify(TX_SEMAPHORE *semaphore_ptr)
+ {
+-
+     if (semaphore_ptr == semaphore_0)
+         semaphore_0_puts++;
+ }
+@@ -79,7 +125,6 @@
+ 
+ void  event_0_notify(TX_EVENT_FLAGS_GROUP *event_flag_group_ptr)
+ {
+-
+     if (event_flag_group_ptr == event_flags_0)
+         event_0_sets++;
+ }
+@@ -87,40 +132,107 @@
+ 
+ void  queue_0_notify(TX_QUEUE *queue_ptr)
+ {
+-
+     if (queue_ptr == queue_0)
+         queue_0_sends++;
+ }
+ 
+ 
+-/* Define the module start function.  */
++/* Define the heap area... default to 4KB.  */
++
++/* This heap size can be configured based on the requirement
++   Note : For using LLVM compiler , pls provide minimum 4KB heap size and size 4KB aligned
++   HEAP_SIZE can be optionally passed from compilation/link flag.
++ */
++#ifdef HEAP_SIZE
++	#define MODULE_HEAP_SZ               (HEAP_SIZE)/sizeof(ULONG)
++#else
++	#define MODULE_HEAP_SZ               (4*1024)/sizeof(ULONG)
++#endif
++
++ULONG                           module_heap_area[MODULE_HEAP_SZ];
++
++#if (defined __ARMCC_VERSION)
++	/* ARM compiler */
++	extern VOID __rt_lib_init(VOID *heap_base, VOID *heap_top);
++#else
++	/* LLVM compiler */
++	extern VOID *__heap_base;
++	extern VOID *__heap_limit;
++#endif
+ 
++/* Define the module start function.  */
+ void    demo_module_start(ULONG id)
+ {
+-
+-CHAR    *pointer;
++  
++    CHAR    *pointer=NULL;
+ 
+     /* Allocate all the objects. In MMU mode, modules cannot allocate control blocks within
+        their own memory area so they cannot corrupt the resident portion of ThreadX by overwriting 
+        the control block(s).  */
+-    txm_module_object_allocate((void *) &thread_0, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_1, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_2, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_3, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_4, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_5, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_6, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &thread_7, sizeof(TX_THREAD));
+-    txm_module_object_allocate((void *) &queue_0, sizeof(TX_QUEUE));
+-    txm_module_object_allocate((void *) &semaphore_0, sizeof(TX_SEMAPHORE));
+-    txm_module_object_allocate((void *) &mutex_0, sizeof(TX_MUTEX));
+-    txm_module_object_allocate((void *) &event_flags_0, sizeof(TX_EVENT_FLAGS_GROUP));
+-    txm_module_object_allocate((void *) &byte_pool_0, sizeof(TX_BYTE_POOL));
+-    txm_module_object_allocate((void *) &block_pool_0, sizeof(TX_BLOCK_POOL));
+-    
++    txm_module_object_allocate((void *)&thread_0, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_1, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_2, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_3, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_4, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_5, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_6, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&thread_7, sizeof(TX_THREAD));
++    txm_module_object_allocate((void *)&queue_0, sizeof(TX_QUEUE));
++    txm_module_object_allocate((void *)&semaphore_0, sizeof(TX_SEMAPHORE));
++    txm_module_object_allocate((void *)&mutex_0, sizeof(TX_MUTEX));
++    txm_module_object_allocate((void *)&event_flags_0, sizeof(TX_EVENT_FLAGS_GROUP));
++    txm_module_object_allocate((void *)&byte_pool_0, sizeof(TX_BYTE_POOL));
++    txm_module_object_allocate((void *)&block_pool_0, sizeof(TX_BLOCK_POOL));
++	txm_module_object_allocate((void *)&test_tx_timer_info, sizeof(TX_TIMER));
++
++	#if  (defined __ARMCC_VERSION)	 
++			__rt_lib_init(&module_heap_area[0], &module_heap_area[MODULE_HEAP_SZ-1]);
++	#else
++			__heap_base  = (VOID *)&module_heap_area[0];
++			__heap_limit = (VOID *)&module_heap_area[MODULE_HEAP_SZ-1];
++	#endif
++
++    /* Moved all object allocation before threads are created as some threads 
++     * start running immediately and access uninitialized objects and crash. 
++     */
++
+     /* Create a byte memory pool from which to allocate the thread stacks.  */
+     tx_byte_pool_create(byte_pool_0, "module byte pool 0", demo_module_pool_space, DEMO_BYTE_POOL_SIZE);
+ 
++    /* Allocate the message queue.  */
++    tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_QUEUE_SIZE*sizeof(ULONG), TX_NO_WAIT);
++	if(pointer == NULL) 
++		return;
++    /* Create the message queue shared by threads 1 and 2.  */
++    tx_queue_create(queue_0, "module queue 0", TX_1_ULONG, pointer, DEMO_QUEUE_SIZE*sizeof(ULONG));
++
++    //tx_queue_send_notify(queue_0, queue_0_notify);
++
++    /* Create the semaphore used by threads 3 and 4.  */
++    tx_semaphore_create(semaphore_0, "module semaphore 0", 1);
++
++    //tx_semaphore_put_notify(semaphore_0, semaphore_0_notify);
++
++    /* Create the event flags group used by threads 1 and 5.  */
++    tx_event_flags_create(event_flags_0, "module event flags 0");
++
++    //tx_event_flags_set_notify(event_flags_0, event_0_notify);
++
++    /* Create the mutex used by thread 6 and 7 without priority inheritance.  */
++    tx_mutex_create(mutex_0, "module mutex 0", TX_NO_INHERIT);
++
++    /* Allocate the memory for a small block pool.  */
++    tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_BLOCK_POOL_SIZE, TX_NO_WAIT);
++
++    /* Create a block memory pool to allocate a message buffer from.  */
++    tx_block_pool_create(block_pool_0, "module block pool 0", sizeof(ULONG), pointer, DEMO_BLOCK_POOL_SIZE);
++
++    /* Allocate a block and release the block memory.  */
++    tx_block_allocate(block_pool_0, (VOID **) &pointer, TX_NO_WAIT);
++
++    /* Release the block back to the pool.  */
++    tx_block_release(pointer);
++
+     /* Put system definition stuff in here, e.g. thread creates and other assorted
+        create information.  */
+ 
+@@ -128,10 +240,9 @@
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+     /* Create the main thread.  */
+-    tx_thread_create(thread_0, "module thread 0", thread_0_entry, 0,
++    tx_thread_create(thread_0, "module thread 0", thread_0_entry, 0,  
+             pointer, DEMO_STACK_SIZE, 
+-            1, 1, TX_NO_TIME_SLICE, TX_AUTO_START);
+-
++            170, 170, TX_NO_TIME_SLICE, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 1.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+@@ -139,89 +250,66 @@
+     /* Create threads 1 and 2. These threads pass information through a ThreadX 
+        message queue.  It is also interesting to note that these threads have a time
+        slice.  */
+-    tx_thread_create(thread_1, "module thread 1", thread_1_entry, 1,
++    tx_thread_create(thread_1, "module thread 1", thread_1_entry, 1,  
+             pointer, DEMO_STACK_SIZE, 
+-            16, 16, 4, TX_AUTO_START);
++            175, 175, 4, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 2.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+-    tx_thread_create(thread_2, "module thread 2", thread_2_entry, 2,
++    tx_thread_create(thread_2, "module thread 2", thread_2_entry, 2,  
+             pointer, DEMO_STACK_SIZE, 
+-            16, 16, 4, TX_AUTO_START);
++            175, 175, 4, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 3.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+-    /* Create threads 3 and 4.  These threads compete for a ThreadX counting semaphore.
++    /* Create threads 3 and 4.  These threads compete for a ThreadX counting semaphore.  
+        An interesting thing here is that both threads share the same instruction area.  */
+-    tx_thread_create(thread_3, "module thread 3", thread_3_and_4_entry, 3,
++    tx_thread_create(thread_3, "module thread 3", thread_3_and_4_entry, 3,  
+             pointer, DEMO_STACK_SIZE, 
+-            8, 8, TX_NO_TIME_SLICE, TX_AUTO_START);
++            172, 172, TX_NO_TIME_SLICE, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 4.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+-    tx_thread_create(thread_4, "module thread 4", thread_3_and_4_entry, 4,
++    tx_thread_create(thread_4, "module thread 4", thread_3_and_4_entry, 4,  
+             pointer, DEMO_STACK_SIZE, 
+-            8, 8, TX_NO_TIME_SLICE, TX_AUTO_START);
++            172, 172, TX_NO_TIME_SLICE, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 5.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+     /* Create thread 5.  This thread simply pends on an event flag which will be set
+        by thread_0.  */
+-    tx_thread_create(thread_5, "module thread 5", thread_5_entry, 5,
++    tx_thread_create(thread_5, "module thread 5", thread_5_entry, 5,  
+             pointer, DEMO_STACK_SIZE, 
+-            4, 4, TX_NO_TIME_SLICE, TX_AUTO_START);
++            171, 171, TX_NO_TIME_SLICE, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 6.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+     /* Create threads 6 and 7.  These threads compete for a ThreadX mutex.  */
+-    tx_thread_create(thread_6, "module thread 6", thread_6_and_7_entry, 6,
++    tx_thread_create(thread_6, "module thread 6", thread_6_and_7_entry, 6,  
+             pointer, DEMO_STACK_SIZE, 
+-            8, 8, TX_NO_TIME_SLICE, TX_AUTO_START);
++            172, 172, TX_NO_TIME_SLICE, TX_AUTO_START);
+ 
+     /* Allocate the stack for thread 7.  */
+     tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_STACK_SIZE, TX_NO_WAIT);
+ 
+-    tx_thread_create(thread_7, "module thread 7", thread_6_and_7_entry, 7,
++    tx_thread_create(thread_7, "module thread 7", thread_6_and_7_entry, 7,  
+             pointer, DEMO_STACK_SIZE, 
+-            8, 8, TX_NO_TIME_SLICE, TX_AUTO_START);
+-
+-    /* Allocate the message queue.  */
+-    tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_QUEUE_SIZE*sizeof(ULONG), TX_NO_WAIT);
+-
+-    /* Create the message queue shared by threads 1 and 2.  */
+-    tx_queue_create(queue_0, "module queue 0", TX_1_ULONG, pointer, DEMO_QUEUE_SIZE*sizeof(ULONG));
+-
+-    tx_queue_send_notify(queue_0, queue_0_notify);
+-
+-    /* Create the semaphore used by threads 3 and 4.  */
+-    tx_semaphore_create(semaphore_0, "module semaphore 0", 1);
+-
+-    tx_semaphore_put_notify(semaphore_0, semaphore_0_notify);
+-
+-    /* Create the event flags group used by threads 1 and 5.  */
+-    tx_event_flags_create(event_flags_0, "module event flags 0");
+-
+-    tx_event_flags_set_notify(event_flags_0, event_0_notify);
+-
+-    /* Create the mutex used by thread 6 and 7 without priority inheritance.  */
+-    tx_mutex_create(mutex_0, "module mutex 0", TX_NO_INHERIT);
+-
+-    /* Allocate the memory for a small block pool.  */
+-    tx_byte_allocate(byte_pool_0, (VOID **) &pointer, DEMO_BLOCK_POOL_SIZE, TX_NO_WAIT);
+-
+-    /* Create a block memory pool to allocate a message buffer from.  */
+-    tx_block_pool_create(block_pool_0, "module block pool 0", sizeof(ULONG), pointer, DEMO_BLOCK_POOL_SIZE);
++            172, 172, TX_NO_TIME_SLICE, TX_AUTO_START);
++			
++#if 0
++    /* Terminate the thread before deleting */
++    tx_thread_terminate(thread_0);
++
++	/* Delete the thread */
++    tx_thread_delete(thread_0);
++	
++#endif
+ 
+-    /* Allocate a block and release the block memory.  */
+-    tx_block_allocate(block_pool_0, (VOID **) &pointer, TX_NO_WAIT);
+-
+-    /* Release the block back to the pool.  */
+-    tx_block_release(pointer);
+ }
+ 
+ 
+@@ -230,38 +318,95 @@
+ 
+ void    thread_0_entry(ULONG thread_input)
+ {
++    UINT        status;
++    qurt_time_t ticks = 0, time = 0;
++	timer_cb_pending = 0;
++	invoke_txm_cust_cb_qapi1 = 1;
++	invoke_txm_cust_cb_qapi2 = 1;
+ 
+-UINT    status;
+-
+-    /* Test external/shared memory.  */
+-     *(ULONG *) 0x90000000 = 0xdeadbeef;
+-     *(ULONG *) 0x90000FFC = 0xfeed0add;
+-     *(ULONG *) 0x90001000 = 0xfedcba01;
+-    
+     /* This thread simply sits in while-forever-sleep loop.  */
+     while(1)
+     {
+-
+         /* Increment the thread counter.  */
+         thread_0_counter++;
+ 
+-        /* Sleep for 10 ticks.  */
+-        tx_thread_sleep(10);
+-       
++        if(thread_0_counter == 4)
++        {
++          ticks = qurt_timer_get_ticks();
++            
++          ticks = qurt_timer_convert_time_to_ticks(100, QURT_TIME_USEC);
++          ticks += 200;
++
++          time = qurt_timer_convert_ticks_to_time(ticks, QURT_TIME_USEC);
++          time += 10;
++        }
++		{
++			int temp[10];
++	
++			// Example of custom callback 1 (with 1 cb argument)
++			if(invoke_txm_cust_cb_qapi1 == 1)
++			{
++				txm_qapi_custom_cb_example1(100, qapi_user_cb1);
++				invoke_txm_cust_cb_qapi1 = 0;
++			}
++			
++			// Example of standard TX Timer API
++			if(timer_cb_pending == 0)
++			{
++				tx_timer_create(test_tx_timer_info, "user_timer",
++							(VOID (*)(ULONG))user_timer_cb, 
++							(ULONG)temp, // timer_info
++                            (UINT) 200,	// timeout 
++							0, // repeat
++							TX_AUTO_ACTIVATE);
++				
++				timer_cb_pending = 1;
++			}
++			
++			// Example of custom callback 2 (with 4 cb arguments)
++			if(invoke_txm_cust_cb_qapi2 == 1)
++			{
++				txm_qapi_custom_oem_cb_example2(1000, 2000, qapi_user_oem_cb2);
++				invoke_txm_cust_cb_qapi2 = 0;
++			}
++			
++			
++			txm_qapi_do_nothing_example();
++			
++			// Query data from kernel space
++			txm_qapi_get_count(&count);
++		}
++
+         /* Set event flag 0 to wakeup thread 5.  */
+         status =  tx_event_flags_set(event_flags_0, 0x1, TX_OR);
+ 
+         /* Check status.  */
+         if (status != TX_SUCCESS)
+             break;
++          
++        /* Sleep for 10 ticks.  */
++        tx_thread_sleep(100);
+     }
+ }
+ 
+-
++/* Example for OEM custom APIs -- OEM API ID and OEM API definitions */
++#define OEM_API_ID_API1			TXM_QC_OEM_API_BASE
++#define OEM_API_ID_API2			TXM_QC_OEM_API_BASE + 1
++
++#define example_oem_api1(a) \
++    (ULONG) _txm_module_system_call12(OEM_API_ID_API1,\
++    (ULONG) a,(ULONG) 0, (ULONG) 0, (ULONG) 0,(ULONG) 0,(ULONG) 0, \
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0)
++
++#define example_oem_api2(a, b) \
++    (ULONG) _txm_module_system_call12(OEM_API_ID_API2,\
++    (ULONG) a,(ULONG) b, (ULONG) 0, (ULONG) 0,(ULONG) 0,(ULONG) 0, \
++    (ULONG) 0,(ULONG) 0,(ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0)
++/* ---  */
+ void    thread_1_entry(ULONG thread_input)
+ {
+ 
+-UINT    status;
++    UINT    status;
+ 
+ 
+     /* This thread simply sends messages to a queue shared by thread 2.  */
+@@ -276,10 +421,18 @@
+ 
+         /* Check completion status.  */
+         if (status != TX_SUCCESS)
+-            break;
++          break;
++
++        /* without sleep, threads 1 & 2, keep sending/receiving the queues continuously and 
++           hog the CPU by not allowing other threads to run */
++        tx_thread_sleep(100);
+ 
+         /* Increment the message sent.  */
+         thread_1_messages_sent++;
++		
++		// Invoke example OEM defined APIs
++		example_oem_api1(thread_1_counter);
++		example_oem_api2(thread_1_counter, thread_1_messages_sent);
+     }
+ }
+ 
+@@ -303,8 +456,12 @@
+         /* Check completion status and make sure the message is what we 
+            expected.  */
+         if ((status != TX_SUCCESS) || (received_message != thread_2_messages_received))
+-            break;
+-        
++          break;
++
++        /* without sleep, threads 1 & 2, keep sending/receiving the queues continuously and 
++           hog the CPU by not allowing other threads to run */
++        tx_thread_sleep(100);
++
+         /* Otherwise, all is okay.  Increment the received message count.  */
+         thread_2_messages_received++;
+     }
+@@ -347,14 +504,27 @@
+     }
+ }
+ 
+-
+ void    thread_5_entry(ULONG thread_input)
+ {
+ 
+ UINT    status;
+-ULONG   actual_flags;
++ULONG   actual_flags = 0;
++
++int *arr;
++int i;
++
++	/* malloc test */
+ 
++	arr = (int *)malloc(sizeof(int)*10);
++	
++	if(arr==NULL)
++		return;
++	
++	for(i=0;i<10;i++) 
++		arr[i] = i*i;
++	free(arr);	
+ 
++	
+     /* This thread simply waits for an event in a forever loop.  */
+     while(1)
+     {
+@@ -425,3 +595,62 @@
+             break;
+     }
+ }
++// *****
++
++int qapi_user_cb1(UINT param1, UINT param2)
++{
++	invoke_txm_cust_cb_qapi1 = 1;
++	return param1+param2;
++}
++
++int qapi_user_oem_cb2(UINT param1, UINT param2, UINT param3, UINT param4, UINT param5)
++{
++	invoke_txm_cust_cb_qapi2 = 1;
++	return param1+param2+param3+param4+param5;
++}
++
++int qapi_custom_cb_uspace_dispatcher(UINT cb_id, void *app_cb, 
++									 UINT cb_param1, UINT cb_param2, 
++									 UINT cb_param3, UINT cb_param4,
++									 UINT cb_param5, UINT cb_param6,
++									 UINT cb_param7, UINT cb_param8)
++{
++	UINT rc = TX_NOT_DONE;
++
++	int (*pfn_app_cb1) (UINT, UINT);
++	int (*pfn_app_cb2) (UINT, UINT, UINT, UINT, UINT);
++	if(cb_id == TXM_QC_CUSTOM_CALLBACK_ID_END-10) // custom cb-type1
++	{
++		pfn_app_cb1 = (int (*)(UINT, UINT))app_cb;
++		rc = (pfn_app_cb1)((UINT)cb_param1, (UINT)cb_param2);
++		
++	}	
++	if(cb_id == (TXM_QC_OEM_CALLBACK_ID_MAX-10)) // custom cb-type2 for OEM callback
++	{
++		pfn_app_cb2 = (int (*)(UINT, UINT, UINT, UINT, UINT))app_cb;
++		rc = (pfn_app_cb2)((UINT)cb_param1, (UINT)cb_param2, (UINT)cb_param3, (UINT)cb_param4, (UINT)cb_param5);
++		
++	}
++	
++	return rc;
++}
++
++void user_timer_cb(TX_TIMER *timer)
++{
++	timer_cb_pending = 0;
++	tx_timer_delete(test_tx_timer_info);
++	return;
++}
++
++/* 
++	This function will be called when there's a crash in Demo module, before stopping and unloading it 
++	This is registered in preamble file as 'Module Stop Thread Entry Point' 
++*/
++void demo_module_stop()
++{
++		// Do error handling stuff here.
++		
++		//Dummy code
++		int timeout = 1000;
++		tx_thread_sleep(timeout);
++}
+diff -au --ignore-file-name-case ../../ExpressLogic/tx_DAM_demo_app/txm_module_preamble.s ../../threadx/txm_demo_app/src/txm_module_preamble.S
+--- ../../ExpressLogic/tx_DAM_demo_app/txm_module_preamble.s	2023-07-23 23:36:32.205021200 -0700
++++ ../../threadx/txm_demo_app/src/txm_module_preamble.S	2023-07-23 23:36:33.039815400 -0700
+@@ -1,5 +1,5 @@
+-    AREA  Init, CODE, READONLY
+-
++        AREA  Init, CODE, READONLY
++        CODE32
+ ;    /* Define public symbols.  */
+ 
+     EXPORT __txm_module_preamble
+@@ -8,57 +8,76 @@
+ ;    /* Define application-specific start/stop entry points for the module.  */
+ 
+     IMPORT demo_module_start
++    IMPORT demo_module_stop
+ 
+ 
+ ;    /* Define common external refrences.  */
+ 
+-    IMPORT  _txm_module_thread_shell_entry
+-    IMPORT  _txm_module_callback_request_thread_entry
+-    IMPORT  |Image$$ER_RO$$Length|
+-    IMPORT  |Image$$ER_RW$$Length|
+-
++   IMPORT  _txm_module_thread_shell_entry
++   IMPORT  _txm_module_callback_request_thread_entry
++   IMPORT  |Image$$ER_RO$$Length|
++   IMPORT  |Image$$ER_RW$$Length|
++#ifdef TX_DAM_QC_CUSTOMIZATIONS
++	IMPORT  |Image$$ER_ZI$$ZI$$Length|
++#endif
+ 
+ __txm_module_preamble
+-    DCD       0x4D4F4455                                        ; Module ID
+-    DCD       0x5                                               ; Module Major Version
+-    DCD       0x3                                               ; Module Minor Version
+-    DCD       32                                                ; Module Preamble Size in 32-bit words
+-    DCD       0x12345678                                        ; Module ID (application defined)
+-    DCD       0x01000001                                        ; Module Properties where:
+-                                                                ;   Bits 31-24: Compiler ID
+-                                                                ;           0 -> IAR
+-                                                                ;           1 -> RVDS
+-                                                                ;           2 -> GNU
+-                                                                ;   Bits 23-1:  Reserved
+-                                                                ;   Bit 0:  0 -> Privileged mode execution (no MMU protection)
+-                                                                ;           1 -> User mode execution (MMU protection)
+-    DCD       _txm_module_thread_shell_entry - . + .            ; Module Shell Entry Point
+-    DCD       demo_module_start - . + .                         ; Module Start Thread Entry Point
+-    DCD       0                                                 ; Module Stop Thread Entry Point 
+-    DCD       1                                                 ; Module Start/Stop Thread Priority
+-    DCD       2046                                              ; Module Start/Stop Thread Stack Size
+-    DCD       _txm_module_callback_request_thread_entry - . + . ; Module Callback Thread Entry
+-    DCD       1                                                 ; Module Callback Thread Priority
+-    DCD       2046                                              ; Module Callback Thread Stack Size
+-    DCD       |Image$$ER_RO$$Length| + |Image$$ER_RW$$Length|   ; Module Code Size
+-    DCD       0x4000                                            ; Module Data Size - default to 16K (need to make sure this is large enough for module's data needs!)
+-    DCD       0                                                 ; Reserved 0
+-    DCD       0                                                 ; Reserved 1
+-    DCD       0                                                 ; Reserved 2
+-    DCD       0                                                 ; Reserved 3
+-    DCD       0                                                 ; Reserved 4
+-    DCD       0                                                 ; Reserved 5
+-    DCD       0                                                 ; Reserved 6
+-    DCD       0                                                 ; Reserved 7
+-    DCD       0                                                 ; Reserved 8
+-    DCD       0                                                 ; Reserved 9
+-    DCD       0                                                 ; Reserved 10
+-    DCD       0                                                 ; Reserved 11
+-    DCD       0                                                 ; Reserved 12
+-    DCD       0                                                 ; Reserved 13
+-    DCD       0                                                 ; Reserved 14
+-    DCD       0                                                 ; Reserved 15
++        DCD       0x4D4F4455                                        ; Module ID
++        DCD       0x5                                               ; Module Major Version
++        DCD       0x3                                               ; Module Minor Version
++        DCD       32                                                ; Module Preamble Size in 32-bit words
++        DCD       0x12345678                                        ; Module ID (application defined) 
++        DCD       0x01000001                                        ; Module Properties where:
++                                                                    ;   Bits 31-24: Compiler ID
++                                                                    ;           0 -> IAR
++                                                                    ;           1 -> RVDS
++                                                                    ;           2 -> GNU
++																	;			4 -> LLVM
++                                                                    ;   Bits 23-1:  Reserved
++                                                                    ;   Bit 0:  0 -> Privileged mode execution (no MMU protection)
++        DCD       _txm_module_thread_shell_entry - . + .            ; Module Shell Entry Point
++        DCD       demo_module_start - . + .                         ; Module Start Thread Entry Point
++        DCD       demo_module_stop - . + .                          ; Module Stop Thread Entry Point 
++        DCD       20                                                ; Module Start/Stop Thread Priority
++        DCD       2046                                              ; Module Start/Stop Thread Stack Size
++        DCD       _txm_module_callback_request_thread_entry - . + . ; Module Callback Thread Entry
++        DCD       25                                                ; Module Callback Thread Priority     
++        DCD       2046                                              ; Module Callback Thread Stack Size   
++        DCD       |Image$$ER_RO$$Length|                            ; Module Code Size
++#ifdef TX_DAM_QC_CUSTOMIZATIONS
++        DCD       |Image$$ER_ZI$$ZI$$Length|                        ; Module data size - get it from ZI section
++        DCD       __txm_module_preamble                             ; Reserved 0
++        DCD       |Image$$ER_RW$$Length|                            ; Reserved 1
++#else
++        DCD       0x4000                                            ; Module Data Size - default to 16K (need to make sure this is large enough for module's data needs!)
++        DCD       0                                                 ; Reserved 0
++        DCD       0                                                 ; Reserved 1
++#endif
++        DCD       0                                                 ; Reserved 2
++        DCD       0                                                 ; Reserved 3
++        DCD       0                                                 ; Reserved 4
++        DCD       0                                                 ; Reserved 5     
++        DCD       0                                                 ; Reserved 6     
++        DCD       0                                                 ; Reserved 7   
++        DCD       0                                                 ; Reserved 8  
++        DCD       0                                                 ; Reserved 9
++#ifdef TX_DAM_QC_CUSTOMIZATIONS
++		DCD       0                            						; txm_module_preamble_debug_enable 
++																	; 1 : enabled
++																	; 0 : disabled
++#else
++		DCD       0                                                 ; Reserved 10
++#endif
++        DCD       0                                                 ; Reserved 11
++        DCD       0                                                 ; Reserved 12
++        DCD       0                                                 ; Reserved 13
++#ifdef TX_DAM_QC_CUSTOMIZATIONS
++        DCD       0xABCDEF01                                        ; Reserved 14 : Module Unique ID
++#else
++        DCD       0                                                 ; Reserved 14
++#endif
++        DCD       0                                                 ; Reserved 15
+ 
+-    END
++        END
+ 
+ 
+Only in ../../threadx/txm_demo_app/src: txm_module_preamble_llvm.S

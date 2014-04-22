@@ -1,0 +1,8 @@
+Logging to /local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/AAAAANAAR/Sectools_Builder_rpm_log.txt
+Sectools Builder config was provided using deprecated api
+Installed "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/AAAAANAAR/sign/default/rpm/rpm.mbn" to "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/build/ms/bin/9x05/signed/rpm.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/AAAAANAAR/sign/default/rpm/rpm.mbn" to "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/build/ms/bin/9x05/rpm.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided
+Installed "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/core/bsp/rpm/build/AAAAANAAR/sign_and_encrypt/default/rpm/rpm.mbn" to "/local/mnt/workspace/CRMBuilds/RPM.BF.2.1.3-00034-M9205AAAAANAZR-1_20191223_015705/b/rpm_proc/build/ms/bin/9x05/signed_encrypted/rpm.mbn"
+Pilsplit was skipped because a value for pilsplitter_target_base_dir was not provided

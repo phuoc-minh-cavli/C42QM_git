@@ -1,0 +1,69 @@
+#===============================================================================
+#
+# APSS TX
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/mobileap/utilities/synchronization/build/data_util_synchronization.scons#2 $
+#  $DateTime: 2021/02/26 00:27:11 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi(['QAPI'])
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('DMS', area='API')
+env.RequirePublicApi('SSCTL', area='API')
+
+DATA_RESTRICTED_APIS = [
+    'DATA_UTIL_COMMON',
+	'DATA_UTIL_LIST',
+	'DATA_UTIL_SYNC',
+	'DATA_UTIL_MEMORY',
+	'DATA_UTIL_CONFIG',
+	'DATA_UTIL_BIT',
+	'DS_UTILS'
+    ]
+
+env.RequireRestrictedApi(DATA_RESTRICTED_APIS)	
+	
+SRCPATH = '${BUILD_ROOT}/dataservices/mobileap/utilities/synchronization/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+DATA_UTIL_SYNC_SOURCES = [
+	'${BUILDPATH}/data_util_synchronization.c',
+	'${BUILDPATH}/data_port.c'
+]
+
+env.AddLibrary(['APPS_PROC','MOB_DATASERVICES'], ('${BUILDPATH}/data_util_sync'), DATA_UTIL_SYNC_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

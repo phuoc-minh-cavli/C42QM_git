@@ -1,0 +1,3358 @@
+=====================================================================================
+
+This file contains certain notices of software components included with the software that Qualcomm Technologies, Inc. ("QTI") and/or its subsidiaries are required to provide you. Except where prohibited by the open source license, the content of this file is provided solely to satisfy QTI's and/or its subsidiaries? attribution and notice requirements, and your use of these software components together with the software of QTI and/or its subsidiaries ("Software") is subject to the terms of your license from QTI and/or its subsidiaries, as the case may be. Compliance with all copyright laws and software license agreements included in the notice section of this file are the responsibility of the user. Except as may be granted by separate express written agreement, this file provides no license to any patents, trademarks, copyrights, or other intellectual property of Qualcomm Incorporated or any of its subsidiaries.
+
+Software provided with this notice is NOT A CONTRIBUTION to any open source project. If alternative licensing is available for any of the components with licenses or attributions provided below, a license choice is made for receiving such code by QTI and/or its subsidiaries, as the case may be.
+
+Copyright (c) 2019 of Qualcomm Technologies, Inc.  All rights reserved.
+
+Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries. All Qualcomm Incorporated trademarks are used with permission. Other products and brand names may be trademarks or registered trademarks of their respective owners.
+
+This software may be subject to U.S. and international export, re-export or transfer (export) laws.  Diversion contrary to U.S. and international law is strictly prohibited.
+
+===================================================================
+
+"/*     Copyright (C) 1997-1998 Telecommunications Industry Association. */
+/*     All rights reserved.                                             */
+/*----------------------------------------------------------------------*/
+/* Note:  Reproduction and use of this software for the design and      */
+/*     development of North American Wideband CDMA Digital              */
+/*     Cellular Telephony Standards is authorized by the TIA.           */
+/*     The TIA does not authorize the use of this software for any      */
+/*     other purpose.                                                   */
+/*                                                                      */
+/*     The availability of this software does not provide any license   */
+/*     by implication, estoppel, or otherwise under any patent rights   */
+/*     of TIA member companies or others covering any use of the        */
+/*     contents herein.                                                 */
+/*                                                                      */
+/*     Any copies of this software or derivative works must include     */
+/*     this and all other proprietary notices.                          */"
+***********************************************************************
+"lookup3.c, by Bob Jenkins, May 2006, Public Domain.
+
+These are functions for producing 32-bit hashes for hash table lookup.
+hashword(), hashlittle(), hashlittle2(), hashbig(), mix(), and final() 
+are externally useful functions. Routines to test the hash are included 
+if SELF_TEST is defined. You can use this free for any purpose. It's in
+the public domain. It has no warranty"
+***********************************************************************
+"Copyright (c) 2003-2011, Troy D. Hanson     http://uthash.sourceforge.net
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ""AS
+IS"" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+***********************************************************************
+"/*
+ * Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED ""AS IS"" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */"
+***********************************************************************
+"/*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+  MD5C.C - RSA Data Security, Inc., MD5 message-digest algorithm
+
+  Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
+  rights reserved.
+
+  License to copy and use this software is granted provided that it
+  is identified as the ""RSA Data Security, Inc. MD5 Message-Digest
+  Algorithm"" in all material mentioning or referencing this software
+  or this function.
+
+  License is also granted to make and use derivative works provided
+  that such works are identified as ""derived from the RSA Data
+  Security, Inc. MD5 Message-Digest Algorithm"" in all material
+  mentioning or referencing the derived work.
+
+  RSA Data Security, Inc. makes no representations concerning either
+  the merchantability of this software or the suitability of this
+  software for any particular purpose. It is provided ""as is""
+  without express or implied warranty of any kind.
+
+  These notices must be retained in any copies of any part of this
+  documentation and/or software.
+
+  <EJECT>
+============================================================================"
+***********************************************************************
+"/*
+ * Copyright (c) 2010 Todd C. Miller <Todd.Miller@courtesan.com>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED ""AS IS"" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */"
+***********************************************************************
+"/*
+ * Copyright 2001-2004 Unicode, Inc.
+ *
+ * Disclaimer
+ *
+ * This source code is provided as is by Unicode, Inc. No claims are
+ * made as to fitness for any particular purpose. No warranties of any
+ * kind are expressed or implied. The recipient agrees to determine
+ * applicability of information provided. If this file has been
+ * purchased on magnetic or optical media from Unicode, Inc., the
+ * sole remedy for any claim will be exchange of defective media
+ * within 90 days of receipt.
+ *
+ * Limitations on Rights to Redistribute This Code
+ *
+ * Unicode, Inc. hereby grants the right to freely use the information
+ * supplied in this file in the creation of products supporting the
+ * Unicode Standard, and to make copies of this file in any form
+ * for internal or external distribution as long as this notice
+ * remains attached.
+ */"
+***********************************************************************
+"/*-
+ * Copyright (c) 1990 The Regents of the University of California.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *	@(#)string.h	5.10 (Berkeley) 3/9/91
+ */"
+***********************************************************************
+"/*===========================================================================
+
+ MD5.H - header file for MD5C.C
+
+ Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
+ rights reserved.
+
+ License to copy and use this software is granted provided that it
+ is identified as the ""RSA Data Security, Inc. MD5 Message-Digest
+ Algorithm"" in all material mentioning or referencing this software
+ or this function.
+
+ License is also granted to make and use derivative works provided
+ that such works are identified as ""derived from the RSA Data
+ Security, Inc. MD5 Message-Digest Algorithm"" in all material
+ mentioning or referencing the derived work.
+
+ RSA Data Security, Inc. makes no representations concerning either
+ the merchantability of this software or the suitability of this
+ software for any particular purpose. It is provided ""as is""
+ without express or implied warranty of any kind.
+
+ These notices must be retained in any copies of any part of this
+ documentation and/or software.
+
+ ===========================================================================*/"
+***********************************************************************
+"/*
+   I retain copyright in this code but I encourage its free use provided
+   that I don't carry any responsibility for the results. I am especially 
+   happy to see it used in free and open source software. If you do use 
+   it I would appreciate an acknowledgement of its origin in the code or
+   the product that results and I would also appreciate knowing a liitle
+   about the use to which it is being put.
+
+   Dr B. R. Gladman <brg@gladman.uk.net> 1st June 2001.
+ */"
+***********************************************************************
+" /*
+   I retain copyright in this code but I encourage its free use provided
+   that I don't carry any responsibility for the results. I am especially 
+   happy to see it used in free and open source software. If you do use 
+   it I would appreciate an acknowledgement of its origin in the code or
+   the product that results and I would also appreciate knowing a liitle
+   about the use to which it is being put.
+
+   Dr B. R. Gladman <brg@gladman.uk.net> 1st June 2001.
+
+   This is an implementation of the AES encryption algorithm (Rijndael)
+   designed by Joan Daemen and Vincent Rijmen. This version is designed
+   to provide both fixed and dynamic block and key lengths and can also 
+   run with either big or little endian internal byte order.
+    
+   NOTE: Input block and key lengths are given in terms of the lengths of
+   the byte arrays involved, the legal values being 16, 24 and 32.
+
+   A. THE CIPHER INTERFACE
+
+   byte                    (an unsigned 8-bit type)
+   word                    (an unsigned 32-bit type)
+   aes_ret:                (a signed 16 bit type for function return values)
+        aes_good            (value != 0, a good return)
+        aes_bad             (value == 0, an error return)
+   enum aes_key:           (encryption direction)
+        enc                 (set key for encryption)
+        dec                 (set key for decryption)
+        both                (set key for both)
+   class or struct aes     (structure for context)
+
+   C subroutine calls:
+
+   aes_ret set_blk(const word block_length, aes *cx)  (variable block size)
+   aes_ret set_key(const byte key[], const word key_length,
+				   const enum aes_key direction, aes *cx)
+   aes_ret encrypt(const byte input_blk[], byte output_blk[], const aes *cx)
+   aes_ret decrypt(const byte input_blk[], byte output_blk[], const aes *cx)
+
+   IMPORTANT NOTE: If you are using this C interface and your compiler does 
+   not set the memory used for objects to zero before use, you will need to 
+   ensure that cx.mode is set to zero before using the C subroutine calls.
+
+   C++ aes class subroutines:
+
+   aes_ret set_blk(const word block_length)  (variable block size)
+   aes_ret set_key(const byte key[], const word key_length,
+				   const aes_key direction)
+   aes_ret encrypt(const byte input_blk[], byte output_blk[]) const
+   aes_ret decrypt(const byte input_blk[], byte output_blk[]) const
+
+   The block length inputs to set_block and set_key are in numbers of
+   BYTES, not bits.  The calls to subroutines must be made in the above 
+   order but multiple calls can be made without repeating earlier calls
+   if their parameters have not changed. If the cipher block length is
+   variable but set_blk has not been called before cipher operations a
+   value of 16 is assumed (that is, the AES block size). In contrast to 
+   earlier versions the block and key length parameters are now checked
+   for correctness and the encryption and decryption routines check to 
+   ensure that an appropriate key has been set before they are called.
+   
+   B. BYTE ORDER WITHIN 32 BIT WORDS
+
+   The fundamental data processing units in Rijndael are 8-bit bytes. The 
+   input, the output and the key input are all enumerated arrays of bytes 
+   in which bytes are numbered starting at zero and increasing to one less
+   than the number of bytes in the array in question.  When these inputs 
+   and outputs are considered as bit sequences, the n'th byte contains 
+   bits 8n to 8n+7 of the sequence with the lower numbered bit mapped to 
+   the most significant bit within the  byte (i.e. that having a numeric 
+   value of 128).  However, Rijndael can be implemented more efficiently 
+   using 32-bit words to process 4 bytes at a time provided that the order
+   of bytes within words is known.  This order is called big-endian if the 
+   lowest numbered bytes in words have the highest numeric significance 
+   and little-endian if the opposite applies. This code can work in either 
+   order irrespective of the native order of the machine on which it runs.
+   The byte order used internally is set by defining INTERNAL_BYTE_ORDER
+   whereas the order for all inputs and outputs is specified by defining 
+   EXTERNAL_BYTE_ORDER, the only purpose of the latter being to determine
+   if a byte order change is needed immediately after input and immediately
+   before output to account for the use of a different internal byte order.  
+   In almost all situations both of these defines will be set to the native 
+   order of the processor on which the code is to run but other settings 
+   may somtimes be useful in special circumstances.
+
+#define INTERNAL_BYTE_ORDER LITTLE_ENDIAN
+#define EXTERNAL_BYTE_ORDER LITTLE_ENDIAN
+
+   C. COMPILATION 
+
+   To compile AES (Rijndael) for use in C code
+    a. Exclude the AES_DLL define in aes.h
+    b. Exclude the AES_IN_CPP define in aes.h
+
+   To compile AES (Rijndael) for use in in C++ code
+    a. Exclude the AES_DLL define in aes.h
+    b. Include the AES_IN_CPP define in aes.h
+
+   To compile AES (Rijndael) in C as a Dynamic Link Library
+    a. Include the AES_DLL define in aes.h
+    b. Compile the DLL.  If using the test files, exclude aes.c from
+       the test build project and compile it with the same defines 
+       as used for the DLL (ensure that the DLL path is correct)
+
+   D. CONFIGURATION OPTIONS (see also aes.c)
+
+   1. define BLOCK_SIZE to set the cipher block size (16, 24 or 32) or
+      leave this undefined for dynamically variable block size (this will
+      result in much slower code).
+   2. set AES_IN_CPP to use the code from C++ rather than C
+   3. set AES_DLL if AES (Rijndael) is to be compiled to a DLL
+   4. set INTERNAL_BYTE_ORDER to one of the above constants to set the
+      internal byte order (the order used within the algorithm code)
+   5. set EXTERNAL_BYTE_ORDER to one of the above constants to set the byte
+      order used at the external interfaces for the input, output and key
+      byte arrays.
+
+   IMPORTANT NOTE: BLOCK_SIZE is in BYTES: 16, 24, 32 or undefined for aes.c
+   and 16, 20, 24, 28, 32 or undefined for aes++.c.  If left undefined a 
+   slower version providing variable block length is compiled   
+
+#define BLOCK_SIZE  16
+
+   Define AES_IN_CPP if you intend to use the AES C++ class rather than the
+   C code directly.
+
+#define AES_IN_CPP
+
+   Define AES_DLL if you wish to compile the code to produce a Windows DLL
+
+#define AES_DLL
+
+*/"
+***********************************************************************
+"/*
+   The AES algorithm Rijndael implemented for block and key sizes of 128,
+   192 and 256 bits (16, 24 and 32 bytes) by Brian Gladman.
+
+   I retain copyright in this code but I encourage its free use provided
+   that I don't carry any responsibility for the results. I am especially 
+   happy to see it used in free and open source software. If you do use 
+   it I would appreciate an acknowledgement of its origin in the code or
+   the product that results and I would also appreciate knowing a liitle
+   about the use to which it is being put. I am grateful to Frank Yellin
+   for some ideas that are used in this implementation.
+ 
+   Dr B. R. Gladman <brg@gladman.uk.net> 1st June 2001.
+ 
+   This is an implementation of the AES encryption algorithm (Rijndael)
+   designed by Joan Daemen and Vincent Rijmen. This version is designed
+   to provide both fixed and dynamic block and key lengths and can also 
+   run with either big or little endian internal byte order (see aes.h). 
+   It inputs block and key lengths in bytes with the legal values being 
+   16, 24 and 32.
+ 
+   CONFIGURATION OPTIONS (see also aes.h)
+ 
+   1.  Define UNROLL for full loop unrolling in encryption and decryption.
+   2.  Define PARTIAL_UNROLL to unroll two loops in encryption and decryption.
+   3.  Define FIXED_TABLES for compiled rather than dynamic tables.
+   4.  Define FF_TABLES to use tables for field multiplies and inverses.
+   5.  Define ARRAYS to use arrays to hold the local state block. If this
+       is not defined, individually declared 32-bit words are used.
+   6.  Define FAST_VARIABLE if a high speed variable block implementation
+       is needed (essentially three separate fixed block size code sequences)
+   7.  Define either ONE_TABLE or FOUR_TABLES for a fast table driven 
+       version using 1 table (2 kbytes of table space) or 4 tables (8
+       kbytes of table space) for higher speed.
+   8.  Define either ONE_LR_TABLE or FOUR_LR_TABLES for a further speed 
+       increase by using tables for the last rounds but with more table
+       space (2 or 8 kbytes extra).
+   9.  If neither ONE_TABLE nor FOUR_TABLES is defined, a compact but 
+       slower version is provided.
+   10. If fast decryption key scheduling is needed define ONE_IM_TABLE
+       or FOUR_IM_TABLES for higher speed (2 or 8 kbytes extra).
+
+   USE OF DEFINES
+  
+   NOTE: some combinations of the following defines are disabled below.
+
+   UNROLL or PARTIAL_UNROLL control the extent to which loops are unrolled
+   in the main encryption and decryption routines. UNROLL does a complete
+   unroll while PARTIAL_UNROLL uses a loop with two rounds in it.
+ 
+#define UNROLL
+#define PARTIAL_UNROLL
+ 
+   If FIXED_TABLES is defined, the tables are comipled statically into the 
+   code, otherwise they are computed once when the code is first used.
+ 
+#define FIXED_TABLES
+ 
+   If FF_TABLES is defined faster finite field arithmetic is performed by 
+   using tables.
+ 
+#define FF_TABLES
+
+   If ARRAYS is defined the state variables for encryption are defined as
+   arrays, otherwise they are defined as individual variables. The latter
+   is useful on machines where these variables can be mapped to registers. 
+ 
+#define ARRAYS
+
+   If FAST_VARIABLE is defined with variable block length, faster but larger
+   code is used for encryption and decryption.
+
+#define FAST_VARIABLE
+ */"
+***********************************************************************
+"/*
+ * Copyright (c) 2002-2004, Karlsruhe University
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+
+/*
+ * Author: Malcolm Purvis <malcolmp@ok-labs.com>
+ * Author: Carlos Dyonisio <medaglia@ok-labs.com>
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+
+/*
+ * Author: Malcolm Purvis <malcolmp@ok-labs.com>
+ *
+ * This file is only included by the main atomic_ops.h, so all of that
+ * file's definitions are available.
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2004, National ICT Australia
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */"
+***********************************************************************
+"/*
+  If you use the zlib library in a product, an acknowledgment is welcome
+  in the documentation of your product. If for some reason you cannot
+  include such an acknowledgment, I would appreciate that you keep this
+  copyright string in the executable of your product.
+ */"
+***********************************************************************
+"/* zutil.h -- internal interface and configuration of the compression library
+ * Copyright (C) 1995-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* zconf.h -- configuration of the zlib compression library
+ * Copyright (C) 1995-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* inftrees.c -- generate Huffman trees for efficient decoding
+ * Copyright (C) 1995-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* inflate.h -- internal inflate state definition
+ * Copyright (C) 1995-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* inflate.c -- zlib decompression
+ * Copyright (C) 1995-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* infback.c -- inflate using a call-back interface
+ * Copyright (C) 1995-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* deflate.h -- internal compression state
+ * Copyright (C) 1995-2017 Jean-loup Gailly
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* crc32.c -- compute the CRC-32 of a data stream
+ * Copyright (C) 1995-2006, 2010, 2011, 2012 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ *
+ * Thanks to Rodney Brown <rbrown64@csc.com.au> for his contribution of faster
+ * CRC methods: exclusive-oring 32 bits of data at a time, and pre-computing
+ * tables for updating the shift register in one step with three exclusive-ors
+ * instead of four steps with four exclusive-ors.  This results in about a
+ * factor of two increase in speed on a Power PC G4 (PPC7455) using gcc -O3.
+ */"
+***********************************************************************
+"/* compress.c -- compress a memory buffer
+ * Copyright (C) 1995-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"/* adler32.c -- compute the Adler-32 checksum of a data stream
+ * Copyright (C) 1995-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ */"
+***********************************************************************
+"* written by Colin Plumb in 1993, no copyright is claimed.
+* This code is in the public domain; do with it what you wish."
+***********************************************************************
+"* This code implements the MD5 message-digest algorithm.
+* The algorithm is due to Ron Rivest.	This code was
+* written by Colin Plumb in 1993, no copyright is claimed.
+* This code is in the public domain; do with it what you wish."
+***********************************************************************
+"* Copyright (C) 2004, 2005, 2010, 2011, 2012-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2017 Jean-loup Gailly
+ * detect_data_type() function provided freely by Cosmin Truta, 2006
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2008, 2010-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2006, 2010, 2011, 2012-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ *
+ * Thanks to Rodney Brown <rbrown64@csc.com.au> for his contribution of faster
+ * CRC methods: exclusive-oring 32 bits of data at a time, and pre-computing
+ * tables for updating the shift register in one step with three exclusive-ors
+ * instead of four steps with four exclusive-ors.  This results in about a
+ * factor of two increase in speed on a Power PC G4 (PPC7455) using gcc -O3."
+***********************************************************************
+"* Copyright (C) 1995-2005, 2010-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2005, 2010, 2011, 2012-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"* Copyright (C) 1995-2003, 2010-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+"##############################################################################
+# Australian Public Licence B (OZPLB)
+# 
+# Version 1-0
+# 
+# Copyright (c) 2007, Open Kernel Labs, Inc.
+# 
+# All rights reserved. 
+# 
+# Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+#               National ICT Australia
+#               http://www.ertos.nicta.com.au
+# 
+# Permission is granted by National ICT Australia, free of charge, to
+# any person obtaining a copy of this software and any associated
+# documentation files (the ""Software"") to deal with the Software without
+# restriction, including (without limitation) the rights to use, copy,
+# modify, adapt, merge, publish, distribute, communicate to the public,
+# sublicense, and/or sell, lend or rent out copies of the Software, and
+# to permit persons to whom the Software is furnished to do so, subject
+# to the following conditions:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimers.
+# 
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimers in the documentation and/or other materials provided
+#       with the distribution.
+# 
+#     * Neither the name of National ICT Australia, nor the names of its
+#       contributors, may be used to endorse or promote products derived
+#       from this Software without specific prior written permission.
+# 
+# EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+# PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+# NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+# WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+# BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+# REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+# THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+# ERRORS, WHETHER OR NOT DISCOVERABLE.
+# 
+# TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+# NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+# THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+# NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+# LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+# OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+# OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+# OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+# CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+# CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+# DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+# CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+# DAMAGES OR OTHER LIABILITY.
+# 
+# If applicable legislation implies representations, warranties, or
+# conditions, or imposes obligations or liability on National ICT
+# Australia or one of its contributors in respect of the Software that
+# cannot be wholly or partly excluded, restricted or modified, the
+# liability of National ICT Australia or the contributor is limited, to
+# the full extent permitted by the applicable legislation, at its
+# option, to:
+# a.  in the case of goods, any one or more of the following:
+# i.  the replacement of the goods or the supply of equivalent goods;
+# ii.  the repair of the goods;
+# iii. the payment of the cost of replacing the goods or of acquiring
+#  equivalent goods;
+# iv.  the payment of the cost of having the goods repaired; or
+# b.  in the case of services:
+# i.  the supplying of the services again; or
+# ii.  the payment of the cost of having the services supplied again.
+# 
+# The construction, validity and performance of this licence is governed
+# by the laws in force in New South Wales, Australia.
+"""""""
+***********************************************************************
+"##############################################################################
+# Australian Public Licence B (OZPLB)
+# 
+# Version 1-0
+# 
+# Copyright (c) 2007, Open Kernel Labs, Inc.
+# 
+# All rights reserved. 
+# 
+# Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+#               National ICT Australia
+#               http://www.ertos.nicta.com.au
+# 
+# Permission is granted by National ICT Australia, free of charge, to
+# any person obtaining a copy of this software and any associated
+# documentation files (the ""Software"") to deal with the Software without
+# restriction, including (without limitation) the rights to use, copy,
+# modify, adapt, merge, publish, distribute, communicate to the public,
+# sublicense, and/or sell, lend or rent out copies of the Software, and
+# to permit persons to whom the Software is furnished to do so, subject
+# to the following conditions:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimers.
+# 
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimers in the documentation and/or other materials provided
+#       with the distribution.
+# 
+#     * Neither the name of National ICT Australia, nor the names of its
+#       contributors, may be used to endorse or promote products derived
+#       from this Software without specific prior written permission.
+# 
+# EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+# PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+# NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+# WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+# BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+# REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+# THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+# ERRORS, WHETHER OR NOT DISCOVERABLE.
+# 
+# TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+# NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+# THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+# NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+# LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+# OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+# OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+# OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+# CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+# CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+# DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+# CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+# DAMAGES OR OTHER LIABILITY.
+# 
+# If applicable legislation implies representations, warranties, or
+# conditions, or imposes obligations or liability on National ICT
+# Australia or one of its contributors in respect of the Software that
+# cannot be wholly or partly excluded, restricted or modified, the
+# liability of National ICT Australia or the contributor is limited, to
+# the full extent permitted by the applicable legislation, at its
+# option, to:
+# a.  in the case of goods, any one or more of the following:
+# i.  the replacement of the goods or the supply of equivalent goods;
+# ii.  the repair of the goods;
+# iii. the payment of the cost of replacing the goods or of acquiring
+#  equivalent goods;
+# iv.  the payment of the cost of having the goods repaired; or
+# b.  in the case of services:
+# i.  the supplying of the services again; or
+# ii.  the payment of the cost of having the services supplied again.
+# 
+# The construction, validity and performance of this licence is governed
+# by the laws in force in New South Wales, Australia."
+***********************************************************************
+"# Australian Public Licence B (OZPLB)
+#
+# Version 1-0
+#
+# Copyright (c) 2007, Open Kernel Labs, Inc.
+#
+# All rights reserved.
+#
+# Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+#               National ICT Australia
+#               http://www.ertos.nicta.com.au
+#
+# Permission is granted by National ICT Australia, free of charge, to
+# any person obtaining a copy of this software and any associated
+# documentation files (the ""Software"") to deal with the Software without
+# restriction, including (without limitation) the rights to use, copy,
+# modify, adapt, merge, publish, distribute, communicate to the public,
+# sublicense, and/or sell, lend or rent out copies of the Software, and
+# to permit persons to whom the Software is furnished to do so, subject
+# to the following conditions:
+#
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimers.
+#
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimers in the documentation and/or other materials provided
+#       with the distribution.
+#
+#     * Neither the name of National ICT Australia, nor the names of its
+#       contributors, may be used to endorse or promote products derived
+#       from this Software without specific prior written permission.
+#
+# EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+# PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+# NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+# WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+# BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+# REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+# THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+# ERRORS, WHETHER OR NOT DISCOVERABLE.
+#
+# TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+# NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+# THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+# NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+# LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+# OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+# OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+# OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+# CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+# CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+# DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+# CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+# DAMAGES OR OTHER LIABILITY.
+#
+# If applicable legislation implies representations, warranties, or
+# conditions, or imposes obligations or liability on National ICT
+# Australia or one of its contributors in respect of the Software that
+# cannot be wholly or partly excluded, restricted or modified, the
+# liability of National ICT Australia or the contributor is limited, to
+# the full extent permitted by the applicable legislation, at its
+# option, to:
+# a.  in the case of goods, any one or more of the following:
+# i.  the replacement of the goods or the supply of equivalent goods;
+# ii.  the repair of the goods;
+# iii. the payment of the cost of replacing the goods or of acquiring
+#  equivalent goods;
+# iv.  the payment of the cost of having the goods repaired; or
+# b.  in the case of services:
+# i.  the supplying of the services again; or
+# ii.  the payment of the cost of having the services supplied again.
+#
+# The construction, validity and performance of this licence is governed
+# by the laws in force in New South Wales, Australia."
+***********************************************************************
+"# Australian Public Licence B (OZPLB)
+# 
+# Version 1-0
+# 
+# Copyright (c) 2007, Open Kernel Labs, Inc.
+# 
+# All rights reserved. 
+# 
+# Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+#               National ICT Australia
+#               http://www.ertos.nicta.com.au
+# 
+# Permission is granted by National ICT Australia, free of charge, to
+# any person obtaining a copy of this software and any associated
+# documentation files (the ""Software"") to deal with the Software without
+# restriction, including (without limitation) the rights to use, copy,
+# modify, adapt, merge, publish, distribute, communicate to the public,
+# sublicense, and/or sell, lend or rent out copies of the Software, and
+# to permit persons to whom the Software is furnished to do so, subject
+# to the following conditions:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimers.
+# 
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimers in the documentation and/or other materials provided
+#       with the distribution.
+# 
+#     * Neither the name of National ICT Australia, nor the names of its
+#       contributors, may be used to endorse or promote products derived
+#       from this Software without specific prior written permission.
+# 
+# EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+# PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+# NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+# WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+# BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+# REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+# THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+# ERRORS, WHETHER OR NOT DISCOVERABLE.
+# 
+# TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+# NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+# THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+# NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+# LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+# OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+# OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+# OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+# CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+# CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+# DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+# CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+# DAMAGES OR OTHER LIABILITY.
+# 
+# If applicable legislation implies representations, warranties, or
+# conditions, or imposes obligations or liability on National ICT
+# Australia or one of its contributors in respect of the Software that
+# cannot be wholly or partly excluded, restricted or modified, the
+# liability of National ICT Australia or the contributor is limited, to
+# the full extent permitted by the applicable legislation, at its
+# option, to:
+# a.  in the case of goods, any one or more of the following:
+# i.  the replacement of the goods or the supply of equivalent goods;
+# ii.  the repair of the goods;
+# iii. the payment of the cost of replacing the goods or of acquiring
+#  equivalent goods;
+# iv.  the payment of the cost of having the goods repaired; or
+# b.  in the case of services:
+# i.  the supplying of the services again; or
+# ii.  the payment of the cost of having the services supplied again.
+# 
+# The construction, validity and performance of this licence is governed
+# by the laws in force in New South Wales, Australia."
+***********************************************************************
+" https://stackoverflow.com/questions/50093243/efficient-conversion-of-float-endianness-in-strict-portable-c
+  - https://trust-in-soft.com/wp-content/uploads/2017/01/vmcai.pdf
+  - https://stackoverflow.com/questions/7396591/bitwise-float-to-int/7396744#7396744"
+***********************************************************************
+" Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+
+  Jean-loup Gailly        Mark Adler
+  jloup@gzip.org          madler@alumni.caltech.edu"
+***********************************************************************
+" Copyright (c) 1989 Regents of the University of California.
+ All rights reserved.
+ Redistribution and use in source and binary forms are permitted
+ provided that the above copyright notice and this paragraph are
+ duplicated in all such forms and that any documentation,
+ advertising materials, and other materials related to such
+ distribution and use acknowledge that the software was developed
+ by the University of California, Berkeley.  The name of the
+ University may not be used to endorse or promote products derived
+ from this software without specific prior written permission.
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE."
+***********************************************************************
+" * Copyright (C) 2004, 2005, 2010, 2011, 2012-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2017 Jean-loup Gailly
+ * detect_data_type() function provided freely by Cosmin Truta, 2006
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2017 Jean-loup Gailly and Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2008, 2010-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2006, 2010, 2011, 2012-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h
+ *
+ * Thanks to Rodney Brown <rbrown64@csc.com.au> for his contribution of faster
+ * CRC methods: exclusive-oring 32 bits of data at a time, and pre-computing
+ * tables for updating the shift register in one step with three exclusive-ors
+ * instead of four steps with four exclusive-ors.  This results in about a
+ * factor of two increase in speed on a Power PC G4 (PPC7455) using gcc -O3."
+***********************************************************************
+" * Copyright (C) 1995-2005, 2010-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2005, 2010, 2011, 2012-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2003, 2010-2017 Mark Adler
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" * Copyright (C) 1995-2003, 2010-2017 Jean-loup Gailly.
+ * For conditions of distribution and use, see copyright notice in zlib.h"
+***********************************************************************
+" *  This Quickselect routine is based on the algorithm described in
+ *  ""Numerical recipes in C"", Second Edition,
+ *  Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
+ *  Public domain."
+***********************************************************************
+"  Copyright (c) 1989 Regents of the University of California.
+  All rights reserved.
+
+  Redistribution and use in source and binary forms are permitted
+  provided that the above copyright notice and this paragraph are
+  duplicated in all such forms and that any documentation,
+  advertising materials, and other materials related to such
+  distribution and use acknowledge that the software was developed
+  by the University of California, Berkeley.  The name of the
+  University may not be used to endorse or promote products derived
+  from this software without specific prior written permission.
+  THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+  IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+  WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE."
+***********************************************************************
+"    // This is highly portable and will always work on any CPU with any compiler
+    // See https://stackoverflow.com/questions/46073295/implicit-type-promotion-rules"
+***********************************************************************
+    // https://stackoverflow.com/questions/1845482/what-is-uintptr-t-data-type/1846648#1846648
+***********************************************************************
+"This Notice.txt file contains certain notices Qualcomm Technologies, Inc.
+(?QTI?) is required to provide with certain software components. Notwithstanding
+anything in the notices in this file, your use of such software components
+together with the QTI software (?Software?) is subject to the terms of your
+separate license from QTI. Compliance with all copyright laws and software
+licenses included in this file are the responsibility of the user. Except
+as may be granted by separate express written agreement, this file provides no
+license to any patents, trademarks, copyrights, or other intellectual property
+of QTI or its affiliates.
+
+Software provided with this notice is NOT A CONTRIBUTION to any open source
+project. If alternative licensing is available for any of the components with
+licenses or attributions provided below, a license choice is made for receiving
+such code by QTI.
+Copyright (c) 2012 Qualcomm Technologies, Inc. All rights reserved.
+Qualcomm is a trademark of Qualcomm Incorporated, registered in the United
+States and other countries. All Qualcomm Incorporated trademarks are used with
+permission. Other products and brand names may be trademarks or registered
+trademarks of their respective owners.
+
+
+
+/*
+Copyright (c) 2009, Evan Fosmark
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met: 
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer. 
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution. 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ""AS IS"" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies, 
+either expressed or implied, of the FreeBSD Project.
+*/
+
+/*
+ * FILE:	sha2.c
+ * AUTHOR:	Aaron D. Gifford <me@aarongifford.com>
+ * 
+ * Copyright (c) 2000-2001, Aaron D. Gifford
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTOR(S) ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTOR(S) BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * $From: sha2.c,v 1.1 2001/11/08 00:01:51 adg Exp adg $
+ */
+
+/******************************************************************************* 
+
+  From Michael Paddon :
+
+   Have a look at sha2.[ch] in
+      http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/hash/
+
+   The code is reputable, clean, efficient and under the BSD licence.
+
+*******************************************************************************/
+
+/*
+Copyright (c) 2003-2011, Troy D. Hanson     http://uthash.sourceforge.net
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ""AS
+IS"" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/*
+SHA-1 in C
+By Steve Reid <sreid@sea-to-sky.net>
+100% Public Domain
+*/"
+***********************************************************************
+"These are functions for producing 32-bit hashes for hash table lookup.
+hashword(), hashlittle(), hashlittle2(), hashbig(), mix(), and FINAL() 
+are externally useful functions. Routines to test the hash are included 
+if SELF_TEST is defined. You can use this free for any purpose. It's in
+the public domain. It has no warranty"
+***********************************************************************
+"SCons is distributed under the MIT license, a full copy of which is
+available in the LICENSE.txt file. The MIT license is an approved Open
+Source license, which means:
+
+        This software is OSI Certified Open Source Software.  OSI
+        Certified is a certification mark of the Open Source Initiative.
+
+More information about OSI certifications and Open Source software is
+available at:
+
+        http://www.opensource.org/"
+***********************************************************************
+lookup3.c, by Bob Jenkins, May 2006, Public Domain.
+***********************************************************************
+Copyright Jonathan Hartley 2013. BSD 3-Clause license, see LICENSE file.
+***********************************************************************
+"Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+
+"
+***********************************************************************
+Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+***********************************************************************
+Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 The SCons Foundation
+***********************************************************************
+"Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
+
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED ""AS IS"" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE."
+***********************************************************************
+"/*
+ * Copyright 1996 John D. Polstra.
+ * Copyright 1996 Matt Thomas <matt@3am-software.com>
+ * Copyright 2002 Charles M. Hannum <root@ihack.net>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *      This product includes software developed by John Polstra.
+ * 4. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*
+ * Copyright 1996 Matt Thomas <matt@3am-software.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *      This product includes software developed by John Polstra.
+ * 4. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*
+ * Copyright 1996 John D. Polstra.
+ * Copyright 1996 Matt Thomas <matt@3am-software.com>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *      This product includes software developed by John Polstra.
+ * 4. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*-
+ * Copyright (c) 1998 The NetBSD Foundation, Inc.
+ * All rights reserved.
+ *
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Paul Kranenburg.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *        This product includes software developed by the NetBSD
+ *        Foundation, Inc. and its contributors.
+ * 4. Neither the name of The NetBSD Foundation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+" * Copyright (c) 2000-2001, Aaron D. Gifford
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTOR(S) ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTOR(S) BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE."
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"/*===========================================================================
+Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All rights reserved.
+
+License to copy and use this software is granted provided that it is identified
+as the ""RSA Data Security, Inc. MD5 Message-Digest Algorithm"" in all material
+mentioning or referencing this software or this function.
+
+License is also granted to make and use derivative works provided that such
+works are identified as ""derived from the RSA Data Security, Inc. MD5
+Message-Digest Algorithm"" in all material mentioning or referencing the
+derived work.
+
+RSA Data Security, Inc. makes no representations concerning either the
+merchantability of this software or the suitability of this software for any
+particular purpose. It is provided ""as is"" without express or implied warranty
+of any kind.
+
+These notices must be retained in any copies of any part of this documentation"
+***********************************************************************
+           Steve Reid <steve@edmweb.com>     100% Public Domain
+***********************************************************************
+"/*=========================================================================
+
+                            EDIT HISTORY FOR FILE
+
+  This section contains comments describing changes made to the module.
+  Notice that changes are listed in reverse chronological order.
+
+
+
+
+
+when       who                 what, where, why
+--------   ----                -------------------------------------------
+03/03/08   ANB                 Added const qualifiers.
+05/02/06   AMW                 Initial SC2X port.
+08/25/04   SJD                 Initial revision.  Original SW from the
+                               security team.
+06/06/04   John Alayari        1. Added comments and headings to functions and
+                                  corrected some indentations to comply
+                                  with ASW Security Services Coding Guideline.
+                                  2. Added casting of (unsigned char) to
+                                  pl_pbl_SHA1Final function to eliminated warnings
+                                  and possible data loss.
+           Steve Reid <steve@edmweb.com>      100% Public Domain
+
+===========================================================================*/"
+***********************************************************************
+"/*
+Copyright (c) 2003-2011, Troy D. Hanson     http://uthash.sourceforge.net
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ""AS
+IS"" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/"
+***********************************************************************
+"/*
+ * FILE:	sha2.h
+ * AUTHOR:	Aaron D. Gifford <me@aarongifford.com>
+ *
+ * Copyright (c) 2000-2001, Aaron D. Gifford
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTOR(S) ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTOR(S) BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * $From: sha2.h,v 1.1 2001/11/08 00:02:01 adg Exp adg $
+ */"
+***********************************************************************
+"/*
+ * Copyright 1996 Matt Thomas <matt@3am-software.com>
+ * Copyright 2002 Charles M. Hannum <root@ihack.net>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*-
+ * Copyright (c) 2011 The NetBSD Foundation, Inc.
+ * All rights reserved.
+ *
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Joerg Sonnenberger.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*-
+ * Copyright (c) 1998, 2002 The NetBSD Foundation, Inc.
+ * All rights reserved.
+ *
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Matt Thomas and by Charles M. Hannum.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *        This product includes software developed by the NetBSD
+ *        Foundation, Inc. and its contributors.
+ * 4. Neither the name of The NetBSD Foundation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*-
+ * Copyright (c) 1994 The NetBSD Foundation, Inc.
+ * All rights reserved.
+ *
+ * This code is derived from software contributed to The NetBSD Foundation
+ * by Christos Zoulas.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by the NetBSD
+ *	Foundation, Inc. and its contributors.
+ * 4. Neither the name of The NetBSD Foundation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+/*
+ * Author: Alex Webster
+ */"
+***********************************************************************
+"/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2004, National ICT Australia
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+/*
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+/*
+ * Author: Alex Webster
+ */"
+***********************************************************************
+".\"" Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+.\""
+.\"" Permission is hereby granted, free of charge, to any person obtaining
+.\"" a copy of this software and associated documentation files (the
+.\"" ""Software""), to deal in the Software without restriction, including
+.\"" without limitation the rights to use, copy, modify, merge, publish,
+.\"" distribute, sublicense, and/or sell copies of the Software, and to
+.\"" permit persons to whom the Software is furnished to do so, subject to
+.\"" the following conditions:
+.\""
+.\"" The above copyright notice and this permission notice shall be included
+.\"" in all copies or substantial portions of the Software.
+.\""
+.\"" THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+.\"" KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+.\"" WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+.\"" NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+.\"" LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+.\"" OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+.\"" WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+".\"" Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+.\""
+.\"" Permission is hereby granted, free of charge, to any person obtaining
+.\"" a copy of this software and associated documentation files (the
+.\"" ""Software""), to deal in the Software without restriction, including
+.\"" without limitation the rights to use, copy, modify, merge, publish,
+.\"" distribute, sublicense, and/or sell copies of the Software, and to
+.\"" permit persons to whom the Software is furnished to do so, subject to
+.\"" the following conditions:
+.\""
+.\"" The above copyright notice and this permission notice shall be included
+.\"" in all copies or substantial portions of the Software.
+.\""
+.\"" THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+.\"" KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+.\"" WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+.\"" NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+.\"" LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+.\"" OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+.\"" WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"* Copyright (c) 2000-2001, Aaron D. Gifford
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+* 1. Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+* 3. Neither the name of the copyright holder nor the names of contributors
+*    may be used to endorse or promote products derived from this software
+*    without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTOR(S) ``AS IS'' AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTOR(S) BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE."
+***********************************************************************
+"* Copyright (c) 1982, 1986, 1993
+*            The Regents of the University of California.  All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+* 1. Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+* 3. Neither the name of the University nor the names of its contributors
+*    may be used to endorse or promote products derived from this software
+*    without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE."
+***********************************************************************
+"* Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+
+/*
+ * Author: Malcolm Purvis <malcolmp@ok-labs.com>
+ * Author: Carlos Dyonisio <medaglia@ok-labs.com>
+ */"
+***********************************************************************
+"* Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2004, National ICT Australia
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia."
+***********************************************************************
+"#Source found at http://code.activestate.com/recipes/576693/
+#Revision 9
+#Licensed under the MIT License"
+***********************************************************************
+"#Copyright (C) 2012 Martin Blech and individual contributors.
+#
+#Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+#The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+#THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"#!/usr/bin/env python
+#
+# Australian Public Licence B (OZPLB)
+# 
+# Version 1-0
+# 
+# Copyright (c) 2007, Open Kernel Labs, Inc.
+# 
+# All rights reserved. 
+# 
+# Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+#               National ICT Australia
+#               http://www.ertos.nicta.com.au
+# 
+# Permission is granted by National ICT Australia, free of charge, to
+# any person obtaining a copy of this software and any associated
+# documentation files (the ""Software"") to deal with the Software without
+# restriction, including (without limitation) the rights to use, copy,
+# modify, adapt, merge, publish, distribute, communicate to the public,
+# sublicense, and/or sell, lend or rent out copies of the Software, and
+# to permit persons to whom the Software is furnished to do so, subject
+# to the following conditions:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimers.
+# 
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimers in the documentation and/or other materials provided
+#       with the distribution.
+# 
+#     * Neither the name of National ICT Australia, nor the names of its
+#       contributors, may be used to endorse or promote products derived
+#       from this Software without specific prior written permission.
+# 
+# EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+# PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+# NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+# WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+# BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+# REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+# THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+# ERRORS, WHETHER OR NOT DISCOVERABLE.
+# 
+# TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+# NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+# THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+# NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+# LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+# OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+# OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+# OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+# CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+# CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+# DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+# CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+# DAMAGES OR OTHER LIABILITY.
+# 
+# If applicable legislation implies representations, warranties, or
+# conditions, or imposes obligations or liability on National ICT
+# Australia or one of its contributors in respect of the Software that
+# cannot be wholly or partly excluded, restricted or modified, the
+# liability of National ICT Australia or the contributor is limited, to
+# the full extent permitted by the applicable legislation, at its
+# option, to:
+# a.  in the case of goods, any one or more of the following:
+# i.  the replacement of the goods or the supply of equivalent goods;
+# ii.  the repair of the goods;
+# iii. the payment of the cost of replacing the goods or of acquiring
+#  equivalent goods;
+# iv.  the payment of the cost of having the goods repaired; or
+# b.  in the case of services:
+# i.  the supplying of the services again; or
+# ii.  the payment of the cost of having the services supplied again.
+# 
+# The construction, validity and performance of this licence is governed
+# by the laws in force in New South Wales, Australia.
+#"
+***********************************************************************
+"# This file is distributed under the University of Illinois Open Source
+# License. See LICENSE.TXT for details."
+***********************************************************************
+"# dblite.py module contributed by Ralf W. Grosse-Kunstleve.
+# Extended for Unicode by Steven Knight"
+***********************************************************************
+# Copyright Jonathan Hartley 2013. BSD 3-Clause license, see LICENSE file.
+***********************************************************************
+# Copyright 2007 Google, Inc. All Rights Reserved. Licensed to PSF under a Contributor Agreement.
+***********************************************************************
+"# Copyright (c) 2009 Raymond Hettinger
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the ""Software""), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+#     The above copyright notice and this permission notice shall be
+#     included in all copies or substantial portions of the Software.
+#
+#     THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND,
+#     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+#     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+#     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+#     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+#     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+#     OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"# Copyright (c) 2003-2005 by Peter Astrand <astrand@lysator.liu.se>
+#
+# Licensed to PSF under a Contributor Agreement.
+# See http://www.python.org/2.4/license for licensing details."
+***********************************************************************
+"# Copyright (c) 2003 Stichting NLnet Labs
+# Copyright (c) 2001, 2002, 2003 Steven Knight
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+# Portions of the following are derived from the compat.py file in
+# Twisted, under the following copyright:
+#
+# Copyright (c) 2001-2004 Twisted Matrix Laboratories"
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Portions of the following are derived from the compat.py file in
+# Twisted, under the following copyright:
+#
+# Copyright (c) 2001-2004 Twisted Matrix Laboratories"
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 The SCons Foundation
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 The SCons
+# Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"# Copyright (c) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 The SCons Foundation
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# ""Software""), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+***********************************************************************
+"""A portion of this file was copied from zlib;
+Copyright (C) 1995-2013 Jean-loup Gailly and Mark Adler
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution."""
+***********************************************************************
+" Copyright (c) 2013 IETF Trust and the persons identified as authors
+ of the code. All rights reserved.  Redistribution and use in source
+ and binary forms, with or without modification, are permitted
+ provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+
+ * Neither the name of Internet Society, IETF or IETF Trust, nor the
+ names of specific contributors, may be used to endorse or promote
+ products derived from this software without specific prior written
+ permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ ???AS IS??? AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+***********************************************************************
+" Copyright (c) 2013 IETF Trust and the persons identified as authors
+ of the code. All rights reserved.  Redistribution and use in source
+ and binary forms, with or without modification, are permitted
+ provided that the following conditions are met:
+
+  * Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+
+  * Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+
+  * Neither the name of Internet Society, IETF or IETF Trust, nor the
+  names of specific contributors, may be used to endorse or promote
+  products derived from this software without specific prior written
+  permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ ???AS IS??? AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+***********************************************************************
+" Copyright (c) 2013 IETF Trust and the persons identified as authors
+ of the code. All rights reserved.  Redistribution and use in source
+ and binary forms, with or without modification, are permitted
+ provided that the following conditions are met:
+ 
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ 
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ 
+ * Neither the name of Internet Society, IETF or IETF Trust, nor the
+ names of specific contributors, may be used to endorse or promote
+ products derived from this software without specific prior written
+ permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ ???AS IS??? AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+***********************************************************************
+" * Copyright (c) 2004 by Internet Systems Consortium, Inc. (""ISC"")
+ * Copyright (c) 1996-1999 by Internet Software Consortium.
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED ""AS IS"" AND ISC DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+ * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE."
+***********************************************************************
+" * Copyright (c) 2002, Frank Vanden Berghen
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Frank Vanden Berghen nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *"
+***********************************************************************
+" * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia."
+***********************************************************************
+" * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+ */
+
+/*
+ * Author: Malcolm Purvis <malcolmp@ok-labs.com>
+ * Author: Carlos Dyonisio <medaglia@ok-labs.com>
+ */"
+***********************************************************************
+" * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2004, National ICT Australia
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia.
+
+
+ * Australian Public Licence B (OZPLB)
+ *
+ * Version 1-0
+ *
+ * Copyright (c) 2007, Open Kernel Labs, Inc.
+ *
+ * All rights reserved. 
+ *
+ * Developed by: Embedded, Real-time and Operating Systems Program (ERTOS)
+ *               National ICT Australia
+ *               http://www.ertos.nicta.com.au
+ *
+ * Permission is granted by National ICT Australia, free of charge, to
+ * any person obtaining a copy of this software and any associated
+ * documentation files (the ""Software"") to deal with the Software without
+ * restriction, including (without limitation) the rights to use, copy,
+ * modify, adapt, merge, publish, distribute, communicate to the public,
+ * sublicense, and/or sell, lend or rent out copies of the Software, and
+ * to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimers.
+ *
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimers in the documentation and/or other materials provided
+ *       with the distribution.
+ *
+ *     * Neither the name of National ICT Australia, nor the names of its
+ *       contributors, may be used to endorse or promote products derived
+ *       from this Software without specific prior written permission.
+ *
+ * EXCEPT AS EXPRESSLY STATED IN THIS LICENCE AND TO THE FULL EXTENT
+ * PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED ""AS-IS"", AND
+ * NATIONAL ICT AUSTRALIA AND ITS CONTRIBUTORS MAKE NO REPRESENTATIONS,
+ * WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ * BUT NOT LIMITED TO ANY REPRESENTATIONS, WARRANTIES OR CONDITIONS
+ * REGARDING THE CONTENTS OR ACCURACY OF THE SOFTWARE, OR OF TITLE,
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT,
+ * THE ABSENCE OF LATENT OR OTHER DEFECTS, OR THE PRESENCE OR ABSENCE OF
+ * ERRORS, WHETHER OR NOT DISCOVERABLE.
+ *
+ * TO THE FULL EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+ * NATIONAL ICT AUSTRALIA OR ITS CONTRIBUTORS BE LIABLE ON ANY LEGAL
+ * THEORY (INCLUDING, WITHOUT LIMITATION, IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHERWISE) FOR ANY CLAIM, LOSS, DAMAGES OR OTHER
+ * LIABILITY, INCLUDING (WITHOUT LIMITATION) LOSS OF PRODUCTION OR
+ * OPERATION TIME, LOSS, DAMAGE OR CORRUPTION OF DATA OR RECORDS; OR LOSS
+ * OF ANTICIPATED SAVINGS, OPPORTUNITY, REVENUE, PROFIT OR GOODWILL, OR
+ * OTHER ECONOMIC LOSS; OR ANY SPECIAL, INCIDENTAL, INDIRECT,
+ * CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, ARISING OUT OF OR IN
+ * CONNECTION WITH THIS LICENCE, THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS WITH THE SOFTWARE, EVEN IF NATIONAL ICT AUSTRALIA OR ITS
+ * CONTRIBUTORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH CLAIM, LOSS,
+ * DAMAGES OR OTHER LIABILITY.
+ *
+ * If applicable legislation implies representations, warranties, or
+ * conditions, or imposes obligations or liability on National ICT
+ * Australia or one of its contributors in respect of the Software that
+ * cannot be wholly or partly excluded, restricted or modified, the
+ * liability of National ICT Australia or the contributor is limited, to
+ * the full extent permitted by the applicable legislation, at its
+ * option, to:
+ * a.  in the case of goods, any one or more of the following:
+ * i.  the replacement of the goods or the supply of equivalent goods;
+ * ii.  the repair of the goods;
+ * iii. the payment of the cost of replacing the goods or of acquiring
+ *  equivalent goods;
+ * iv.  the payment of the cost of having the goods repaired; or
+ * b.  in the case of services:
+ * i.  the supplying of the services again; or
+ * ii.  the payment of the cost of having the services supplied again.
+ *
+ * The construction, validity and performance of this licence is governed
+ * by the laws in force in New South Wales, Australia."
+***********************************************************************
+"   Copyright (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>
+
+   Permission to use, copy, modify, and distribute this software for any
+   purpose with or without fee is hereby granted, provided that the above
+   copyright notice and this permission notice appear in all copies.
+
+   THE SOFTWARE IS PROVIDED ""AS IS"" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+   WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+   MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+   ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+   WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+   ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE."
+***********************************************************************
+

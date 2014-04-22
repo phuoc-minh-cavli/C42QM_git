@@ -1,0 +1,65 @@
+#include "pm_dal_prop_ids.h"
+<driver name = "NULL">
+<device id="/apps/pme9205">
+<props id=PM_PROP_SMPS_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_smps 
+</props>
+<props id=PM_PROP_LDO_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_ldo
+</props>
+<props id=PM_PROP_GPIO_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_gpio 
+</props>
+<props id=PM_PROP_MPP_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_mpp
+</props>
+<props id=PM_PROP_PBS_CLIENT_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_pbs_client 
+</props>
+<props id=PM_PROP_MEGAXO_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_megaxo 
+</props>
+<props id=PM_PROP_PWRON_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_pwron
+</props>
+<props id=PM_PROP_VBUS_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_vbus
+</props>
+<props id=PM_PROP_RTC_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR >
+num_of_rtc
+</props>
+<props id=PM_PROP_MX type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+mx_rail
+</props>
+<props id=PM_PROP_MPP_SPECIFIC type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+mpp_specific
+</props>
+<props id=PM_PROP_CX type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+cx_rail
+</props>
+<props id=PM_PROP_PAM_NODE_RSRCS type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+  pm_npa_pam_node_rsrcs
+</props>
+<props id=PM_PROP_PAM_NODE_NUM type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+  num_of_pam_nodes
+</props>
+<props id=PM_PROP_REMOTE_LDO type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+  pmic_npa_remote_ldo
+</props>
+<props id=PM_PROP_REMOTE_SMPS type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+  pmic_npa_remote_smps
+</props>
+<props id=PM_PROP_REMOTE_CLK type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+  pmic_npa_remote_clk
+</props>
+<props id=PM_PROP_CBLPWRN_DEBOUNCE_DURATION type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+cblpwrn_debounce_timer
+</props>
+<props id=PM_PROP_APPS_CFG_INFO type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+pm_apps_config_info
+</props>
+<props id=PM_PROP_APPS type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+apps_rail
+</props>
+</device>
+</driver>

@@ -1,0 +1,75 @@
+#===============================================================================
+# QMI SLIM Interface
+#
+# GENERAL DESCRIPTION
+#    QMI SLIM interface build file
+#
+# Copyright (c) 2019 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/slim/qmimsgs/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/slim/qmimsgs/inc',
+   '${INC_ROOT}/api/common/api',
+   '${INC_ROOT}/core/api/dal',
+   '${INC_ROOT}/core/api/mproc',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+]
+
+env.PublishPrivateApi('LOC_API_V02', INC_DIRS)
+
+SLIM_API_V01_SOURCES =  [
+   '${BUILDPATH}/sensor_location_interface_manager_v01.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/slim/qmimsgs'), SLIM_API_V01_SOURCES)
+

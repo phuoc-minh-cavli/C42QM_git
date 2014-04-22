@@ -1,0 +1,103 @@
+#===============================================================================
+#
+# CLOCK DRIVER HW (CHIPSET) LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/clock/hw/mdm9205/apps/build/clock_apps.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Add API folders
+#-------------------------------------------------------------------------------
+
+CLOCK_BUILD_ROOT = os.getcwd();
+
+#-------------------------------------------------------------------------------
+# Define paths
+#-------------------------------------------------------------------------------
+
+SRCPATH = "../"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Define any features or compiler flags
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'POWER',
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+CLOCK_HW_SOURCES = [
+   '${BUILDPATH}/src/ClockApps.c',
+   '${BUILDPATH}/src/ClockAppsDCVS.c',
+   '${BUILDPATH}/src/ClockAppsLite.c',
+   '${BUILDPATH}/src/ClockAppsPLL.c',
+   '${BUILDPATH}/src/ClockAppsXO.c'
+]
+
+#-------------------------------------------------------------------------------
+# Add libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_APPS'],
+   '${BUILDPATH}/ClockHW',
+   CLOCK_HW_SOURCES)
+
+
+#-------------------------------------------------------------------------------
+# HWIO
+#-------------------------------------------------------------------------------
+
+if env.has_key('HWIO_IMAGE'):
+
+  env.AddHWIOFile('HWIO', [
+   {
+      'filename': '${INC_ROOT}/core/systemdrivers/clock/hw/${CHIPSET}/apps/inc/ClockLiteHWIO.h',
+      'modules': [
+        'GCC_CLK_CTL_REG',
+        'APCS_F0_QTMR_V1'],
+      'module-filter-include': {
+        'GCC_CLK_CTL_REG': ['GCC_APCS_CLOCK_BRANCH_ENA_VOTE', 'GCC_PRNG_AHB_CBCR'],
+      },
+      'header':
+        '#include <HALhwio.h>\n'
+        '#include <msmhwiobase.h>\n\n'
+        '/*\n'
+        ' * HWIO base definitions\n'
+        ' */\n'
+        '#define PROC_CLK_BRANCH_ENA_VOTE   GCC_APCS_CLOCK_BRANCH_ENA_VOTE\n\n',
+    }
+  ])

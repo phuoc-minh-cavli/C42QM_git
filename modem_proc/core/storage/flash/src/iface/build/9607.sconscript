@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# 9x07 Target Specific Scons file for Flash Iface
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015, 2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 18/01/19   sl      Add support to compile modules for page only image
+# 08/06/15   sb      Initial Revision
+#===============================================================================
+
+Import('env')
+
+flash_bam_images = [
+   'MODEM_IMAGE', 'CBSP_MODEM_IMAGE',
+   'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE',
+   'NAND_MBA_DRIVER', 'MODEM_PAGEONLY',
+   ]
+
+
+dictionary_keys = set(env.Dictionary())
+
+# Find the intersection
+flash_bam_images_result_keys = set(flash_bam_images) & dictionary_keys
+
+if len(flash_bam_images_result_keys) != 0 :
+   env.Replace(ENABLE_FLASH_BAM = 'yes')

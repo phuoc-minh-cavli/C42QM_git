@@ -1,0 +1,22 @@
+#===============================================================================
+#
+# Network Service APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.PublishPublicApi('CRYPTOLIB', [
+    "${INC_ROOT}/dataservices/netservice/security/crypto/lib/common/ref10",
+    "${INC_ROOT}/dataservices/netservice/security/crypto/lib/common/utils",
+    "${INC_ROOT}/dataservices/netservice/security/crypto/lib/curve25519"
+])
+
+env.LoadAPIUnits()

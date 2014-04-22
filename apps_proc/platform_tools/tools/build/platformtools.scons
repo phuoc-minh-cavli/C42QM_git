@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# tx_platform APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021-22 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/platform_tools.tx/1.0/tools/build/platformtools.scons#2 $
+#  $DateTime: 2022/02/10 02:34:44 $
+#  $Author: pwbldsvc $
+#  $Change: 35368793 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#===============================================================================
+import os
+
+Import('env')
+
+if os.path.exists('platformtools_cleanpack.py'):
+   env.LoadToolScript('platformtools_cleanpack.py')
+
+env.LoadSoftwareUnits()
+

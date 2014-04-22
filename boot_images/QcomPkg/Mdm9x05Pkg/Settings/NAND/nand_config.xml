@@ -1,0 +1,18 @@
+ <driver name="Flash">
+   <device id=DALDEVICEID_FLASH_DEVICE_1>
+   </device>
+   <device id=DALDEVICEID_FLASH_DEVICE_2>
+   </device>
+   <device id=DALDEVICEID_FLASH_DEVICE_3>
+   </device>
+   <device id="DALDEVICEID_FLASH_DEVICE_4">
+   </device>
+   <device id="DALDEVICEID_FLASH_DEVICE_5">
+   </device>
+   <device id="DALDEVICEID_FLASH_DEVICE_6">
+   </device>
+   <device id="DALDEVICEID_FLASH_DEVICE_7">
+   </device>
+   <device id="DALDEVICEID_FLASH_DEVICE_8">
+   </device>
+ </driver>

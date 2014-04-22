@@ -1,0 +1,550 @@
+;============================================================================
+;
+;   Heap Walker V1.01
+;
+;       Parses a given memheap and gets the statistics
+;       Doesn't pinpoint who is causing the problem.
+;       Provides the following in the summary (further parsed by 
+;       the heapparser script:
+;
+;       Allocation Table:
+;       Blk Address FileHash  Lineno  Allocated   Extra  Free  Last   Pad
+;        No                               Bytes   Bytes  Flag  Flag  Byte
+;
+;                
+;   Procedure:
+;       1) Load the ELF file into T32 Simulator
+;       2) Load the Jtag log or ram dumps (if working with Jtag log)
+;       3) In the T32 Cmd Line : "do heapwalker <Heap Variable> <Output Dir>"
+;       4) Follow the output shown in "AREA ST" to fetch the results.
+;
+;
+; Copyright (c) 2012,2017 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
+;============================================================================
+
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+; $Header: //components/rel/core.tx/6.0/services/utils/tools/t32/HeapWalker.cmm#1 $ 
+; $DateTime: 2020/01/30 22:49:35 $ 
+; $Author: pwbldsvc $
+;
+;  when        who     what, where, why
+; ---------    ---     --------------------------------------------------------
+; 23/01/17     nk      Fixed issue of not detecting corruption if the corruption is in last block
+; 12/01/12     rks     memheap unified script intial version 
+;============================================================================
+
+
+LOCAL &OpT32File
+LOCAL &OpPlFile
+LOCAL &HeapParserScript
+LOCAL &OpT32FileMemDb
+
+ENTRY &HeapVar &OpDir
+
+Area.Reset
+Area.Create ST 200. 1000.       ;create an AREA window              
+Area.Select ST                  ;select the AREA window as PRACTICE 
+                                ;input/output window                
+Area ST                         ;display the AREA window            
+&HeapParserScript=OS.PWD();
+&HeapParserScript="&HeapParserScript"+"\heapwalkparser_memdebug_db.pl"
+;Set the version of the script:
+; 00.00.01 -- First Walker Script for Mem Heap With CRC enabled
+&CMMVERSION="00.00.01"
+
+print "Unified Heap Walker v 1.1  "
+print "Removed requirement for debug feature and perl script post-processing"
+print "---------------------------------------------------------------------"
+
+if ("&HeapVar"=="")
+(
+        print "Enter the heap variable to be parsed:"
+        enter &HeapVar
+
+)
+;Check if the variable exists else enddo
+if (!Y.EXIST("&HeapVar"))
+(
+   print "&HeapVar is not found in the build !!. Bailing out..."
+   enddo
+)
+&MemHeapTypeSize=0
+&HeapVarSize=Y.SIZEOF("&HeapVar")
+&MemHeapTypeSize=Y.SIZEOF("diag_heap")
+
+
+if (&MemHeapTypeSize!=&HeapVarSize)
+(
+        print "&HeapVar is not a mem_heap_type variable!!"
+        enddo
+)
+;Check if the variable exists else enddo
+if (!Y.EXIST("&HeapVar"))
+(
+   print "&HeapVar is not found in the build !!. Bailing out..."
+   enddo
+)
+
+
+if ("&OpDir"=="")
+(
+        print "Please enter the directory where the results should be stored"
+        dialog.dir *.*
+        ENTRY &OpDir
+)
+if ("&OpDir"=="")
+(
+        print "Output Dir not chosen.. Bailing Out...."
+        enddo
+)
+
+if (!os.file(&HeapParserScript))
+(
+      dialog.file *.pl
+      ENTRY &HeapParserScript
+;      &HeapParserScript="&filename"
+)
+if ("&HeapParserScript"!="")
+(
+  if (!os.file(&HeapParserScript))
+  (
+       print "Parser Script not chosen.. Bailing Out...."
+       enddo
+  )
+)
+else
+(
+  print "Parser Script not chosen.. Bailing Out...."
+  enddo
+)
+
+
+&CASE1=1;Robust XOR + memheap2 and no debug feature
+&CASE2=2;Constant canary used for integrety check + memheap2 and no debug feature
+&CASE3=3;legacy memheap and no debug feature
+&CASE4=4; XOR + memheap2 + debug feature enabled
+&CASE5=5;constant canary for integrety check + memheap2 + debug feature
+&CASE6=6;legacy memheap + debug feature
+&adv_dbg_fr=0 ;for chekcing if advance debug feature is enabled
+&MemHeapCase=0
+
+if ((&MemHeapTypeSize==0x23c)||(&MemHeapTypeSize==0x240))
+(
+   &MemHeapCase=1   ;CASE1
+)
+if (&MemHeapTypeSize==0x238)
+(
+   &MemHeapCase=2   ;CASE2
+)
+
+if ((&MemHeapTypeSize<0x50))
+(
+   &MemHeapCase=3   ;CASE3
+)
+
+; Initialize the heap buffer pointer
+&curr_heap_mem=V.VALUE((mem_heap_type *) &HeapVar.first_block)
+&HeapMemBuffer=Y.NAME(D:&curr_heap_mem)
+
+&memBlockHdrSz=v.value(sizeof(mem_block_header_type))
+
+if (&memBlockHdrSz!=0x8)
+(
+   &MemHeapCase=&MemHeapCase+3
+)
+
+&MemDebugSize=0
+if (Y.EXIST("memdebug"))
+(
+    &dbSize=v.value(sizeof(memdebug.db))
+    &dbStructSize=v.value(sizeof(memdebug_db_s_type))
+    &MemDebugSize=(&dbSize)/(&dbStructSize)
+)
+
+if (Y.EXIST("debug_free_index_cnt"))
+(
+   &adv_dbg_fr=0x1
+)
+
+&OpT32File="&OpDir\"+"&HeapVar"+"_MemBlkList.txt"
+&OpPlFile="&OpDir\"+"memdebug_db"+"_MemCost.txt"
+&OpT32FileMemDb="&OpDir\"+"memdebug_db_MemBlkList.txt"
+print "Walking through the heap"
+gosub walkHeap &HeapVar &OpDir
+
+if ((Y.EXIST("memdebug")))
+(
+    print "Walking through the memdebug.d"
+    gosub walkMemDebugDB &OpDir &MemDebugSize
+    print " Running the Parser"
+    gosub ProcMemDebugDB &OpT32FileMemDb &OpPlFile
+)
+print "Done"
+enddo
+;    &stack_end=v.value(((rex_tid_type *) &tid_address)->sp)
+
+walkHeap:
+ENTRY &HeapVar &OpDir
+
+ OPEN #1 &OpT32File /Create
+
+; Important : Don't change this header! Used by Parser as is.
+
+ WRITE #1 "Blocks List Report" 
+ WRITE #1 "------------------"
+ WRITE #1 "Version             : &CMMVERSION"  
+ WRITE #1 "Heap State Variable : &HeapVar"
+ WRITE #1 "Heap Buffer         : &HeapMemBuffer"
+ WRITE #1 "  "
+ if ((&adv_dbg_fr==0x0)&&(&MemHeapCase>3))
+ (
+   WRITE #1 "Block No       Address      FileHash    Lineno    Allocated     Extra    Free    Last      Pad     Expected"
+   WRITE #1 "                                                  Bytes         Bytes    Flag    Flag      Bytes   Pad Bytes"
+ )
+if (Y.EXIST("amss_mem_heap"))
+(
+     if ((&adv_dbg_fr==0x1)&&(&MemHeapCase>3)&&(&HeapVar==amss_mem_heap))
+     (
+       WRITE #1 "Block No      Address         db_index         Allocated     Extra    Free    Last    Hash         calc    heap"
+       WRITE #1 "                                               Bytes         Bytes    Flag    Flag    Bytes        hash    addn"
+     )
+)
+if (Y.EXIST("amss_mem_heap"))
+(
+ if ((&adv_dbg_fr==0x1)&&(&MemHeapCase>3)&&("&HeapVar"!="amss_mem_heap"))
+ (
+   WRITE #1 "Block No     Address        Clr_Ptr    Clr_Ptr_Symb  Allocated      Extra    Free    Last       Hash        calc    heap"
+   WRITE #1 "                                                     Bytes          Bytes    Flag    Flag       Bytes       hash    addn"
+ )
+)
+ if (&MemHeapCase==1)
+ (
+   WRITE #1 "Block No     Address        Allocated      Extra     Free     Last     Hash     calc      heap"
+   WRITE #1 "                            Bytes          Bytes     Flag     Flag     Bytes    hash      addn"
+ )
+ 
+ if (&MemHeapCase==2)
+ (
+   WRITE #1 "Block No     Address        Allocated      Extra     Free   Last      Hash        calc  "
+   WRITE #1 "                            Bytes          Bytes     Flag   Flag      Bytes       hash  "
+ )
+ 
+ if (&MemHeapCase==3)
+ (
+   WRITE #1 "Block No     Address        Allocated      Extra     Free     Last    Pad     Expected"
+   WRITE #1 "                            Bytes          Bytes     Flag     Flag    Bytes   Pad Bytes"
+ )
+ 
+ WRITE #1 "============================================================================================================================"
+
+
+ &lastflag=0
+ &freeflag=0
+ &count=1
+ &writestring=""
+ &hash=0x0
+ &blkhash=0x0
+ &calchash=0x0
+ &heapusedhash=0x0
+ &heapfreehash=0x0
+ if ((&MemHeapCase!=&CASE3)&&(&MemHeapCase!=&CASE6))
+ (
+   &blkhash=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->header_guard)
+ )
+ if (((&MemHeapCase==&CASE1)||(&MemHeapCase==&CASE4)))
+ (
+   &heapusedhash=V.VALUE((mem_heap_type *) &HeapVar.magic_num_used)
+   &heapfreehash=V.VALUE((mem_heap_type *) &HeapVar.magic_num_free)
+ )
+
+ if ((&MemHeapCase==&CASE3)||(&MemHeapCase==&CASE6))
+ (
+   &calchash=0xAA
+   &blkhash=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->pad1)
+ )
+ 
+ if ((&MemHeapCase==&CASE2)||(&MemHeapCase==&CASE5))
+ (
+   &calchash=V.VALUE((mem_heap_type *) &HeapVar->block_header_guard)
+ )
+ &magicNumIndex=0
+ &magicNum=0
+ if ((&MemHeapCase!=&CASE3)&&(&MemHeapCase!=&CASE6))
+ (
+   &magicNumIndex=V.VALUE((mem_heap_type*) &HeapVar.magic_num_index)
+   &magicNum=V.VALUE(magic_num[&magicNumIndex])
+ )
+ 
+ &debug_info=0
+ &debug_info_symbol=0
+ &blkhash=&calchash
+ &lineno=0
+ &size=0
+ &prevsize=0
+ &corruptionflag=0
+ while (&lastflag!=0xFF)
+ (
+     
+
+     if ((&MemHeapCase==&CASE1)||(&MemHeapCase==&CASE4))
+     (
+       &calchash=0
+     )
+     
+     if ((&MemHeapCase!=&CASE3)&&(&MemHeapCase!=&CASE6))
+     (
+       &blkhash=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->header_guard)
+     )
+
+     if ((&MemHeapCase==&CASE3)||(&MemHeapCase==&CASE6))
+     (
+       &blkhash=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->pad1)
+     )
+	 &prevsize=&size
+     &size=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->forw_offset)
+     &extrabytes=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->extra)
+     &freeflag=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->free_flag)
+     &lastflag=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->last_flag)
+     
+     if (&MemHeapCase>3)
+     (
+         if (&adv_dbg_fr==0x0); if adv_dbg_fr is true then hash and lineNo. are not aplicable
+         (
+           &hash=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->filenamehash)
+           &lineno=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->linenum)
+         )
+         if (Y.EXIST("amss_mem_heap"))
+         (
+             if ((&adv_dbg_fr==0x1)&&("&HeapVar"!="amss_mem_heap")&&(&freeflag!=0x1))
+             (
+                &debug_info=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->header_debug_info.caller_ptr) 
+                &debug_info_symbol=Y.NAME(D:&debug_info)
+             )
+         )
+         if (Y.EXIST("amss_mem_heap"))
+         (
+             if ((&adv_dbg_fr==0x1)&&("&HeapVar"=="amss_mem_heap")&&(&freeflag!=0x1))
+             (
+                &debug_info=V.VALUE(((mem_block_header_type*) &curr_heap_mem)->header_debug_info.debug_index) 
+                &debug_info_symbol=0x0
+             )
+         )
+     )
+     &writestring=format.DECIMAL(8.,&count)
+     &writestring="&writestring"+"    0x"+format.HEX(8., &curr_heap_mem)
+
+     if (&MemHeapCase>3)
+     (
+         if (&adv_dbg_fr==0x0); if adv_dbg_fr is true then hash and lineNo. are not aplicable
+         (
+             &writestring="&writestring"+"       0x"+format.HEX(4., &hash)
+             &writestring="&writestring"+format.DECIMAL(8., &lineno)
+         )
+         if (&adv_dbg_fr==0x1)
+         (
+            &writestring="&writestring,       "+"0x"+format.HEX(8.,&debug_info)
+            if (Y.EXIST("amss_mem_heap"))
+            (
+                if ("&HeapVar"!="amss_mem_heap")
+                (
+                    if ("&debug_info_symbol"!="")
+                    ( 
+                       &writestring="&writestring,    "+""+"&debug_info_symbol"
+                    )
+                    else
+                    (
+                       &writestring="&writestring,   "+"NoSymbol"
+                    )
+                )
+            )
+         )
+     )
+     &writestring="&writestring"+"    "+format.DECIMAL(8., &size)
+     &writestring="&writestring"+"      "+format.DECIMAL(8., &extrabytes)
+     &writestring="&writestring"+"    0x"+format.HEX(2., &freeflag)
+     &writestring="&writestring"+"    0x"+format.HEX(2., &lastflag)
+     
+     if ((&MemHeapCase==&CASE1)||(&MemHeapCase==&CASE4))
+     (
+         if (&freeflag==0)
+         (
+           &calchash0=V.VALUE(*((uint16*) &curr_heap_mem))
+           &calchash2=V.VALUE(*((uint16*) &curr_heap_mem+1))
+           &calchash4=V.VALUE(*((uint16*) &curr_heap_mem+2))
+           &calchash6=V.VALUE(*((uint16*) &curr_heap_mem+3))
+           &calchash=&calchash2^&calchash4^&calchash6^&heapusedhash
+           &corruptionflag=1
+         )
+         if (&freeflag==1)
+         (
+           &calchash0=V.VALUE(*((uint16*) &curr_heap_mem))
+           &calchash2=V.VALUE(*((uint16*) &curr_heap_mem+1))
+           &calchash4=V.VALUE(*((uint16*) &curr_heap_mem+2))
+           &calchash6=V.VALUE(*((uint16*) &curr_heap_mem+3))
+           &calchash8=V.VALUE(*((uint16*) &curr_heap_mem+4))
+           &calchash10=V.VALUE(*((uint16*) &curr_heap_mem+5))
+           &calchash=&calchash2^&calchash4^&calchash6^&calchash8^&calchash10^&heapfreehash
+           &corruptionflag=1
+         )
+     )
+     
+     &corruptionflag=0
+     if ((&MemHeapCase!=&CASE3)&&(&MemHeapCase!=&CASE6))
+     (
+         &writestring="&writestring"+"      0x"+format.HEX(4., &blkhash) 
+         &writestring="&writestring"+"      0x"+format.HEX(4., &calchash) 
+     )
+     else
+     (
+         &writestring="&writestring"+"      0x"+format.HEX(2., &blkhash) 
+         &writestring="&writestring"+"      0x"+format.HEX(2., &calchash) 
+     )
+     if ((&MemHeapCase==&CASE1)||(&MemHeapCase==&CASE4))
+     (
+         if (&freeflag==0)
+         (
+           &writestring="&writestring"+"      "+format.HEX(4., &heapusedhash) 
+         )
+         else
+         (
+           &writestring="&writestring"+"      "+format.HEX(4., &heapfreehash) 
+         )
+     )
+     
+     WRITE #1 "&writestring"
+
+     if ((&MemHeapCase!=&CASE3)&&(&MemHeapCase!=&CASE6))
+     (
+         if ((&freeflag!=0x00)&&(&size>0x10))
+         (
+            &pad=V.VALUE(((frd_Offset_info*) (&curr_heap_mem+(&size-0x8)))->pad);0x8 is the size of frd_Offset_info struct
+            if (&pad!=&magicNum)
+            (
+                &count=&count   
+                print "Heap Corruption Detected at frd_Offset_info of free memory block!!";
+                print "Possible Overflown Block              : "+format.DECIMAL(8.,&count);
+                print "Overflown Block's Header address      : &curr_heap_mem";
+                print "Owner of the Overflown Block          : 0x"+format.HEX(4., &hash)+" : "+format.DECIMAL(8., &lineno);
+                print "Size allocated to the Overflown Block : "+format.DECIMAL(8., &size);
+                print "Aborting the script"
+                CLOSE #1
+                enddo
+            )
+         )
+     )
+
+     if (&blkhash!=&calchash)
+     (
+       &count=&count-1   
+       &curr_heap_mem=&curr_heap_mem-&prevsize
+       print "Heap Corruption Detected!!";
+       print "Possible Overflown Block No           : "+format.DECIMAL(8.,&count);
+       print "Overflown Block's Header address      : &curr_heap_mem";
+       print "Owner of the Overflown Block          : Check memdebug_db_MemBlkList.txt for block no"+format.DECIMAL(8.,&count);
+       print "Size allocated to the Overflown Block : "+format.DECIMAL(8., &prevsize);
+       if (Y.EXIST("memdebug"))
+       (
+          print "Walking through the memdebug.db"
+          gosub walkMemDebugDB &OpDir &MemDebugSize
+          print " Running the Parser"
+          gosub ProcMemDebugDB &OpT32FileMemDb &OpPlFile
+       )
+       print "Aborting the script"
+       CLOSE #1
+       enddo
+     )
+     &curr_heap_mem=&curr_heap_mem+&size
+     if (&lastflag==1)
+     (
+        &lastflag=0xFF
+     )
+     &count=&count+1;
+ )
+
+close #1
+return ;End of walkHeap
+
+walkMemDebugDB:
+ENTRY &OpDir &MemDebugSize
+
+
+ OPEN #2 &OpT32FileMemDb /Create 
+
+
+; Important : Don't change this header! Used by Parser as is.
+WRITE #2 "Address    Size      CallerPtr        CallerPtr_Symbol                              tidPtr   tidPtr_Symbol                 " 
+ WRITE #2 "=========================================================================================================================="
+ 
+ &ptr=0;
+ &count=0;
+ &writestring=""
+ &caller_ptr=0x0
+ &caller_ptr_symbol=""
+ &tid=0x0
+ &tid_ptr_symbol=""
+ &size=0
+ while (&count!=&MemDebugSize)
+ (
+ 
+ 
+ ; First check for PAD 
+ &ptr= V.VALUE(memdebug.db[&count].ptr)
+ 
+ if (&ptr!=0x0)      
+ (
+    &size=V.VALUE(memdebug.db[&count].size)
+    &caller_ptr=V.VALUE(memdebug.db[&count].caller_ptr) 
+    &caller_ptr_symbol= Y.NAME(D:&caller_ptr)
+    &tid=V.VALUE(memdebug.db[&count].tid) 
+    if (&tid!=0x0)
+    (
+        &tid_ptr_symbol= V.STRING(((TX_THREAD*)&tid)->tx_thread_name) 	   
+    )
+    else
+    (
+        &tid_ptr_symbol=""
+    )
+    
+    &writestring="0x"+format.HEX(8., &ptr)     
+    &writestring="&writestring"+"   "+format.DECIMAL(8., &size)
+    &writestring="&writestring"+"      0x"+format.HEX(8., &caller_ptr)
+    if ("&caller_ptr_symbol"!="")
+    ( 
+        &writestring="&writestring"+"   "+"&caller_ptr_symbol"
+    )
+    else
+    (
+        &writestring="&writestring"+"    NoSymbol                                     "
+    )
+    &writestring="&writestring"+"      0x"+format.HEX(8., &tid)
+    if ("&tid_ptr_symbol"!="")
+    ( 
+        &writestring="&writestring"+"   "+"&tid_ptr_symbol"
+    )
+    else
+    (
+        &writestring="&writestring"+"    NoSymbol                                     "
+    )
+ 
+ WRITE #2 "&writestring"
+
+   
+ )
+
+ 
+ &count=&count+1;
+ )
+
+close #2
+return ;End of walkMemDebugDB
+
+ProcMemDebugDB:
+ENTRY &OpT32FileMemDb &OpPlFile
+print "     Executing perl &HeapParserScript -i &OpT32FileMemDb -o &OpPlFile"
+os.area "perl &HeapParserScript -i &OpT32FileMemDb -o &OpPlFile"
+print "     Parser finished executing."
+print "     Please check &OpPlFile and &OpT32FileMemDb for results"
+return ;End of ProcMemDebugDB

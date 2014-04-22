@@ -1,0 +1,26 @@
+#=================================================================
+# VOICELOG SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+UTILSSRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', UTILSSRCPATH, duplicate=0)
+
+env.PublishPrivateApi('VOICELOG', [
+    "${AVS_ROOT}/vsd/voicelog/inc/private",
+])
+
+VOICELOG_SOURCES = [   
+     '${BUILDPATH}/voicelog_module.c',     
+]
+
+if 'AVS_MPSS_TEST' in env:
+ IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+ IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/voicelog/voicelog'), VOICELOG_SOURCES)
+
+

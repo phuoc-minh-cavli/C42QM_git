@@ -1,0 +1,70 @@
+#===============================================================================
+#
+# CLADE_HEAP Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:
+#  $DateTime: 
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/17/17   pgoswami     Initial revision
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+    
+#-------------------------------------------------------------------------------
+# Internal definition
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/perf/clade_heap/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+env.RequirePublicApi(['PERF'], area='PERF')
+#-------------------------------------------------------------------------------
+# External dependencies
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([ 'KERNEL' , 'SERVICES' , 'DEBUGTOOLS', 'DAL', 'POWER' ], area='CORE')
+env.RequirePublicApi(['PERF'], area='PERF')
+env.PublishPrivateApi( 'CLADEHEAP', [ '${INC_ROOT}/perf/clade_heap/inc' ] )
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+CLADE_HEAP_SOURCES = []
+if 'USES_FEATURE_CLADE_HEAP' in env:
+    CLADE_HEAP_SOURCES = [
+        '${BUILDPATH}/clade_heap.c'
+    ]
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+sources = CLADE_HEAP_SOURCES
+env.AddBinaryLibrary(['CORE_QDSP6_SW','MODEM_PAGEONLY'], '${BUILDPATH}/clade_heap', sources, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])    
+    
+RCINIT_IMG = ['CORE_QDSP6_SW']
+if 'USES_FEATURE_CLADE_HEAP' in env:
+	if 'USES_RCINIT' in env:
+		env.AddRCInitFunc(
+		RCINIT_IMG,
+		{
+			'sequence_group'             : 'RCINIT_GROUP_1',      # required
+			'init_name'                 : 'clade_check_heap_initialized',       # required
+			'init_function'             : 'clade_check_heap_initialized',  # required
+			'dependencies'              : []
+		})

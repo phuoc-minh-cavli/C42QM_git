@@ -1,0 +1,71 @@
+#===============================================================================
+#
+# TX demo module app scons script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/QCBOR/UsefulBuf/build/UsefulBuf.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+SRCPATH = '${BUILD_ROOT}/core/securemsm/QCBOR/UsefulBuf'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/QCBOR/UsefulBuf/src/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    "USEFULBUF_QAPI",
+    # needs to be last also contains wrong comdef.h
+    "KERNEL",
+]
+
+env.RequirePublicApi(CBSP_API)
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS=" --c99 --gnu")
+
+USEFULBUF_SOURCES = [
+	'${BUILDPATH}/src/UsefulBuf.c',
+]
+
+if 'USES_ARM' in env:
+  IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    ]
+  env.AddBinaryLibrary(IMAGES , '${BUILD_ROOT}/core/securemsm/QCBOR/UsefulBuf/build/UsefulBuf', USEFULBUF_SOURCES)
+else:
+  USER_IMAGES = ['TXM_MODULES_LLVM']
+  env.AddBinaryLibrary(
+      USER_IMAGES,
+      '${BUILD_ROOT}/core/securemsm/QCBOR/UsefulBuf/build/LLVM/UsefulBuf',
+      USEFULBUF_SOURCES)

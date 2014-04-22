@@ -1,0 +1,76 @@
+#===============================================================================
+#
+# ftl Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2016 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/storage/ftl/build/SConscript#1 $  $DateTime: 2020/01/30 22:49:35 $  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who  what, where, why
+# ----------  ---  -------------------------------------------------------------
+# 2016-08-08  rp   Enhance fs-osal to support both rex and qurt.
+#===============================================================================
+# Import methods to get compile time configuration.
+import sys
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/storage/ftl/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+
+   # needs to be last as it may contain wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+FLASH_DEST_IMAGES = [
+  'CORE_APPS',                  # Domain(REX + TN)
+]
+
+#-----------------------------------------------------------------------------
+# AMSS source files
+#-----------------------------------------------------------------------------
+
+ftl_SOURCES = [
+    '${BUILDPATH}/flash_ftl_core.c',
+    '${BUILDPATH}/flash_ftl_util.c',
+    '${BUILDPATH}/flash_ftl_osal.c',
+    '${BUILDPATH}/flash_ftl_api.c',
+]
+env.AddLibrary(FLASH_DEST_IMAGES,'${BUILDPATH}/ftl', ftl_SOURCES)
+

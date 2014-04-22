@@ -1,0 +1,91 @@
+#===============================================================================
+#
+# Flash Scrub Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016, 2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when        who  what, where, why
+# ----------  ---  -------------------------------------------------------------
+# 2019-08-22  as   Add support to featurise efs_scrub
+# 2016-11-17  as   Create
+#===============================================================================
+
+# Import methods to get compile time configuration.
+import sys
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MPROC',
+   'SECUREMSM',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'DSM',
+
+   # needs to be last as it may contain wrong comdef.h
+   'KERNEL',
+]
+
+
+#env.RequirePublicApi(['COMMON'], area='API')
+env.RequirePublicApi(['FDS'], area='API')
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Add Libraries to image
+#----------------------------------------------------------------------------
+
+EFS_SCRUB_DEST_IMAGES = [
+  'CORE_APPS',                  # Domain(REX + TN)
+]
+
+#-----------------------------------------------------------------------------
+# source files
+#-----------------------------------------------------------------------------
+
+EFS_SCRUB_SOURCES = [
+    '${BUILDPATH}/core/storage/efs_scrub/src/efs_scrub.c',
+    '${BUILDPATH}/api/fds/src/flash_driver_service_v01.c',
+]
+
+#Note that while enabling below, modem scrub feature also needs to be enabled
+if 'USES_EFS_SCRUB' in env:
+   env.Append(CPPDEFINES = ["FEATURE_ENABLE_EFS_SCRUB"])
+
+env.AddLibrary(EFS_SCRUB_DEST_IMAGES,'${BUILDPATH}/build', EFS_SCRUB_SOURCES)
+

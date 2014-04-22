@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+  <NvEfsItemData name="feature_bmsk_2" id="73623" description="GSTK Feature Bitmask 2 slot specific" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" fullpathname="/nv/item_files/modem/uim/gstk/feature_bmsk_2">
+    <Member name="GSTK Feature Bitmask 2 slot specific" description="GSTK Feature Bitmask 2 slot specific" comment="" sizeOf="1" type="uint64">64 </Member>
+  </NvEfsItemData>
+</NvData>

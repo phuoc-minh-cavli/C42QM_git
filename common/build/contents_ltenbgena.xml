@@ -1,0 +1,425 @@
+<?xml version="1.0" ?>
+<contents>
+  <product_info>
+    <product_name>MDM9205.TX.2.0</product_name>
+    <hlos_type cmm_var="HLOS_TYPE">TX</hlos_type>
+    <chipid cmm_var="CHIPID">MDM9205</chipid>
+  </product_info>
+  <builds_flat>
+    <build>
+      <name>common</name>
+      <role>common</role>
+      <chipset>MDM9205</chipset>
+      <build_id>MDM9205.TX.2.0-00133-STD.PROD-1</build_id>
+      <windows_root_path>.\</windows_root_path>
+      <linux_root_path>./</linux_root_path>
+      <image_dir>common</image_dir>
+      <download_file get_binary="True" minimized="true">
+        <file_name>partition.mbn</file_name>
+        <file_path>common/build/</file_path>
+      </download_file>
+      <file_ref get_binary="True" partition="secdata" storage_type="nand" minimized="true">
+        <file_name>sec.elf</file_name>
+        <file_path>common/build/signed_sec/9205/secelf/</file_path>
+      </file_ref>
+      <download_file get_binary="True" storage_type="nand" minimized="true">
+        <file_name>sec.elf</file_name>
+        <file_path>common/build/signed_sec/9205/secelf/</file_path>
+      </download_file>
+      <partition_file>
+        <file_name>partition_nand.xml</file_name>
+        <file_path>common/config/</file_path>
+      </partition_file>
+      <file_ref get_binary="True">
+        <file_name>partition_nand.xml</file_name>
+        <file_path>common/config/</file_path>
+      </file_ref>
+      <download_file cmm_file_var="MULTIIMGOEM_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>multi_image.mbn</file_name>
+        <file_path>common/build/bin/sec/9205/multi_image/</file_path>
+      </download_file>
+      <partition_patch_file storage_type="nand" minimized="true">
+        <file_name>patch_p2K_b128K.xml</file_name>
+        <file_path>common/build/</file_path>
+      </partition_patch_file>
+      <partition_file get_binary="True" storage_type="nand" minimized="true">
+        <file_name>rawprogram_nand_p2K_b128K.xml</file_name>
+        <file_path>common/build/</file_path>
+      </partition_file>
+      <download_file get_binary="True" storage_type="nand">
+        <file_name>partition_complete_p2K_b128K.mbn</file_name>
+        <file_path>common/build/</file_path>
+      </download_file>
+      <download_file get_binary="True" minimized="true">
+        <file_name>cefs.mbn</file_name>
+        <file_path>common/build/TAs/</file_path>
+      </download_file>
+      <file_ref get_binary="True" minimized="true">
+        <file_name>cefs.mbn</file_name>
+        <file_path>common/build/TAs/</file_path>
+      </file_ref>
+    </build>
+    <build>
+      <name>glue</name>
+      <role>glue</role>
+      <chipset>MDM9205</chipset>
+      <build_id>GLUE.MDM9205_TX.2.0-00022-NOOP_TEST-1</build_id>
+      <windows_root_path>.\</windows_root_path>
+      <linux_root_path>./</linux_root_path>
+      <release_path/>
+      <image_dir>common</image_dir>
+      <buildfile_path>echo/</buildfile_path>
+      <build_command>echo ./BuildProducts.txt &gt; BuildProducts.txt</build_command>
+    </build>
+    <build>
+      <name>apps</name>
+      <role>apps</role>
+      <chipset>MDM9205</chipset>
+      <build_id>IOT.TX.6.0-00235-M9205ACFNAABZA-1</build_id>
+      <windows_root_path cmm_root_path_var="APSS_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="APSS_BUILDROOT">./</linux_root_path>
+      <image_dir>apps_proc</image_dir>
+      <release_path>HY11_CompileTest</release_path>
+      <download_file cmm_file_var="APSS_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>apps.mbn</file_name>
+        <file_path>apps_proc/build/ms/bin/ACFNAABZ/</file_path>
+      </download_file>
+      <file_ref minimized="true">
+        <file_name>l4.t32</file_name>
+        <file_path>apps_proc/build/ms</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>l4.men</file_name>
+        <file_path>apps_proc/build/ms</file_path>
+      </file_ref>
+      <download_file cmm_file_var="APSS_ELF" minimized="true">
+        <file_name>M9205ACFNAABZ*.elf</file_name>
+        <file_path>apps_proc/build/ms</file_path>
+      </download_file>
+      <buildfile_path>apps_proc/build/ms/</buildfile_path>
+      <build_command>build_9205.bat pack</build_command>
+    </build>
+    <build>
+      <name>cnss</name>
+      <role>cnss</role>
+      <chipset>MDM9205</chipset>
+      <build_id>CNSS.KF.4.2-00030-KFHW112-1</build_id>
+      <windows_root_path cmm_root_path_var="CNSS_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="CNSS_BUILDROOT">./</linux_root_path>
+      <image_dir>ioesw_proc</image_dir>
+      <release_path>HK11</release_path>
+      <download_file minimized="true">
+        <file_name>raw_flashimage_AR400X_REV8_IOT_hostless_unidev_dualband_hlos_1bitflash.bin</file_name>
+        <file_path>ioesw_proc/wlanfw.ioe/.output/AR6002/hw7.8/bin</file_path>
+      </download_file>
+      <buildfile_path>export/</buildfile_path>
+      <build_command>export BUILD_VARIANT=REV78.hw;./ioesw_proc/wlanfw.ioe/build/build_iotivity.sh;./ioesw_proc/wlanfw.ioe/build/build_ioe_sw.sh hostless</build_command>
+    </build>
+    <build>
+      <name>modem</name>
+      <role>modem</role>
+      <chipset>MDM9205</chipset>
+      <build_id>MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1</build_id>
+      <physical_pool>
+        <region_base>0x80000000</region_base>
+        <size>0x1500000</size>
+      </physical_pool>
+      <windows_root_path cmm_root_path_var="MPSS_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="MPSS_BUILDROOT">./</linux_root_path>
+      <image_dir>modem_proc</image_dir>
+      <release_path>PCT/SRC</release_path>
+      <file_ref minimized="true">
+        <file_name>qdsp6sw.mbn</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>qdsp6sw_2.mbn</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>qdsp6sw_paging.bin</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>efs1.bin</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>efs2.bin</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>efs3.bin</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </file_ref>
+      <file_ref symbol="modem">
+        <file_name>orig_MODEM_PROC_IMG*.elf</file_name>
+        <file_path>modem_proc/build/ms/</file_path>
+      </file_ref>
+      <file_ref debug_script="load_coredump">
+        <file_name>load_coredump.cmm</file_name>
+        <file_path>modem_proc/core/debugtools/err/cmm/</file_path>
+      </file_ref>
+      <file_ref debug_script="recover_npa_dumps">
+        <file_name>NPADump.cmm</file_name>
+        <file_path>modem_proc/core/power/npa/scripts/</file_path>
+      </file_ref>
+      <file_ref debug_script="recover_sleepctl_logs">
+        <file_name>SleepDump.cmm</file_name>
+        <file_path>modem_proc/core/power/sleep2.0/scripts/</file_path>
+      </file_ref>
+      <file_ref debug_script="analyze_qurt_kernel_error_info">
+        <file_name>analy_qurt_error.cmm</file_name>
+        <file_path>modem_proc/core/kernel/qurt/scripts</file_path>
+      </file_ref>
+      <download_file cmm_file_var="MPSS_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>qdsp6sw.mbn</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </download_file>
+      <download_file cmm_file_var="MPSSTINY_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>qdsp6sw_2.mbn</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </download_file>
+      <download_file cmm_file_var="MPSSPAGING_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>qdsp6sw_paging.bin</file_name>
+        <file_path>modem_proc/build/ms/bin/9205.ltenbgena.prod/</file_path>
+      </download_file>
+      <download_file cmm_file_var="MPSS_ELF" minimized="true">
+        <file_name>orig_MODEM_PROC_IMG*.elf</file_name>
+        <file_path>modem_proc/build/ms/</file_path>
+      </download_file>
+      <buildfile_path>/</buildfile_path>
+      <build_command> </build_command>
+    </build>
+    <build>
+      <name>tz</name>
+      <role>tz</role>
+      <chipset>MDM9205</chipset>
+      <build_id>TZ.XF.5.1.3-00193-M9205AAAAANAZT-3</build_id>
+      <windows_root_path cmm_root_path_var="TZ_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="TZ_BUILDROOT">./</linux_root_path>
+      <image_dir>trustzone_images</image_dir>
+      <release_path>HY11_CompileTest</release_path>
+      <download_file cmm_file_var="TZ_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>tz.mbn</file_name>
+        <file_path>trustzone_images/build/ms/bin/BAHAANAA/</file_path>
+      </download_file>
+      <download_file cmm_file_var="TZDEVCFG_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>devcfg.mbn</file_name>
+        <file_path>trustzone_images/build/ms/bin/BAHAANAA/</file_path>
+      </download_file>
+      <file_ref cmm_file_var="CMNLIB_BINARY" minimized="true">
+        <file_name>cmnlib.mbn</file_name>
+        <file_path>trustzone_images/build/ms/bin/BAHAANAA/</file_path>
+      </file_ref>
+      <file_ref cmm_file_var="KEYMASTER_BINARY" minimized="true">
+        <file_name>keymasterapp32.mbn</file_name>
+        <file_path>trustzone_images/build/ms/bin/BAHAANAA/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>haventkn.mbn</file_name>
+        <file_path>trustzone_images/build/ms/bin/BAHAANAA/</file_path>
+      </file_ref>
+      <buildfile_path>/</buildfile_path>
+      <build_command> </build_command>
+    </build>
+    <build>
+      <name>boot</name>
+      <role>boot</role>
+      <chipset>MDM9205</chipset>
+      <build_id>BOOT.XF.0.2-00111-MDM9x05LZB-2</build_id>
+      <windows_root_path cmm_root_path_var="BOOT_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="BOOT_BUILDROOT">./</linux_root_path>
+      <image_dir>boot_images</image_dir>
+      <release_path>HY11_CompileTest</release_path>
+      <download_file minimized="true">
+        <file_name>sbl1.mbn</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Bin/9x05/LA/RELEASE/</file_path>
+      </download_file>
+      <file_ref minimized="true">
+        <file_name>hwio.cmm</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Tools/hwio/scripts/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>*</file_name>
+        <file_path>boot_images/QcomPkg/Library/NandJtagTools/</file_path>
+      </file_ref>
+      <file_ref minimized="true">
+        <file_name>hwioreg.cmm</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Tools/hwio/scripts/</file_path>
+      </file_ref>
+      <download_file minimized="true">
+        <file_name>hwio.cmm</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Tools/hwio/scripts/</file_path>
+      </download_file>
+      <file_ref minimized="true">
+        <file_name>NandJtagTools.elf</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Bin/9x05/LA/RELEASE/</file_path>
+      </file_ref>
+      <download_file cmm_file_var="BOOT_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>sbl1.mbn</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Bin/9x05/LA/RELEASE/</file_path>
+      </download_file>
+      <file_ref get_binary="True" storage_type="nand">
+        <file_name>nand_mbn_generator.py</file_name>
+        <file_path>boot_images/QcomPkg/Tools/storage/nandbootmbn/</file_path>
+      </file_ref>
+      <file_ref get_binary="True" storage_type="nand">
+        <file_name>prog_firehose_nand.elf</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Bin/9x05/LA/RELEASE/</file_path>
+      </file_ref>
+      <device_programmer cmm_file_var="PROG_FIREHOSE_NAND" minimized="true">
+        <file_name>prog_firehose_nand.elf</file_name>
+        <file_path>boot_images/QcomPkg/Mdm9x05Pkg/Bin/9x05/LA/RELEASE/</file_path>
+      </device_programmer>
+      <buildfile_path>python/</buildfile_path>
+      <build_command>python -u boot_images/QcomPkg/buildit.py --variant LA,LB,LC,LD -r RELEASE -t Mdm9x05Pkg,QcomToolsPkg &amp;&amp; rm -f boot_images/Conf/* &amp;&amp; cd boot_images/BaseTools &amp;&amp; make clean &amp;&amp; cd ../.. &amp;&amp; python boot_images/packit.py -t Mdm9x05,QcomTools --variant LZB</build_command>
+    </build>
+    <build>
+      <name>rpm</name>
+      <role>rpm</role>
+      <chipset>MDM9205</chipset>
+      <build_id>RPM.BF.2.1.3-00034-M9205AAAAANAZR-1</build_id>
+      <windows_root_path cmm_root_path_var="RPM_BUILDROOT">.\</windows_root_path>
+      <linux_root_path cmm_root_path_var="RPM_BUILDROOT">./</linux_root_path>
+      <image_dir>rpm_proc</image_dir>
+      <release_path>HY11_CompileTest</release_path>
+      <file_ref minimized="true">
+        <file_name>rpm.mbn</file_name>
+        <file_path>rpm_proc/build/ms/bin/9x05/</file_path>
+      </file_ref>
+      <file_ref debug_script="recover_ulog_dumps">
+        <file_name>rpm_ulogdump.cmm</file_name>
+        <file_path>rpm_proc/core/power/ulog/scripts</file_path>
+      </file_ref>
+      <file_ref debug_script="recover_npa_dumps">
+        <file_name>rpm_npadump.cmm</file_name>
+        <file_path>rpm_proc/core/power/npa/scripts</file_path>
+      </file_ref>
+      <file_ref debug_script="parse_merged_logs">
+        <file_name>rpm_log_bfam.py</file_name>
+        <file_path>rpm_proc/core/power/rpm/debug/scripts</file_path>
+      </file_ref>
+      <file_ref symbol="true">
+        <file_name>RPM_AAAAANAAR.elf</file_name>
+        <file_path>rpm_proc/core/bsp/rpm/build/9x05/</file_path>
+      </file_ref>
+      <download_file cmm_file_var="RPM_BINARY" get_binary="True" storage_type="nand" minimized="true">
+        <file_name>rpm.mbn</file_name>
+        <file_path>rpm_proc/build/ms/bin/9x05/</file_path>
+      </download_file>
+      <download_file cmm_file_var="RPM_ELF" minimized="true">
+        <file_name>RPM_AAAAANAAR.elf</file_name>
+        <file_path>rpm_proc/core/bsp/rpm/build/9x05/</file_path>
+      </download_file>
+      <buildfile_path>rpm_proc/build/</buildfile_path>
+      <build_command>build_packed.sh 9x05</build_command>
+    </build>
+  </builds_flat>
+  <build_tools>
+    <tool>
+      <name>cpfatfs</name>
+      <build>boot</build>
+      <path>boot_images/core/storage/tools/fattool/</path>
+    </tool>
+    <tool>
+      <name>fatadd</name>
+      <build>boot</build>
+      <path>boot_images/core/storage/tools/fattool/</path>
+    </tool>
+    <tool>
+      <name>msp</name>
+      <build>boot</build>
+      <path>boot_images/core/storage/tools/ptool/</path>
+    </tool>
+    <tool>
+      <name>checksparse</name>
+      <build>boot</build>
+      <path>boot_images/core/storage/tools/ptool/</path>
+    </tool>
+  </build_tools>
+  <external_tools>
+    <tool>
+      <name>trace32</name>
+      <version>Jan 2019</version>
+      <path>\\range\corebsp-products-8x09\Twizy_9205\Bringup\T32</path>
+    </tool>
+    <tool>
+      <name>qpst</name>
+      <version>QPST 2.7.483</version>
+      <path>\\cold\tools\Installers\QPST</path>
+    </tool>
+    <tool>
+      <name>qxdm</name>
+      <version>QXDM4 04.00.310</version>
+      <path>\\cold\tools\Installers\QXDM</path>
+    </tool>
+  </external_tools>
+  <workflow>
+    <tool>
+      <name>sectools.py</name>
+      <build>common</build>
+      <path>./common/sectools/</path>
+    </tool>
+    <tool>
+      <name>nand_mbn_generator.py</name>
+      <build>boot</build>
+      <path>boot_images/QcomPkg/Tools/storage/nandbootmbn/</path>
+    </tool>
+    <step filter="multi_image" type="delete">
+      <destn>./common/build/bin/sec/multi_image.mbn</destn>
+    </step>
+    <step filter="multi_image" type="exec">
+      <params>python @tool_name secimage -p 9205 -m @root_dir --m_gen --m_sign --m_validate -a -o @destn</params>
+      <tool_name>sectools.py</tool_name>
+      <destn>./bin/sec/</destn>
+      <root_dir>$[build:common]</root_dir>
+    </step>
+    <step filter="multi_image" type="delete">
+      <destn>./common/build/bin/sec/multi_image_qti.mbn</destn>
+    </step>
+    <step filter="multi_image" type="exec">
+      <params>python @tool_name secimage -p 9205 -m @root_dir --m_gen --m_sign --m_validate --qti_signing -a -o @destn</params>
+      <tool_name>sectools.py</tool_name>
+      <destn>./bin/sec/</destn>
+      <root_dir>$[build:common]</root_dir>
+    </step>
+    <step filter="sec" type="exec">
+      <params>python @tool_name secimage -c ./../sectools/config/9205/9205_fb_kp_secimage.xml -i @src -g secelf -sa -o signed_sec</params>
+      <tool_name>sectools.py</tool_name>
+      <src>./../sectools/resources/build/fileversion2/sec_32.elf</src>
+    </step>
+    <step type="exec">
+      <params>python @tool_name ./../config/partition_nand.xml partition.mbn 128 2 32768</params>
+      <tool_name>nand_mbn_generator.py</tool_name>
+    </step>
+    <step type="copy">
+      <src_files>$[attribute:get_binary]</src_files>
+      <destn_dir>./../../binaries</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>Ver_Info.txt</src_files>
+      <destn_dir>./bin/image</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>partition_complete_p2K_b128K.mbn</src_files>
+      <destn_dir>./../../binaries</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>patch_p2K_b128K.xml</src_files>
+      <destn_dir>./../../binaries</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>rawprogram_nand_p2K_b128K.xml</src_files>
+      <destn_dir>./../../binaries</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>./../config/cefs.mbn</src_files>
+      <destn_dir>./TAs</destn_dir>
+    </step>
+    <step type="copy">
+      <src_files>./../config/cefs.mbn</src_files>
+      <destn_dir>./../../binaries</destn_dir>
+    </step>
+  </workflow>
+</contents>

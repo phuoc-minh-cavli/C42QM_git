@@ -1,0 +1,174 @@
+#===============================================================================
+#
+#       G E R A N    G L 1   S C O N S   C O N F I G U R A T I O N
+#
+# GENERAL DESCRIPTION
+#    SCons build script for the GL1 VU
+#
+# Copyright (c) 2010-2015 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/geran.mpss/5.2.0/gl1/build/gl1.scons#2 $
+#  $DateTime: 2018/04/30 09:42:45 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/01/18   hd      CR2167422 : FR 46686: Support GERAN as dynamic module using DMM/External paging framework 
+# 01/10/13   sk      CR552259 CR sync from 1.0/1.1
+# 20/08/13   nn      CR518344 Use secapi_get_random() for generating random numbers.
+# 15/04/13   pjr     Shortened gl1 thread names to show correctly in T32
+# 08/06/12   pa      Added support for GPLT.
+# 20100906   tjw     New file
+#
+#===============================================================================
+import sys
+
+def main(env):
+  # If USES_WPLT is set this library is required
+  if 'USES_WPLT' not in env:
+    # Otherwise verify that USES_GSM or USES_UMTS is set, if not bail out now
+    if 'USES_GSM' not in env and 'USES_UMTS' not in env:
+      return()
+
+  ################################################################
+  ################################################################
+  # SIMPLE CONFIGURABLE ITEMS:
+  #-------------------------------------------------------------------------------
+  # Name of the subsystem to which this unit belongs
+  #-------------------------------------------------------------------------------
+  SU_NAME = 'GERAN'
+
+  #-------------------------------------------------------------------------------
+  # Name of this unit
+  #-------------------------------------------------------------------------------
+  UNIT_NAME = 'GL1'
+
+  #-------------------------------------------------------------------------------
+  # Source path
+  #-------------------------------------------------------------------------------
+  # The path to the source files
+  SRCPATH = '../src'
+
+  #-------------------------------------------------------------------------------
+  # Source files
+  #-------------------------------------------------------------------------------
+  # The source files. Either '*.c' or list the files individually.
+  # If listing the files individually, include any private files, they will be stripped later
+  # e.g. SRC_FILES = ['foo.c', 'bar.c']
+  SRC_FILES = '*.c'
+
+  GL1_TDRRC_SRC_FILES =[
+    'l1_bcch.c',
+    'l1_idle.c',
+    'l1_tch.c'
+    ]
+
+  PRIVATE_SRC_FILES = []
+
+  # List of the files not to be cleaned by cleanpack
+  PUBLISHED_HDR_FILES = [
+    'gl1rlc.h',
+    'gl1rlccmn.h',
+    'gl1_arbitrator_cxm.h',
+    'gl1_arbitrator_detect.h',
+    'gl1_arbitrator_interface.h',
+    'gl1_arbitrator_resolve.h',
+    'gl1_arbitrator_tables.h',
+    'gl1_arbitrator_types.h',
+    'gl1_arbitrator_utils.h',
+    'gl1_sys_algo.h',
+    'gmacsigl1_g.h',
+    'gpl1_gprs_if.h',
+    'gpl1_gprs_if_g.h',
+    'gpl1_gprs_task.h',
+    'l1.h',
+    'l1i.h',
+    'l1_amr.h',
+    'l1_arbitration.h',
+    'l1_arbitration_g.h',
+    'l1_fm.h',
+    'l1_log.h',
+    'l1_log_api.h',
+    'l1_os.h',
+    'l1_sc_int.h',
+    'l1_sc.h'
+    ]
+
+
+  #-------------------------------------------------------------------------------
+  # Required internal APIs
+  #-------------------------------------------------------------------------------
+  REQUIRED_SU_APIS = [
+      'GCOMMON',
+      'GDIAG',
+      'GDRIVERS',
+      'GL1',
+      'GL2',
+      'GLLC',
+      'GMAC',
+      'GMDSP',
+      'GRLC',
+      'GRR',
+      'GSNDCP',
+      'GPLT'
+      ]
+
+  #-------------------------------------------------------------------------------
+  # Images the SU will be loaded into (MODEM_APPS and/or MODEM_MODEM)
+  #-------------------------------------------------------------------------------
+  IMAGES = ['MODEM_MODEM', 'MOB_GERAN']
+
+ 
+  ################################################################
+  # UNIT-SPECIFIC SCONS MAGIC
+  ################################################################
+  # (for build specialists to play their tricks)
+
+  ################################################################
+  # DATA ASSEMBLED, PUT IT INTO ACTION USING THE SHARED
+  # FUNCTIONS IN build/geran_build_tools.py
+  ################################################################
+  sys.path.append('${GERAN_BUILD_TOOLS}')
+  import geran_build_tools
+
+
+  # Needs to come before building files.
+  env.RequireRestrictedApi(['VIOLATIONS'])  # for wcdma\l1\offline\inc\wl1trm.h
+
+  geran_build_tools.set_up_component_build_config(
+    env,
+    SU_NAME=                  SU_NAME,
+    UNIT_NAME=                UNIT_NAME,
+    SRCPATH=                  SRCPATH,
+    SRC_FILES=                SRC_FILES,
+    PRIVATE_SRC_FILES=        PRIVATE_SRC_FILES,
+    REQUIRED_SU_APIS=         REQUIRED_SU_APIS,
+    IMAGES=                   IMAGES,
+    MSG_BT_SSID_DFLT=         'MSG_SSID_GSM_L1',      # Doesn't use the standard naming convention
+    DELIVER_SOURCE =          False,                  # GL1 is delivered as a binary to some customers
+    GL1_TDRRC_SRC_FILES =     GL1_TDRRC_SRC_FILES,
+    PUBLISHED_HDR_FILES=      PUBLISHED_HDR_FILES,
+    DMM =                     True
+  )
+
+
+  env.LoadSoftwareUnits()
+
+try:
+  Import('env') # Fails if used from SCons test harness
+  _usingTestHarness = False
+except:
+  _usingTestHarness = True
+
+if not _usingTestHarness:
+  main(env)
+#else: test harness calls main() directly with its own env
+

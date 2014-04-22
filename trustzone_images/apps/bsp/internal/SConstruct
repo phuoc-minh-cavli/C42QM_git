@@ -1,0 +1,92 @@
+# Copyright 2018 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+
+import os
+import random
+import time
+import getpass
+import platform
+import traceback
+import sys
+
+THIS_DIR = os.path.abspath(os.path.dirname((lambda x:x).func_code.co_filename))
+THIS_FILE = os.path.join(THIS_DIR,'SConstruct')
+
+#determining where a scons build was kicked off from is difficult. This file allows for both
+#in tree and out of tree builds, and _also_ being invoked as the entry point to the build, or
+#from the in_tree.scons and out_of_tree.scons files. in_tree.scons and out_of_tree.scons are nice
+#and tell us what we're doing. If this file isn't invoked through those wrappers, then we need to
+#determine in tree vs out of tree manually. The only way to do this is to examine the stack trace
+#and find the first file that is executed _by_ SCons but is not _a part of_ SCons. If that file is 
+#this file, we're doing an in tree build. Otherwise, it's an out of tree build
+def doing_in_tree_build():
+  tb = traceback.extract_stack()
+  #the 0th entry in tb will be the scons entry point
+  for index,entry in enumerate(tb):
+    file = entry[0]
+    #SConscript.py calls our scons entry point
+    if 'SCons/Script/SConscript.py' in file:
+      return tb[index+1][0] == THIS_FILE
+
+def dummy(*args, **kwargs):
+  pass
+
+BUILD_ROOT = os.path.abspath(os.path.join(THIS_DIR,'..','..','..'))
+TARGET_ROOT = os.path.abspath(os.path.join( THIS_DIR,'..','..','..','..'))
+try:
+  Import('env')
+  #if Import('env') does not throw an error, then this is not a standalone build using the SDK
+  env.Replace(STANDALONE_SDK = False)
+except:
+  try:
+    Import('intree')
+  except:
+    intree = doing_in_tree_build()
+  if intree:
+    env = DefaultEnvironment(ENV = os.environ, tools = ['mingw','textfile'])
+    env.Replace(STANDALONE_SDK = True)
+  else:
+    ret = SConscript(os.path.join(THIS_DIR,'external','SConstruct'))
+    Return('ret')
+
+env.Replace(SECTOOLS_BUILDER_VERBOSITY = 'z')
+env.Decider('MD5-timestamp')
+
+if ARGUMENTS.get('deterministic',0) == 1:
+  env.Replace(BUILD_TIMESTAMP = "Wed Dec 31 16:00:00 1969")
+  env.Replace(BUILD_USER_NAME = "deterministic user name")
+  env.Replace(BUILD_MACHINE_NAME = "deterministic machine name")
+else:
+  env.Replace(BUILD_TIMESTAMP = time.ctime())
+  env.Replace(BUILD_USER_NAME = getpass.getuser())
+  env.Replace(BUILD_MACHINE_NAME = platform.node())
+
+
+if not env['STANDALONE_SDK']:
+  env.Replace(BUILD_ROOT = BUILD_ROOT)
+  env.Replace(TARGET_ROOT = TARGET_ROOT)
+  env.Tool('ssg_environment', toolpath = ['$BUILD_ROOT/ssg/bsp/build/scripts'])
+  env.Tool('deploy_builder', toolpath = ['$BUILD_ROOT/build/ms'])
+  env.Tool('qcscons_replacement', toolpath= ['$BUILD_ROOT/ssg/bsp/build/scripts/'])
+  env.Deploy('SConstruct')
+  env.Deploy('${BUILD_ROOT}/apps/bsp/trustzone/build/entry.sconscript')
+  env.Deploy('${BUILD_ROOT}/apps/bsp/trustzone/build/apps_config.py')
+  env.Tool('idlcompiler',toolpath=['${BUILD_ROOT}/ssg/bsp/build/scripts'])
+else:
+  #this file will be located at the sdk root
+  env.Replace(SDK_ROOT=THIS_DIR)
+  env.Replace(BUILD_ROOT=os.path.abspath(os.path.join(env['SDK_ROOT'],'../../..')))
+  env = env.Clone()
+  #Load the Tools and methods
+  env.Tool('ssg_environment', toolpath = ['${SDK_ROOT}/scripts'])
+  #TODO: do we need to deploy in an sdk build?
+  env.Tool('deploy_builder',  toolpath = ['${SDK_ROOT}/scripts'])
+  env.Tool('qcscons_replacement', toolpath= ['${SDK_ROOT}/scripts'])
+
+  env.Tool('idlcompiler',toolpath=['${SDK_ROOT}/scripts'])
+
+env['HAS_APPS_COMPONENT'] = True
+env.SConscript('${BUILD_ROOT}/apps/bsp/trustzone/build/entry.sconscript',exports='env')
+if env.StandaloneSdk():
+  env.SConscript('${BUILD_ROOT}/ssg/bsp/trustzone/build/SConscript',exports='env')

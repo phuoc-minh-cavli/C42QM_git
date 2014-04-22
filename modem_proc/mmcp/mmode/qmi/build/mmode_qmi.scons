@@ -1,0 +1,251 @@
+#===============================================================================
+#
+# Multimode QMI SCons 
+#
+# GENERAL DESCRIPTION
+#    SCons build script
+#
+# Copyright (c) 2010-2012 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mmcp.mpss/6.1.10/mmode/qmi/build/mmode_qmi.scons#1 $
+#  $DateTime: 2023/04/25 14:39:18 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 06/05/12   ns      Added ECALL in PUBLIC APIs
+# 09/15/10   pm      Initial file
+#
+#===============================================================================
+#from glob import glob
+#from os.path import join, basename
+
+Import('env')
+env = env.Clone()
+
+import os
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = '../src'
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+  'MSG_BT_SSID_DFLT=MSG_SSID_MMODE_QMI',
+])
+
+#-------------------------------------------------------------------------------
+# Publish our Private API
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('MMODE', ["${INC_ROOT}/mmcp/mmode/qmi/inc"])
+
+#-------------------------------------------------------------------------------
+# Necessary Public API's
+#-------------------------------------------------------------------------------
+REQUIRED_PUBLIC_APIS = [
+    'CNE',
+    'DATA',
+    'DATACOMMON',
+    'GERAN',
+    'GPS',
+    'HDR',
+    'MCS',
+    'MMODE',
+    'NAS',
+    'PBM',
+    'ONEX',
+    'RFA',
+    'UIM',
+    'UTILS',
+    'WMS',
+    'WCDMA',
+    'ECALL',
+    'MCFG',
+    ]
+
+REQUIRED_RESTRICTED_APIS = [
+    'CNE',
+    'DATA',
+    'DATACOMMON',
+    'FW',
+    'GERAN',
+    'GPS',
+    'HDR',
+    'LTE',
+    'MCS',
+    'MDSP',
+    'MMODE',
+    'NAS',
+    'ONEX',
+    'PBM',
+    'RFA',
+    'UIM',
+    'UTILS',
+    'WCDMA',
+    'WMS',
+    'TDSCDMA',
+    'MCFG',
+    ]
+
+CORE_APIS = [
+    'BUSES',
+    'DAL',
+    'DEBUGTOOLS',
+    'MPROC',
+    'POWER',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+MULTIMEDIA_APIS = [
+    'MVS',
+    ]
+
+QMI_PUBLIC_APIS = [
+    'NAS',
+    'VOICE',
+    'NAS_EXT',
+	'PSM'
+    ]
+
+env.RequirePublicApi(['MCFG'], area='MCFG')
+env.RequirePublicApi(CORE_APIS, area='core')
+env.RequirePublicApi(['AUDIO'], area='MULTIMEDIA') 
+env.RequirePublicApi(MULTIMEDIA_APIS, area='MULTIMEDIA')
+env.RequirePublicApi(QMI_PUBLIC_APIS, area='API')
+env.RequirePublicApi(QMI_PUBLIC_APIS, area='QMIMSGS') 
+
+env.RequirePublicApi(REQUIRED_PUBLIC_APIS) 
+env.RequireRestrictedApi(REQUIRED_RESTRICTED_APIS)
+
+#-------------------------------------------------------------------------------
+# External API's not built with SCons
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+    'BREW',
+    'MULTIMEDIA_AUDIO',
+])
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Construct the list of source files by looking for *.c
+#MMODE_QMI_C_SOURCES = ['${BUILDPATH}/' + basename(fname)
+#                 for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+MMODE_QMI_C_SOURCES = [
+	'${BUILDPATH}/qmi_nas.c',
+    '${BUILDPATH}/qmi_nas_mmgsdi.c',
+	'${BUILDPATH}/qmi_nas_msg.c',
+    '${BUILDPATH}/qmi_nas_nw_name.c',
+    '${BUILDPATH}/qmi_nas_utils.c',
+    '${BUILDPATH}/qmi_mmode_crit_sect_rex.c',
+    '${BUILDPATH}/qmi_mmode_task.c',
+    '${BUILDPATH}/qmi_mmode_task_svc.c',
+    '${BUILDPATH}/qmi_mmode_taski.c',
+    '${BUILDPATH}/qmi_mmode_svc.c',
+    '${BUILDPATH}/qm_cbpq.c',
+    '${BUILDPATH}/qm_nas_clnt.c',
+    '${BUILDPATH}/qm_si.c',
+    '${BUILDPATH}/qm_meas.c',
+    '${BUILDPATH}/qm_util.c',
+    '${BUILDPATH}/qm_timer.c',
+    '${BUILDPATH}/qm_efs.c',
+	'${BUILDPATH}/qmi_psm.c',
+	'${BUILDPATH}/power_save_mode_service_impl_v01.c'
+]
+
+MMODE_QMI_VOICE_C_SOURCES = [
+    '${BUILDPATH}/qmi_voice.c',
+    '${BUILDPATH}/qmi_voice_call_list.c',
+    '${BUILDPATH}/qmi_voice_cm_if.c',
+    '${BUILDPATH}/qmi_voice_cm_sups.c',
+    '${BUILDPATH}/qmi_voice_cm_util.c',
+    '${BUILDPATH}/qmi_voice_cmd_list.c',
+    '${BUILDPATH}/voice_service_impl_v02.c',
+    '${BUILDPATH}/network_access_service_impl_v01.c',
+    '${BUILDPATH}/qmi_voice_msgr_if.c',
+    '${BUILDPATH}/qm_timer.c'
+]
+
+MMODE_QMI_MSTATS_C_SOURCES = [
+    '${BUILDPATH}/qm_mstats.c'
+]
+
+MMODE_QMI_TIMER_NV_C_SOURCES = [
+    '${BUILDPATH}/qm_nv.c',
+    '${BUILDPATH}/qm_tib.c'
+]
+MMODE_QMI_HDR_C_SOURCES = [
+    '${BUILDPATH}/qmi_nas_hdr.c'
+]
+
+MMODE_QMI_NOT_USED_C_SOURCES = [
+    '${BUILDPATH}/voice_service_impl_v02.c',
+    '${BUILDPATH}/network_access_service_impl_v01.c',
+	'${BUILDPATH}/power_save_mode_service_impl_v01.c'
+]
+
+LTE_ONLY_VARIANTS = ['9607.lteonly.test', '9607.lteonly.prod', '9607.lteonlyf3.test', '9607.lteonlyf3.prod', '9607.lteonlynogps.test', '9607.lteonlynogps.prod',
+                     '9607.lteonlynogpsf3.test', '9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltenb.test','9607.ltenb.prod',
+                     '9607.ltenbf3.test','9607.ltenbf3.prod', '9607.ltenbniag.test', '9607.ltenbniag.prod', '9607.ltenbniagf3.prod', '9607.ltenb128.test', 
+					 '9607.ltenb128.prod', '9607.ltenb128f3.prod', '9607.ltenbniag128.test', '9607.ltenbniag128.prod', '9607.ltenbniag128f3.prod', '9607.dyn.test',
+					 '8909.lteonly.test', '8909.lteonly.prod']
+
+LTE_NON_IMS_VARIANTS = ['9607.ltenbgniag.test', '9607.ltenbgniag.prod', '9607.ltenbgniagf3.prod', '9607.ltenbniag.test', '9607.ltenbniag.prod', '9607.ltenbniagf3.prod', 
+                        '9607.ltenbgniag128.test','9607.ltenbgniag128.prod', '9607.ltenbgniag128f3.prod','9607.ltenbniag128.test', '9607.ltenbniag128.prod', '9607.ltenbniag128f3.prod', 
+                        '9607.ltenbgniaf3.prod', '9607.ltenbgniaf3.test']
+						
+if not os.environ.get('VARIANT_NAME', '') in LTE_NON_IMS_VARIANTS:
+   MMODE_QMI_C_SOURCES += MMODE_QMI_VOICE_C_SOURCES,
+   
+if os.environ.get('VARIANT_NAME', '') in LTE_ONLY_VARIANTS:
+   env.Append(CPPDEFINES =  [
+            'FEATURE_MMODE_QMI_DISABLE_IMS_EXT',
+#            'FEATURE_MMODE_QMI_DISABLE_VOICE',
+            'FEATURE_MMODE_QMI_NOT_USED',
+            'FEATURE_MMODE_QMI_LTE_ONLY'
+            ])
+
+if not os.environ.get('VARIANT_NAME', '') in LTE_ONLY_VARIANTS:
+   env.Append(CPPDEFINES =  [
+            'FEATURE_MMODE_QMI_DISABLE_IMS_EXT',
+#            'FEATURE_MMODE_QMI_DISABLE_VOICE',
+            'FEATURE_MMODE_QMI_NOT_USED',
+            'FEATURE_MMODE_QMI_GPRS_LTE'
+            ])
+
+if os.environ.get('VARIANT_NAME', '') in LTE_NON_IMS_VARIANTS:
+   env.Append(CPPDEFINES =  [
+            'FEATURE_MMODE_QMI_DISABLE_VOICE'
+            ])
+
+# Add our library to the ModemApps image
+env.AddLibrary( ['MODEM_MODEM'], '${BUILDPATH}/mmode_qmi', [MMODE_QMI_C_SOURCES] )
+
+# Build image for which this task belongs
+RCINIT_QMI_MMODE = ['MODEM_MODEM']
+
+
+
+if 'USES_MSGR' in env:
+        env.AddUMID('${BUILDPATH}/qmi_mmode_msgr.umid', ['../../../api/qmi_mmode_msgr_msg.h'])

@@ -1,0 +1,32 @@
+/* List of files to compress for CLADE Low Priority */
+
+
+*modem_proc/core/debugtrace*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/apttests*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/core/securemsm*:(  EXCLUDE_FILE(cu_target.o  PrngML.o) .text EXCLUDE_FILE(cu_target.o PrngML.o) .text.* .gnu.linkonce.t.* )
+
+
+
+*modem_proc/fw*:(EXCLUDE_FILE(fw_vpev6_boot.o fw_sdm_mem.o) .text EXCLUDE_FILE(fw_vpev6_boot.o fw_sdm_mem.o) .text.* .gnu.linkonce.t.*)
+
+*modem_proc/mmcp*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/uim*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/qmimsgs*:(  .text  .text.* .gnu.linkonce.t.* )
+*modem_proc/mpower*:(  .text  .text.* .gnu.linkonce.t.* )
+
+
+
+*modem_proc/core/debugtrace*:(.rodata .rodata.* )
+*modem_proc/core/apttests*:(.rodata .rodata.* )
+*modem_proc/core/securemsm*:(.rodata .rodata.* )
+*modem_proc/fw_common*:(.rodata .rodata.* )
+*modem_proc/fw_lte*:( EXCLUDE_FILE(lte_LL1_uers_mpdcch_ce_main.o) .rodata EXCLUDE_FILE(lte_LL1_uers_mpdcch_ce_main.o) .rodata.* )
+*modem_proc/mmcp*:(.rodata .rodata.* )
+*modem_proc/uim*:(.rodata .rodata.* )
+*modem_proc/qmimsgs*:(.rodata .rodata.* )
+*modem_proc/mpower*:(.rodata .rodata.* )
+
+
+
+/*Do not remove alignment, Linker can only handle cache line aligned inputs for compression*/
+. = ALIGN(64);

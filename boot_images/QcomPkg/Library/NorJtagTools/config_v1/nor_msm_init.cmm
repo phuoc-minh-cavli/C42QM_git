@@ -1,0 +1,110 @@
+;============================================================================
+;  Name:
+;    NOR_MSM_INIT.CMM
+;
+;  Description:
+;    MSM specific hardware init script for flash programming
+;
+;  Copyright (c) 2014-2019 Qualcomm Technologies Incorporated.
+;  All Rights Reserved.
+;  Qualcomm Confidential and Proprietary
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+;
+; when       who     what, where, why
+; -------    ---     --------------------------------------------------------
+; 01/03/19   sl      Added clk script support
+; 09/09/18   sb      Updated for 9205
+; 01/17/17   eo      Updated i2c eeprom tools for sdx24
+; 01/17/17   eo      Updated i2c eeprom tools for sdx50
+; 06/21/16   eo      Updated for SPI-NOR tools
+; 10/01/15   sb      Disable virtio platform for 9x55
+; 05/07/15   sb      Update settings for 9x55 Virtio
+; 03/17/15   sb      Updated for 9x55
+; 09/30/14   sb      I2C NOR tools address change to code ram
+; 09/16/14   sb      I2C NOR tool support on cortex-a7
+; 08/04/14   sb      Update settings for 9x45/8909 - Virtio
+;============================================================================;
+
+global &VirtioPlatform
+
+;============================================================================
+; Get the arguments passed in.
+;============================================================================
+
+LOCAL &CurDir
+
+&CurDir=os.pwd()
+
+;------------------------------------------------------------
+;                   DEBUGGER SYSTEM SETUP
+;------------------------------------------------------------
+; Turbo mode of debug state accesses - CPU makes no checks of
+; memory access in debug mode.
+
+;System.Option TURBO off
+
+; Usage of TRST in system - Must be off if reset tied to trst.
+SYStem.Option.TRST on
+SYStem.Option.CFLUSH on
+SYStem.Option.ENRESET on
+SYStem.Option.WAITRESET off
+;SYStem.Option.ResBreak on
+
+if "&NorTargetFamily"=="FLASH_QCS405_CORTEXA53_CFG"
+(
+  ;Set for virtio testing
+  &VirtioPlatform="no"
+
+  system.cpu CortexA53
+)
+if "&NorTargetFamily"=="FLASH_9K05_CORTEXA7_CFG"
+(
+  ;Set for virtio testing
+  &VirtioPlatform="no"
+  
+  SYStem.CPU CORTEXA7
+)
+
+sys.u
+
+; Disassembler selection - Automatically selects correct one.
+SYStem.Option DisMode Auto
+
+;------------------------------------------------------------
+; lock L2 Cache
+;------------------------------------------------------------
+;as code is running from code ram now, we no need l2 cache lock
+;do nor_l2_cache_lock.cmm
+
+if "&VirtioPlatform"=="no"
+(
+  ;sys.u
+)  
+
+;------------------------------------------------------------
+;  MSM configuration
+;------------------------------------------------------------
+
+; Generate a reset
+register.reset
+
+if "&NorTargetFamily"=="FLASH_QCS405_CORTEXA53_CFG"
+(
+  ; setup clock
+  do setup_clk_for_i2c_qcs405.cmm
+  ;do ../../../src/extdrv/config_v2/setup_clk_for_i2c_rpm.cmm
+  ;do ../../../src/extdrv/config_v2/setup_clk_for_spi_nor.cmm
+)
+
+if "&NorTargetFamily"=="FLASH_9K05_CORTEXA7_CFG"
+(
+  ; setup clock
+  do setup_clk_for_i2c_9205.cmm
+  ;do ../../../src/extdrv/config_v2/setup_clk_for_i2c_rpm.cmm
+  ;do ../../../src/extdrv/config_v2/setup_clk_for_spi_nor.cmm
+)
+
+enddo

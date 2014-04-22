@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="certs.0.0" type="1"/>
+<NvEfsFile name="GoogleSuplCertificateGeo.cer" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/SUPL/GoogleSuplCertificateGeo.cer" buildPath="modem_proc/gps/gnss_tools/config/efs_files/GoogleSuplCertificateGeo.cer"/>
+<NvEfsItemData name="gnss_concurrent_sessions_support_config" id="73938" description="GNSS SM Concurrent Sessions Support Config" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_concurrent_sessions_support_config">
+	<Member name="concurrent_sessions_support_config" description="GNSS SM Concurrent Sessions Support Config" comment="" sizeOf="1" type="uint32">0 </Member>
+</NvEfsItemData>
+</NvData>

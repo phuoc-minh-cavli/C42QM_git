@@ -1,0 +1,46 @@
+
+on error cont
+
+r.set r1 r(r1)
+;if no error, meaning the current hw thread is active
+goto endthreadloop
+
+local &NUM_HW_THREADS
+&NUM_HW_THREADS=4
+
+thread 0
+break
+thread 1
+break
+thread 2
+break
+thread 3
+break
+
+on error gosub
+(
+	&thread=&thread+1
+	goto startthreadloop
+)
+
+local &thread
+&thread=0
+
+startthreadloop:
+repeat
+(
+   if &thread==&NUM_HW_THREADS
+   (
+      dialog.message "no hw thread is active, can not save jtag log"
+	  end
+   )
+
+   thread &thread
+   r.SET r1 r(r1)
+  ; break
+
+   ;if no error, meaning the hw thread is active
+   goto endthreadloop
+)
+endthreadloop:
+enddo

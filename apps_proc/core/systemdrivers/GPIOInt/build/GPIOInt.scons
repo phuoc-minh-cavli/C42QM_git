@@ -1,0 +1,140 @@
+#===============================================================================
+#
+# GPIO INTERRUPT CONTROLLER Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/GPIOInt/build/GPIOInt.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/GPIOInt/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+env.Append(CPPDEFINES = ["GPIOINT_LOG_SIZE=512"])
+
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+  'CS_INC',
+])
+
+#-------------------------------------------------------------------------------
+# Internal Defines
+#-------------------------------------------------------------------------------
+#env.Append(CPPDEFINES = ["QAPI_TXM_SOURCE_CODE"])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.Append(CPPPATH = [
+   "${INC_ROOT}/core/systemdrivers/GPIOInt/inc",
+   "${INC_ROOT}/core/systemdrivers/GPIOInt/src",
+   "${INC_ROOT}/core/systemdrivers/GPIOInt/config",
+   "${INC_ROOT}/core/api/systemdrivers",
+])
+
+env.PublishPrivateApi('SYSTEMDRIVERS_GPIOINT', [
+   "${INC_ROOT}/core/systemdrivers/hal/gpioint/inc",
+])
+
+
+CBSP_API = [
+  'HAL',
+  'DAL',
+  'DEBUGTOOLS',
+  'MPROC',
+  'POWER',
+  'SERVICES',
+  'SYSTEMDRIVERS_8660',
+  'SYSTEMDRIVERS',
+  'QAPI',
+  'KERNEL',
+]
+ 
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+# turned off until we have mpm support.
+env.Append(CCFLAGS = " -DGPIOINT_USE_MPM")
+env.Append(CCFLAGS = " -DGPIOINT_USE_NPA")
+
+
+#-------------------------------------------------------------------------------
+# Image Definitions
+#-------------------------------------------------------------------------------
+GPIOINT_IMAGES = ['CORE_APPS']
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+GPIO_INTERRUPT_SOURCES = [
+  '${BUILDPATH}/GPIOIntFwk.c',
+  '${BUILDPATH}/GPIOIntInfo.c',
+  '${BUILDPATH}/GPIOInt.c',
+]
+
+#-------------------------------------------------------------------------------
+# QAPI
+#-------------------------------------------------------------------------------
+# Creating a separate library QAPI source files to be shipped as binary
+
+GPIOINT_QAPI_SOURCES = [
+  '${BUILDPATH}/qapi_gpioint.c',
+]
+
+env.AddLibrary('CORE_APPS', '${BUILDPATH}/gpioint_qapi', GPIOINT_QAPI_SOURCES)
+
+#-------------------------------------------------------------------------------
+# RCInit Dependencies
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = GPIOINT_IMAGES
+  env.AddRCInitFunc(       # Code Fragment in TMC: NO
+  RCINIT_IMG,              # define TMC_RCINIT_INIT_GPIOINT_INIT
+  {
+    'sequence_group'             : 'RCINIT_GROUP_0',       # required
+    'init_name'                  : 'GPIOInt',              # required
+    'init_function'              : 'GPIOInt_Init',         # required
+    'dependencies'               : ['dalsys','npa']
+  })
+  env.AddRCInitFunc( 
+    RCINIT_IMG,
+    {
+      'sequence_group' : 'RCINIT_GROUP_0',                     # required
+      'init_name'      : 'qapi_gpioint',                          # required
+      'init_function'  : '__qapi_GPIOINT_Module_Init',              # required
+      'dependencies'   : ['dalsys']
+    })
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(GPIOINT_IMAGES,'${BUILDPATH}/GPIOInt',GPIO_INTERRUPT_SOURCES)
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG, 
+   {
+      'devcfg_xml'    : ['${BUILD_ROOT}/core/systemdrivers/GPIOInt/config/${CHIPSET}/GPIOInt.xml',
+                         '${BUILD_ROOT}/core/systemdrivers/GPIOInt/config/${CHIPSET}/GPIOInt_ConfigData.c']
+   })

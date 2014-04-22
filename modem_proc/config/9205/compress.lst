@@ -1,0 +1,14 @@
+/* List of files to compress for Q6zip. Empty list disables the feature */
+
+    . = ALIGN(4K);
+    __swapped_range_rx_start__ = .;
+    __swapped_range_text_start__ = .;
+    __swapped_range_text_partial_start__ = .;
+
+    . = ALIGN(4K);
+    __swapped_range_text_partial_end__ = .;
+    __swapped_range_text_end__ = .;
+    __swapped_range_rodata_start__ = .;
+
+    __swapped_range_rodata_end__ = .;
+    __swapped_range_rx_end__ = .;

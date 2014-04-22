@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="certs.0.0" type="1"/>
+<NvEfsFile name="SuplRootCert_DER.cer" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/SuplRootCert_DER.cer" buildPath="modem_proc/gps/gnss_tools/config/efs_files/cmcc/SuplRootCert_DER.cer"/>
+<NvEfsFile name="GoogleSuplCertificateGeo.cer" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/GoogleSuplCertificateGeo.cer" buildPath="modem_proc/gps/gnss_tools/config/efs_files/GoogleSuplCertificateGeo.cer"/>
+<NvEfsFile name="cacertv3" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/cacertv3" buildPath="modem_proc/gps/gnss_tools/config/efs_files/cmcc/cacertv3"/>
+<NvEfsFile name="spirentrootCA" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/spirentrootCA" buildPath="modem_proc/gps/gnss_tools/config/efs_files/cmcc/spirentrootCA"/>
+<NvEfsFile name="SuplRootCert" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/SuplRootCert" buildPath="modem_proc/gps/gnss_tools/config/efs_files/cmcc/SuplRootCert"/>
+<NvEfsFile name="VeriSign-SpirentIntermediateRoot" id="none" description="" comment="" category="Unknown" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/SUPL/VeriSign-SpirentIntermediateRoot" buildPath="modem_proc/gps/gnss_tools/config/efs_files/cmcc/VeriSign-SpirentIntermediateRoot"/>
+<NvEfsItemData name="gnss_concurrent_sessions_support_config" id="73938" description="GNSS SM Concurrent Sessions Support Config" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_concurrent_sessions_support_config">
+	<Member name="concurrent_sessions_support_config" description="GNSS SM Concurrent Sessions Support Config" comment="" sizeOf="1" type="uint32">0 </Member>
+</NvEfsItemData>
+</NvData>

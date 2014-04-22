@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+<NvItemData name="AAGPS Default QoS Time" id="1918" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_default_qos_time" description="" comment="" sizeOf="1" type="uint32">64 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Positioning Modes Supported" id="1920" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_positioning_modes_supported" description="" comment="" sizeOf="1" type="uint32">127 </Member>
+	</NvItemData>
+	</NvData>

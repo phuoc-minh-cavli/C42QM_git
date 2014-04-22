@@ -1,0 +1,5 @@
+../../core/kernel/rtos/threadx/txm_module_lib/build/LLVM/txm_lib.lib
+../../core/mproc/qmi/build/LLVM/qcci_dam_lib.lib
+../../core/mproc/qmi/build/LLVM/IDL_DAM_LIB.lib
+../../core/services/time_qapi/build/LLVM/timer_dam_lib.lib
+../../core/services/diag/build/LLVM/diag_dam_lib.lib

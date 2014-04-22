@@ -1,0 +1,35 @@
+<image_cfg>
+    <!-- Devcfg Environment Variables -->
+    <devcfg_info>
+        <target_img>apps</target_img>
+        <devcfg_target_build_tag>DAL_DEVCFG_IMG</devcfg_target_build_tag>
+        <dal_config_target_id>0x9206</dal_config_target_id>
+        <!-- These tags have to be comman separated. They can be on a single or multiple lines. -->
+        <!-- Do not have the comments within devcfg_xml_tag tag -->
+        <!--  TCSR_SOC_HW_VERSION : 0x193F000, refer ipcat for Bear family -->
+        <devcfg_xml_tag_single_configs>
+      	    9x06_xml
+        </devcfg_xml_tag_single_configs>
+        <OEM>
+            <uses_oem_config>false</uses_oem_config>
+            <oem_config_base_addr>
+            </oem_config_base_addr>
+        </OEM>
+        <soc_hw_version>
+            9x06_xml : 8201
+        </soc_hw_version>
+        <tcsr>
+            <tcsr_soc_hw_version_addr>
+      	        0x194D000
+            </tcsr_soc_hw_version_addr>
+            <tcsr_paddr_to_vaddr_same>true</tcsr_paddr_to_vaddr_same>
+        </tcsr>
+        <multiCfg>true</multiCfg>
+        <singleImg>true</singleImg>
+        <memory>
+            <props_memory_optimisation>true</props_memory_optimisation>
+            <size_of_struct>true</size_of_struct>
+            <hw_version_specific_props>true</hw_version_specific_props>
+        </memory>
+    </devcfg_info>
+</image_cfg>

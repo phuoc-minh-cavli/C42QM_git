@@ -1,0 +1,36 @@
+#===============================================================================
+#
+# QSEE GP TEE SE utilities
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2017 Qualcomm Technologies, Inc.  All Rights Reserved.
+# Qualcomm Technologies Proprietary and Confidential.
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+
+sources = [
+  '../src/BER.c',
+  '../src/DGI.c',
+  '../src/APDU.c',
+  '../src/CryptoUtils.c',
+  '../src/EseDebug.c',
+]
+
+includes = ['../inc',
+    "${BUILD_ROOT}/core/api/services",
+    "${BUILD_ROOT}/ssg/api/securemsm/trustzone/qsee",
+    "${BUILD_ROOT}/ssg/api/securemsm/trustzone/gp",
+    "${BUILD_ROOT}/ssg/api/securemsm/util",
+    "${BUILD_ROOT}/ssg/securemsm/trustzone/qsee/services/inc/",
+    "${BUILD_ROOT}/core/api/kernel/libstd/stringl/",]
+
+lib = env.SecureAppLibBuilder(includes, sources, 'tee_se_utils')
+env.Deploy([lib, 'SConscript', '../inc/EseDebug.h', '../inc/CryptoUtils.h', '../inc/APDU.h', '../inc/BER.h', '../inc/DGI.h'])
+env.DeploySdkLib(lib)
+Return('lib')
+

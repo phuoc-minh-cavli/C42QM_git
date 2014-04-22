@@ -1,0 +1,107 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# Qualcomm Technologies Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/msf.mpss/1.0/dmm/build/dmm.scons#2 $
+# $DateTime: 2019/02/28 23:16:10 $
+# $Author: pwbldsvc $
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+if 'USES_MODEM_DYNAMIC_LOADING' or 'USES_FEATURE_EXTERNAL_PAGING' in env:
+
+  from glob import glob
+  from os.path import join, basename
+  import re
+
+  dmm_public_api_list = [
+          ('CORE',                'STORAGE'),
+          ('CORE',                'KERNEL'),
+          ('CORE',                'DAL'),
+          ('CORE',                'DEBUGTOOLS'),
+          ('CORE',                'SERVICES'),
+          ('MCS',                 'MCS'),
+					('MSF',                 'DMM'),
+          ('MMCP',                'MMCP'),
+          ('MMCP',                'PUBLIC'),
+          ('PERF',                'EXTPL'),
+          ]
+
+  for api_area,api_name in dmm_public_api_list:
+      env.RequirePublicApi([api_name], area=api_area)
+          
+  env.RequireRestrictedApi([
+      'DMM',
+      ])
+
+  env.PublishPrivateApi('VIOLATIONS',
+                        ['${INC_ROOT}/core/kernel/dlfwk/dlwSrc/inc',
+                         '${INC_ROOT}/mmcp/policyman/inc'])
+
+  SRCPATH = "${BUILD_ROOT}/msf/dmm/src"
+
+  env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+  DMM_SOURCES = [
+      '${BUILDPATH}/dmm.c',
+      '${BUILDPATH}/dm_registry.c',
+      '${BUILDPATH}/dmm_stm.c',
+  ]
+
+  if 'USES_MODEM_DYNAMIC_LOADING' in env:
+    DMM_SOURCES.append('${BUILDPATH}/dmm_so.c')
+    dmm_enabled = True
+  elif 'USES_FEATURE_EXTERNAL_PAGING' in env:
+    DMM_SOURCES.append('${BUILDPATH}/dmm_extpl.c')
+    dmm_enabled = True
+  else:
+	  dmm_enabled = False
+
+  if dmm_enabled is True:       
+	  # STM files
+	  for stmname in glob(join(env.subst(SRCPATH), '*.stm')):
+	    match = re.search('([^\\\/]*)\.stm', stmname)
+	    match.group(1)
+	    env.STM2('${BUILDPATH}/__' + match.group(1) + '_int.c',
+	             '${BUILDPATH}/' + match.group(1) + '.stm')
+	    DMM_SOURCES.append('${BUILDPATH}/__' + match.group(1) + '_int.c')
+
+	  env.Append(CPPPATH = '${BUILDPATH}')
+	  env.Append(CPPPATH = '${BUILD_ROOT}/msf/dmm/build/${BUILDPATH}')
+
+	  #     env.AddLibrary(['MODEM_MODEM'], '${BUILDPATH}/dmm', DMM_SOURCES)
+	  env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/dmm', DMM_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+
+	  # Build image for which this task belongs
+	  RCINIT_DMM = ['MODEM_MODEM']
+
+	  # RC Init Function Dictionary
+	  RCINIT_INIT_DMM = {
+	    'sequence_group'      : 'RCINIT_GROUP_2',
+	    'init_name'           : 'dmm_init',
+	    'init_function'       : 'dmm_init'
+	    }
+
+	  # RC Init Task Dictionary
+	  RCINIT_TASK_DMM = {
+	    'thread_name'         : 'dmm',
+	    'sequence_group'      : 'RCINIT_GROUP_2',
+	    'stack_size_bytes'    : '4096',
+	    'priority_amss_order' : 'CC_PRI_ORDER',
+	    'thread_entry'        : 'dmm_task',
+	    }
+
+	  # Add init function to RCInit
+	  if 'USES_RCINIT' in env:
+	    env.AddRCInitFunc(RCINIT_DMM, RCINIT_INIT_DMM)
+	    env.AddRCInitTask(RCINIT_DMM, RCINIT_TASK_DMM)
+

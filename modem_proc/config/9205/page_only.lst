@@ -1,0 +1,107 @@
+/*
+ * Page Only Image Sections
+ *
+ */
+
+.page_only_section_common_text :
+{
+   __segments_text_section_common_start__ = .;
+       KEEP(*modem_proc/*: 
+       ( 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).text 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).text.* 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).gnu.linpkonce.d.*
+       ))
+   __segments_text_section_common_end__ = .;
+   . = ALIGN(4096);
+}
+
+.page_only_section_common_rodata :
+{
+   __segments_rodata_section_common_start__ = .;
+       KEEP(*modem_proc/*: 
+      ( 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).rodata 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).rodata.* 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).gnu.linpkonce.d.*
+       ))
+   __segments_rodata_section_common_end__ = .;
+   . = ALIGN(4096);
+}
+
+__MMU_region_start_name_page.only.common.data_A0_1_R_1_W_1_X_0_lock_1 = .;
+
+.page_only_section_common_data :
+{
+   __segments_data_section_common_start__ = .;
+       KEEP(*modem_proc/*: 
+      ( 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).data 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).data.* 
+          EXCLUDE_FILE(*modem_proc/nb1/* *modem_proc/fw_nb/* *modem_proc/lte/* *modem_proc/fw_lte/*).gnu.linpkonce.d.*
+       ))
+   __segments_data_section_common_end__ = .;
+   . = ALIGN(4096);
+}
+
+. = ALIGN(4096K);
+
+.page_only_section_nb1_text :
+{
+   __segments_text_section_nb1_start__ = .;
+       KEEP(*modem_proc/nb1*: ( .text .text.* .gnu.linkonce.t.* ))
+	   KEEP(*modem_proc/fw_nb/*: ( .text .text.* .gnu.linkonce.t.* ))
+   __segments_text_section_nb1_end__ = .;
+   . = ALIGN(4096);
+}
+
+.page_only_section_nb1_rodata :
+{
+   __segments_rodata_section_nb1_start__ = .;
+       KEEP(*modem_proc/nb1*: ( .rodata  .rodata.* .gnu.linkonce.r.* ))
+	   KEEP(*modem_proc/fw_nb/*: ( .rodata  .rodata.* .gnu.linkonce.r.* ))
+   __segments_rodata_section_nb1_end__ = .;
+   . = ALIGN(4096);
+}
+__MMU_region_start_name_page.only.NB1.data_A0_1_R_1_W_1_X_0_lock_1 = .;
+
+.page_only_section_nb1_data :
+{
+
+   __segments_data_section_nb1_start__ = .;
+       KEEP(*modem_proc/nb1*: ( .data  .data.* ))
+	   KEEP(*modem_proc/fw_nb/*: ( .data  .data.*  .gnu.linkonce.r.* ))
+   __segments_data_section_nb1_end__ = .;
+   . = ALIGN(4096);
+}
+
+. = ALIGN(2048K);
+__MMU_region_start_name_page.only.M1.text_A0_1_R_1_W_0_X_1_lock_1 = .;
+
+.page_only_section_m1_text :
+{
+   __segments_text_section_m1_start__ = .;
+       KEEP(*modem_proc/lte*: ( .text .text.* .gnu.linkonce.t.* ))
+	   KEEP(*modem_proc/fw_lte/*: ( .text .text.* .gnu.linkonce.t.* ))
+   __segments_text_section_m1_end__ = .;
+   . = ALIGN(4096);
+}
+
+.page_only_section_m1_rodata :
+{
+   __segments_rodata_section_m1_start__ = .;
+       KEEP(*modem_proc/lte*: ( .rodata  .rodata.* .gnu.linkonce.r.* ))
+	   KEEP(*modem_proc/fw_lte/*: ( .rodata  .rodata.* .gnu.linkonce.r.* ))
+   __segments_rodata_section_m1_end__ = .;
+   . = ALIGN(4096);
+}
+__MMU_region_start_name_page.only.M1.data_A0_1_R_1_W_1_X_0_lock_1 = .;
+
+.page_only_section_m1_data :
+{
+   __segments_data_section_m1_start__ = .;
+       KEEP(*modem_proc/lte*: ( .data  .data.* ))
+	   KEEP(*modem_proc/fw_lte/*: ( .data  .data.* .gnu.linkonce.r.* ))
+   __segments_data_section_m1_end__ = .;
+   . = ALIGN(4096);
+}

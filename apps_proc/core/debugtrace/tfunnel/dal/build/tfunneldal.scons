@@ -1,0 +1,72 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for HAL QDSS-STM Library.
+#
+# Copyright (c) 2009-2012 Qualcomm Technologies Incorporated.
+# All rights reserved.
+# Qualcomm Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //source/qcom/qct/core/debugtools/sandbox/users/prasads/qdss/hal/stm/build/stmhal.scons#2 $
+#
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_APIS = [
+   'DEBUGTRACE',
+   'SERVICES',
+   'HAL',
+   'DAL',
+   'KERNEL'
+]
+
+
+env.RequirePublicApi(CBSP_APIS)
+env.RequireRestrictedApi(CBSP_APIS)
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+
+if env['MSM_ID'] in ['8960']:
+  config='8960'
+elif env['MSM_ID'] in ['8064']:
+  config='8064'
+else:
+  config='8974'                     #default config
+  if env['MSM_ID'] in ['8974','9x25','9x35','9x45','9x55','9x06','9205']:     #placeholder - add to this list when we add a config for new targets
+    config=env['MSM_ID']
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+TFUNNEL_DAL_SRC = ['${BUILDPATH}/DalTFunnel.c']
+TFUNNEL_PORT_CFG_SOURCES = ['../../config/'+config + '/tfunnel_config.c']
+
+env.AddLibrary(['MODEM_IMAGE','RPM_IMAGE','CORE_QDSP6_SW','WCN_IMAGE',
+   'CBSP_WCN_IMAGE','CORE_GSS','APPS_PROC'],
+   '${BUILDPATH}/tfunnel_dal',TFUNNEL_DAL_SRC)
+
+env.AddLibrary(['VENUS_VSS'],
+   '${BUILDPATH}/tfunnel_dal',TFUNNEL_DAL_SRC + TFUNNEL_PORT_CFG_SOURCES)
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+   'devcfg_xml' : ['../../config/'+config+'/daltfunnel.xml',
+                   '../../config/'+config + '/tfunnel_config.c']
+   })
+   # env.AddLibrary(DEVCFG_IMG, '${BUILDPATH}/tfunnel_cfg', TFUNNEL_PORT_CFG_SOURCES)
+

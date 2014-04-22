@@ -1,0 +1,40 @@
+#===============================================================================
+#
+# QCA4004 Driver
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/kingfisherhost.tx/1.0/build/qca4004_driver.scons#12 $
+#  $DateTime: 2022/12/27 00:55:41 $
+#  $Author: minhu $
+#  $Change: 42344937 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#===============================================================================
+import os
+
+Import('env')
+
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all CoreBSP code
+#-------------------------------------------------------------------------------
+
+if os.path.exists('qca4004_driver_cleanpack.py'):
+   env.LoadToolScript('qca4004_driver_cleanpack.py')
+
+if 'USES_QCLI' not in env:
+   env.Append(CFLAGS = ['-DQCA4004_DEBUG_PRINT_DISABLE'])
+
+env.LoadSoftwareUnits(0,"../core/build")
+#env.LoadSoftwareUnits(0,"../api/build")
+env.LoadSoftwareUnits(0,"../test/build")
+

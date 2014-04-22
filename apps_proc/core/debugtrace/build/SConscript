@@ -1,0 +1,105 @@
+#===============================================================================
+#
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009, 2019 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtrace/build/SConscript#1 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+
+Import('env')
+config='8974'        #default config
+                     #add to this list as more configs are added
+if env['MSM_ID'] in ['8974','9x25','8x26','8x10','8962','8926','9x35', '8916', '9x45','9x55','9x06','9205']:
+    config=env['MSM_ID']
+    env['QDSS_MSM_CONFIG']=config
+
+#-------------------------------------------------------------------------------
+# Publish Protected APIs
+# these are accesible within QDSS
+#-------------------------------------------------------------------------------
+
+env.PublishProtectedApi('DEBUGTRACE',[
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/common/hal/inc",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/csr/hal/inc",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/common/src/",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/common/inc/",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/tlmm/hal/inc",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/tracer/src",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/qmi/ctrl_client/inc",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/agent/app/inc",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/tpdm/dal/src/",
+   "${DEBUGTRACE_INC_ROOT}/core/debugtrace/tpda/dal/src/",
+   ])
+
+if env.IsTargetEnable(['VENUS_VSS']):
+    env.PublishPrivateApi('DEBUGTRACE',[
+       "${DEBUGTRACE_INC_ROOT}/core/debugtrace/common/hal/inc",
+       "${DEBUGTRACE_INC_ROOT}/core/debugtrace/common/inc",
+    ])
+
+#-------------------------------------------------------------------------------
+#Define QDSS features here
+#----------------------------------
+### Place qdss_init in standalone mode ###
+#env.Replace(USES_QDSS_STANDALONE=True)
+
+### Always vote for QDSS clocks to be ON ###
+#env.Replace(USES_QDSS_CLK_ALWAYS_ON=True)
+
+#-------------------------------------------------------------------------------
+# Enviroment variables
+#-------------------------------------------------------------------------------
+if 'USES_QDSS_STANDALONE' in env:
+   env.Append(CCFLAGS = " -DQDSS_STANDALONE_MODE=1")
+
+if env.IsTargetEnable(['VENUS_VSS']):
+   env.Append(CCFLAGS = " -DTRACER_VENUS_BUILD")
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+SRCPATH = "${BUILD_ROOT}"
+
+if env['MSM_ID'] not in ['9x45']:
+    PACK_DEBUGTRACE = env.FindFiles(['*'], (SRCPATH  + '/core/debugtrace/common/src/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/csr/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/cti/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/etm/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/replicator/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/stm/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tfunnel/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tlmm/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tmc/config/9x45'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/hwevent/config/9x45'))
+    env.CleanPack(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], PACK_DEBUGTRACE)
+
+
+if env['MSM_ID'] not in ['9x55']:
+    PACK_DEBUGTRACE = env.FindFiles(['*'], (SRCPATH  + '/core/debugtrace/common/src/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/csr/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/cti/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/etm/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/replicator/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/stm/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tfunnel/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tlmm/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/tmc/config/9x55'))
+    PACK_DEBUGTRACE += env.FindFiles(['*'], (SRCPATH + '/core/debugtrace/hwevent/config/9x55'))
+    env.CleanPack(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], PACK_DEBUGTRACE)

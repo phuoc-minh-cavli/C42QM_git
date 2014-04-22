@@ -1,0 +1,186 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_mba.cmm 
+//
+//  Description:                                                              
+//    Trustzone debug script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 05/12/2014 AJCheriyan    Moved to the new design
+// 10/10/2012 AJCheriyan	Moved to actual reset based debug mechanism
+// 08/14/2012 AJCheriyan	Fixed typo.
+// 07/19/2012 AJCheriyan    Created for B-family.
+
+
+//###################Arguments passed #####################
+ENTRY %LINE &ArgumentLine
+LOCAL &SubRoutine &Port
+LOCAL &TargetProcessor &SymbolLoadScript &BuildPath &DebugScript &UsesCTI &ProcessorTimeoutValue &TargetProcessorPORT &BootProcessor &DefBkpts
+
+//##################Defaults##########################
+&TargetProcessor="mpss"
+
+//* Check if we need to call for help or do some work *//
+IF ("&ArgumentLine"=="")
+(
+    &SubRoutine="HELP"
+)
+ELSE
+(
+    &SubRoutine="MAIN"
+)
+
+GOSUB &SubRoutine
+
+MAIN:
+    //note that optextract has a limit of 10 entries
+    do optextract Img,Bkpts &ArgumentLine
+    ENTRY &Image &Bkpts
+    
+    // Get the target processor for this port
+    do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &Image
+    ENTRY &Unused1 &TargetProcessor &TargetProcessorPort &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused2 &Unused3 &Unused4 &Unused5
+
+	
+    LOCAL &T32_stopstate &T32_attachstate
+    // Needed for MDM multi-proc attach as we will be attaching only to APPS in std_debug script	
+    INTERCOM.EVALUATE &targetprocessorport SYSTEM.MODE()
+    &T32_attachstate=EVAL()
+    IF !(&T32_attachstate==0x0B)
+    (
+            &counter=0
+	    WHILE (&counter<&processortimeoutvalue)
+    	    (
+                WAIT.100ms  
+                &counter=&counter+1
+ 	    )	       
+           
+	    do std_intercom_do &targetprocessorport std_utils ATTACHPROC dontgo 
+    )
+
+ 
+        INTERCOM.EVALUATE &targetprocessorport STATE.RUN()
+        &T32_stopstate=EVAL()
+        INTERCOM.EVALUATE &targetprocessorport SYSTEM.MODE()
+        &T32_attachstate=EVAL()
+        
+        
+        IF ((1==&T32_stopstate)||("&T32_attachstate"!="0x0B"))
+        (
+            area.reset
+            area
+            PRINT %ERROR "Error! std_debug_mba &image entry: Remote T32 window is not attached/stopped"
+            GOTO EXIT
+        )
+
+	// Delete Existing Breakpoints
+	do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL
+
+        // Set the breakpoints specified by the user
+	IF ("&Bkpts"!="NULL")
+	(
+		do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS ONCHIP &Bkpts 
+	)
+	
+	// Now set the entry and exit breakpoints
+	
+	//record physical address of image to pass to 
+	LOCAL &sw_start
+	INTERCOM.EVALUATE &targetprocessorport register(pc)
+	&sw_start=EVAL()
+	//should be on a 1MB boundary
+	&sw_start=&sw_start&0xFFF00000
+	
+	
+	do std_intercom_do &targetprocessorport std_utils SETBREAKPOINTS ONCHIP &EntryBkpt
+
+
+	INTERCOM.EXECUTE &targetprocessorport GO
+	
+	INTERCOM.EXECUTE &targetprocessorport WAIT !RUN()
+        
+	//configure translation tables
+	GOSUB SETUP_MMU_LIVETARGET
+	
+    GOSUB CONFIGURE_TRANSLATION_TABLE &sw_start
+    intercom.execute &targetprocessorport d.l
+	
+	GOSUB SETUP_MMU_LIVETARGET
+	
+	INTERCOM.EXECUTE &targetprocessorport TASK.reset
+	INTERCOM.EXECUTE &targetprocessorport MENU.reset
+	
+	INTERCOM.EXECUTE &targetprocessorport menu.reprogram &MPSS_BUILDROOT\modem_proc\core\kernel\qurt_mba\install\MBAv5\debugger\T32\qurt_model.men
+	INTERCOM.EXECUTE &targetprocessorport TASK.CONFIG &MPSS_BUILDROOT\modem_proc\core\kernel\qurt_mba\install\MBAv5\debugger\T32\qurt_model.t32
+	
+	do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL
+	do std_intercom_do &targetprocessorport std_utils SETBREAKPOINTS &error_bkpts
+	
+	
+EXIT:
+	ENDDO
+
+FATALEXIT:
+	END
+
+////////////////////////////////////////
+//
+//			CONFIGURE_TRANSLATION_TABLE
+//			
+//			Configure the MMU on remote ADSP T32 session.
+//
+///////////////////////////////////////// 
+CONFIGURE_TRANSLATION_TABLE:
+LOCAL &sw_start
+ENTRY &sw_start
+
+ON ERROR GOTO SETUP_MMU_LIVETARGET
+        
+        
+        INTERCOM.EVALUATE &targetprocessorport ADDRESS.OFFSET(start)
+            &MEMMAP_VIRT=EVAL()
+            
+        &MEMMAP_PHY=&sw_start
+        &image_size=0xfffffff
+        
+        INTERCOM.EXECUTE &targetprocessorport Trans.off
+        INTERCOM.EXECUTE &targetprocessorport trans.reset
+        INTERCOM.EXECUTE &targetprocessorport mmu.format QURT d.l(QURTK_pagetables) &MEMMAP_VIRT++&image_size &MEMMAP_PHY
+        INTERCOM.EXECUTE &targetprocessorport trans.tablewalk.on
+        INTERCOM.EXECUTE &targetprocessorport trans.autoenable
+        
+        ON ERROR //remove error handler
+        
+        RETURN
+
+        
+////////////////////////////////////////
+//
+//			SETUP_MMU_LIVETARGET
+//			
+//			Configure the MMU on remote mpss T32 session.
+//
+/////////////////////////////////////////        
+SETUP_MMU_LIVETARGET:
+    ON ERROR //remove error handler if present
+    //INTERCOM.EXECUTE &targetprocessorport mmu.off
+    //INTERCOM.EXECUTE &targetprocessorport mmu.reset
+    INTERCOM.WAIT &targetprocessorport
+    INTERCOM.EXECUTE &targetprocessorport mmu.tlb.scan
+    INTERCOM.WAIT &targetprocessorport
+    //INTERCOM.EXECUTE &targetprocessorport mmu.on
+    RETURN
+    
+
+	
+		

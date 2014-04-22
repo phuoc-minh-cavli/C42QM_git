@@ -1,0 +1,127 @@
+#===============================================================================
+#
+# Network Service AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2011-2012 by QUALCOMM Technologies, Inc. All Rights Reserved.
+# All Rights Reserved.
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_MOB' not in env:
+	env.Append(CFLAGS = " --c99 ")
+#env.Append(CCFLAGS = " --enum_is_int ")
+#env.Append(CCFLAGS = " --wchar32 ")
+#env.Append(CFLAGS = " --bss_threshold=0 ")
+#env.Append(CFLAGS = " --DWARF3 ")
+
+#env.Append(CFLAGS = " --diag_suppress==66 ")
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = " --diag_suppress=66 ")
+
+
+#------------------------------------------------------------------
+# Setup source PATH
+#------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/dataservices/netservice/security/crypto/lib"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+##------------------------------------------------------------------
+## Necessary Public and Restricted API's
+##------------------------------------------------------------------
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('WDS', area='api')
+env.RequirePublicApi('WDS_EXT', area='api')
+env.RequirePublicApi('DPM', area='api')
+env.RequirePublicApi('COMMON', area='api')
+
+env.RequirePublicApi([
+    'CRYPTOLIB'
+    ])
+
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi(['SHARKSSL_PORT'])
+env.RequirePublicApi(['SHARKSSL'])
+env.RequirePublicApi(['NICHESTACK_PORT'])
+env.RequirePublicApi(['NICHESTACK'])
+
+#------------------------------------------------------------------
+# Generate the library and add to an image
+#------------------------------------------------------------------
+CRYPTO_AES_SRC = [
+        '${BUILDPATH}/aes/aes.c',
+    ]
+CRYPTO_CHACHA_SRC = [
+        '${BUILDPATH}/chacha20_poly1305/chacha20_poly1305.c',
+    ]
+CRYPTO_REF10_SRC = '${BUILDPATH}/common/ref10/fe_ge.c'
+
+CRYPTO_UTILS_SRC = [
+        '${BUILDPATH}/common/utils/utils.c',
+    ]
+
+CRYPTO_CURVE_SRC = [ 
+        '${BUILDPATH}/curve25519/c25519.c',
+        '${BUILDPATH}/curve25519/c25519_sw.c',
+    ]
+
+CRYPTO_ED_SRC = [
+        '${BUILDPATH}/ed25519/ed25519.c',
+        '${BUILDPATH}/ed25519/ed25519_sw.c',
+    ]
+
+CRYPTO_DIGEST_SRC = [
+        '${BUILDPATH}/digest/md5.c',
+        '${BUILDPATH}/digest/qcc_digest.c',
+        '${BUILDPATH}/digest/sha1.c',
+        '${BUILDPATH}/digest/sha256.c',
+        '${BUILDPATH}/digest/sha384.c',
+        '${BUILDPATH}/digest/sha512.c',
+    ]
+CRYPTO_HMAC_SRC = [
+        '${BUILDPATH}/hmac/hmac_hw.c',
+        '${BUILDPATH}/hmac/hmac_sw.c',
+    ]
+CRYPTO_RNG_SRC = [
+        '${BUILDPATH}/rng/prng.c',
+        '${BUILDPATH}/rng/rng.c',
+    ]
+CRYPTO_SRP_SRC = [
+        '${BUILDPATH}/srp/srp.c',
+        '${BUILDPATH}/srp/srp_sw.c',
+        '${BUILDPATH}/srp/srp_hw.c',
+    ]
+
+CRYPTO_MGMT_SRC = [
+        '${BUILDPATH}/crypto_mgmt/obj_mgmt.c',
+        '${BUILDPATH}/crypto_mgmt/op_mgmt.c',
+        ]
+
+CRYPTO_SOURCES = [CRYPTO_REF10_SRC,
+                CRYPTO_CURVE_SRC,
+				CRYPTO_UTILS_SRC
+                ]
+
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES,'${BUILDPATH}/cryptolib', CRYPTO_SOURCES)
+
+# Instruct build system to look for files at the next level down
+#------------------------------------------------------------------
+env.LoadSoftwareUnits()

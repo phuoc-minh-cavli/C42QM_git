@@ -1,0 +1,18 @@
+smc1_mar:value DL-DCCH-Message ::= 
+{
+  message c1 : securityModeCommand : 
+      {
+        rrc-TransactionIdentifier 2,
+        criticalExtensions c1 : securityModeCommand-r8 : 
+            {
+              securityConfigSMC 
+              {
+                securityAlgorithmConfig 
+                {
+                  cipheringAlgorithm eea0,
+                  integrityProtAlgorithm eia1
+                }
+              }
+            }
+      }
+}

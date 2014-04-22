@@ -1,0 +1,53 @@
+  #include "msmhwiobase.h"
+  <device id="PWM_0">
+    <global_def>
+      <var_seq name="PWM_AHB_CLK" type=DALPROP_DATA_TYPE_STRING>
+        gcc_pdm_ahb_clk
+      </var_seq>
+      <var_seq name="PWM_CLK" type=DALPROP_DATA_TYPE_STRING>
+        gcc_pwm0_xo512_clk
+      </var_seq>
+    </global_def>
+
+    <props name="PWM_BASE" type=DALPROP_ATTR_TYPE_UINT32>
+      PDM_PERPH_WEB_BASE_PHYS
+    </props>
+    <props name="PWM_OFFSET" type=DALPROP_ATTR_TYPE_UINT32>
+      0x0
+    </props>
+
+    <!--
+     In 9205, only 2 PWM instances - 0 & 1 are brought out to GPIOs.
+     Hence, we only need to have the total PWM instances supported as 2.
+
+     However, in future chipsets, if 0 & 8 are brought out, then this
+     property needs to be changed to 9.
+     -->
+    <props name="PWM_TOTAL_INSTANCES" type=DALPROP_ATTR_TYPE_UINT32>
+      2
+    </props>
+
+    <!--
+     This is the bus clock needed to access any PWM register.
+     -->
+    <props name="PWM_AHB_CLK" type=DALPROP_ATTR_TYPE_STRING_PTR>
+      PWM_AHB_CLK
+    </props>
+
+    <!--
+     This is the PWM core clock that goes into the PWM counters.
+     -->
+    <props name="PWM_CLK" type=DALPROP_ATTR_TYPE_STRING_PTR>
+      PWM_CLK
+    </props>
+
+    <!--
+     The following property could be modified as per OEM requirements.
+     The source clock is running at 19.2 MHz. For example, a divider of 4 will
+     give 4.8 MHz.
+     Max divider is 512.
+     -->
+    <props name="PWM_CLK_DIV" type=DALPROP_ATTR_TYPE_UINT32>
+      1
+    </props>
+  </device>

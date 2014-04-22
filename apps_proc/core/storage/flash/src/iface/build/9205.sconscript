@@ -1,0 +1,41 @@
+#===============================================================================
+#
+# 9x06 Target Specific Scons file for Flash Iface
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/storage/flash/src/iface/build/9205.sconscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/07/16   sb      Update to support 9x55
+#===============================================================================
+
+Import('env')
+
+flash_bam_images = [
+   'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+   ]
+
+
+dictionary_keys = set(env.Dictionary())
+
+# Find the intersection
+flash_bam_images_result_keys = set(flash_bam_images) & dictionary_keys
+
+if len(flash_bam_images_result_keys) != 0 :
+   env.Replace(ENABLE_FLASH_BAM = 'yes')

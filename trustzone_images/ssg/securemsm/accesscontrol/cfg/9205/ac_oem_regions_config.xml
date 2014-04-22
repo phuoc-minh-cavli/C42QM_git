@@ -1,0 +1,65 @@
+<!--===========================================================================
+   Copyright (c) 2019-2020 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
+=========================================================================== -->
+
+#include "ACOEMConfig.h"
+
+<driver name="NULL">
+
+  <global_def>
+  </global_def>
+  <!--
+    NOTE : Only the following VMs are allowed to specify RW permissions
+           through this configuration
+              AC_VM_HLOS
+			  AC_VM_MSS_MSA
+
+            Also, the given permission applies to the entire start=[...] end=[...]
+            address range for the corresponding regionId.
+            Configure only the needed regions and remove the rest.
+  -->
+  <!-- regionId=[0] start=[0x000a04b8] end=[0x000a04c8] -->
+  <!--              start=[0x000a44b8] end=[0x000a44c8] -->
+
+  <!-- regionId=[1] start=[0x000a04c8] end=[0x000a04d8] -->
+  <!--              start=[0x000a44c8] end=[0x000a44d8] -->
+
+  <!-- regionId=[2] start=[0x000a04d8] end=[0x000a04e8] -->
+  <!--              start=[0x000a44d8] end=[0x000a44e8] -->
+					
+  <!-- regionId=[3]	start=[0x000a04e8] end=[0x000a0500] -->
+  <!--              start=[0x000a44e8] end=[0x000a4500] -->
+
+  <!--
+   Uncomment the following block, modify the readVmMask and writeVmMask to
+   suit your needs and remove the regions that you do not want to modify
+  -->
+  <!--device id="/ac/oem_regions_config">
+    <props name="permissions" type=ACOEMRegionPermissions array="True">
+    <![CDATA[
+    {
+        {
+            .regionId = 0,
+            .readVmMask = AC_VM_MASK(AC_VM_HLOS) | AC_VM_MASK(AC_VM_MSS_MSA),
+            .writeVmMask = AC_VM_MASK(AC_VM_MSS_MSA)
+        },
+        {
+            .regionId = 1,
+            .readVmMask = AC_VM_MASK(AC_VM_HLOS) | AC_VM_MASK(AC_VM_MSS_MSA),
+            .writeVmMask = AC_VM_MASK(AC_VM_MSS_MSA)
+        },
+        {
+            .regionId = 2,
+            .readVmMask = AC_VM_MASK(AC_VM_HLOS) | AC_VM_MASK(AC_VM_MSS_MSA),
+            .writeVmMask = AC_VM_MASK(AC_VM_MSS_MSA)
+        },
+        {
+            .regionId = 3,
+            .readVmMask = AC_VM_MASK(AC_VM_HLOS) | AC_VM_MASK(AC_VM_MSS_MSA),
+            .writeVmMask = AC_VM_MASK(AC_VM_MSS_MSA)
+        },
+    }
+    ]]>
+    </props>
+  </device-->
+</driver>

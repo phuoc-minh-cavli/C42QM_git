@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<QXDMProfessional>
+	<Persistence>
+		<MultiInstance>0</MultiInstance>
+		<FixedFontSize>0</FixedFontSize>
+		<DynamicParsersPath>C:\Documents and Settings\All Users\Documents\Qualcomm\QXDM\Parsers\</DynamicParsersPath>
+		<DroppedMessages>0</DroppedMessages>
+		<ParsingPreference>0</ParsingPreference>
+		<EmptyHexadecimalPane>1</EmptyHexadecimalPane>
+		<DIAGRequestTimeout>500</DIAGRequestTimeout>
+		<ScriptCommandTimeout>15000</ScriptCommandTimeout>
+		<TargetCOMPort>Disconnect</TargetCOMPort>
+		<GPSCOMPort>Disconnect</GPSCOMPort>
+		<TrackNMEA>0</TrackNMEA>
+		<OSCoreDump>1</OSCoreDump>
+		<MessagesView>
+			<ISVConfig>
+				<Items>4,5,6,8</Items>
+				<MessageLevels>
+00014/00,
+00014/01,
+00014/02,
+00014/03,
+00014/04,
+00018/00,
+00018/01,
+00018/02,
+00018/03,
+00018/04,
+00024/00,
+00024/01,
+00024/02,
+00024/03,
+00024/04,
+00032/00,
+00032/01,
+00032/02,
+00032/03,
+00032/04,
+00046/00,
+00046/01,
+00046/02,
+00046/03,
+00046/04,
+00047/00,
+00047/01,
+00047/02,
+00047/03,
+00047/04,
+00047/05,
+00047/06,
+00047/07,
+00047/08,
+00047/09,
+00047/10,
+00047/11,
+00047/12,
+00047/13,
+00047/21,
+00047/22,
+00049/00,
+00049/01,
+00049/02,
+00049/03,
+00049/04,
+00049/05,
+00049/06,
+00049/07,
+00049/08,
+00049/09,
+00049/10,
+00050/00,
+00050/01,
+00050/02,
+00050/03,
+00050/04,
+00080/00,
+00080/01,
+00080/02,
+00080/03,
+00080/04,
+03006/00,
+03006/01,
+03006/02,
+03006/03,
+03006/04,
+03007/00,
+03007/01,
+03007/02,
+03007/03,
+03007/04,
+03008/00,
+03008/01,
+03008/02,
+03008/03,
+03008/04,
+03009/00,
+03009/01,
+03009/02,
+03009/03,
+03009/04,
+03010/00,
+03010/01,
+03010/02,
+03010/03,
+03010/04,
+03011/00,
+03011/01,
+03011/02,
+03011/03,
+03011/04,
+03012/00,
+03012/01,
+03012/02,
+03012/03,
+03012/04,
+03013/00,
+03013/01,
+03013/02,
+03013/03,
+03013/04,
+03014/00,
+03014/01,
+03014/02,
+03014/03,
+03014/04,
+05000/00,
+05000/01,
+05000/02,
+05000/03,
+05000/04,
+05001/00,
+05001/01,
+05001/02,
+05001/03,
+05001/04,
+05002/00,
+05002/01,
+05002/02,
+05002/03,
+05002/04,
+05003/00,
+05003/01,
+05003/02,
+05003/03,
+05003/04,
+05004/00,
+05004/01,
+05004/02,
+05004/03,
+05004/04,
+05005/00,
+05005/01,
+05005/02,
+05005/03,
+05005/04,
+05006/00,
+05006/01,
+05006/02,
+05006/03,
+05006/04,
+05007/00,
+05007/01,
+05007/02,
+05007/03,
+05007/04,
+05008/00,
+05008/01,
+05008/02,
+05008/03,
+05008/04,
+05009/00,
+05009/01,
+05009/02,
+05009/03,
+05009/04,
+05010/00,
+05010/01,
+05010/02,
+05010/03,
+05010/04,
+05011/00,
+05011/01,
+05011/02,
+05011/03,
+05011/04,
+05012/00,
+05012/01,
+05012/02,
+05012/03,
+05012/04,
+05013/00,
+05013/01,
+05013/02,
+05013/03,
+05013/04,
+05014/00,
+05014/01,
+05014/02,
+05014/03,
+05014/04,
+05015/00,
+05015/01,
+05015/02,
+05015/03,
+05015/04,
+05016/00,
+05016/01,
+05016/02,
+05016/03,
+05016/04,
+05017/00,
+05017/01,
+05017/02,
+05017/03,
+05017/04,
+05018/00,
+05018/01,
+05018/02,
+05018/03,
+05018/04,
+05019/00,
+05019/01,
+05019/02,
+05019/03,
+05019/04,
+05020/00,
+05020/01,
+05020/02,
+05020/03,
+05020/04,
+05021/00,
+05021/01,
+05021/02,
+05021/03,
+05021/04,
+05022/00,
+05022/01,
+05022/02,
+05022/03,
+05022/04,
+05023/00,
+05023/01,
+05023/02,
+05023/03,
+05023/04,
+05024/00,
+05024/01,
+05024/02,
+05024/03,
+05024/04,
+05025/00,
+05025/01,
+05025/02,
+05025/03,
+05025/04,
+05026/00,
+05026/01,
+05026/02,
+05026/03,
+05026/04,
+05027/00,
+05027/01,
+05027/02,
+05027/03,
+05027/04,
+05028/00,
+05028/01,
+05028/02,
+05028/03,
+05028/04,
+05029/00,
+05029/01,
+05029/02,
+05029/03,
+05029/04,
+05500/00,
+05500/01,
+05500/02,
+05500/03,
+05500/04,
+05500/05,
+05501/00,
+05501/01,
+05501/02,
+05501/03,
+05501/04,
+05501/05,
+05502/00,
+05502/01,
+05502/02,
+05502/03,
+05502/04,
+05502/05,
+05503/00,
+05503/01,
+05503/02,
+05503/03,
+05503/04,
+05503/05,
+05504/00,
+05504/01,
+05504/02,
+05504/03,
+05504/04,
+05504/05,
+05505/00,
+05505/01,
+05505/02,
+05505/03,
+05505/04,
+05505/05,
+05506/00,
+05506/01,
+05506/02,
+05506/03,
+05506/04,
+05506/05,
+05507/00,
+05507/01,
+05507/02,
+05507/03,
+05507/04,
+05507/05,
+05508/00,
+05508/01,
+05508/02,
+05508/03,
+05508/04,
+05508/05,
+05509/00,
+05509/01,
+05509/02,
+05509/03,
+05509/04,
+05509/05,
+05510/00,
+05510/01,
+05510/02,
+05510/03,
+05510/04,
+05510/05,
+05511/00,
+05511/01,
+05511/02,
+05511/03,
+05511/04,
+05511/05,
+05512/00,
+05512/01,
+05512/02,
+05512/03,
+05512/04,
+05512/05,
+05513/00,
+05513/01,
+05513/02,
+05513/03,
+05513/04,
+05513/05,
+05514/00,
+05514/01,
+05514/02,
+05514/03,
+05514/04,
+05514/05,
+05515/00,
+05515/01,
+05515/02,
+05515/03,
+05515/04,
+05515/05,
+09509/00,
+09509/01,
+09509/02,
+09509/03,
+09509/04,
+09509/22
+</MessageLevels>
+				<AcceptUnknowns>1</AcceptUnknowns>
+				<DelayedSubsysOnly>0</DelayedSubsysOnly>
+				<EventIDs>
+00000,
+00256,
+00259,
+00401,
+00402,
+00403,
+00410,
+00411,
+00412,
+00413,
+00414,
+00418,
+00440,
+01127,
+01205,
+01241,
+01242,
+01243,
+01244,
+01245,
+01246,
+01247,
+01248,
+01249,
+01250,
+01251,
+01286,
+01287,
+01288,
+01289,
+01290,
+01291,
+01292,
+01293,
+01294,
+01295,
+01296,
+01297,
+01298,
+01299,
+01300,
+01301
+</EventIDs>
+				<LogCodes>
+0x1036,
+0x1037,
+0x119B,
+0x119D,
+0x11EB,
+0x12E8,
+0x12E9,
+0x1375,
+0x1376,
+0x1377,
+0x1378,
+0x1379,
+0x137A,
+0x137B,
+0x137C,
+0x137D,
+0x137E,
+0x137F,
+0x1380,
+0x1381,
+0x1382,
+0x1383,
+0x1385,
+0x1386,
+0x1387,
+0x138E,
+0x138F,
+0x1390,
+0x1391,
+0x1392,
+0x1393,
+0x1394,
+0x1395,
+0x1396,
+0x1397,
+0x1398,
+0x1399,
+0x139A,
+0x139B,
+0x139C,
+0x139D,
+0x139E,
+0x139F,
+0x13BA,
+0x13BB,
+0x13C2,
+0x13C3,
+0x13C4,
+0x13C6,
+0x13CE,
+0x13D1,
+0x13DB,
+0x1430,
+0x1440,
+0x1456,
+0x1476,
+0x1477,
+0x1478,
+0x147B,
+0x147C,
+0x147D,
+0x147E,
+0x1480,
+0x1482,
+0x1488,
+0x148A,
+0x1490,
+0x1491,
+0x1494,
+0x14B0,
+0x14E5,
+0x14E6,
+0x14E7,
+0x14E8,
+0x14E9,
+0x1508,
+0x1509,
+0x150A,
+0x150B,
+0x150C,
+0x150D,
+0x150E,
+0x150F,
+0x1510,
+0x1511,
+0x1512,
+0x1513,
+0x1514,
+0x1515,
+0x1516,
+0x1519,
+0x151A,
+0x1544,
+0x1570,
+0x1576,
+0x1577,
+0x1587,
+0x1589,
+0x1599,
+0x159A,
+0x1647,
+0x1807,
+0xB0E2,
+0xB0E3,
+0xB0EC,
+0xB0ED,
+0xB193,
+0xB196
+</LogCodes>
+				<OTATypes>
+0x1004/003,
+0x1005/004,
+0x1007/009,
+0x1008/004,
+0x412F/001/008,
+0x412F/003/008,
+0x713A/009/001,
+0x713A/009/004,
+0x713A/009/016
+</OTATypes>
+			</ISVConfig>
+			<Appearance>
+				<ShowDate>0</ShowDate>
+				<ShowMilliseconds>1</ShowMilliseconds>
+				<TypeSpecificTime>1</TypeSpecificTime>
+				<UseLegacyFormat>0</UseLegacyFormat>
+				<IncludeHeader>0</IncludeHeader>
+				<Order>3</Order>
+				<Columns>0/80,1/80,2/240,3/120,4/400,5/400,6/120,7/80,8/80</Columns>
+				<Type></Type>
+			</Appearance>
+		</MessagesView>
+		<LoggingView>
+			<ISVConfig>
+				<Items>4,5,6,8</Items>
+				<EventIDs>
+00000,
+00256,
+00259,
+00414,
+00418
+</EventIDs>
+				<LogCodes>
+0x1036,
+0x1037,
+0x119B,
+0x119D,
+0x11EB,
+0x12E8,
+0x12E9,
+0x1375,
+0x1376,
+0x1377,
+0x1378,
+0x1379,
+0x137A,
+0x137B,
+0x137C,
+0x137D,
+0x137E,
+0x137F,
+0x1380,
+0x1381,
+0x1382,
+0x1383,
+0x1385,
+0x1386,
+0x1387,
+0x138E,
+0x138F,
+0x1390,
+0x1391,
+0x1392,
+0x1393,
+0x1394,
+0x1395,
+0x1396,
+0x1397,
+0x1398,
+0x1399,
+0x139A,
+0x139B,
+0x139C,
+0x139D,
+0x139E,
+0x139F,
+0x13BA,
+0x13BB,
+0x13C2,
+0x13C3,
+0x13C4,
+0x13C6,
+0x13CE,
+0x13D1,
+0x13DB,
+0x1430,
+0x1440,
+0x1456,
+0x1476,
+0x1477,
+0x1478,
+0x147B,
+0x147C,
+0x147D,
+0x147E,
+0x1480,
+0x1482,
+0x1488,
+0x148A,
+0x1544,
+0x1576,
+0x1577,
+0xB0E2,
+0xB0E3
+</LogCodes>
+				<AcceptUnknowns>1</AcceptUnknowns>
+				<DelayedSubsysOnly>0</DelayedSubsysOnly>
+				<RestartOnDisconnect>0</RestartOnDisconnect>
+				<FragmentSize>4294967295</FragmentSize>
+				<LogFilePath>C:\Program Files (x86)\Qualcomm\QXDM\Bin\</LogFilePath>
+				<MessageLevels>
+00018/00,
+00018/01,
+00018/02,
+00018/03,
+00018/04,
+00032/00,
+00032/01,
+00032/02,
+00032/03,
+00032/04,
+00047/01,
+00047/02,
+00047/03,
+00047/04,
+00047/06,
+00047/07,
+00047/08,
+00047/09,
+00047/10,
+00047/11,
+00047/12,
+00047/13,
+00047/21,
+00047/22,
+00049/00,
+00049/01,
+00049/02,
+00049/03,
+00049/04,
+00049/05,
+00049/06,
+00049/07,
+00049/08,
+00049/09,
+00049/10,
+00050/00,
+00050/01,
+00050/02,
+00050/03,
+00050/04,
+00080/00,
+00080/01,
+00080/02,
+00080/03,
+00080/04,
+01000/02,
+01000/03,
+01000/04,
+01007/01,
+01007/02,
+01007/03,
+01007/04,
+03006/00,
+03006/01,
+03006/02,
+03006/03,
+03006/04,
+03007/00,
+03007/01,
+03007/02,
+03007/03,
+03007/04,
+03008/00,
+03008/01,
+03008/02,
+03008/03,
+03008/04,
+03009/00,
+03009/01,
+03009/02,
+03009/03,
+03009/04,
+03010/00,
+03010/01,
+03010/02,
+03010/03,
+03010/04,
+03011/00,
+03011/01,
+03011/02,
+03011/03,
+03011/04,
+03012/00,
+03012/01,
+03012/02,
+03012/03,
+03012/04,
+03013/00,
+03013/01,
+03013/02,
+03013/03,
+03013/04,
+03014/00,
+03014/01,
+03014/02,
+03014/03,
+03014/04,
+05000/00,
+05000/01,
+05000/02,
+05000/03,
+05000/04,
+05001/00,
+05001/01,
+05001/02,
+05001/03,
+05001/04,
+05002/00,
+05002/01,
+05002/02,
+05002/03,
+05002/04,
+05003/00,
+05003/01,
+05003/02,
+05003/03,
+05003/04,
+05004/00,
+05004/01,
+05004/02,
+05004/03,
+05004/04,
+05005/00,
+05005/01,
+05005/02,
+05005/03,
+05005/04,
+05006/00,
+05006/01,
+05006/02,
+05006/03,
+05006/04,
+05007/00,
+05007/01,
+05007/02,
+05007/03,
+05007/04,
+05008/00,
+05008/01,
+05008/02,
+05008/03,
+05008/04,
+05009/00,
+05009/01,
+05009/02,
+05009/03,
+05009/04,
+05010/00,
+05010/01,
+05010/02,
+05010/03,
+05010/04,
+05011/00,
+05011/01,
+05011/02,
+05011/03,
+05011/04,
+05012/00,
+05012/01,
+05012/02,
+05012/03,
+05012/04,
+05013/00,
+05013/01,
+05013/02,
+05013/03,
+05013/04,
+05014/00,
+05014/01,
+05014/02,
+05014/03,
+05014/04,
+05015/00,
+05015/01,
+05015/02,
+05015/03,
+05015/04,
+05016/00,
+05016/01,
+05016/02,
+05016/03,
+05016/04,
+05017/00,
+05017/01,
+05017/02,
+05017/03,
+05017/04,
+05018/00,
+05018/01,
+05018/02,
+05018/03,
+05018/04,
+05019/00,
+05019/01,
+05019/02,
+05019/03,
+05019/04,
+05020/00,
+05020/01,
+05020/02,
+05020/03,
+05020/04,
+05021/00,
+05021/01,
+05021/02,
+05021/03,
+05021/04,
+05022/00,
+05022/01,
+05022/02,
+05022/03,
+05022/04,
+05023/00,
+05023/01,
+05023/02,
+05023/03,
+05023/04,
+05024/00,
+05024/01,
+05024/02,
+05024/03,
+05024/04,
+05025/00,
+05025/01,
+05025/02,
+05025/03,
+05025/04,
+05026/00,
+05026/01,
+05026/02,
+05026/03,
+05026/04,
+05027/00,
+05027/01,
+05027/02,
+05027/03,
+05027/04,
+05028/00,
+05028/01,
+05028/02,
+05028/03,
+05028/04,
+05029/00,
+05029/01,
+05029/02,
+05029/03,
+05029/04,
+05500/00,
+05500/01,
+05500/02,
+05500/03,
+05500/04,
+05500/05,
+05501/00,
+05501/01,
+05501/02,
+05501/03,
+05501/04,
+05501/05,
+05502/00,
+05502/01,
+05502/02,
+05502/03,
+05502/04,
+05502/05,
+05503/00,
+05503/01,
+05503/02,
+05503/03,
+05503/04,
+05503/05,
+05504/00,
+05504/01,
+05504/02,
+05504/03,
+05504/04,
+05504/05,
+05505/00,
+05505/01,
+05505/02,
+05505/03,
+05505/04,
+05505/05,
+05506/00,
+05506/01,
+05506/02,
+05506/03,
+05506/04,
+05506/05,
+05507/00,
+05507/01,
+05507/02,
+05507/03,
+05507/04,
+05507/05,
+05508/00,
+05508/01,
+05508/02,
+05508/03,
+05508/04,
+05508/05,
+05509/00,
+05509/01,
+05509/02,
+05509/03,
+05509/04,
+05509/05,
+05510/00,
+05510/01,
+05510/02,
+05510/03,
+05510/04,
+05510/05,
+05511/00,
+05511/01,
+05511/02,
+05511/03,
+05511/04,
+05511/05,
+05512/00,
+05512/01,
+05512/02,
+05512/03,
+05512/04,
+05512/05,
+05513/00,
+05513/01,
+05513/02,
+05513/03,
+05513/04,
+05513/05,
+05514/00,
+05514/01,
+05514/02,
+05514/03,
+05514/04,
+05514/05,
+05515/00,
+05515/01,
+05515/02,
+05515/03,
+05515/04,
+05515/05,
+09509/22
+</MessageLevels>
+				<OTATypes>
+0x1004/003,
+0x1005/004,
+0x1007/009,
+0x1008/004,
+0x713A/009/001,
+0x713A/009/004,
+0x713A/009/016
+</OTATypes>
+			</ISVConfig>
+			<Appearance>
+				<ShowDate>0</ShowDate>
+				<ShowMilliseconds>1</ShowMilliseconds>
+				<TypeSpecificTime>1</TypeSpecificTime>
+				<UseLegacyFormat>0</UseLegacyFormat>
+				<IncludeHeader>0</IncludeHeader>
+				<Order>0,1,2,3,4</Order>
+				<Columns>0/80,1/80,2/240,3/120,4/400,5/400,6/120,7/80,8/80</Columns>
+				<Type></Type>
+			</Appearance>
+		</LoggingView>
+		<Replay>
+			<Auto-Skip>0</Auto-Skip>
+			<PlaybackSpeed>0</PlaybackSpeed>
+			<Compact>0</Compact>
+		</Replay>
+		<FixedFontFace></FixedFontFace>
+		<ScriptPath></ScriptPath>
+		<SourceFilesPath></SourceFilesPath>
+		<RegExEngine>0</RegExEngine>
+		<DMCLibrary>
+			<DMCTREE>
+				<SELECTED></SELECTED>
+			</DMCTREE>
+		</DMCLibrary>
+		<DMCVersion></DMCVersion>
+		<Displays>
+			<Display0>
+				<Frame>
+					<Show>2</Show>
+					<Minimum>0,410</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>310,-4,496,60</Normal>
+				</Frame>
+				<Type>OS Core Dump</Type>
+			</Display0>
+			<Display1>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>653,906,1256,-2</Normal>
+				</Frame>
+				<Type>GNSS Primary RF Status</Type>
+			</Display1>
+			<Display2>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>846,-2,1034,446</Normal>
+				</Frame>
+				<Type>GNSS Navigation Database</Type>
+			</Display2>
+			<Display3>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>449,-1,793,24</Normal>
+				</Frame>
+				<Type>GNSS Measurements</Type>
+			</Display3>
+			<Display4>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>714,688,1385,121</Normal>
+					<VILSize>371</VILSize>
+					<HexSize>0</HexSize>
+					<PILSize>670</PILSize>
+				</Frame>
+				<View>
+					<Appearance>
+						<ShowDate>0</ShowDate>
+						<ShowMilliseconds>1</ShowMilliseconds>
+						<TypeSpecificTime>1</TypeSpecificTime>
+						<UseLegacyFormat>0</UseLegacyFormat>
+						<IncludeHeader>0</IncludeHeader>
+						<Order>0,1,2,3,4</Order>
+						<Columns>0/80,1/80,2/240,3/120,4/400,5/400,6/120,7/80,8/80</Columns>
+					</Appearance>
+					<ISVConfig>
+						<Items>5,6</Items>
+						<LogCodes>
+0x119B,
+0x119C,
+0x119D,
+0x11A0,
+0x138E,
+0x138F,
+0x1390,
+0x1391,
+0x1392,
+0x1393,
+0x1394,
+0x1395,
+0x1396,
+0x1397,
+0x1398,
+0x1399,
+0x139A,
+0x139B,
+0x139C,
+0x139D,
+0x139E,
+0x139F
+</LogCodes>
+						<MessageLevels>
+01007/00,
+01007/01,
+01007/02,
+01007/03,
+01007/04,
+01007/16,
+01007/25,
+01007/26
+</MessageLevels>
+						<AcceptUnknowns>0</AcceptUnknowns>
+						<DelayedSubsysOnly>0</DelayedSubsysOnly>
+					</ISVConfig>
+					<HexEdit>
+						<ShowASCII>1</ShowASCII>
+						<ShowHorzSB>0</ShowHorzSB>
+						<ShowVertSB>0</ShowVertSB>
+						<BytesPerLine>16</BytesPerLine>
+						<BytesPerGroup>1</BytesPerGroup>
+					</HexEdit>
+					<ParsedItem>
+						<FieldColumns>200,50,50,50</FieldColumns>
+						<TextColumns>300</TextColumns>
+					</ParsedItem>
+				</View>
+				<Type>Filtered View</Type>
+			</Display4>
+			<Display5>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>1111,105,1141,331</Normal>
+					<VILSize>479</VILSize>
+					<HexSize>0</HexSize>
+					<PILSize>1009</PILSize>
+				</Frame>
+				<View>
+					<Appearance>
+						<ShowDate>0</ShowDate>
+						<ShowMilliseconds>1</ShowMilliseconds>
+						<TypeSpecificTime>1</TypeSpecificTime>
+						<UseLegacyFormat>0</UseLegacyFormat>
+						<IncludeHeader>0</IncludeHeader>
+						<Order>3,4</Order>
+						<Columns>0/80,1/80,2/240,3/120,4/400,5/400,6/120,7/80,8/80</Columns>
+					</Appearance>
+					<HexEdit>
+						<ShowASCII>1</ShowASCII>
+						<ShowHorzSB>0</ShowHorzSB>
+						<ShowVertSB>0</ShowVertSB>
+						<BytesPerLine>16</BytesPerLine>
+						<BytesPerGroup>1</BytesPerGroup>
+					</HexEdit>
+					<ParsedItem>
+						<FieldColumns>200,50,50,50</FieldColumns>
+						<TextColumns>3268</TextColumns>
+					</ParsedItem>
+				</View>
+				<Type>Item View</Type>
+			</Display5>
+			<Display6>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>643,398,1434,50</Normal>
+				</Frame>
+				<Type>Log View</Type>
+			</Display6>
+			<Display7>
+				<Frame>
+					<Show>1</Show>
+					<Minimum>-1,-1</Minimum>
+					<Maximum>-1,-1</Maximum>
+					<Normal>909,110,1146,195</Normal>
+				</Frame>
+				<Type>Messages View</Type>
+			</Display7>
+		</Displays>
+		<MainFrame>
+			<Show>1</Show>
+			<Normal>650,25,1225,25</Normal>
+			<ExportParsedText>0</ExportParsedText>
+			<ForceANSIText>1</ForceANSIText>
+			<VendorDatabase>C:\Users\Public\Documents\Qualcomm\QXDM\Vendor\Qualcomm\</VendorDatabase>
+			<StatusIndicators>0,31905,31906,31928,31929,31915,31916,31924</StatusIndicators>
+			<HSDPADeviceCategory>4</HSDPADeviceCategory>
+			<ShortcutF6>0</ShortcutF6>
+			<ShortcutF8>0</ShortcutF8>
+			<ISFSettings>
+				<Advanced>0</Advanced>
+				<QueryISFSave>0</QueryISFSave>
+				<AutoISFSave>0</AutoISFSave>
+				<QuickISFSave>0</QuickISFSave>
+				<MaxISFSize>0</MaxISFSize>
+				<MaxISFDuration>0</MaxISFDuration>
+				<MaxISFDurationFraction>0</MaxISFDurationFraction>
+				<MaxISFArchives>0</MaxISFArchives>
+			</ISFSettings>
+		</MainFrame>
+	</Persistence>
+	<Current>
+		<ItemView>
+			<Frame>
+				<Show>1</Show>
+				<Minimum>-1,-1</Minimum>
+				<Maximum>-1,-1</Maximum>
+				<Normal>784,12,1048,4</Normal>
+				<VILSize>479</VILSize>
+				<HexSize>0</HexSize>
+				<PILSize>1017</PILSize>
+			</Frame>
+			<View>
+				<Appearance>
+					<ShowDate>0</ShowDate>
+					<ShowMilliseconds>1</ShowMilliseconds>
+					<TypeSpecificTime>1</TypeSpecificTime>
+					<UseLegacyFormat>0</UseLegacyFormat>
+					<IncludeHeader>0</IncludeHeader>
+					<Order>3,4</Order>
+					<Columns>0/80,1/240,2/288,3/157,4/1218,5/80</Columns>
+				</Appearance>
+				<HexEdit>
+					<ShowASCII>1</ShowASCII>
+					<ShowHorzSB>0</ShowHorzSB>
+					<ShowVertSB>0</ShowVertSB>
+					<BytesPerLine>16</BytesPerLine>
+					<BytesPerGroup>1</BytesPerGroup>
+				</HexEdit>
+				<ParsedItem>
+					<FieldColumns>200,50,50,50</FieldColumns>
+					<TextColumns>3268</TextColumns>
+				</ParsedItem>
+			</View>
+		</ItemView>
+		<OSCoreDump>
+			<Frame>
+				<Show>1</Show>
+				<Minimum>-1,-1</Minimum>
+				<Maximum>-1,-1</Maximum>
+				<Normal>310,-4,496,60</Normal>
+			</Frame>
+		</OSCoreDump>
+		<MessagesView>
+			<Frame>
+				<Show>2</Show>
+				<Minimum>160,774</Minimum>
+				<Maximum>-1,-1</Maximum>
+				<Normal>909,110,1146,195</Normal>
+			</Frame>
+		</MessagesView>
+	</Current>
+</QXDMProfessional>

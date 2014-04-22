@@ -1,0 +1,124 @@
+#===============================================================================
+#
+# TX demo module app scons script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/com_test_app/build/com_test_app.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#===============================================================================
+
+Import('env')
+env_dam = env.Clone()
+
+if 'USES_ARM' in env_dam:
+  IMAGES = ['COM_TEST_APP']
+else:
+  IMAGES = ['LLVM_DAM']
+
+if 'USES_QSEECOM' not in env_dam:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+    CLEAN_SOURCES = env_dam.FindFiles("*", "${BUILD_ROOT}/core/securemsm/com_test_app/src/")
+    #IMAGES.append('APPS_IMAGE')
+    IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 'COM_TEST_APP', 'LLVM_DAM']
+
+    env_dam.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+#The following flag is globally defined when compiling a module
+env_dam.Append(CPPDEFINES = [
+    "TXM_MODULE",
+    "QAPI_TXM_MODULE",
+    "TX_DAM_QC_CUSTOMIZATIONS",
+])
+
+# mlevy - added for designated initializers in object.h
+if 'USES_ARM' in env_dam:
+  env_dam.Append(CCFLAGS=" --c99 --gnu")
+
+CBSP_APIS = [
+    'QSEECOM_API',
+    'QSEECOM_DRIVER',
+    'SERVICES',
+    'STORAGE',
+    'QAPI',
+    'QTEE_INVOKE_QAPI',
+    'MINK',
+]
+
+env_dam.RequirePublicApi('KERNEL', area='core')
+env_dam.RequirePublicApi(CBSP_APIS)
+
+SRCPATH = '${BUILD_ROOT}/core/securemsm/com_test_app/src'
+env_dam.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_ARM' in env_dam:
+    APP_SOURCES = [
+        '${BUILDPATH}/txm_module_preamble.S',
+    ]
+else:
+    APP_SOURCES = [
+        '${BUILDPATH}/txm_module_preamble_llvm.S',
+    ]
+
+APP_SOURCES.append('${BUILDPATH}/app_module.c')
+  
+com_test_app_objs = env_dam.Object(APP_SOURCES)
+com_test_app = env_dam.Library('${BUILDPATH}/com_test_app', com_test_app_objs)
+
+env_dam.AddLibsToImage(IMAGES, com_test_app_objs)
+
+# For kernel tests
+env_kernel = env.Clone()
+
+IMAGES_KERNEL = [
+  'MODEM_IMAGE',
+  'CBSP_MODEM_IMAGE',
+  'APPS_IMAGE',
+  'CBSP_APPS_IMAGE',
+  'SINGLE_IMAGE',
+  'CBSP_SINGLE_IMAGE',
+  'QDSP6_SW_IMAGE',
+  'CBSP_QDSP6_SW_IMAGE'
+]
+
+env_kernel.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env_kernel.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",            # needed for _txm_module_manager_file_load symbol visibility
+   "TX_DAM_QC_CUSTOMIZATIONS",
+])
+
+RESTRICTED_API = [
+  'QSEECOM_DRIVER_API',
+]
+
+env_kernel.RequirePublicApi(CBSP_APIS)
+env_kernel.RequirePublicApi('KERNEL', area='core')
+env_kernel.RequireRestrictedApi(RESTRICTED_API)
+
+env_kernel.Append(CFLAGS=" --c99")
+
+KERNEL_SOURCES = [
+  '${BUILDPATH}/kernel_com_test.c'
+]
+
+if 'USES_SECUREMSM_DEBUG_EXTN' in env_kernel:
+    env_kernel.AddLibrary(IMAGES_KERNEL, '${BUILDPATH}/build/com_test_app', KERNEL_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

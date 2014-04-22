@@ -1,0 +1,1292 @@
+;============================================================================
+;  Name:
+;    INTERRUPTCONTROLLERQGIC.CMM
+;
+;  Description:
+;    This script lets the user configure interrupts on the main interrupt 
+;     controller. 
+;  USAGE :
+;    Please Run InterruptController.cmm . The InterruptControllerQGIC.cmm is an internal script 
+;    which is not meant to  be run independently.
+;  
+;
+; Copyright (c) 2011 Qualcomm Technologies, Incorporated.  
+; All Rights Reserved.
+; Qualcomm Confidential and Proprietary
+;----------------------------------------------------------------------------
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+; when       who     what, where, why
+; -------    ---     --------------------------------------------------------
+; 10/2/2011  an      Created for querying QGIC InterruptController data.
+;============================================================================;
+
+
+
+;============================================================================
+; Set up some defaults for some variables
+;============================================================================
+GLOBAL &IntrTrigger &IntTrigger &MaxIRQ &INTRSET &nIdx &IntCnt &IntrVal &Prod &Choice &MaxPriVal
+GLOBAL &nMask &nResult &IPriority
+;&GICDBASE &GICCBASE &PlatformSet &Presult
+;&GICDBASE=0x3201000
+;&GICCBASE=0x3200F00
+;&Presult=0
+&MaxPriVal=0xFE
+&Interrupt=0
+&MaxIRQ=0x120
+&INTRSET=0
+&PlatformSet=1
+&PrnRes=0
+
+;============================================================================
+; Get the arguments passed in.
+;============================================================================
+ENTRY
+DISPLAYMENU:
+AREA.RESet
+WINPOS 0. 0. 100% 100%
+AREA.Create INTRMENU
+AREA.view INTRMENU
+
+
+on error gosub
+(
+  print "An Error has Occured"
+  enddo (1==0)
+)
+
+
+AREA.CLEAR INTRMENU
+AREA.view INTRMENU
+AREA.Select INTRMENU
+;============================================================================
+; don't proceed without user confirmation
+;============================================================================
+      
+print "      "
+print "**************************************************************************"
+print " "     
+print "  T H E   Q G I C   I N T E R R U P T C O N T R O L L E R     S C R I P T     "
+print " "      
+print "**************************************************************************"      
+if &Presult!=0
+(
+print " "
+  GOSUB ERRORHNDLRMAIN &PlatformNum
+)
+&Presult=0
+if &PrnRes!=0
+(
+print " "
+  GOSUB PRNHNDLER &PrnRes
+)
+&PrnRes=0
+print " "
+print "  PLEASE CHOOSE FROM THE FOLLOWING OPTIONS "
+print " "
+print "************************************************************************" 
+print " "
+print " Please first select option 1 to select the interrupt number. "
+print " "
+print " "
+print " "
+print " 0.  Exit the script."
+print " 1.  Select the interrupt number."
+print " 2.  Check if the interrupt is enabled."
+print " 3.  Check if the interrupt is set."
+print " 4.  Check if the interrupt is pending."
+print " 5.  Check if the interrupt is Active."
+print " 6.  Get the interrupt trigger."
+print " 7.  Set the interrupt trigger."
+print " 8.  Trigger the PPI/SPI interrupt."
+print " 9.  Clear Interrupt."
+print " 10. Get highest priority interrupt."
+print " 11. Disable interrupt."
+print " 12. Enable interrupt."
+print " 13. Get a list of pending interrupts."
+print " 14. Get a list of interrupts that are set or fired."
+print "     (This is the raw interrupt status they may not be enabled.)"
+print " 15. Get the QGIC Distributor and QGIC controller Configuration state."
+print " 16. Set the QGIC Distributor and QGIC controller Configuration state."
+print " 17. Clear all Interrupts."
+print " 18. Get Interrupt Priority."
+print " 19. Set Interrupt Priority."
+print "************************************************************************"    
+print
+print
+print
+print
+&t32_cmm_stopped=1
+enter &Choice
+&t32_cmm_stopped=0
+print
+print
+&Choice=&Choice.
+if &Choice>0x13
+(  
+  &PrnRes=0xFFFF
+  GOTO DISPLAYMENU
+)
+if &Choice==1
+(  
+  
+  print
+  print
+  AREA.view INTRMENU
+  AREA.Select INTRMENU
+
+  print "You entered choice 1."
+  print "Please select the interrupt number."
+  &t32_cmm_stopped=1
+  enter &Interrupt
+  &t32_cmm_stopped=0
+  &INTRSET=0
+  &IntrVal=&Interrupt
+  &Interrupt=&Interrupt.
+
+  if (&Interrupt>V.VALUE(&MaxIRQ))
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  if (&PlatformSet==0)
+  (
+    &PrnRes=0x1B
+    GOTO DISPLAYMENU
+  )
+  &PrnRes=0x1C
+  &INTRSET=1
+  AREA.view INTRMENU
+  AREA.Select INTRMENU
+  GOTO DISPLAYMENU
+
+)
+
+;******************************************************************************
+;  CHECK IF INTERRUPT IS ENABLED.
+;******************************************************************************
+
+if &Choice==2
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &nIdx=((&Interrupt)>>5)
+  &IsEnableReg=((&GICDBASE)+(0x100+(4*(&nIdx))))
+  &EnableVal=data.long(a:&IsEnableReg)
+  &nResult=(&EnableVal)&(1<<((&Interrupt)&0x1F))
+  if (&nResult==0)
+  (
+    &PrnRes=0x2A
+  )
+  else
+  (
+    &PrnRes=0x2B
+  )
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  CHECK IF INTERRUPT IS SET.
+;******************************************************************************
+
+if &Choice==3
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &nIdx=((&Interrupt)>>5)
+  &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+  &PendVal=data.long(a:&IsPendReg)
+  &nResult=((&PendVal)&(1<<((&Interrupt)&0x1F)))
+  if (&nResult==0)
+  (
+    &PrnRes=0x3A
+  )
+  else
+  (
+    &PrnRes=0x3B
+  )
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  CHECK IF INTERRUPT IS PENDING.
+;******************************************************************************
+if &Choice==4
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  
+  &nIdx=((&Interrupt)>>5)
+  
+  &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+  &IsEnableReg=((&GICDBASE)+(0x100+(4*(&nIdx))))
+  &IsEnableVal=data.long(a:&IsEnableReg)
+  &PendVal=data.long(a:&IsPendReg)
+
+  &nResult=(((&PendVal)&(1<<((&Interrupt)&0x1F)))&((&IsEnableVal)&(1<<((&Interrupt)&0x1F))))
+  if (&nResult==0)
+  (
+    &PrnRes=0x4A
+  )
+  else
+  (
+    &PrnRes=0x4B
+  )
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  CHECK IF INTERRUPT IS ACTIVE.
+;******************************************************************************
+
+if &Choice==5
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &Prod=(&Interrupt)&(0x1F)
+  &nMask=1<<(&Prod)
+  &nIdx=((&Interrupt)>>5)
+  &Prod=4*(&nIdx)
+  &IsActiveReg=(&GICDBASE)+(0x300+(&Prod))
+  &ActiveVal=data.long(a:&IsActiveReg)
+  &nResult=(&ActiveVal)&(&nMask)
+  if (&nResult==0)
+  (
+    &PrnRes=0x5A
+  )
+  else
+  (
+    &PrnRes=0x5B
+  )
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  GET INTERRUPT TRIGGER
+;******************************************************************************
+
+if &Choice==6
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  
+  &nIdx=((&Interrupt)>>4)
+  &Prod=((&Interrupt)&(0xF))
+  &nMask=(1<<((2*(&Prod))+1))
+  &TriggerReg=((&GICDBASE)+(0xc00+(4*(&nIdx))))
+  &TriggerVal=data.long(a:&TriggerReg)
+  &nResult=(&TriggerVal)&(&nMask)
+  if (&nResult==0)
+  (
+    &PrnRes=0x6A
+  )
+  else
+  (
+    &PrnRes=0x6B
+  )
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  SET INTERRUPT TRIGGER
+;******************************************************************************
+
+if &Choice==7
+( 
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print "you entered choice 7"
+  print "Please choose one of the below trigger options you want to set for interrupt &Interrupt."
+  print "Please choose 0 for Main Menu."
+  print "Please choose 1 for level high trigger."
+  print "Please choose 2 for rising edge trigger."
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &IntrTrigger
+  &t32_cmm_stopped=0
+  &nIdx=((&Interrupt)>>4)
+  &Prod=((&Interrupt)&(0xF))
+  &nMask=(1<<((2*(&Prod))+1))
+  &TriggerReg=((&GICDBASE)+(0xc00+(4*(&nIdx))))
+  &TriggerVal=data.long(a:&TriggerReg)
+  if "&IntrTrigger"=="0"
+  (  
+    &PrnRes=0x1C
+  )
+  if "&IntrTrigger"=="1"
+  (
+    &MaskVal=~(&nMask)
+    &nResult=&TriggerVal&(&MaskVal)
+   
+    &PrnRes=0x7A
+  )
+  if "&IntrTrigger"=="2"
+  (
+    &nResult=(&TriggerVal)|(&nMask)
+    &PrnRes=0x7B
+  )
+  data.set a:&TriggerReg %LONG &nResult
+  
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  TRIGGER INTERRUPT
+;******************************************************************************
+
+if &Choice==8
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  
+  &nIdx=((&Interrupt)>>5)
+  &nMask=(1<<((&Interrupt)&0x1F))
+  &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+  &PendVal=data.long(a:&IsPendReg)
+  &nResult=((&PendVal)|(1<<((&Interrupt)&0x1F)))
+  data.set a:&IsPendReg %LONG &nResult
+  &PrnRes=0x8
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  CLEAR INTERRUPT
+;******************************************************************************
+if &Choice==9
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  
+  &nIdx=((&Interrupt)>>5)
+  &ICPendReg=((&GICDBASE)+(0x280+(4*(&nIdx))))
+  &ICPendVal=data.long(a:&ICPendReg)
+  &nResult=((&ICPendVal)|(1<<((&Interrupt)&0x1F)))
+  data.set a:&ICPendReg %LONG &nResult
+  &PrnRes=0x9
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  GET HIGHEST PENDING INTERRUPT
+;******************************************************************************
+if &Choice==0xA
+(
+  &nHppirAddr=(&GICCBASE+0x00000018)
+  &nHppirVal=data.long(a:&nHppirAddr)
+  &nResult=(&nHppirVal)&0x1fff
+ if (&nResult==0x3FF)
+ (
+   &PrnRes=0xAA
+ )
+ else
+ (
+   &PrnRes=0xAB
+ )
+ 
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  DISABLE INTERRUPT
+;******************************************************************************
+if &Choice==0xB
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &nIdx=((&Interrupt)>>5)
+  &ICEnableReg=((&GICDBASE)+(0x180+(4*(&nIdx))))
+  &ICEnableVal=data.long(a:&ICEnableReg)
+  &nResult=((&ICEnableVal)|(1<<((&Interrupt)&0x1F)))
+  data.set a:&ICEnableReg %LONG &nResult
+  &PrnRes=0xB
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  ENABLE INTERRUPT
+;******************************************************************************
+if &Choice==0xC
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &nIdx=((&Interrupt)>>5)
+  &ISEnableReg=((&GICDBASE)+(0x100+(4*(&nIdx))))
+  &ISEnableVal=data.long(a:&ISEnableReg)
+  &nResult=((&ISEnableVal)|(1<<((&Interrupt)&0x1F)))
+  data.set a:&ISEnableReg %LONG &nResult
+  &PrnRes=0xC
+  GOTO DISPLAYMENU
+)
+
+;******************************************************************************
+;  LIST OF PENDING INTERUPTS
+;******************************************************************************
+if &Choice==0xD
+(
+  &IntCnt=0
+  AREA.RESet 
+  AREA.Create INTRLIST 3000. 10000. ; change size to something that can display all data
+  AREA.Select INTRLIST
+  WINPOS 0. 0. 100% 100%
+  AREA.view INTRLIST
+  print
+  print "****************************************************************************************"
+  print
+  print "you entered choice 12. The following is a list of Pending Interrupts."
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &NoInit=0x1
+  while ((&IntCnt)<=(&MaxIRQ))
+  (  
+    &nIdx=((&IntCnt)>>5)
+    &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+    &IsEnableReg=((&GICDBASE)+(0x100+(4*(&nIdx))))
+    &IsEnableVal=data.long(a:&IsEnableReg)
+    &PendVal=data.long(a:&IsPendReg)
+    &nResult=(((&PendVal)&(1<<((&IntCnt)&0x1F)))&((&IsEnableVal)&(1<<((&IntCnt)&0x1F))))
+
+    if (&nResult==0)
+    (
+      &PrnRes=0xDA
+    )
+    else
+    (
+      &NoInit=0x0
+      &PrnRes=0xDB
+    GOSUB PRNHNDLER &PrnRes
+    )
+    &IntCnt=(&IntCnt)+1
+  )
+  &PrnRes=0
+  if &NoInit==0x1
+  (
+    print
+    print
+    print " There are no pending Interrupts."
+    print
+    print
+  )
+  print
+  print "****************************************************************************************"
+  print
+  print "Please Enter 1 to Go back to the main menu or 0 to exit this script"
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &WhereTo
+  &t32_cmm_stopped=0
+  if "&WhereTo"=="1"
+  (
+    GOTO DISPLAYMENU
+  )
+  else
+  (
+    winclear
+    enddo (0==0)	
+  )
+
+)
+;******************************************************************************
+;  LIST OF SET/FIRED INTERUPTS
+;******************************************************************************
+if &Choice==0xE
+(
+  &IntCnt=0
+  AREA.RESet 
+  AREA.Create INTRLIST 3000. 10000. ; change size to something that can display all data
+  AREA.Select INTRLIST
+  WINPOS 0. 0. 100% 100%
+  AREA.view INTRLIST
+  print
+  print "****************************************************************************************"
+  print
+  print "you entered choice 12. The following is a list of Fired Interrupts."
+  print
+  print "****************************************************************************************"
+  print
+  print
+ &NoInit=0x1
+  while &IntCnt<=&MaxIRQ
+  (  
+    &nIdx=((&IntCnt)>>5)
+    &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+    &PendVal=data.long(a:&IsPendReg)
+    &nResult=((&PendVal)&(1<<((&IntCnt)&0x1F)))
+    if (&nResult==0)
+    (
+      &PrnRes=0xEA
+    )
+    else
+    (
+      &NoInit=0x0
+      &PrnRes=0xEB
+    GOSUB PRNHNDLER &PrnRes
+    )
+    &IntCnt=(&IntCnt)+1
+  )
+  if &NoInit==0x1
+  (
+    print
+    print
+    print " There are no Interrupts that have fired or are set."
+    print
+    print
+  )
+  &PrnRes=0
+  print
+  print "****************************************************************************************"
+  print
+  print "Please Enter 1 to Go back to the main menu or 0 to exit this script"
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &WhereTo
+  &t32_cmm_stopped=0
+  if "&WhereTo"=="1"
+  (
+    GOTO DISPLAYMENU
+  )
+  else
+  (
+    winclear
+    enddo (0==0)	
+  )
+)
+
+if &Choice==0xF
+(
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print "you entered choice 15"
+  print
+  print "The QGIC Distributor Configuration is the following :"
+  print "****************************************************************************************"
+  
+  &GICDVal=data.long(a:&GICDBASE)
+  &IsDistNs=&GICDVal&(0x2)
+  &IsDist=&GICDVal&(0x1)
+  if &IsDist==0
+  (
+   print "The QGIC Distributor is not Enabled."
+  )
+  else
+  (
+    print "The QGIC Distributor is Enabled."
+  )
+  if &IsDistNs==0
+  (
+    print "The QGIC Non secure Distributor is not Enabled."
+  )
+  else
+  (
+    print "The QGIC Non Secure Distributor is Enabled."
+  )
+  print "****************************************************************************************"
+  print "The QGIC Controller Configuration is the following :"
+  print "****************************************************************************************"
+  &GICCVal=data.long(a:&GICCBASE)
+  &IsIntNs=&GICCVal&(0x2)
+  &IsInt=&GICCVal&(0x1)
+  &ISecAck=&GICCVal&(0x4)
+  &ISecDest=&GICCVal&(0x8)
+ 
+
+  if &IsInt==0
+  (
+   print "The QGIC secure interrupts are not Enabled."
+  )
+  else
+  (
+    print "The QGIC secure interrupts are Enabled."
+  )
+  if &IsIntNs==0
+  (
+    print "The QGIC Non secure interrupts are not Enabled."
+  )
+  else
+  (
+    print "The QGIC Non Secure interrupts are Enabled."
+  )
+  if &ISecAck==0
+  (
+    print "The QGIC Secure domain ack of non secure interrupts (S_ACK) is not enabled ."
+  )
+  else
+  (
+    print "The QGIC Secure domain ack of non secure interrupts (S_ACK) is enabled ."
+  )
+
+  if &ISecDest==0
+  (
+    print "The QGIC Secure destination port (S_DEST) is set to IRQ."
+  )
+  else
+  (
+    print "The QGIC Secure destination port (S_DEST) is set to FIQ."
+  )
+  &PMRBASE=(&GICCBASE)+0x4
+  &PmrVal=data.long(a:&PMRBASE)
+  &Pmr=&PmrVal&(0xFF)
+  print "The lowest priority interrupt mask set is &Pmr"
+  
+  print "Please choose 0 to navigate to the Main Menu."
+
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &Input
+  &t32_cmm_stopped=0
+  if "&Input"=="0"
+  (  
+    &PrnRes=0x1C
+    GOTO DISPLAYMENU
+  )
+
+  else
+  (
+    winclear
+    enddo (0==0)	
+  ) 
+  
+)
+
+if &Choice==0x10
+(
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print "You entered choice 16 to set the QGIC to a standard configuration."
+  print "Please wait, this might take a while.."
+  print
+  print "****************************************************************************************"
+  
+  &IntCnt=0
+  if &PlatformNum==0x4
+  (
+    ;******************************************************************************
+    ;  For the APPS processor we are in trust zone mode. ALL interrupts are secure.
+    ;******************************************************************************
+  
+    while &IntCnt<=&MaxIRQ
+    (  
+
+      ;******************************************************************************
+      ;  Set the trigger to edge.
+      ;******************************************************************************
+
+      &nIdx=((&IntCnt)>>4)
+      &Prod=((&IntCnt)&(0xF))
+      &nMask=(1<<((2*(&Prod))+1))
+      &TriggerReg=((&GICDBASE)+(0xc00+(4*(&nIdx))))
+      &TriggerVal=data.long(a:&TriggerReg)
+      &nResult=(&TriggerVal)|(&nMask)
+      data.set a:&TriggerReg %LONG &nResult
+
+      ;******************************************************************************
+      ;  Set all the interrupt to secure interrupts for the applications processor.
+      ;******************************************************************************
+
+      &nIdx=((&IntCnt)>>5)
+      &Prod=(1<<((&IntCnt)&0x1F))
+      &SecurityReg=(&GICDBASE)+(0x80+(4*(&nIdx)))
+      &SecurityVal=data.long(a:&SecurityReg)
+      &nResult=(&SecurityVal)&(~(&Prod))
+      data.set a:&SecurityReg %LONG &nResult
+ 
+      ;******************************************************************************
+      ;  Set the target cpu to cpu id 0x1
+      ;******************************************************************************
+
+      &nIdx=((&IntCnt)/4)
+      &Prod=((&IntCnt)&(0x3))*8
+      &nMask=(0xFF<<(&Prod))
+      &TargetReg=((&GICDBASE)+(0x800+(4*(&nIdx))))
+      &TargetVal=data.long(a:&TargetReg)
+      &TargetVal=(&TargetVal)&(~(&nMask))
+      &nResult=(&TargetVal)|((0x1<<(&Prod))&(&nMask))
+      data.set a:&TargetReg %LONG &nResult
+      &IntCnt=(&IntCnt)+1
+    )
+
+    ;******************************************************************************
+    ;  Enable the Secure distributor on the GIC Distributor.
+    ;******************************************************************************
+    &GICDVal=data.long(a:&GICDBASE)
+    &IsDist=(&GICDVal)|(0x1)
+    data.set a:&GICDBASE %LONG &IsDist
+
+    ;******************************************************************************
+    ; Enable the secure interrupts on the GIC controller.
+    ;******************************************************************************
+    &GICCVal=data.long(a:&GICCBASE)
+    &IsInt=(&GICCVal)|(0x1)
+    data.set a:&GICCBASE %LONG &IsInt
+
+
+    ;*******************************************************************************
+    ; Set the priority mask for recieving the interrupts
+    ;*******************************************************************************
+    &PmrReg=&GICCBASE+0x4
+    &nMask=0xFF
+    data.set a:&PmrReg %LONG &nMask
+    &PmrVal=data.long(a:&PmrReg)
+
+    print "The QGIC Distributor Configuration is set to the following :"
+    print "****************************************************************************************"
+    print "The secure distributor has been enabled."
+    print "The secure interrupts have been enabled."
+    print "IRQ port has been set as a secure destination."
+    print "The lowest priority interrupt mask set is &PmrVal"
+    print "All QGIC interrupts are by default configured to edge trigger as a result of running this script option. "
+
+  )
+  if &PlatformNum!=0x4
+  (
+
+    ;******************************************************************************
+    ;  For the APPS processor we are in trust zone mode. ALL interrupts are non 
+    ;  secure excepting the FIQ interrupts. FIQs are all marked as secure.
+    ;  In this script however we mark all interrupts as non secure since we do not
+    ;  have prior knowledge for the FIQ assignments.
+    ;******************************************************************************
+  
+    while &IntCnt<=&MaxIRQ
+    (  
+
+      ;********************************************************************************
+      ;  Set the trigger to edge.
+      ;********************************************************************************
+
+      &nIdx=((&IntCnt)>>4)
+      &Prod=((&IntCnt)&(0xF))
+      &nMask=(1<<((2*(&Prod))+1))
+      &TriggerReg=(&GICDBASE)+(0xc00+(4*(&nIdx)))
+      &TriggerVal=data.long(a:&TriggerReg)
+      &nResult=(&TriggerVal)|(&nMask)
+      data.set a:&TriggerReg %LONG &nResult
+      ;********************************************************************************
+      ;  Set all the interrupt to non secure interrupts for all other processors 
+      ;  excepting the Applications processor.
+      ;********************************************************************************
+
+      &nIdx=((&IntCnt)>>5)
+      &Prod=(1<<((&IntCnt)&0x1F))
+      &SecurityReg=(&GICDBASE)+(0x80+(4*(&nIdx)))
+      &SecurityVal=data.long(a:&SecurityReg)
+      &nResult=(&SecurityVal)|(&Prod)
+      data.set a:&SecurityReg %LONG &nResult
+
+      ;********************************************************************************
+      ;  Set the target cpu to cpu id 0x1
+      ;********************************************************************************
+
+      &nIdx=((&IntCnt)/4)
+      &Prod=((&IntCnt)&(0x3))*8
+      &nMask=(0xFF<<(&Prod))
+      &TargetReg=(&GICDBASE)+(0x800+(4*(&nIdx)))
+      &TargetVal=data.long(a:&TargetReg)
+      &TargetVal=(&TargetVal)&(~(&nMask))
+      &nResult=(&TargetVal)|((0x1<<(&Prod))&(&nMask))
+      data.set a:&TargetReg %LONG &nResult
+      &IntCnt=(&IntCnt)+1
+    )
+
+    ;******************************************************************************
+    ;  Enable the Secure and non secure distributor on the GIC Distributor.
+    ;******************************************************************************
+    &GICDVal=data.long(a:&GICDBASE)
+    &IsDist=(&GICDVal)|(0x3)
+    data.set a:&GICDBASE %LONG &IsDist
+
+    ;**************************************************************************************
+    ; Enable the secure and non secure interrupts and the secure ack on the GIC controller.
+    ; Set the FIQ as a secure destination.
+    ;**************************************************************************************
+    &GICCVal=data.long(a:&GICCBASE)
+    &IsInt=(&GICCVal)|(0xF)
+    data.set a:&GICCBASE %LONG &IsInt
+
+    ;*******************************************************************************
+    ; Set the priority mask for receiving the interrupts
+    ;*******************************************************************************
+    &PmrReg=&GICCBASE+0x4
+    &nMask=0xFF
+    data.set a:&PmrReg %LONG &nMask
+    &PmrVal=data.long(a:&PmrReg)
+
+    print "The QGIC Distributor Configuration is set to the following :"
+    print "****************************************************************************************"
+    print "The secure and non secure distributor has been enabled."
+    print "The secure and non secure interrupts have been enabled."
+    print "The secure ack on the GIC controller has been set."
+    print "FIQ port has been set as a secure destination."
+    print "The lowest priority interrupt mask set is &PmrVal"
+    print "All QGIC interrupts are by default configured to edge trigger as a result of running this script option. "
+  )  
+
+  print "****************************************************************************************"
+  print "Please enter 1 to return to the main QGIC menu or any other Key to exit this script."
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &Input
+  &t32_cmm_stopped=0
+  if "&Input"=="1"
+  (  
+    GOTO DISPLAYMENU
+  )
+  else
+  (
+    winclear
+    enddo (0==0)	
+  ) 
+  
+)
+
+if &Choice==0x11
+( 
+  print "****************************************************************************************"
+  print
+  print "You entered choice 17 to clear all the QGIC interrupts."
+  print "Please wait, this might take a while.."
+  print
+  print "****************************************************************************************"
+  &IntCnt=0
+  while &IntCnt<=&MaxIRQ
+  (  
+    &nIdx=((&IntCnt)>>5)
+    &ICPendReg=((&GICDBASE)+(0x280+(4*(&nIdx))))
+    &ICPendVal=data.long(a:&ICPendReg)
+    &nResult=((&ICPendVal)|(1<<((&IntCnt)&0x1F)))
+    data.set a:&ICPendReg %LONG &nResult
+   
+  
+    &IntCnt=(&IntCnt)+1
+  )
+
+  print
+  print "All Interrupts are cleared."
+  print
+  print "Please enter 1 to return to the main QGIC menu or any other Key to exit this script."
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &Input
+  &t32_cmm_stopped=0
+  if "&Input"=="1"
+  (  
+    GOTO DISPLAYMENU
+  )
+
+  else
+  (
+    winclear
+    enddo (0==0)	
+  ) 
+)
+
+;******************************************************************************
+;  GET INTERRUPT PRIORITY
+;******************************************************************************
+
+if &Choice==0x12
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  &nIdx=((&Interrupt)/4)
+  &IPriorityReg=((&GICDBASE)+(0x400+(4*(&nIdx))))
+  &IPriorityVal=data.long(a:&IPriorityReg)
+  &nShiftVal=(((&Interrupt)&0x3)*0x8)
+  &nMask=(0xFF<<(&nShiftVal))
+  &nResult=((&IPriorityVal)>>(&nShiftVal))&0xFF
+ 
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print " You entered choice 18"
+  print " The interrupt "
+  print %CONTinue %Decimal &Interrupt 
+  print %CONTinue " has the priority of "
+  print %CONTinue %Decimal &nResult "."
+  print
+  print "****************************************************************************************"
+  print "Please enter 1 to return to the main QGIC menu or any other Key to exit this script."
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &Input
+  &t32_cmm_stopped=0
+  if "&Input"=="1"
+  (  
+    GOTO DISPLAYMENU
+  )
+  else
+  (
+    winclear
+    enddo (0==0)	
+  ) 
+)
+
+;******************************************************************************
+;  SET INTERRUPT PRIORITY
+;******************************************************************************
+
+if &Choice==0x13
+(
+  if (&INTRSET==0)
+  (
+    &PrnRes=0x1A
+    GOTO DISPLAYMENU
+  )
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print "You entered choice 19"
+  print "Please Enter the priority you wish to set."
+  print "Please Note : Priorities can be set from 0 to 254 in steps of eight."
+  print
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &IPriority
+  &t32_cmm_stopped=0
+  &IPriority=&IPriority.
+
+  if &IPriority>0xFE
+  (  
+    &PrnRes=0x13A
+    GOTO DISPLAYMENU
+  )
+  
+  &nIdx=((&Interrupt)/4)
+  &nShiftVal=(((&Interrupt)&0x3)*0x8)
+  &IPriorityReg=((&GICDBASE)+(0x400+(4*(&nIdx))))
+  &nMask=(0xFF<<(&nShiftVal))
+  &RegVal=data.long(a:&IPriorityReg)
+  &IPriorityVal=(&RegVal)&(~(&nMask))
+  &PriorityVal=((&IPriority)<<(&nShiftVal))&(&nMask)
+  &IPriorityVal=(&IPriorityVal)|(&PriorityVal)
+  data.set a:&IPriorityReg %LONG &IPriorityVal
+  &IPriority=data.long(a:&IPriorityReg)
+  &nShiftVal=(((&Interrupt)&0x3)*0x8)
+  &nResult=((&IPriority)>>(&nShiftVal))&0xFF 
+  Area.clear INTRMENU
+  print
+  print "****************************************************************************************"
+  print
+  print "You entered choice 19"
+  print "  The interrupt "
+  print %CONTinue %Decimal &Interrupt 
+  print %CONTinue " has been configured for the priority of "
+  print %CONTinue %Decimal &nResult "."
+  print
+  print "****************************************************************************************"
+  print "Please enter 1 to return to the main QGIC menu or any other Key to exit this script."
+  print "****************************************************************************************"
+  print
+  print
+  &t32_cmm_stopped=1
+  enter &Input
+  &t32_cmm_stopped=0
+  if "&Input"=="1"
+  (  
+    GOTO DISPLAYMENU
+  )
+  else
+  (
+    winclear
+    enddo (0==0)	
+  ) 
+)
+
+if &Choice==0
+( 
+  winclear
+  enddo (0==0)
+)	 
+
+term.close 
+
+enddo (0==0)
+
+PRNHNDLER: 
+  ENTRY &PrnEntry
+  if &PrnEntry==0xFFFF
+  (
+    print "  !! DATA ENTRY ERROR !!"
+    print "  Menu option entered is invalid."
+  )
+  if &PrnEntry==0x1A
+  (
+    print "  !! DATA ENTRY ERROR !!"
+    print "  Interrupt number is invalid."
+    print "  Please choose option 1 to select a valid interrupt number from 0 to 288."
+  )
+  if &PrnEntry==0x1B
+  (
+    print "  !! PLATFORM IS NOT SET !!"
+    print "  Please run the InterruptController.cmm to set the platform."
+  )
+  if &PrnEntry==0x1C
+  (
+    print "  You chose Interrupt &Interrupt" 
+    print
+
+    &nIdx=((&Interrupt)>>5)
+    &IsEnableReg=((&GICDBASE)+(0x100+(4*(&nIdx))))
+    &EnableVal=data.long(a:&IsEnableReg)
+    &nResult=(&EnableVal)&(1<<((&Interrupt)&0x1F))
+    if (&nResult==0)
+    (
+      print "  The Interrupt is currently disabled."
+      print
+    )
+    else
+    (
+      print "  The Interrupt is currently enabled."
+      print
+    )
+    &IsPendReg=((&GICDBASE)+(0x200+(4*(&nIdx))))
+    &PendVal=data.long(a:&IsPendReg)
+    &nResult=((&PendVal)&(1<<((&Interrupt)&0x1F)))
+    if (&nResult==0)
+    (
+      print "  The Interrupt is currently not set/ fired."
+      print
+    )
+    else
+    (
+      print "  The Interrupt is currently set/fired."
+      print
+    )
+    &nIdx=((&Interrupt)>>4)
+    &Prod=((&Interrupt)&(0xF))
+    &nMask=(1<<((2*(&Prod))+1))
+    &TriggerReg=((&GICDBASE)+(0xc00+(4*(&nIdx))))
+    &TriggerVal=data.long(a:&TriggerReg)
+    &nResult=(&TriggerVal)&(&nMask)
+    if (&nResult==0)
+    (
+      print "  It has a LEVEL HIGH trigger."
+      print
+    )
+    else
+    (
+      print "  It has a RISING EDGE trigger."
+      print
+    )
+    &nIdx=((&Interrupt)/4)
+    &IPriorityReg=((&GICDBASE)+(0x400+(4*(&nIdx))))
+    &IPriorityVal=data.long(a:&IPriorityReg)
+    &nShiftVal=(((&Interrupt)&0x3)*0x8)
+    &nMask=(0xFF<<(&nShiftVal))
+    &nResult=((&IPriorityVal)>>(&nShiftVal))&0xFF
+    print "  It has a interrupt priority of "
+    print %CONTinue %Decimal &nResult "."
+    print
+
+  )
+  if &PrnEntry==0x2A
+  (
+    print "  You entered choice 2."
+    print "  The Interrupt &Interrupt is disabled."
+  )
+  if &PrnEntry==0x2B
+  (
+    print "  You entered choice 2."
+    print "  The Interrupt &Interrupt is enabled."
+  )
+
+  if &PrnEntry==0x3A
+  (
+    print "  You entered choice 3."
+    print "  The Interrupt &Interrupt is not set."
+  )
+  if &PrnEntry==0x3B
+  (
+    print "  You entered choice 3."
+    print "  The Interrupt &Interrupt is set."
+  )
+
+  if &PrnEntry==0x4A
+  (
+    print "  You entered choice 4."
+    print "  The interrupt &Interrupt is currently not pending."
+  )
+  if &PrnEntry==0x4B
+  (
+    print "  You entered choice 4."
+    print "  The interrupt &Interrupt is currently pending."
+  )
+  if &PrnEntry==0x5A
+  (
+    print "  You entered choice 5."
+    print "  The interrupt &Interrupt is not currently active."
+    
+  )
+  if &PrnEntry==0x5B
+  (
+    print "  You entered choice 5."
+    print "  The interrupt &Interrupt is currently active."
+  )
+  if &PrnEntry==0x6A
+  (
+    print "  You entered choice 6."
+    print "  Interrupt &Interrupt has a LEVEL HIGH trigger."
+  )
+  if &PrnEntry==0x6B
+  (
+    print "  You entered choice 6."
+    print "  Interrupt &Interrupt has a RISING trigger."
+  )
+  if &PrnEntry==0x7A
+  (
+    print "  You entered choice 7 to configure Interrupt &Interrupt to Level High."
+    print "  The trigger has been configured."
+  )
+  if &PrnEntry==0x7B
+  (
+    print "  You entered choice 7 to configure Interrupt &Interrupt to Rising Edge."
+    print "  The trigger has been configured."
+  )
+ 
+  if &PrnEntry==0x8
+  (
+    print "  You entered choice 8."
+    print "  The Interrupt &Interrupt has been triggered."
+  )
+
+  if &PrnEntry==0x9
+  (
+    print "  You entered choice 9."
+    print "  The Interrupt &Interrupt has been cleared"
+  )
+  if &PrnEntry==0xAA
+  (
+    print "  You entered choice 10."
+    print "  There are no interrupts currently being processed."
+  )
+  if &PrnEntry==0xAB
+  (
+    print "  You entered choice 10."
+    print "  The highest priority interrupt is "
+    print %CONTinue %Decimal &nResult
+    print %CONTinue "."
+  )
+  if &PrnEntry==0xB
+  (
+    print "  You entered choice 11."
+    print "  The interrupt &Interrupt has been disabled."
+  )
+  if &PrnEntry==0xC
+  (
+    print "  You entered choice 12."
+    print "  The interrupt &Interrupt has been enabled."
+  )
+
+  if &PrnEntry==0xDA
+  ( 
+    print "  The interrupt "
+    print %CONTinue %Decimal &IntCnt
+    print %CONTinue " is currently not pending."
+  )
+
+  if &PrnEntry==0xDB
+  (
+    print "  The interrupt "
+    print %CONTinue %Decimal &IntCnt
+    print %CONTinue " is currently pending."
+  )
+  if &PrnEntry==0xEA
+  ( 
+    print %Decimal "  The interrupt "
+    print %CONTinue %Decimal &IntCnt
+    print %CONTinue " is currently not set."
+  )
+
+  if &PrnEntry==0xEB
+  (
+    print "  The interrupt "
+    print %CONTinue %Decimal &IntCnt
+    print %CONTinue " is currently set."
+  )
+
+  if &PrnEntry==0x13A
+  (
+    print "  !! DATA ENTRY ERROR !!"
+    print "  Invalid Priority "
+    print %CONTinue &IPriority
+    print %CONTinue " entered for the interrupt "
+    print %CONTinue %Decimal &Interrupt "."
+    print "  Valid priority values range between 0 and 254. 0 being the highest 254 being the lowest"
+   
+  )
+
+  if &PrnEntry==0x13B
+  (
+    print " You entered choice 19"
+    print " The priority value of &PriorityVal has been set." 
+  )
+  
+RETURN

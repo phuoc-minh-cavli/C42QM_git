@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+	<NvConfigurationData carrierIndex="0" version="common.0.0" type="1"/>
+	<NvEfsFile mcfgAttributes="0x09" mcfgVariant="2" targetPath="/ds/atcop/strings/bandpref" buildPath="modem_proc/dataiot/datacfg/efs/default/bandpref"/>
+	<NvEfsFile mcfgAttributes="0x09" mcfgVariant="2" targetPath="/data/ds_caas_feature_info.txt" buildPath="modem_proc/dataiot/datacfg/efs/default/ds_caas_feature_info.txt"/>
+	<GroupFile name="mcfg_sw_gen_Gen_3GPP.xml" description="" comment="" category="" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/Common/ROW/mcfg_sw_gen_Commercial.xml"/>
+</NvData>

@@ -1,0 +1,53 @@
+#===============================================================================
+#
+# Core AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/bsp/config/scmm/main/latest/hwengines/build/SConscript#5 $
+#  $DateTime: 2009/07/01 15:26:14 $
+#  $Author: wduembeg $
+#  $Change: 956532 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+#
+#BUILD_ROOT    = apps_proc 
+#BUILD_MS_ROOT = apps_proc/build/ms
+TARGET_FILES = [
+	'${BUILD_ROOT}/build/ms/target.builds',
+	'${BUILD_ROOT}/core/bsp/build/tbc_core.builds',
+	'${BUILD_ROOT}/build/ms/cleanpack.txt',
+	'${BUILD_ROOT}/build/ms/pack_file.xml',
+	'${BUILD_ROOT}/build/ms/build_9x45.cmd'
+	'${BUILD_ROOT}/build/ms/build_9x45.sh'
+	'${BUILD_ROOT}/build/ms/9x45_L4_APPS_PROC_DDROnly_rom.scl'
+	'${BUILD_ROOT}/build/ms/build_products.sh',
+]
+
+#-------------------------------------------------------------------------------
+# Convert warnings to errors in all CoreBSP code
+#-------------------------------------------------------------------------------
+
+if 'USES_ARM' in env:
+	env.Append(CFLAGS = "--diag_error=warning ")
+else:
+    "do nothing"
+
+env.CleanPack(['CORE_APPS'], TARGET_FILES)
+env.LoadSoftwareUnits()

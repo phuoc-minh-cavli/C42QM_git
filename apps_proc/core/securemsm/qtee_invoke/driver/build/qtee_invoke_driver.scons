@@ -1,0 +1,101 @@
+#===============================================================================
+#                    Copyright 2011 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/qtee_invoke/driver"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+    "FX_FILEX_PRESENT",            # needed for _txm_module_manager_file_load symbol visibility
+    "TX_DAM_QC_CUSTOMIZATIONS",
+    ])
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'PRODUCTS_DSR',
+    'PRODUCTS_SCM',
+    'MMUTILS',
+
+    # Used for QTEE Invoke
+    'SECUREMSM',
+    'QTEE_INVOKE_QAPI',
+    'USEFULBUF_QAPI',
+    'QCBOR_QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QTEE_INVOKE_DRIVER_API',
+    'SECUREMSM_DRIVER_OBJECT_API',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.Append(CFLAGS="--gnu --c99")
+
+#-------------------------------------------------------------------------------
+# Publish QTEE Invoke Driver API
+#-------------------------------------------------------------------------------
+#env.PublishPublicApi(QTEE_DRIVER_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+QTEE_INVOKE_LIB_SOURCES =  [
+    '${BUILDPATH}/src/qtee_invoke_driver.c',
+    '${BUILDPATH}/src/qtee_invoke_cred.c',
+]
+
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE'
+    ]
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/qtee_invoke_driver', QTEE_INVOKE_LIB_SOURCES)
+
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/qtee_invoke_cred.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/qtee_invoke_stubs.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/IClientEnv.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/src/IKeymaster_pvt.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/inc/InvokeUtils.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/inc/qtee_invoke.h"])
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+    # TODO: Add QTEE Invoke to RCINIT
+    env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+     'sequence_group'             : 'RCINIT_GROUP_2',                   # required, should load after qseecom
+     'init_name'                  : 'qtee_invoke',                  # required
+     'init_function'              : 'qtee_invoke_init',                  # required
+     'dependencies'               : ['qseecom_init', 'qurt_txm_module_manager']   # qseecom_init for app_region_notification and qurt_txm_module_manager for Module manager init
+    })

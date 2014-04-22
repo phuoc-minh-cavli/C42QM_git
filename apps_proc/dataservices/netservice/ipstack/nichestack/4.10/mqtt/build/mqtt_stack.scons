@@ -1,0 +1,122 @@
+#===============================================================================
+#
+# Dataservices APSS TX build script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/netservice/ipstack/nichestack/4.10/mqtt/build/mqtt_stack.scons#3 $
+#  $DateTime: 2021/03/25 23:17:53 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+
+Import('env')
+#Changes for MOB
+if 'USES_MOB' in env:
+  env.RequirePublicApi('STUB')
+
+env = env.Clone()
+
+if 'USES_ENABLE_MQTT' not in env:
+	Return()
+
+SRCPATH = '${BUILD_ROOT}/dataservices/netservice/ipstack/nichestack/4.10/mqtt'
+
+#appending defines to cflags
+#'-DMQTT_CLIENT_SECURITY'
+
+env.Append(CFLAGS=['-DMQTT_CLIENT', '-DMQTT_STACK_SIZE=8192', '-DMQTT_PRIORITY=150', '-DMQTT_PARAM=0','-DMQTT_ENABLE_LOG_ERR', '-DMQTT_ENABLE_LOG_PRINT', '-DIP_V6'])
+
+#including header files 
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi(['DSS_NET'],area='dataservices')
+env.RequirePublicApi(['NICHESTACK'],area='dataservices')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequireRestrictedApi(['MQTT_INC'])
+env.RequirePublicApi([
+    'DATASERVICES_NET_IPSTACK'
+    'SHARKSSL',
+    ])
+env.RequirePublicApi(['QAPI'])
+
+DATASERVICES_RESTRICTED_APIS = [
+    'DS_UTILS',
+    ]
+	
+env.RequireRestrictedApi(DATASERVICES_RESTRICTED_APIS)
+
+INC_DIRS = []
+INC_DIRS = ['${INC_ROOT}/dataservices/ds_utils/inc']
+env.PublishPrivateApi('DS_UTILS', INC_DIRS)
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# including source files
+
+SOURCE = [
+	'${BUILDPATH}/src/mqtt_mod.c',
+	'${BUILDPATH}/src/MQTTConnectClient.c',
+    '${BUILDPATH}/src/MQTTDeserializePublish.c',
+    '${BUILDPATH}/src/MQTTFormat.c',
+    '${BUILDPATH}/src/MQTTPacket.c',
+    '${BUILDPATH}/src/MQTTSerializePublish.c',
+    '${BUILDPATH}/src/MQTTSubscribeClient.c',
+    '${BUILDPATH}/src/MQTTUnsubscribeClient.c',
+    '${BUILDPATH}/src/mqttc.c',
+	'${BUILDPATH}/src/ce.c',
+	'${BUILDPATH}/src/mqtt_port.c'
+	]
+
+TEST_SOURCE = [
+	'${BUILDPATH}/src/MQTTConnectServer.c',
+    '${BUILDPATH}/src/MQTTDeserializePublish.c',
+    '${BUILDPATH}/src/MQTTSubscribeServer.c',
+	]
+    
+MQTT_SRC = [
+	SOURCE,
+    TEST_SOURCE
+	]
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/mqtt'), MQTT_SRC)
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_MQTT_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_3',      # required
+  'init_name'                  : 'mqtt_init',           # required
+  'init_function'              : 'mqtt_init',           # required
+  'dependencies'               : ['netmain']
+}
+
+RCINIT_INIT_MQTT_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_3',          # required
+  'thread_name'                : 'mqtt',                    # required
+  'thread_entry'               : 'MQTT_thread',           
+  'stack_size_bytes'           : '16384',
+  'priority_amss_order'        : '50'
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE', 'MOB_DATASERVICES']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_MQTT_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_MQTT_TASK )

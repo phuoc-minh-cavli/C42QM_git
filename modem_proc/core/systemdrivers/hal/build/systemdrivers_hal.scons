@@ -1,0 +1,29 @@
+#===============================================================================
+#
+# System Drivers HAL Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.mpss/3.10/systemdrivers/hal/build/systemdrivers_hal.scons#1 $
+#  $DateTime: 2018/06/26 03:18:17 $
+#  $Author: pwbldsvc $
+#  $Change: 16502877 $
+#
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+
+env.LoadSoftwareUnits()
+

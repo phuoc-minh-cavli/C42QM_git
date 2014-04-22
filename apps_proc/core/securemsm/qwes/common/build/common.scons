@@ -1,0 +1,98 @@
+#===============================================================================
+#
+# QWES Common Lib
+#
+# Copyright (c) 2018,2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# Import SCons Environment
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = '${BUILD_ROOT}/core/securemsm/qwes/common'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+#-------------------------------------------------------------------------------
+# Dependency paths for include files
+#-------------------------------------------------------------------------------
+CBSP_API = [
+    'SERVICES',
+    'QCBOR_QAPI',
+    'PSM_CLIENT',
+    'SYSTEMDRIVERS',
+    'USEFULBUF_QAPI',
+    'QTEE_INVOKE_QAPI',
+    'QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QTEE_INVOKE_DRIVER_API',
+    'QWES_COMMON',
+    'QWES_OS_ABSTRACTION',
+]
+
+QWES_API = [
+    'QWES_DAEMON',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+env.RequireProtectedApi(QWES_API)
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS=" --c99 --gnu")
+
+#-------------------------------------------------------------------------------
+# Sources, library
+#-------------------------------------------------------------------------------
+QWES_COMMON_SOURCES = [
+    '${BUILDPATH}/src/haven_util.c',
+    '${BUILDPATH}/src/qwes_client_env.c',
+    '${BUILDPATH}/src/qwes_config.c',
+    '${BUILDPATH}/src/qwes_vector.c',
+    '${BUILDPATH}/src/http_util.c',
+    '${BUILDPATH}/src/ta_util.c',
+    '${BUILDPATH}/src/ta_sync.c',
+    '${BUILDPATH}/src/qwes_util.c',
+]
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+]
+
+USER_IMAGES = [
+    'CORE_TXM_LIBS',
+]
+
+env.AddBinaryLibrary(
+    IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/common/build/qwes_common_kernel',
+    QWES_COMMON_SOURCES
+)
+
+env.AddBinaryLibrary(
+    USER_IMAGES,
+    '${BUILD_ROOT}/core/securemsm/qwes/common/build/qwes_common_user',
+    QWES_COMMON_SOURCES
+)
+
+QWES_COMMON_SRC_FILES = env.FindFiles(
+  ['*.c', '*.cpp', '*.h'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWES_COMMON_SRC_FILES)

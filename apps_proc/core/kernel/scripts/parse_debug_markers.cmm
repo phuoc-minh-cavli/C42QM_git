@@ -1,0 +1,84 @@
+;==============================================================================
+;
+;  FILE: parse_debug_markers.cmm
+;
+;  DESCRIPTION: Parse debug markers added in module loading
+;
+;==============================================================================
+;
+; Copyright (c) 2021 Qualcomm Technologies, Inc.
+; All Rights Reserved.
+; Confidential and Proprietary - Qualcomm Technologies, Inc.
+;
+;==============================================================================
+
+
+Area.Create IO 200. 200.
+Area.Select IO
+Area IO
+
+Var.NEWLOCAL char[32][50] \err_states
+Var.set \err_states[0]="err_file_open" 
+Var.set \err_states[1]="err_module_mem_allocate"
+Var.set \err_states[2]="err_module_image_type"
+Var.set \err_states[3]="err_elf_header_read"
+Var.set \err_states[4]="err_invalid_file_loaded"
+Var.set \err_states[5]="err_code_mem_alloc"
+Var.set \err_states[6]="err_mdt_extract"
+Var.set \err_states[7]="err_inavlid_preamble"
+Var.set \err_states[8]="err_module_init"
+Var.set \err_states[9]="err_invalid_module_ptr"
+Var.set \err_states[10]="err_invalid_module_preamble"
+Var.set \err_states[11]="err_invalid_offset"
+Var.set \err_states[12]="err_invalid_preamble_size_params"
+Var.set \err_states[13]="err_module_data_alloc"
+Var.set \err_states[14]="err_size_data_sect"
+Var.set \err_states[15]="err_size_preamble_shell_entry"
+Var.set \err_states[16]="err_size_code_start"
+Var.set \err_states[17]="err_size_callback"
+Var.set \err_states[18]="err_module_already_loaded"
+
+print "Debug markers and resepctive bits"
+print "|------------|---------------------------------------|"
+print "| bit        | Error Cause                           |"
+print "|------------|---------------------------------------|"
+
+print "|    0       | err_file_open                         |"
+print "|    1       | err_module_mem_allocate               |"
+print "|    2       | err_module_image_type                 |"
+print "|    3       | err_elf_header_read                   |"
+print "|    4       | err_invalid_file_loaded               |"
+print "|    5       | err_code_mem_alloc                    |"
+print "|    6       | err_mdt_extract                       |"
+print "|    7       | err_invalid_preamble                  |"
+print "|    8       | err_module_init                       |"
+print "|    9       | err_invalid_module_ptr                |"
+print "|    10      | err_invalid_module_preamble           |"
+print "|    11      | err_invalid_offset                    |"
+print "|    12      | err_invalid_preamble_size_params      |"
+print "|    13      | err_module_data_alloc                 |"
+print "|    14      | err_size_data_sect                    |"
+print "|    15      | err_size_preamble_shell_entry         |"
+print "|    16      | err_size_code_start	                |"
+print "|    17      | err_size_callback                     |"
+print "|    18      | err_module_already_loaded             |"
+
+print ""
+
+&marker_string = v.value(\\M9205ACINAAAMA00082\txm_module_manager_file_load\txm_debug_marker)
+&marker_bin = FORMAT.BINARY(32.,&marker_string)
+print "txm_debug_marker - - - >  " FORMAT.BINARY(32.,&marker_string)
+&marker_bin_str = FORMAT.BINARY(32.,&marker_string)
+print ""
+&i=0
+while (&marker_string>0)
+(
+	&bit_check = &marker_string&1
+	if (&bit_check>0)
+	(
+		print "Error Cause - - - >  " Var.STRing(\err_states[&i])
+		print ""
+	)
+	&i=&i+1
+	&marker_string = &marker_string>>1
+)

@@ -1,0 +1,70 @@
+#/** @file RNGLib.inf
+#  
+#  Component description file for RNG Lib module
+#  
+#   Copyright (c) 2012-2014 Qualcomm Technologies, Inc.  All Rights
+#   Reserved. Qualcomm Technologies Proprietary and Confidential.
+#  
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 12/23/15   hy      Enable SW rng
+# 11/20/14   sk      Enable HW rng
+# 10/16/14   sk      Added qcomlib to support system-unique rngseed for sw rng
+# 08/12/14   na      Temporarily disable HW RngLib
+# 08/06/14   sk      Enabled HW RngLib
+# 04/04/14   vk      Remove warning related build options, added globally
+# 03/20/14   sk      Add AARCH64 compiler flag
+# 01/13/14   sk      Enabled SW RngLib
+# 12/04/13   sk      Added RngLib SW source in place of HW source, and added HashLib LibraryClass
+# 10/25/13   vk      Remove warning as error
+# 07/23/11   yk      Initial version.
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = RNGLib
+  FILE_GUID                      = 779cdbb6-569a-4661-9d55-628992845d8e
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = RNGLib
+
+[Sources.common]
+  ../../../../QcomPkg/Library/RNGLib/SwA/RngSw.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/Mdm9x05Pkg/Mdm9x05Pkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+
+[LibraryClasses]
+  DALModEnvLib
+  #DALFwkLib
+  #DALConfigLib
+  BaseLib
+  #UefiLib
+  #UefiBootServicesTableLib
+  DebugLib
+  #HashLib
+  #QcomLib
+
+
+[Protocols]
+  #gEfiDalSysProtocolGuid 
+  gEfiClockProtocolGuid
+
+[Guids]
+
+[Pcd]
+
+[Depex]
+

@@ -1,0 +1,39 @@
+#===============================================================================
+#
+# QWES Lib
+#
+# Copyright (c) 2018 Qualcomm Technologies, Inc.
+#                           All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+# Import SCons Environment
+Import('env')
+
+# Publish Protected Include Paths only available to QWES
+env.PublishProtectedApi('QWES_AGENT', [
+    "${INC_ROOT}/core/securemsm/qwes/agent/threadx/inc",
+    "${INC_ROOT}/core/securemsm/qwes/agent/common/inc",
+])
+
+env.PublishProtectedApi('QWES_DAEMON', [
+    "${INC_ROOT}/core/securemsm/qwes/daemon/common/inc",
+    "${INC_ROOT}/core/securemsm/qwes/daemon/threadx/inc",
+])
+
+# Remove src code
+
+# Remove Non-ThreadX files from common QWES code
+NON_TX_QWES_FILES = env.FindFiles(
+  ['Android.bp', 'Android.mk', 'Makefile.am', 'Makefile', 'Package'],
+  '../')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], NON_TX_QWES_FILES)
+
+QWES_TEST_FILES = env.FindFiles(
+  ['*'],
+  '../test/')
+  
+env.CleanPack(['CORE', 'CORE_APPS'], QWES_TEST_FILES)
+
+# Search for additional Units (must come last)
+env.LoadSoftwareUnits()

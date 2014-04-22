@@ -1,0 +1,412 @@
+#===============================================================================
+#
+# Core AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataimsiot.mpss/1.0/build/ims.scons#10 $
+#  $DateTime: 2023/04/28 09:34:16 $
+#  $Author: amitgoya $
+#  $Change: 46275541 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 01-Dec-12  Prashanth M E  - SSL Dependency for DPL TLS Interface is added in IMS
+# 14-Mar-14  Prashanth M E  - IMS Settings header files include path added
+# 03-Feb-15  Sreenidhi      - Exclude apcs module from compilation for JO builds 
+# 11-Feb-15  Dipak          - CR: 766106 Include MCFG for SIM Swap FR
+# 23-Sep-15  Shashank       - CR: 889982 FR 29357 Compressed Heap changes
+# 28-Sep-16  Ramananda      - CR  1071682 JO.2.0.2 on IMS.MPSS.12.5
+#===============================================================================
+import os
+
+Import('env')
+
+
+
+# Load cleanpack script to remove private files etc. from customer builds:
+if os.path.exists('ims_cleanpack.py'):
+    env.LoadToolScript('ims_cleanpack.py')
+
+if 'USES_IMS' not in env:
+	Return()
+	
+#----------------------------------Amit---------------------------------------------
+# An Attempt to make IMS software Compiler-Warnings free
+# Override CCFLAGS for this Module. Make all Warnings to Errors!
+#
+# Flags -Wno-low, medium, high and no-error are being set inside 
+# modem_proc/config/internal_build_cfg.xml file. 
+# the below changes ensure that no warnings are going to be promoted from PW
+# in 1x code to keep it warnings free.
+#----------------------------------------------------------------------------#
+# Copy the CFLAGS list to a new environment for us
+# (somehow the list is a reference when cloned, so use deepcopy)
+import copy
+orig_env = env
+env = env.Clone()
+env['CFLAGS'] = copy.deepcopy(orig_env['CFLAGS'])
+
+
+
+# Set -Werror compiler flag to treat warnings as errors
+if env['CFLAGS'].count('-Wno-low') > 0:
+   env['CFLAGS'].remove('-Wno-low')
+
+if env['CFLAGS'].count('-Wno-medium') > 0:
+  env['CFLAGS'].remove('-Wno-medium')
+
+if env['CFLAGS'].count('-Wno-high') > 0:
+  env['CFLAGS'].remove('-Wno-high')
+
+if env['CFLAGS'].count('-Wno-error') > 0:
+   env['CFLAGS'].remove('-Wno-error')
+
+if env['PRODUCT_LINE'].startswith("MPSS.AT"):
+   env.Append(HEXAGON_WARN = '-Wno-error-high -Wno-error-medium -Wno-error-low')
+else:
+	env.Append(HEXAGONCC_WARN = ' -Werror ')
+	env.Append(HEXAGONCXX_WARN = ' -Werror ')	
+	
+	
+hexagon_rtos_release = env.get('HEXAGON_RTOS_RELEASE')
+hexagon_major_release = hexagon_rtos_release.split(".")[0]
+if hexagon_major_release >= "8":
+	env.Append(HEXAGONCC_WARN =  ' -Wno-inline-new-delete -Wno-shift-negative-value -Wno-tautological-pointer-compare -Wno-pointer-bool-conversion')
+	env.Append(HEXAGONCXX_WARN = ' -Wno-inline-new-delete -Wno-shift-negative-value -Wno-tautological-pointer-compare -Wno-pointer-bool-conversion')	
+	
+###
+
+if env.PathExists('${INC_ROOT}/dataimsiot'):
+    env.Replace(IMS_ROOT = '${INC_ROOT}/dataimsiot')
+else:
+    env.Replace(IMS_ROOT = '${INC_ROOT}/modem/dataimsiot')
+
+
+#The order of APIs in the ims_public_api_list determines the order the paths are listed on the build command line.
+#To optimize build times the API list is sorted in descending order of use.
+
+ims_public_api_list = [
+        ('CORE',                'KERNEL'),
+        ('CORE',                'SERVICES'),
+        ('DATAIOT',           	'PUBLIC'),
+        ('MMCP',                'PUBLIC'),
+        ('CORE',                'DAL'),
+        ('CORE',                'MEMORY'),
+        ('CORE',                'DEBUGTOOLS'),
+        ('CORE',                'SYSTEMDRIVERS'),
+        ('HDR',                 'PUBLIC'),
+        ('UIM',                 'UIM'),
+        ('UIM',                 'PUBLIC'),
+        ('APR',                 'APR'),
+        ('CORE',                'MPROC'),
+        ('CORE',                'STORAGE'),
+        ('MCS',                 'MCS'),
+        ('SEC',                 'IPSEC'),
+        ('SEC',                 'SSL'),
+        ('AVS',                 'CVD'),
+        ('MMCP',                'MMCP'),
+        ('CORE',                'SECUREMSM'),
+        ('GERAN',               'PUBLIaC'),
+        ('WCDMA',               'PUBLIC'),
+        ('QMIMSGS',             'IMSA'),
+        ('QMIMSGS',             'IMSP'),
+        ('QMIMSGS',             'IMSS'),
+        ('QMIMSGS',             'IMS_IOT'),
+        ('QMIMSGS',             'LOC'),
+        ('QMIMSGS',             'IMSVT'),
+        ('QMIMSGS',             'IMSRTP'),
+        ('QMIMSGS',             'IMSDCM'),
+		('QMIMSGS',             'IMS_IOT'),
+        ('AVS',                 'MMUTILS'),
+        ('LTE',                 'LTE'),
+        ('AVS',                 'VOICEMEM'),		
+        ('AVS',                 'VOICELOG'),		
+        ('AVS',                 'COMMON'),
+        ('AVS',                 'VOICECFG'),
+        ('AVS',                 'VADAPTER'),
+        ('UTILS',               'A2'),
+        ('MCFG',                'MCFG'),
+        ('DATAIOT',           	'DATAIOT'),
+		('AVS',                 'AVS_MPSS'),
+        ]
+
+
+for api_area,api_name in ims_public_api_list:
+    env.RequirePublicApi([api_name], area=api_area)
+
+env.RequireRestrictedApi(['IMS_VIOLATIONS'])
+
+MODEM_PUBLIC_APIS = [
+    'MMODE',
+    'DATACOMMON',
+    'DATAMODEM',
+    'UIM',
+    'MCS',
+    'DATA',
+    'HDR',
+    'WMS',
+    'GERAN',
+    'NAS',
+    'UTILS',
+    'WCDMA',
+    'MPROC',
+    'IPSEC',
+    'SSL',
+    'SAP',
+    'LTE',
+    'PERF',
+    'AVS',
+    'APR'
+]
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'MODEM_DATA',
+    'MODEM_DATACOMMON',
+    'MODEM_DATAMODEM',
+    'DATAMODEM',
+    'MCS',
+    'NAS',
+    'HDR',
+    'MMODE',
+    'UIM',
+    'WCDMA',
+    'UTILS',
+    'SAP',
+    'LTE',
+]
+
+if env.PathExists('${INC_ROOT}/modem/dataimsiot'):
+    env.RequirePublicApi(MODEM_PUBLIC_APIS)
+    env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+#Start AU paths that were included in the top level pasted block
+env.PublishProtectedApi('IMS',[
+        '${IMS_ROOT}/core_service/cmipapp_interface/inc',
+        '${IMS_ROOT}/core_service/psm/inc',
+        '${IMS_ROOT}/core_service/service_db/inc',		
+        '${IMS_ROOT}/core_service/sip_interface/inc',
+        '${IMS_ROOT}/core_service/wms_interface/inc',
+        '${IMS_ROOT}/core_service/xml_parser/inc',
+        '${IMS_ROOT}/framework/external_inc',
+        '${IMS_ROOT}/framework/inc',
+        '${IMS_ROOT}/ps_media/common/inc',
+        '${IMS_ROOT}/ps_media/rtp_audio/inc',		
+        '${IMS_ROOT}/ps_media/rtp_core/inc',
+        '${IMS_ROOT}/ps_media/rtp_profile/inc',		
+        '${IMS_ROOT}/ps_media/rtp_sl/inc',
+        '${IMS_ROOT}/ps_media/sdp/external_inc',
+        #'${IMS_ROOT}/ps_media/vs/inc',
+        '${IMS_ROOT}/services/common/inc',
+        '${IMS_ROOT}/services/registerservice/inc',
+        '${IMS_ROOT}/services/sms/inc',
+        '${IMS_ROOT}/services/voice/inc',
+        '${IMS_ROOT}/services/optionshandler/inc',
+        '${IMS_ROOT}/sip/auth/inc',
+        '${IMS_ROOT}/sip/dialoguseragent/inc',
+        '${IMS_ROOT}/sip/init/inc',
+        '${IMS_ROOT}/sip/nondialoguseragent/inc',
+        '${IMS_ROOT}/sip/parser/inc',
+        '${IMS_ROOT}/sip/registeruseragent/inc',		
+        '${IMS_ROOT}/sip/transaction/inc',
+        '${IMS_ROOT}/sip/transport/inc',
+        '${IMS_ROOT}/sip/transport/ipsec',
+        '${IMS_ROOT}/sip/utils/inc',
+		'${IMS_ROOT}/sip/psm/inc',		
+        ])
+
+env.RequireProtectedApi(['IMS'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = '../'
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+IMS_BASE_SOURCES=[
+	'${BUILDPATH}/core_service/cmipapp_interface/src/qimscm_ip_app_interface.c',
+    '${BUILDPATH}/core_service/psm/src/qimscore_psm.c',
+	'${BUILDPATH}/core_service/service_db/src/qims_core_service_db.c',
+	'${BUILDPATH}/core_service/sip_interface/src/qims_sip_interface.c',
+	'${BUILDPATH}/core_service/sip_interface/src/qims_sip_parser.c',	
+	'${BUILDPATH}/core_service/wms_interface/src/qimswms_interface.c',
+	'${BUILDPATH}/core_service/xml_parser/src/qims_xml_common.c',
+    '${BUILDPATH}/core_service/xml_parser/src/qims_xml_decoder.c',
+    '${BUILDPATH}/core_service/xml_parser/src/qims_xml_decoder_schema.c',  
+    '${BUILDPATH}/core_service/xml_parser/src/XMLGenarator.c',
+    '${BUILDPATH}/core_service/xml_parser/src/qims_ussd_interface.c',
+	'${BUILDPATH}/framework/src/qimsfw_config.c',
+	'${BUILDPATH}/framework/src/qimsfw_isim.c',
+	'${BUILDPATH}/framework/src/qimsfw_sockets.c',
+	'${BUILDPATH}/framework/src/qimsfw_task.c',
+	'${BUILDPATH}/framework/src/qimsfw_timers.c',
+	'${BUILDPATH}/framework/src/qimsfw_utils.c',
+	'${BUILDPATH}/framework/src/qimsfw_sec.c',
+	'${BUILDPATH}/framework/src/qimsfw_target.c',
+    '${BUILDPATH}/framework/src/qimsfw_encoding_scheme.c',
+	'${BUILDPATH}/services/common/src/qimsservices_interface.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_interface.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_pcscf_list_handler.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_pdn_dss_adapter.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_pdn_iptype_manager.c',
+    '${BUILDPATH}/services/registerservice/src/qimsrm_pdn_throttling_manager.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_pdp_fsm.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_reg_event_notify_processor.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_reg_throttling_manager.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_registration_fsm.c',
+	'${BUILDPATH}/services/registerservice/src/qimsrm_policy.c',
+	'${BUILDPATH}/services/sms/src/qimssms_interface.c',
+	'${BUILDPATH}/services/sms/src/qimssms_internal.c',
+	'${BUILDPATH}/services/optionshandler/src/qims_options_handler.c',
+	'${BUILDPATH}/sip/auth/src/qims_sip_auth.c',
+	'${BUILDPATH}/sip/auth/src/qims_sip_base64.c',
+	'${BUILDPATH}/sip/auth/src/qims_sip_digest.c',
+	'${BUILDPATH}/sip/auth/src/qims_sip_md5.c',
+	'${BUILDPATH}/sip/dialoguseragent/src/qims_sip_dialog.c',
+	'${BUILDPATH}/sip/dialoguseragent/src/qims_sip_subscribe.c',
+	'${BUILDPATH}/sip/init/src/qims_sip_init.c',
+	'${BUILDPATH}/sip/nondialoguseragent/src/qims_sip_nondialog_ua.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_address.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_decode.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_encode.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_header.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_match.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_param.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_parser_ua_apis.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_parser_utils.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_string.c',
+	'${BUILDPATH}/sip/parser/src/qims_sip_teladdress.c',
+	'${BUILDPATH}/sip/registeruseragent/src/qims_sip_register_ua.c',
+	'${BUILDPATH}/sip/transaction/src/qims_sip_transaction.c',
+	'${BUILDPATH}/sip/transport/src/qims_sip_socket_handler.c',
+	'${BUILDPATH}/sip/transport/src/qims_sip_tcphelper.c',
+	'${BUILDPATH}/sip/transport/src/qims_sip_tcpreassembler.c',
+	'${BUILDPATH}/sip/transport/src/qims_sip_transport.c',
+	'${BUILDPATH}/sip/transport/ipsec/qims_ipsec.cpp',
+	'${BUILDPATH}/sip/transport/ipsec/qims_sip_ipsec.c',
+	'${BUILDPATH}/sip/utils/src/qims_sip_utils.c',
+	'${BUILDPATH}/sip/dialoguseragent/src/qims_sip_session.c',
+	'${BUILDPATH}/sip/psm/src/qims_sip_psm.c',
+]
+
+IMS_VOLTE_SOURCES=[
+	'${BUILDPATH}/ps_media/common/src/qvp_app_common.c',
+	'${BUILDPATH}/ps_media/rtp_audio/src/qpaudio.c',
+	'${BUILDPATH}/ps_media/rtp_audio/src/qpDplQdj.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtcp.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_app_cmd.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_buf.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_log.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_packet.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_socket_handler.c',
+	'${BUILDPATH}/ps_media/rtp_core/src/qvp_rtp_timer.c',
+	'${BUILDPATH}/ps_media/rtp_profile/src/qvp_rtp_amr_profile.c',
+	'${BUILDPATH}/ps_media/rtp_profile/src/qvp_rtp_dtmf_profile.c',
+	'${BUILDPATH}/ps_media/rtp_profile/src/qvp_rtp_profile.c',
+	'${BUILDPATH}/ps_media/rtp_sl/src/qvp_rtp_session_based_sl.c',
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_app_oa_api.c',
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_app_oa_media_common.c',
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_app_oa_media_encoder.c',	
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_app_oa_media_parser.c',	
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_common.c',	
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_encoder_class.c',	
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_info.c',	
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_media_info.c',		
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_parser_class.c',		
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_parser_util.c',		
+	'${BUILDPATH}/ps_media/sdp/e_src/qvp_sdp_session_info.c',	
+	#'${BUILDPATH}/ps_media/vs/src/vs.c',	
+	'${BUILDPATH}/services/voice/src/qims_voice_call_fsm.c',
+    '${BUILDPATH}/services/voice/src/qims_ussd_call_fsm.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_call_manager.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_dialog_common.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_dialog_uac.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_dialog_uas.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_interface.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_media.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_cust_hdr.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_sdp.c',
+	'${BUILDPATH}/services/voice/src/qims_voice_qos.c',
+]
+
+LTE_IMS_SMS_VARIANTS = ['9607.lteonly.test', '9607.lteonly.prod', '9607.lteonlyf3.test', '9607.lteonlyf3.prod', '9607.lteonlynogps.test', '9607.lteonlynogps.prod',
+                          '9607.lteonlynogpsf3.test', '9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltenb.test','9607.ltenb.prod',
+                          '9607.ltenbf3.test','9607.ltenbf3.prod','9607.ltegsm.test', '9607.ltegsm.prod', '9607.ltenbg.test','9607.ltenbg.prod', '9607.ltenbgf3.prod',
+						  '9607.ltenbg128.test', '9607.ltenbg128.prod', '9607.ltenbg128f3.prod', '9607.ltenb128.test', '9607.ltenb128.prod', '9607.ltenb128f3.prod',
+						  '9607.dyn.test',
+						  '8909.lteonly.test', '8909.lteonly.prod']
+
+
+LTE_IMS_VOLTE_VARIANTS = ['9607.lteonly.test', '9607.lteonly.prod', '9607.lteonlyf3.test', '9607.lteonlyf3.prod', '9607.lteonlynogps.test', '9607.lteonlynogps.prod',
+                          '9607.lteonlynogpsf3.test', '9607.lteonlynogpsf3.prod','9607.lteonly128.test','9607.lteonly128.prod','9607.ltenb.test','9607.ltenb.prod',
+                          '9607.ltenbf3.test','9607.ltenbf3.prod','9607.ltegsm.test', '9607.ltegsm.prod', '9607.ltenbg.test','9607.ltenbg.prod', '9607.ltenbgf3.prod',
+						  '9607.ltenbg128.test', '9607.ltenbg128.prod', '9607.ltenbg128f3.prod', '9607.ltenb128.test', '9607.ltenb128.prod', '9607.ltenb128f3.prod',
+						  '9607.dyn.test',
+						  '8909.lteonly.test', '8909.lteonly.prod']
+
+#if os.environ.get('VARIANT_NAME', '') in LTE_IMS_VOLTE_VARIANTS:
+#   env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/ims', [IMS_BASE_SOURCES])
+
+#if os.environ.get('VARIANT_NAME', '') in LTE_IMS_SMS_VARIANTS:
+#   IMS_C_SOURCES = IMS_BASE_SOURCES,
+#   env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/ims', [IMS_C_SOURCES])
+
+
+# Create the library with the specified name and path with the list of objects to be added to that library
+# and add the library to the Apps Image
+
+#env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/ims', [IMS_C_SOURCES])
+
+if 'USES_IMS_SMS' in env:
+        env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/ims_sms', [IMS_BASE_SOURCES])
+
+
+if 'USES_IMS_VOLTE' in env:
+        env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/ims_volte', [IMS_VOLTE_SOURCES])
+
+
+
+# Build image for which this task belongs
+RCINIT_IMS = ['MODEM_MODEM']
+
+# RC Init Function Dictionary
+RCINIT_INIT_IMS = {
+            'sequence_group'      : env.subst('$MODEM_UPPERLAYER'),
+            'init_name'           : 'qims_task_init',
+            'init_function'       : 'qims_task_init',
+    }
+
+# RC Init Task Dictionary
+RCINIT_TASK_IMS = {
+            'thread_name'          : 'ims',
+            'sequence_group'       : env.subst('$MODEM_UPPERLAYER'),
+            'stack_size_bytes'     : env.subst('$IMS_STKSZ'),
+            'priority_amss_order'  : 'QVP_RTP_PRI_ORDER',
+            'stack_name'           : 'ims_stack',
+            'thread_entry'         : 'ims_task',
+           #'tcb_name'             : 'ims_tcb',
+            'cpu_affinity'         : 'REX_ANY_CPU_AFFINITY_MASK',
+    }
+
+# Add init function to RCInit
+if 'USES_MODEM_RCINIT' in env:
+ env.AddRCInitFunc(RCINIT_IMS, RCINIT_INIT_IMS)
+ env.AddRCInitTask(RCINIT_IMS , RCINIT_TASK_IMS)
+
+env.LoadSoftwareUnits()

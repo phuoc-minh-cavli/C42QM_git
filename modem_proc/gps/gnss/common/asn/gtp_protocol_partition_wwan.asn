@@ -1,0 +1,222 @@
+GtpBsaDataPartitionDownload DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS
+	Gsm-WcdmaL2RegionId,
+	LteSystemBandwidth,
+	LteL2RegionId,
+	Mcc,
+	Mnc,
+	Nid,
+	PosReliability,
+	Sid,
+	WwanPartitionID,
+   WwanPartitionVersionID,
+   VersionIdentifier,
+   AntennaPorts
+
+FROM
+	GtpProtocol
+	;	
+
+gtpBsaPartitionDownloadVersion	VersionIdentifier ::= {majorRelease 4, minorRelease 0, pointRelease 13}
+
+/* not included in master ASN.1 file */
+
+CdmaRegionId ::= SEQUENCE {
+	mcc 		Mcc,  /* Set to ‘0’ for region ID in BSA header and for region reported by mobile. */
+	sid		Sid,
+	nid		Nid,
+	...
+}
+
+Gsm-WcdmaRegionId ::= SEQUENCE {
+	mcc 		Mcc,
+	mnc 		Mnc,
+	lac 		INTEGER (0..65535),   /* 65534 is a reserved value but will be allowed. */
+...
+}
+
+
+TdpPartitionCellInformation ::=	SEQUENCE {
+	antennaCenterOffset_X		INTEGER(-32767..32767),
+	antennaCenterOffset_Y		INTEGER(-32767..32767),
+	antennaCenterOffset_Z		INTEGER(-32767..32767),
+	antennaCenterHorUnc_1_Sigma	INTEGER(0..127),
+	horAntennaPosReliability	PosReliability,		/* 4.0.2 */
+	antennaCenterVerUnc_1_Sigma	INTEGER(0..127),
+	vertAntennaPosReliability	PosReliability,		/* 4.0.2 */
+	plid				INTEGER(0..503),	/* 4.0.3 */
+	downlinkFrequency		INTEGER(4625..38000),   /* changed lower limit in 4.0.6 */
+	flc				INTEGER(-150000..150000),     /* changed range from 15000 to 150000 in 4.0.8*/
+	flcUnc_1_Sigma			INTEGER(0..150000),     /* changed range to 0..150000 in 4.0.8*/
+	cellSystemBW			LteSystemBandwidth,
+	cyclicPrefix			BOOLEAN,
+	antennaPorts			AntennaPorts,
+	rlc				INTEGER(-150000..150000)	OPTIONAL,     /* changed range from 15000 to 150000 in 4.0.8*/
+	rlcUnc_1_Sigma			INTEGER(0..150000)	OPTIONAL,      /* changed range to 0..150000 in 4.0.8*/
+	tdpNeighborList			SEQUENCE (SIZE (1..maxNumNeighborCells)) OF SEQUENCE {
+		partitionIndex		INTEGER(0..255)	OPTIONAL,
+		cellIndex		INTEGER(0..255),
+		...
+	}  OPTIONAL,
+	...
+}
+
+
+GtpBsaPartitionCells ::= SEQUENCE (SIZE (1..maxNumCellsInPartition)) OF SEQUENCE {
+	cellID CHOICE {
+		cdmaL4Id	INTEGER(0..65535), /* Base Station ID */
+		gsmL4Id		INTEGER(0..65535), /* Cell Identifier */
+		wcdmaL4Id	INTEGER(0..268435455), /* Universal Cell Identifier */
+		lteL4Id		INTEGER(0..268435455), /* Global Cell Identifier */
+		...
+	},
+	latitudeOffsetRadian		INTEGER(0..65535),
+	longitudeOffsetRadian		INTEGER(0..65535),
+	coverageRadius			INTEGER(0..255),
+	horSectorCenterPosReliability	PosReliability,		/* 4.0.2 */
+	meanTerrainHeight		INTEGER(0..4095)		OPTIONAL,
+	stDevTerrainHeightL4		INTEGER(0..15)			OPTIONAL,
+	vertSectorCenterPosReliability	PosReliability			OPTIONAL,	/* 4.0.2 */
+	tdpPartitionCellInformation	TdpPartitionCellInformation	OPTIONAL,
+	...
+}
+
+
+BsaPartitionHeader ::= SEQUENCE {
+   bsaPartitionVersionID   WwanPartitionVersionID,                 /* Changed in 4.0.8 */
+	partitionLatSpanRadian		INTEGER(0..3294199)		OPTIONAL,	/* 4.0.9 */
+	partitionLongSpanRadian		INTEGER(0..6588398)		OPTIONAL,	/* 4.0.9 */
+	numCellRecords			INTEGER(0..1024),				/* 4.0.2 */
+	partitionStructureDataBsa	SEQUENCE {
+		numTdpRecords			INTEGER(0..255),           
+		regionCenterOffsetStepRadian	INTEGER(1..255),
+		antennaCenterOffsetStepMeter	INTEGER(1..255)		OPTIONAL,	/* 4.0.2 */
+		embeddedBsaPartitionList	SEQUENCE (SIZE (1..maxNumEmbeddedPartitions)) OF WwanPartitionID	OPTIONAL,
+		embeddedSnaPartitionList	SEQUENCE (SIZE (1..maxNumEmbeddedPartitions)) OF WwanPartitionID	OPTIONAL,
+		regionIdentifiers	SEQUENCE  (SIZE (1..maxNumRegionIdentifiers)) OF SEQUENCE {
+			regionId	CHOICE {
+				cdmaL3RegionId		CdmaRegionId,
+				gsmL3RegionId		Gsm-WcdmaRegionId,
+				wcdmaL2RegionId		Gsm-WcdmaL2RegionId,
+				lteL2RegionId		LteL2RegionId,
+				...
+			},
+			l4StartIndex		INTEGER(0..1023),	/* 4.0.2 */
+			numCellRecordsInRegion	INTEGER(1..1024),	/* 4.0.3, 4.0.4 */
+			...
+		},
+		...
+	}	OPTIONAL,
+	...
+}
+
+
+GtpBsaDataPartitionDownload ::=	SEQUENCE {
+	bsaPartitionHeader	BsaPartitionHeader,
+	gtpBsaPartitionCells	GtpBsaPartitionCells	OPTIONAL,
+	...
+}
+
+  /* Definition of range constants */
+
+maxNumEmbeddedPartitions		INTEGER ::= 255
+maxNumRegionIdentifiers			INTEGER	::= 255
+maxNumCellsInPartition			INTEGER ::= 1024	/* 4.0.2 */
+maxNumNeighborCells			   INTEGER ::= 72
+
+END
+
+
+
+GtpSnaDataPartitionDownload DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS
+	CdmaL2RegionId,
+	Gsm-WcdmaL2RegionId,
+	LteL2RegionId,
+	PosReliability,
+	WwanPartitionID,
+   WwanPartitionVersionID,
+   VersionIdentifier
+
+FROM
+	GtpProtocol
+	;	
+
+gtpSnaPartitionDownloadVersion	VersionIdentifier ::= {majorRelease 4, minorRelease 0, pointRelease 13}
+
+/* not included in master ASN.1 file */
+
+GtpSnaPartitionBody ::=		SEQUENCE (SIZE (1..maxNumL3Regions)) OF SEQUENCE {
+	l3RegionId		CHOICE {
+		cdmaL3Id		INTEGER(0..65535), /* NID */
+		gsmL3Id			INTEGER(0..65535), /* LAC */
+		wcdmaL3Id		INTEGER(0..65535), /* LAC */
+		lteL3Id			INTEGER(0..65535), /* TAC */
+		...
+	},
+	latitudeOffsetRadian	INTEGER(0..65535),
+	longitudeOffsetRadian	INTEGER(0..65535),
+	coverageRadius		INTEGER(0..255),
+	horPosReliability	PosReliability,  /* 4.0.5 */
+	vertPosReliability	PosReliability,  /* 4.0.5 */
+	meanTerrainHeight	INTEGER(0..4095),
+	stDevTerrainHeightL4	INTEGER(0..15),
+	...
+}
+
+
+
+SnaPartitionHeader ::=		SEQUENCE {
+   snaPartitionVersionID   WwanPartitionVersionID,                 /* Changed in 4.0.8 */
+	partitionLatSpanRadian		INTEGER(0..3294199),                 /* Increased range in 4.0.9 */
+	partitionLongSpanRadian		INTEGER(0..6588398),                /* Increased range in 4.0.9 */
+	wwanDataUse	BIT STRING 	{ gtpUploadAllowed(0),
+					  tdpUploadAllowed (1)
+					}	(SIZE (0..16)) OPTIONAL,
+	numL2RegionRecords		INTEGER(1..maxNumL2Regions),
+	numL3RegionRecords		INTEGER(0..maxNumL3Regions),  
+
+	partitionStructureDataSna	SEQUENCE {
+		regionCenterOffsetStepRadian	INTEGER(1..255),
+		embeddedSnaPartitionList	SEQUENCE (SIZE (1..maxNumEmbeddedPartitions)) OF WwanPartitionID  OPTIONAL,   /* Changed to comply with the ICD definition */ 
+		regionIdentifiers	SEQUENCE  (SIZE (1..maxNumL2Regions)) OF SEQUENCE {
+			regionId	CHOICE {
+				cdmaL2RegionId		CdmaL2RegionId,
+				gsmL2RegionId		Gsm-WcdmaL2RegionId,
+				wcdmaL2RegionId		Gsm-WcdmaL2RegionId,
+				lteL2RegionId		LteL2RegionId,
+				...
+			},
+         latitudeL2Region     INTEGER(-4194304..4194304),          /* Units of 360/2^24 degrees */
+         longitudeL2Region 	INTEGER(-8388608..8388607),          /* Units of 360/2^24 degrees */ 
+	      coverageRadius		   INTEGER(0..255),
+	      horPosReliability	   PosReliability,  
+	      vertPosReliability	PosReliability,  
+	      meanTerrainHeight	   INTEGER(0..4095),
+	      stDevTerrainHeight	INTEGER(0..15),
+
+		   regionStartIndex	   INTEGER(0..254)      OPTIONAL,
+		   numL3RecordsInL2Region	INTEGER(1..255)   OPTIONAL,	
+			...
+		},
+		...
+	},
+	...
+}
+
+GtpSnaDataPartitionDownload ::=	SEQUENCE {
+	snaPartitionHeader		SnaPartitionHeader,
+	gtpSnaPartitionBody		GtpSnaPartitionBody	OPTIONAL,
+	...
+}
+
+  /* Definition of range constants */
+
+maxNumEmbeddedPartitions		INTEGER ::= 255
+maxNumL2Regions			      INTEGER ::= 1024
+maxNumL3Regions			      INTEGER ::= 255
+
+
+END

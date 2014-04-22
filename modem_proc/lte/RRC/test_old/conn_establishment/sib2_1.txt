@@ -1,0 +1,165 @@
+sib2:value BCCH-DL-SCH-Message ::= 
+{
+  message c1 : systemInformation : 
+      {
+        criticalExtensions systemInformation-r8 : 
+          {
+            sib-TypeAndInfo 
+            {
+              sib2 : 
+                {
+                  accessBarringInformation 
+                  {
+                    accessBarringForEmergencyCalls FALSE,
+                    accessBarringForSignalling 
+                    {
+                      accessProbabilityFactor p00,
+                      accessBarringTime s4,
+                      accessClassBarringList 
+                      {
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        }
+                      }
+                    },
+                    accessBarringForOriginatingCalls 
+                    {
+                      accessProbabilityFactor p00,
+                      accessBarringTime s4,
+                      accessClassBarringList 
+                      {
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        },
+                        {
+                          accessClassBarring FALSE
+                        }
+                      }
+                    }
+                  },
+                  radioResourceConfigCommon 
+                  {
+                    rach-Configuration 
+                    {
+                      preambleInformation 
+                      {
+                      },
+                      powerRampingParameters 
+                      {
+                        powerRampingStep dB0
+                      },
+                      ra-SupervisionInformation 
+                      {
+                        preambleTransMax n1,
+                        ra-ResponseWindowSize sf2,
+                        mac-ContentionResolutionTimer sf8
+                      },
+                      maxHARQ-Msg3Tx 1
+                    },
+                    bcch-Configuration 
+                    {
+                      modificationPeriodCoeff n1
+                    },
+                    pcch-Configuration 
+                    {
+                      defaultPagingCycle ms320,
+                      nB fourT
+                    },
+                    prach-Configuration 
+                    {
+                      rootSequenceIndex 0,
+                      prach-ConfigInfo 
+                      {
+                        prach-ConfigurationIndex 0,
+                        highSpeedFlag FALSE,
+                        zeroCorrelationZoneConfig 0
+                      }
+                    },
+                    pdsch-Configuration 
+                    {
+                      referenceSignalPower 0,
+                      p-b pb0
+                    },
+                    pusch-Configuration 
+                    {
+                      pusch-ConfigBasic 
+                      {
+                        parameterM pm2,
+                        hoppingMode interSubFrame
+                      },
+                      ul-ReferenceSignalsPUSCH 
+                      {
+                        groupHoppingEnabled FALSE,
+                        groupAssignmentPUSCH 0,
+                        sequenceHoppingEnabled FALSE,
+                        dynamicCyclicShift dynamicallyAssigned : NULL
+                      }
+                    },
+                    pucch-Configuration 
+                    {
+                      pucch-ResourceSize ffs,
+                      deltaShift ds1,
+                      deltaOffset do0,
+                      nRB-CQI ffs,
+                      nCS-AN 0,
+                      n1Pucch-AN ffs
+                    },
+                    soundingRsUl-Config 
+                    {
+                      srsBandwidthConfiguration bw0,
+                      srsSubframeConfiguration sc0,
+                      ackNackSrsSimultaneousTransmission FALSE
+                    },
+                    uplinkPowerControl 
+                    {
+                      p0-NominalPUSCH 
+                      {
+                        persistentScheduling 0,
+                        nonPersistentScheduling 0
+                      },
+                      alpha al0,
+                      p0-NominalPUCCH -100,
+                      deltaTFList-PUCCH 
+                      {
+                      }
+                    }
+                  },
+                  ue-TimersAndConstants 
+                  {
+                    t300 ms100,
+                    t301 ms100,
+                    t310 ms0,
+                    t311 ms1000,
+                    t312 ms0
+                  },
+                  frequencyInformation 
+                  {
+                    ul-Bandwitdh n6,
+                    additionalSpectrumEmission 0
+                  }
+                }
+            }
+          }
+      }
+}

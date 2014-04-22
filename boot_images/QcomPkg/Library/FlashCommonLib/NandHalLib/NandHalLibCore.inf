@@ -1,0 +1,71 @@
+#/** @file NandHalLib.inf
+#  
+#  Nand HAL Library UEFI INF file
+#  
+#  Copyright (c) 2017, 2019 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# ----------   ---     ---------------------------------------------------------
+# 2019-07-23   sl      use common code for mp and ps.
+# 2019-06-11   sl      Multipage support added
+# 2017-03-03   eo      Initial version.
+#
+#==============================================================================
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandHalLib
+  FILE_GUID                      = 471DD703-97A2-4870-B891-27FAE2B01578 
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = NandHalLib 
+
+[Sources.common]
+  flash_hal_common.c
+  flash_hal_main.c
+  flash_hal_nand_main.c
+  flash_hal_properties.c
+
+#  flash_hal_util_asm.s | GCC
+  QpicLib/flash_hal_nandc.c
+  QpicLib/flash_hal_nandc_common.c
+  QpicLib/flash_hal_nandc_predef_bam_init.c
+  QpicLib/flash_hal_nandc_predef_bam_exec.c
+  QpicLib/flash_hal_nandc_predef_bam_pprocess.c
+  QpicLib/flash_hal_nandc_predef_bam_core.c
+  QpicLib/flash_hal_nandc_predef_bam_common.c
+  QpicLib/flash_hal_nandc_multipage.c
+  QpicLib/flash_hal_nandc_reduced.c
+  ../flash_bam_wrapper.h
+  ../
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -Wno-unused-function -DENABLE_FLASH_BAM -DFLASH_HAL_HWIO_INCLUDE_H=\"flash_hal_hwio.h\" -DFLASH_CFG_INCLUDE_H="\"flash_cfg_qpic_2_0_1.h\""
+  MSFT:*_*_*_CC_FLAGS =
+  RVCT:*_*_*_CC_FLAGS = --diag_error=warning
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec  
+  QcomPkg/XBLLoaderApi.dec  
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  TimerLib
+  PcdLib
+
+[Pcd.common]
+
+  

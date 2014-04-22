@@ -1,0 +1,43 @@
+#===============================================================================
+#
+# Modem API wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load API's for modem
+#
+# Copyright (c) 2012 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/build/datamodem.api#1 $
+#  $DateTime: 2020/03/17 08:03:16 $
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/23/12   ma      Remove Modem directory
+# 05/03/12   jgr     Add moved public files
+# 07/10/10   enj     Initial revision
+#
+#===============================================================================
+Import('env')
+if env.PathExists('${BUILD_ROOT}/dataiot'):
+   env.Replace(DATAMODEM_ROOT = '${INC_ROOT}/dataiot')
+else:    
+   env.Replace(DATAMODEM_ROOT = '${INC_ROOT}/modem/dataiot')
+
+
+env.PublishPublicApi('DATAMODEM',   ["${DATAMODEM_ROOT}/api"])
+env.PublishPublicApi('PUBLIC',      ["${DATAMODEM_ROOT}/api/public"])
+
+
+env.PublishRestrictedApi('DATAMODEM',   ["${DATAMODEM_ROOT}/api"])
+env.PublishPublicApi('DATAMODEM',   ["${DATAMODEM_ROOT}/api/public"])
+
+env.LoadAPIUnits()

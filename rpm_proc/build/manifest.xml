@@ -1,0 +1,10 @@
+<config>
+  <image_tree>
+    <name>RPM.BF.2.1.3</name>
+    <build_id>RPM.BF.2.1.3-00034-M9205AAAAANAZR-1</build_id>
+    <branch_point_revision/>
+    <revision>00034</revision>
+    <spin>1</spin>
+    <client>M9205AAAAANAZR</client>
+  </image_tree>
+</config>

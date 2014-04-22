@@ -1,0 +1,85 @@
+#==============================================================================
+# Debug Agent App
+#
+# GENERAL DESCRIPTION
+#    Build script
+#
+#==============================================================================
+#  Copyright (c) 2013 Qualcomm Technologies, Inc.
+#  All rights reserved.
+#  Confidential and Proprietary - Qualcomm Technologies, Inc.
+#==============================================================================
+#
+#$Header: //components/rel/core.tx/6.0/debugtrace/agent/app/build/da_app.scons#1 $
+#
+#==============================================================================
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'DAL',
+    'DEBUGTRACE',
+    'KERNEL',
+    'MPROC',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'STORAGE',
+])
+
+env.RequirePublicApi([
+   'COMMON',
+   'QDSSC'
+   ], area='API')
+
+env.RequireRestrictedApi(['DEBUGTRACE'])
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+DA_APP_SRC = [
+    '${BUILDPATH}/da_main.c',
+    '${BUILDPATH}/da_reader.c',
+    '${BUILDPATH}/da_cmd_action.c',
+    '${BUILDPATH}/da_cmd_cti.c',
+    '${BUILDPATH}/da_cmd_ctrl.c',
+    '${BUILDPATH}/da_cmd_ctrl_common.c',
+    '${BUILDPATH}/da_cmd_etm.c',
+    '${BUILDPATH}/da_cmd_hwe.c',
+    '${BUILDPATH}/da_cmd_info.c',
+    '${BUILDPATH}/da_cmd_qmi_common.c',
+    '${BUILDPATH}/da_cmd_qmi_misc.c',
+    '${BUILDPATH}/da_cmd_qmi_rpm.c',
+    '${BUILDPATH}/da_cmd_qmi_swt.c',
+    '${BUILDPATH}/da_cmd_swt.c',
+    ]
+
+env.AddLibrary(['APPS_PROC','CORE_APPS','APPS_IMAGE', 'CBSP_APPS_IMAGE'],
+   '${BUILDPATH}/da_app', DA_APP_SRC)
+
+#-------------------------------------------------------------------------------
+# Build for RCINIT
+#-------------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+      RCINIT_IMG = ['APPS_PROC','CORE_APPS','APPS_IMAGE', 'CBSP_APPS_IMAGE']
+      env.AddRCInitFunc(
+         RCINIT_IMG,
+         {
+            'sequence_group'             : 'RCINIT_GROUP_2',
+            'init_name'                  : 'DebugAgentConfigInit',
+            'init_function'              : 'da_start_init',
+            'dependencies'               : ['qdss','qmi_fw','qdss_control']
+         }
+      )
+

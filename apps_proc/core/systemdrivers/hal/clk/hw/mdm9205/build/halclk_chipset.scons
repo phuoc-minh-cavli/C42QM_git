@@ -1,0 +1,123 @@
+#===============================================================================
+#
+# HAL CLK CHIPSET LIBRARY
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/hal/clk/hw/mdm9205/build/halclk_chipset.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+
+import os
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "../"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'HAL',
+   'DAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+HAL_CLK_CHIPSET_BUILD_ROOT = os.getcwd();
+
+env.PublishPrivateApi("SYSTEMDRIVERS_HAL_CLK_CHIPSET", [
+  HAL_CLK_CHIPSET_BUILD_ROOT + "/../inc",
+])
+
+#-------------------------------------------------------------------------------
+# Sources: HALClock Chipset Sources
+#-------------------------------------------------------------------------------
+
+HALCLK_CHIPSET_SOURCES = [
+  '${BUILDPATH}/src/HALclkMain.c',
+  '${BUILDPATH}/src/HALclkTest.c',
+  '${BUILDPATH}/src/apcs/HALclkAPCSMain.c',
+  '${BUILDPATH}/src/apcs/HALclkSPARROWCLK.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1QUP1.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1QUP2.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1QUP3.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1QUP4.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1UART1.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1UART2.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1UART3.c',
+  '${BUILDPATH}/src/gcc/HALclkBLSP1UART4.c',
+  '${BUILDPATH}/src/gcc/HALclkCRYPTO.c',
+  '${BUILDPATH}/src/gcc/HALclkECC.c',
+  '${BUILDPATH}/src/gcc/HALclkGCC.c',
+  '${BUILDPATH}/src/gcc/HALclkGCCMain.c',
+  '${BUILDPATH}/src/gcc/HALclkGP1.c',
+  '${BUILDPATH}/src/gcc/HALclkGP2.c',
+  '${BUILDPATH}/src/gcc/HALclkGP3.c',
+  '${BUILDPATH}/src/gcc/HALclkPCNOC.c',
+  '${BUILDPATH}/src/gcc/HALclkPDM.c',
+  '${BUILDPATH}/src/gcc/HALclkPRNG.c',
+  '${BUILDPATH}/src/gcc/HALclkSPMI.c',
+  '${BUILDPATH}/src/gcc/HALclkUSBHS.c',
+]
+
+#-------------------------------------------------------------------------------
+# Sources: HALClockChipset Library Creation
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(
+   ['CORE_APPS'],
+   '${BUILDPATH}/HALclk_chipset',
+   HALCLK_CHIPSET_SOURCES)
+
+#-------------------------------------------------------------------------------
+# HWIO
+#-------------------------------------------------------------------------------
+
+if env.has_key('HWIO_IMAGE'):
+  env.AddHWIOFile('HWIO', [
+    {
+      'filename': '${INC_ROOT}/core/systemdrivers/hal/clk/hw/${CHIPSET}/inc/HALclkHWIO.h',
+      'modules': ['APCS_GLB', 'APCS_GCC', 'APCS_ACC', 'GCC_CLK_CTL_REG'],
+      'output-offsets': True,
+      'output-fvals': True,
+      'output-phys': True,
+      'rmsk-input': True,
+      'header':
+        '/*\n'
+        ' * HWIO base definitions\n'
+        ' */\n'
+        'extern  uint32                     HAL_clk_nHWIOBaseGCC;\n' +
+        '#define CLK_CTL_BASE               HAL_clk_nHWIOBaseGCC\n' +
+        '#define CLK_CTL_BASE_PHYS          0x01800000\n' +
+        '#define CLK_CTL_BASE_SIZE          0x00100000\n' +
+        '#define PROC_CLK_BRANCH_ENA_VOTE   GCC_APCS_CLOCK_BRANCH_ENA_VOTE\n\n'
+        'extern  uint32                     HAL_clk_nHWIOBaseAPCS;\n' +
+        '#define A7SS_BASE                  HAL_clk_nHWIOBaseAPCS\n' +
+        '#define A7SS_BASE_PHYS             0x0b000000\n' +
+        '#define A7SS_BASE_SIZE             0x00200000\n'
+    }
+  ])

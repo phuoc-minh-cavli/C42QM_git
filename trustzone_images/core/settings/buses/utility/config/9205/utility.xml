@@ -1,0 +1,31 @@
+//
+// DESCRIPTION:  This file lists access permission for all QUPS
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header: 
+//
+// when       who     what, where, why
+// 07/15/19   SS      Initial Version
+//
+//===========================================================================
+//             Copyright c 2019 QUALCOMM Technologies, Incorporated.
+//                    All Rights Reserved.
+//                  QUALCOMM Confidential & Proprietary
+//===========================================================================
+
+#include "utility.h"
+
+<driver name="NULL">
+    <device id=BLSP_DEVICE_ID_MODIFY_1>  
+    //Enable GPIO protection in the original xml, in case the BLSP is assigned/modified to TZ/MODEM due to security reasons.
+        <props name="CHIP_BUS_INDEX"           type=DALPROP_ATTR_TYPE_UINT32>     BLSP_UART_1               </props> 
+        <props name="SUBSYSTEM_ID"             type=DALPROP_ATTR_TYPE_UINT32>     AC_MSS_MSA                </props>
+    </device>	
+	<device id="BLSP_MODIFY_GLOBAL_PROP">
+      <props name="NUM_BLSP_MODIFY_DEVICES" type=DALPROP_ATTR_TYPE_UINT32> 1 </props> // Number of peripheral BLSP devices to modify
+   </device>
+</driver>	
+	

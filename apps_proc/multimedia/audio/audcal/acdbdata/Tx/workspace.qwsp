@@ -1,0 +1,17 @@
+﻿<WorkSpace_Data WSVersID="Badger_3" ToolPlugin="QACT">
+  <ACDBFile_Paths>
+    <ACDBFile_Paths path="Handset_cal.acdb" />
+    <ACDBFile_Paths path="Headset_cal.acdb" />
+    <ACDBFile_Paths path="Speaker_cal.acdb" />
+    <ACDBFile_Paths path="Global_cal.acdb" />
+    <ACDBFile_Paths path="Codec_cal.acdb" />
+  </ACDBFile_Paths>
+  <OpenDSP MajorMinor="1_0">
+    <AREA_LIST />
+    <TOPOLOGY_LIST />
+    <BLOCK_LIST />
+    <AB_VIEW_LIST />
+    <INTERFACE_LIST />
+  </OpenDSP>
+  <GUI_Data />
+</WorkSpace_Data>

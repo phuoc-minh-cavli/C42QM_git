@@ -1,0 +1,642 @@
+;==============================================================================
+
+; @file tlb_dump.cmm
+
+; @detail Script to dump TLB and some statistics on it
+
+; @author anandj
+
+; Copyright (c) 2018 by Qualcomm Technologies, Inc.  All Rights Reserved.
+
+;==============================================================================
+
+area.create tlb_dump 160. 215.
+
+area.select tlb_dump
+
+area.view tlb_dump
+
+
+
+gosub tlb_print
+
+enddo
+
+
+
+;==============================================================================
+
+; Functions
+
+;==============================================================================
+
+;==============================================================================
+
+; @brief Stringize a size (units of bytes) quantity
+
+; @return Size rounded to nearest K (Kilo) or M (Mega) and a suffix
+
+;==============================================================================
+
+stringize_size:
+
+    entry &size
+
+    local &suffix
+
+
+
+    &suffix="K"
+
+    if (&size>=1.*1024.*1024.)
+
+    (
+
+        &size=&size/(1024.*1024.)
+
+        &suffix="M"
+
+    )
+
+    else if (&size>=1.*1024.)
+
+    (
+
+        &size=&size/1024.
+
+        &suffix="K"
+
+    )
+
+    return &size "&suffix"
+
+
+
+;==============================================================================
+
+; @brief Print contents of TLB and its statistics
+
+;==============================================================================
+
+tlb_print:
+
+    var.newlocal unsigned long long * \t32_qurtk_tlb_dump
+
+    var.newlocal unsigned char * \t32_qurtk_tlb_map
+
+    var.newlocal unsigned int[192] \t32_vaddr_begin
+
+    var.newlocal unsigned int[192] \t32_vaddr_end
+
+    var.newlocal unsigned int[192] \t32_asid
+
+    local &i
+
+    local &j
+
+    local &entry
+
+    local &s
+
+    local &ppage
+
+    local &ppage0
+
+    local &ppage10
+
+    local &ppage20
+
+    local &ppage30
+
+    local &ppage40
+
+    local &ppage50
+
+    local &size
+
+    local &size_rounded
+
+    local &size_suffix
+
+    local &paddr_begin
+
+    local &paddr_end
+
+    local &lock_str
+
+    local &mem_str
+
+    local &tcm_begin_paddr
+
+    local &tcm_end_paddr
+
+    local &vpage
+
+    local &vaddr_begin
+
+    local &vaddr_end
+
+    local &asid
+
+    local &num_tlb
+
+    local &num_locked_tlb_mainland
+
+    local &num_locked_tlb_island
+
+    local &num_unused_tlb
+
+    local &num_locked_tlb
+
+    local &v
+
+    local &g
+
+    local &g_str
+
+    local &xwr
+
+    local &xwr_str
+
+    local &cccc
+
+    local &cccc_str
+
+    local &duplicate_idx
+
+
+
+    var.assign \t32_qurtk_tlb_dump=&QURTK_tlb_dump
+
+    var.assign \t32_qurtk_tlb_map=&QURTK_tlb_map
+
+
+
+    &num_tlb=0
+
+    &num_locked_tlb_mainland=0
+
+    &num_locked_tlb_island=0
+
+    &num_unused_tlb=0
+
+    &num_locked_tlb=0
+
+
+
+    ; Figure out number of (HW) TLBs. QURTK_tlb_dump is sized at compile-time
+
+    ; so it should be reliable
+
+    &num_tlb=symbol.sizeof(QURTK_tlb_dump)/8.
+
+
+
+    ; Figure out TCM physical address range
+
+    if (symbol.exist(QURTK_l2tcm_base))
+
+        &tcm_begin_paddr=var.value(QURTK_l2tcm_base)
+
+    else
+
+        &tcm_begin_paddr=0xFFFFFFFF
+
+    
+
+    ; @todo anandj QURTK_tcm_dump_size is not reliable. For example, it
+
+    ; is 0x20 on CDSP! Figure out a reliable way to determine TCM size
+
+    if (symbol.exist(QURTK_tcm_dump_size))
+
+        &tcm_size=var.value(QURTK_tcm_dump_size)
+
+    else
+
+        &tcm_size=0.
+
+
+
+    &tcm_end_paddr=&tcm_begin_paddr+&tcm_size
+
+
+
+    &i=0
+
+    print "idx value            virtual range      physical range      asid  size g xwr cache                                          mem annotations"
+
+    repeat &num_tlb
+
+    (
+
+        &entry=var.value(\t32_qurtk_tlb_dump[&i])
+
+        &s=(&entry&0x1)
+
+
+
+        &ppage=(&entry>>1)&0x7FFFFF
+
+        &ppage0=&ppage&0x1
+
+        &ppage10=&ppage&0x3
+
+        &ppage20=&ppage&0x7
+
+        &ppage30=&ppage&0xF
+
+        &ppage40=&ppage&0x1F
+
+        &ppage50=&ppage&0x3F
+
+        &size=0.
+
+
+
+        &vpage=(&entry>>32.)&0xFFFFF
+
+
+
+        &asid=(&entry>>52.)&0x7F
+
+
+
+        &v=(&entry>>63)&1.
+
+
+
+        &g=(&entry>>62.)&1.
+
+
+
+        &xwr_str="???"
+
+        &xwr=(&entry>>29.)&7.
+
+        if (&xwr==1.)
+
+            &xwr_str="--r"
+
+        if (&xwr==2.)
+
+            &xwr_str="-w-"
+
+        if (&xwr==3.)
+
+            &xwr_str="-wr"
+
+        if (&xwr==4.)
+
+            &xwr_str="x--"
+
+        if (&xwr==5.)
+
+            &xwr_str="x-r"
+
+        if (&xwr==6.)
+
+            &xwr_str="xw-"
+
+        if (&xwr==7.)
+
+            &xwr_str="xwr"
+
+
+
+        &g_str=" "
+
+        if (&g==1)
+
+        (
+
+            &g_str="G"
+
+        )
+
+
+
+        &cccc=(&entry>>24.)&0xF
+
+        if (&cccc==0x0)
+
+            &cccc_str="D$/cacheable[ wb] I$/cached   L2/uncached     "
+
+        if (&cccc==0x1)
+
+            &cccc_str="D$/cacheable[ wt] I$/cached   L2/uncached     "
+
+        if (&cccc==0x2)
+
+            &cccc_str="D$/device   [sfc] I$/uncached L2/uncached     "
+
+        if (&cccc==0x3)
+
+            &cccc_str="D$/uncached [sfc] I$/uncached L2/uncached     "
+
+        if (&cccc==0x4)
+
+            &cccc_str="D$/device         I$/uncached L2/uncached     "
+
+        if (&cccc==0x5)
+
+            &cccc_str="D$/cached   [ wt] I$/uncached L2/cached  [ wt]"
+
+        if (&cccc==0x6)
+
+            &cccc_str="D$/uncached       I$/uncached L2/uncached     "
+
+        if (&cccc==0x7)
+
+            &cccc_str="D$/cached   [ wb] I$/cached   L2/cached  [ wb]"
+
+        if (&cccc==0x8)
+
+            &cccc_str="D$/cached   [ wb] I$/cached   L2/cached  [ wt]"
+
+        if (&cccc==0x9)
+
+            &cccc_str="D$/cached   [ wt] I$/cached   L2/cached  [ wb]"
+
+        if (&cccc==0xA)
+
+            &cccc_str="D$/cached   [ wb] I$/uncached L2/cached  [ wb]"
+
+        if (&cccc==0xB)
+
+            &cccc_str="D$/cached   [ wt] I$/uncached L2/cached  [ wt]"
+
+        if (&cccc==0xC)
+
+            &cccc_str="reserved                                      "
+
+        if (&cccc==0xD)
+
+            &cccc_str="D$/uncached       I$/uncached L2/cached  [ wt]"
+
+        if (&cccc==0xE)
+
+            &cccc_str="reserved                                      "
+
+        if (&cccc==0xF)
+
+            &cccc_str="D$/uncached       I$/uncached L2/cached  [ wb]"
+
+
+
+        &paddr_begin=0.
+
+        if (&s==1)
+
+        (
+
+            &paddr_begin=&ppage<<12.
+
+            &size=4.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage0==1))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFFE)<<12.)
+
+            &size=16.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage10==2.))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFFC)<<12.)
+
+            &size=64.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage20==4.))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFF8)<<12.)
+
+            &size=256.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage30==8))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFF0)<<12.)
+
+            &size=1.*1024.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage40==0x10))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFE0)<<12.)
+
+            &size=4.*1024.*1024.
+
+        )
+
+        if ((&s==0)&&(&ppage50==0x20))
+
+        (
+
+            &paddr_begin=((&ppage&0xFFFC0)<<12.)
+
+            &size=16.*1024.*1024.
+
+        )
+
+        &paddr_end=&paddr_begin+&size-1
+
+
+
+        &vaddr_begin=&vpage<<12.
+
+        &vaddr_end=&vaddr_begin+&size-1
+
+
+
+        &lock_str="        "
+
+        if (var.value(\t32_qurtk_tlb_map[&i])==0xFF)
+
+        (
+
+            &num_locked_tlb_mainland=&num_locked_tlb_mainland+1
+
+            &lock_str="locked/m"
+
+        )
+
+        if (var.value(\t32_qurtk_tlb_map[&i])==0xFE)
+
+        (
+
+            &num_locked_tlb_island=&num_locked_tlb_island+1
+
+            &lock_str="locked/i"
+
+        )
+
+
+
+        if (symbol.exist(__swapped_segments_start__)&&symbol.exist(__swapped_segments_end__))
+
+        (
+
+            if ((&vaddr_begin>=var.value(&__swapped_segments_start__))&&(&vaddr_end<=var.value(&__swapped_segments_end__)))
+
+                &lock_str="pager"
+
+        )
+
+
+
+        &mem_str="ddr"
+
+        if ((&paddr_begin>=&tcm_begin_paddr)&&(&paddr_end<=&tcm_end_paddr))
+
+        (
+
+            &mem_str="tcm"
+
+        )
+
+
+
+        gosub stringize_size &size
+
+        entry &size_rounded &size_suffix
+
+
+
+        ; Is valid entry?
+
+        if (&v==1)
+
+        (
+
+            &duplicate_idx=&num_tlb+1.
+
+            if (&i>0)
+
+            (
+
+                &j=0
+
+                repeat &i
+
+                (
+
+                    if (var.value(\t32_vaddr_begin[&j])>=&vaddr_begin&&var.value(\t32_vaddr_end[&j])<=&vaddr_end&&var.value(\t32_asid[&j])==&asid)
+
+                    (
+
+                        &duplicate_idx=&j
+
+                        break
+
+                    )
+
+                    &j=&j+1
+
+                )
+
+            )
+
+
+
+            var.assign \t32_vaddr_begin[&i]=&vaddr_begin
+
+            var.assign \t32_vaddr_end[&i]=&vaddr_end
+
+            var.assign \t32_asid[&i]=&asid
+
+
+
+            if (&duplicate_idx>&num_tlb)
+
+                print "" format.hex(2,&i) "] " format.hex(16,&entry) " " format.hex(8,&vaddr_begin) "--" format.hex(8,&vaddr_end) " " format.hex(9,&paddr_begin) "--" format.hex(9,&paddr_end) format.decimal(4,&asid) format.decimal(5,&size_rounded) &size_suffix " &g_str &xwr_str &cccc_str &mem_str &lock_str"
+
+            else
+
+                print %error "" format.hex(2,&i) "] " format.hex(16,&entry) " " format.hex(8,&vaddr_begin) "--" format.hex(8,&vaddr_end) " " format.hex(9,&paddr_begin) "--" format.hex(9,&paddr_end) format.decimal(4,&asid) format.decimal(5,&size_rounded) &size_suffix " &g_str &xwr_str &cccc_str &mem_str &lock_str !DUPLICATE of &duplicate_idx?"
+
+        )
+
+        else
+
+        (
+
+            var.assign \t32_vaddr_begin[&i]=0
+
+            var.assign \t32_vaddr_end[&i]=0
+
+            var.assign \t32_asid[&i]=0
+
+            print "" format.hex(2,&i) "] " format.hex(16,&entry)
+
+            &num_unused_tlb=&num_unused_tlb+1
+
+        )
+
+
+
+        &i=&i+1
+
+    )
+
+
+
+    &num_locked_tlb=&num_locked_tlb_mainland+&num_locked_tlb_island
+
+
+
+    print ""
+
+    print "Memory classification"
+
+    print "------------------------"
+
+    print "tcm: " format.hex(8,&tcm_begin_paddr) "--" format.hex(8,&tcm_end_paddr)
+
+    print "ddr: everything else"
+
+    print ""
+
+    print "Annotations"
+
+    print "------------------------"
+
+    print "locked/i : locked for island use"
+
+    print "locked/m : locked for mainland use"
+
+    print "pager    : used by DL Pager"
+
+    print ""
+
+    print "Statistics"
+
+    print "------------------------"
+
+    print format.decimal(3,&num_locked_tlb_mainland) " TLBs locked (mainland)"
+
+    print format.decimal(3,&num_locked_tlb_island) " TLBs locked (island)"
+
+    print format.decimal(3,&num_locked_tlb) " TLBs locked (total)"
+
+    print format.decimal(3,&num_unused_tlb) " TLBs unused"
+
+
+

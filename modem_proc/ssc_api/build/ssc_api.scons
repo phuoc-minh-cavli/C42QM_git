@@ -1,0 +1,237 @@
+#===============================================================================
+#
+# Sensors API libraries
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018-2020 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.api/2.0/build/ssc_api.scons#21 $
+#  $DateTime: 2020/12/22 11:48:52 $
+#  $Change: 27916176 $
+#
+#===============================================================================
+Import('env')
+import os, inspect
+import platform
+import subprocess
+import SCons.Builder
+import npd
+import sys
+
+
+#------------------------------------------------------------------------------
+# Globals
+#------------------------------------------------------------------------------
+ME = inspect.getfile(inspect.currentframe())
+MY_ROOT = os.path.dirname(os.path.dirname(ME))
+MY_NAME = os.path.basename(MY_ROOT)
+
+#-------------------------------------------------------------------------------
+# Check if SSC_API has to be built
+#-------------------------------------------------------------------------------
+ssc_api_build_tags = [
+   # SSC as the USER PD on SLPI processor
+   'SSC_SLPI_USER',
+
+   #SSC as part of root PD on MDSP processor
+   'MODEM_MODEM',
+   
+   #SSC as part of root PD on MDSP processor
+   'MODEM_SENSORONLY',   
+
+   # SSC as the USER PD on ADSP processor
+   'SSC_ADSP_USER',
+
+   # SSC simulation
+   'SSC_SIM',
+
+   # CHRE shared libs
+   'ADSP_SHARED_LIBS',
+
+   # Add new targets here
+   # Note:
+   #   Compose Build Tag as follows: [Component]_[Image]_[PD Type]
+   #   [Component] - Name of Component Folder. Example: CORE, SSC
+   #   [Image] - Type of processor. Example: ADSP, SLPI, MPSS
+   #   [PD Type] - ROOT or USER
+   #   see http://qwiki.qualcomm.com/qct-osteam/CoreBSP/SLPI_Development_Information#How_Build_Tags_are_Composed
+ ]
+
+ssc_api_root = inspect.getfile(inspect.currentframe())
+ssc_api_root_dir = os.path.dirname(os.path.dirname(ssc_api_root))
+
+env.Replace(SSC_API_ROOT = ssc_api_root_dir)  # Create an ${SSC_ROOT} variable
+env.Replace(SSC_API_BUILD_TAGS = ssc_api_build_tags)  #Store the build tags
+
+# Delete ssc_api folder for modem flavors which use no sensors.
+# USES_NO_SENSORS is a modem specific build tag.
+if 'USES_NO_SENSORS' in env:
+  env.PrintInfo("No sensors api")
+  if 'CLEANPACK_TARGET' in env:
+    env.PrintInfo("Removing ssc_api folder")
+    # Load cleanpack script:
+    if env.PathExists('${SSC_API_ROOT}'):
+      env.LoadToolScript('ssc_api_cleanpack', toolpath = ['${SSC_API_ROOT}/build'])
+      Return()
+  else: #if cleanpack is not defined and USES_NO_SENSORS is defined, then return
+    env.PrintInfo("Returning from ssc_api")
+    Return()
+
+#-------------------------------------------------------------------------------
+# Remove source files
+#-------------------------------------------------------------------------------
+PB_PATH = os.path.join(MY_ROOT, 'pb')
+
+REMOVE_FILES = []
+PROTO_FILES = env.FindFiles(['*.proto'], PB_PATH)
+
+WHITELIST = [
+  'sns_accel.proto',
+  'sns_ambient_light.proto',
+  'sns_ambient_temperature.proto',
+  'sns_amd.proto',
+  'sns_async_com_port.proto',
+  'sns_async_uart.proto',
+  'sns_cal.proto',
+  'sns_client.proto',
+  'sns_client_qsocket.proto',
+  'sns_device_mode.proto',
+  'sns_gyro.proto',
+  'sns_hall.proto',
+  'sns_humidity.proto',
+  'sns_interrupt.proto',
+  'sns_mag.proto',
+  'sns_motion_detect.proto',
+  'sns_physical_sensor_test.proto',
+  'sns_pressure.proto',
+  'sns_proximity.proto',
+  'sns_registry.proto',
+  'sns_resampler.proto',
+  'sns_rgb.proto',
+  'sns_sensor_temperature.proto',
+  'sns_std_batch_trig_flush.proto',
+  'sns_std_event_gated_sensor.proto',
+  'sns_std.proto',
+  'sns_std_sensor.proto',
+  'sns_std_type.proto',
+  'sns_suid.proto',
+  'sns_thermopile.proto',
+  'sns_timer.proto',
+  'sns_ultra_violet.proto',
+  'sns_heart_rate.proto',
+  'sns_offbody_detect.proto',
+  'sns_ppg.proto']
+
+if 'SENSORS_ALGO_DEV_FLAG' in env:
+   WHITELIST += [
+     'sns_oem1.proto',
+     'sns_rmd.proto',
+     'sns_mag_cal.proto',
+     'sns_gyro_cal.proto',
+     'sns_tilt.proto',
+     'sns_sig_motion.proto',
+     'sns_rotv.proto',
+     'sns_psmd.proto',
+     'sns_offbody_detect.proto',
+     'sns_heart_rate.proto',
+     'sns_heart_beat.proto',
+     'sns_hinge_angle.proto',
+     'sns_gravity.proto',
+     'sns_geomag_rv.proto',
+     'sns_game_rv.proto',
+     'sns_device_orient.proto',
+     'sns_pedometer.proto',
+     'sns_step_detect.proto',
+     'sns_threshold.proto',
+     'sns_sar.proto',
+     'sns_accel_cal.proto',
+     'sns_tilt_to_wake.proto',
+     'sns_activity_recognition.proto']
+
+if 'SENSORS_DD_DEV_FLAG' in env:
+   REMOVE_LIST = [
+     'sns_client_qsocket.proto']
+
+   for file in REMOVE_LIST:
+     if file in WHITELIST:
+       WHITELIST.remove(file)
+
+for file in PROTO_FILES:
+  folder, filename = os.path.split(file)
+  if filename not in WHITELIST and 'SENSORS_DD_DEV_FLAG' in env:
+    REMOVE_FILES += [file]
+
+# Build SSC_API if there is a build tag that is supported
+if env.IsKeyEnable(ssc_api_build_tags) is True:
+  env.CleanPack(env['SSC_API_BUILD_TAGS'], REMOVE_FILES, pack_exception=["USES_NO_SHIP_NANOPB"])
+
+  #-------------------------------------------------------------------------------
+  # Internal dependencies
+  #-------------------------------------------------------------------------------
+  INCPATH = os.path.join(MY_ROOT, 'build', "${BUILDPATH}", 'pb')
+  if os.path.isdir(INCPATH):
+    MY_API = MY_NAME + '_API'
+    env.PublishPrivateApi(MY_API, [INCPATH])
+
+  env.Append(CFLAGS = ' -DPB_FIELD_16BIT')
+  env.RequirePublicApi(['SNS_API_INCLUDES'], area='ssc_api')
+
+  #-------------------------------------------------------------------------------
+  # Source files
+  #-------------------------------------------------------------------------------
+  VARIANT_SRCFILES = []
+  PB_PATH = os.path.join(MY_ROOT, 'pb')
+
+  if 'USES_SSC_PBGEN' in env:
+    for proto_file in env.FindFiles(['*.proto'], PB_PATH):
+      output = env.PBGen(str(proto_file))
+      VARIANT_SRCFILES += [output[1]]   # Just include the .c file
+
+  #-------------------------------------------------------------------------------
+  # nanopb dependencies
+  #-------------------------------------------------------------------------------
+  if platform.system() == 'Linux':
+    protoc_bin = os.path.join(ssc_api_root_dir, "nanopb", "generator", "protoc")
+  else:
+    protoc_bin = os.path.join(ssc_api_root_dir, "nanopb", "generator-win", "protoc.exe")
+
+  if not (env.IsBuildInternal() or env.GetOption('clean') or env.IsKeyEnable('SSC_SIM')):
+    if env.GetUsesFlag("USES_NO_SHIP_NANOPB"):
+      if not os.path.exists(protoc_bin):
+        env.PrintError("Nanopb library is not available. Verify the contents of NO_SHIP_NANOPB.")
+        sys.exit(1)
+    else:
+      npd.get_nanopb(MY_ROOT, env.subst('${BUILD_ROOT}'))
+  else:
+    env.PrintInfo("Ignoring Nanopb library check.")
+
+  #-------------------------------------------------------------------------------
+  # Add Libraries to Image
+  #-------------------------------------------------------------------------------
+  MY_LIB = os.path.join('${BUILDPATH}', MY_NAME)
+  MY_PROTO_LIB = MY_LIB + '_PROTO'
+
+  if len(VARIANT_SRCFILES) > 0:
+    proto_lib = env.AddLibrary(env['SSC_API_BUILD_TAGS'], MY_PROTO_LIB, VARIANT_SRCFILES)
+
+    if 'USES_MEMSEG' in env:
+      env.TagLibraryForMemorySegment(env['SSC_API_BUILD_TAGS'], 'ssc', proto_lib)
+    elif 'USES_ISLAND' in env:
+      env.AddIslandLibrary(env['SSC_API_BUILD_TAGS'], proto_lib)
+
+  #-------------------------------------------------------------------------------
+  # Symbol export for CHRE
+  #-------------------------------------------------------------------------------
+  exports_root = os.path.join(MY_ROOT, 'build')
+  env.DLExposeFile(exports_root + '/dl_ssc_api_symbols.lst')
+
+#-------------------------------------------------------------------------------
+# Scan subdirectories to find more /build folders
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

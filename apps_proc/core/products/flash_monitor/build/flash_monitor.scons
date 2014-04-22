@@ -1,0 +1,107 @@
+#=============================================================================
+#
+# Target:    All
+# Processor: All
+#
+#=============================================================================
+# $Header: //components/rel/core.tx/6.0/products/qapi_utils/build/qapi_utils.scons#1 $
+#=============================================================================
+#  Copyright 2022 Qualcomm Technologies Incorporated.
+#  All Rights Reserved.
+#  QUALCOMM Proprietary/GTDR
+#=============================================================================
+from glob import glob
+from os.path import join, basename, exists
+
+
+import subprocess
+import os
+Import('env')
+env = env.Clone()
+
+#-----------------------------------------------------------------------------
+# Define paths
+#-----------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/products/flash_monitor"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Static Configuration
+#-------------------------------------------------------------------------------
+# Set to true if the Flash Monitor thread support required
+FLASH_MONITOR_SUPPORT = True
+
+#enable if FLASH_MONITOR_SUPPORT added for 9205
+if 'USES_AWARE' not in env:
+  Return()
+
+
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'DEBUGTRACE',
+   'HAL',
+   'HWENGINES',
+   'MPROC',
+   'MEMORY',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+   'PSM_CORE',
+   'PSM_CLIENT',   
+]
+
+env.PublishRestrictedApi('PSM_CORE', ["${INC_ROOT}/ril/psm/server/inc"])
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#env.PublishPrivateApi('MHI',["${INC_ROOT}/core/hwengines/mhi"])
+
+#-------------------------------------------------------------------------------
+# Define sources
+#-------------------------------------------------------------------------------
+
+FLASH_MONITOR_SOURCES = [
+   '${BUILDPATH}/src/flash_monitor.c',
+]
+
+#-------------------------------------------------------------------------------
+# Define objects
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Libraries
+#------------------------------------------------------------------------------- 
+flash_monitor_object = env.Object(FLASH_MONITOR_SOURCES)
+flash_monitor_lib = env.Library('${BUILDPATH}', flash_monitor_object)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if FLASH_MONITOR_SUPPORT == True:
+	env.AddLibsToImage(['CBSP_APPS_IMAGE', 'APPS_IMAGE'], flash_monitor_lib)
+
+RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+if 'USES_RCINIT' in env:
+    env.AddRCInitFunc(
+        RCINIT_IMG,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_7',
+            'init_name'                  : 'init_flash_monitor_thread',
+            'init_function'              : 'init_flash_monitor_start',
+	     'dependencies'              : ['diag']
+        }
+    )
+

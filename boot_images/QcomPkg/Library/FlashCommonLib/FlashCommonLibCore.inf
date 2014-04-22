@@ -1,0 +1,80 @@
+#/** @file FlashCommonLib.inf
+#  
+#  SLC Nand Library UEFI INF file
+#  
+#  Copyright (c) 2017, 2019 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# ----------   ---     ---------------------------------------------------------
+# 2019-06-11   sl      Multipage support added
+# 2017-03-03   eo      Initial version.
+#
+#==============================================================================
+
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = FlashCommonLib
+  FILE_GUID                      = 51F0224D-FE08-44b9-A258-6DE3D56A9352
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = FlashCommonLib 
+
+[Sources.common]
+  Core/flash_fwk.c
+  Core/flash_dal_util.c
+  Core/flash_nand_entry.c
+  Core/flash_nand_config.c
+  Core/flash_nand_core.c
+  Core/flash_nand_init.c
+  Core/flash_nand_partition.c
+  Core/flash_partition_services.c
+  Core/flash_osal_core.c
+  Core/flash_onfi.c
+  Core/flash_otp_config.c
+  Core/flash_properties.c
+  Core/flash_bam_wrapper.c
+
+  NandHalLib/flash_hal.h
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -Wno-unused-function  -DBUILD_BOOT_CHAIN -DFLASH_ENABLE_NAND -DFLASH_ENABLE_DMA -ULOADER_CODE -DFLASH_CFG_INCLUDE_H="\"flash_cfg_qpic_2_0_1.h\""
+  MSFT:*_*_*_CC_FLAGS =
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec  
+  QcomPkg/XBLLoaderApi.dec  
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  ServicesUtilsLib
+  SmemLib
+  NandTargetLib
+  NandHalLib
+  TimerLib
+  PcdLib
+
+[Guids]
+  #gEfiPartTypeUnusedGuid                        ## SOMETIMES_CONSUMES ## GUID
+  #gEfiPartTypeSystemPartGuid                    ## SOMETIMES_CONSUMES ## Protocol
+  gEfiHashAlgorithmSha1Guid
+  gEfiPartitionTypeGuid                         ## CONSUMES
+
+[Protocols]
+  gEfiHashProtocolGuid
+
+[Pcd.common]
+
+  

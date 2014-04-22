@@ -1,0 +1,31 @@
+#===============================================================================
+#
+# Data APSS TN Include Paths
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2021 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/utils/build/dataservices_utils.api#1 $
+#  $DateTime: 2021/02/23 21:44:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who              what, where, why
+# --------   ---     ---------------------------------------------------------
+# 17Feb2021  vpulimi    Common data services utilities
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# ------------------------------------------------------------------------------
+# Include Paths
+#-------------------------------------------------------------------------------
+env.PublishPublicApi('UTILS', ["${INC_ROOT}/dataservices/utils/inc"])
+
+

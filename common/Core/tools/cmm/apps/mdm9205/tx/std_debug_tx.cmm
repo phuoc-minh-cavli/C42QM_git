@@ -1,0 +1,128 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_TX.cmm 
+//
+//  Description:                                                              
+//    Boot debug script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 08/11/2016 c_sknven	  modified the breakpoints and added disabling of watchdog timers
+// 07/18/2016 martham     ThreadX apps debug support
+// 07/09/2014 Rssridha    Created for Tesla.
+
+//* Arguments passed *//
+ENTRY %LINE &ArgumentLine
+LOCAL &SubRoutine &Port
+LOCAL &TargetProcessor &TargetProcessorPort  &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused1 &Unused2 &Unused3 &Unused4 &Unused5
+LOCAL &POS_FLAVOR &APSS_FLAVOR
+
+//* Check if we need to call for help or do some work *//
+IF ("&ArgumentLine"=="")
+(
+    &SubRoutine="HELP"
+)
+ELSE
+(
+    &SubRoutine="MAIN"
+)
+
+GOSUB &SubRoutine
+
+
+MAIN:
+    //note that optextract has a limit of 10 entries
+    do optextract Img,Bkpts &ArgumentLine
+    ENTRY &Image &Bkpts
+    // Get the target processor for this port
+
+    LOCAL &ELFFILE0 &ELFFILE1 &ELFFILE2 &ELFFILE3 &FILE
+
+    // Default image
+    &Image="apps"
+
+    do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &Image
+    ENTRY &Unused1 &TargetProcessor &TargetProcessorPort &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused2 &Unused3 &Unused4 &Unused5
+
+
+
+	// We have work to do if it is SBL
+	IF ("&Image"=="apps")
+	(
+	
+	do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL
+	
+	// Now set the entry and exit breakpoints
+    //do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS Onchip &EntryBkpt
+	
+	//GO
+ 	
+	//IF (STRING.SCAN("&extraoption","usbboot",0)!=-1)
+	//(
+	//    do std_utils EXECUTESCRIPT EXIT &COMMON_CHIPSET_METASCRIPTSDIR\std_debug_flashless
+	//)
+
+	//WAIT !run()
+	   
+	//DE= Data Execution Prevention is not enabled for ThreadX Lykan.
+	//TN apps has DEP feature on 9x45 target. Disable the DEP so that Soft breakpoints can be used.
+	
+	//do std_disable_dep.cmm 9x06 1 0x80000000 0xF
+
+	
+	//If TX T32 OSAM enabled, then device get crash due to BIMC error during the bootup with T32 attached.
+    //This is because the OSAM accessing the OS variables before kernel initialization.
+	//So set a known break point in TX which confirms the OS init is done and then enable OSAM.
+	//**To debug from OS entry start, we must disable the OSAM by task.reset.
+	
+	do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS Onchip rcinit_task
+	
+	GO
+
+	WAIT !run()
+	
+	//Disable apps non-secure hw watchdog and software watchdog timer.
+	PRINT %ERROR "Note!! APPS non-secure watchdog and software watchdog timers are disabled."
+	INTERCOM.EXECUTE &TargetProcessorPort v dog_enable_hw_wdog=0
+	INTERCOM.EXECUTE &TargetProcessorPort v dog_enabled = 0
+    INTERCOM.EXECUTE &TargetProcessorPort v dog_enable_startup_timer = 0
+	INTERCOM.EXECUTE &TargetProcessorPort v sleep_allow_low_power_modes = 0
+	
+	//FIXME to be put in std_extensions.cmm
+	&POS_FLAVOR=STRING.SCAN("&APPS_BUILDROOT","M9206", 0)
+	&APSS_FLAVOR=STRING.MID("&APPS_BUILDROOT", &POS_FLAVOR+5, 8)
+
+	INTERCOM.EXECUTE &TargetProcessorPort TASK.reset
+	//INTERCOM.EXECUTE &TargetProcessorPort MENU.reset
+		
+	&FILE=OS.PSD()+"/demo/arm/kernel/threadx/threadx.t32"
+	INTERCOM.EXECUTE &TargetProcessorPort TASK.CONFIG &FILE
+	//Load threadX OS awareness menu
+	&FILE=OS.PSD()+"/demo/arm/kernel/threadx/threadx.men"
+	INTERCOM.EXECUTE &TargetProcessorPort MENU.ReProgram &FILE
+
+	do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL	 
+	do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS Onchip &ErrBkpts
+	)
+	
+    //TODO: Calling this causing the system crash for ThreadX. Needs to debug further.
+	//do std_utils EXECUTESCRIPT EXIT &COMMON_CHIPSET_METASCRIPTSDIR\smmu_xpu_disable
+
+EXIT:
+	ENDDO
+
+FATALEXIT:
+	END
+
+
+	
+		

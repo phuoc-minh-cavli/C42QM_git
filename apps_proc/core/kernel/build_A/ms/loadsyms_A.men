@@ -1,0 +1,30 @@
+add
+menu
+(
+popup "&L4"
+(
+popup "Load &Symbols"
+(
+menuitem "&all"
+(
+do loadsyms.cmm all
+)
+menuitem "&ig_naming"
+(
+do loadsyms.cmm ig_naming
+)
+menuitem "&kernel"
+(
+do loadsyms.cmm kernel
+)
+menuitem "&ig_server"
+(
+do loadsyms.cmm ig_server
+)
+menuitem "&amss"
+(
+do loadsyms.cmm amss
+)
+)
+)
+)

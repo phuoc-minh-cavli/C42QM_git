@@ -1,0 +1,48 @@
+;============================================================================
+;  Name:
+;    SETUP_CLK_FOR_I2C_9205.CMM
+;
+;  Clock initialization script used by
+;   any I2C nor related tool cmm scripts
+;
+;
+;    Copyright (c) 2019 Qualcomm Technologies Incorporated.
+;    All Rights Reserved.
+;    Qualcomm Confidential and Proprietary
+;----------------------------------------------------------------------------
+;============================================================================
+;
+;                        EDIT HISTORY FOR MODULE
+;
+;
+;============================================================================;
+
+
+
+;GCC_PCNOC_RPM_AHB_CBCR : 0x01827024
+PER.S.F AD:0x01827024 %L 0x1 0x1
+;GCC_PCNOC_AHB_CBCR : 0x0182701C
+PER.S.F AD:0x0182701C %L 0x1 0x1
+;GCC_PCNOC_AT_CBCR : 0x01827028
+PER.S.F AD:0x01827028 %L 0x1 0x1
+; GCC_PCNOC_QDSS_STM_AXI_CBCR : 0x0182702C
+PER.S.F AD:0x0182702C %L 0x1 0x1
+; GCC_BIMC_PCNOC_AXI_CBCR : 0x01831024
+PER.S.F AD:0x01831024 %L 0x1 0x1		
+
+; GCC_IMEM_CFG_AHB_CBCR (at 0x0180E008 )
+PER.S.F AD:0x0180E008  %L 0x1 0x1
+
+;HWIO_OUTF(GCC_RPM_CLOCK_BRANCH_ENA_VOTE, PCNOC_APSS_AHB_CLK_ENA, 1);
+PER.S.F AD:0x01836004 %L 0x10000 1
+;HWIO_OUTF(GCC_RPM_CLOCK_BRANCH_ENA_VOTE, IMEM_AXI_CLK_ENA, 1);
+PER.S.F AD:0x01836004 %L 0x20000 1
+;HWIO_OUTF(GCC_RPM_CLOCK_BRANCH_ENA_VOTE, BLSP1_AHB_CLK_ENA, 1);
+PER.S.F AD:0x01836004 %L 0x0400 1
+;HWIO_OUTF(GCC_RPM_CLOCK_BRANCH_ENA_VOTE, BLSP1_SLEEP_CLK_ENA, 1);
+PER.S.F AD:0x01836004 %L 0x0200 1
+
+;HWIO_OUTF(GCC_BLSP1_QUP2_I2C_APPS_CBCR, CLK_ENABLE, 1);
+PER.S.F AD:0x01803010 %L 0x1 0x1
+
+enddo

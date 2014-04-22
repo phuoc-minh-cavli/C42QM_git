@@ -1,0 +1,106 @@
+/* Dispatch table for sys_* functions */
+
+/* DO NOT MODIFY THIS FILE.  ITS ORDER IS SIGNIFICANT */
+
+    .extern _exit
+    .extern sys_access
+    .extern sys_clock
+    .extern sys_close
+    .extern sys_closedir
+    .extern sys_errno
+    .extern sys_exit
+    .extern sys_fcntl
+    .extern sys_flen
+    .extern sys_fstat
+    .extern sys_ftell
+    .extern sys_getcwd
+    .extern sys_getpid
+    .extern sys_gettimeofday
+    .extern sys_get_cmdline
+    .extern sys_heapinfo
+    .extern sys_isatty
+    .extern sys_iserror
+    .extern sys_mkdir
+    .extern sys_Mtxdst
+    .extern sys_Mtxinit
+    .extern sys_Mtxlock
+    .extern sys_Mtxunlock
+    .extern sys_open
+    .extern sys_opendir
+    .extern sys_read
+    .extern sys_readc
+    .extern sys_readdir
+    .extern sys_remove
+    .extern sys_rename
+    .extern sys_rmdir
+    .extern sys_sbrk
+    .extern sys_seek
+    .extern sys_stat
+    .extern sys_statvfs
+    .extern sys_system
+    .extern sys_time
+    .extern sys_Tlsalloc
+    .extern sys_Tlsfree
+    .extern sys_Tlsget
+    .extern sys_Tlsset
+    .extern sys_tmpnam
+    .extern sys_write
+    .extern sys_write0
+    .extern sys_writec
+    .extern sys_writecreg
+    .extern sys_fork
+    .extern sys_execve
+
+    .data
+    .global __dispatch_table__
+
+__dispatch_table__:
+    .word   _exit
+    .word   sys_access
+    .word   sys_clock
+    .word   sys_close
+    .word   sys_closedir
+    .word   sys_errno
+    .word   sys_exit
+    .word   sys_fcntl
+    .word   sys_flen
+    .word   sys_fstat
+    .word   sys_ftell
+    .word   sys_getcwd
+    .word   sys_getpid
+    .word   sys_gettimeofday
+    .word   sys_get_cmdline
+    .word   sys_heapinfo
+    .word   sys_isatty
+    .word   sys_iserror
+    .word   sys_mkdir
+    .word   sys_Mtxdst
+    .word   sys_Mtxinit
+    .word   sys_Mtxlock
+    .word   sys_Mtxunlock
+    .word   sys_open
+    .word   sys_opendir
+    .word   sys_read
+    .word   sys_readc
+    .word   sys_readdir
+    .word   sys_remove
+    .word   sys_rename
+    .word   sys_rmdir
+    .word   sys_sbrk
+    .word   sys_seek
+    .word   sys_stat
+    .word   sys_statvfs
+    .word   sys_system
+    .word   sys_time
+    .word   sys_Tlsalloc
+    .word   sys_Tlsfree
+    .word   sys_Tlsget
+    .word   sys_Tlsset
+    .word   sys_tmpnam
+    .word   sys_write
+    .word   sys_write0
+    .word   sys_writec
+    .word   sys_writecreg
+    .word   sys_fork
+    .word   sys_execve
+

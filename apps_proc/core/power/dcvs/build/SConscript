@@ -1,0 +1,189 @@
+#===============================================================================
+#                    Copyright 2009-2012 QUALCOMM Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/power/dcvs/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#
+#===============================================================================
+
+#===============================================================================
+# DCVS Libs
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Determine target information
+#-------------------------------------------------------------------------------
+
+env['DCVS_TARG_CHIP'] = env['MSM_ID']
+env['DCVS_TARG_PROC'] = env.DetermineProcessorName()
+
+#-------------------------------------------------------------------------------
+# Determine if target specific files need to be used
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in ['8974', '9x25', '8x26']:
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER1_H','\\"blast.h\\"')])
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER2_H','\\"blast.h\\"')])
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER3_H','\\"qurt.h\\"')])
+else:
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER1_H','\\"blast_cycles.h\\"')])
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER2_H','\\"blast_timer.h\\"')])
+  env.Append(CPPDEFINES = [('DCVS_OS_HEADER3_H','\\"qtimer.h\\"')])
+
+
+#-------------------------------------------------------------------------------
+# Determine which os specific files to use.
+#-------------------------------------------------------------------------------
+if env.has_key('USES_BREWMP'):
+   env['DCVS_TARG_OS'] = 'bmp'
+elif env.has_key('USES_BLAST'):
+   env['DCVS_TARG_OS'] = 'blast'
+else:
+   env['DCVS_TARG_OS'] = 'tx'
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/power/dcvs"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'BREW',
+   'CS',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'BUSES',
+   'POWER',
+   'MPROC',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'DEBUGTRACE',
+   'STORAGE',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishProtectedApi('DCVS_INC', [
+	"${INC_ROOT}/core/power/dcvs/inc",
+	"${INC_ROOT}/core/power/dcvs/inc/algorithms",
+ SRCPATH + "/src/common",
+ SRCPATH + "/src/tgt/${DCVS_TARG_CHIP}/${DCVS_TARG_PROC}",
+ SRCPATH + "/src/Env/Default",
+	])
+
+env.PublishProtectedApi('CORE_API_KERNEL', [
+	"${INC_ROOT}/core/api/kernel/quartz",
+	"${INC_ROOT}/core/api/kernel/rex",
+        "${INC_ROOT}/core/kernel/qurt/libs/qurt/include/public"
+	])
+
+env.RequireProtectedApi(['CORE_API_KERNEL'])
+env.RequireProtectedApi(['POWER_UTILS'])
+env.RequireProtectedApi(['DCVS_INC'])
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+DCVS_LIB_SOURCES = [
+   '${BUILDPATH}/src/common/dcvs_core.c',
+   '${BUILDPATH}/src/common/dcvs_npa.c',
+   '${BUILDPATH}/src/common/dcvs_npa_qdsp.c',
+   '${BUILDPATH}/src/common/cpu_monitor.c',
+   '${BUILDPATH}/src/common/cpu_monitor_qdsp.c',
+   '${BUILDPATH}/src/common/dcvs_nv.c',
+   '${BUILDPATH}/src/common/algorithms/disabled.c',
+   '${BUILDPATH}/src/common/algorithms/classic.c',
+   '${BUILDPATH}/src/common/algorithms/qdsp_classic.c',
+   '${BUILDPATH}/src/common/algorithms/fixed.c',
+   '${BUILDPATH}/src/common/algorithms/requests.c',
+   '${BUILDPATH}/src/os/${DCVS_TARG_OS}/dcvs_kernel.c',
+   '${BUILDPATH}/src/os/${DCVS_TARG_OS}/dcvs_nv_os.c',
+   '${BUILDPATH}/src/tgt/${DCVS_TARG_CHIP}/${DCVS_TARG_PROC}/dcvs_target.c',
+   '${BUILDPATH}/src/tgt/${DCVS_TARG_CHIP}/${DCVS_TARG_PROC}/dcvs_clkstub.c',
+   ]
+
+dcvs_lib_obj = env.Object(DCVS_LIB_SOURCES)
+dcvs_lib = env.Library('${BUILDPATH}/dcvs', dcvs_lib_obj)
+
+DCVS_MARKER_SOURCES = [
+   '${BUILDPATH}/src/common/dcvs_marker.c',
+   ]
+
+dcvs_marker_obj = env.Object(DCVS_MARKER_SOURCES)
+dcvs_marker_lib = env.Library('${BUILDPATH}/dcvsmarker', dcvs_marker_obj)
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE'], dcvs_lib)
+env.AddLibsToImage(['QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'], dcvs_lib)
+
+# Mdm9k the Modem builds as APPS_IMAGE and Modem Controller builds as MODEM_IMAGE
+# so we are mapping the Modem Controller to the marker implementation.
+if env['MSM_ID'] in ['9x00']:
+  env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'modem'], dcvs_marker_lib)
+else: 
+  env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'modem'], dcvs_lib)
+
+env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], dcvs_lib)
+
+env.AddLibsToImage(['CORE_GSS'], dcvs_lib)
+
+#-------------------------------------------------------------------------------
+# Register with RCINIT framework so that it can call our init functions.
+#-------------------------------------------------------------------------------
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE', 'CORE_MODEM', 'CORE_QDSP6_SW', 'CORE_GSS']
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'init_name'                  : 'core_cpu',
+      'init_function'              : 'CoreCpuInitialize',
+      'dependencies'               : ['npa','icbarb']
+    })
+  env.AddRCInitFunc(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_6',
+      'init_name'                  : 'dcvs',
+      'init_function'              : 'DCVSInitialize',
+      'dependencies'               : ['npa','fs','core_cpu']
+    }) 
+
+#-------------------------------------------------------------------------------
+# Register SW events with the QDSS Tracer framework.
+#--------------------------------------------------------------------------
+if 'USES_QDSS_SWE' in env:
+  env.Append(CCFLAGS = " -DDCVS_TRACER_SWEVT")
+  QDSS_IMG = ['QDSS_EN_IMG']
+  events = [['DCVS_CPU_FREQUENCY_UPDATE', 'DCVS Update: CPU clock=%lu kHz bandwidth=%lu Mbps'],
+            ['DCVS_CPU_UTILIZATION_UPDATE', 'DCVS CPU utilization update']]
+  env.AddSWEInfo(QDSS_IMG, events)
+
+if 'QDSS_TRACER_SWE' in env: #if SWE builder is loaded call builder
+    env.SWEBuilder(['../inc/dcvs_tracer_event_ids.h'],None)   
+

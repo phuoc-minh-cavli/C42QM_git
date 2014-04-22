@@ -1,0 +1,72 @@
+#===============================================================================
+#
+# FDS (Flash Driver Service) QMI APIs
+#
+# GENERAL DESCRIPTION
+#    Build script
+#
+# Copyright (c) 2013-2014 Qualcomm Technologies, Inc.  All Rights Reserved.
+# Qualcomm Technologies Proprietary and Confidential.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/fotatools/2.0/online/clade2/build/clade2.scons#1 $
+#  $DateTime: 2020/12/17 01:25:12 $
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/26/13   pm      Baseline version
+#===============================================================================
+Import('env')
+env = env.Clone()
+from glob import glob
+from os.path import join, basename, exists
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CFLAGS = "--gnu")
+print env
+# ------------------------------------------------------------------------------
+# Include Paths
+#---------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# APIs needed to build the FDS APIs
+#-------------------------------------------------------------------------------
+
+# Should be first
+env.RequirePublicApi([
+  'COMMON',
+  ])
+
+env.RequirePublicApi([
+  'MPROC',
+  ], area='CORE')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+# Construct the list of source files by looking for *.c
+FDS_C_SOURCES = ['${BUILDPATH}/' + basename(fname)
+                 for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Add our library to the following build tags:
+#   QMIMSGS_MPSS and MODEM_MODEM(deprecated for QMI) for MPSS images
+#   QMIMSGS_APSS_TN and MODEM_APPS(deprecated for QMI) for APSS.TN images
+env.AddBinaryLibrary (['QMIMSGS_MPSS','MODEM_MODEM',
+                 'QMIMSGS_APSS_TN','MODEM_APPS','TXM_MODULES'], 
+                 '${BUILDPATH}/fota_clade2', [FDS_C_SOURCES])
+
+# Load test units
+env.LoadSoftwareUnits()

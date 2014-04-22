@@ -1,0 +1,168 @@
+#===============================================================================
+#
+# Thermal Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2011-2014,2019 by QUALCOMM Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header$
+#  $DateTime$
+#  $Author$
+#  $Change$
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/15/13   clm     Added support to query commands/TLVs supported by service
+# 08/30/11   clm     Initial version.
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# On WLAN.HL.1.0, it is not possible to compile this driver in the Root PD, as
+# there are no modem components present in the build tree.  There are two variants
+# that will generate a Root PD, which need to be skipped.  These variants are not
+# POR and were for prototyping only, but this bypass will be left in place for the
+# time being.
+if env['BUILD_ID'] in ['8998.wlan_core.testQ','QCAHLAWPQ']:
+   Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/power/thermal/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#------------------------------------------------------------------------------
+# Add extension flags
+#------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'HWENGINES',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'STORAGE',
+   'MPROC',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi([
+  'TMD','TS','COMMON',
+  ], area='API')
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+iscore_build = 0
+if 'USES_NO_MODEM' in env or 'USES_GNSS_ONLY_NO_WWAN' in env:
+  env.PrintInfo('Core only Limits Core SW build')
+  iscore_build = 1
+else:
+  env.PrintInfo('Not a Core only build. Safe to enable QFE_PA in Limits Core SW')
+  env.RequirePublicApi(['COMMON','CDMA','WCDMA','MEAS','LTE','GSM','GNSS',], area='RFA')
+  env.RequirePublicApi(['MMCP',], area='MMCP')
+  env.RequirePublicApi(['RFLM',], area='RFLM')
+  env.RequirePublicApi(['MCS',], area='MCS')
+  env.RequirePublicApi(['GERAN',], area='GERAN')
+  env.RequirePublicApi(['GERAN',], area='FW')
+  env.RequirePublicApi(['MCFG',], area='MCFG')
+  env.RequirePublicApi(['LTE',], area='LTE')
+
+env.RequireProtectedApi(['CORE_API_KERNEL'])
+env.RequireProtectedApi(['POWER_UTILS'])
+env.PublishProtectedApi('THERMAL_INC', ["${INC_ROOT}/core/power/thermal/inc"])
+
+if env['MSM_ID'] in ['9205']:
+  env.Append(CPPDEFINES = ['-DTHERMAL_CPR_COLD', 'TSENS_OFFLINE_MODEM=4'])
+  if iscore_build == 0:
+    env.PrintInfo('Enable QFE_PA')
+    env.Append(CPPDEFINES = ['-DQFE_PA'])
+else:
+  env.Append(CPPDEFINES = ['TSENS_OFFLINE_MODEM=0'])
+
+
+if 'USES_THERMAL' in env:
+    if 'USES_RCINIT' in env:
+        RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW']
+        env.AddRCInitTask(
+           RCINIT_IMG,
+             {
+                'sequence_group'            : 'RCINIT_GROUP_7',             # required
+                'thread_name'               : 'thermal',                    # required
+                'stack_size_bytes'          : '8192',                       # required
+                'priority_amss_order'      : 'THERMAL_PRI_ORDER',           # required
+                #'stack_name'               : 'thermal_stack',              # opt
+                'thread_entry'              : 'thermal_task',               # opt
+                'tcb_name'                  : 'thermal_tcb',                # opt
+                'cpu_affinity'              : 'REX_ANY_SMT_MASK',
+             })
+
+#-------------------------------------------------------------------------------
+# Target-specific setup
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+if 'USES_THERMAL' in env:
+    THERMAL_MODEM_SOURCES =  [
+        '${BUILDPATH}/common/therm_log.c',
+        '${BUILDPATH}/common/therm_monitor.c',
+        '${BUILDPATH}/common/therm_config.c',
+        '${BUILDPATH}/common/therm_mitigation_device_service.c',
+        '${BUILDPATH}/common/therm_sensor_service.c',
+        '${BUILDPATH}/common/thermal_mitigation_device_service_impl_v01.c',
+        '${BUILDPATH}/common/thermal_sensor_service_impl_v01.c',            
+        '${BUILDPATH}/os/${PLAT}/therm_os.c',
+        '${BUILDPATH}/target/therm_npa_sensor.c',
+        '${BUILDPATH}/target/therm_npa_mitigate.c',
+        '${BUILDPATH}/target/therm_target.c',
+        '${BUILDPATH}/target/default_config.c',
+     ]
+THERMAL_TINY_MODEM_SOURCES =  [
+        '${BUILDPATH}/common/therm_log.c',
+        '${BUILDPATH}/common/therm_monitor.c',
+        '${BUILDPATH}/common/therm_config.c',
+        '${BUILDPATH}/os/${PLAT}/therm_os.c',
+        '${BUILDPATH}/target/therm_npa_sensor.c',
+        '${BUILDPATH}/target/therm_npa_mitigate.c',
+        '${BUILDPATH}/target/therm_target.c',
+     ]
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if 'USES_THERMAL' in env:
+    env.AddLibrary(
+      ['CORE_MODEM', 'CORE_QDSP6_SW'],
+      '${BUILDPATH}/thermal_modem', THERMAL_MODEM_SOURCES)
+    env.AddLibrary(
+      ['MODEM_PAGEONLY','MODEM_SENSORONLY'],
+      '${BUILDPATH}/thermal_modem', THERMAL_TINY_MODEM_SOURCES)
+

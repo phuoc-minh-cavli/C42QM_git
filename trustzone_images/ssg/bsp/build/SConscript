@@ -1,0 +1,37 @@
+#===============================================================================
+#
+# CBSP Build system
+#
+# GENERAL DESCRIPTION
+#    Calls the actual Image scripts
+#
+# Copyright 2009, 2011, 2016 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ssg.tz/1.1.3/bsp/build/SConscript#1 $
+#  $DateTime: 2019/05/23 05:32:51 $
+#  $Author: pwbldsvc $
+#  $Change: 19292046 $
+#===============================================================================
+from SCons.Script import BUILD_TARGETS
+
+Import('env')
+
+pyfiles = env.Glob('scripts/*.py')
+ldfiles = env.Glob('scripts/*.ld')
+txtfiles = env.Glob('scripts/*.txt')
+bin_files = ['scripts/bin/linux/minkidl', 'scripts/bin/win/minkidl.exe']
+
+env.Deploy(pyfiles + ldfiles + txtfiles + bin_files)
+
+# Install validated_metabuild.json to build/ms/bin/... for unit testing
+metabuild_json = env.File("validated_metabuild.json")
+if metabuild_json.exists():
+    installed_json = env.Install(
+        "${BUILD_ROOT}/build/ms/bin/${SHORT_BUILDPATH}", metabuild_json)
+    env.Alias("metajson", installed_json)
+    COMMAND_LINE_TARGETS.append("metajson")
+    BUILD_TARGETS.append("metajson")

@@ -1,0 +1,84 @@
+#===============================================================================
+#
+# Quartz AU, Net SU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2015-2021 by Qualcomm Atheros, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+
+#env.Append(CPPDEFINES = 'ENABLE_SSL')
+#env.Append(CPPDEFINES = 'SNTP_CLIENT')
+#env.Append(CPPDEFINES = 'DNS_SERVER')
+#env.Append(CPPDEFINES = 'TIMER_OPERATION_API_AVAILABLE')
+
+SRCPATH = '${BUILD_ROOT}/dataservices/drivers'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Configure for high space optimizations
+#env.Replace(ARMCC_OPT="-Ospace -O3")
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi(['UTILS'], area='dataservices')
+
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi('UTILS_EXT')
+
+#'${INC_ROOT}/dataservices/netservice/ipstack/nichestack/4.10/h',
+
+env.RequirePublicApi(['DATASERVICES_NET'])
+env.RequireRestrictedApi(['NET_UTILS'])
+
+env.RequirePublicApi([
+        'NICHESTACK',
+        ])
+
+# Needed for RNG
+#env.RequirePublicApi(['CRYPTOLIB'], area='crypto')
+#env.RequirePublicApi(['CRYPTO_PORT'], area='quartz')
+
+#env.RequirePublicApi(['CRYPTOLIB'])
+#env.RequirePublicApi(['CRYPTO_PORT'])
+
+
+ROM_SOURCES = [
+
+	'${BUILDPATH}/rmnet_bam/src/rmnet_bam.c',
+	'${BUILDPATH}/rmnet_bam/src/ecm_inf.c',
+]
+
+TX_SOURCES = [ ROM_SOURCES, ]
+
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/drivers'), TX_SOURCES)
+env.LoadSoftwareUnits()
+
+# Treat compiler warnings as errors!
+#env.Append(CCFLAGS = "--diag_error=warning")
+

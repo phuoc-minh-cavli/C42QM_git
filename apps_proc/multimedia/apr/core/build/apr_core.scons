@@ -1,0 +1,18 @@
+#=================================================================
+# APR_CORE SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+SRCPATH = "${BUILD_ROOT}/multimedia/apr/core"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+APR_CORE_SOURCES = [   
+  '${BUILDPATH}/src/apr_main.c',
+  '${BUILDPATH}/src/aprv2_drv.c',
+  '${BUILDPATH}/src/aprv2_rtable.c',
+]
+
+IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW', 'MULTIMEDIA_APPS']
+env.AddLibrary(IMAGES, ('${BUILDPATH}/apr/apr_core'), APR_CORE_SOURCES)

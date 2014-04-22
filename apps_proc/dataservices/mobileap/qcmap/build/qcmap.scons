@@ -1,0 +1,116 @@
+#===============================================================================
+#
+# QCMAP Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/mobileap/qcmap/build/qcmap.scons#3 $
+#  $DateTime: 2021/09/24 01:00:32 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+#===============================================================================
+Import('env')
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('DPM', area='qmimsgs')
+	env.RequirePublicApi('WDA', area='qmimsgs')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+	env.RequirePublicApi('NAS', area='qmimsgs')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('DPM', area='API')
+env.RequirePublicApi('WDA', area='API')
+env.RequirePublicApi('WDS', area='API')
+env.RequirePublicApi('NAS', area='API')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('DSS_NET', area='dataservices')
+env.RequirePublicApi('QAPI', area='dataservices')
+env.RequirePublicApi(['QCMAP'],area='dataservices')
+env.RequirePublicApi('QCMAP_EXT')
+env.RequirePublicApi('UTILS')
+
+
+QCMAP_RESTRICTED_APIS = [
+  'DS_UTILS',
+  'NETMGR',
+  'QTI',
+  'DATA_UTIL_COMMON',
+  'DATA_UTIL_LIST',
+  'DATA_UTIL_SYNC',
+  'DATA_UTIL_MEMORY',
+  'DATA_UTIL_CONFIG',
+  'DATA_UTIL_BIT',
+  'DS_UTILS'
+  ]
+
+env.RequireRestrictedApi(QCMAP_RESTRICTED_APIS)
+
+SRCPATH = '${BUILD_ROOT}/dataservices/mobileap/qcmap/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+QCMAP_SOURCES = [
+  '${BUILDPATH}/qcmap_main.c',
+  '${BUILDPATH}/qcmap_cmdq.c',
+  '${BUILDPATH}/qcmap_qti.c'
+]
+
+IMAGES = ['APPS_PROC','MOB_DATASERVICES']
+env.AddLibrary(IMAGES, ('${BUILDPATH}/qcmap'), QCMAP_SOURCES)
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QCMAP_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_2',           # required
+  'init_name'                  : 'qcmap',                      # required
+  'init_function'              : 'qcmap_task_init',           # required
+  'dependencies'               : ['smd']
+}
+
+RCINIT_INIT_QCMAP_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_2',          # required
+  'thread_name'                : 'qcmap_task',                 # required
+  'thread_entry'               : 'qcmap_task_entry',           
+  'stack_size_bytes'           : '16384',
+  'priority_amss_order'        : '60'
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QCMAP_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QCMAP_TASK )
+  
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = "--diag_error=warning")

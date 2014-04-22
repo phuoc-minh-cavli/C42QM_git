@@ -1,0 +1,50 @@
+#----------------------------------------------------------------------------
+# Copyright (c) 2014 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+# FILE:            core/debugtrace/cti/dal/build/ctidal.scons
+#
+# DESCRIPTION:     SCons for CTI DAL Interface.
+#
+#
+# EDIT HISTORY FOR MODULE
+# ---------------------------------------------------------------------------
+#
+# when         who         what, where, why
+# ----------   -------     -----------------
+# 2014-01-24   rpoddar     Initial revision.
+#
+#----------------------------------------------------------------------------
+
+Import('env')
+
+#----------------------------------------------------------------------------
+# Source PATH
+#----------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(['HAL', 'DAL', 'DEBUGTRACE', 'SERVICES', 'KERNEL'])
+env.RequireRestrictedApi(['DEBUGTRACE'])
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+config = env['QDSS_MSM_CONFIG']
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+CTI_DAL_SRC = ['${BUILDPATH}/DalCTI.c']
+
+env.AddLibrary(['APPS_PROC'], '${BUILDPATH}/cti_dal', CTI_DAL_SRC)
+
+CTI_CFG_SRC = ['../../config/' + config + '/cti_config.c']
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+   'devcfg_xml' : ['../../config/'+ config +'/dalcti.xml',
+                   '../../config/'+ config +'/cti_config.c']
+   })
+
+   # env.AddLibrary(DEVCFG_IMG, '${BUILDPATH}/cti_cfg', CTI_CFG_SRC)

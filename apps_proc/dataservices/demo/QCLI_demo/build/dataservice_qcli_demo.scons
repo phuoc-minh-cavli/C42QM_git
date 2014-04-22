@@ -1,0 +1,212 @@
+#===============================================================================
+#
+# Dataservices CLI_DEMO
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2017-2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_QCLI' not in env:
+	env.AddUsesFlags('QCLI_DISABLED')
+
+if 'QCLI_DISABLED' in env:
+	Return()
+	
+if 'USES_ENABLE_LWM2M_APN_OBJ' not in env:
+	env.AddUsesFlags('USES_ENABLE_LWM2M_APN_OBJ')
+
+if 'USES_ENABLE_LWM2M_APN_OBJ' in env:
+	env.Append(CPPDEFINES = 'LWM2M_ENABLE_APN_OBJ')
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.Append(CPPDEFINES = 'INCLUDE_SSLDEMO')
+	env.Append(CPPDEFINES = 'ENABLE_SSL')
+
+#env.Append(CPPDEFINES = 'SNTP_CLIENT')
+#env.Append(CPPDEFINES = 'DNS_SERVER')
+#env.Append(CPPDEFINES = 'TIMER_OPERATION_API_AVAILABLE')
+env.Append(CPPDEFINES = 'FX_FILEX_PRESENT')
+
+if 'USES_SECUREMSM_DEBUG_EXTN' in env:
+    env.Append(CPPDEFINES = [
+     "ENABLE_SECUREMSM_QCLI_HOOKS",
+     ])
+
+SRCPATH = '${BUILD_ROOT}/dataservices/demo/QCLI_demo'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+# Configure for high space optimizations
+#env.Replace(ARMCC_OPT="-Ospace -O3")
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('COMMON', area='api')
+env.RequirePublicApi('STORAGE_FILESYSTEM', area='core')
+env.RequirePublicApi('STORAGE_FLASH', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('WDS', area='API')
+env.RequirePublicApi(['DSS_NET'],area='dataservices')
+env.RequirePublicApi(['QAPI'])
+env.RequirePublicApi(['PSM_CLIENT'], area="ril")
+env.RequirePublicApi(['QCMAP'], area='dataservices') 
+env.RequirePublicApi('UTILS_EXT')
+env.RequireRestrictedApi(['QCLI_DEMO'])
+env.RequirePublicApi('QCMAP_EXT')
+env.RequirePublicApi('ATFWD_EXT')
+env.RequirePublicApi('LOCATION_API', area='location')
+env.RequirePublicApi(['DATASERVICES_NET_IPSTACK'])
+DATASERVICES_RESTRICTED_APIS = [
+    'DS_UTILS',
+    ]
+env.RequirePublicApi('UTILS')
+env.RequireRestrictedApi(DATASERVICES_RESTRICTED_APIS)
+
+env.RequireRestrictedApi(['NET_UTILS'])
+
+env.RequirePublicApi([
+        'NICHESTACK',
+        'SHARKSSL',
+        'MISC_NETSERVICES',
+        ])
+
+# Needed for RNG
+#env.RequirePublicApi(['CRYPTOLIB'], area='crypto')
+#env.RequirePublicApi(['CRYPTO_PORT'], area='quartz')
+
+#env.RequirePublicApi(['CRYPTOLIB'])
+#env.RequirePublicApi(['CRYPTO_PORT'])
+
+
+CLI_SOURCES = [
+    '${BUILDPATH}/src/qcli/pal.c',
+    '${BUILDPATH}/src/qcli/qcli.c',
+    '${BUILDPATH}/src/net/netcmd.c',
+	'${BUILDPATH}/src/core/common.c',
+	'${BUILDPATH}/src/core/heap_demo.c',
+    '${BUILDPATH}/src/net/netutils.c',
+    '${BUILDPATH}/src/net/dss_netapp.c',
+    '${BUILDPATH}/src/net/psm_demo.c',
+    '${BUILDPATH}/src/net/bench.c',
+    '${BUILDPATH}/src/net/ssl_demo.c',
+     '${BUILDPATH}/src/net/cert_demo.c',
+    '${BUILDPATH}/src/net/mobileap_app.c',
+    '${BUILDPATH}/src/net/httpc_demo.c',
+    '${BUILDPATH}/src/net/mqtt_cli_app.c',
+    '${BUILDPATH}/src/net/mqtt_cmd.c',
+	'${BUILDPATH}/src/net/coap_cmd.c',
+	'${BUILDPATH}/src/net/device_info_cmd.c',
+	'${BUILDPATH}/src/net/net_debug_cmd.c',
+	'${BUILDPATH}/src/atfwd/atfwd_cli_app.c',
+	'${BUILDPATH}/src/net/multi_app_cmdq_1.c',
+	'${BUILDPATH}/src/net/multi_app_cmdq_2.c',
+	'${BUILDPATH}/src/net/multi_app_test.c',
+	'${BUILDPATH}/src/net/cli_cpu_profile.c',
+	'${BUILDPATH}/src/version/version_cli_app.c'
+]
+
+CLI_NO_SHIP_SOURCES = [
+    '${BUILDPATH}/src/qcli/pal.c',
+    '${BUILDPATH}/src/qcli/qcli.c',
+    '${BUILDPATH}/src/net/netcmd.c',
+    '${BUILDPATH}/src/net/netutils.c',
+    '${BUILDPATH}/src/net/dss_netapp.c',
+    '${BUILDPATH}/src/net/bench.c',
+    '${BUILDPATH}/src/net/ssl_demo.c',
+    '${BUILDPATH}/src/net/cert_demo.c',
+	'${BUILDPATH}/src/net/mobileap_app.c',
+    '${BUILDPATH}/src/net/httpc_demo.c',
+    '${BUILDPATH}/src/net/mqtt_cli_app.c',
+    '${BUILDPATH}/src/net/mqtt_cmd.c',
+	'${BUILDPATH}/src/net/coap_cmd.c',
+	'${BUILDPATH}/src/net/device_info_cmd.c',
+	'${BUILDPATH}/src/atfwd/atfwd_cli_app.c',
+	'${BUILDPATH}/src/net/multi_app_cmdq_1.c',
+	'${BUILDPATH}/src/net/multi_app_cmdq_2.c',
+	'${BUILDPATH}/src/net/multi_app_test.c',
+	'${BUILDPATH}/src/net/cli_cpu_profile.c',
+	'${BUILDPATH}/src/version/version_cli_app.c'
+	]
+if 'USES_MINI_QCLI' in env:
+	CLI_MINI_SOURCES = [
+		'${BUILDPATH}/src/qcli/pal.c',
+		'${BUILDPATH}/src/qcli/qcli.c',
+		'${BUILDPATH}/src/net/netcmd.c',
+		'${BUILDPATH}/src/core/common.c',
+		'${BUILDPATH}/src/core/heap_demo.c',
+		'${BUILDPATH}/src/net/netutils.c',
+		'${BUILDPATH}/src/net/dss_netapp.c',
+		'${BUILDPATH}/src/net/bench.c',
+		'${BUILDPATH}/src/net/ssl_demo.c',
+		    '${BUILDPATH}/src/net/cert_demo.c',
+               '${BUILDPATH}/src/net/coap_cmd.c',
+	       '${BUILDPATH}/src/net/multi_app_cmdq_1.c',
+     	       '${BUILDPATH}/src/net/multi_app_cmdq_2.c',
+	       '${BUILDPATH}/src/net/multi_app_test.c'
+	]
+
+if 'USES_ENABLE_LWM2M' in env:
+	LWM2M_DEMO_SOURCES = [
+		'${BUILDPATH}/src/lwm2m/ext_object_test_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/fota_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/devicecap_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/software_mgnt_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/utils_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/lwm2m_main_demo_v2.c',
+		'${BUILDPATH}/src/lwm2m/device_stub_app_v2.c',
+		'${BUILDPATH}/src/lwm2m/cell_con_app_v2.c',
+	]
+
+if 'USES_ENABLE_LWM2M_APN_OBJ' in env:
+	LWM2M_DEMO_APN_SOURCES = [
+		'${BUILDPATH}/src/lwm2m/apn_info_app_v2.c',
+	]
+			
+IMAGES = ['DATA_TN', 'APPS_PROC']
+
+if 'USES_EXT_BUILD_FLAVORS' in env:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/qcli_demo'), CLI_NO_SHIP_SOURCES)
+elif 'USES_MINI_QCLI' in env:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/qcli_demo'), CLI_MINI_SOURCES)
+else:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/qcli_demo'), CLI_SOURCES)
+	
+if 'USES_ENABLE_LWM2M' in env and 'USES_MINI_QCLI' not in env:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/lwm2m_qcli_demo'), LWM2M_DEMO_SOURCES)
+if 'USES_ENABLE_LWM2M_APN_OBJ' in env and 'USES_MINI_QCLI' not in env:
+	env.AddLibrary(IMAGES, ('${BUILDPATH}/lwm2m_apn_qcli_demo'), LWM2M_DEMO_APN_SOURCES)
+
+# Treat compiler warnings as errors!
+#env.Append(CCFLAGS = "--diag_error=warning")
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_4',           # required
+  'init_name'                  : 'qcli_app_start',           # required
+  'init_function'              : 'qcli_app_start',          # required
+  'dependencies'               : ['pal']
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )
+
+env.LoadSoftwareUnits()

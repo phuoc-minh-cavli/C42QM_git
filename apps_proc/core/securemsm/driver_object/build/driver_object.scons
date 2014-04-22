@@ -1,0 +1,66 @@
+#===============================================================================
+#                    Copyright 2011 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/driver_object/src/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/securemsm/driver_object/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",            # needed for _txm_module_manager_file_load symbol visibility
+   "TX_DAM_QC_CUSTOMIZATIONS",
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SERVICES',
+   'STORAGE',
+   'MINK',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+
+env.Append(CFLAGS="--gnu --c99")
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+DRIVER_OBJECT_LIB_SOURCES =  [
+   '${BUILDPATH}/driver_object.c',
+]
+
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/build/driver_object', DRIVER_OBJECT_LIB_SOURCES)
+
+env.CleanPack(IMAGES, ["${BUILDPATH}/atomic_ops_port.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/driver_object.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/heap.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/heap_port.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/securemsm_utils.h"])
+env.CleanPack(IMAGES, ["${BUILDPATH}/ObjectTableMT.h"])

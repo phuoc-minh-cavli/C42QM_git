@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+    <NvConfigurationData carrierIndex="0" version="" type="1"/>
+  <NvEfsItemData name="ims_iot_rm_config" id="74129" description="IMS IOT RM and PM Configurations" comment="" category="" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/ims/ims_iot_rm_config">
+    <Member name="Version" description="Version History" comment="" sizeOf="1" type="uint32">2</Member>
+    <Member name="IMS_Service_Info_LTE" description="IMS Service Info on LTE RAT" comment="" sizeOf="1" type="int32">3</Member>
+    <Member name="IMS_Service_Info_LTE_No_Vops" description="IMS Service Info on No VOPS LTE RAT" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="IMS_Service_Info_LTE_Roam" description="IMS Service Info on Roaming" comment="" sizeOf="1" type="int32">3</Member>
+    <Member name="IMS_Service_Info_LTE_No_Vops_Roam" description="IMS Service Info on Roaming with no VOPS" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Auth_Reg_mode" description="Authentication Reg mode" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Auth_Scheme" description="Authentication Scheme" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="IP_Type_Info" description="IP Type for Registration" comment="" sizeOf="1" type="int32">27</Member>
+    <Member name="PCSCF_Priority" description="PCSCF Priority for Registration" comment="" sizeOf="1" type="int32">197121</Member>
+    <Member name="PCSCF_Server_Address" description="PCSCF Address to be used for registration" comment="" sizeOf="256" type="string"></Member>
+    <Member name="PCSCF_Server_Port" description="PCSCF Server port to be used" comment="" sizeOf="1" type="int32">5060</Member>
+    <Member name="APN_Name" description="IMS APN Name" comment="" sizeOf="104" type="string">ims</Member>
+    <Member name="Domain_Name" description="IMS Domain name" comment="" sizeOf="64" type="string"></Member>
+    <Member name="Pdn_Retry_Long_Timer" description="PDN Retry Long timer in sec" comment="" sizeOf="1" type="int32">600</Member>
+    <Member name="Pdn_Retry_Internal_Timer" description="PDN Retry internal timer in sec" comment="" sizeOf="1" type="int32">5</Member>
+    <Member name="Pdn_Retry_Short_Timer" description="PDN Retry short timer in sec" comment="" sizeOf="1" type="int32">60</Member>
+    <Member name="Network_Initiated_De_Registration_Timer" description="Network initiated DeReg timer in sec" comment="" sizeOf="1" type="int32">60</Member>
+    <Member name="Permanent_Failure_Exit_Timer" description="Permanent Reg Failure timer in sec" comment="" sizeOf="1" type="int32">86400</Member>
+    <Member name="Reg_Retry_Base_Timer" description="Reg_Retry_Base_Timer" comment="" sizeOf="1" type="int32">30</Member>
+    <Member name="Reg_Retry_Max_Timer" description="Registration Retry max timer in sec" comment="" sizeOf="1" type="int32">1800</Member>
+    <Member name="Max_PDN_Intermediate_Retries" description="Max number of PDN intermediate retries" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Max_PCSCF_Discovery_Retries" description="Max num of PCSCF discovery retries" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Max_PDN_Failure_Linear_Retries" description="Max number of PDN linear retries" comment="" sizeOf="1" type="int32">15</Member>
+    <Member name="Max_PDN_Failure_Telescopic_Retries" description="Max number of PDN telescopic retries" comment="" sizeOf="1" type="int32">9</Member>
+    <Member name="Max_Registration_Retries" description="Max number of Reg retries" comment="" sizeOf="1" type="int32">3</Member>
+    <Member name="Subscribe_Register_Event" description="Subscription for reg event flag" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Register_Expires" description="Registration expiry in sec" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Subscribe_Expires" description="subscription for reg event expiry in sec" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Private_IP_Enable" description="Private IP enable flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="APCS_Enable" description="AutoConfig enable flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="VOLTE_Enable" description="VoLTE enable flag" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="SMS_Over_IP_Enable" description="SMS over IP enable flag" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="USSD_Enable" description="USSD enable flag" comment="" sizeOf="1" type="int32">0</Member>
+	<Member name="Discard_PSM_Reg_On_TCP" description="Discard Register PSM data On TCP" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Reserved" description="Reserved bytes" comment="" sizeOf="476" type="string"></Member>
+  </NvEfsItemData> 
+</NvData> 

@@ -1,0 +1,33 @@
+#include "dbg_cfg.h"
+
+/*
+typedef struct dbg_cfg_data_s{
+  uint32_t sec_wdog_base_addr;
+  uint32_t nsec_wdog_status_reg_addr;
+  uint32_t apss_shared_tz_ipc_interrupt_reg_addr;
+  uint32_t reset_dbg_reg_addr;
+  uint16_t sec_wdog_bark_int_id;
+  uint16_t nsec_wdog_bite_int_id;
+  uint16_t rpm_wdog_bite_int_id;
+  uint16_t rpm_err_ind_int_id;
+  uint16_t max_dump_collection_time_in_ms;
+} dbg_cfg_data_t;  
+*/
+<driver name="NULL">
+   <device id="dbg_cfg">
+      <props id=1 type="dbg_cfg_data_t">
+         {
+            0x004AA000,  /* WDOG_RESET_REG */
+            0x0B01700C,  /* APCS_WDT_WDOG_STATUS */
+            0x0B008044,  /* APCS_TZIPC_INTERRUPT */
+            0x01814000,  /* GCC_RESET_DEBUG */
+            213,         /* Sec Wdog Bark interrupt id */
+            18,          /* NSec Wdog Bite interrupt id */
+            269,         /* RPM Wdog Bite interrupt id */
+            206,         /* RPM Err Ind interrupt id */
+            2500,        /* Worst case dump collection time in ms. Let's keep less for MDM target.
+                            APQ will time out in 3 sec waiting for MDM GPIO reset. */
+         }
+      </props>
+   </device>
+</driver>

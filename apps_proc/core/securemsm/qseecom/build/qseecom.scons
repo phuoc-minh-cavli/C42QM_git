@@ -1,0 +1,33 @@
+#===============================================================================
+#
+# RTOS Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#===============================================================================
+
+Import('env')
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+
+if 'USES_QSEECOM' not in env:
+    #-------------------------------------------------------------------------------
+    # Pack info
+    #-------------------------------------------------------------------------------
+    CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/driver/src/")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/qseecom_listeners_module/src/")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/qseecom_listeners_module/src/tzservices/fs")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/qseecom_listeners_module/src/tzservices/tzcommon/inc")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/listeners/src/")
+    CLEAN_SOURCES += env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/qseecom/listeners/inc/")
+
+    env.CleanPack(IMAGES, CLEAN_SOURCES)
+
+    Return()
+
+env.LoadSoftwareUnits()

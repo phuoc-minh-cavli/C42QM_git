@@ -1,0 +1,7 @@
+
+
+
+Import('env')
+
+env.PublishRestrictedApi('TS_M2M_COMMON', ["${INC_ROOT}/dataservices/iot_app/common/inc"])
+env.LoadAPIUnits()

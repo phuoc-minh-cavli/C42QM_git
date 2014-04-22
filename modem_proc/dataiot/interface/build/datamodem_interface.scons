@@ -1,0 +1,94 @@
+#===============================================================================
+#
+# Modem wrapper script
+#
+# GENERAL DESCRIPTION
+#    build script to load modem data software units
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/interface/build/datamodem_interface.scons#2 $
+#  $DateTime: 2021/01/08 07:47:06 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ------ ---------------------------------------------------
+# 08/31/10   ack     Initial revision
+#
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+#env.Replace(MSVC_WARN = '/W3 /WX /wd4013 /wd4005')
+hexagon_rtos_release = env.get('HEXAGON_RTOS_RELEASE')
+hexagon_major_release = hexagon_rtos_release.split(".")[0]
+if 'USES_MOB' not in env:
+  if hexagon_major_release == "6":
+    env.Append(CCFLAGS = ' -Werror-high -Werror-medium')
+    env.Append(CXXFLAGS = ' -Werror-high -Werror-medium')
+
+  if hexagon_major_release >= "8":
+    env.Append(HEXAGONCC_WARN = ' -Wno-tautological-pointer-compare ')
+
+#Enable internal flags!
+env.Replace(USES_DATAMODEM_DSS_PING = True)
+env.Replace(USES_QMI_SERVICE_SPLIT = True)
+env.Replace(USES_DATAMODEM_NETIFACE = True)
+env.Replace(USES_DATAMODEM_NETIFACE_SOCK_REARCH = True)
+env.Replace(USES_DATAMODEM_QMI = True)
+if 'USES_DATA_IOE_LWG' not in env and 'USES_DATA_IOE_LONLY' not in env:
+  env.Replace(USES_DATAMODEM_QMI_QOS = True)
+env.Replace(USES_DATAMODEM_RMIFACECTLS = True)
+env.Replace(USES_MODEM_DATAMODEM_IPV6 = True)
+#env.Replace(USES_DATAMODEM_RMIFACECTLS_SLIP = True)
+env.Replace(USES_DATAMODEM_TASKS = True)
+env.Replace(USES_DATAMODEM_UTILS = True)
+env.Replace(USES_DATAMODEM_DSNET = True)
+env.Replace(USES_DATAMODEM_DSSVC = True)
+env.Replace(USES_DATAMODEM_DSSOCK = True)
+env.Replace(USES_DATAMODEM_DSS = True)
+env.Replace(USES_DATAMODEM_UTILS_SOCK_REARCH = True)
+env.Replace(USES_DATAMODEM_IFACECTLS_NAT = True)
+env.Replace(USES_DATAMODEM_QMI_NAT = True)
+
+if 'USES_DATAMODEM_SGLTE_FUSION' in env:
+  env.Replace(USES_DATA_MUX = True)
+  env.Replace(USES_DATA_QMI_QMUX = True)
+
+if ('USES_GSM' in env) or ('USES_UMTS' in env):
+    env.Replace(USES_DATAMODEM_QMI_UMTS = True)
+
+if 'USES_LTE' in env:
+    env.Replace(USES_DATAMODEM_QMI_LTE = True)
+
+if env['PRODUCT_LINE'] in ['MPSS.JO.3.0.2','MPSS.JO.3.0.3']:
+  env.Append(CPPDEFINES = ['FEATURE_NAS_DISABLE_VOICE'])
+
+import copy
+orig_env = env
+env = env.Clone()
+env['CFLAGS'] = copy.deepcopy(orig_env['CFLAGS'])
+
+# Eliminate all LLVM warnings!
+if env['CFLAGS'].count('-Wno-low') > 0:
+  env['CFLAGS'].remove('-Wno-low')
+
+if env['CFLAGS'].count('-Wno-medium') > 0:
+  env['CFLAGS'].remove('-Wno-medium')
+
+if env['CFLAGS'].count('-Wno-high') > 0:
+  env['CFLAGS'].remove('-Wno-high')
+
+if env['CFLAGS'].count('-Wno-error') > 0:
+  env['CFLAGS'].remove('-Wno-error')
+	
+env.LoadSoftwareUnits()

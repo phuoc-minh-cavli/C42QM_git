@@ -1,0 +1,57 @@
+#==============================================================================
+# Debug Agent Parser
+#
+# GENERAL DESCRIPTION
+#    Build script
+#
+#==============================================================================
+#  Copyright (c) 2013 Qualcomm Technologies, Inc.
+#  All rights reserved.
+#  Confidential and Proprietary - Qualcomm Technologies, Inc.
+#==============================================================================
+#
+#$Header: //components/rel/core.tx/6.0/debugtrace/agent/parser/build/da_parser.scons#1 $
+#
+#==============================================================================
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'DEBUGTRACE',
+    'SERVICES',
+    'SYSTEMDRIVERS',   #DDIChipInfo
+    'DAL',
+    'KERNEL',
+])
+
+env.RequireProtectedApi(['DEBUGTRACE'])   #tracer_config_int.h
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+DA_PARSER_SRC = [
+    '${BUILDPATH}/da_parser.c',
+    '${BUILDPATH}/dapar_action.c',
+    '${BUILDPATH}/dapar_cti.c',
+    '${BUILDPATH}/dapar_etm.c',
+    '${BUILDPATH}/dapar_hwe.c',
+    '${BUILDPATH}/dapar_info.c',
+    '${BUILDPATH}/dapar_odl.c',
+    '${BUILDPATH}/dapar_sink.c',
+    '${BUILDPATH}/dapar_stm.c',
+    '${BUILDPATH}/dapar_swt.c',
+    ]
+
+env.AddLibrary(['APPS_PROC'],
+    '${BUILDPATH}/da_parser', DA_PARSER_SRC)
+

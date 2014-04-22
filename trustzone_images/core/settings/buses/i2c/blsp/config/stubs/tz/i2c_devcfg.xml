@@ -1,0 +1,25 @@
+//===========================================================================
+//
+// FILE:         i2c_tz_stubs.xml
+//
+// DESCRIPTION:  This file contains the DAL XML properties for the QUPI2CPD
+//               Device Access Library.
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header:  $
+//
+// when       who     what, where, why
+// 01/10/19   ss      Created for Stubs
+// 04/28/16   vg      Added Configurable GPIO settings
+// 03/22/16   vg      Renamed the AHB anc Core clock
+// 02/29/16   vg      updated with latest xml entries
+// 10/13/15   vg      created
+//
+//===========================================================================
+//             Copyright c 2019 QUALCOMM Technologies Incorporated.
+//                    All Rights Reserved.
+//                  QUALCOMM Proprietary
+//===========================================================================

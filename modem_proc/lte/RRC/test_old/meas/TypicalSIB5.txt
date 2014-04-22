@@ -1,0 +1,72 @@
+TypicalSIB5_1:value BCCH-DL-SCH-Message ::= 
+{
+  message c1 : systemInformation : 
+      {
+        criticalExtensions systemInformation-r8 : 
+          {
+            sib-TypeAndInfo 
+            {
+              sib5 : 
+                {
+                  interFreqCarrierFreqList 
+                  {
+                    {
+                      dl-CarrierFreq 65535,
+                      q-RxLevMin -23,
+                      p-Max -30,
+                      t-ReselectionEUTRA 7,
+                      t-ReselectionEUTRA-SF 
+                      {
+                        sf-Medium oDot75,
+                        sf-High oDot75
+                      },
+                      threshX-High 10,
+                      threshX-Low 10,
+                      allowedMeasBandwidth mbw15,
+                      presenceAntennaPort1 TRUE,
+                      cellReselectionPriority 6,
+                      neighCellConfig '11'B,
+                      q-OffsetFreq dB-6,
+                      interFreqNeighCellList 
+                      {
+                        {
+                          physCellId 2,
+                          q-OffsetCell dB-20
+                        },
+                        {
+                          physCellId 3,
+                          q-OffsetCell dB-18
+                        },
+                        {
+                          physCellId 6,
+                          q-OffsetCell dB-14
+                        }
+                      },
+                      interFreqBlackCellList 
+                      {
+                        {
+                          physCellIdRange 
+                          {
+                            start 1
+                          }
+                        },
+                        {
+                          physCellIdRange 
+                          {
+                            start 5
+                          }
+                        },
+                        {
+                          physCellIdRange 
+                          {
+                            start 8
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+            }
+          }
+      }
+}

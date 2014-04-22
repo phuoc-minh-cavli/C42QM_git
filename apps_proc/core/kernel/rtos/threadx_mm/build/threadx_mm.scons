@@ -1,0 +1,104 @@
+#===============================================================================
+#                 Copyright 2011, 2020, 2022 Qualcomm Technologies Incorporated.
+#                             All Rights Reserved.
+#                          QUALCOMM Proprietary/GTDR
+#===============================================================================
+# THREADX Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+TX_SOURCE_PACK = env.FindFiles("*.h", "${BUILD_ROOT}/core/kernel/rtos/threadx_mm/src/")
+env.CleanPack(['APPS_IMAGES','CBSP_APPS_IMAGE'], TX_SOURCE_PACK)
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/rtos/threadx_mm"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "FX_FILEX_PRESENT",
+   "TX_ENABLE_IRQ_NESTING",
+   "TX_ENABLE_PROFILING",
+   "TX_DISABLE_NOTIFY_CALLBACKS",
+   "TX_DAM_QC_CUSTOMIZATIONS",
+   "TX3_CHANGES",
+   "QAPI_FS_DAM_FILE_SEPERATION",
+   "TXM_ENABLE_LAST_THREAD_INFO=1",
+   ])
+   
+if 'USES_TX_KERNEL_TRACE' in env:
+   env.Append(CPPDEFINES = [
+	 "TX_ENABLE_EVENT_TRACE"
+   ])
+   
+if 'USES_MODULE_MMU_CONTROL_ENABLE' in env:
+	env.Append(CPPDEFINES = [
+	"MODULE_MMU_CONTROL_ENABLE",
+	])
+	
+if 'USES_LLDB_ENABLE' in env:
+	env.Append(CPPDEFINES = [
+	"LLDB_FEATURE_ENABLED",
+	])
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'SERVICES',
+   'STORAGE',
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, librarie
+#-------------------------------------------------------------------------------
+THREADX_LIB_SOURCES =  [
+   '${BUILDPATH}/src/txm_module_manager_thread_stack_build.S',
+   '${BUILDPATH}/src/txm_module_manager_alignment_adjust.c',
+   '${BUILDPATH}/src/txm_module_manager_application_request.c',
+   '${BUILDPATH}/src/txm_module_manager_file_load.c',
+   '${BUILDPATH}/src/txm_module_manager_in_place_load.c',
+   '${BUILDPATH}/src/txm_module_manager_initialize.c',
+   '${BUILDPATH}/src/txm_module_manager_kernel_dispatch.c',
+   '${BUILDPATH}/src/txm_module_manager_maximum_module_priority_set.c',
+   '${BUILDPATH}/src/txm_module_manager_memory_load.c',
+   '${BUILDPATH}/src/txm_module_manager_object_pointer_get.c',
+   '${BUILDPATH}/src/txm_module_manager_object_pool_create.c',
+   '${BUILDPATH}/src/txm_module_manager_start.c',
+   '${BUILDPATH}/src/txm_module_manager_stop.c',
+   '${BUILDPATH}/src/txm_module_manager_thread_create.c',
+   '${BUILDPATH}/src/txm_module_manager_unload.c',
+   '${BUILDPATH}/src/txm_module_manager_user_mode_entry.S',
+   '${BUILDPATH}/src/txm_module_manager_object_allocate.c',
+   '${BUILDPATH}/src/txm_module_manager_util.c',
+   '${BUILDPATH}/src/txm_module_manager_object_pointer_get_extended.c',
+   '${BUILDPATH}/src/txm_module_manager_queue_notify_trampoline.c',
+   '${BUILDPATH}/src/txm_module_manager_semaphore_notify_trampoline.c',
+   '${BUILDPATH}/src/txm_module_manager_thread_notify_trampoline.c',
+   '${BUILDPATH}/src/txm_module_manager_timer_notify_trampoline.c',
+   '${BUILDPATH}/src/txm_module_manager_event_flags_notify_trampoline.c',
+   '${BUILDPATH}/src/txm_module_manager_callback_request.c',
+   '${BUILDPATH}/src/txm_module_manager_callback_handlers.c',
+   '${BUILDPATH}/src/txm_module_manager_object_deallocate.c',
+   '${BUILDPATH}/src/txm_module_manager_thread_reset.c',
+   '${BUILDPATH}/src/txm_module_manager_properties_get.c',
+   '${BUILDPATH}/src/txm_module_manager_internal_load.c',
+   '${BUILDPATH}/src/txm_module_manager_callback_trampoline.c',
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 
+     'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+     
+env.AddBinaryLibrary(IMAGES,'${BUILDPATH}/threadx_mm',THREADX_LIB_SOURCES )
+
+env.LoadSoftwareUnits()
+
+import os
+os.system("python ../../patch/scripts/build_TxDAM_patch.py ../../patch/scripts/")

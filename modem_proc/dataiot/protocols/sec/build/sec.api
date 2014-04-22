@@ -1,0 +1,14 @@
+Import('env')
+
+env.PublishPublicApi('DATAMODEM',   ["${INC_ROOT}/dataiot/protocols/sec/api/ipsec"])
+env.PublishPublicApi('DATAMODEM',    ["${INC_ROOT}/dataiot/protocols/sec/api/ssl"])
+env.PublishRestrictedApi('DATAMODEM', ["${INC_ROOT}/dataiot/protocols/sec/common/inc"])
+env.PublishRestrictedApi('DATAMODEM', ["${INC_ROOT}/dataiot/protocols/sec/ssl/shared/inc"])
+env.PublishRestrictedApi('DATAMODEM', ["${INC_ROOT}/dataiot/protocols/sec/ssl/chipset/inc"])
+
+#next line for with modem folder only
+env.PublishPublicApi('DATAMODEM',   ["${INC_ROOT}/dataiot/protocols/sec/api/ssl"])
+
+
+
+env.LoadAPIUnits()

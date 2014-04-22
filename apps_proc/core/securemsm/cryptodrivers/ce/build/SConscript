@@ -1,0 +1,51 @@
+#===============================================================================
+#
+# Crypto Driver Libraries
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/securemsm/cryptodrivers/ce/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/13/13    sy     Fixing 8x26 Pack compilation by not cleaning the whole ce/chipset directory 
+# 07/04/12    nk     Initial version
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+env.Replace(BUILDPATH = env.subst('${BUILDPATH}/${BUILD_ID}'))
+
+CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/cryptodrivers/ce/shared/src/")
+
+env.CleanPack(['APPS_IMAGE',   
+               'CBSP_APPS_IMAGE',], CLEAN_SOURCES)
+
+#  Cryptodriver Test files
+CLEAN_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/core/securemsm/cryptodrivers/ce/test")
+
+env.CleanPack(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 
+                      'APPS_IMAGE', 'CBSP_APPS_IMAGE',
+                      'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 
+                      'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 
+                      'WCN_IMAGE'], CLEAN_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load sub scripts
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+

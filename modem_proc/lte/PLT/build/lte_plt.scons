@@ -1,0 +1,121 @@
+#===============================================================================
+#
+# LTE PLT Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 10/18/16   mal     Enable PLT in S/P builds
+# 11/21/10   cguo    Initial version.
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_FEATURE_CATM1_DISABLE' in env:
+    Return()
+
+from glob import glob
+from os.path import join, basename, abspath
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('PLT', ['${INC_ROOT}/lte/PLT/src'])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last 
+    ], area='core')
+
+
+
+env.RequirePublicApi(['UTILS'])
+
+env.RequirePublicApi(['FW_LTE'], area='FW_LTE')
+
+
+env.RequireRestrictedApi(['UTILS'])
+env.RequireProtectedApi(['UTILS'])
+
+# Need to get access to LTE protected headers
+env.RequireProtectedApi([
+    'LTE',
+    ])
+
+env.RequireExternalApi('BREW')
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+# Add our UMID file
+if 'USES_MSGR' in env:
+   env.AddUMID('${BUILDPATH}/lte_plt.umid', ['../inc/lte_plt_msg.h'])
+
+if 'USES_LTE_PLT' in env:
+    # Load the PLT Script tool
+    env.LoadToolScript('lte_plt_builder', toolpath = [env.subst('${LTE_ROOT}/PLT/build')])
+
+    # Run the PLT Script tool
+    if env.PathExists('../../../fw_lte/build') and not env.PathExists('../../../fw/lte/build'):
+        fw_lte_path = '../../../fw_lte/build'
+    elif env.PathExists('../../../fw/fw_lte/build'):
+        fw_lte_path = '../../../fw/fw_lte/build'
+    elif env.PathExists('../../../fw/api/build'):
+        fw_lte_path = '../../../fw/api/build'
+    else:
+        fw_lte_path = '../../../fw/lte/build'  
+
+    header_input = SRCPATH + '/lte_plt_autogen_pack_unpack.h'
+    autogen_src  = '${BUILDPATH}/lte_plt_autogen_pack_unpack.foo'
+    # Reference from modem/lte/PLT/build directory
+    xml_files    = ['../../build/$BUILDPATH/lte.umid',
+                    '../../ML1/l1_common/build/$BUILDPATH/lte_ml1_l1_common.umid',
+                    fw_lte_path + '/$BUILDPATH/fw_lte.umid',
+                    '$BUILDPATH/lte_plt.umid',
+                    #'../../../hdr/build/$BUILDPATH/hdr.umid'
+                   ]
+
+    # Call the LTEPLT generator
+    env.LTEPLT(source = [header_input] + xml_files,
+               target = autogen_src)
+         
+    # Add the autogen build path to the compilation path
+    env.Append(CPPPATH = env.subst('${LTE_ROOT}/PLT/build/$BUILDPATH'))
+
+# Construct the list of source files by looking for *.c
+LTE_PLT_SOURCES  = ['${BUILDPATH}/' + basename(fname)
+                    for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the LTE PLT source and create a library (ship source)
+env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/lte_plt', LTE_PLT_SOURCES)
+

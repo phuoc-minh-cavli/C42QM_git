@@ -1,0 +1,63 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for QDSS control library
+#
+# Copyright (c) 2011-2012, 2019 Qualcomm Technologies Incorporated.
+# All rights reserved.
+# Qualcomm Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header:  $
+#
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+env.RequirePublicApi(['HAL','DAL','BUSES','DEBUGTRACE','DEBUGTOOLS','SERVICES','SYSTEMDRIVERS','HWENGINES', 'POWER','WIREDCONNECTIVITY','MEMORY','PRODUCTS','KERNEL'])
+env.RequireRestrictedApi(['DEBUGTRACE'])
+env.RequireProtectedApi(['DEBUGTRACE'])
+
+
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+QDSS_CONTROL_SRC = [
+   '${BUILDPATH}/qdss_bam.c',
+   '${BUILDPATH}/qdss_diag.c',
+   '${BUILDPATH}/qdss_control.c',
+   '${BUILDPATH}/qdss_tpda.c',
+   '${BUILDPATH}/qdss_tpdm.c',
+   '${BUILDPATH}/qdss_sio.c',
+   '${BUILDPATH}/qdss_etr.c',
+   '${BUILDPATH}/qdss_trace_sink.c',
+   '${BUILDPATH}/qdss_trace_buffer.c',
+   '${BUILDPATH}/qdss_tfunnel.c',
+   '${BUILDPATH}/qdss_tmc.c',
+   '${BUILDPATH}/qdss_test.c',
+]
+
+env.AddLibrary(['APPS_PROC'],
+   '${BUILDPATH}/qdss_control',QDSS_CONTROL_SRC)
+
+
+
+if 'USES_RCINIT' in env:
+  env.AddRCInitFunc(
+    ['APPS_PROC'],
+    {
+      'sequence_group'          : 'RCINIT_GROUP_1',
+      'init_name'               : 'qdss_control',
+      'init_function'           : 'qdss_control_init',
+      'dependencies'            : ['dalsys','diag','npa']
+      })
+

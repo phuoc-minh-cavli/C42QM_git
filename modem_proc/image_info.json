@@ -1,0 +1,303 @@
+{
+  "version" : "1.0",
+  "environment" : [
+    "HEXAGON_ROOT",
+    "ARMTOOLS"
+  ],
+  "tools" : [
+    {
+      "name" : "python",
+      "version" : "2.7"
+    }
+  ],
+  "variant_info" : {
+    "9205.ltenbgena.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgena.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgena.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbgeng.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgeng.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgeng.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbge.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbge.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbge.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbgeniag.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgeniag.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgeniag.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.lteena.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.lteena.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.lteena.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbena.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbena.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbena.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbgetna.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgetna.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgetna.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbetna.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbetna.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbetna.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbgefi.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgefi.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbgefi.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltenbe.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbe.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltenbe.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.ltee.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltee.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.ltee.prod -c"
+            }
+          ]
+        }
+      ]
+    },
+    "9205.nbgenia.prod" : {
+      "commands" : [
+        {
+          "build" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.nbgenia.prod"
+            }
+          ]
+        },
+        {
+          "clean" : [
+            {
+              "path" : "modem_proc/build/ms"
+            },
+            {
+              "command" : "./build.sh 9205.nbgenia.prod -c"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

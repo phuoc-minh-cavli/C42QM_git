@@ -1,0 +1,186 @@
+#===============================================================================
+#
+# TZBSP crypto lib
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright 2010 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/ssg.tz/1.1.3/securemsm/uclib/tz/build/SConscript#2 $
+#  $DateTime: 2019/09/13 03:01:12 $
+#  $Author: pwbldsvc $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who        what, where, why
+# --------      ---        ---------------------------------------------------------
+# 2/15/2010   cap        Initial
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/ssg/securemsm/uclib"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequirePublicApi(['SERVICES',
+                      'DAL',
+                      'SYSTEMDRIVERS',
+                      'KERNEL'
+                     ], area='core')
+
+env.RequirePublicApi(['UCLIB',
+                      'SSGPLATFORM',
+                      'SECUREMSM'
+                     ], area='ssg')
+
+env.RequireRestrictedApi(['SSGPLATFORM',
+                          'SECUREMSM',
+                          'TZCHIPSET',
+                          'QSEE',
+                          'MINK',
+                          'SWCRYPTOSELFTEST',
+                          'TZUCLIB'])
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+#
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+TZ_UCLIB_SOURCES = ['${BUILDPATH}/tz/ucenv_tz.c']
+
+UCLIB_LEGACY_SOURCES = ['${BUILDPATH}/tz/legacy/ce/src/CeML_wrap.c',
+                        '${BUILDPATH}/tz/legacy/ce/src/CeML_kdf_wrap.c',
+                        '${BUILDPATH}/tz/legacy/driver/src/cipher_wrap.c',
+                        '${BUILDPATH}/tz/legacy/driver/src/hash_wrap.c',
+                        '${BUILDPATH}/tz/legacy/driver/src/hmac_wrap.c',
+                        '${BUILDPATH}/tz/legacy/driver/src/kdf_wrap.c',
+                        '${BUILDPATH}/tz/legacy/driver/src/prng_wrap.c',
+                       ]
+
+UCLIB_LEGACY_USR_SOURCES = ['${BUILDPATH}/usr/legacy/unifiedcrypto/shared/aes/src/aes_shared.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/shared/des/src/des_shared.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/shared/ecc/src/ecc_shared.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/shared/ecc_generic/src/ecc_generic_shared.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/shared/ecies/src/ecies_shared.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/shared/sha/src/sha_shared.c',
+                            '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_encryption.c',
+                            '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_keygen.c',
+                            '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_signature.c',
+                            '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_crt.c',
+                           ]
+
+UCLIB_LEGACY_ECC_SOURCES = ['${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc/src/ecc_core.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_arith.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_ecc.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_ecc_protocols.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_inverse.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_random.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecc_generic/src/qrlbn_utils.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/core/ecies/src/ecies_core.c',
+                            '${BUILDPATH}/usr/legacy/unifiedcrypto/environment/src/uc_env.c',
+                           ]
+
+UCLIB_LEGACY_SECMATH_SOURCES = ['${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_mod_exp.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_montmul_utils.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_barrett_reduce.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_read_radix.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_read_unsigned_bin.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_to_radix.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_to_unsigned_bin.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_is_prime.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_BIGINT_prime_test.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_is_prime_div_chk.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_bin_to_hex_str.c',
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_hex_str_to_bin.c',
+                               ]
+
+UCLIB_LEGACY_SECMATH_SOURCES_OPTIMIZED = [
+                                '${BUILDPATH}/usr/legacy/secmath/shared/src/secmath_montmul_ref.c',
+                               ]
+
+UCLIB_LEGACY_SECRSA_SOURCES = ['${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_exptmod.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_math.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_utils.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_mem.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_math2.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secrsa_padding.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secpkcs8.c',
+                               '${BUILDPATH}/usr/legacy/secrsa/shared/src/secasn1.c',
+                              ]
+
+TZ_UCLIB_SOURCES = TZ_UCLIB_SOURCES + UCLIB_LEGACY_SOURCES + UCLIB_LEGACY_USR_SOURCES + UCLIB_LEGACY_ECC_SOURCES
+TZ_UCLIB_SOURCES = TZ_UCLIB_SOURCES + UCLIB_LEGACY_SECMATH_SOURCES + UCLIB_LEGACY_SECRSA_SOURCES
+
+#-------------------------------------------------------------------------------
+# Compiling  secmath_montmul_ref.c with optimized CCFLAGS
+# Needed to get better performance numbers for RSA/ECC
+#-------------------------------------------------------------------------------
+env_Opt = env.Clone()
+env_Opt.Append(CCFLAGS = " -O3 -mllvm -unroll-runtime-epilog=false " )
+secmath_objs_optimized = env_Opt.AddBinaryObject(['TZOS_IMAGE','TZBSPTEST_IMAGE','TZTESTEXEC_IMAGE'], UCLIB_LEGACY_SECMATH_SOURCES_OPTIMIZED)
+
+env.AddBinaryLibrary(['TZOS_IMAGE','TZBSPTEST_IMAGE','TZTESTEXEC_IMAGE'], '${BUILDPATH}/ucenv_tz', TZ_UCLIB_SOURCES)
+
+env.Deploy(['SConscript',
+            env.Glob('../../uclib/inc/*.h'),
+            env.Glob('../legacy/ce/inc/*.h'),
+])
+
+
+if env['MSM_ID'] in ['9205']:
+	if 'USES_RCINIT' in env:
+	   RCINIT_IMGS = ['CTZL64_IMAGE', 'TZOS_IMAGE', 'CTZL_IMAGE']
+	   env.AddRCInitFunc(
+	   RCINIT_IMGS,
+	   {
+		  'sequence_group'             : 'RCINIT_GROUP_7',
+		  'init_name'                  : 'Remove_ce_clk_req',
+		  'init_function'              : 'CeML_Remove_clk_req',
+		  'dependencies'               : ['post_cold_init'],
+		  'policy_optin'               : ['default']
+		})
+
+# build for off-target
+if env.IsKeyEnable(['OFFTARGET_QTEEEMU_IMAGE', 'SDK_OFFTARGET_IMAGE']):
+   if env.Is64BitImage():
+     target = 'uclib_64'
+     bin = ['${BUILDPATH}/bin/x86_tz/uclib64.o',]
+   else:
+     target = 'uclib_32'
+     bin = ['${BUILDPATH}/bin/x86_tz/uclib32.o',]
+
+   #modify headers
+   env.Prepend(CPPPATH=["${INC_ROOT}/ssg/securemsm/sdk/QTEEEmu/include", "${INC_ROOT}/ssg/securemsm/sdk/QTEEEmu/mink/core/inc",])
+   env['CPPPATH'] = [path.replace('core/api/services', 'ssg/securemsm/sdk/QTEEEmu/misc_bad_includes') for path in env['CPPPATH']]
+
+   # add selftest stub
+   selftest = ['${BUILD_ROOT}/ssg/securemsm/swcryptoselftest/src/selftest_kernel_stub.c']
+
+   # sim variant of ucenv
+   TZ_UCLIB_SOURCES = [s.replace('ucenv_tz.c','ucenv_tz_sim.c') for s in TZ_UCLIB_SOURCES]
+
+   # FIXME
+   # the x86 variant of uclib*.o doesn't create keys in the KDF, return hardcoded value instead
+   TZ_UCLIB_SOURCES = [s.replace('CeML_kdf_wrap.c','CeML_kdf_wrap_sim.c') for s in TZ_UCLIB_SOURCES]
+
+   rel_sources = TZ_UCLIB_SOURCES + UCLIB_LEGACY_SECMATH_SOURCES_OPTIMIZED + bin + selftest
+   rel_sources = [s.replace('${BUILDPATH}','../../') for s in rel_sources]
+
+   uclib=env.SecureAppLibBuilder([], rel_sources, target)
+   Return('uclib')

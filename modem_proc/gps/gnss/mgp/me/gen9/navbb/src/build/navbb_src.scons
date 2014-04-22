@@ -1,0 +1,65 @@
+# -------------------------------------------------------------------------------- #
+#                N A V B B _ S R C . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the NavBB Src module.
+#
+#  Copyright (c) 2017 Qualcomm Technologies, Inc. 
+#  All Rights Reserved.
+#  Confidential and Proprietary - Qualcomm Technologies, Inc. 
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/mgp/me/gen9/navbb/src/build/navbb_src.scons#1 $
+# $DateTime: 2020/07/21 21:23:44 $
+# $Author: pwbldsvc $
+# --------------------------------------------------------------------------------- #
+
+Import('gps_env')
+
+#--------------------------------------------------------------------------------
+# Setup source PATH
+#--------------------------------------------------------------------------------
+SRCPATH = '../src'
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#--------------------------------------------------------------------------------
+# Name of the subsystem to which this unit belongs
+#--------------------------------------------------------------------------------
+LIB_TARGET = '${BUILDPATH}/' + 'gnss_mgpme_gen9_navbb'
+
+#--------------------------------------------------------------------------------
+# Images that this VU is added
+#--------------------------------------------------------------------------------
+IMAGES = ['MODEM_MODEM']
+
+#--------------------------------------------------------------------------------
+# Generate the library and add to an image
+#--------------------------------------------------------------------------------
+BINARY_LIB_SOURCES = gps_env.GenerateCompileList(SRCPATH, '*.c')
+
+#--------------------------------------------------------------------------------
+# Ship our code as binary library and add it to the Modem image
+#--------------------------------------------------------------------------------
+
+
+if 'USES_FEATURE_DYNAMIC_LOADING_GNSS' in gps_env:
+  if 'USES_MODEM_DYNAMIC_LOADING' in gps_env:
+    output = BINARY_LIB_SOURCES
+    
+    # Need to replace '${BUILDPATH}' with '${GPS_ROOT}'
+    output = [w.replace('${BUILDPATH}', abspath(gps_env.subst(SRCPATH))) for w in output]
+    
+    # This expects a string with the variable name to pass back
+    Return('output')
+    #End of Dynamic Module
+    #gps_env.PrintInfo("Dynamic loading FW is ready in GNSS")
+    
+  elif 'USES_FEATURE_EXTERNAL_PAGING' in gps_env:
+    gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt_dmm'), BINARY_LIB_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+    
+  else:
+    gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+else:
+  gps_env.AddGPSFullBinaryLibrary(IMAGES, (LIB_TARGET + '_pvt'), BINARY_LIB_SOURCES, pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+
+
+gps_env.LoadSoftwareUnits()

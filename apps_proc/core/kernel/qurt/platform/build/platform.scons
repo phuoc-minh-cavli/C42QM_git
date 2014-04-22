@@ -1,0 +1,64 @@
+#===============================================================================
+#                    Copyright 2015, 2023 by Qualcomm Technologies, Inc.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# Free RTOS Libs
+#-------------------------------------------------------------------------------
+
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/qurt/platform/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+if 'USES_DAM_EXCEPTION_IS_FATAL' in env:
+   env.Append(CPPDEFINES = [
+      "TX_DAM_EXCEPTION_IS_FATAL"
+   ])
+
+#-------------------------------------------------------------------------------
+# Internal depends for qurt library
+#-------------------------------------------------------------------------------
+COMMON_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'DEBUGTOOLS_ERR',
+   'HAL',
+   'MPROC',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'SECUREMSM',
+   'PRODUCTS_SCM',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(COMMON_API)
+env.RequireRestrictedApi(COMMON_API)
+
+#-------------------------------------------------------------------------------
+# Source Code
+#-------------------------------------------------------------------------------
+PLAT_LIB_SOURCES =  [
+   '${BUILDPATH}/fault.S',
+   '${BUILDPATH}/head.S',
+   '${BUILDPATH}/init.S',
+   '${BUILDPATH}/mmu_init.S',
+   '${BUILDPATH}/power_asm.S',
+   '${BUILDPATH}/vectors.S',
+   '${BUILDPATH}/cache.c',
+   '${BUILDPATH}/exception.c',
+   '${BUILDPATH}/plat_init_vars.c',
+   '${BUILDPATH}/power.c',
+]
+
+env.AddBinaryLibrary(['APPS_IMAGE','CBSP_APPS_IMAGE'], '${BUILDPATH}/platform', PLAT_LIB_SOURCES)

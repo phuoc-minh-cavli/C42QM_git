@@ -1,0 +1,240 @@
+#===============================================================================
+#
+# Task Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/bsp/config/mdm9x00/main/latest/debugtools/task/build/SConscript#6 $
+#  $DateTime: 2010/06/16 09:47:59 $
+#  $Author: smann $
+#  $Change: 1336017 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/06/09   wd      Create
+#
+#===============================================================================
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/dog/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'CS',
+   'DSM',
+   'MODEM_API',
+   'MODEM_1X',
+   'MODEM_DATA',
+   'MODEM_HDR',
+   'MODEM_MDSP',
+   'MODEM_NAS',
+   'MODEM_PMIC',
+   'MODEM_RF',
+   'MODEM_SERVICES',
+   'MODEM_WCDMA',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'HAL',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h   
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+DOG_SOURCES = [
+   '${BUILDPATH}/dog.c',
+]
+
+DOG_KEEPALIVE_MODEM = [
+   '${BUILDPATH}/dog_keepalive.c',
+   '${BUILDPATH}/dog_keepalive_modem_server.c'
+]
+
+DOG_KEEPALIVE_APPS = [
+   '${BUILDPATH}/dog_keepalive_apps.c',
+]
+
+DOG_MONITOR_Q6 = [
+   '${BUILDPATH}/dog_q6_thread_monitor.c',
+]
+
+#Determine which dog hal to bring in (target independent implementation)
+platform = 'default'
+if env['HAL_PLATFORM'] in ['9x25']:
+    platform = '9x25'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+elif env['HAL_PLATFORM'] in ['9x35']:
+    platform = '9x35'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+elif env['HAL_PLATFORM'] in ['9x45']:
+    platform = '9x45'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+elif env['HAL_PLATFORM'] in ['9x55']:
+    platform = '9x55'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'        
+elif env['HAL_PLATFORM'] in ['9x06']:
+    platform = '9x06'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'     	
+elif env['HAL_PLATFORM'] in ['9205']:
+    platform = '9205'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'    		
+elif env['HAL_PLATFORM'] in ['9x65']:
+    platform = '9x65'
+    if env.IsTargetEnable(['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW']):
+        platform += '/modem'
+    elif env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+
+DOG_SOURCES += ['${BUILDPATH}/hal/' + platform + '/HALdog.c']
+
+if 'USES_DOG_STUBS' in env:
+    DOG_SOURCES = ['${BUILDPATH}/dog_stubs.c']
+
+#-------------------------------------------------------------------------------
+# Clean pack files
+#-------------------------------------------------------------------------------
+
+#Clean pack for 9x25
+dog_9x25_modem_source_path = '9x25/modem'
+dog_9x25_apps_source_path = '9x25/apps'
+
+DOG_9x25_SOURCES = [
+  '${BUILDPATH}/hal/' + dog_9x25_modem_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x25_modem_source_path + '/HALdogHWIO.h',
+  '${BUILDPATH}/hal/' + dog_9x25_apps_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x25_apps_source_path + '/HALdogHWIO.h',  
+]
+
+if not env['HAL_PLATFORM'] in ['9x25']:
+    env.CleanPack(
+       ['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW',
+       'CORE_APPS', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], 
+       DOG_9x25_SOURCES)
+
+#Clean pack for 9x35
+dog_9x35_modem_source_path = '9x35/modem'
+dog_9x35_apps_source_path = '9x35/apps'
+
+DOG_9x35_SOURCES = [
+  '${BUILDPATH}/hal/' + dog_9x35_modem_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x35_modem_source_path + '/HALdogHWIO.h',
+  '${BUILDPATH}/hal/' + dog_9x35_apps_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x35_apps_source_path + '/HALdogHWIO.h',  
+]
+
+if not env['HAL_PLATFORM'] in ['9x35']:
+    env.CleanPack(
+       ['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW',
+       'CORE_APPS', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], 
+       DOG_9x35_SOURCES)
+	   
+#Clean pack for 9x45
+dog_9x45_modem_source_path = '9x45/modem'
+dog_9x45_apps_source_path = '9x45/apps'
+
+DOG_9x45_SOURCES = [
+  '${BUILDPATH}/hal/' + dog_9x45_modem_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x45_modem_source_path + '/HALdogHWIO.h',
+  '${BUILDPATH}/hal/' + dog_9x45_apps_source_path + '/HALdog.c',
+  '${BUILDPATH}/hal/' + dog_9x45_apps_source_path + '/HALdogHWIO.h',  
+]
+
+if not env['HAL_PLATFORM'] in ['9x45']:
+    env.CleanPack(
+       ['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW',
+       'CORE_APPS', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], 
+       DOG_9x45_SOURCES)   
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibrary(['CORE_QDSP6_SW', 'CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CBSP_SINGLE_IMAGE', 'CORE_APPS', 'CORE_SINGLE', 'CORE_WCN', 'WCN_IMAGE', 'CORE_GSS'], 
+    '${BUILDPATH}/dog', DOG_SOURCES)
+if 'USES_DOG_STUBS' not in env:
+    env.AddLibrary(['CORE_QDSP6_SW'], '${BUILDPATH}/dog_monitor_q6', DOG_MONITOR_Q6)
+
+#keepalive enabled builds
+if env['HAL_PLATFORM'] in ['9x00']:
+    #q6 (apps)
+    env.AddLibrary(['CORE_QDSP6_SW'], '${BUILDPATH}/dog_keepalive_apps', DOG_KEEPALIVE_APPS)
+    #arm9 (modem)
+    env.AddLibrary(['CORE_MODEM'], '${BUILDPATH}/dog_keepalive_modem', DOG_KEEPALIVE_MODEM)
+elif env['HAL_PLATFORM'] in ['7x30']:
+    env.AddLibrary(['CORE_APPS'], '${BUILDPATH}/dog_keepalive_apps', DOG_KEEPALIVE_APPS)
+    env.AddLibrary(['CORE_MODEM'], '${BUILDPATH}/dog_keepalive_modem', DOG_KEEPALIVE_MODEM)
+    
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'CORE_GSS', 'CORE_APPS']
+    env.AddRCInitTask(           # DOG
+        RCINIT_IMG,                 # define TMC_RCINIT_REXTASK_DOG
+        {
+            'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+            'thread_name'                : 'dog',                             # required
+            'thread_type'                : 'RCINIT_TASK_QURTTASK',            # required
+            'stack_size_bytes'           : '4096',
+            'priority_amss_order'        : 'DOG_PRI_ORDER',
+            'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+        }
+    )
+    env.AddRCInitFunc(
+        RCINIT_IMG,
+        {
+            'sequence_group'             : 'RCINIT_GROUP_0',
+            'init_name'                  : 'dog_init',
+            'init_function'              : 'dog_init'
+        }
+    )

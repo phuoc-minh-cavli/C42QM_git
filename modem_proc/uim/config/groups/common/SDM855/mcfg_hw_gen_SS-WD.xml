@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="qmi_cat_mode" id="65683" description="QMI CAT mode" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" fullpathname="/nv/item_files/modem/qmi/cat/qmi_cat_mode">
+		<Member name="QMI_CAT_MODE" description="" comment="" sizeOf="1" type="uint8">5 </Member>
+	</NvEfsItemData>
+<NvEfsFile name="lpa_support" id="73849" description="LPA Support" comment="" category="UIM" mcfgAttributes="0x09" mcfgVariant="2" targetPath="/nv/item_files/modem/uim/lpa/lpa_support" buildPath="modem_proc/uim/config/efs_files/hw_settings/lpa_support"/>
+	</NvData>

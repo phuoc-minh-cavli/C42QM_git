@@ -1,0 +1,231 @@
+// *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+//
+//              MSM7600 APPS PROCESSOR SCATTER LOADING DESCRIPTION FILE
+//
+//  Copyright (c) 2007 by QUALCOMM Incorporated. All Rights Reserved.
+//
+//  GENERAL DESCRIPTION
+//    This scatter loading description file is used preprocessed by the build
+//    processor to construct appropriate loading instructions to the the ARM
+//    linker to relocate different segments based on user specified
+//    mappings.
+//
+//    Different configurations from this file are chosen by the build processor
+//    through defined symbols.  Investigate msmxxxx.builds to see what some of
+//    the define values mean.
+//
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+
+//===========================================================================
+//
+//                          EDIT HISTORY FOR MODULE
+//
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+//  $Header: //components/rel/build.tn/4.0/ms/9205_L4_APPS_PROC_DDROnly_rom.scl#3 $
+//
+// when       who     what, where, why
+// --------   ---     -------------------------------------------------------
+// 01/22/07   gfr     Created.
+//===========================================================================
+
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+//  Same as Non-DDROnly version
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+
+#include "customer.h"
+
+
+MSM_NOTPAGED (SCL_APPS_CODE_USER_BASE) (SCL_APPS_CODE_USER_SIZE)
+{
+
+
+  BOOT +0x0 (SCL_APPS_CODE_USER_SIZE)
+  {
+    boot_vectors.o (Boot_Block_Info)
+    boot_reset_handler.o (RST_Handler)
+    boot_data.o (+RO)
+    boot_ram_test.o (+RO)
+    boothw_target.o (+RO)
+    bootmem.o (+RO)
+    crc.o (+RO)
+    /* The following definitions are needed for static C++ initialization
+     * according to ARM documentation.
+     * See "Compiler and Libraries Guide" pg. 5-30 through 5-32
+     */
+    .ANY (C$$pi_ctorvec)
+    .ANY (C$$pi_dtorvec)
+    * (.init_array)
+    * (.ARM.exidx)
+  //  cache_mmu_l4.o (+RO)
+  }
+  APPS_CODE_PAD +0 
+  {
+    boot_pad_seg.o (APPS_CODE_SEGMENT_START, +LAST)
+  }
+  APPS_BOOT +0x0  (SCL_APPS_CODE_USER_SIZE)
+  {
+    .ANY (+RO)
+  }
+}
+
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+//Ensure the initial segments shall be Code/RO and XBL Crashdump region  is going to overwrite based on the  macros: XBL_CRASHDUMP_IMG_BASE,XBL_CRASHDUMP_IMG_SIZE
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+// Application Code
+//
+// The application entry point is at the symbol Reset_Handler. This region
+// contains the code from all files not in the Virtual Boot Block.
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+
+APPS_CODE_NOTPAGED +0x0 (SCL_APPS_CODE_USER_SIZE)
+{
+  MAIN_APP_1 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+  MAIN_APP_2 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_3 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_4 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_5 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_6 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_7 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_8 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_9 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  MAIN_APP_10 +0x0 0x400000
+  {
+    .ANY (+RO)
+  }
+
+  APPS_DATA_PAD +0
+  {
+    boot_pad_seg.o (APPS_DATA_SEGMENT_START, +LAST)
+  }
+
+}
+
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+// RAM Locations
+//
+// The first two 32-bit locations are reserved for the IRQ and FIQ interrupt
+// vectors, which are vectored through RAM
+//
+//*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
+
+//This is reservation for dynamic section to patch-in
+//Dummy_dynamic_padding.c should contain CONST data of size 0x1000 that will be patch in here. 
+//Dummy data is for the sake of avoiding linker optimizing and removing this segment.
+DYNAMIC_DATA_SECTION_NOTPAGED +0x0 (0x9000)
+{
+	DYNAMIC_DATA +0x0
+	{
+		dummy_dynamic_padding.o (+RW-DATA)
+	}
+  DYNAMIC_STRING_TABLE +0x0
+  {
+    dummy_dynamic_string_padding.o (+RW-DATA)
+  }
+  DYNAMIC_SYMBOL_TABLE +0x0
+  {
+    dummy_dynamic_symbol_padding.o (+RW-DATA)
+  }
+  DYNAMIC_HASH_TABLE +0x0
+  {
+    dummy_dynamic_hash_padding.o (+RW-DATA)
+  }
+}
+
+APPS_DATA_NOTPAGED +0x0 (SCL_APPS_CODE_USER_SIZE)
+{
+  APP_RAM +0x0 NOCOMPRESS (SCL_APPS_CODE_USER_SIZE) 
+  {
+    sys_m_nzi.o (+DATA, +ZI)
+    err_nzi.o (+DATA, +ZI)
+    .ANY (+RW)
+  }
+
+  ZI_REGION +0x0 (SCL_APPS_CODE_USER_SIZE)
+  {
+    .ANY(+ZI)
+  }
+
+  APPS_UNINIT_PAD +0
+  {
+    boot_pad_seg.o (APPS_UNINIT_SEGMENT_START, +LAST)
+  }
+}
+
+QSR_NOTPAGED (0xF0000000)
+{
+      __QSR_4_0_MSG_ALIGNED_START__ +0x0
+    {
+    }
+    QSR_4_0_MSG +0x0
+    {
+        *(QSR_4_0_MSG.fmt*)
+        .ANY (QSR_4_0_MSG.fmt*)
+    }
+    __QSR_4_0_MSG_UNALIGNED_START__  +0x0
+    {
+    }
+
+    __QSR_4_0_MSG_END__     +0x0
+    {
+        
+    }   
+}
+QSR_NOTPAGEDSTR (0xF8000000)
+{
+    QSR_4_0_MSG_STR     +0x0
+    {
+        *(QSR_4_0_STR*)
+        .ANY (QSR_4_0_STR*)        
+    }
+}
+
+/**
+ * Generate an empty segment for kernel to know the location of end of APPS image for its static
+ * mappings
+ */
+APPS_END_NOTPAGED +0x0 (SCL_APPS_CODE_USER_SIZE)
+{
+   APPS_END +0x0
+   {
+   }
+}
+

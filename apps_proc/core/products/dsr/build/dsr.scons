@@ -1,0 +1,131 @@
+#==============================================================================
+#     Copyright (c) 2014-2016 QUALCOMM Technologies Incorporated.
+#     All rights reserved.
+#     Qualcomm Confidential and Proprietary
+#==============================================================================*/
+# Quartz Platform M4
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/products/dsr"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within platform
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+   'DEBUGTOOLS',
+   'SERVICES',
+   'PRODUCTS_DSR',
+   'KERNEL',
+], area='CORE')
+
+env.RequireRestrictedApi([
+   'PRODUCTS_DSR_PRIVATE',
+])
+
+#-------------------------------------------------------------------------------
+# Source Code
+#------------------------------------------------------------------------------- 
+PLATFORM_DSR_SOURCES =  [
+	'${BUILDPATH}/src/dsr_framework.c',
+	'${BUILDPATH}/test/dsr_framework_test.c',
+]
+
+#-------------------------------------------------------------------------------
+# Libraries
+#------------------------------------------------------------------------------- 
+dsr_object = env.Object(PLATFORM_DSR_SOURCES)
+dsr_lib = env.Library('${BUILDPATH}', dsr_object)
+
+#env.AddLibrary(['APPS_IMAGE', 'CBSP_APPS_IMAGE'],'${BUILDPATH}', [PLATFORM_DSR_SOURCES])
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibsToImage(['CBSP_APPS_IMAGE', 'APPS_IMAGE'], dsr_lib)
+
+#-------------------------------------------------------------------------------
+# RCInit 
+#-------------------------------------------------------------------------------
+RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+if 'USES_RCINIT' in env:
+   env.AddRCInitFunc(
+    RCINIT_IMG,          
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+     'init_name'                  : 'dsr',                             # required
+     'init_function'              : 'dsr_init_framework',              # required
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_ISR_0',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_ISR_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_ISR_1',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_ISR_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_ISR_2',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_ISR_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_ISR_3',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_ISR_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_WORKLOOP_0',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_WORKLOOP_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+   env.AddRCInitTask(
+    RCINIT_IMG,
+    {
+      'sequence_group'             : 'RCINIT_GROUP_0',
+      'thread_name'                : 'DSR_WORKLOOP_1',
+      'thread_type'                : 'RCINIT_TASK_QURTTASK',
+      'thread_entry'               : 'RCINIT_NULL',
+      'stack_size_bytes'           : '2048',
+      'priority_amss_order'        : 'DSR_WORKLOOP_PRI_ORDER',
+      'policy_optin'               : [ 'default', 'ftm', ],
+    })
+

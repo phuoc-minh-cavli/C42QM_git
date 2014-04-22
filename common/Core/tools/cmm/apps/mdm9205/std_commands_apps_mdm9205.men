@@ -1,0 +1,105 @@
+//
+//  Description:                                                              
+//    RPM Command Menu
+//                                                                            
+// Copyright (c) 2012 - 2014 by QUALCOMM, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 02/06/2015 RSSRIDHA	    Load kernel symbols for APPS
+// 07/27/2012 AJCheriyan    Created for B-family.
+
+ADD
+MENU
+(
+	POPUP "&Flash and Debug"
+	(
+		MENUITEM "[:flash]&Build Options"
+		(
+			WINCLEAR
+			do std_buildoptions
+		)
+
+		POPUP "[:CORRELATE]&Debug Images"
+		( 
+			MENUITEM "[:PSTEP]&Debug RPM"
+			( 
+				WINCLEAR
+				do std_debug Img=rpm
+			)
+            		MENUITEM "[:PSTEP]&Debug SBL1"
+			( 
+				WINCLEAR
+				do std_debug Img=sbl1
+			)
+			MENUITEM "[:PSTEP]&Debug TZ"
+			( 
+				WINCLEAR
+				do std_debug Img=tz
+			)
+			MENUITEM "[:PSTEP]&Debug APPS"
+			(
+				WINCLEAR
+				do std_debug Img=apps
+			)
+			MENUITEM "[:PSTEP]&Debug MPSS"
+			(
+				WINCLEAR
+				do std_debug Img=apps,mpss 
+			)
+			MENUITEM "[:PSTEP]&Debug MBA"
+			(
+				WINCLEAR
+				do std_debug Img=mba 
+			)
+		)
+		POPUP "[:CORRELATE]&Load Symbols"
+		( 
+		  	MENUITEM "[:PSTEP]&SBL1 Symbols"
+			( 
+				do std_loadsyms_sbl
+			)
+			MENUITEM "[:PSTEP]&TZ Symbols"
+			( 
+				do std_loadsyms_tz
+			)
+			MENUITEM "[:PSTEP]&APPS Symbols"
+			(
+				do std_loadsyms_apps apps
+			)
+		)
+		MENUITEM "[:PSTEP]&Save Logs"
+		(
+			WINCLEAR
+			do std_savelogs
+		)
+
+		MENUITEM "[:REDO]&Soft Reset"
+		(
+			WINCLEAR
+			do std_reset
+		)
+		
+//		MENUITEM "[:cts]&Trace Options"
+//		(
+//			WINCLEAR
+//			do std_debug TRACEGUI
+//		)
+	)
+)
+ADD
+TOOLBAR
+(
+
+    TOOLITEM "Map and Load" ":load" "do std_buildoptions"
+    TOOLITEM "Debug Menu" "_,X,:flashnew" "do std_debug"
+
+)
+

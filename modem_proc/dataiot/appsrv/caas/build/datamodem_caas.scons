@@ -1,0 +1,115 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 04/05/19   sr      Initial Version
+#===============================================================================
+Import('env')
+
+#import pdb
+
+from glob import glob
+from os.path import join, basename
+
+if env['PRODUCT_LINE'] in ['MPSS.JO.3.0.3', 'MPSS.JO.3.0.3.c1']:
+    Return() 
+
+#turn off debug if requested
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+
+#turn on debug if requested
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2")
+    env.Replace(HEXAGON_DBG = "-g")
+    env.Replace(GCC_DBG = "-g")
+
+env.Append(CPPDEFINES = ['FEATURE_DATA_APPSRV_DIAG_SUPPORT'])
+
+#-------------------------------------------------------------------------------
+# Necessary Core Public API's
+#-------------------------------------------------------------------------------
+CORE_PUBLIC_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+#    'SYSTEMDRIVERS',
+#    'WIREDCONNECTIVITY',
+#    'STORAGE',
+#    'SECUREMSM',
+#    'BUSES',
+#    'DAL',
+#    'POWER',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+env.RequirePublicApi(CORE_PUBLIC_APIS, area='core')
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Public API's
+#-------------------------------------------------------------------------------
+MODEM_PUBLIC_APIS = [
+    'DATAMODEM',
+    'DATA'
+    ]
+
+env.RequirePublicApi(MODEM_PUBLIC_APIS)
+
+#-------------------------------------------------------------------------------
+# Necessary Modem Restricted API's
+#-------------------------------------------------------------------------------
+MODEM_RESTRICTED_APIS = [
+    'DATAMODEM',
+    'DATA'
+    ]
+
+env.RequireRestrictedApi(MODEM_RESTRICTED_APIS)
+
+#-------------------------------------------------------------------------------
+#  OffTarget/QTF
+#-------------------------------------------------------------------------------
+if 'USES_MOB' in env:
+  env.RequireRestrictedApi(['DATAMODEM_QTF_OFT'])
+
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Setup UMIDs
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+#code shipped as library
+MODEM_DATA_CAAS_SOURCES = [
+    '${BUILDPATH}/src/ds_caas_mgr.c',
+    '${BUILDPATH}/src/ds_caas_mgr_testapp.c',
+]
+
+env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_DATAMODEM'], '${BUILDPATH}/caas',[MODEM_DATA_CAAS_SOURCES])

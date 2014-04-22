@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+    <NvConfigurationData carrierIndex="0" version="" type="1"/>
+  <NvEfsItemData name="ims_iot_qipcall_config" id="74130" description="IMS IOT Voice and SMS Configurations" comment="" category="" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/ims/ims_iot_qipcall_config">  
+    <Member name="Version" description="Version History" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="SMS_Accept_Contact" description="SMS Accept contact" comment="" sizeOf="64" type="string">+g.3gpp.smsip</Member>
+    <Member name="Psi_Value" description="PSI Value" comment="" sizeOf="128" type="string"></Member>
+	<Member name="Sms_Format" description="SMS Format" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Session_Level_BandWidth" description="Enable session level AS param in SDP" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Reliable_180_Response_Enabled" description="Enable reliable provisional response" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Display_Text_Priority" description="Display text source" comment="" sizeOf="1" type="int32">2</Member>
+    <Member name="Uri_Type" description="URI Type" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Privacy_Type" description="Privacy type" comment="" sizeOf="1" type="int32">2</Member>
+    <Member name="Phone_Context_Policy" description="Configure number format during roaming" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="CallerId_Mode" description="Caller ID mode" comment="" sizeOf="1" type="int32">16</Member>
+    <Member name="Invite_Retry_Counter" description="Retry counter for invite" comment="" sizeOf="1" type="int32">2</Member>
+    <Member name="Invite_Retry_Duration" description="Invite retry duration in sec" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Voice_Call_Cancel_Timer" description="Call cancel timer in sec" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Session_End_Response_Timeout" description="Session end response timeout flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Disable_Early_Media_Timer" description="Disable early media timer flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Ringing_Timer" description="Ringing Timer in sec" comment="" sizeOf="1" type="int32">45</Member>
+    <Member name="RingBack_Timer" description="Ringback timer in sec" comment="" sizeOf="1" type="int32">180</Member>
+    <Member name="Rtp_LinkAliveness_Timer" description="RTP link aliveness timer in sec" comment="" sizeOf="1" type="int32">20</Member>
+    <Member name="Terminating_Identity_Service" description="Terminating identity service type" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Qos_Reservation_Timer" description="QOS reservation timer in sec" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Local_Qos_ResReq_Audio" description="Local QOS enable flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Qos_Preconditions_Enabled" description="Precondition enable flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Qos_Desired_Strength" description="Desired strength of QOS attribute" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Ignore_AS_Validation" description="Ignore AS validation flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Enable_PEM_Header_In_183" description="Enable PEM header in 183 flag" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Phone_Context_Source" description="Phone context source" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Phone_Context_Domain" description="Domain name for phone context" comment="" sizeOf="128" type="string"></Member>
+    <Member name="Session_Timer_Enabled" description="Flag to enable session timer" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Session_Refresher_Type" description="Session refresher type" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Session_Refresher_Method" description="Session refresher method" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Allow_Se_Negotiation" description="Flag to enable SE negotiation" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Rtcp_Monitor_In_Voip_Enabled" description="Flag to enable RTCP monitor" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Rtcp_Link_Aliveness_Timer" description="Link Aliveness value for RTCP in sec" comment="" sizeOf="1" type="int32">20</Member>
+    <Member name="Rtcp_Transmit_In_Voip_Enabled" description="Flag to enable RTCP transmission" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Rtcp_Reporting_Interval_For_Audio_Active" description="RTCP reporting interval in sec for active call" comment="" sizeOf="1" type="int32">5</Member>
+    <Member name="Rtcp_Reporting_Interval_For_Audio_Hold" description="RTCP reporting interval in sec for hold call" comment="" sizeOf="1" type="int32">5</Member>
+    <Member name="RR_For_Audio" description="RR value for audio" comment="" sizeOf="1" type="int32">2000</Member>
+    <Member name="RS_For_Audio" description="RS value for audio" comment="" sizeOf="1" type="int32">600</Member>
+    <Member name="Disable_RTCP_Monitoring" description="Flag to disable RTCP monitor" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="Accept_Contact" description="Accept contact" comment="" sizeOf="128" type="string">urn:urn-7:3gpp-service.ims.icsi.mmtel</Member>
+    <Member name="Session_Expires" description="Session expiry value in sec" comment="" sizeOf="1" type="int32">1800</Member>
+    <Member name="Min_Session_Expires" description="Min session expiry value in sec" comment="" sizeOf="1" type="int32">90 </Member>
+    <Member name="AMR_OctetAligned_DynamicPt" description="Payload type for AMR octate aligned" comment="" sizeOf="1" type="int32">0</Member>
+    <Member name="AMR_BandWidthEfficient_DynamicPt" description="Payload value for AMR bandwidth efficient codec" comment="" sizeOf="1" type="int32">102</Member>
+    <Member name="Dtmf_Nb_DynamicPt" description="Payload type for DTMF NB" comment="" sizeOf="1" type="int32">96</Member>
+    <Member name="AMR_ModeSet" description="Mode set for AMR codec" comment="" sizeOf="1" type="int32">4</Member>
+    <Member name="Scr_AMR_Enable" description="Flag to enable AMR SCR" comment="" sizeOf="1" type="int32">1</Member>
+    <Member name="Speech_Start_Port" description="Speech start port number" comment="" sizeOf="1" type="int32">50000</Member>
+    <Member name="Speech_Stop_Port" description="Speech Stop port number" comment="" sizeOf="1" type="int32">50002</Member>
+    <Member name="T_CALL" description="T Call timer value in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="RTCP_XR_Enabled" description="Flag to enable RTCP XR" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="RTCP_XR_Reporting_Interval" description="RTCP XR reporting interval timer in sec" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="RTCP_XR_Params" description="RTCP XR param mask" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="RTCP_XR_Stat_Summary" description="Flag to enable RTCP XR Stat summary" comment="" sizeOf="1" type="uint32">0</Member>
+    <Member name="Rtcp_Reporting_Interval_In_Voip" description="RTCP reporting interval in sec" comment="" sizeOf="1" type="int32">5</Member>
+	<Member name="Audio_Feature_Tag" description="audio feature tag" comment="" sizeOf="32" type="string">audio</Member>
+    <Member name="Reserved" description="Reserved bytes" comment="" sizeOf="336" type="string"></Member>
+  </NvEfsItemData>
+</NvData>  

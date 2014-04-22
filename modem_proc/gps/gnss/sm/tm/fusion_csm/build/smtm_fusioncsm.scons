@@ -1,0 +1,95 @@
+# -------------------------------------------------------------------------------- #
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/sm/tm/fusion_csm/build/smtm_fusioncsm.scons#1 $
+# $Date: 2020/07/21 $
+# -------------------------------------------------------------------------------- #
+#                         S M T M _ FUSION_CSM . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the GNSS SM TM Fusion CSM subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+#  Copyright (c) 2016 Qualcomm Technologies, Inc.
+#  Qualcomm Technologies Confidential and Proprietary. All Rights Reserved. 
+#
+# All Rights Reserved. Qualcomm Confidential and Proprietary
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+from glob import glob
+from os.path import join, basename
+
+#--------------------------------------------------------------------------------
+# Require own Public API
+#--------------------------------------------------------------------------------
+gps_env.RequirePublicApi('FUSION_CSM', area='GPS')
+
+#--------------------------------------------------------------------------------
+# Define and Require Internal API
+#--------------------------------------------------------------------------------
+gps_env.PublishProtectedApi('GPS_FUSION_CSM', ['${GPS_ROOT}/gnss/sm/tm/fusion_csm/src',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/common/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/meas_data/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/power_mgr/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/scalable_buffer/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/tech_if/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/tech_if/src',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/upload_mgr/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/upload_mgr/src',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/config_mgr/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/area_mgr/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/meas_modes/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/meas_modes/src/common/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/meas_modes/src/wifi_meas_mode/src/hybrid/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/meas_modes/src/wifi_meas_mode/src/pure/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/ctx_mgr/inc',
+                                               '${GPS_ROOT}/gnss/sm/tm/fusion_csm/src/ctx_mgr/src',
+                                       ])
+gps_env.RequireProtectedApi(['GPS_FUSION_CSM'])
+
+# Workaround for C++ compile failures due to inline C functions
+gps_env.Append(CFLAGS="-D_NO_CPP_INLINES ")
+
+#--------------------------------------------------------------------------------
+# Build the files into a library
+#--------------------------------------------------------------------------------
+if 'USES_FEATURE_GNSS_FUSION_CSM' in gps_env:
+    gps_env.PrintInfo("  Fusion CSM Supported")
+    SRCPATH = '../src'
+    gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*', '../stub'))
+else:
+    gps_env.PrintInfo("  Fusion CSM Not Supported")
+    SRCPATH = '../stub'
+    gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*', '../src'))
+    
+gps_env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+LIB_TARGET = '${BUILDPATH}/' + 'smtm_fusioncsm'
+IMAGES = ['MODEM_MODEM']
+
+BINARY_LIB_CPP_SOURCES = gps_env.GenerateCompileList(SRCPATH, '*.cpp')
+
+gps_env.AddGPSFullBinaryLibrary(IMAGES, 
+                     (LIB_TARGET + '_pvt'),
+                     BINARY_LIB_CPP_SOURCES)
+
+#--------------------------------------------------------------------------------
+# Compile the sub-modules
+#--------------------------------------------------------------------------------
+gps_env.LoadSoftwareUnits()

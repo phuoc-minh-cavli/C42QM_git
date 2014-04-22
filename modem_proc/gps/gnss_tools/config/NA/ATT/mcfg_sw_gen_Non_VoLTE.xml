@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="gps.0.0" type="1"/>
+<NvItemData name="GPSOne Lock" id="452" description="" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gps1_lock" description="" comment="" sizeOf="1" type="uint32">0 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Default QoS Time" id="1918" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_default_qos_time" description="" comment="" sizeOf="1" type="uint32">64 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Positioning Modes Supported" id="1920" description="" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="aagps_positioning_modes_supported" description="" comment="" sizeOf="1" type="uint32">65407 </Member>
+	</NvItemData>
+	<NvItemData name="AAGPS Use Transport Security" id="3758" description="Enable User Plane Secure Transport" comment="" category="AAGPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="use_security" description="Enable User Plane Secure Transport" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvItemData>
+	<NvItemData name="CGPS UMTS PDE Server Address URL" id="4703" description="UMTS PDE Server Address URL" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="cgps_umts_pde_server_addr_url" description="" comment="" sizeOf="128" type="string">0</Member>
+	</NvItemData>
+	<NvItemData name="GNSS SUpL Version" id="6792" description="SUPL Version" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="gnss_SUPL_Version" description="" comment="" sizeOf="1" type="uint32">131072 </Member>
+	</NvItemData>
+	<NvEfsItemData name="gnss_1x_up_supl_enable" id="65811" description="NV to enable/disable SUPL as 1x up protocol" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_1x_up_supl_enable">
+		<Member name="gnss_1x_up_supl_enable" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="gnss_agps_rat_pref_config" id="67217" description="AGPS RAT Preference" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_agps_rat_pref_config">
+		<Member name="umts_lte_prefered" description="Whether UMTS/LTE to be prefered over other RAT's when camped on more than one RAT." comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="agps_rat_enable_bitmask" description="Bit mask to enable/disable AGPS on RAT's" comment="" sizeOf="1" type="int16">65535 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="gnss_assisted_glo_protocol_select" id="70192" description="Select A-Glonass positioning protocols" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_assisted_glo_protocol_select">
+		<Member name="asst_glonass_pos_protocols" description="Select Assisted Glonass positioning protocols" comment="" sizeOf="1" type="uint32">2 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="gnss_lpp_enable" id="67225" description="Use LPP when on LTE" comment="" category="GPS" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/gps/cgps/sm/gnss_lpp_enable">
+		<Member name="gnss_lpp_enable" description="Use LPP when on LTE" comment="" sizeOf="1" type="uint8">2 </Member>
+	</NvEfsItemData>
+	</NvData>

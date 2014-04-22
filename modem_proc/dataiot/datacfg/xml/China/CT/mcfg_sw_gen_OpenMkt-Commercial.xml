@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+  <NvConfigurationData carrierIndex="0" version="data.0.0" type="1"/>
+  <GroupFile name="mcfg_sw_gen_DeleteROW.xml" description="" comment="" category="" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/Common/ROW/mcfg_sw_gen_DeleteROW.xml"/>
+  <NvItemData name="QNC Enabled Flag" id="240" description="" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+    <Member name="data_qnc_enabled" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+  </NvItemData>
+  <NvEfsItemData name="remove_unused_pdn" id="70334" description="Removed unused PDN" comment="" category="Data" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/data/3gpp/ps/remove_unused_pdn">
+    <Member name="Removed unused PDN" description="Removed unused PDN" comment="" sizeOf="1" type="uint8">1 </Member>
+  </NvEfsItemData>
+  <NvEfsFile name="ds_dsd_attach_profile.txt" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/data/ds_dsd_attach_profile.txt" buildPath="modem_proc/dataiot/datacfg/efs/CT/ds_dsd_attach_profile.txt"/>
+  <NvEfsFile name="Profile1" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile1" buildPath="modem_proc/dataiot/datacfg/efs/CT/Profile1"/>
+  <NvEfsFile name="Profile2" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile2" buildPath="modem_proc/dataiot/datacfg/efs/CT/Profile2"/>
+  <NvEfsFile name="Profile3" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/Data_Profiles/Profile3" buildPath="modem_proc/dataiot/datacfg/efs/CT/Profile3"/>
+  </NvData>

@@ -1,0 +1,63 @@
+#===============================================================================
+#
+# APSS TX
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/mobileap/utilities/list/build/data_util_list.scons#1 $
+#  $DateTime: 2019/11/26 00:18:17 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('DMS', area='API')
+env.RequirePublicApi('SSCTL', area='API')
+
+DATA_RESTRICTED_APIS = [
+    'DATA_UTIL_COMMON',
+	'DATA_UTIL_LIST',
+	'DATA_UTIL_SYNC',
+	'DATA_UTIL_MEMORY',
+	'DATA_UTIL_CONFIG',
+	'DATA_UTIL_BIT',
+	'DS_UTILS'
+    ]
+
+env.RequireRestrictedApi(DATA_RESTRICTED_APIS)	
+	
+SRCPATH = '${BUILD_ROOT}/dataservices/mobileap/utilities/list/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+DATA_UTIL_LIST_SOURCES = [
+	'${BUILDPATH}/data_util_list.c'
+]
+
+env.AddLibrary(['APPS_PROC','MOB_DATASERVICES'], ('${BUILDPATH}/data_util_list'), DATA_UTIL_LIST_SOURCES)
+
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

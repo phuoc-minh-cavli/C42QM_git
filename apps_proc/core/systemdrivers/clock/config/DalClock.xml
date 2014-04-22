@@ -1,0 +1,18 @@
+
+<!-- NOTE: DAL config has trouble parsing multi-line comment, so please put -->
+<!--       proper comment tags on each line                                 -->
+<!--                                                                        -->
+<!-- Clock Driver Properties file                                           -->
+<!-- Note we depend on the include path for the following directories to be -->
+<!-- available to the DAL config compiler:                                  -->
+<!-- "${INC_ROOT}/core/systemdrivers/hal/clk/inc",                          -->
+<!-- "${INC_ROOT}/core/systemdrivers/clock/src",                            -->
+<!-- "${INC_ROOT}/core/systemdrivers/clock/config"                          -->
+<!-- "${INC_ROOT}/core/systemdrivers/clock/config/${CHIPSET}"               -->
+
+
+<driver name="Clock">
+  <device id=DALDEVICEID_CLOCK>
+    #include "ClockChipset.xml"
+  </device>
+</driver>

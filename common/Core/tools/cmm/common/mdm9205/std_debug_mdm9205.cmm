@@ -1,0 +1,472 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_mdm9645.cmm 
+//
+//  Description:                                                              
+//    Top level debug script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 05/05/2017 MarthaM       TZ.4.0 debug support
+// 09/17/2014 RSSRIDHA	    Created fields for MDM9x45
+
+
+
+// Following arguments are supported. 
+// &UTILITY - subroutine to call. GETDEBUGDEFAULTS and SETDEBUGCOOKIE supported. Otherwise exit
+// &OPTION - 
+// ARG0 - Image to debug. 
+// ARG1 - En/Disable Sleep. lpm_enable / lpm_disable
+// ARG2 - Entry point for this debug session. will default to image entry point
+//        if nothing is specified.
+
+
+LOCAL &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+ENTRY &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+
+GLOBAL &APPS_BUILDROOT &APPS_ELF
+
+//	Locals: Local Variables
+//	Input Arguments
+//LOCAL &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4
+
+//	Return values to the caller along with success / fail value specific to utility
+LOCAL &PASS &RVAL0 &RVAL1 &RVAL2
+
+// Name of the utility we are calling
+LOCAL &SUBROUTINE
+
+// Any subroutine specific options
+// Default exists for each subroutine
+
+// Input Argument 0 is the name of the utility
+&SUBROUTINE="&UTILITY"
+
+IF !(("&SUBROUTINE"=="GETDEBUGDEFAULTS")||("&SUBROUTINE"=="SETDEBUGCOOKIE"))
+(
+	PRINT %ERROR "WARNING: UTILITY &UTILITY DOES NOT EXIST."
+	GOTO EXIT
+)
+ELSE
+(
+	// This should be created by some top level script. The setupenv for each proc would
+	// set this up
+ 	AREA.SELECT
+
+ 	// Debug Print Statement
+	// PRINT "&SUBROUTINE &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG5 &IARG6 &IARG7"
+    // Call the required utility
+	GOSUB &SUBROUTINE &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+	ENTRY &PASS &RVAL0 &RVAL1 &RVAL2
+
+	GOTO EXIT
+	
+)
+
+////////////////////////////////////////////
+//        Name: APPSBOOT_BKPT
+//        Function: Sets or clears debug cookie for desired subsystem
+//        Inputs: 
+//              &ARG0 - image to set debug cookie for
+//              &ACTION - "clear" - clears debug cookie. Else Sets it.
+//
+/////////////////////////////////////////////
+APPSBOOT_BKPT:
+    LOCAL &set_command
+    ENTRY &set_command
+
+    LOCAL &AppsBootBkpt
+    
+    IF ("&HLOS"=="WP")
+    (
+        &AppsBootBkpt=0x80200000
+    )
+    ELSE 
+    (
+        &AppsBootBkpt=0x87a00000
+    )
+    
+    IF "&set_command"=="remove"
+    (
+        PRINT "Removing apps breakpoints"
+        B.DELETE &AppsBootBkpt
+    )
+    ELSE
+    (
+        PRINT "Disabling other breakpoints, setting appsboot entry breakpoint"
+        BREAK.DISABLE /ALL
+
+        B.DELETE &AppsBootBkpt
+        B.S &AppsBootBkpt /o     //appsboot entry
+    )
+    
+RETURN
+
+////////////////////////////////////////////
+//        Name: SETDEBUGCOOKIE
+//        Function: Sets or clears debug cookie for desired subsystem
+//        Inputs: 
+//              &ARG0 - image to set debug cookie for
+//              &ACTION - "clear" - clears debug cookie. Else Sets it.
+//
+/////////////////////////////////////////////
+
+SETDEBUGCOOKIE:
+	LOCAL &ACTION &ARG0 &ARG1 &ARG2 &ARG3 &ARG4 &ARG5 &ARG6 &ARG7 &ARG8 &ARG9 &ARG10 &ARG11
+	ENTRY &ACTION &ARG0 &ARG1 &ARG2 &ARG3 &ARG4 &ARG5 &ARG6 &ARG7 &ARG8 &ARG9 &ARG10 &ARG11
+
+    LOCAL &DebugCookieAddress &DebugCookieAddress1
+	&Loc_ARG0=string.lwr("&ARG0")
+    //&Action should be "None"
+    
+          //############RPM DEBUG#############        
+            IF ("&Loc_ARG0"=="rpm")
+            (
+                &DebugCookieAddress=&RPM_DEBUG_COOKIE
+            )
+            //############APPS PROCESSOR DEBUG#############
+            ELSE IF ("&Loc_ARG0"=="appspbl")
+            (
+                RETURN
+            )
+            ELSE IF ("&Loc_ARG0"=="sbl1")
+            (
+                &DebugCookieAddress=&SBL1_DEBUG_COOKIE
+            )
+            ELSE IF ("&Loc_ARG0"=="tz")
+            (
+                &DebugCookieAddress=&SBL1_DEBUG_COOKIE
+            )
+            ELSE IF ("&Loc_ARG0"=="apps")
+            (
+                &DebugCookieAddress=&SBL1_DEBUG_COOKIE
+            )
+            
+            //############MODEM_Q6 DEBUG#############                    
+            ELSE IF ("&Loc_ARG0"=="mpss")
+            (
+                &DebugCookieAddress=&MPSS_DEBUG_COOKIE
+                do std_utils HWIO_OUTF GCC_MSS_CFG_AHB_CBCR CLK_ENABLE 0x1 EZAXI
+                wait.200ms
+                do std_utils HWIO_OUTF MSS_QDSP6SS_DBG_CFG DBG_SW_REG 0x20
+
+		
+            )
+            ELSE IF ("&Loc_ARG0"=="mba")
+            (
+                &DebugCookieAddress=&MBA_DEBUG_COOKIE
+
+                do std_utils HWIO_OUTF GCC_MSS_CFG_AHB_CBCR CLK_ENABLE 0x1 EZAXI
+                wait.200ms
+                do std_utils HWIO_OUTF MSS_QDSP6SS_DBG_CFG DBG_SW_REG 0x10
+            )
+            ELSE
+            (
+                print %error "Error! Unknown image: &ARG0 specified"
+                GOTO FATALEXIT
+            )
+            
+            //set the value
+            IF STR.LWR("&ACTION")!="clear"
+            (
+                DATA.SET EZAXI:&DebugCookieAddress %LONG %LE &DEBUG_COOKIE_VALUE
+            )
+            ELSE //user wants cookie cleared
+            (
+                DATA.SET EZAXI:&DebugCookieAddress %LONG %LE 0x0
+            )
+            
+            
+    RETURN //SETDEBUGCOOKIE. 
+  
+
+////////////////////////////////////////////
+//            Function: GETDEBUGDEFAULTS
+//
+//
+//               &rvalue_targetprocessor="RPM" -> 
+//                      Multiple images may map to same processor (e.g. MBA and MPSS on the modem Q6)
+//               &rvalue_symbolloadscript="std_loadsyms_rpm"
+//                      Specifies the load script that std_debug will call to load symbols on your target processor
+//               &rvalue_buildpath="&RPM_BUILDROOT"
+//                      The Build Path for your image's symbols.
+//               &rvalue_debugscript="std_debug_rpm" 
+//                      Debug script for your image, which std_debug will call once the target image is in initialization.
+//               &rvalue_peripheral_processor="FALSE"
+//                      Indicates if the target is a peripheral processor, in which case CTI is used to communicate with the boot processor that it initialized.
+//                      Currently only Q6's use this.
+//               &rvalue_targetprocessorport=&RPM_PORT
+//                      The JTag intercom port to execute intercom commands on the remote JTag window
+//               &rvalue_processortimeoutvalue=0x1
+//                      Once the system starts booting up, it will wait for either a CTI signal or timeout, then JTag attempts to break.
+//                      Q6's take a while to load, depending on how long apps takes to load them (say 20 seconds), whereas RPM and bootchain are nearly immediate
+//                      timeout value is in increments of 100 milliseconds.
+//                      
+//
+////////////////////////////////////////////
+GETDEBUGDEFAULTS:
+    LOCAL &ACTION &ARG0 &ARG1 &ARG2 &ARG3 &ARG4 &ARG5 &ARG6 &ARG7 &ARG8 &ARG9 &ARG10 &ARG11 &ARG12
+    ENTRY &ACTION &ARG0 &ARG1 &ARG2 &ARG3 &ARG4 &ARG5 &ARG6 &ARG7 &ARG8 &ARG9 &ARG10 &ARG11 &ARG12
+        
+            //locals for given parameters
+            LOCAL &given_image &given_lpm_option &given_cti_enable &given_alternateelf &given_extraoption
+            
+            
+            &given_image=string.lwr("&ARG0")
+            &given_lpm_option=string.lwr("&ARG1")
+            &given_cti_enable=string.lwr("&ARG2")
+            &given_alternateelf=string.lwr("&ARG3")
+            &given_extraoption="&ARG4"
+
+            //return value variables
+            LOCAL &rvalue_image &rvalue_targetprocessor &rvalue_targetprocessorport &rvalue_bootprocessor &rvalue_bootprocessorport &rvalue_peripheral_processor &rvalue_processortimeoutvalue &rvalue_debugscript &rvalue_symbolloadscript &rvalue_buildpath &rvalue_entry_bkpt &rvalue_error_bkpts &rvalue_lpm_option &rvalue_sleep_disable_command &rvalue_cti_enable &rvalue_multi_elf_option &rvalue_alternateelf &rvalue_extraoption
+
+            
+            &rvalue_bootprocessor="APPS0"
+            &rvalue_bootprocessorport=&APPS0_PORT
+            &rvalue_image="&given_image"
+            //FIXME - needs review by AJ for non-q6 processors.
+            //FIXME - MBA debug needs verification
+            //############RPM DEBUG#############        
+            IF ("&given_image"=="rpm")
+            (
+               &rvalue_targetprocessor="RPM"
+               &rvalue_targetprocessorport=&RPM_PORT
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_rpm_mdm9205"
+               &rvalue_symbolloadscript="std_loadsyms_rpm"
+               &rvalue_buildpath="&RPM_BUILDROOT"
+               &rvalue_entry_bkpt="exceptions_init"
+               &rvalue_error_bkpts="NULL"
+               &rvalue_sleep_disable_command="NULL"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+
+            //############APPS PROCESSOR DEBUG#############
+            ELSE IF ("&given_image"=="appspbl")
+            (
+               &rvalue_targetprocessor="APPS0"
+               &rvalue_targetprocessorport=&APPS0_PORT
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_boot"
+               &rvalue_symbolloadscript="NULL"
+               &rvalue_buildpath="&BOOT_BUILDROOT"
+               &rvalue_entry_bkpt="NULL"
+               &rvalue_error_bkpts="NULL"
+               &rvalue_sleep_disable_command="NULL"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+            ELSE IF ("&given_image"=="sbl1")
+            (
+               &rvalue_targetprocessor="APPS0"
+               &rvalue_targetprocessorport=&APPS0_PORT
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_boot"
+               &rvalue_symbolloadscript="std_loadsyms_sbl"
+               &rvalue_buildpath="&BOOT_BUILDROOT"
+               &rvalue_entry_bkpt="sbl1_main_ctl"
+               &rvalue_error_bkpts="boot_error_handler"
+               &rvalue_sleep_disable_command="NULL"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+            ELSE IF ("&given_image"=="tz")
+            (
+               &rvalue_targetprocessor="APPS0"
+               &rvalue_targetprocessorport=&APPS0_PORT
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_tz"
+               &rvalue_symbolloadscript="std_loadsyms_tz"
+               &rvalue_buildpath="&TZ_BUILDROOT"
+			   
+               IF (Y.EXIST(tzbsp_reset_vector))
+	           (
+		          &rvalue_entry_bkpt="tzbsp_reset_vector"
+			   )
+			   ELSE
+			   (
+				  &rvalue_entry_bkpt="Image$$TZBSP_CODE$$Base"
+			   )
+               &rvalue_error_bkpts="tzbsp_err_fatal"
+               &rvalue_sleep_disable_command="NULL"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+            ELSE IF ("&given_image"=="apps")
+            (
+               &rvalue_targetprocessor="APPS0"
+               &rvalue_targetprocessorport=&APPS0_PORT
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_&HLOS"
+               &rvalue_symbolloadscript="std_loadsyms_apps"
+	       &APPS_BUILDROOT="&APSS_BUILDROOT"
+	       &APPS_ELF="&APSS_ELF"
+               &rvalue_buildpath="&APPS_BUILDROOT"
+               &rvalue_entry_bkpt="0x80000000"
+               &rvalue_error_bkpts="err_fatal_handler"
+               &rvalue_sleep_disable_command="v sleep_allow_low_power_modes=0"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+            
+            //############MODEM_Q6 DEBUG#############                    
+            ELSE IF (("&given_image"=="mpss,apps")||("&given_image"=="apps,mpss"))
+            (
+	    	&rvalue_targetprocessor="APPS0,mpss"
+               &rvalue_targetprocessorport="&APPS0_PORT,&MPSS_PORT"
+               &rvalue_peripheral_processor="false"
+               &rvalue_processortimeoutvalue=0x1
+               &rvalue_debugscript="std_debug_&HLOS,std_debug_mpss"
+               &rvalue_symbolloadscript="std_loadsyms_apps,std_loadsyms_mpss"
+	       &APPS_BUILDROOT="&APSS_BUILDROOT"
+	       &APPS_ELF="&APSS_ELF"
+               &rvalue_buildpath="&APSS_BUILDROOT,&MPSS_BUILDROOT"
+               &rvalue_entry_bkpt="main"
+               &rvalue_error_bkpts="QURTK_error,err_fatal_handler"
+               &rvalue_sleep_disable_command="v g_sleepAllowLowPowerModes=0"
+	       &rvalue_extraoption="mproc"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+            ELSE IF ("&given_image"=="mpss")
+            (
+               &rvalue_targetprocessor="mpss"
+               &rvalue_targetprocessorport=&MPSS_PORT
+               &rvalue_peripheral_processor="true"
+               &rvalue_processortimeoutvalue=0x4A
+               &rvalue_debugscript="std_debug_mpss"
+               &rvalue_symbolloadscript="std_loadsyms_mpss"
+               &rvalue_buildpath="&MPSS_BUILDROOT"
+               &rvalue_entry_bkpt="main"
+               &rvalue_sleep_disable_command="v g_sleepAllowLowPowerModes=0"
+               &rvalue_error_bkpts="QURTK_error,err_fatal_handler"
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="false"
+               &rvalue_multi_elf_option="false"
+            )
+
+            ELSE IF ("&given_image"=="mba") 
+            (
+               &rvalue_targetprocessor="mpss"
+               &rvalue_targetprocessorport=&MPSS_PORT
+               &rvalue_peripheral_processor="true"
+               &rvalue_processortimeoutvalue=0x4A
+               &rvalue_debugscript="std_debug_mba"
+               &rvalue_symbolloadscript="std_loadsyms_mpss"
+               &rvalue_buildpath="&MPSS_BUILDROOT"  //FIXME - std_loadsyms should be smarter, and could point directly to build.
+               &rvalue_entry_bkpt="main"
+               &rvalue_error_bkpts="mba_error_handler,QURTK_handle_error,QURTK_tlb_crash,QURTK_error,QURTK_handle_nmi"
+               &rvalue_sleep_disable_command="NULL"
+               
+               //defaults. rvalues are modified below depending on user input.
+               &rvalue_lpm_option="lpm_disable"
+               &rvalue_cti_enable="true"
+               &rvalue_multi_elf_option="false"
+            )
+            ELSE
+            (
+                PRINT %ERROR "Error! Unknown image: &ARG0 specified"
+                GOTO FATALEXIT
+            )
+        
+        
+            IF ("&given_lpm_option"=="lpm_disable")
+            (
+                &rvalue_lpm_option="lpm_disable"
+            )
+            IF ("&given_lpm_option"=="lpm_enable")
+            (
+                &rvalue_lpm_option="lpm_enable"
+            )
+
+            IF ("&given_cti_enable"=="true")
+            (
+                &rvalue_cti_enable="true"
+            )
+            IF ("&given_cti_enable"=="false")
+            (
+                &rvalue_cti_enable="false"
+            )
+
+            IF ("&given_alternateelf"=="")
+            (
+                &rvalue_alternateelf="NULL"
+            )
+            ELSE
+            (
+                &rvalue_alternateelf="&given_alternateelf"
+            )
+	    
+            //Just pass extraoption through
+	    IF (("&given_extraoption"!="")||("&given_extraoption"!="NULL"))
+	    (
+		&rvalue_extraoption= "&given_extraoption"+","+"&rvalue_extraoption"
+	    )
+       
+	    IF (STRING.SCAN("&Usb_Boot_Flashless","True",0)!=-1)
+	    (
+		&rvalue_extraoption= "&rvalue_extraoption"+","+"usbboot"
+	    )
+
+	    ELSE IF (STRING.SCAN("&Pcie_Boot_Flashless","True",0)!=-1)
+	    (
+		&rvalue_extraoption= "&rvalue_extraoption"+","+"pcieboot"
+	    )
+        
+            ENDDO &rvalue_image &rvalue_targetprocessor &rvalue_targetprocessorport &rvalue_bootprocessor &rvalue_bootprocessorport &rvalue_peripheral_processor &rvalue_processortimeoutvalue &rvalue_debugscript &rvalue_symbolloadscript &rvalue_buildpath &rvalue_entry_bkpt &rvalue_error_bkpts &rvalue_lpm_option "&rvalue_sleep_disable_command" &rvalue_cti_enable &rvalue_multi_elf_option &rvalue_alternateelf &rvalue_extraoption
+        
+        
+        
+    
+    
+    
+    RETURN //GETDEBUGDEFAULTS
+EXIT:
+	ENDDO
+
+FATALEXIT:
+	END
+
+
+
+
+
+
+
+ 
+

@@ -1,0 +1,422 @@
+#===============================================================================
+# UIM MMGSDI Subsystem build script
+# GENERAL DESCRIPTION
+#    build script for modem/uim/mmgsdi
+#
+#                       COPYRIGHT INFORMATION
+#
+# Copyright (c) 2010 - 2019, 2023 QUALCOMM Technologies, Inc (QTI) and its licensors.
+# All Rights Reserved.  QUALCOMM Technologies Proprietary.
+# Export of this technology or software
+# is regulated by the U.S. Government. Diversion contrary to U.S. law prohibited.
+#
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/modem/uim/mmgsdi/build/main/latest/uim_mmgsdi.scons#6 $ $DateTime: 2003/07/16 23:58:06 $ $Author: amitp $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/23/23   tq      IMSI switch for aware device 
+# 12/27/19   tq      Support for FEATURE_UIM_JO_3_0_3_CAPABILITIES on CT.2.0
+# 08/22/19   sch     Send SELECT ISDR to determine if card is eUICC or not
+# 03/06/19   vgd     GET EID for M2M cards where LPA is not supported
+# 07/09/18   tq      Added mmgsdi_depricated.c
+# 06/22/18   bcho    Support for FEATURE_UIM_JO_3_0_3_CAPABILITIES on CT.1.0
+# 11/17/17   me      Support for FEATURE_UIM_JO_3_0_3_CAPABILITIES
+# 10/18/16   sn      Support for FEATURE_UIM_JO_3_0_2_CAPABILITIES
+# 10/17/16   sn      Added support for features UIM capabilities 
+# 08/16/16   me      Added support for features UIM capabilities 
+# 07/05/16   sp      Added stub functions for EFs under PKCS directory
+# 06/22/16   bcho    Disable builtin plmn functionality for IOE devices
+# 06/20/16   nr      Adding PSM, PB Cache, Multiple sub selection for IoE flavor
+# 05/16/16   bcho    Disable silent pin verification for IOE devices
+# 05/12/16   vdc     Added stub file for hidden key functionality
+# 05/11/16   vdc     Guard with FEATURE_MMGSDI_3GPP2 for 3GPP2 related functions
+# 05/04/16   bcho    Disable CPHS functionality for IOE LTE Only devices
+# 05/04/16   vdc     Adding SE13 addl lang table stub for IoE flavor
+# 05/02/16   ar      Snip out 3GPP2 files in from non-CDMA builds
+# 04/26/16   dd      Stub out onchip functionality for IOE flavour
+# 04/25/16   bcho    Disable SAP server mode for IOE devices
+# 04/14/16   vdc     Added external personlization files for IOE flavor
+# 03/09/16   vdc     Removed JCDMA related code
+# 03/09/16   bcho    Removal of ICC files from MMGSDI for IOE LTE only flavor
+# 03/09/16   vdc     Added stub file for CSG functionality
+# 03/07/16   ar      Create mmgsdi_file_update_stub.c to remove file_update_evt
+# 03/04/16   gm      Featurize mmgsdi_2 task based on dual SIM support
+# 12/25/15   bcho    Added support for PSM
+# 11/25/15   sp      Updated copyright
+# 09/25/15   vr      Added support for multi profile
+# 05/29/15   hh      Added mmgsdi_manage_channel.c
+# 04/17/15   nr      Added mmgsdi_pb_cache.c
+# 11/26/14   av      Changes to make sure tasks opt for inclusion in FTM mode
+# 09/29/14   tkl     Added support for persistent cache
+# 09/19/14   ar      Featurize mmgsdi_3 task based on triple SIM support
+# 08/28/14   vv      Added mmgsdi_simlock_refresh.c
+# 08/27/14   yt      Added mmgsdi_crsm.c to list of source files
+# 08/27/14   tl      Add mmgsdi_ss_event.c
+# 08/19/14   hh      Added mmgsdi_1x_upp.c
+# 08/14/14   tl      Added mmgsdi_silent_pin.c to list of source files
+# 08/11/14   bcho    Add mmgsdi_caller_context.c
+# 07/28/14   vv      Remove mmgsdi_convert.c
+# 07/15/14   kk      NV Refresh: MCFG - MMGSDI interactions
+# 06/30/14   vv      Remove perso code
+# 04/06/14   am      Added mmgsdi_memory_cleanup.c to list of source files
+# 03/18/14   tl      Introduce new SIM Lock feature
+# 02/25/14   bcho    Add mmgsdi_builtin_plmn.c
+# 01/21/14   yt      Add mmgsdi_uim_common.c
+# 10/16/13   tl      Remove mmgsdibt.c from list of source files
+# 10/02/13   yt      Add new files for command/response processing
+# 09/23/13   vr      qtf-crm MOB migration
+# 08/28/13   yt      Remove VIRTUIM/VIRTSAT files from list of source files
+# 08/20/13   spo     Added mmgsdi_sub_selection.c
+# 07/15/13   vs      Added 2 new EONS source files for NITZ and OPL/PNN
+# 06/25/13   vdc     Added support for spawning 3rd task in MMGSDI
+# 06/18/13   av      Fallback to SFS if SFP not available
+# 04/30/13   yt      Remove non-existent paths
+# 04/18/13   at      Added mmgsdi_se13.c
+# 04/15/13   tl      Removed mmgsdi_mflo.c from list of source files
+# 04/02/13   av      Move UIM tasks to group4 of RCINIT
+# 01/20/13   vv      Added EONS support for the CSG
+# 12/05/12   vv      Added support for parallel processing in MMGSDI
+# 09/18/12   nk      Changes to support modem folder removal
+# 06/06/12   yt      RCInit: Move MMGSDI init function to MODEM_DRIVER group
+# 05/23/12   vv      Added support for file update notification registration
+# 05/02/12   yt      Enable GSDI init function for RCInit
+# 03/07/12   yt      RCInit changes
+# 12/21/11   bcho    Legacy GSDI removal updates and EONS
+# 10/28/11   yt      Added mmgsdicache.c to the list of source files
+# 10/13/11   yt      Added support for RCInit
+# 10/13/11   shr     Adding support for full recovery
+# 04/20/11   adp     Moving MMGSDI logging under UIM
+# 03/23/11   nk      Added RFA Restricted APIs
+# 12/20/10   nk      Fixed Compilaton Errors
+# 12/15/10   nk      Updated to include DAL Public APIs
+# 11/30/10   nk      Removing files that are not compiled
+# 10/22/10   nk      Moved USES_RUIM check after env.Clone().  Added compilation
+#            of mmgsdi_evt.c
+# 10/11/10   nk      Updated with header and UESES Flag Check
+#
+#===============================================================================
+
+
+#-----------------------------------------
+# Import and clone the SCons environment
+#-----------------------------------------
+Import('env')
+env = env.Clone()
+
+# Verify that USES_RUIM is set, otherwise bail out now
+if 'USES_RUIM' not in env:
+    Return()
+
+#-----------------------------------------
+# Setup source PATH
+#-----------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-----------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-----------------------------------------
+env.Append(CPPDEFINES = [
+   "MSG_BT_SSID_DFLT=MSG_SSID_RUIM",
+])
+
+#-----------------------------------------
+# Necessary Public API's
+#-----------------------------------------
+CORE_APIS = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'SECUREMSM',
+    'DAL',
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+
+# We need the Core BSP API's
+env.RequirePublicApi(CORE_APIS, area="CORE")
+
+# We need the UIM API's
+env.RequirePublicApi(['UIM', 'MCS', 'MMODE', 'PBM', 'GERAN', 'WMS', 'RFA'])
+
+# We need our "inc" dir too + other UIM "inc" dirs
+# We need WCDMA RRC Restricted APIs
+env.RequireRestrictedApi(['UIM', 'MCS', 'NAS', 'WCDMA', 'MMODE', 'LTE', 'RRC', 'RFA'])
+
+
+#-------------------------------------------------------------------------------
+# External API's not built with SCons
+#-------------------------------------------------------------------------------
+env.RequireExternalApi(['BREW'])
+
+#-----------------------------------------
+# Generate the library and add to an image
+#-----------------------------------------
+if 'USES_UIM_IOE_L_ONLY' in env:
+  MMGSDI_C_SOURCES = [
+      '${BUILDPATH}/mmgsdi_icc_stubs.c',
+      '${BUILDPATH}/mmgsdi_icc_rsp_stubs.c',
+      '${BUILDPATH}/mmgsdi_uim_icc_stubs.c',
+      '${BUILDPATH}/mmgsdi_cphs_stubs.c'
+  ]
+else:
+  MMGSDI_C_SOURCES = [
+      '${BUILDPATH}/mmgsdi_icc.c',
+      '${BUILDPATH}/mmgsdi_icc_rsp.c',
+      '${BUILDPATH}/mmgsdi_uim_icc.c',
+      '${BUILDPATH}/mmgsdi_cphs.c'
+  ]
+
+if 'USES_CDMA' in env:
+  MMGSDI_C_SOURCES += [
+      '${BUILDPATH}/mmgsdisessionlib_3gpp2.c',
+      '${BUILDPATH}/mmgsdi_cnf_3gpp2.c',
+      '${BUILDPATH}/mmgsdiutil_3gpp2.c'
+  ]
+else:
+  MMGSDI_C_SOURCES += [
+      '${BUILDPATH}/mmgsdisessionlib_3gpp2_stubs.c',
+      '${BUILDPATH}/mmgsdi_cnf_3gpp2_stubs.c'
+  ]
+
+if 'USES_UIM_IOE' in env:
+  MMGSDI_C_SOURCES += [
+      '${BUILDPATH}/mmgsdi_file_update_stubs.c',
+      '${BUILDPATH}/mmgsdi_sub_selection_stubs.c',
+      '${BUILDPATH}/mmgsdi_csg_stubs.c',
+      '${BUILDPATH}/mmgsdi_external_simlock_stubs.c',
+      '${BUILDPATH}/mmgsdilib_sap_stubs.c',
+      '${BUILDPATH}/mmgsdi_sap_stubs.c',
+      '${BUILDPATH}/mmgsdi_sap_rsp_stubs.c',
+      '${BUILDPATH}/mmgsdi_onchip_stubs.c',
+      '${BUILDPATH}/mmgsdi_se13_addl_lang_table_stubs.c',
+      '${BUILDPATH}/mmgsdi_hidden_key_stubs.c',
+      '${BUILDPATH}/mmgsdi_silent_pin_stubs.c',
+      '${BUILDPATH}/mmgsdi_pb_cache_stub.c',
+      '${BUILDPATH}/mmgsdi_psm.c',
+      '${BUILDPATH}/mmgsdi_builtin_plmn_stubs.c',
+      '${BUILDPATH}/mmgsdilib_pkcs_stubs.c',
+      '${BUILDPATH}/mmgsdi_euicc_m2m.c'
+  ]
+else:
+  MMGSDI_C_SOURCES += [
+      '${BUILDPATH}/mmgsdi_file_update.c',
+      '${BUILDPATH}/mmgsdi_sub_selection.c',
+      '${BUILDPATH}/mmgsdi_csg.c',
+      '${BUILDPATH}/mmgsdi_external_simlock.c',
+      '${BUILDPATH}/mmgsdilib_sap.c',
+      '${BUILDPATH}/mmgsdi_sap.c',
+      '${BUILDPATH}/mmgsdi_sap_rsp.c',
+      '${BUILDPATH}/mmgsdi_onchip.c',
+      '${BUILDPATH}/mmgsdi_se13_addl_lang_table.c',
+      '${BUILDPATH}/mmgsdi_hidden_key.c',
+      '${BUILDPATH}/mmgsdi_silent_pin.c',
+      '${BUILDPATH}/mmgsdi_pb_cache.c',
+      '${BUILDPATH}/mmgsdi_psm_stubs.c',
+      '${BUILDPATH}/mmgsdi_builtin_plmn.c',
+      '${BUILDPATH}/mmgsdilib_pkcs.c',
+      '${BUILDPATH}/mmgsdi_euicc_m2m_stubs.c'
+  ]
+
+MMGSDI_C_SOURCES += [
+    '${BUILDPATH}/mmgsdi_efs.c',
+    '${BUILDPATH}/mmgsdi_sfs.c',
+    '${BUILDPATH}/mmgsdi_nv.c',
+    '${BUILDPATH}/mmgsdi_simlock.c',
+    '${BUILDPATH}/mmgsdi.c',
+    '${BUILDPATH}/mmgsdi_cnf.c',
+    '${BUILDPATH}/mmgsdi_gen.c',
+    '${BUILDPATH}/mmgsdi_gen_rsp.c',
+    '${BUILDPATH}/mmgsdi_refresh.c',
+    '${BUILDPATH}/mmgsdi_refresh_rsp.c',
+    '${BUILDPATH}/mmgsdi_session.c',
+    '${BUILDPATH}/mmgsdi_uicc.c',
+    '${BUILDPATH}/mmgsdi_uicc_rsp.c',
+    '${BUILDPATH}/mmgsdi_uim_uicc.c',
+    '${BUILDPATH}/mmgsdilib.c',
+    '${BUILDPATH}/mmgsdisessionlib.c',
+    '${BUILDPATH}/mmgsdiutil.c',
+    '${BUILDPATH}/mmgsdi_evt.c',
+    '${BUILDPATH}/mmgsdicache.c',
+    '${BUILDPATH}/mmgsdi_card_init.c',
+    '${BUILDPATH}/mmgsdi_task_init.c',
+    '${BUILDPATH}/mmgsdi_eons.c',
+    '${BUILDPATH}/mmgsdi_file.c',
+    '${BUILDPATH}/mmgsdi_se13.c',
+    '${BUILDPATH}/mmgsdi_eons_nitz.c',
+    '${BUILDPATH}/mmgsdi_eons_opl_pnn.c',
+    '${BUILDPATH}/mmgsdi_eons_cdma.c',
+    '${BUILDPATH}/mmgsdi_common.c',
+    '${BUILDPATH}/mmgsdi_common_rsp.c',
+    '${BUILDPATH}/mmgsdi_uim_common.c',
+    '${BUILDPATH}/mmgsdi_memory_cleanup.c',
+    '${BUILDPATH}/mmgsdi_nv_refresh.c',
+    '${BUILDPATH}/mmgsdi_caller_context.c',
+    '${BUILDPATH}/mmgsdi_1x_upp.c',
+    '${BUILDPATH}/mmgsdi_ss_event.c',
+    '${BUILDPATH}/mmgsdi_crsm.c',
+    '${BUILDPATH}/mmgsdi_simlock_refresh.c',
+    '${BUILDPATH}/mmgsdi_persistent_cache.c',
+    '${BUILDPATH}/mmgsdi_manage_channel.c',
+    '${BUILDPATH}/mmgsdi_multi_profile.c',
+    '${BUILDPATH}/mmgsdi_iot.c',
+    '${BUILDPATH}/mmgsdi_depricated_api.c', 	
+    '${BUILDPATH}/mmgsdi_euicc.c',
+    '${BUILDPATH}/mmgsdi_imsi_switch.c'
+]
+
+# Add our library to the MODEM_AMSS image
+env.AddLibrary(['MODEM_MODEM','MOB_UIM'], '${BUILDPATH}/uim_mmgsdi', MMGSDI_C_SOURCES)
+
+#------------------------------------------
+# Determine the target so that appropriate
+# Features can be enabled 
+#------------------------------------------
+if env['PRODUCT_LINE'].startswith("MPSS.JO.3.0.1"):
+   env.Append(CPPDEFINES = ['FEATURE_UIM_JO_3_0_1_CAPABILITIES'])
+elif env['PRODUCT_LINE'].startswith("MPSS.JO.3.0.2"):
+   env.Append(CPPDEFINES = ['FEATURE_UIM_JO_3_0_2_CAPABILITIES'])
+elif env['PRODUCT_LINE'].startswith("MPSS.JO.3.0.3"):
+   env.Append(CPPDEFINES = ['FEATURE_UIM_JO_3_0_3_CAPABILITIES'])
+elif env['PRODUCT_LINE'].startswith("MPSS.CT.1.0"):
+   env.Append(CPPDEFINES = ['FEATURE_UIM_JO_3_0_3_CAPABILITIES'])
+elif env['PRODUCT_LINE'].startswith("MPSS.CT.2.0"):
+   env.Append(CPPDEFINES = ['FEATURE_UIM_JO_3_0_3_CAPABILITIES'])
+else:
+   env.PrintWarning("Feature: Unknown Feature!")
+   Exit(1)
+
+# Build image for which this task belongs
+RCINIT_GSDI = ['MODEM_MODEM','MOB_UIM']
+
+# RC Init Function Dictionary
+RCINIT_INIT_GSDI = {
+            'sequence_group' : env.subst('$MODEM_DRIVER'),
+            'init_name'      : 'gsdi_init',
+            'init_function'  : 'mmgsdi_init',
+            'dependencies'   : [],
+            'policy_optin'   : ['default', 'ftm', ]
+    }
+
+# RC Init Task Dictionary
+RCINIT_TASK_GSDI= {
+            'thread_name'         : 'gsdi',
+            'sequence_group'      : 'RCINIT_GROUP_4',
+            'stack_size_bytes'    : env.subst('$GSDI_STKSZ'),
+            'priority_amss_order' : 'GSDI_PRI_ORDER',
+            'stack_name'          : 'gsdi_stack',
+            'thread_entry'        : 'gsdimain',
+            'tcb_name'            : 'gsdi_task_tcb',
+            'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+            'policy_optin'        : ['default', 'ftm', ]
+    }
+
+# Add init function to RCInit
+if 'USES_MODEM_RCINIT' in env:
+            env.AddRCInitTask(RCINIT_GSDI, RCINIT_TASK_GSDI)
+            env.AddRCInitFunc(RCINIT_GSDI, RCINIT_INIT_GSDI)
+
+# Build image for which this task belongs
+RCINIT_MMGSDI_1 = ['MODEM_MODEM','MOB_UIM']
+
+# RC Init Function Dictionary
+RCINIT_INIT_MMGSDI_1 = {
+            'sequence_group' : env.subst('$MODEM_DRIVER'),
+            'init_name'      : 'mmgsdi_slot1_init',
+            'init_function'  : 'mmgsdi_slot1_init',
+            'dependencies'   : [],
+            'policy_optin'   : ['default', 'ftm', ]
+    }
+
+# RC Init Task Dictionary
+RCINIT_TASK_MMGSDI_1= {
+            'thread_name'         : 'mmgsdi_1',
+            'sequence_group'      : 'RCINIT_GROUP_4',
+            'stack_size_bytes'    : env.subst('$GSDI_STKSZ'),
+            'priority_amss_order' : 'GSDI_PRI_ORDER',
+            'stack_name'          : 'mmgsdi_1_stack',
+            'thread_entry'        : 'gsdimain',
+            'tcb_name'            : 'mmgsdi_1_tcb',
+            'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+            'policy_optin'        : ['default', 'ftm', ]
+    }
+
+# Add init function to RCInit
+if 'USES_MODEM_RCINIT' in env:
+            env.AddRCInitTask(RCINIT_MMGSDI_1, RCINIT_TASK_MMGSDI_1)
+            env.AddRCInitFunc(RCINIT_MMGSDI_1, RCINIT_INIT_MMGSDI_1)
+
+# Build image for which this task belongs
+if 'USES_DUAL_SIM' in env:
+	RCINIT_MMGSDI_2 = ['MODEM_MODEM','MOB_UIM']
+
+	# RC Init Function Dictionary
+	RCINIT_INIT_MMGSDI_2 = {
+	            'sequence_group' : env.subst('$MODEM_DRIVER'),
+	            'init_name'      : 'mmgsdi_slot2_init',
+	            'init_function'  : 'mmgsdi_slot2_init',
+	            'dependencies'   : [],
+	            'policy_optin'   : ['default', 'ftm', ]
+	    }
+
+	# RC Init Task Dictionary
+	RCINIT_TASK_MMGSDI_2= {
+	            'thread_name'         : 'mmgsdi_2',
+	            'sequence_group'      : 'RCINIT_GROUP_4',
+	            'stack_size_bytes'    : env.subst('$GSDI_STKSZ'),
+	            'priority_amss_order' : 'GSDI_PRI_ORDER',
+	            'stack_name'          : 'mmgsdi_2_stack',
+	            'thread_entry'        : 'gsdimain',
+	            'tcb_name'            : 'mmgsdi_2_tcb',
+	            'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+	            'policy_optin'        : ['default', 'ftm', ]
+	    }
+
+	# Add init function to RCInit
+	if 'USES_MODEM_RCINIT' in env:
+	            env.AddRCInitTask(RCINIT_MMGSDI_2, RCINIT_TASK_MMGSDI_2)
+	            env.AddRCInitFunc(RCINIT_MMGSDI_2, RCINIT_INIT_MMGSDI_2)
+
+# Build image for which this task belongs
+if 'USES_FEATURE_TRIPLE_SIM' in env:
+    RCINIT_MMGSDI_3 = ['MODEM_MODEM','MOB_UIM']
+
+    # RC Init Function Dictionary
+    RCINIT_INIT_MMGSDI_3 = {
+                'sequence_group' : env.subst('$MODEM_DRIVER'),
+                'init_name'      : 'mmgsdi_slot3_init',
+                'init_function'  : 'mmgsdi_slot3_init',
+                'dependencies'   : [],
+                'policy_optin'   : ['default', 'ftm', ]
+        }
+
+    # RC Init Task Dictionary
+    RCINIT_TASK_MMGSDI_3= {
+                'thread_name'         : 'mmgsdi_3',
+                'sequence_group'      : 'RCINIT_GROUP_4',
+                'stack_size_bytes'    : env.subst('$GSDI_STKSZ'),
+                'priority_amss_order' : 'GSDI_PRI_ORDER',
+                'stack_name'          : 'mmgsdi_3_stack',
+                'thread_entry'        : 'gsdimain',
+                'tcb_name'            : 'mmgsdi_3_tcb',
+                'cpu_affinity'        : env.subst('$MODEM_CPU_AFFINITY'),
+                'policy_optin'        : ['default', 'ftm', ]
+        }
+
+    # Add init function to RCInit
+    if 'USES_MODEM_RCINIT' in env:
+                env.AddRCInitTask(RCINIT_MMGSDI_3, RCINIT_TASK_MMGSDI_3)
+                env.AddRCInitFunc(RCINIT_MMGSDI_3, RCINIT_INIT_MMGSDI_3)
+
+# Load test units
+env.LoadSoftwareUnits()

@@ -1,0 +1,49 @@
+import os
+import fnmatch
+import itertools
+
+Import('env')
+env = env.Clone()
+
+SRCPATH = ".."
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+CBSP_API = [
+   'POWER',
+   'MPROC',
+   'DEBUGTOOLS',
+   'DAL',
+   'SERVICES',
+   'NPA',
+   'UTILS',
+   'SYSTEMDRIVERS',
+   # needs to be last also contains wrong comdef.h      
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('STUBS', [
+   '${BUILD_ROOT}/core/power/stubs',   
+])
+
+env.Append(CPPDEFINES=['RPM_EDGE_TYPE=SMD_APPS_RPM'])
+env.Append(CPPDEFINES=['ULOG_RPM_LOCK_TYPE=ULOG_LOCK_OS'])
+env.Append(CPPDEFINES=['DALSYS_RPM_SYNC_TYPE=DALSYS_SYNC_ATTR_RESOURCE'])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+
+STUBS_SOURCES =  [
+   '${BUILDPATH}/core_stubs.c'
+]
+stubs_obj = env.Object(STUBS_SOURCES)
+stubs_lib = env.Library('${BUILDPATH}/stubs', stubs_obj)
+
+env.AddLibsToImage(
+   ['APPS_IMAGE', 'CBSP_APPS_IMAGE'], [stubs_lib])
+
+

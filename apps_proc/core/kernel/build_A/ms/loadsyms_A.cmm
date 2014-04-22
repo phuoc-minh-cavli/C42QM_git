@@ -1,0 +1,69 @@
+ENTRY &elf &build_id
+if "&elf"=="kernel"
+  GOSUB load_kernel
+if "&elf"=="amss"
+  d.load.elf ../../core/kernel/build/amss/bin/&build_id.reloc /nocode /noclear /cpp /strippart 8.
+if "&elf"=="ig_naming"
+  PRINT "ig_naming is not supported on the MDM6615 3.x build." ;d.load.elf ../../core/kernel/build/iguana/bin/ig_naming /nocode /noclear /gcc3 /cpp /strippart 8.
+if "&elf"=="ig_server"
+  PRINT "ig_server is not supported on the MDM6615 3.x build." ;d.load.elf ../../core/kernel/build/iguana_server/bin/ig_server /nocode /noclear /gcc3 /cpp /strippart 8.
+
+if "&elf"=="all"
+(
+  GOSUB load_kernel
+  d.load.elf ../../core/kernel/build/amss/bin/&build_id.reloc /nocode /noclear /cpp /strippart 8.
+)
+
+ENDDO
+
+load_kernel:
+  &full_amss_build_exists=OS.FILE("../../core/bsp/amsslibs/build/arm11/kernel.reloc");
+  &coreimg_build_exists=OS.FILE("../../core/bsp/coreimg/build/arm11/kernel.reloc");
+  &foundTwoRelocs=(&full_amss_build_exists&&&coreimg_build_exists);
+
+  if &foundTwoRelocs
+  (
+    DIALOG
+    (
+      HEADER "Select File" 
+      POS 0. 0. 50. 1
+      TEXT "More than one viable location for elf file.  Select desired file."
+      POS 1. 1. 50. 1
+      TC.0001: CHOOSEBOX "Full AMSS Build" ""
+      TC.0002: CHOOSEBOX "CoreIMG Build" ""
+      POS 1. 5. 10
+      DEFBUTTON "OK" "continue"
+    )
+
+    DIALOG.SET TC.0001
+    STOP
+
+    IF DIALOG.BOOLEAN(TC.0001)
+    (
+      PRINT "Using full amss build path.";
+      d.load.elf ../../core/bsp/amsslibs/build/arm11/kernel.reloc /nocode /noclear /gcc3 /cpp /strippart 8.
+    )
+    IF DIALOG.BOOLEAN(TC.0002)
+    (
+      PRINT "Using coreimg build path.";
+      d.load.elf ../../core/bsp/coreimg/build/arm11/kernel.reloc /nocode /noclear /gcc3 /cpp /strippart 8.
+    )
+
+    DIALOG.END
+  )
+  else if &full_amss_build_exists
+  (
+    PRINT "Using full amss build path.";
+    d.load.elf ../../core/bsp/amsslibs/build/arm11/kernel.reloc /nocode /noclear /gcc3 /cpp /strippart 8.
+  )
+  else if &coreimg_build_exists
+  (
+    PRINT "Using coreimg build path.";
+    d.load.elf ../../core/bsp/coreimg/build/arm11/kernel.reloc /nocode /noclear /gcc3 /cpp /strippart 8.
+  )
+  else
+  (
+    PRINT "WARNING: DID NOT LOAD ANY KERNEL RELOC FILE."
+    RETURN (0==1)
+  )
+  RETURN (0==0) ; Return true.  Practice has no primitives for TRUE and FALSE.

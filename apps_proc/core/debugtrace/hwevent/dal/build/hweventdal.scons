@@ -1,0 +1,78 @@
+#===============================================================================
+#
+# GENERAL DESCRIPTION
+#    Build script for HAL QDSS-TMC Library.
+#
+# Copyright (c) 2011-2012 Qualcomm Technologies Incorporated.
+# All rights reserved.
+# Qualcomm Confidential and Proprietary
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtrace/hwevent/dal/build/hweventdal.scons#1 $
+#
+
+Import('env')
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+env.RequirePublicApi(['HAL','DAL','DEBUGTRACE','SERVICES','SYSTEMDRIVERS','POWER', 'KERNEL'])
+env.RequireRestrictedApi(['DEBUGTRACE'])
+env.RequireProtectedApi(['DEBUGTRACE'])
+config=env['QDSS_MSM_CONFIG']
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+HWEVENT_DAL_SRC = [
+'${BUILDPATH}/DalHWEvent.c',
+]
+
+#Do NOT add source to 'APPS_PROC' image
+if env.has_key('APPS_PROC') is False:
+   HWEVENT_DAL_SRC+=['${BUILDPATH}/hwevent_cntrl.c']
+
+
+if env.IsTargetEnable(['WCN_IMAGE']):
+   env.Append(CCFLAGS = " -DEVENT_SUBSYSTEM=PRONTO")
+elif env.IsTargetEnable(['CORE_MODEM','MODEM_IMAGE','CBSP_MODEM_IMAGE','MCFG_SW']):
+   env.Append(CCFLAGS = " -DEVENT_SUBSYSTEM=MODEM")                    
+elif env.IsTargetEnable(['CORE_QDSP6_SENSOR_SW','CORE_QDSP6_AUDIO_SW']):
+   env.Append(CCFLAGS = " -DEVENT_SUBSYSTEM=SENSOR")
+elif env.IsTargetEnable(['CORE_QDSP6_AUDIO_SW']):
+   env.Append(CCFLAGS = " -DEVENT_SUBSYSTEM=AUDIO")
+   
+                     
+
+
+env.AddLibrary(['APPS_PROC','MCFG_SW','CBSP_QDSP6_SW_IMAGE','MODEM_IMAGE','CORE_QDSP6_SW'],
+   '${BUILDPATH}/hwevent_dal',HWEVENT_DAL_SRC)
+
+
+HWEVENT_CFG_SRC = ['../../config/'+config + '/hwevent_config.c']
+
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+   'devcfg_xml' : ['../../config/'+ config +'/dalhwevent.xml',
+                   '../../config/'+config + '/hwevent_config.c']
+   })
+   # env.AddLibrary(DEVCFG_IMG, '${BUILDPATH}/hwevent_cfg', HWEVENT_CFG_SRC)
+   
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CORE_MODEM','CORE_QDSP6_SW','MCFG_SW','CBSP_QDSP6_SW_IMAGE']
+  env.AddRCInitFunc(           # Code Fragment in TMC: NO
+   RCINIT_IMG,                 # 
+   {
+    'sequence_group'             : 'RCINIT_GROUP_2',            # required
+    'init_name'                  : 'hwevent_init',              # required
+    'init_function'              : 'hwevent_diag_init',          # required
+    'dependencies'               : ['dalsys','diag']
+   })

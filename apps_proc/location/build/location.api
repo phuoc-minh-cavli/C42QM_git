@@ -1,0 +1,31 @@
+#===============================================================================
+#
+# Location APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/location.tx/3.0/build/location.api#1 $
+#  $DateTime: 2020/06/04 04:30:35 $
+#  $Author: pwbldsvc $
+#  $Change: 24187663 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+Import('env')
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/api/qapi'
+]
+
+env.PublishPublicApi('LOCATION_API', INC_DIRS)
+
+env.LoadAPIUnits()

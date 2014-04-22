@@ -1,0 +1,97 @@
+#===============================================================================
+# location_flp Libs
+#
+# GENERAL DESCRIPTION
+#    location_flp Build Script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/location.tx/3.0/locationwifiinterface/build/SConscript#1 $
+#  $DateTime: 2020/06/04 04:30:35 $
+#  $Change: 24187663 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+# Create a processor specific macro which can be (ab)used for feature-ization.  
+#env.Append(CPPDEFINES = [( 'MPMINT_RPM_WAKEUP_IRQ', '201' ),         
+#                         ( 'HAL_MPMINT_TARGET_H', '\\"HALmpmint${MSM_ID}.h\\"' ),
+#                        ])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/locationwifiinterface/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'SYSTEMDRIVERS',
+   'KERNEL',
+]
+env.RequirePublicApi(CBSP_API, area='core')
+
+
+#-------------------------------------------------------------------------------
+# DATASERVICES API
+#-------------------------------------------------------------------------------
+DS_API = [
+    'NICHESTACK',
+    'QAPI',
+    'DSS_NET',
+    'DATASERVICES_NET_IPSTACK',
+    'CRYPTOLIB',
+]
+env.RequirePublicApi(DS_API, area='dataservices')
+
+env.RequirePublicApi('OSYS')
+env.RequirePublicApi('SERVER_PROTOCOL')
+#env.RequirePublicApi('QCA4004_DRIVER_API', area='qca4004_driver')
+env.RequirePublicApi('QCA4004_DRIVER_API')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/flp/inc',
+   '${INC_ROOT}/location/geofence/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/pcid/inc',
+   '${INC_ROOT}/location/platform/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/location/xtra/inc',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/location/locationwifiinterface/inc',
+   '${INC_ROOT}/kingfisherhost/api/inc',
+    '${INC_ROOT}/kingfisherhost/core/inc'
+]
+
+env.PublishPrivateApi('LOCATION_WIFI_INTERFACE', INC_DIRS)
+
+LOC_FLP_SOURCES =  [
+   '${BUILDPATH}/LocationWifiInterface.cpp',
+   '${BUILDPATH}/LocationWifiInterfaceTimer.cpp',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/locationwifiinterface'), LOC_FLP_SOURCES)
+

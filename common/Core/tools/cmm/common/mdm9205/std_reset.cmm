@@ -1,0 +1,125 @@
+//============================================================================
+//  Name:                                                                     
+//    std_reset.cmm 
+//
+//  Description:                                                              
+//		Top level reset script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------------------
+// 07/18/2016  Martham      Disable OSAM before system up
+// 09/10/2013 AJCheriyan        Removed TLMM register write. Disable PMIC watchdog added
+// 06/16/2013 AJCheriyan    Added check for Chipset family as well
+// 02/11/2013 AJCheriyan	Pulled in DLOAD cookie clearing logic from HLOS reset scripts
+// 02/08/2013 AJCheriyan	Added change to clear boot partition select / watchdog enable registers
+// 10/10/2012 AJCheriyan	Added change to go to end of RPM boot loader to turn on IMEM clocks
+// 08/13/2012 AJCheriyan	Manually reset the security block to workaround V1 HW bug
+// 07/19/2012 AJCheriyan    Created for B-family (8974)
+//
+
+LOCAL &DLOAD_COOKIE1_ADDR &DLOAD_COOKIE2_ADDR
+
+// DLOAD Cookies in OCIMEM
+&DLOAD_COOKIE_ADDR=0x0193D100
+
+MAIN:
+	// Check for any active sessions
+	do std_intercom_init CHECKSESSION 4 RPM APPS0 MPSS IPA
+	
+	// "Reset" all T32 sessions except RPM
+	IF (("&RPM_ALIVE"!="0.")&&("&RPM_ALIVE"!=""))
+	(
+		do std_intercom_cmds &RPM_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS1_ALIVE"!="0.")&&("&APPS1_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS1_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS2_ALIVE"!="0.")&&("&APPS2_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS2_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS3_ALIVE"!="0.")&&("&APPS3_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS3_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS4_ALIVE"!="0.")&&("&APPS4_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS4_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS5_ALIVE"!="0.")&&("&APPS5_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS5_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS6_ALIVE"!="0.")&&("&APPS6_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS6_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&APPS7_ALIVE"!="0.")&&("&APPS7_ALIVE"!=""))
+	(
+		do std_intercom_cmds &APPS7_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+
+	IF (("&MPSS_ALIVE"!="0.")&&("&MPSS_ALIVE"!=""))
+	(
+		do std_intercom_cmds &MPSS_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&ADSP_ALIVE"!="0.")&&("&ADSP_ALIVE"!=""))
+	(
+		do std_intercom_cmds &ADSP_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	IF (("&IPA_ALIVE"!="0.")&&("&IPA_ALIVE"!=""))
+	(
+		do std_intercom_cmds &IPA_PORT NOWAIT SYS.MODE NODEBUG, SYS.D, BREAK.DELETE /ALL
+	)
+	// Reset RPM last
+	IF ((("&APPS0_ALIVE"!="0.")&&("&APPS0_ALIVE"!=""))||("&LOCALHOST"=="&APPS0_PORT"))
+	(
+		// Load HWIO
+		do hwio	
+		do std_memorymap
+		B.D /all
+		
+		//In ThreadX device getting crashed due to BIMC error if OSAM enabled, during the bootup with APPS T32 attached.
+		//This caused by accessing the OS variables by OSAM before kernel init.
+		//As a workaorund disable the OSAM before kernel init and enable after TX low level init done.
+		
+		TASK.reset
+		
+		//INTERCOM.EXECUTE &APPS0_PORT SYS.U
+		do std_intercom_do &APPS0_PORT std_sysup
+
+     	// Clear the Boot Partition Select Register and Watchdog debug for all revs
+		// do std_utils HWIO_OUT BOOT_PARTITION_SELECT 0x0
+		// do std_utils HWIO_OUT GCC_WDOG_DEBUG 0x0
+
+		// Disable PMIC watchdog
+		//do pmic_wdog_disable.cmm 
+      
+    		// Now clear the cookies
+		//do std_debug_&CHIPSET SETDEBUGCOOKIE clear mpss
+		//do std_debug_&CHIPSET SETDEBUGCOOKIE clear mba	    
+    
+	)
+	
+	GOTO EXIT
+
+
+
+FATALEXIT:
+	END
+
+EXIT:
+	ENDDO
+
+
+

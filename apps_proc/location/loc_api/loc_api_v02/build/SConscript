@@ -1,0 +1,85 @@
+#===============================================================================
+# loc_api_v02 Libs
+#
+# GENERAL DESCRIPTION
+#    loc_api_v02 Build Script
+#
+# Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/location.tx/3.0/loc_api/loc_api_v02/build/SConscript#1 $
+#  $DateTime: 2020/06/04 04:30:35 $
+#  $Change: 24187663 $
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#env.PrintInfo('******* In location/loc_api/loc_api_v02/build/Sconscript')
+
+# Create a processor specific macro which can be (ab)used for feature-ization.  
+#env.Append(CPPDEFINES = [( 'MPMINT_RPM_WAKEUP_IRQ', '201' ),         
+#                         ( 'HAL_MPMINT_TARGET_H', '\\"HALmpmint${MSM_ID}.h\\"' ),
+#                        ])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/location/loc_api/loc_api_v02/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+env.RequirePublicApi(CBSP_API, area='core')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+INC_DIRS = []
+
+INC_DIRS = [
+   '${INC_ROOT}/location/api/inc',
+   '${INC_ROOT}/location/core/inc',
+   '${INC_ROOT}/location/izat_core/inc',
+   '${INC_ROOT}/location/loc_api/loc_api_v02/inc',
+   '${INC_ROOT}/location/utils/inc',
+   '${INC_ROOT}/api/common/api',
+   '${INC_ROOT}/core/api/dal',
+   '${INC_ROOT}/core/api/mproc',
+   '${INC_ROOT}/core/api/services',
+   '${INC_ROOT}/core/api/systemdrivers',
+   '${INC_ROOT}/core/api/kernel/devcfg',
+   '${INC_ROOT}/core/api/kernel/qurt',
+   '${INC_ROOT}/core/api/kernel/threadx',
+   '${INC_ROOT}/core/kernel/dlfwk/rtld/inc',
+   '${INC_ROOT}/core/api/services',
+]
+
+env.PublishPrivateApi('LOC_API_V02', INC_DIRS)
+
+LOC_API_V02_SOURCES =  [
+   '${BUILDPATH}/loc_api_sync_req.c',
+   '${BUILDPATH}/loc_api_v02_client.c',
+   '${BUILDPATH}/loc_api_v02_log.c',
+   '${BUILDPATH}/location_service_iot_v02.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+IMG_LIST = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+
+env.AddLibrary(IMG_LIST, ('${BUILDPATH}/loc_api/loc_api_v02'), LOC_API_V02_SOURCES)
+

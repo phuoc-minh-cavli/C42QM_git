@@ -1,0 +1,309 @@
+#===============================================================================
+#
+# Dataservices APSS TX build script
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2019 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: 
+#  $DateTime: 2022/06/08 06:27:11 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+#===============================================================================
+
+Import('env')
+
+env = env.Clone()
+
+#if env.get('USES_CORTEXM4') :
+
+#------------------------------------------------------------------
+# Setup source PATH
+#------------------------------------------------------------------
+SRCPATH = [ "${NICHESTACK_ROOT}/",
+]
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+##------------------------------------------------------------------
+## Necessary Public and Restricted API's
+##------------------------------------------------------------------
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('QAPI')
+	env.RequirePublicApi('POWER', area='core')
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+#env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+#env.RequirePublicApi('MEMORY', area='core')
+#env.RequirePublicApi('POWER', area='core')
+#env.RequirePublicApi('MPROC', area='core')
+#env.RequirePublicApi('STORAGE', area='core')
+#env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('DSS_NET', area='dataservices')
+
+env.RequirePublicApi([
+#    'HWENGINES',
+#    'DEBUGTOOLS_ERR',
+#    'SERVICES',
+#    'SYSTEMDRIVERS',
+#    'DAL',
+#    'POWER',
+#    'BUSES',
+#    'KERNEL', # needs to be last
+    ], area='core')
+    
+env.RequirePublicApi([
+    'NICHESTACK',
+    ])
+env.RequirePublicApi([
+    'NICHESTACK_PORT',
+    ])
+
+env.RequirePublicApi([ 
+        'DATASERVICES_NET_IPSTACK', 
+        'SHARKSSL', 
+        ]) 
+
+env.RequirePublicApi(['QAPI'], area='core')
+env.RequireRestrictedApi(['DS_UTILS'])
+
+#------------------------------------------------------------------
+# Generate the library and add to an image
+#------------------------------------------------------------------
+NICHESTACK_ALLPORTS_SRC = [
+    '${BUILDPATH}/allports/allports.c',
+    '${BUILDPATH}/allports/timeouts.c',
+    ]
+    
+NICHESTACK_AUTOIP4_SRC  = [
+    '${BUILDPATH}/autoip4/autoip.c',
+    '${BUILDPATH}/autoip4/upnp.c',
+    ]
+    
+NICHESTACK_CLI_SRC      = [
+    '${BUILDPATH}/cli/cli.c',
+    '${BUILDPATH}/cli/cli_group_nt.c',
+    '${BUILDPATH}/cli/cli_mod.c',
+    '${BUILDPATH}/cli/cli_nt.c',
+    ]
+    
+NICHESTACK_NATRT_SRC      = [
+    '${BUILDPATH}/natrt/nat_mod.c',
+    '${BUILDPATH}/natrt/nat_nt.c',
+    '${BUILDPATH}/natrt/natfrag.c',
+    '${BUILDPATH}/natrt/natftp.c',
+    '${BUILDPATH}/natrt/nattl.c',
+    '${BUILDPATH}/natrt/natport.c',
+    '${BUILDPATH}/natrt/natutil.c',
+    ]
+    
+NICHESTACK_IP_SRC       = [
+    '${BUILDPATH}/ip/et_arp.c',
+    '${BUILDPATH}/ip/icmp.c',
+    '${BUILDPATH}/ip/iface.c',
+    '${BUILDPATH}/ip/ip.c',
+    '${BUILDPATH}/ip/ip_reasm.c',
+    '${BUILDPATH}/ip/ip4mctest.c',
+    '${BUILDPATH}/ip/ipdemux.c',
+    '${BUILDPATH}/ip/ipmc.c',
+    '${BUILDPATH}/ip/ipnet.c',
+    '${BUILDPATH}/ip/ipport.c',
+    '${BUILDPATH}/ip/ipraw.c',
+    '${BUILDPATH}/ip/iproute.c',
+    '${BUILDPATH}/ip/ipstart.c',
+    '${BUILDPATH}/ip/pmtu.c',
+    '${BUILDPATH}/ip/rtbtree.c',
+    '${BUILDPATH}/ip/udp.c',
+    ]
+NICHESTACK_IPMC_SRC     = [
+    '${BUILDPATH}/ipmc/igmp.c',
+    '${BUILDPATH}/ipmc/igmp_cmn.c',
+    '${BUILDPATH}/ipmc/igmp_mod.c',
+    '${BUILDPATH}/ipmc/igmp_nt.c',
+    '${BUILDPATH}/ipmc/igmp2.c',
+    '${BUILDPATH}/ipmc/ipopt.c',
+    ]
+    
+NICHESTACK_IPV6_SRC     = [
+    '${BUILDPATH}/ipv6/icmp6.c',
+    '${BUILDPATH}/ipv6/ip6.c',
+    '${BUILDPATH}/ipv6/ip6_pcb.c',
+    '${BUILDPATH}/ipv6/ip6ext.c',
+    '${BUILDPATH}/ipv6/ip6frags.c',
+    '${BUILDPATH}/ipv6/ip6mc.c',
+    '${BUILDPATH}/ipv6/ip6mctest.c',
+    '${BUILDPATH}/ipv6/ip6route.c',
+    '${BUILDPATH}/ipv6/ip6tun.c',
+    '${BUILDPATH}/ipv6/ip62mac.c',
+    '${BUILDPATH}/ipv6/ipv6_mod.c',
+    '${BUILDPATH}/ipv6/ipv6_nt.c',
+    '${BUILDPATH}/ipv6/nd.c',
+    '${BUILDPATH}/ipv6/tcp6.c',
+    '${BUILDPATH}/ipv6/udp6.c',
+    '${BUILDPATH}/ipv6/udpsock6.c',
+    ]
+    
+NICHESTACK_MISCLIB_SRC  = [
+    '${BUILDPATH}/misclib/ascii_utils.c',
+    '${BUILDPATH}/misclib/cb.c',
+    '${BUILDPATH}/misclib/cksum.c',
+    '${BUILDPATH}/misclib/console_mod.c',
+    '${BUILDPATH}/misclib/dhcsetup.c',
+    '${BUILDPATH}/misclib/do_script.c',
+    '${BUILDPATH}/misclib/genlist.c',
+    '${BUILDPATH}/misclib/gio.c',
+    '${BUILDPATH}/misclib/in_utils.c',
+    '${BUILDPATH}/misclib/memdev.c',
+    '${BUILDPATH}/misclib/nextcarg.c',
+    '${BUILDPATH}/misclib/parseip.c',
+    '${BUILDPATH}/misclib/profiler.c',
+    '${BUILDPATH}/misclib/reshost.c',
+    '${BUILDPATH}/misclib/strilib.c',
+    '${BUILDPATH}/misclib/strlib.c',
+    '${BUILDPATH}/misclib/syslog.c',
+    '${BUILDPATH}/misclib/syslog_mod.c',
+    '${BUILDPATH}/misclib/syslog_nt.c',
+    '${BUILDPATH}/misclib/tcp_echo.c',
+    '${BUILDPATH}/misclib/tcpcksum.c',
+    '${BUILDPATH}/misclib/ttyio.c',
+    '${BUILDPATH}/misclib/udp_echo.c',
+    '${BUILDPATH}/misclib/user_nt.c',
+    '${BUILDPATH}/misclib/userpass.c',
+    ]
+NICHESTACK_NET_SRC      = [
+    '${BUILDPATH}/net/app_ping.c',
+    '${BUILDPATH}/net/chainbuff_nt.c',
+    '${BUILDPATH}/net/dc_mod.c',
+	'${BUILDPATH}/net/ds_mod.c',
+    '${BUILDPATH}/net/dc_nt.c',
+    '${BUILDPATH}/net/dhcpclnt.c',
+	'${BUILDPATH}/net/dhcpsrvr.c',
+    '${BUILDPATH}/net/dhcputil.c',
+	'${BUILDPATH}/net/dnssrvr.c',
+	'${BUILDPATH}/net/dnsrelay.c',
+    '${BUILDPATH}/net/diag_nt.c',
+    '${BUILDPATH}/net/dnsc_nt.c',
+    '${BUILDPATH}/net/dnsclnt.c',
+    '${BUILDPATH}/net/ifmap.c',
+    '${BUILDPATH}/net/macloop.c',
+    '${BUILDPATH}/net/netmain_nt.c',
+    '${BUILDPATH}/net/ping.c',
+    '${BUILDPATH}/net/pktalloc.c',
+    '${BUILDPATH}/net/q.c',
+    '${BUILDPATH}/net/slip.c',
+    '${BUILDPATH}/net/slipif.c',
+    '${BUILDPATH}/net/udp_open.c',
+    ]
+NICHESTACK_TCP_SRC      = [
+    '${BUILDPATH}/tcp/in_pcb.c',
+    '${BUILDPATH}/tcp/nptcp.c',
+    '${BUILDPATH}/tcp/rawsock.c',
+    '${BUILDPATH}/tcp/nonipsock.c',
+    '${BUILDPATH}/tcp/sockcall.c',
+    '${BUILDPATH}/tcp/socket.c',
+    '${BUILDPATH}/tcp/socket2.c',
+    '${BUILDPATH}/tcp/soselect.c',
+    '${BUILDPATH}/tcp/tcp_in.c',
+    '${BUILDPATH}/tcp/tcp_out.c',
+    '${BUILDPATH}/tcp/tcp_subr.c',
+    '${BUILDPATH}/tcp/tcp_timr.c',
+    '${BUILDPATH}/tcp/tcp_usr.c',
+    '${BUILDPATH}/tcp/tcp_zio.c',
+    '${BUILDPATH}/tcp/tcpport.c',
+    '${BUILDPATH}/tcp/tcpsack.c',
+    '${BUILDPATH}/tcp/udpsock.c',
+    ]
+NICHESTACK_VFSCOMP_SRC  = '${BUILDPATH}/utils/vfscomp/vfscomp.c'
+NICHESTACK_VFS_SRC      = [
+    '${BUILDPATH}/vfs/vfs_nt.c',
+    '${BUILDPATH}/vfs/vfsfiles.c',
+    '${BUILDPATH}/vfs/vfssync.c',
+    '${BUILDPATH}/vfs/vfsutil.c',
+    ]
+
+NICHESTACK_NET_SRC_EXT_WITHOUT_SSL = [
+                                       '${BUILDPATH}/net/netmain_mod_no_ssl.c',
+                                     ]
+NICHESTACK_NET_SRC_WITH_INTERNAL_SSL = [
+                                        '${BUILDPATH}/net/netmain_mod.c',
+                                       ]
+ROM_SOURCES = [
+                NICHESTACK_ALLPORTS_SRC,
+                NICHESTACK_AUTOIP4_SRC,
+#                NICHESTACK_CLI_SRC,
+                NICHESTACK_IP_SRC,
+                NICHESTACK_IPMC_SRC,
+                NICHESTACK_IPV6_SRC,
+                NICHESTACK_MISCLIB_SRC,
+                NICHESTACK_NET_SRC,
+                NICHESTACK_TCP_SRC,
+				NICHESTACK_NATRT_SRC,
+#                NICHESTACK_VFSCOMP_SRC,
+#                NICHESTACK_VFS_SRC,
+                 
+              ]
+			  
+ROM_SOURCES_EXT = [
+                     ROM_SOURCES,
+		             NICHESTACK_NET_SRC_EXT_WITHOUT_SSL,
+                  ]
+ROM_SOURCES_INT = [
+                     ROM_SOURCES,
+                     NICHESTACK_NET_SRC_WITH_INTERNAL_SSL,
+                  ]
+
+
+
+IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
+
+if 'USES_ENABLE_SSL_NETLIB' in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/nichestack'), ROM_SOURCES_INT)
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/nichestack_ext'), ROM_SOURCES_EXT)
+if 'USES_ENABLE_SSL_NETLIB' not in env:
+	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/nichestack_ext'), ROM_SOURCES_EXT)
+
+# Compile the source and convert to 
+# 1. a binary library if code is to be placed in RAM
+# 2. object files if code is to be placed in ROM
+#env.AddObject(['IOE_ROM'], ROM_SOURCES) 
+#env.AddIndirectionObject(['IOE_ROM_IPT'], ROM_SOURCES)
+                     
+#XIP_SOURCES = [NICHESTACK_DHCPV6_RAM_SRC, ]
+#env.AddBinaryLibrary(['IOE_RAM','IOE_RAM_IPT'], '${BUILDPATH}/nichestack', XIP_SOURCES)
+#if 'USES_AUTOSCL' in env:
+#    env.AddScatterObj(['IOE_RAM','IOE_RAM_IPT'], XIP_SOURCES, 'XIP_BSP_RO_REGION')
+
+#------------------------------------------------------------------
+# Instruct build system to look for files at the next level down
+#------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QTI_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_2',           # required
+  'init_name'                  : 'data_nichestackinit',           # required
+  'init_function'              : 'nichestack_init',          # required
+  'dependencies'               : ['bam']
+}
+ 
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE','MOB_DATASERVICES']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )
+  # env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QTI_TASK )
+

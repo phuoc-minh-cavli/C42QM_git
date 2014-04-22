@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="refresh_vote_ok" id="67328" description="Vote OK for refresh" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/refresh_vote_ok">
+		<Member name="refresh_vote_ok" description="" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	</NvData>

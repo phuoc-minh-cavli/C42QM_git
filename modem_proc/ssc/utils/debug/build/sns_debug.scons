@@ -1,0 +1,23 @@
+#===============================================================================
+#
+# Debug utility
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2018 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#===============================================================================
+Import('env')
+import inspect
+
+# option for delayed initialization for debugging purposes
+if 'SNS_DELAY_INIT' in env:
+   env.Append(CPPDEFINES = ['SNS_DELAY_INIT'])
+
+if 'USES_SSC_STATIC_LIB_BUILDER' in env:
+  env.AddSSCSU(inspect.getfile(inspect.currentframe()),
+               binary_lib =False)
+

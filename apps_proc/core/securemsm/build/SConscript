@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# Securemsm Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/apps/mdm/dev/adamo.9x25_Trustzone_Support/apps_proc/core/buses/slimbus/build/SConscript#1 $
+#  $DateTime: 2012/08/03 10:40:40 $
+#  $Author: coresvc $
+#  $Change: 2659652 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 08/17/10   MJS     Initial revision.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits()

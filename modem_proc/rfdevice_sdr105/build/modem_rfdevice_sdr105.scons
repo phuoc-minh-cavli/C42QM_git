@@ -1,0 +1,241 @@
+#====include path optimized=====================================================
+#
+#
+# GENERAL DESCRIPTION
+#
+# Copyright (c) 2015 - 2020 Qualcomm Technologies Incorporated. All Rights Reserved
+#
+# Qualcomm Proprietary
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/rfdevice_sdr105.mpss/1.10/build/modem_rfdevice_sdr105.scons#2 $
+# $DateTime: 2020/07/24 08:44:46 $
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 07/24/20   up       renamed FEATURE_RFA_DEVICE_GSM_FSK_TX to RFGSM_FSK_ENABLE
+# 07/03/20   up       Added feature flag FEATURE_RFA_DEVICE_GSM_FSK_TX
+# 07/02/19   up      Compilation error fix for LTE only build
+# 03/05/19   sk      RF PAGE ONLY changes for NB/CATM
+# 04/18/16   ka       Remove SDR660 precs
+# 04/04/17   aguo     SCONS update to enable RFDEVICE Gtest framework
+# 03/12/16   ka       Add support for SDR660 precs and latest AG
+# 08/29/16   snk      Fixed OFT comilation error
+# 08/29/16   snk      Fixed ontarget comilation error
+# 08/29/16   snk      Disable SDR660 OFT comilation
+# 07/19/16    hm      SDR660 to only compile based on 9655.wtr6k flag for ONT
+#                     OFT will always compile
+# 07/19/16   snk      Added back sdr660 component
+# 06/01/16    sd      Strip v210/212 typedef_ag only for external builds
+# 05/27/16    rg      Strip v210/212 typedef_ag based on MPSS type
+# 05/10/16   ssr      Added path for PERF Heap_mgt inc folder
+# 09/22/15    aks     Updated SCONS to query for label:RFTECH_GSM
+# 09/10/15    hs      Added path for TRX GNSS
+# 08/18/15   avi      Updated to expose ag files for test vectors
+# 05/07/15   dps      Initial version
+#===============================================================================
+
+Import('env')
+env = env.Clone()
+
+if 'MODEM_PAGEONLY' in env['BUILD_TAGS']:
+    env.Append(CPPDEFINES = 'FEATURE_RF_LTE_PAGE_ONLY')
+    if('USES_GSM' in env):
+        del env['USES_GSM']
+    build_tags = ['MODEM_MODEM', 'MOB_RFA', 'MOB_RFDEVICE']
+    for tag in build_tags :
+        env[tag] = True
+
+if 'RFDEVICE_GTEST' in env:
+   Return()
+
+import os, sys, stat
+from stat import *
+import glob
+
+def remove_file(path):
+    if os.path.exists(path):
+        os.chmod(path, stat.S_IWRITE)
+        os.remove(path)
+
+       
+# If it is On-target build and does not have 6k feature in scons, do not compile
+# If OFT, always compile
+
+#usage:  ENV_UPDATE_RFA=CHIPSET,=mdm9x15,USES_NO_DEBUG,delete,USES_HI_SPEED,add
+if ARGUMENTS.get('ENV_UPDATE_RFA'):
+   
+   env_update_string    = ARGUMENTS.get('ENV_UPDATE_RFA')
+   env_update_list      = env_update_string.split(',')
+   item_total           = len(env_update_list)
+   list_index           = 0
+   
+   #note if list is not even number of items, last odd item is ignored
+   while list_index < item_total-1:
+                 
+      item            = env_update_list[list_index]  
+      value           = env_update_list[list_index+1]
+      list_index      += 2
+                                              
+      if(value == 'add'):
+         env[str(item)] = 'yes'
+         print "adding",item,"to env"                                          
+                
+      elif(value == 'delete'):
+         del env[str(item)]
+         print "deleting",item,"from env"
+      
+      else:
+         if(value[0] != '='):
+            print "missing leading = in",value
+            print "not updating ",item
+                 
+         else:
+            value2 = value[1:len(value)]
+            env[str(item)] = value2
+            print "now setting",item,value
+
+env.Replace(RFDEVICE_SDR105_ROOT = '${INC_ROOT}/rfdevice_sdr105')
+
+env.RequirePublicApi([
+        'RFDEVICE_INTERFACE',
+        ],
+        area='RFDEVICE_INTERFACE')
+
+env.RequirePublicApi([
+        'RFDEVICE_TRX',
+        ],
+        area='RFDEVICE_TRX')
+
+env.RequirePublicApi([
+        'RFDEVICE_SDR105',
+        ],
+        area='RFDEVICE_SDR105')
+
+env.RequireRestrictedApi([
+        'UTILS',
+        'RFDEVICE_SDR105V1_LIB',
+        'RFDEVICE_SDR105_LIB',
+        'RFDEVICE_TRX_VIOLATIONS',
+        'VIOLATIONS',
+		'RF_LTE_RF_UTIL_PROTECTED_LIB',
+        ])
+
+
+env.RequirePublicApi(['RFMODEM'], area=env.get('RF_GLOBALS')['RFMODEM_AREA'])
+
+env.RequirePublicApi('QLNK', area='RFMODEM_ATLAS') # Need access to Qlink header files
+
+env.RequirePublicApi([
+        'KERNEL',
+        'SYSTEMDRIVERS',
+        'DAL',
+        'SERVICES',
+        'DEBUGTOOLS',
+        'POWER',
+        'MPROC',
+        'MEMORY',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'HEAP_MGT',
+        ],
+        area='PERF')
+
+env.RequirePublicApi([
+        'COMMON',
+        'CDMA',
+        'MEAS',
+        'GSM',
+        'LM',
+        'WCDMA',
+        'LTE',
+        'GNSS',
+        'TDSCDMA',
+        'RFA',
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'PUBLIC',
+        'MMCP',
+        ],
+        area='MMCP')
+
+env.RequirePublicApi([
+        'RFNV',
+        ],
+        area='RFNV')
+env.RequirePublicApi('MCS', area='MCS')
+
+env.RequirePublicApi(['RFLM'],area='RFLM')
+
+env.RequirePublicApi('FW_COMMON', area='FW_COMMON')
+env.RequirePublicApi('COMMON', area='FW')
+
+env.RequirePublicApi('FW_GERAN', area='FW_GERAN')
+env.RequirePublicApi('GERAN', area='FW') 
+
+env.RequirePublicApi('FW_WCDMA', area='FW_WCDMA')
+env.RequirePublicApi('WCDMA', area='FW') 
+
+env.RequirePublicApi('FW_TARGET', area='FW_TARGET')
+env.RequirePublicApi('TARGET', area='FW')
+
+env.RequirePublicApi('FW_LTE', area='FW_LTE')
+env.RequirePublicApi('LTE', area='FW')
+
+env.RequirePublicApi('LTE', area='LTE')
+
+env.RequirePublicApi('GERAN', area='GERAN')
+
+env.RequirePublicApi('PUBLIC', area='ONEX')
+
+env.RequirePublicApi('GPS', area='GPS')
+
+env.RequirePublicApi('RFTECH_CDMA', area='RFTECH_CDMA')
+
+env.RequirePublicApi('RFTECH_GSM', area='RFTECH_GSM')
+	
+env.RequirePublicApi('RFTECH_LTE', area='RFTECH_LTE')
+#-------------------------------------------------------------------------------
+# Enable debug flag to strip out internal debug APIs from customer builds
+if 'USES_INTERNAL_BUILD' in env:
+  env.Append(CPPDEFINES = ['FEATURE_RFA_DEVICE_DEBUG'])
+
+if ('USES_FEATURE_FSK_TX' in env ):
+  env.Append(CPPDEFINES = ['RFGSM_FSK_ENABLE'])
+
+# Enable warnings -> errors
+if 'USES_INTERNAL_BUILD' in env:
+  if os.environ.get('HEXAGON_RTOS_RELEASE').startswith('8'):
+    env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror -Wno-c++11-compat -Wno-shift-negative-value", 
+                  HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror -Wno-c++11-compat -Wno-shift-negative-value")
+  else:
+    env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror", 
+                  HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")
+
+env.PublishPrivateApi( 'RFA_RF_VIOLATIONS', [
+   '${INC_ROOT}/perf/heap_mgt/inc',
+])
+  
+env.LoadSoftwareUnits( ) 

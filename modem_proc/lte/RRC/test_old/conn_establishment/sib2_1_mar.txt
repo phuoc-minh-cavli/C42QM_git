@@ -1,0 +1,126 @@
+sib2_i_mar:value BCCH-DL-SCH-Message ::= 
+{
+  message c1 : systemInformation : 
+      {
+        criticalExtensions systemInformation-r8 : 
+          {
+            sib-TypeAndInfo 
+            {
+              sib2 : 
+                {
+                  ac-BarringInfo 
+                  {
+                    ac-BarringForEmergency FALSE
+                  },
+                  radioResourceConfigCommon 
+                  {
+                    rach-Config 
+                    {
+                      preambleInfo 
+                      {
+                        numberOfRA-Preambles n4
+                      },
+                      powerRampingParameters 
+                      {
+                        powerRampingStep dB0,
+                        preambleInitialReceivedTargetPower dBm-120
+                      },
+                      ra-SupervisionInfo 
+                      {
+                        preambleTransMax n3,
+                        ra-ResponseWindowSize sf2,
+                        mac-ContentionResolutionTimer sf8
+                      },
+                      maxHARQ-Msg3Tx 1
+                    },
+                    bcch-Config 
+                    {
+                      modificationPeriodCoeff n2
+                    },
+                    pcch-Config 
+                    {
+                      defaultPagingCycle rf32,
+                      nB fourT
+                    },
+                    prach-Config 
+                    {
+                      rootSequenceIndex 0,
+                      prach-ConfigInfo 
+                      {
+                        prach-ConfigIndex 0,
+                        highSpeedFlag FALSE,
+                        zeroCorrelationZoneConfig 0,
+                        prach-FreqOffset 0
+                      }
+                    },
+                    pdsch-Config 
+                    {
+                      referenceSignalPower 0,
+                      p-b 0
+                    },
+                    pusch-Config 
+                    {
+                      pusch-ConfigBasic 
+                      {
+                        n-SB 1,
+                        hoppingMode interSubFrame,
+                        pusch-HoppingOffset 0,
+                        enable64QAM FALSE
+                      },
+                      ul-ReferenceSignalsPUSCH 
+                      {
+                        groupHoppingEnabled FALSE,
+                        groupAssignmentPUSCH 0,
+                        sequenceHoppingEnabled FALSE,
+                        cyclicShift 0
+                      }
+                    },
+                    pucch-Config 
+                    {
+                      deltaPUCCH-Shift ds1,
+                      nRB-CQI 0,
+                      nCS-AN 0,
+                      n1PUCCH-AN 0
+                    },
+                    soundingRS-UL-Config setup : 
+                      {
+                        srs-BandwidthConfig bw0,
+                        srs-SubframeConfig sc0,
+                        ackNackSRS-SimultaneousTransmission FALSE
+                      },
+                    uplinkPowerControl 
+                    {
+                      p0-NominalPUSCH 0,
+                      alpha al0,
+                      p0-NominalPUCCH -127,
+                      deltaFList-PUCCH 
+                      {
+                        deltaF-PUCCH-Format1 deltaF-2,
+                        deltaF-PUCCH-Format1b deltaF1,
+                        deltaF-PUCCH-Format2 deltaF-2,
+                        deltaF-PUCCH-Format2a deltaF-2,
+                        deltaF-PUCCH-Format2b deltaF-2
+                      },
+                      deltaPreambleMsg3 0
+                    },
+                    ul-CyclicPrefixLength len1
+                  },
+                  ue-TimersAndConstants 
+                  {
+                    t300 ms100,
+                    t301 ms100,
+                    t310 ms0,
+                    n310 n1,
+                    t311 ms1000,
+                    n311 n1
+                  },
+                  freqInfo 
+                  {
+                    additionalSpectrumEmission 1
+                  },
+                  timeAlignmentTimerCommon sf500
+                }
+            }
+          }
+      }
+}

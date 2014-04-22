@@ -1,0 +1,97 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_boot.cmm 
+//
+//  Description:                                                              
+//    Boot debug script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 05/12/2014 AJCheriyan    Moved to the new design
+// 10/10/2012 AJCheriyan	Moved to actual reset based debug mechanism
+// 08/14/2012 AJCheriyan	Fixed typo.
+// 07/19/2012 AJCheriyan    Created for B-family.
+
+//* Arguments passed *//
+ENTRY %LINE &ArgumentLine
+LOCAL &SubRoutine &Port
+LOCAL &TargetProcessor &TargetProcessorPort  &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused1 &Unused2 &Unused3 &Unused4 &Unused5
+
+//* Check if we need to call for help or do some work *//
+IF ("&ArgumentLine"=="")
+(
+    &SubRoutine="HELP"
+)
+ELSE
+(
+    &SubRoutine="MAIN"
+)
+
+GOSUB &SubRoutine
+
+
+MAIN:
+    //note that optextract has a limit of 10 entries
+    do optextract Img,Bkpts &ArgumentLine
+    ENTRY &Image &Bkpts
+    // Get the target processor for this port
+    do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &Image
+    ENTRY &Unused1 &TargetProcessor &TargetProcessorPort &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused2 &Unused3 &Unused4 &Unused5
+
+	// For Apps PBL
+	IF ("&Image"=="appspbl")
+	(
+            do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL
+	    do std_utils SETBREAKPOINTS Onchip &Bkpts
+            GO
+	)
+
+	// We have work to do if it is SBL
+	IF ("&Image"=="sbl1")
+	(
+		
+		// Delete Existing Breakpoints
+		do std_intercom_do &TargetProcessorPort std_utils DeleteBreakpoint ALL
+
+        	// Clear the debug cookie
+        	//do std_debug_&CHIPSET SETDEBUGCOOKIE clear &Image
+
+        	// Now set the entry and exit breakpoints
+		do std_intercom_cmds &TargetProcessorPort NOWAIT Break.Set &EntryBkpt &ErrBkpts /onchip
+        
+        	// Set the breakpoints specified by the user
+		IF ("&Bkpts"!="NULL")
+		(
+			do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS ONCHIP &Bkpts, GO
+		)
+		ELSE
+		(
+		    INTERCOM.EXECUTE &targetprocessorport GO
+		)	
+	
+	 	IF (STRING.SCAN("&Usb_Boot_Flashless","True",0)!=-1)
+		(
+		    do std_utils EXECUTESCRIPT EXIT &COMMON_CHIPSET_METASCRIPTSDIR\std_debug_flashless
+		)
+	
+	)
+
+
+EXIT:
+	ENDDO
+
+FATALEXIT:
+	END
+
+
+	
+		

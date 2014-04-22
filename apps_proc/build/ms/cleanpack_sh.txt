@@ -1,0 +1,8 @@
+SYNTAX=2
+beginCMTEST
+beginPROD
+beginEXE  SUCCESS=0
+python pack/cleanpack.py -x apps_proc/build/ms/pack_file.xml -r b -l build-log.txt 
+endEXE
+endPROD
+endCMTEST

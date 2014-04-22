@@ -1,0 +1,16 @@
+#===============================================================================
+#
+# VERSION APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#
+#===============================================================================
+Import('env')
+
+env.LoadAPIUnits()

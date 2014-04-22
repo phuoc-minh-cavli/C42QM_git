@@ -1,0 +1,212 @@
+#====include path optimized=====================================================
+#
+#
+# GENERAL DESCRIPTION
+#
+# Copyright (c) 2016-2019 Qualcomm Technologies, Incorporated. All Rights Reserved
+#
+# Qualcomm Proprietary
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies, Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies, Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+# $Header: //components/rel/rfdevice_qat3516.mpss/1.20/build/modem_rfdevice_qat3516.scons#1 $
+# $DateTime: 2020/04/16 12:14:54 $ 
+#
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---    -----------------
+# 07/04/19   dh      Clean up the code to help compiling out Geran from NA flavor
+# 04/25/19   dh     RF PAGE ONLY changes for NB/CATM
+# 07/05/16   dbc    Disable compilation for AT 
+# 02/19/16   hm     Initial file
+#===============================================================================
+
+Import('env')
+
+env = env.Clone()
+
+if 'MODEM_PAGEONLY' in env['BUILD_TAGS']:
+	if 'USES_GSM' in env:
+		del env['USES_GSM']
+	build_tags = ['MODEM_MODEM', 'MOB_RFA', 'MOB_RFDEVICE']
+	for tag in build_tags :
+		env[tag] = True
+
+# Load test units not needed since it compiles "test"
+env.LoadSoftwareUnits()
+
+if env['PRODUCT_LINE'].startswith("MPSS.AT"):
+   Return()
+
+LIB_NAME        = 'rf_device_qat3516'
+IMAGE_SOURCES   = ['MODEM_MODEM','MOB_RFA', 'MOB_RFDEVICE']
+
+LIB_SRC         = 'src'
+LIB_PROTECTED   = 'protected'
+
+
+from glob import glob
+
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Enable warnings -> errors
+if 'USES_INTERNAL_BUILD' in env:
+   if not env['PRODUCT_LINE'].startswith("MPSS.AT"):
+     env = env.Clone(HEXAGONCC_WARN = "${HEXAGONCC_WARN} -Werror", 
+                   HEXAGONCXX_WARN = "${HEXAGONCCXX_WARN} -Werror")	
+
+#-------------------------------------------------------------------------------
+# Source PATH:  
+#-------------------------------------------------------------------------------
+SRCPATH = ".."
+
+#BUILDPATH =  image_name / processor_name, eg modem_libs / arm11 = directory where built objects stored
+env.VariantDir('${BUILDPATH}', SRCPATH , duplicate=0)
+
+env.Append(CPPDEFINES = ['MSG_BT_SSID_DFLT=MSG_SSID_RF',]) 
+
+
+env.RequirePublicApi(['RFMODEM'],area=env.get('RF_GLOBALS')['RFMODEM_AREA'])
+
+env.RequirePublicApi([
+        'COMMON',
+        'CDMA',		
+        ],
+        area='RFA')
+
+env.RequirePublicApi([
+        'RFLM',
+        ],
+        area='RFLM')
+
+env.RequirePublicApi([
+        'SERVICES',
+        'KERNEL',
+        'DAL',
+        'SYSTEMDRIVERS',
+        'DEBUGTOOLS',
+        'MPROC',
+        'MEMORY',
+        ],
+        area='CORE')
+
+env.RequirePublicApi([
+        'MMCP',
+        ],
+        area='MMCP')
+		
+env.RequirePublicApi([
+        'RFDEVICE_INTERFACE',
+        ],
+        area='RFDEVICE_INTERFACE')		
+		
+env.RequirePublicApi([
+                'WCDMA',
+		'GERAN',
+		'RF',
+		'COMMON'
+        ],
+        area='FW')		
+
+env.RequirePublicApi([
+        'MCS',
+        ],
+        area='MCS')	
+		
+env.RequirePublicApi([
+        'GERAN',
+        ],
+        area='GERAN')		
+				
+env.RequirePublicApi([
+        'RFDEVICE_QAT3516',
+        ],
+        area='RFDEVICE_QAT3516')
+
+env.RequirePublicApi([
+        'RFDEVICE_QTUNER',
+        ],
+        area='RFDEVICE_QTUNER')	
+
+env.RequireRestrictedApi([
+	'RFDEVICE_QAT3516_VIOLATIONS',
+    ])
+
+
+LIB_SOURCES = [ ]  #empy list
+
+SOURCE_FILES = [ ] 
+
+#find all .c
+SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.c'))
+
+#find all .cpp files 
+SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.cpp'))
+
+#find all .s files
+SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_SRC+'/*.s'))
+
+
+for filename in SOURCE_FILES:
+        LIB_SOURCES.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+
+#if LIB_SOURCES:
+
+        env.AddLibrary(IMAGE_SOURCES, '${BUILDPATH}/'+LIB_NAME,[
+        LIB_SOURCES,
+        ])
+
+
+
+
+
+env.Append(CPPDEFINES = ['FEATURE_LIBRARY_ONLY'])
+
+#this statement must appear outside of 'USES_NO_STRIP_NO_ODM' test so that AddBinaryLibrary can be launched
+LIB_SOURCES = []  #empy list
+
+#force HY11 protected library to be rebuilt
+if 'USES_FEATURE_RF_PACKBUILD_GENERATE_PROTECTED_LIBS' in env:
+        env.Replace(USES_NO_STRIP_NO_ODM = 'yes')
+
+if 'USES_NO_STRIP_NO_ODM' in env:
+
+        SOURCE_FILES = [ ] 
+
+        #find all .c
+        SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_PROTECTED+'/*.c'))
+        
+        #find all .cpp files 
+        SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_PROTECTED+'/*.cpp'))
+
+        #find all .s files
+        SOURCE_FILES.extend(glob(SRCPATH + '/'+LIB_PROTECTED+'/*.s'))
+
+
+        for filename in SOURCE_FILES:
+                LIB_SOURCES.append('${BUILDPATH}/' + filename.replace(SRCPATH,''))
+
+
+#this statement must appear outside of 'USES_NO_STRIP_NO_ODM' test so that the pre-built library will be added to the list file
+env.AddBinaryLibrary(IMAGE_SOURCES, '${BUILDPATH}/'+LIB_NAME+'_protected',[
+    LIB_SOURCES,
+    ], pack_exception=['USES_CUSTOMER_GENERATE_LIBS'])
+

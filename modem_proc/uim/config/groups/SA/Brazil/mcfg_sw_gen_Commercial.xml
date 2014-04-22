@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="pbm_ecc_nums" id="67221" description="NV ECC numbers" comment="" category="PBM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/pbm/pbm_ecc_nums">
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string">190</Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string">112</Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string">911</Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">2 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="32" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="12" type="string"></Member>
+		<Member name="Unidentified" description="" comment="" sizeOf="1" type="uint8">0 </Member>
+	</NvEfsItemData>
+	</NvData>

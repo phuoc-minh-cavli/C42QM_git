@@ -1,0 +1,139 @@
+#===============================================================================
+#
+# test_crypto Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2022 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataiot.mpss/2.0/protocols/sec/ssl/testapp/build/testapp.scons#3 $
+#  $DateTime: 2022/06/02 23:32:51 $
+#  $Author: pwbldsvc $
+#  $Change: 37616471 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/19/22   rj      FR 78240: Memory optimizations- Disable DHCPv6, PPP, HDLC and SSL
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Don't compile SSL files if USES_FEATURE_AWARE_CT21 is present
+#-------------------------------------------------------------------------------
+if 'USES_FEATURE_AWARE_CT21' in env:
+    Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/dataiot/protocols/sec/ssl"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi([
+        'SSL',
+        ],
+        area='DATAIOT')
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'MPROC',
+   'SECUREMSM',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'HWENGINES',
+   'POWER',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequirePublicApi(['PUBLIC'], area='DATAIOT')
+
+#-------------------------------------------------------------------------------
+# Internal depends within SecureMSM
+#-------------------------------------------------------------------------------
+SME_PROTECTED_API = [
+    'CRYPTODRIVERS',
+]
+
+env.RequireProtectedApi(SME_PROTECTED_API)
+
+env.PublishPrivateApi('SECUREMSM', [
+   "${BUILD_ROOT}/core/securemsm/smetest/test_crypto/inc",
+   "${BUILD_ROOT}/core/securemsm/smecom/com/inc",
+   "${BUILD_ROOT}/core/securemsm/smecom/com/src",
+   "${BUILD_ROOT}/core/securemsm/crypto/src",
+   "${BUILD_ROOT}/core/securemsm/cryptodrivers/ce/chipset/${CHIPSET}/inc",
+   "${BUILD_ROOT}/core/securemsm/sfp/src",
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# SEC Test Applications
+#----------------------------------------------------------------------------
+
+if env.get('CHIPSET').startswith('mdm'):
+  	env.Append(CPPDEFINES=["FEATURE_SEC_CHANNEL_NOT_AVAILABLE"])
+
+if 'USES_DATAMODEM_SEC_SSL_TESTAPP' in env:	
+  SEC_TESTAPP_SOURCES = [
+	'${BUILDPATH}/testapp/src/sectestapp.c', 
+	'${BUILDPATH}/testapp/src/secssltest.c', 
+	'${BUILDPATH}/testapp/src/secsslhttp.c', 
+	'${BUILDPATH}/testapp/src/secssltest_cfgparser.cpp', 
+	'${BUILDPATH}/testapp/src/secssltest_cfginput.cpp',
+	'${BUILDPATH}/testapp/src/secdiagsvc.c',
+  ]
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#------------------------------------------------------------------------------- 
+if 'USES_DATAMODEM_SEC_SSL_TESTAPP' in env:
+  env.AddBinaryLibrary(
+	  ['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 
+	   'MODEM_IMAGE',  'CBSP_MODEM_IMAGE',
+	   'APPS_IMAGE',   'CBSP_APPS_IMAGE'],
+      '${BUILDPATH}/test_ssl',
+	  [SEC_TESTAPP_SOURCES])
+  env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_DATAMODEM' ],'${BUILDPATH}/test_ssl',SEC_TESTAPP_SOURCES)
+
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Setup RCINIT so we start Sectestapp task
+#------------------------------------------------------------------------------- 
+if 'USES_DATAMODEM_SEC_SSL_TESTAPP' in env:
+  if 'USES_RCINIT' in env:
+     RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW']
+     env.AddRCInitTask(
+      RCINIT_IMG,
+      {
+        'sequence_group'             : 'RCINIT_GROUP_1',                  # required
+        'thread_name'                : 'sectestapp',                      # required
+        'stack_size_bytes'           : '16384',
+        'priority_amss_order'        : 'SECTESTAPP_PRI_ORDER',
+        'cpu_affinity'               : 'REX_ANY_CPU_AFFINITY_MASK',
+      })

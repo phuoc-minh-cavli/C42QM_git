@@ -1,0 +1,72 @@
+# -------------------------------------------------------------------------------- #
+#                         G N S S _ S L I M . S C O N S
+#
+# DESCRIPTION
+#   SCons file for the GNSS SLIM subsystem.
+#
+#
+# INITIALIZATION AND SEQUENCING REQUIREMENTS
+#   None.
+#
+#
+# Copyright (c) 2013-2015 Qualcomm Atheros, Inc.
+# All Rights Reserved.
+# Qualcomm Atheros Confidential and Proprietary.
+#
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+#
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+# $Header: //components/rel/gnss8.mpss/9.5.1.1/gnss/slim/build/gnss_slim.scons#2 $
+# $DateTime: 2022/11/30 17:39:13 $
+# $Author: pwbldsvc $
+# --------------------------------------------------------------------------------- #
+
+#--------------------------------------------------------------------------------
+# Import and clone the SCons environment
+#--------------------------------------------------------------------------------
+Import('gps_env')
+
+#-------------------------------------------------------------------------------
+# Publish these private APIs for the rest of SLIM
+#-------------------------------------------------------------------------------
+gps_env.PublishPrivateApi('GNSS_SLIM', ['${GPS_ROOT}/gnss/slim/common/core/inc',
+                                    '${GPS_ROOT}/gnss/slim/common/osal/inc',
+                                    '${GPS_ROOT}/gnss/slim/provider/loceng/inc',
+                                    '${GPS_ROOT}/gnss/slim/provider/pe/inc',
+                                    '${GPS_ROOT}/gnss/slim/provider/samlite/inc',
+                                   ])
+
+if 'USES_EXPORT_LOC_API' in gps_env:
+    gps_env.PublishPrivateApi('GNSS_SLIM', ['${GPS_ROOT}/gnss/slim/provider/ssc/inc',
+                                        '${GPS_ROOT}/gnss/slim/provider/qmiloc/inc',
+                                        '${GPS_ROOT}/gnss/slim/sns_pb/inc',
+                                       ])
+elif 'USES_ENABLE_CGPS_LBS_TASK' in gps_env and 'USES_PDS_EXT' in gps_env:
+    Ggps_env.PublishPrivateApi('GNSS_SLIM', ['${GPS_ROOT}/gnss/slim/provider/qmipds/inc'])
+else:
+    gps_env.PrintWarning("Not adding QMILOC or QMIPDS provider includes to SLIM module.")
+
+if 'USES_FEATURE_LOCTECH_QMISLIM' in gps_env:
+    gps_env.PublishPrivateApi('GNSS_SLIM', ['${GPS_ROOT}/gnss/slim/provider/qmislim/inc',
+                                        '${GPS_ROOT}/gnss/slim/qmislim/mpss/inc',
+                                        '${GPS_ROOT}/gnss/slim/qmislim/common/inc',
+                                        '${GPS_ROOT}/gnss/slim/qmislim/monitor/inc',
+                                        '${GPS_ROOT}/gnss/slim/qmislim/qmiclient/inc',
+                                        '${GPS_ROOT}/gnss/slim/qmislim/qmiservice/inc',
+                                       ])
+
+gps_env.RequirePrivateApi('GNSS_SLIM')
+
+# Remove all source files from shipped build
+gps_env.CleanPack('CLEANPACK_TARGET', gps_env.FindFiles('*.c', '..'))
+
+gps_env.LoadSoftwareUnits()

@@ -1,0 +1,101 @@
+#/** @file HashLib.inf
+#  
+#  
+#   Copyright (c) 2010-2014 Qualcomm Technologies, Inc.  All Rights
+#   Reserved. Qualcomm Technologies Proprietary and Confidential.
+#  
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when       who     what, where, why
+# --------   ---     ----------------------------------------------------------
+# 01/06/15   mash    Introduced software wrapper for XBL
+# 08/25/14   nc      Added DALModEmptyDirLib to Library Classes on account 
+#					 of removal from BAMLib.inf
+# 08/12/14   na      Temporarily disable HW HashLib
+# 08/06/14   sk      Enabled HW RngLib
+# 04/04/14   vk      Remove warning related build options, added globally
+# 03/18/14   sm      Added back warning as error
+# 02/25/14   sk      Added gEfiClockProtocolGuid
+# 01/13/14   sk      Enabled SW HashLib
+# 12/04/13   sk      Added HashLib SW source in place of HW source
+# 10/25/13   vk      Remove warning as error
+# 05/04/13   sp      Changes to make common CE driver code target independent
+# 04/06/13   shl     Reorganized the file tree so common code can be shared.
+# 12/23/10   vs      Created.
+#
+#==============================================================================
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = HashLib
+  FILE_GUID                      = f543c3bd-1291-4c3d-861c-55ddfb0dd1c2
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = HashLib
+
+[Sources.common]
+  ../../../../QcomPkg/Library/HashLib/HwB/ConfigA/ce0_msmhwioreg.h
+  ../../../../QcomPkg/Library/HashLib/HwB/ConfigA/CeCL.h
+  ../../../../QcomPkg/Library/HashLib/HwB/ConfigA/CeCL_Env.h
+  ../../../../QcomPkg/Library/HashLib/HwB/ConfigA/CeCL_Target.h
+  ../../../../QcomPkg/Library/HashLib/HwB/enviornment/core/CeEL_Env.h
+  ../../../../QcomPkg/Library/HashLib/HwB/CeCL.c
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL.c
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL.h
+  ../../../../QcomPkg/Library/HashLib/HwB/enviornment/core/CeEL_Env.c
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL_Bam.c
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL_Bam.h
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL_Reg.c
+  ../../../../QcomPkg/Library/HashLib/HwB/CeEL_Reg.h
+  ../../../../QcomPkg/Library/HashLib/HwB/CeML.c
+  ../../../../QcomPkg/Library/HashLib/HwB/enviornment/core/CeCL_Clk.c
+  ../../../../QcomPkg/Library/HashLib/HwB/AeCL.c
+  ../../../../QcomPkg/Library/HashLib/HwB/AeCL.h
+  ../../../../QcomPkg/Library/HashLib/HwB/AeCL_Env.h
+  ../../../../QcomPkg/Library/HashLib/HwB/AeCL_NativeCrypto.h
+  ../../../../QcomPkg/Library/HashLib/HwB/AeEL.c
+  ../../../../QcomPkg/Library/HashLib/HwB/AeEL.h
+  ../../../../QcomPkg/Library/HashLib/HwB/AeEL_Env.c
+  ../../../../QcomPkg/Library/HashLib/HwB/AeEL_Env.h
+  ../../../../QcomPkg/Library/HashLib/HwB/AeML.c
+  ../../../../QcomPkg/Library/HashLib/HwB/AeML.h
+  ../../../../QcomPkg/Library/HashLib/HwB/Hash_Interface.c
+
+[Sources.AARCH64]
+  ../../../../QcomPkg/Library/HashLib/HwB/aes_armv8ni_aarch64_asm.S | RVCT
+  ../../../../QcomPkg/Library/HashLib/HwB/sha_armv8ni_aarch64_asm.S | RVCT
+  #../../../../QcomPkg/Library/HashLib/HwB/macros_armv8ni_aarch64_asm.inc  | RVCT
+
+[Packages]
+  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/Mdm9x05Pkg/Mdm9x05Pkg.dec
+  QcomPkg/QcomPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+
+  
+[LibraryClasses]
+  #TimetickLib
+  BaseLib
+  #UefiLib
+  #UefiBootServicesTableLib
+  DebugLib
+  DALModEnvLib
+  NpaApiLib
+  BamLib
+  #DALModEmptyDirLib
+
+[Protocols]
+  gEfiClockProtocolGuid
+
+[Guids]
+
+[Pcd]
+
+[Depex]
+

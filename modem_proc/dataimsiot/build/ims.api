@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# Core APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/dataimsiot.mpss/1.0/build/ims.api#1 $
+#  $DateTime: 2018/07/10 23:30:42 $
+#  $Author: pwbldsvc $
+#  $Change: 16614574 $
+#                      EDIT HISTORY FOR FILE
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 14-Mar-2014  Prashanth M E     Publishing Public APIs to external modules - 'IMSPUBLIC'
+# -----------------------------------------------------------------------------
+# 03-Apr-2014  Prashanth M E     Updating Public APIs - 'IMSPUBLIC'
+#
+#===============================================================================
+

@@ -1,0 +1,78 @@
+#===============================================================================
+#
+# SUBS_PRIO Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcs.mpss/5.1/subs_prio/build/subs_prio.scons#2 $
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Exit immediately for PLT builds or PAGE_ONLY builds
+#-------------------------------------------------------------------------------
+if 'USES_PLT' in env or 'USES_BUILD_PAGEONLY_IMAGE' in env:
+    Return()
+
+# Need access to MCS Protected headers
+env.RequireProtectedApi([
+    'MCS',
+    ])
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+SUBS_PRIO_LIB_SRC = [
+    '${BUILDPATH}/subs_prio.c',
+]
+
+# Compile subs_prio source and convert to a binary library
+env.AddBinaryLibrary(['MODEM_MODEM', 'MOB_MCS_SUBS_PRIO'], '${BUILDPATH}/subs_prio', SUBS_PRIO_LIB_SRC)
+
+#-------------------------------------------------------------------------------
+# RCINIT support
+#-------------------------------------------------------------------------------
+
+RCINIT_SUBS_PRIO_INIT = {
+ 'sequence_group'             : env.subst('$MODEM_PROTOCOL'),           # required
+ 'init_name'                  : 'sp_initialization',             # required
+ 'init_function'              : 'sp_initialization',             # opt
+ 'policy_optin'               : ['default', 'ftm', ],
+}
+
+
+if 'USES_MODEM_RCINIT' in env:
+   RCINIT_SUBS_PRIO = ['MODEM_MODEM', 'CORE_QDSP6_SW']
+   env.AddRCInitFunc(RCINIT_SUBS_PRIO, RCINIT_SUBS_PRIO_INIT)
+
+#-------------------------------------------------------------------------------
+# Continue loading software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

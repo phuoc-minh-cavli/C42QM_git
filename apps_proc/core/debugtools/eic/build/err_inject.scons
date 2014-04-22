@@ -1,0 +1,114 @@
+#===============================================================================
+#
+# ERR INJECT Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2014 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/debugtools/eic/build/err_inject.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 09/30/14   dav     Create seperate folder for EIC
+# 08/27/14   din     Created separate file for ERR Inject.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# SUPPORTED IMAGES
+#-------------------------------------------------------------------------------
+
+CRASH_INJECT_IMGS = [
+    'CORE_APPS',
+]
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/eic/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Features and Definitions
+#-------------------------------------------------------------------------------
+
+if 'USES_ERR_INJECT_CRASH' in env:
+    env.Append(CPPDEFINES=['ERR_INJECT_CRASH'])
+
+if 'USES_DEVCFG' in env:
+    env.Append(CPPDEFINES=['ERR_USES_DEVCFG'])
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+env.RequireExternalApi([
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['TMS_INTERNAL'])
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+ERR_INJECT_CRASH_SOURCES = [
+   '${BUILDPATH}/err_inject_crash.c',
+]
+
+#-------------------------------------------------------------------------------
+# Libraries
+#-------------------------------------------------------------------------------
+
+if 'USES_ERR_INJECT_CRASH' in env:
+    env.AddLibrary(
+        CRASH_INJECT_IMGS,
+        '${BUILDPATH}/err_inject_crash', ERR_INJECT_CRASH_SOURCES )
+
+# Devcfg Registrations
+if 'USES_ERR_INJECT_CRASH' in env:
+    if 'USES_DEVCFG' in env:
+        DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+        env.AddDevCfgInfo(DEVCFG_IMG,
+        {
+         'devcfg_xml' : '${BUILD_ROOT}/core/debugtools/eic/src/err_inject_crash.xml'
+        })
+    
+if 'USES_ERR_INJECT_CRASH' in env:
+  if 'USES_RCINIT' in env:
+     env.AddRCInitFunc( 
+      CRASH_INJECT_IMGS, 
+      {
+       'sequence_group'             : 'RCINIT_GROUP_2',                   # required
+       'init_name'                  : 'err_inject_crash_init',            # required
+       'init_function'              : 'err_inject_crash_init',            # required
+      # 'dependencies'               : ['',]
+      })
+

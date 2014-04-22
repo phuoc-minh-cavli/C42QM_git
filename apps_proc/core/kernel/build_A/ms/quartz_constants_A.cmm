@@ -1,0 +1,6 @@
+GLOBAL &l4_entry_point
+GLOBAL &l4_bootimg
+
+&l4_entry_point=L4_ENTRY_POINT
+&l4_bootimg="BOOTING_PBN_PATH"
+&mmu_data=&l4_entry_point+MMU_DATA_OFFSET

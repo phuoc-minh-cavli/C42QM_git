@@ -1,0 +1,14 @@
+
+<!-- NOTE: DAL config has trouble parsing multi-line comment, so please put -->
+<!--       proper comment tags on each line                                 -->
+<!--                                                                        -->
+<!-- PWM Driver Properties file                                             -->
+<!-- Note we depend on the include path for the following directories to be -->
+<!-- available to the DAL config compiler:                                  -->
+<!-- "${INC_ROOT}/core/systemdrivers/pwm/config"                            -->
+<!-- "${INC_ROOT}/core/systemdrivers/pwm/config/${CHIPSET}"                 -->
+
+
+<driver name="PWM">
+  #include "PWMChipset.xml"
+</driver>

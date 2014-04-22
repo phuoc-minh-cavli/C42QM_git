@@ -1,0 +1,7 @@
+/**
+ * Copyright (c) 2018 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+
+const uint32 CPFM_UID = 119;

@@ -1,0 +1,69 @@
+#===============================================================================
+#
+# MSGR Scons
+#
+# Copyright (c) 2019 Qualcomm Technologies Incorporated.
+# All Rights Reserved.
+# Qualcomm Confidential and Proprietary
+
+# Export of this technology or software is regulated by the U.S. Government.
+# Diversion contrary to U.S. law prohibited.
+
+# All ideas, data and information contained in or disclosed by
+# this document are confidential and proprietary information of
+# Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+# By accepting this material the recipient agrees that this material
+# and the information contained therein are held in confidence and in
+# trust and will not be used, copied, reproduced in whole or in part,
+# nor its contents revealed in any manner to others without the express
+# written permission of Qualcomm Technologies Incorporated.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mcs.mpss/5.1/msgr/build/msgr.scons#3 $
+#
+#===============================================================================
+from glob import glob
+from os.path import join, basename
+
+Import('env')
+env = env.Clone()
+env.Append(CPPPATH = ['${MCS_ROOT}/msgr/gen', '${MCS_ROOT}/msgr/build/${BUILDPATH}'])
+env.Append(CPPDEFINES = ['FEATURE_MSGR_REX'])
+
+# Only supported for MOB builds
+if 'USES_MOB' in env:
+  env.Append(CPPDEFINES = ['FEATURE_MSGR_VARIANTS'])
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Process UMIDs
+#-------------------------------------------------------------------------------
+env.AddUMID('${BUILDPATH}/msgr.umid', ['../../api/msgr_msg.h'])
+
+#-------------------------------------------------------------------------------
+# Need to get access to MCS Protected headers
+#-------------------------------------------------------------------------------
+env.RequireProtectedApi(['MCS'])
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+MSGR_SRC  = ['${BUILDPATH}/' + basename(fname)
+             for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+MSGR_SRC += ['${BUILDPATH}/' + basename(fname)
+             for fname in glob(join(env.subst(SRCPATH), '*.cpp'))]
+
+# Compile the msgr source and convert to a library
+env.AddBinaryLibrary(['MODEM_MODEM','MOB_MCS_MSGR','MODEM_PAGEONLY','MODEM_SENSORONLY'],
+                     '${BUILDPATH}/msgr',
+                     MSGR_SRC,
+                     pack_exception=['USES_CUSTOMER_GENERATE_LIBS', 'USES_COMPILE_L1_OPT_AC_PROTECTED_LIBS'])
+
+# Load test units
+env.LoadSoftwareUnits()

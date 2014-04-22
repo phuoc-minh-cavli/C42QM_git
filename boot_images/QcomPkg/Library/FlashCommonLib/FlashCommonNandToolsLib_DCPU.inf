@@ -1,0 +1,87 @@
+#/** @file FlashCommonLib.inf
+#  
+#  SLC Nand Library UEFI INF file
+#  
+#  Copyright (c) 2017, 2019 Qualcomm Technologies, Inc. All Rights Reserved.
+#
+#**/
+
+#==============================================================================
+#                              EDIT HISTORY
+#
+#
+# when         who     what, where, why
+# ----------   ---     ---------------------------------------------------------
+# 2019-06-11   sl      Multipage support added
+# 2017-03-03   eo      Initial version.
+#
+#==============================================================================
+# 80ee6be6-7555-4b62-a91d-28fce430b117
+# 487f10ee-a146-4283-a5a0-c0edf38d7fa8
+# 63a062be-b0b4-4bce-be90-856ab827167c
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = NandToolsLib
+  FILE_GUID                      = 9972fa45-f774-4a16-9c0c-32df30fee78c
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = NandToolsLib
+
+[Sources.ARM]
+  Loader/flash_boot_ops_setup.c
+  Loader/flash_dal.c
+  Loader/flash_dal_fwk.c
+  Loader/flash_dal_info.c
+  Loader/flash_dal_nand_default.c
+  Loader/flash_dal_util.c
+  Loader/flash_decode_nandids.c
+  Loader/flash_nand_config.c
+  Loader/flash_nand_core.c
+  Loader/flash_nand_entry.c
+  Loader/flash_nand_init.c
+  Loader/flash_nand_partition.c
+  Loader/flash_onfi.c
+  Loader/flash_otp_config.c
+  Loader/flash_partition_services.c
+  Loader/flash_properties.c
+
+  NandHalLib/flash_hal.h
+  ../NandJtagTools/flash_log.h
+
+[BuildOptions.ARM]
+  GCC:*_*_*_CC_FLAGS = -Wno-unused-function -DBUILD_NAND -DFLASH_ENABLE_NAND -UFLASH_ENABLE_DMA -DLOADER_CODE -g -DFLASH_CFG_INCLUDE_H="\"flash_cfg_qpic_2_0_1.h\"" -DFLASH_LOG_H="\"flash_log.h\"" -DNOISY -DTNOISY="3"
+  MSFT:*_*_*_CC_FLAGS =
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  ArmPkg/ArmPkg.dec
+  QcomPkg/QcomPkg.dec  
+  QcomPkg/XBLLoaderApi.dec  
+
+[LibraryClasses]
+  MuslLib
+  BaseLib
+  DebugLib
+  BaseMemoryLib
+  ServicesUtilsLib
+  SmemLib
+  BamLoaderLib
+  NandHalToolsLib
+  NandTargetLib
+  TimerLib
+  PcdLib
+  DALCommonLoaderLib
+
+[Guids]
+  gEfiHashAlgorithmSha1Guid
+  gEfiPartitionTypeGuid                         ## CONSUMES
+
+[Protocols]
+  gEfiHashProtocolGuid
+
+[Pcd.common]
+
+  

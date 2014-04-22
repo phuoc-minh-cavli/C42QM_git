@@ -1,0 +1,31 @@
+//===========================================================================
+//
+// FILE:         bam_config.xml
+//
+// DESCRIPTION:  This file contains the DAL XML properties for the BAM
+//               Device Access Library.
+//
+//===========================================================================
+//
+//                             Edit History
+//
+// $Header:
+//
+// when       who     what, where, why
+// --------   ---     -------------------------------------------------------
+// 11/07/13   SA      Branched from config/8926. Updated tgtcfg ptr to devcfg and supported BAMs
+// 
+//===========================================================================
+//             Copyright c 2013-2016 QUALCOMM Technologies Incorporated.
+//                    All Rights Reserved.
+//                  QUALCOMM Proprietary/GTDR
+//===========================================================================
+<driver name="NULL">
+   <device id="/core/hwengines/bam">
+    <props name="bam_tgt_config" type=DALPROP_ATTR_TYPE_STRUCT_PTR>
+         bam_tgt_config
+    </props>
+  </device>
+</driver>
+
+

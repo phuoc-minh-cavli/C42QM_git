@@ -1,0 +1,149 @@
+#===============================================================================
+#
+# AUDIO INIT
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2011-2012 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/audio.tx/2.0/audio/csd_qmi_services/build/csd_qmi_service.scons#1 $
+#  $DateTime: 2018/12/25 22:39:07 $
+#  $Author: pwbldsvc $
+#  $Change: 17929171 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when          who         what, where, why
+# --------      ---         ----------------------------------------------------
+# 09/12/14      vk       Added VoUSB feature support
+# 07/06/2011    jp       Initial revision
+#===============================================================================
+Import('env')
+env = env.Clone()
+env.Append(CPPFLAGS = " -DMDM_QMI_CSD_DEBUG")
+#env.Append(CPPDEFINES=['FEATURE_RCINIT'])
+#-------------------------------------------------------------------------------
+# Source PATH     
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd_qmi_services"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+#-------------------------------------------------------------------------------
+# CoreBSP dependencies
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'BOOT',
+   'BUSES',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'IODEVICES',
+   'MPROC',
+   'POWER',
+   'SECUREMSM',
+   'SENSORS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API, area='core')
+env.RequireRestrictedApi(CBSP_API)
+
+env.RequireRestrictedApi('CSDLITE')
+env.RequireRestrictedApi('CSD_AUDIO')
+env.RequireRestrictedApi('CSD_VOICE')
+env.RequirePublicApi('CSD_QMI_SERVICES')
+env.RequirePublicApi('RTPD_SERVICES')
+env.RequireRestrictedApi('CSD_OS_DEP')
+env.RequireRestrictedApi('APR')
+env.RequireRestrictedApi('CSD_UTILS')
+api_path = env.RealPath('${BUILD_ROOT}/api')
+qmimsgs_path = env.RealPath('${BUILD_ROOT}/qmimsgs')
+
+if env.PathExists(qmimsgs_path): 
+   env.RequirePublicApi('CSD', area='QMIMSGS')
+elif env.PathExists(api_path):
+   env.RequirePublicApi('CSD', area='API')
+
+env.RequirePublicApi([
+   'MMUTILS',
+   'APR',
+   'AUDIO',
+   'CSD_QMI_SERVICES',
+])
+
+
+#-------------------------------------------------------------------------------
+# Sources
+#-------------------------------------------------------------------------------
+
+csd_qmi_SOURCES = [
+        '${BUILDPATH}/src/csd_qmi_services_list.c',
+        '${BUILDPATH}/src/csd_qmi_services_vc.c',
+        '${BUILDPATH}/src/csd_qmi_services_vm.c',
+        '${BUILDPATH}/src/csd_qmi_services_vs.c',
+        '${BUILDPATH}/src/csd_qmi_services_dev.c',
+        '${BUILDPATH}/src/csd_qmi_services_main.c',
+        '${BUILDPATH}/src/csd_qmi_services.c',
+        '${BUILDPATH}/src/csd_qmi_services_lite.c',
+]
+
+#---------------------------------------------------------------------------------
+# Build products for RCINIT
+#---------------------------------------------------------------------------------
+if 'USES_FEATURE_AUDIO_CSD_QMI_SERVICE' in env: 
+    RCINIT_CSD_QMI_BUILD_TAG = ['CORE_APPS', 'MULTIMEDIA_APPS']
+
+    RCINIT_CSD_QMI_REXTASK = {
+     'sequence_group'         : 'RCINIT_GROUP_3',
+     'thread_name'            : 'audio_csd_qmi_service',
+    #'thread_tcb'             : 'RCINIT_NULL', 
+     'thread_entry'           : 'audio_csd_qmi_service_task',
+     'thread_type'            : 'RCINIT_TASK_QURTTASK',     
+     'stack_size_bytes'       : '4096',
+     'priority_amss_order'    : 'AUDIO_CSD_QMI_SERVICE_PRI_ORDER',
+    #'cpu_affinity'           : 'REX_ANY_CPU_AFFINITY_MASK',
+   }
+
+
+if 'USES_FEATURE_AUDIO_CSD_QMI_SERVICE' in env: 
+     if 'USES_RCINIT' in env:
+       env.AddRCInitTask(RCINIT_CSD_QMI_BUILD_TAG , RCINIT_CSD_QMI_REXTASK)
+
+#---------------------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------
+# objs, libraries
+#-------------------------------------------------------------------------------
+
+if 'USES_FEATURE_AUDIO_CSD_QMI_SERVICE' in env: 
+   csd_qmi_obj = env.Object(csd_qmi_SOURCES)
+   csd_qmi_lib = env.Library('${BUILDPATH}/csd_qmi_services_main', csd_qmi_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if 'USES_FEATURE_AUDIO_CSD_QMI_SERVICE' in env: 
+   env.AddLibsToImage(
+      ['MULTIMEDIA_APPS'],
+        csd_qmi_lib)
+ 
+env.LoadSoftwareUnits()
+

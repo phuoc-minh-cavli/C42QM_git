@@ -1,0 +1,26 @@
+#===============================================================================
+# QMI SLIM Interface
+#
+# GENERAL DESCRIPTION
+#    QMI SLIM interface build file
+#
+# Copyright (c) 2019 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.LoadSoftwareUnits(0,"../qmimsgs/build")
+env.LoadSoftwareUnits(0,"../qmislim/common/build")
+env.LoadSoftwareUnits(0,"../qmislim/qmiclient/build")
+env.LoadSoftwareUnits(0,"../client/build")
+env.LoadSoftwareUnits(0,"../utils/build")
+
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../common/core/inc"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../common/core/src"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../common/osal/inc"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../provider/qmislim/inc"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../provider/qmislim/src"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../qmislim/monitor/src"))
+env.CleanPack("CLEANPACK_TARGET", env.FindFiles("*", "../qmislim/qmiservice/src"))

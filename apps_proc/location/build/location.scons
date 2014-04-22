@@ -1,0 +1,123 @@
+#===============================================================================
+#
+# Location APIs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2020 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#---------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/location.tx/3.0/build/location.scons#6 $
+#  $DateTime: 2021/10/26 04:59:54 $
+#  $Author: pwbldsvc $
+#  $Change: 33661129 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+#===============================================================================
+import os
+from glob import glob
+from os.path import join, basename
+
+Import('env')
+
+if 'USES_FEATURE_CGPS_APPS_GTP_MCS' in env:
+	print "USES_FEATURE_CGPS_APPS_GTP_MCS defined"
+	env.Append(CPPDEFINES = 'FEATURE_LOCATION_MCS')
+
+#enable the below debug flag only in test builds.
+#env.Append(CPPDEFINES = 'GTP_DEBUG')
+BUILDPATH_STRING = '${BUILDPATH}/'
+
+# Helper function to generate the list of files to compile into the specified list
+def GenerateCompileList(self, directory, patternlist):
+    # normalize patternlist to be a list
+    if not isinstance(patternlist, list):
+        patternlist = [patternlist]
+
+    filelist = []
+    try:
+        for pattern in patternlist:
+            filelist = filelist + [BUILDPATH_STRING + basename(fname)
+                                   for fname in glob(join(env.subst(directory), pattern))]
+    except:
+        env.PrintError("Could not generate file list")
+        raise
+    return filelist
+AddMethod(env, GenerateCompileList)
+
+# Helper function to remove the specified file from list
+# Input "file" = name of file to be removed without any 
+#                leading or trailing modifications
+def RemoveCompileFile(self, sourcelist, filelist):
+    # normalize input to be a list
+    if not isinstance(filelist, list):
+        filelist = [filelist]
+    
+    # Modify any entry that has BUILDPATH_STRING
+    filelist = [basename(fname) for fname in filelist]
+    
+    for file in filelist:
+        try:
+            filename = BUILDPATH_STRING + file
+            while sourcelist.count(filename) > 0:
+                sourcelist.remove(filename)
+        except:
+            env.PrintError("Could not execute RemoveCompileFile")
+            raise
+AddMethod(env, RemoveCompileFile)
+
+if os.path.exists('location_cleanpack.py'):
+   env.LoadToolScript('location_cleanpack.py')
+
+if 'USES_LOCATION_DISABLE' in env:
+    env.Append(CFLAGS = ['-DLOCATION_MODULE_DISABLED'])
+    env.Append(CPPFLAGS = ['-DLOCATION_MODULE_DISABLED'])
+    env.LoadSoftwareUnits(0,"../api/build")
+    env.LoadSoftwareUnits(0,"../utils/build")
+    env.LoadSoftwareUnits(0,"../xtra/build")
+    env.LoadSoftwareUnits(0,"../platform/build")
+    env.LoadSoftwareUnits(0,"../izat_core/build")
+    env.LoadSoftwareUnits(0,"../core/build")
+    env.LoadSoftwareUnits(0,"../pcid/build")
+    env.LoadSoftwareUnits(0,"../test/build")
+    env.CleanPack("CLEANPACK_TARGET", "../core")
+    env.CleanPack("CLEANPACK_TARGET", "../flp")
+    env.CleanPack("CLEANPACK_TARGET", "../geofence")
+    env.CleanPack("CLEANPACK_TARGET", "../gtpwwan")
+    env.CleanPack("CLEANPACK_TARGET", "../izat_core")
+    env.CleanPack("CLEANPACK_TARGET", "../loc_api")
+    env.CleanPack("CLEANPACK_TARGET", "../locationwifiinterface")
+    env.CleanPack("CLEANPACK_TARGET", "../pcid")
+    env.CleanPack("CLEANPACK_TARGET", "../platform")
+    env.CleanPack("CLEANPACK_TARGET", "../slim")
+    env.CleanPack("CLEANPACK_TARGET", "../test")
+    env.CleanPack("CLEANPACK_TARGET", "../wifipositioning")
+else:
+    if 'USES_WIFI_POSITIONING_DISABLE' in env:
+        env.Append(CFLAGS = ['-DWIFI_POSITIONING_DISABLED'])
+        env.Append(CPPFLAGS = ['-DWIFI_POSITIONING_DISABLED'])
+    else:
+        env.LoadSoftwareUnits(0,"../wifipositioning/build")
+        env.LoadSoftwareUnits(0,"../locationwifiinterface/build")
+    if 'USES_SENSORS_DISABLE' in env:
+        env.Append(CFLAGS = ['-DSENSORS_DISABLED'])
+        env.Append(CPPFLAGS = ['-DSENSORS_DISABLED'])
+    else:
+        env.LoadSoftwareUnits(0,"../slim/build")
+    env.LoadSoftwareUnits(0,"../api/build")
+    env.LoadSoftwareUnits(0,"../core/build")
+    env.LoadSoftwareUnits(0,"../flp/build")
+    env.LoadSoftwareUnits(0,"../geofence/build")
+    env.LoadSoftwareUnits(0,"../gtpwwan/build")
+    env.LoadSoftwareUnits(0,"../izat_core/build")
+    env.LoadSoftwareUnits(0,"../loc_api/loc_api_v02/build")
+    env.LoadSoftwareUnits(0,"../pcid/build")
+    env.LoadSoftwareUnits(0,"../platform/build")
+    env.LoadSoftwareUnits(0,"../test/build")
+    env.LoadSoftwareUnits(0,"../utils/build")
+    env.LoadSoftwareUnits(0,"../xtra/build")

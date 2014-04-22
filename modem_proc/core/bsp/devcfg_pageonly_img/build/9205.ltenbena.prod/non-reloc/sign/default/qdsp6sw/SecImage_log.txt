@@ -1,0 +1,101 @@
+Upscaling MBN header v5 to MBN header v6
+Performing OEM sign on image: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/build/ms/bin/9205.ltenbena.prod/non-reloc/unsigned/qdsp6sw_2.mbn
+Signed image is stored at /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.ltenbena.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_2.mbn
+OEM signed image with ECDSA
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.ltenbena.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_2.mbn signature is valid
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.ltenbena.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_2.mbn is not encrypted
+
+Base Properties: 
+| Integrity Check             | True  |
+| Signed                      | True  |
+| Encrypted                   | False |
+| Size of signature           | 104   |
+| Size of one cert            | 2048  |
+| Num of certs in cert chain  | 3     |
+| Number of root certs        | 1     |
+| Maximum number of root certs| None  |
+| Cert chain size             | 6144  |
+
+ELF Properties: 
+Header: 
+| Magic                      | ELF                           |
+| Class                      | ELF32                          |
+| Data                       | 2's complement, little endian  |
+| Version                    | 1 (Current)                    |
+| OS/ABI                     | No extensions or unspecified   |
+| ABI Version                | 0                              |
+| Type                       | EXEC (Executable file)         |
+| Machine                    | 164                            |
+| Version                    | 0x1                            |
+| Entry address              | 0x80000000                     |
+| Program headers offset     | 0x00000034                     |
+| Section headers offset     | 0x00000000                     |
+| Flags                      | 0x00000067                     |
+| ELF header size            | 52                             |
+| Program headers size       | 32                             |
+| Number of program headers  | 17                             |
+| Section headers size       | 40                             |
+| Number of section headers  | 0                              |
+| String table section index | 0                              |
+
+Program Headers: 
+| Num | Type | Offset | VirtAddr | PhysAddr | FileSize | MemSize | Flags | Align |
+|-----|------|--------|----------|----------|----------|---------|-------|-------|
+|  1  | LOAD |0x003000|0x80000000|0x80000000| 0x001d54 | 0x002000|   RE  | 0x1000|
+|  2  | LOAD |0x005000|0x80004000|0x80004000| 0x011160 | 0x012000|   RW  | 0x1000|
+|  3  | LOAD |0x017000|0x80018000|0x80018000| 0x013940 | 0x014000|   RW  | 0x1000|
+|  4  | LOAD |0x02b000|0x80030000|0x80030000| 0x00e1d0 | 0x00f000|  RWE  | 0x1000|
+|  5  | LOAD |0x03a000|0x80040000|0x80040000| 0x037798 | 0x038000|   RE  | 0x1000|
+|  6  | LOAD |0x072000|0x80080000|0x80080000| 0x0001f8 | 0x001000|   RE  | 0x1000|
+|  7  | LOAD |0x073000|0x80081000|0x80081000| 0x03bed0 | 0x03c000|   RE  | 0x1000|
+|  8  | LOAD |0x0af000|0x800c0000|0x800c0000| 0x00cd80 | 0x00d000|   RW  | 0x1000|
+|  9  | LOAD |0x0bc000|0x800d0000|0x800d0000| 0x017641 | 0x018000|   R   | 0x1000|
+|  10 | LOAD |0x0d4000|0x800e9000|0x800e9000| 0x069044 | 0x06a000|   RW  | 0x1000|
+|  11 | LOAD |0x13e000|0x80153000|0x80153000| 0x000000 | 0x008000|   RW  | 0x1000|
+|  12 | LOAD |0x13e000|0x8015b000|0x8015b000| 0x000000 | 0x030000|   RW  | 0x1000|
+|  13 | LOAD |0x13e000|0x8018b000|0x8018b000| 0x000000 | 0x83e000|   RW  | 0x1000|
+|  14 | LOAD |0x13e000|0x809c9000|0x809c9000| 0x0018c0 | 0x002000|   RW  | 0x1000|
+|  15 | LOAD |0x140000|0x809d0000|0x809d0000| 0x1d4040 | 0x1d5000|   RW  | 0x1000|
+|  16 | LOAD |0x315000|0x80ba5000|0x80ba5000| 0x00538e | 0x006000|   R   | 0x1000|
+|  17 | LOAD |0x31b000|0x80cff000|0x80cff000| 0x000000 | 0x001000|   RW  | 0x1000|
+
+Hash Segment Properties: 
+| Header Size     | 168B  |
+| Hash Algorithm  | sha384|
+
+Header: 
+| cert_chain_ptr              | 0x80d00288  |
+| cert_chain_size             | 0x00001800  |
+| cert_chain_size_qti         | 0x00000000  |
+| code_size                   | 0x00000390  |
+| image_id                    | 0x00000000  |
+| image_size                  | 0x00001bf8  |
+| metadata_major_version      | 0x00000000  |
+| metadata_major_version_qti  | 0x00000000  |
+| metadata_minor_version      | 0x00000000  |
+| metadata_minor_version_qti  | 0x00000000  |
+| metadata_size               | 0x00000078  |
+| metadata_size_qti           | 0x00000000  |
+| sig_ptr                     | 0x80d00288  |
+| sig_size                    | 0x00000068  |
+| sig_size_qti                | 0x00000000  |
+| version                     | 0x00000006  |
+Metadata:
+| anti_rollback_version        | 0x00000000  |
+| app_id                       | 0x00000000  |
+| debug                        | 0x00000001  |
+| hw_id                        | 0x00000000  |
+| in_use_soc_hw_version        | 0x00000001  |
+| model_id                     | 0x00000000  |
+| mrc_index                    | 0x00000000  |
+| multi_serial_numbers         | 0x00000000  |
+| oem_id                       | 0x00000000  |
+| oem_id_independent           | 0x00000000  |
+| root_revoke_activate_enable  | 0x00000000  |
+| rot_en                       | 0x00000000  |
+| soc_vers                     | 0x00002013  |
+| sw_id                        | 0x00000002  |
+| uie_key_switch_enable        | 0x00000000  |
+| use_serial_number_in_signing | 0x00000000  |
+
+

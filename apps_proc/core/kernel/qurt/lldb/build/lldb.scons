@@ -1,0 +1,68 @@
+#===============================================================================
+#                    Copyright 2018 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+# QURT LLDB Libs
+#-------------------------------------------------------------------------------
+import os
+Import('env')
+env = env.Clone()
+
+if 'USES_LLDB_ENABLE' not in env:
+	Return()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/kernel/qurt/lldb"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = [
+   "TX_KERNEL",
+   ])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DEBUGTOOLS',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'DAL',
+   'PRODUCTS_DSR',
+   'KERNEL',
+   'MPROC'
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+QURT_LLDB_LIB_SOURCES =  [
+   '${BUILDPATH}/src/lldb_driver.c',
+   '${BUILDPATH}/src/lldb_process_req.c',
+   '${BUILDPATH}/src/lldb_utils.c',
+   '${BUILDPATH}/src/lldb_brkpt.c',
+   '${BUILDPATH}/src/lldb_next_pc.c',
+   '${BUILDPATH}/src/lldb_brkpt_asm.S',
+]
+
+IMAGES = ['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE']
+env.AddBinaryLibrary(IMAGES , '${BUILDPATH}/lldb', QURT_LLDB_LIB_SOURCES)
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitFunc(           # Code Fragment in TMC: YES
+    RCINIT_IMG,                  # define TMC_RCINIT_INIT_TIMER_TASK_INIT
+    {
+     'sequence_group'             : 'RCINIT_GROUP_0',                   # required
+     'init_name'                  : 'lldb_driver',                       # required
+     'init_function'              : 'lldb_driver_init',                  # required
+     'dependencies'               : ['rspcom']
+    })
+	

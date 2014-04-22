@@ -1,0 +1,103 @@
+#===============================================================================
+#         Copyright (c) 2019 Qualcomm Technologies Incorporated.
+#                    All Rights Reserved.
+#                  QUALCOMM Proprietary/GTDR
+
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/systemdrivers/InterruptController/build/interruptcontroller.scons#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#
+#===============================================================================
+# DAL InterruptController Lib
+#-------------------------------------------------------------------------------
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/systemdrivers/InterruptController"
+SRCPATHSCRIPTS = env['BUILD_ROOT']+'/core/systemdrivers/InterruptController/scripts'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0) 
+
+#-------------------------------------------------------------------------------
+# Source Code
+#-------------------------------------------------------------------------------
+
+env.PublishPrivateApi('DAL_INTERRUPTCONTROLLER', [
+   "${INC_ROOT}/core/api/kernel/libstd/stringl",
+   "${INC_ROOT}/core/api/kernel/qurt",
+   "${INC_ROOT}/core/systemdrivers/hal/qgic/inc",
+   "${INC_ROOT}/core/systemdrivers/InterruptController/src",
+   "${INC_ROOT}/core/systemdrivers/InterruptController/inc",
+   "${INC_ROOT}/core/systemdrivers/InterruptController/src/l4_qgic",
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'MPROC',
+   'POWER',
+   # needs to be last also contains wrong comdef.h      
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Internal Defines
+#-------------------------------------------------------------------------------
+
+env.Replace(SRC_DIR='l4_qgic')
+env.Append(CPPDEFINES = ["DAL_L4_QGIC_PLATFORM"])
+env.Append(CPPDEFINES = ["DALINTERRUPT_MPM_WAKEUP"])
+env.Append(CPPDEFINES = ["INTERRUPT_LOG_SIZE=512"])
+
+#-------------------------------------------------------------------------------
+# Define Image
+#-------------------------------------------------------------------------------
+
+INTCONT_IMAGE = ['CORE_APPS']
+
+#-------------------------------------------------------------------------------
+# Source Code
+#-------------------------------------------------------------------------------
+DAL_INTERRUPT_CONTROLLER_SOURCES = [
+   '${BUILDPATH}/src/DALInterruptControllerInfo.c',
+   '${BUILDPATH}/src/DALInterruptControllerFwk.c',
+   '${BUILDPATH}/src/l4_qgic/DALInterruptController.c'
+]
+
+INTERRUPT_CONTROLLER_DEV_CFG_SOURCES = [
+   '${BUILD_ROOT}/core/systemdrivers/InterruptController/config/InterruptConfigData.c',
+]
+
+
+#-------------------------------------------------------------------------------
+# Add CMM Scripts
+#-------------------------------------------------------------------------------
+try:
+  env.AddCMMScripts ('APPS', [SRCPATHSCRIPTS], { 'InterruptController.cmm' : ' Interrupt Controller', 'InterruptLog.cmm' : ' Interrupt Log' }, 'DAL')
+except:
+  pass
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibrary(INTCONT_IMAGE, '${BUILDPATH}/DalInterruptController', DAL_INTERRUPT_CONTROLLER_SOURCES)
+
+if 'USES_DEVCFG' in env:
+   DEVCFG_IMG = ['DAL_DEVCFG_IMG']
+   env.AddDevCfgInfo(DEVCFG_IMG,
+   {
+      'devcfg_xml'    : ['${BUILD_ROOT}/core/systemdrivers/InterruptController/config/${MSM_ID}/InterruptController.xml',
+                         '${BUILD_ROOT}/core/systemdrivers/InterruptController/config/${MSM_ID}/InterruptConfigData.c']
+   })

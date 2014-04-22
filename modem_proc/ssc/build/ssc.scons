@@ -1,0 +1,284 @@
+#===============================================================================
+#
+# Sensors (SSC) AU
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016-2019 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#
+#  $Id: //components/rel/ssc.slpi/5.1/build/ssc.scons#5 $
+#  $DateTime: 2019/09/11 10:53:10 $
+#  $Change: 20509356 $
+#
+#===============================================================================
+Import('env')
+import json
+import subprocess
+import os, inspect
+import platform
+
+#-------------------------------------------------------------------------------
+# Check if SSC has to be built
+#-------------------------------------------------------------------------------
+ssc_build_tags = [
+   # SSC as the USER PD on SLPI processor
+   'SSC_SLPI_USER',
+
+   #SSC as part of root PD on MDSP processor
+   'MODEM_MODEM',
+   
+   #SSC as part of root PD on MDSP processor
+   'MODEM_SENSORONLY',   
+
+   # SSC as the USER PD on ADSP processor
+   'SSC_ADSP_USER',
+
+   # SSC simulation
+   'SSC_SIM',
+
+   # Add new targets here
+   # Note:
+   #   Compose Build Tag as follows: [Component]_[Image]_[PD Type]
+   #   [Component] - Name of Component Folder. Example: CORE, SSC
+   #   [Image] - Type of processor. Example: ADSP, SLPI, MPSS
+   #   [PD Type] - ROOT or USER
+   #   see http://qwiki.qualcomm.com/qct-osteam/CoreBSP/SLPI_Development_Information#How_Build_Tags_are_Composed
+ ]
+
+ssc_root = inspect.getfile(inspect.currentframe())
+ssc_root_dir = os.path.dirname(os.path.dirname(ssc_root))
+
+# Create an ${SSC_ROOT} variable.
+env.Replace(SSC_ROOT=ssc_root_dir)
+
+# Store the build tags
+env.Replace(SSC_BUILD_TAGS=ssc_build_tags)
+
+# Delete ssc folder for modem flavors which use no sensors.
+# USES_NO_SENSORS is a modem specific build tag.
+if 'USES_NO_SENSORS' in env:
+  env.PrintInfo("No sensors")
+  if 'CLEANPACK_TARGET' in env:
+    env.PrintInfo("Removing ssc folder")
+    # Load cleanpack script:
+    if env.PathExists('${SSC_ROOT}/chipset/${CHIPSET}'):
+      env.LoadToolScript('ssc_cleanpack', toolpath = ['${SSC_ROOT}/chipset/${CHIPSET}'])
+      Return()
+  else: #if cleanpack is not defined and USES_NO_SENSORS is defined, then return
+    env.PrintInfo("Returning from ssc")
+    Return()
+
+#-------------------------------------------------------------------------------
+#Publish protected APIs
+#-------------------------------------------------------------------------------
+
+env.PublishProtectedApi('SNS_FRAMEWORK', [
+  "${SSC_ROOT}/framework/inc",
+])
+
+env.PublishProtectedApi('SNS_INTERNAL_INCLUDES', [
+   "${SSC_ROOT}/inc/internal",
+   "${SSC_ROOT}/inc/internal/${CHIPSET}",
+   "${SSC_ROOT}/utils/osa/${CHIPSET}",
+])
+
+env.PublishProtectedApi('SNS_MATH_UTIL', [
+   "${SSC_ROOT}/utils/mathutls/inc",
+])
+
+#-------------------------------------------------------------------------------
+# Get dependent API header files
+#-------------------------------------------------------------------------------
+qdsp6_public_apis = [
+                     'QDSP6',
+                    ]
+core_public_apis = [
+                     'BUSES',
+                     'SERVICES',
+                     'DEBUGTRACE', # For QDSP6 profiling
+                   ]
+env.RequirePublicApi(qdsp6_public_apis, area='qdsp6')
+env.RequirePublicApi(core_public_apis, area='core')
+
+#-------------------------------------------------------------------------------
+# Set Global build rules
+#-------------------------------------------------------------------------------
+env.Append(CCFLAGS = ' -Os ') # Change to -O0 to support GDB debugging on simulation
+env.Append(CFLAGS = ' -std=c11')
+
+env.Append(CFLAGS = '-Werror')
+env.Append(CFLAGS = '-Wall')
+env.Append(CFLAGS = '-Wextra')
+#TODO: Remove these:
+env.Append(CFLAGS = '-Wno-sign-compare')
+env.Append(CFLAGS = '-Wno-unused-result')
+
+# Build SSC if there is a build tag that is supported
+if env.IsKeyEnable(ssc_build_tags) is True:
+  #-------------------------------------------------------------------------------
+  # Setup SEE variables and builders
+  #-------------------------------------------------------------------------------
+  env.Tool('ssc_static_lib_builder', toolpath = ['${SSC_ROOT}/build'])
+  env.Tool('ssc_library_builder', toolpath = ['${SSC_ROOT}/build'])
+  env.Tool('sharedlib_builder', toolpath = ['${SSC_ROOT}/build'])
+
+  exports_root = str(env.get('BUILD_ROOT', None)) + '/ssc/build'
+  env.DLExposeFile(exports_root + '/dl_ssc_symbols.lst')
+
+  #-------------------------------------------------------------------------------
+  # Configure the sensors build
+  #-------------------------------------------------------------------------------
+  if 'USES_SNS_STANDALONE_SDC' in env:
+    env.Append(CPPDEFINES = ['SNS_STANDALONE_SDC'])
+  if 'USES_SNS_STANDALONE_SLPI' in env:
+    env.Append(CPPDEFINES = ['SNS_DISABLE_REGISTRY'])
+    env.AddUsesFlags(['SNS_DISABLE_REGISTRY'])
+    env.AddUsesFlags(['SNS_DISABLE_TEST_CLIENT'])
+
+  #-------------------------------------------------------------------------------
+  # Any new algo must be added to this list
+  #-------------------------------------------------------------------------------
+  include_algo_libs = ['sns_accel_cal','sns_amd','sns_aont','sns_basic_gestures','sns_bring_to_ear','sns_ccd','sns_cmc','sns_device_orient','sns_distance_bound',
+  'sns_dpc','sns_facing','sns_fmv','sns_game_rv','sns_geomag_rv','sns_gravity','sns_gyro_cal','sns_gyro_rot_matrix','sns_mag_cal','sns_mcmd','sns_oem1',
+  'sns_pedometer','sns_psmd','sns_rmd','sns_rotv','smd','sns_multishake','sns_threshold','sns_tilt','sns_tilt_to_wake','sdc']
+  #-------------------------------------------------------------------------------
+  # Any new platform lib must be added to this list
+  #-------------------------------------------------------------------------------
+  include_platform_libs = ['client_manager','diag_sensor','dynamic_sensor','Low_lat_client_manager','power_sensor','cm_qsocket','suid_sensor','sns_async_com_port',
+  'dae_sensor','sns_device_mode','sns_da_test','ext_svc','sns_interrupt','registry_parser','registry_config','sns_remote_proc_state','sns_resampler',
+  'sns_signal_sensor','sns_test','sns_timer','com','i2c','spi','sns_debug','diag','sns_gpio_service','island','sns_list','math_util','memory','osa','pram','pwr_rail_mgr',
+  'pwr_scpm_mgr','pwr_sleep_mgr','sns_registry_util','sensor','sns_signal','sns_ctstruct_extn','timer', 'sns_psm']
+  #-------------------------------------------------------------------------------
+  # Any new simulation lib must be added to this list
+  #-------------------------------------------------------------------------------
+  include_sim_libs = ['sns_sim','ssc_sim_main','pram_sim','glink','osa_test']
+
+  include_sensor_vendor_libs = []
+
+  exclude_libs = []
+
+  if 'SENSORS_DD_DEV_FLAG' in env:
+    env.Append(CPPDEFINES = ['SENSORS_DD_DEV_FLAG'])
+  if 'SENSORS_ADD_SHARED_OEM1' in env:
+    env.Append(CPPDEFINES = ['SENSORS_ADD_SHARED_OEM1'])
+  if 'SENSORS_ADD_SHARED_ACCEL_CAL' in env:
+    env.Append(CPPDEFINES = ['SENSORS_ADD_SHARED_ACCEL_CAL'])
+  if 'SENSORS_ALGO_DEV_FLAG' in env:
+    env.Append(CPPDEFINES = ['SENSORS_ALGO_DEV_FLAG'])
+
+  if "USES_QSOCKETS_UIMAGE" in env:
+    env.AddUsesFlags(['SNS_ISLAND_INCLUDE_QCM'])
+    if env.IsBuildInternal():
+      env.AddUsesFlags(['SNS_ISLAND_INCLUDE_TEST_CLIENT'])
+
+  if env.get('SIM_PLATFORM') in ['x86']:
+     env.PrintInfo("Building for SSC_TARGET_X86 target")
+     env.Append(CPPDEFINES = ['SSC_TARGET_X86'])
+     env.Append(CFLAGS = '-g') # For debugging symbols in GDB; should turn-off in production
+     env.Append(CFLAGS = ' -D_POSIX_C_SOURCE=200809L')
+     env.Replace(SSC_EXCLUDE_LIBS=exclude_libs)
+     env.Replace(SSC_INCLUDE_SENS_VEND_LIBS=include_sensor_vendor_libs)
+
+     # Detect undefined behavior at runtime and abort
+     #env.Append(CFLAGS = ' -fsanitize=undefined')
+     #env.Append(CFLAGS = ' -fno-sanitize-recover')
+
+     # Add a stack protector to detect buffer overflows
+     env.Append(CFLAGS = ' -fstack-protector-all')
+     # Check for overflowing the allocated stack
+     env.Append(CFLAGS = ' -fstack-check')
+
+     # PEND: Valgrind not yet supported on PW build servers
+     #env.Append(CPPDEFINES = ['SNS_VALGRIND'])
+
+     #Code coverage (The following must be removed for Valgrind/Helgrind use)
+     #env.Append(CPPDEFINES = ['SNS_CODE_COVERAGE'])
+     #env.Append(CFLAGS = ['-fprofile-arcs', '-ftest-coverage'])
+
+  elif env.PathExists('${SSC_ROOT}/chipset/${CHIPSET}'):
+     env.Append(CPPDEFINES = ['SSC_TARGET_HEXAGON'])
+     env.Append(CFLAGS = '-mllvm -disable-shrink-wrap-common-args')
+     env.LoadToolScript('por', toolpath = ['${SSC_ROOT}/chipset/${CHIPSET}'])
+
+  else:
+     env.PrintError("missing chipset folder: ", os.path.join(ssc_root_dir, "chipset", env['CHIPSET']) )
+
+  if 'SNS_ENABLE_DAE' in env:
+    env.Append(CPPDEFINES = ['SNS_ENABLE_DAE'])
+    env.AddUsesFlags(['SNS_ISLAND_INCLUDE_DAE'])
+    env.AddUsesFlags(['SNS_ISLAND_INCLUDE_SIGNAL_SENSOR'])
+    env.AddUsesFlags(['SNS_ISLAND_INCLUDE_CCD'])
+
+  env.Replace(SSC_INCLUDE_ALGO_LIBS=include_algo_libs)
+  env.Replace(SSC_INCLUDE_PLAT_LIBS=include_platform_libs)
+  env.Replace(SSC_INCLUDE_SIM_LIBS=include_sim_libs)
+
+  #option to disable dependency on linker script
+  if 'SNS_NO_ISLAND_PTR_CHECKS' in env:
+     env.Append(CPPDEFINES = ['SNS_NO_ISLAND_PTR_CHECKS'])
+
+  #option to select higher sns signal task wait time to avoid crash on RUMI platform
+  if 'SNS_SIGNAL_TASK_HIGH_WAIT_TIME' in env:
+     env.Append(CPPDEFINES = ['SNS_SIGNAL_TASK_HIGH_WAIT_TIME'])
+
+  # option for disabling island mode
+  if 'SNS_DISABLE_ISLAND' in env:
+     env.Append(CPPDEFINES="SNS_DISABLE_ISLAND=true")
+  else:
+     env.Append(CPPDEFINES="SNS_DISABLE_ISLAND=false")
+
+  #-------------------------------------------------------------------------------
+  # Remove source files for external builds
+  #-------------------------------------------------------------------------------
+  remove_all_ssc_chipset_dir = False
+  remove_complete_ssc_inc_internal = False
+  REMOVE_FILES  =  []
+  REMOVE_FILES +=  env.FindFiles(['*.json'], ssc_root_dir)
+  if 'SENSORS_DD_DEV_FLAG' in env:
+
+    remove_all_ssc_chipset_dir = True
+
+    inc_int_dir = os.path.join(ssc_root_dir, "inc", "internal")
+    REMOVE_FILES +=  env.FindFiles(['*.*'], inc_int_dir)
+    remove_complete_ssc_inc_internal = True
+
+    if 'SENSORS_ALGO_DEV_FLAG' not in env:
+      inc_utils_dir = os.path.join(ssc_root_dir, "inc", "utils")
+      REMOVE_FILES += env.FindFiles(['sns_buffer.h', 'sns_algo.h', 'sns_sensor_util_internal.h'], inc_utils_dir)
+
+  ssc_chipset_root = os.path.join(ssc_root_dir, "chipset")
+  for dirName, subDirList, fileList in os.walk(ssc_chipset_root):
+    if ssc_chipset_root == dirName:
+      for subDirName in subDirList:
+        ssc_chipset_dir = os.path.join(ssc_root_dir, "chipset", subDirName)
+        if remove_all_ssc_chipset_dir:
+          REMOVE_FILES +=  env.FindFiles(['*.*'], ssc_chipset_dir)
+        elif subDirName != env['CHIPSET']:
+          REMOVE_FILES += env.FindFiles(['*.*'], ssc_chipset_dir)
+      break
+
+  ssc_inc_internal_root = os.path.join(ssc_root_dir, "inc", "internal")
+  for dirName, subDirList, fileList in os.walk(ssc_inc_internal_root):
+    if ssc_inc_internal_root == dirName:
+      for subDirName in subDirList:
+        if remove_complete_ssc_inc_internal == False:
+          ssc_inc_internal_dir = os.path.join(ssc_root_dir, "inc", "internal", subDirName)
+          REMOVE_FILES += env.FindFiles(['sns_hwio_sdc.h','sns_hwio_ccd_ppe.h'], ssc_inc_internal_dir)
+      break
+  env.CleanPack(env['SSC_BUILD_TAGS'], REMOVE_FILES)
+
+#------------------------------------------------------------------------------
+# Scan subdirectories to find more /build folders
+#------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# Generates
+#-------------------------------------------------------------------------------
+if 'USES_STATIC_SENSORS_LIST_GEN' in env:
+  env.GenerateStaticSensorList(env['SSC_BUILD_TAGS'])

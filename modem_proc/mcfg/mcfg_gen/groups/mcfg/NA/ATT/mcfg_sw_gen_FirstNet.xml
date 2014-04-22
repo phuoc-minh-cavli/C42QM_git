@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="mcfg.0.0" type="1"/>
+<NvItemData name="Banner" id="71" description="" comment="" category="Display" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="1">
+		<Member name="letters" description="" comment="" sizeOf="13" type="string">FirstNet</Member>
+	</NvItemData>
+	</NvData>

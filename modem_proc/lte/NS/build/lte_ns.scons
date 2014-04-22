@@ -1,0 +1,99 @@
+#===============================================================================
+#
+# LTE PLT Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2010 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/lte.mpss/4.7.2/NS/build/lte_ns.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/05/18   ua     Initial creation.
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+if 'USES_FEATURE_CATM1_DISABLE' in env:
+    Return()
+    
+from glob import glob
+from os.path import join, basename, abspath
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('NS', ['${INC_ROOT}/lte/NS/src'])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last 
+    ], area='core')
+
+
+
+env.RequirePublicApi(['UTILS'])
+
+env.RequirePublicApi(['FW_LTE'], area='FW_LTE')
+
+
+env.RequireRestrictedApi(['UTILS'])
+env.RequireProtectedApi(['UTILS'])
+
+# Need to get access to LTE protected headers
+env.RequireProtectedApi([
+    'LTE',
+    ])
+
+env.RequireExternalApi('BREW')
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+
+# Run the PLT Script tool
+if env.PathExists('../../../fw_lte/build') and not env.PathExists('../../../fw/lte/build'):
+	fw_lte_path = '../../../fw_lte/build'
+elif env.PathExists('../../../fw/fw_lte/build'):
+	fw_lte_path = '../../../fw/fw_lte/build'
+elif env.PathExists('../../../fw/api/build'):
+	fw_lte_path = '../../../fw/api/build'
+else:
+	fw_lte_path = '../../../fw/lte/build'  
+	 
+# Add the autogen build path to the compilation path
+env.Append(CPPPATH = env.subst('${LTE_ROOT}/NS/build/$BUILDPATH'))
+
+# Construct the list of source files by looking for *.c
+LTE_NS_SOURCES  = ['${BUILDPATH}/' + basename(fname)
+                    for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the NS PLT source and create a library (ship source)
+env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/lte_ns', LTE_NS_SOURCES)
+

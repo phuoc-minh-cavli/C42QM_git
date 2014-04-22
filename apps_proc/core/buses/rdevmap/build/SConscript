@@ -1,0 +1,240 @@
+#===============================================================================
+#
+# RDEVMAP Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009, 2022 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/buses/rdevmap/build/SConscript#2 $
+#  $DateTime: 2022/03/17 03:16:50 $
+#  $Author: pwbldsvc $
+#  $Change: 36027125 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 03/17/22   RK      Added feature flage to work always non-persistent
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+
+SRCPATH = "${BUILD_ROOT}/core/buses/rdevmap/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+#  It looks like if a bogus interface identifier is given (e.g. XXXXX_BOGUS),
+#  it's silently ignored.  This is good.  It allows you to create a common
+#  list used across all targets.
+
+CBSP_XAPI = [
+    'CS',
+    'DSM',
+    'MODEM_1X',
+    'MODEM_ADIE',
+    'MODEM_API',
+    'MODEM_DATA',
+    'MODEM_HDR',
+    'MODEM_MMODE',
+    'MODEM_NAS',
+    'MODEM_PMIC',
+    'MODEM_RF',
+    'MODEM_SERVICES',
+    'MODEM_UIM',
+    'MODEM_WCDMA',
+    'MULTIMEDIA',
+    'MULTIMEDIA_AUDIO',
+    'WCONNECT',
+    'WIRELESSCONNECTIVITY',
+]
+
+env.RequireExternalApi( CBSP_XAPI )
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+CBSP_API = [
+    'DAL',
+    'DEBUGTOOLS',
+    'HAL',
+    'HWENGINES',
+    'MEMORY',
+    'MPROC',
+    'POWER',
+    'SECUREMSM',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'WIREDCONNECTIVITY',
+	'BUSES',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',   
+]
+
+MODEM_API = [
+   'DATA',
+   'DATAMODEM',
+]
+
+env.RequirePublicApi( CBSP_API )
+env.RequireRestrictedApi( CBSP_API )
+
+env.RequirePublicApi(MODEM_API, area='MODEM')
+
+#-------------------------------------------------------------------------------
+# Source Code and LIBs
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in ['6615','6695']:
+
+    RDEVMAP_SOURCES =  [
+        '${BUILDPATH}/rdevmap.c'
+    ]
+
+    rdevmap_obj = env.Object(RDEVMAP_SOURCES)
+    rdevmap_lib = env.Library('${BUILDPATH}/rdevmap', rdevmap_obj)
+
+elif env['MSM_ID'] in ['7x30']:
+
+    RDEVMAP_MODEM_SOURCES =  [
+        '${BUILDPATH}/rdevmap.c',
+    ]
+    rdevmap_modem_obj = env.Object(RDEVMAP_MODEM_SOURCES)
+    rdevmap_modem_lib = env.Library('${BUILDPATH}/rdevmap_apps', rdevmap_modem_obj)
+
+elif env['MSM_ID'] in ['9x00']:
+
+    RDEVMAP_MODEM_SOURCES =  [
+        '${BUILDPATH}/rdevmap.c',
+    ] 
+    rdevmap_modem_obj = env.Object(RDEVMAP_MODEM_SOURCES)
+    rdevmap_modem_lib = env.Library('${BUILDPATH}/rdevmap_apps', rdevmap_modem_obj)
+
+else: 
+
+    #  Do for all targets moving forward (8660, 8960, 9x15, 8064, 8794, etc.)
+    #  We don't want to add a case here for each specific target.
+
+    RDEVMAP_MODEM_SOURCES =  [
+       '${BUILDPATH}/rdevmap.c',
+    ]
+
+    env.Append(CPPDEFINES = ["FEATURE_RDM_ALWAYS_NON_PERSISTENT"])
+    rdevmap_modem_obj = env.Object(RDEVMAP_MODEM_SOURCES)
+    rdevmap_modem_lib = env.Library('${BUILDPATH}/rdevmap_apps', rdevmap_modem_obj)
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+if env['MSM_ID'] in ['6615','6695']:
+
+    env.AddLibsToImage(['SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE'], rdevmap_lib )
+
+elif env['MSM_ID'] in ['7x30']:
+
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], rdevmap_lib )
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], rdevmap_modem_lib )
+
+elif env['MSM_ID'] in ['8660']:
+
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], rdevmap_lib )
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], rdevmap_modem_lib )
+
+
+elif env['MSM_ID'] in ['9x00']:
+
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE'], rdevmap_lib )
+    env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], rdevmap_lib )
+    env.AddLibsToImage(['QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE'], [rdevmap_lib, rdevmap_modem_lib])
+
+else:
+
+    #  Do this for all targets moving forward (8960, 9x15, 8064, 8974, etc.) 
+    #  We don't want to add a case here for each specific target.
+
+    env.AddLibsToImage(['MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'APPS_IMAGE', 'CBSP_APPS_IMAGE', 'CORE_QDSP6_SW'], [rdevmap_modem_lib])
+
+#---------------------------------------------------------------------------
+# Setup the constants for document title and the DCN number for Agile
+#---------------------------------------------------------------------------
+env['DOCTITLE']="Rdevmap API"
+env['DOCREVISION']="80-N1874-1"
+
+DOCSRCPATH = "${BUILD_ROOT}/core/buses/api/rdevmap"
+env.Replace(DOCSRCPATH = DOCSRCPATH)
+
+#---------------------------------------------------------------------------
+# List of Header files that contain doxygen tags   List of TeX files that
+# contain documentation to be merged with doxygen generated TeX files
+#---------------------------------------------------------------------------
+docsrcfiles = [
+    '${DOCSRCPATH}/docsrc/rdevmap/rdevmap_MainPage.h',
+    '${DOCSRCPATH}/rdevmap.h',
+    '${DOCSRCPATH}/docsrc/rdevmap/introduction.tex',
+
+    ]
+
+#---------------------------------------------------------------------------
+# Call the builder with the name of the document. The document can 
+# be found under \core\api\doc once the build completes.
+#---------------------------------------------------------------------------
+if env['MSM_ID'] in ['7x30']:
+    target_doc = env.PdfDocument('Rdevmap_API', 
+                                 docsrcfiles
+                                )
+
+#---------------------------------------------------------------------------
+# Finally add the document to the core docs target. 
+#---------------------------------------------------------------------------
+if env['MSM_ID'] in ['7x30']:
+    env.AddDocs('CORE_DOCS',target_doc)
+
+#---------------------------------------------------------------------------
+# RCInit framework.
+# Once these are in build RCINIT will do initializations below regardless of
+# TMC_RCINIT_INIT_RDM_* definitions. To keep initializations called only once
+# TMC_RCINIT_INIT_RDM_* must be defined in *.builds file to remove calls from TMC.
+#---------------------------------------------------------------------------
+
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_RDM_GET_PREV_PORTS
+    {
+     'sequence_group'             : 'RCINIT_GROUP_7',                   # required
+     'init_name'                  : 'rdm_persistence',                  # required
+     'init_function'              : 'rdm_get_prev_ports',               # required
+     'dependencies'               : ['',]
+    })
+
+if 'USES_RCINIT' in env:
+   RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+   env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                 # define TMC_RCINIT_INIT_RDM_ISSUE_OPENS
+    {
+     'sequence_group'             : 'RCINIT_GROUP_7',                   # required
+     'init_name'                  : 'rdm_opens',                        # required
+     'init_function'              : 'rdm_issue_opens',                  # required
+     'dependencies'               : ['rdm_persistence',]
+    })
+

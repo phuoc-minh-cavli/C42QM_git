@@ -1,0 +1,636 @@
+//============================================================================
+//  Name:                                                                     
+//    std_debug_rpm.cmm 
+//
+//  Description:                                                              
+//    RPM debug script
+//                                                                            
+// Copyright (c) 2012 - 2014 by Qualcomm Technologies, Incorporated.  All Rights Reserved.        
+//
+//
+//
+//
+//                      EDIT HISTORY FOR FILE
+//  This section contains comments describing changes made to the module.
+//  Notice that changes are listed in reverse chronological order.
+//
+// when       who     		what, where, why
+// --------   ---     		---------------------------------------------------------
+// 07/31/2013 AJCheriyan    Added support for PMIC Watchdog to be disabled
+// 07/19/2012 AJCheriyan    Created for B-family.
+
+
+
+//####################Declarations#######################
+
+LOCAL &ArgumentLine
+LOCAL &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+LOCAL &targetprocessor &string_length
+
+//###################Arguments passed #####################
+ENTRY %LINE &ArgumentLine
+ENTRY &UTILITY &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+
+//##################Defaults##########################
+&targetprocessor="rpm"
+
+//#####################Select Subroutine###################
+// Name of the utility we are calling
+LOCAL &SUBROUTINE
+// Any subroutine specific options
+// Default exists for each subroutine
+LOCAL &OPTION
+
+// Input Argument 0 is the name of the utility
+&SUBROUTINE="&UTILITY"
+IF !(("&SUBROUTINE"=="TRACEGUI"))
+(
+	//IF ("&ArgumentLine"=="")
+	//(
+	//	&SUBROUTINE="HELP"
+	//)
+	//ELSE
+	//(
+		&SUBROUTINE="MAIN"
+	//)
+)
+
+	// This should be created by some top level script. The setupenv for each proc would
+	// set this up
+ 	AREA.SELECT
+    // Call the required utility
+	GOSUB &SUBROUTINE &OPTION &IARG0 &IARG1 &IARG2 &IARG3 &IARG4 &IARG5 &IARG6 &IARG7 &IARG8 &IARG9 &IARG10 &IARG11
+	ENTRY &PASS &RVAL0 &RVAL1 &RVAL2
+
+	GOTO EXIT
+	
+	
+MAIN:
+	  //note that optextract has a limit of 10 entries
+    do optextract Img,Bkpts &ArgumentLine
+    ENTRY &Image &Bkpts
+    // Get the target processor for this port
+    do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &Image
+    ENTRY &Unused1 &TargetProcessor &TargetProcessorPort &BootProc &BootProcPort &UsesCTI &ProcessorTimeoutValue &DebugScript &SymbolLoadScript &BuildPath &EntryBkpt &ErrBkpts &LpmOpt &SleepDisableCmd &Unused2 &Unused3
+	
+		// We have work to do if it is SBL
+	IF ("&Image"=="rpm")
+	(
+		// Hit GO on Boot Processor
+		GO
+		
+		// Attach to RPM Core and break
+		do std_intercom_do &TargetProcessorPort std_utils BREAKPROC
+
+	    LOCAL &T32_stopstate &T32_attachstate
+        
+        INTERCOM.EVALUATE &targetprocessorport STATE.RUN()
+        &T32_stopstate=EVAL()
+            INTERCOM.EVALUATE &targetprocessorport SYSTEM.MODE()
+        &T32_attachstate=EVAL()
+        
+        
+        IF ((1==&T32_stopstate)||("&T32_attachstate"!="0x0B"))
+        (
+            area.reset
+            area
+            PRINT %ERROR "Error! std_debug_rpm &image entry: Remote T32 window is not attached/stopped"
+            GOTO EXIT
+        )
+	
+        do std_debug_&CHIPSET SETDEBUGCOOKIE clear &image
+        
+
+        // Set the breakpoints specified by the user
+		IF ("&Bkpts"!="NULL")
+		(
+			do std_intercom_do &TargetProcessorPort std_utils SETBREAKPOINTS ONCHIP &Bkpts 
+		)
+		
+		// Now set the entry and exit breakpoints
+		do std_intercom_do &targetprocessorport std_utils SETBREAKPOINTS ONCHIP &EntryBkpt &ErrBkpts /onchip
+	)
+	GOTO EXIT
+
+	
+	
+
+////////////////////////////////////////
+//
+//			TRACEGUI
+//			
+//			Main TRACEGUI logic
+//
+/////////////////////////////////////////  
+TRACEGUI:
+
+		///////////////Variables/////////////////////
+        
+        
+        ///////////////////Set Defaults///////////////
+        LOCAL &image 
+        &image="rpm"
+        
+        //setup intercoms
+        do std_intercom_init NEWSESSION
+        
+        //from GETDEBUGDEFAULTS
+		LOCAL &image &targetprocessor &targetprocessorport &bootprocessor &bootprocessorport &usescti &processortimeoutvalue &debugscript &symbolloadscript &imagebuildroot &entry_bkpt &error_bkpts &lpm_option &sleep_disable_command &cti_enable &multi_elf_option
+		
+        //Trace Variables//
+        LOCAL &tracesource &tracesink &tpiusink &cycleaccurate &traceconfiguration &portsize &cycleaccuratecommand &portsizecommand 
+        
+        /////////////Addtional Variables////////////////
+        LOCAL &user_defined_bkpts
+        &user_defined_bkpts=""
+        LOCAL &PORTSIZE_SIZES
+        
+        //FIXME - only 8bit works for now since we can't set portsize without resetting processor
+        //&PORTSIZE_SIZES="4bit,8bit,16bit"
+        &PORTSIZE_SIZES="8bit"
+
+        
+        ///////////get target specific debug defaults////////////////
+        do std_debug_&CHIPSET GETDEBUGDEFAULTS NONE &image &lpm_option &cti_enable &multi_elf_option
+            ENTRY &image &targetprocessor &targetprocessorport &bootprocessor &bootprocessorport &usescti &processortimeoutvalue &debugscript &symbolloadscript &imagebuildroot &entry_bkpt &error_bkpts &lpm_option &sleep_disable_command &cti_enable &multi_elf_option
+    
+        
+        ////////////get target specific trace defaults////////////////
+        &tracesource="&targetprocessor"
+        &tracescript="std_trace"+"_"+"&image"+"_"+"&CHIPSET"
+        
+        do &tracescript GETTRACEDEFAULTS &tracesource &tracesink &tpiusink &cycleaccurate &traceconfiguration &portsize 
+            ENTRY &tracesource &tracesink &tpiusink &portsize &cycleaccuratecommand &traceconfiguration &portsizecommand 
+
+            
+
+        LOCAL &Rvalue
+        do std_intercom_init CHECKSESSION 1 &bootprocessor
+            ENTRY &Rvalue
+        IF (&Rvalue!=1.)
+        (
+            PRINT %ERROR "&bootprocessor T32 window not open. Please open and try again"
+            GOTO FATALEXIT
+        )
+	
+	GOSUB CREATEDIALOG //&image &targetprocessor &user_defined_bkpts &lpm_option &cti_enable &multi_elf_option &tracesink &tpiusink &portsize &cycleaccuratecommand &portsizecommand	
+
+
+        STOP
+        
+        DIALOG.END
+
+        RETURN
+        
+
+
+
+// Sub-routine to create the dialog
+CREATEDIALOG:
+
+    //LOCAL &image &targetprocessor &user_defined_bkpts &lpm_option &cti_enable &multi_elf_option &tracesink &tpiusink &portsize &cycleaccuratecommand &portsizecommand	
+    //ENTRY &image &targetprocessor &user_defined_bkpts &lpm_option &cti_enable &multi_elf_option &tracesink &tpiusink &portsize &cycleaccuratecommand &portsizecommand	
+	
+	// Check if the window exists
+	//WINTOP BUILDOPTIONS
+	//IF FOUND()
+    //   RETURN 
+	WINPOS 0. 0. 60. 30. 
+
+	DIALOG
+	(&
+	    HEADER "Hot Attach Options"
+
+        
+        POS 0. 0. 59. 28.
+        BOX "Hot Attach Options"
+
+        POS 1. 1. 54. 1.
+        TEXT "These options will run without halting processor."
+
+
+
+
+
+        ///////////////////////////////////////////
+        ////////////BREAKPOINT SECTION/////////////
+        ///////////////////////////////////////////   
+        POS 1. 5. 44. 6.
+        BOX "BreakPoint Options"
+        POS 4. 6. 30. 1.
+        TEXT "Breakpoint List. Comma separated, max of two"
+        POS 4. 7. 35. 1.
+        BREAKPOINTEDIT: EDIT "&user_defined_bkpts" "GOSUB SETUSERBREAKPOINTS"
+        POS 27. 8. 12. 1.
+        HELPBUTTON: DEFBUTTON "? - Breakpoints"
+        (
+            DIALOG.OK "The CortexM3 allows two onchip breakpoints, which can be set while the core is running. Setting soft breakpoints requiers halting the core."
+        )
+        
+        ///////////////////////////////////////////
+        ////////////ELF SECTION/////////////
+        ///////////////////////////////////////////      
+        POS 48. 7. 10. 2.
+        ELFBUTTON: DEFBUTTON "Load Elf" "GOSUB LOADELF"
+        
+        
+        ///////////////////////////////////////////
+        ////////////TRACE SECTION//////////////////
+        ///////////////////////////////////////////        
+        POS 1. 11. 44. 7.
+        BOX "Trace Options"
+        POS 2. 12. 18. 1.
+        TRACE.TRACE_DISABLE: CHOOSEBOX "Trace Disabled" "GOSUB TRACE_OPTIONS"
+        TRACE.TRACE_ENABLE_ETB: CHOOSEBOX "ETB Tracing" "GOSUB TRACE_OPTIONS"
+        TRACE.TRACE_ENABLE_TPIU: CHOOSEBOX "TPIU Tracing" "GOSUB TRACE_OPTIONS"
+
+        POS 24. 13. 19. 1.
+        CYCLEACCURATE_CHECKBOX: CHECKBOX "Enable CycleAccurate Tracing" "GOSUB TRACE_SET_CYCLEACCURATE"
+
+        POS 4. 15. 8. 1.
+        TPIU_PORT.TPIU_A: CHOOSEBOX "TPIU A" "GOSUB TPIU_SELECT"
+        POS 13. 15. 8. 1.
+        TPIU_PORT.TPIU_B: CHOOSEBOX "TPIU B" "GOSUB TPIU_SELECT"
+
+        POS 24. 14. 12. 1.
+        TEXT "Trace Pin Width"
+        POS 24. 15. 10. 1.
+        PORTSIZE_DROPDOWN: DYNPULLDOWN "&PORTSIZE_SIZES" "GOSUB SETPORTSIZE"
+        
+        
+        ///////////////////////////////////////////
+        ////////////CTI SECTION////////////////////
+        ///////////////////////////////////////////                
+        POS 1. 18. 20. 5.
+        BOX "Halt other processors"
+        POS 2. 19. 15. 1.
+        CTI.CTI_DISABLE: CHOOSEBOX "CTI_Disable" "GOSUB CTI_OPTIONS"
+        POS 2. 20. 15. 1.
+        CTI.CTI_ENABLE: CHOOSEBOX "CTI_Enable" "GOSUB CTI_OPTIONS"
+        POS 14. 21. 6. 1.
+        HELPBUTTON: DEFBUTTON "? - Halt"
+        (
+            DIALOG.OK "Enabling CTI halt will halt other processors when a breakpoint hits. It will enable standalone debugging, but system may be unrecoverable afterwards."
+        )        
+        
+        
+        POS 15. 25. 25. 2.
+        GOBUTTON: DEFBUTTON "Go" "GOSUB RUN_HOTATTACH_COMMANDS"
+        
+        POS 48. 26. 10. 1.
+        GOBUTTON: DEFBUTTON "End Dialog" "GOSUB ENDDIALOG"
+        	
+        ///////////////////////////////////////////
+        ////////////BIG HALT BUTTON////////////////
+        ///////////////////////////////////////////        
+        //POS 15. 27. 25. 2.
+        //HALTBUTTON: DEFBUTTON "Attach and Halt" "GOSUB WAKEANDHALT"
+        
+	
+	
+	)
+	// Set the default options here
+	
+    //////////////////////////////////////////////////////
+    ////////////////Set Power Defaults////////////////////
+    ///////////////Disabled for now. will be enabled//////
+    ///////////////for future rev/////////////////////////
+//	IF ("&lpm_option"=="lpm_disable")
+//    (
+//        DIALOG.SET LOAD.LPM_DISABLE
+//    )
+//    ELSE
+//    (
+//        DIALOG.SET LOAD.LPM_ENABLE
+//    )
+    
+    
+    
+    //////////////////////////////////////////////////////
+    ////////////////Set Trace Defaults////////////////////
+    //////////////////////////////////////////////////////
+    DIALOG.SET PORTSIZE_DROPDOWN "&portsize"
+    
+    IF ("&tpiusink"=="tpiub")
+    (
+        DIALOG.SET TPIU_PORT.TPIU_B
+    )
+    ELSE
+    (
+        DIALOG.SET TPIU_PORT.TPIU_A
+    )
+    
+    IF ("&tracesink"=="none")
+    (
+        DIALOG.DISABLE TPIU_PORT.TPIU_A
+        DIALOG.DISABLE TPIU_PORT.TPIU_B
+        DIALOG.DISABLE PORTSIZE_DROPDOWN
+        DIALOG.SET TRACE.TRACE_DISABLE
+    )
+    
+    IF ("&cycleaccuratecommand"=="off")
+    (
+        DIALOG.DISABLE CYCLEACCURATE_CHECKBOX
+    )
+    
+    //////////////////////////////////////////////////////
+    ////////////////Set CTI Defaults////////////////////
+    //////////////////////////////////////////////////////
+    IF ("&cti_enable"=="false")
+    (
+        DIALOG.SET CTI.CTI_DISABLE
+    )
+    
+    IF ("&user_defined_bkpts"=="nobreak")
+    (
+        DIALOG.SET BREAKPOINTEDIT "NoBreak"
+    )
+    ELSE
+    (
+        DIALOG.SET BREAKPOINTEDIT "&user_defined_bkpts"
+    )
+
+	RETURN
+
+
+
+CTI_OPTIONS:
+    IF DIALOG.BOOLEAN(CTI.CTI_ENABLE)
+    (
+        &cti_enable="true"
+    )
+    IF DIALOG.BOOLEAN(CTI.CTI_DISABLE)
+    (
+        &cti_enable="false"    
+    )
+    RETURN
+
+        
+
+		
+		
+SETUSERBREAKPOINTS:
+	LOCAL &bkpt1 &bkpt2 &bkpt3 &bkpt4 &bkpt5 &bkpt6 &bkpt7 &bkpt8 &bkpt9 &bkpt10
+    
+    &user_defined_bkpts=DIALOG.STRING(BREAKPOINTEDIT)
+    
+    do listparser &user_defined_bkpts
+    ENTRY &bkpt1 &bkpt2 &bkpt3 &bkpt4 &bkpt5 &bkpt6 &bkpt7 &bkpt8 &bkpt9 &bkpt10
+    
+    
+    LOCAL &bkpts_ok
+    &bkpts_ok="true"
+	
+    IF ("&user_defined_bkpts"!="")
+    (
+        IF STRING.FIND("&user_defined_bkpts"," ")==TRUE()
+        (
+            &bkpts_ok="false"
+        )
+        
+        IF ("&bkpt3"!="") //there shouldn't be a third breakpoint...
+        (
+            &bkpts_ok="false"
+        )  
+        IF ("&bkpts_ok"=="false")
+        (
+            DIALOG.SET BREAKPOINTEDIT "Invalid Breakpoint(s)."
+            DIALOG.DISABLE GOBUTTON        
+        )
+        ELSE
+        (
+            DIALOG.SET BREAKPOINTEDIT "&user_defined_bkpts"
+            DIALOG.ENABLE GOBUTTON
+        )
+    )
+    RETURN
+
+LOADELF:
+	do &symbolloadscript &image locally notliveattach &RPM_BUILDROOT
+	RETURN
+    
+    
+TRACE_OPTIONS:
+	IF DIALOG.BOOLEAN(TRACE.TRACE_DISABLE)
+	(
+        &tracesink="none"
+        DIALOG.DISABLE CYCLEACCURATE_CHECKBOX
+        DIALOG.DISABLE PORTSIZE_DROPDOWN    
+        DIALOG.DISABLE TPIU_PORT.TPIU_A
+        DIALOG.DISABLE TPIU_PORT.TPIU_B
+	)
+	IF DIALOG.BOOLEAN(TRACE.TRACE_ENABLE_ETB)
+	(
+        &tracesink="etb"
+        DIALOG.ENABLE CYCLEACCURATE_CHECKBOX
+        DIALOG.ENABLE CYCLEACCURATE_CHECKBOX
+        DIALOG.DISABLE TPIU_PORT.TPIU_A
+        DIALOG.DISABLE TPIU_PORT.TPIU_B
+    
+	)
+	IF DIALOG.BOOLEAN(TRACE.TRACE_ENABLE_TPIU)
+	(
+        &tracesink="tpiu"
+        DIALOG.ENABLE CYCLEACCURATE_CHECKBOX
+        DIALOG.ENABLE PORTSIZE_DROPDOWN    
+        DIALOG.ENABLE TPIU_PORT.TPIU_A
+        DIALOG.ENABLE TPIU_PORT.TPIU_B
+        
+	)
+    RETURN
+
+TPIU_SELECT:
+    IF DIALOG.BOOLEAN(TPIU_PORT.TPIU_A)
+    (
+        &tpiusink="tpiua"
+    )
+    IF DIALOG.BOOLEAN(TPIU_PORT.TPIU_B)
+    (
+        &tpiusink="tpiub"    
+    )
+    RETURN
+
+SETPORTSIZE:
+        &portsize=DIALOG.STRING(PORTSIZE_DROPDOWN)
+        
+        RETURN
+        
+TRACE_SET_CYCLEACCURATE:
+    
+    IF DIALOG.BOOLEAN(CYCLEACCURATE_CHECKBOX)
+    (
+        &cycleaccuratecommand="on"
+    )
+    ELSE
+    (
+        &cycleaccuratecommand="off"
+    )
+
+    RETURN
+//kept for future revisions which will have power options
+POWEROPTIONS:
+
+
+    IF DIALOG.BOOLEAN(LOAD.LPM_ENABLE)
+    (
+        &lpm_option="lpm_enable"
+    )
+    IF DIALOG.BOOLEAN(LOAD.LPM_DISABLE)
+    (
+        &lpm_option="lpm_disable"    
+    )
+    
+    RETURN
+
+    
+//macro to verify no spaces given with breakpoints
+VERIFYBREAKPOINTS:
+
+	&user_defined_bkpts=DIALOG.STRING(BREAKPOINTEDIT)
+    IF STRING.FIND("&user_defined_bkpts"," ")==TRUE()
+    (
+        DIALOG.SET BREAKPOINTEDIT "Invalid Breakpoint list. Please remove spaces"
+        DIALOG.DISABLE GOBUTTON
+        &user_defined_bkpts=""
+    )
+    ELSE
+    (
+        
+        DIALOG.SET BREAKPOINTEDIT "&user_defined_bkpts"
+        DIALOG.ENABLE GOBUTTON
+    )
+
+	RETURN
+
+
+RUN_HOTATTACH_COMMANDS:
+    
+		GOSUB MAKE_SURE_BOOT_PROCESSOR_ATTACHED
+		
+
+
+        print "Setting Trace options"
+        if (("&tracesink"=="etb")||("&tracesink"=="tpiu"))
+        (
+            if ("&tracesink"=="etb")
+            (
+                do std_trace_rpm_&CHIPSET STARTTRACING None &image &tracesink &cycleaccuratecommand hotattach &portsizecommand
+            )
+            else if ("&tracesink"=="tpiu")
+            (
+				do std_trace SETUPGPIOS None &tpiusink
+				
+                do std_trace_rpm_&CHIPSET STARTTRACING None &image &tpiusink &cycleaccuratecommand hotattach &portsizecommand
+            )
+            else
+            (
+                PRINT %error "Error: Unknown trace configuration specified: tracesink: &tracesink, TPIU Sink: &tpiusink"
+                GOTO EXIT
+            )
+        )
+        
+
+        
+        print "Setting CTI options"
+        IF ("&cti_enable"=="true")
+        (
+            do std_intercom_do &bootprocessorport std_cti masters=&targetprocessor slaves=allcores
+        )
+        
+     
+        print "Setting Breakpoints"
+        BREAK.DISABLE /all
+
+		LOCAL &bkpt1 &bkpt2
+		do listparser &user_defined_bkpts
+		ENTRY &bkpt1 &bkpt2
+		
+        do std_utils SETBREAKPOINTS Onchip &bkpt1
+		do std_utils SETBREAKPOINTS Onchip &bkpt2
+
+     
+ 
+        RETURN
+        
+ENDDIALOG:
+    DIALOG.END
+
+        GOTO EXIT
+		
+
+////////////////////////////////////////
+//
+//			MAKE_SURE_BOOT_PROCESSOR_ATTACHED
+//			
+//			Makes sure boot processor is attached
+//          Otherwise attaching on subsystem processor not possible
+//
+///////////////////////////////////////// 
+MAKE_SURE_BOOT_PROCESSOR_ATTACHED:
+
+
+
+    LOCAL &Rvalue
+    do std_intercom_init CHECKSESSION 1 &bootprocessor
+        ENTRY &Rvalue
+    IF (&Rvalue!=1.)
+    (
+        PRINT %ERROR "&bootprocessor T32 window not open. Please open and try again"
+        GOTO FATALEXIT
+    )
+	
+	
+	//Run HWIO if needed
+	LOCAL &hwio_ran
+	INTERCOM.EVALUATE &bootprocessorport Y.EXIST(HWIO_LPASS_QDSP6SS_CGC_OVERRIDE_ADDR)
+		&hwio_ran=EVAL()
+	IF (&hwio_ran==0x0)
+	(
+		//FIXME - T32 doesn't like doing this long script
+		IF ("&bootprocessor"=="RPM")
+		(
+			do hwio
+		)
+		ELSE
+		(
+			INTERCOM.EXECUTE &bootprocessorport do hwio
+			INTERCOM.WAIT &bootprocessorport
+		)
+		
+	)
+    
+    //if boot processor t32 not attached, attach.
+    INTERCOM.EVALUATE &bootprocessorport SYSTEM.MODE()
+        &BOOT_PROCESSOR_STATE=EVAL()
+    IF ("&BOOT_PROCESSOR_STATE"!="0x0B")
+    (
+        INTERCOM.EXECUTE &bootprocessorport sys.m.a
+    )
+    INTERCOM.EVALUATE &bootprocessorport SYSTEM.MODE()
+        &BOOT_PROCESSOR_STATE=EVAL()
+    IF ("&BOOT_PROCESSOR_STATE"!="0x0B")
+    (
+            winclear
+            WINPOS 0. 0. 60. 15. 0. 0. 
+            area.reset
+            area
+            PRINT %ERROR " std_cti_&image - &bootprocessor not able to attach"
+            PRINT %ERROR " Please ensure the following:"    
+            PRINT %ERROR "     JTAG is physically attached"
+            PRINT %ERROR "     T32 installation is up to date."
+            PRINT %ERROR "     Device is booted."
+            PRINT %ERROR " "
+            
+            ENDDO &FAILURE
+    )
+    
+    RETURN		
+		
+EXIT:
+	ENDDO
+
+FATALEXIT:
+	END
+
+
+		

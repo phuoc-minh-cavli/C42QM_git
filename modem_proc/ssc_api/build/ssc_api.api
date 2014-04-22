@@ -1,0 +1,30 @@
+#===============================================================================
+#
+# Sensors (SSC) AU
+#
+# GENERAL DESCRIPTION
+#    SSC API
+#
+#
+# Copyright (c) 2019-2020 by Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+
+Import('env')
+import json
+
+public_api = [
+  "${BUILD_ROOT}/ssc_api/build/ssc_sim_img/${PROC}/${SHORT_BUILDPATH}/pb",
+  "${BUILD_ROOT}/ssc_api/build/ssc_slpi_user/${PROC}/${SHORT_BUILDPATH}/pb",
+  "${BUILD_ROOT}/ssc_api/build/sensor_img/${PROC}/${SHORT_BUILDPATH}/pb",  
+  "${BUILD_ROOT}/ssc_api/build/sensor_img/${MSM_ID}/pb",  
+  "${BUILD_ROOT}/ssc_api/build/mapss_b/${PROC}/${SHORT_BUILDPATH}/pb",
+  "${BUILD_ROOT}/ssc_api/build/modem_root_libs/${PROC}/${SHORT_BUILDPATH}/pb",
+  "${BUILD_ROOT}/ssc_api/build/sensoronly/${PROC}/${SHORT_BUILDPATH}/pb",
+  "${BUILD_ROOT}/ssc_api/nanopb/inc",
+]
+
+env.PublishPublicApi('SNS_API_INCLUDES', public_api)
+env.LoadAPIUnits()

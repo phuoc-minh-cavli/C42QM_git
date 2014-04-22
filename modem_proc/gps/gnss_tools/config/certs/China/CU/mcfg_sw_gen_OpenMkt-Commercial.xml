@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="certs.0.0" type="1"/>
+<NvEfsFile name="GoogleSuplCertificateGeo.cer" id="none" description="" comment="" category="Unknown" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" targetPath="/SUPL/GoogleSuplCertificateGeo.cer" buildPath="modem_proc/gps/gnss_tools/config/efs_files/GoogleSuplCertificateGeo.cer"/>
+</NvData>

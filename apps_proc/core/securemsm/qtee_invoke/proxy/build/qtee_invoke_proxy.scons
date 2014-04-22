@@ -1,0 +1,78 @@
+#===============================================================================
+#                    Copyright 2011 Qualcomm Technologies Incorporated.
+#                           All Rights Reserved.
+#                         QUALCOMM Proprietary/GTDR
+#===============================================================================
+Import('env')
+
+# Common
+SRCPATH = "${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy"
+
+CBSP_API = [
+    'DEBUGTOOLS',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'PRODUCTS_DSR',
+    'PRODUCTS_SCM',
+    'MMUTILS',
+
+    # Used for QTEE Invoke
+    'QTEE_INVOKE_QAPI',
+    'MINK',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+]
+
+RESTRICTED_API = [
+    'QSEECOM_DRIVER_API',
+    'QTEE_INVOKE_DRIVER_API',
+]
+
+SOURCES = [
+    '${BUILDPATH}/src/QTEEInvoke.c',
+]
+
+IMAGES = [
+    'MODEM_IMAGE',
+    'CBSP_MODEM_IMAGE',
+    'APPS_IMAGE',
+    'CBSP_APPS_IMAGE',
+    'SINGLE_IMAGE',
+    'CBSP_SINGLE_IMAGE',
+    'QDSP6_SW_IMAGE',
+    'CBSP_QDSP6_SW_IMAGE',
+    'APPS_PROC',
+]
+
+
+# Build
+env = env.Clone()
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(RESTRICTED_API)
+
+if 'USES_ARM' in env:
+    env.Append(CFLAGS="--gnu --c99")
+    USER_IMAGES = [
+        'CORE_TXM_LIBS',
+    ]
+
+    env.AddBinaryLibrary(IMAGES, '${BUILDPATH}/qtee_invoke_proxy_kernel', SOURCES)
+    env.AddBinaryLibrary(
+            USER_IMAGES,
+            '${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy/build/qtee_invoke_proxy_user',
+            SOURCES)
+else:
+  USER_IMAGES = ['TXM_MODULES_LLVM']
+  env.AddBinaryLibrary(
+      USER_IMAGES,
+      '${BUILD_ROOT}/core/securemsm/qtee_invoke/proxy/build/LLVM/qtee_invoke_proxy_user',
+      SOURCES)
+
+# Continue
+env.LoadSoftwareUnits()

@@ -1,0 +1,36 @@
+#/** @file SleepLib.inf
+#  
+#  Build file for the SleepLib Library.
+#  
+#  Copyright (c) 2018, Qualcomm Technologies, Inc. All rights reserved.
+#
+#**/
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SleepLib
+  FILE_GUID                      = 5347cf9c-7759-48ca-9743-51e8d67b7ecd
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = SleepLib
+
+[BuildOptions]
+  RVCT:*_*_*_CC_FLAGS = -DUSE_LOADER_UTILS
+  GCC:*_*_*_CC_FLAGS = -DUSE_LOADER_UTILS
+  MSFT:*_*_*_CC_FLAGS = -DUSE_LOADER_UTILS
+  
+[Sources.common]
+  sleep.c
+
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  QcomPkg/QcomPkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
+  QcomPkg/XBLLoaderApi.dec
+
+[LibraryClasses]
+  ProcLib
+  BaseLib
+  MuslLib

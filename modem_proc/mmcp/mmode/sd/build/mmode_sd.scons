@@ -1,0 +1,164 @@
+#===============================================================================
+#
+# Multimode SD SCons 
+#
+# GENERAL DESCRIPTION
+#    SCons build script
+#
+# Copyright (c) 2011 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/mmcp.mpss/6.1.10/mmode/sd/build/mmode_sd.scons#1 $
+#  $DateTime: 2023/04/25 14:39:18 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#06/05/12   ns      Added ECALL in Restricted APIs
+#03/13/12   ds      Added WCDMA and AUDIO APIs
+#09/29/11   gm      RC init changes
+#09/15/10   pm      Initial file
+#
+#===============================================================================
+# from glob import glob
+# from os.path import join, basename
+
+Import('env')
+env = env.Clone()
+
+if 'USES_WPLT' in env:
+   Return()
+
+# --------------------------------------------------------------------------- #
+# Turn off/on debug if requested 			      
+# --------------------------------------------------------------------------- # 
+if ARGUMENTS.get('DEBUG_OFF','no') == 'yes':
+    env.Replace(ARM_DBG = "")
+    env.Replace(HEXAGON_DBG = "")
+    env.Replace(GCC_DBG = "")
+
+if ARGUMENTS.get('DEBUG_ON','no') == 'yes':
+    env.Replace(ARM_DBG = "-g --dwarf2") 
+    env.Replace(HEXAGON_DBG = "-g")  
+    env.Replace(GCC_DBG = "-g")
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = '../src'
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Set MSG_BT_SSID_DFLT for legacy MSG macros
+#-------------------------------------------------------------------------------
+env.Append(CPPDEFINES = [
+    'MSG_BT_SSID_DFLT=MSG_SSID_SD',
+])
+
+#-------------------------------------------------------------------------------
+# Publish our Private API
+#-------------------------------------------------------------------------------
+env.PublishPrivateApi('MMODE', ["${INC_ROOT}/mmcp/mmode/sd/inc"])
+
+#-------------------------------------------------------------------------------
+# Necessary Public API's
+#-------------------------------------------------------------------------------
+REQUIRED_PUBLIC_APIS = [
+    'GERAN',
+    'MCS',
+    'MMODE',
+    'NAS',
+    'ONEX',
+    'PBM',
+    'RFA',
+    'UIM',
+	  'WCDMA',
+    'MCFG',
+    ]
+
+REQUIRED_RESTRICTED_APIS = [
+    'GERAN',
+    'FW',
+    'LTE',
+    'MCS',
+    'MDSP',
+    'MMODE',
+    'NAS',
+    'ONEX',
+    'RFA',
+    'UIM',
+    'UTILS',
+    'WCDMA',
+	  'ECALL',
+    ]
+
+CORE_APIS = [
+    'BUSES',
+    'DAL',
+    'DEBUGTOOLS',
+    'MPROC',
+    'SERVICES',
+    'STORAGE',
+    'SYSTEMDRIVERS',
+
+    # needs to be last also contains wrong comdef.h
+    'KERNEL',
+    ]
+	
+MULTIMEDIA_APIS = [
+    'MVS',
+    ]
+	
+env.RequirePublicApi(CORE_APIS, area='core')
+env.RequirePublicApi(REQUIRED_PUBLIC_APIS) 
+env.RequireRestrictedApi(REQUIRED_RESTRICTED_APIS)
+
+env.RequirePublicApi(['AUDIO'], area='MULTIMEDIA') 
+env.RequirePublicApi(MULTIMEDIA_APIS, area='MULTIMEDIA')
+
+#-------------------------------------------------------------------------------
+# External API's not built with SCons
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+    'BREW',
+])
+									 
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+# Construct the list of source files by looking for *.c
+#SD_C_SOURCES = ['${BUILDPATH}/' + basename(fname)
+#                 for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+
+SD_C_SOURCES = [
+	'${BUILDPATH}/prl.c',
+	'${BUILDPATH}/prldiag.c',
+	'${BUILDPATH}/puzl.c',
+	'${BUILDPATH}/sd.c',
+	'${BUILDPATH}/sdnv.c',
+	'${BUILDPATH}/sdsr.c',
+	'${BUILDPATH}/sdss.c',
+	'${BUILDPATH}/sdssscr.c',
+	'${BUILDPATH}/sdprl.c',
+	'${BUILDPATH}/sdefs.c',
+	'${BUILDPATH}/sdmmss.c',
+	'${BUILDPATH}/sdtask.c',
+	'${BUILDPATH}/sdcmd.c',
+]
+
+# Add our library to the ModemApps image
+env.AddLibrary( ['MODEM_MODEM'], '${BUILDPATH}/mmode_sd', [SD_C_SOURCES] )
+
+
+# Build image for which this task belongs
+#RCINIT_SD = ['MODEM_MODEM']
+

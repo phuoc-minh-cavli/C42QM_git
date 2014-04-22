@@ -1,0 +1,36 @@
+#=================================================================
+# UTILS SConscript
+#=================================================================
+Import('env')
+
+env = env.Clone()
+
+UTILSSRCPATH = ".."
+env.VariantDir('${BUILDPATH}', UTILSSRCPATH, duplicate=0)
+
+env.PublishPrivateApi('UTILS', [
+    "${AVS_ROOT}/vsd/utils/inc/private",
+])
+
+if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:
+  print 'Compiling stubs for VS Utils as USES_FEATURE_VS_MEMORY_OPTIMISED flag is defined'
+  UTILS_SOURCES = [   
+    '${BUILDPATH}/stubs/voice_diag.c',
+    ]
+else:
+  UTILS_SOURCES = [   
+    '${BUILDPATH}/src/voice_utility.c',
+    '${BUILDPATH}/src/voice_amr.c',
+    '${BUILDPATH}/src/voice_dsm.c',
+    '${BUILDPATH}/src/amrsup.c',
+    '${BUILDPATH}/src/voice_diag.c',
+    ]
+
+if 'AVS_MPSS_TEST' in env:
+  IMAGES = ['AVS_ADSP','AVS_ADSP_USER']
+else:
+  IMAGES = ['MULTIMEDIA_MODEM', 'MULTIMEDIA_QDSP6_SW']
+
+env.AddLibrary(IMAGES, ('${BUILDPATH}/utils/utils'), UTILS_SOURCES)
+env.LoadSoftwareUnits()
+#end else of if 'USES_FEATURE_VS_MEMORY_OPTIMISED' in env:

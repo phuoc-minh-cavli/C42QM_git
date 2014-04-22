@@ -1,0 +1,14 @@
+if( $(mcs_dsm_config) )
+{
+  // Build this component as a lib
+  #include <lib.qbd>
+
+  // HACK: This check should be removed when mcs_config=fw is enabled
+  if( !$(fw_config) )
+  {
+    if( $(TestsIncluded) == True )
+    {
+      #include <add_tests.qbd>
+    }
+  }
+}

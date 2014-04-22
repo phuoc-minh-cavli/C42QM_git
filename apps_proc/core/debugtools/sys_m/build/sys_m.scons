@@ -1,0 +1,253 @@
+#===============================================================================
+#
+# System Monitor Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-15 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/debugtools/sys_m/main/latest/default/build/sys_m.scons#1 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 05/06/09   wd      Create
+#
+#===============================================================================
+Import('env')
+
+# Required Namespaces
+import os
+import fnmatch
+
+# TMS SU ROOT
+TMS_SU_ROOT = "/core/debugtools/"
+
+# OPTIONAL FILES (CHANGES DELIVERED BY OWNER OF IMAGE_ROOT)
+SYS_M_XML_CONFIG_FILE = 'sys_m_dalcfg.xml'
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/sys_m/src"
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# Build Variant configurations
+#-------------------------------------------------------------------------------
+if 'USES_RMTS_ON_SPI_NOR' in env:
+   env.Append(CPPDEFINES = ["SYSM_SPI_NOR_TIMEOUTS"])
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'COMMON',
+   'CS',
+   'DSM',
+   'MODEM_API',
+   'MODEM_1X',
+   'MODEM_DATA',
+   'MODEM_HDR',
+   'MODEM_MDSP',
+   'MODEM_NAS',
+   'MODEM_PMIC',
+   'MODEM_RF',
+   'MODEM_SERVICES',
+   'MODEM_WCDMA',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'BUSES',
+   'DAL',
+   'DEBUGTOOLS',
+   'HWENGINES',
+   'HAL',
+   'MEMORY',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+
+   # needs to be last also contains wrong comdef.h   
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+env.RequireProtectedApi(['TMS_INTERNAL'])
+env.RequirePublicApi(['SSREQ','SSCTL'], area='API')
+
+env.Append(CPPDEFINES = ["SYSM_CHIP_ID=1"])
+
+env.RequirePublicApi([
+  'COMMON',
+  ], area='API')
+
+env.RequirePublicApi([
+  'MPROC',
+  ], area='CORE')
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+DEVCFG_IMG = [ 'DAL_DEVCFG_IMG' ]
+
+#Target independent system monitor sources
+SYS_M_SOURCES = ['${BUILDPATH}/sys_m_common.c',]
+SYS_M_SOURCES += ['${BUILDPATH}/qmi_ssctl_v02_client.c',]
+SYS_M_SOURCES += ['${BUILDPATH}/qmi_ssctl_ser_v02.c',]
+SYS_M_SOURCES += ['${BUILDPATH}/sys_m_qmi.c',]
+
+#Target dependent system monitor sources
+#Note: Currently transitioning from target based sources to image based sources 
+
+
+platform = 'default'
+if env['HAL_PLATFORM'] in ['9x25']:
+    platform = '9x25'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+    
+elif env['HAL_PLATFORM'] in ['9x45']:
+    platform = '9x45'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+
+elif env['HAL_PLATFORM'] in ['9x55']:
+    platform = '9x55'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+elif env['HAL_PLATFORM'] in ['9x06']:
+    platform = '9x06'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+elif env['HAL_PLATFORM'] in ['9205']:
+    platform = '9205'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+elif env['HAL_PLATFORM'] in ['9x65']:
+    platform = '9x65'
+    if env.IsTargetEnable(['CORE_APPS']):
+        platform += '/apps'
+        SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_nzi.c']
+
+SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m.c']
+SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_smp2p.c']
+SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/sys_m_diag.c']
+SYS_M_SOURCES += ['${BUILDPATH}/lib/' + platform + '/HAL_sys_m.c']
+
+
+#-------------------------------------------------------------------------------
+# Clean pack files
+#-------------------------------------------------------------------------------
+
+# Clean pack files for 9x55
+sys_m_9x55_source_path = '9x55'
+sys_m_9x55_apps_source_path = '9x55/apps'
+
+SYS_M_9x55_SOURCES = [
+  '${BUILDPATH}/lib/' + sys_m_9x55_source_path + '/sys_m.c',
+  '${BUILDPATH}/lib/' + sys_m_9x55_source_path + '/sys_m_nzi.c',
+  '${BUILDPATH}/lib/' + sys_m_9x55_apps_source_path + '/sys_m_dalcfg.xml',
+  '${BUILDPATH}/lib/' + sys_m_9x55_apps_source_path + '/sys_m.c',
+  '${BUILDPATH}/lib/' + sys_m_9x55_apps_source_path + '/sys_m_nzi.c',
+  '${BUILDPATH}/lib/' + sys_m_9x55_apps_source_path + '/sys_m_dalcfg.xml',
+  '${BUILDPATH}/lib/' + sys_m_9x55_apps_source_path + '/sys_m_diag.c',
+]
+
+if not env['HAL_PLATFORM'] in ['9x55' ,'9x06','9205']:
+    env.CleanPack(
+       ['CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CORE_QDSP6_SW',
+       'CORE_APPS', 'APPS_IMAGE', 'CBSP_APPS_IMAGE'], 
+       SYS_M_9x55_SOURCES)
+
+#rcinit
+if 'USES_RCINIT' in env:
+        RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'CORE_GSS', 'CORE_WCN', 'CORE_APPS']
+        env.AddRCInitTask(          
+            RCINIT_IMG,                 
+            {
+                'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+                'thread_name'                : 'sys_m',                             # required
+                'thread_type'                : 'RCINIT_TASK_QURTTASK',            # required
+                'stack_size_bytes'           : '4096',
+                'priority_amss_order'        : 'SYS_M_PRI_ORDER'
+            }
+        )
+        env.AddRCInitTask(
+            RCINIT_IMG,
+            {
+                'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+                'thread_name'                : 'sys_m_smp2p',                             # required
+                'thread_type'                : 'RCINIT_TASK_QURTTASK',                             # required
+                'stack_size_bytes'           : '4096',
+                'priority_amss_order'        : 'SYS_M_PRI_ORDER'
+            }
+        ) 
+        env.AddRCInitTask(          
+            RCINIT_IMG,                 
+            {
+                'sequence_group'             : 'RCINIT_GROUP_0',                  # required
+                'thread_name'                : 'sys_m_qmi',                             # required
+                'thread_type'                : 'RCINIT_TASK_QURTTASK',                             # required
+                'stack_size_bytes'           : '4096',
+                'priority_amss_order'        : 'SYS_M_PRI_ORDER'
+            }
+        )     
+        env.AddRCInitFunc(
+            RCINIT_IMG,
+            {
+                'sequence_group'            : 'RCINIT_GROUP_1',
+                'init_name'                 : 'sys_m_init',
+                'init_function'             : 'sys_m_init'
+            }
+        )
+    
+        env.AddRCInitFunc(
+            RCINIT_IMG,
+            {
+                'sequence_group'            : 'RCINIT_GROUP_0',
+                'init_name'                 : 'sys_m_gpio_init',
+                'init_function'             : 'sys_m_gpio_init',
+                'dependencies'              : ['dalsys', 'GPIOInt']
+            }
+        )
+    
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+env.AddLibrary(['CORE_QDSP6_SW', 'CORE_MODEM', 'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 'CBSP_SINGLE_IMAGE', 'CORE_APPS', 'CORE_SINGLE', 'CORE_SPS', 'CORE_GSS', 'CORE_WCN'], 
+	'${BUILDPATH}/sys_m', SYS_M_SOURCES)
+
+#-------------------------------------------------------------------------------
+# DALCFG Image "Static" Configuration Items
+#-------------------------------------------------------------------------------
+
+if 'USES_DEVCFG' in env:
+   env.AddDevCfgInfo(['DAL_DEVCFG_IMG'],
+   {
+      'devcfg_xml' : '${BUILD_ROOT}/core/debugtools/sys_m/src/lib/9x55/apps/sys_m_dalcfg.xml',
+   })
+

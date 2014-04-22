@@ -1,0 +1,75 @@
+#===========================================================================
+#  Copyright (c) 2018 QUALCOMM Technologies Incorporated.
+#  All Rights Reserved.
+#  Qualcomm Confidential and Proprietary
+#===========================================================================
+#
+# App Core
+#
+# GENERAL DESCRIPTION
+#    build script
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains schedulerents describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+
+#===============================================================================
+import os
+
+Import('env')
+env = env.Clone()
+
+aliases = ['smplHyp2TAServ', 'uefitzt', 'deploy','allapps']
+env.Replace(OUT_DIR = '${BUILD_ROOT}/ssg/bsp/trustzone/qsapps/smplHyp2TAServ/build')
+
+
+if not env.CheckAlias(aliases):
+ Return()
+
+#-------------------------------------------------------------------------------
+# Compiler, object, and linker definitions
+#-------------------------------------------------------------------------------
+includes = [
+]
+
+#------------------------------------------------------------------------------
+# We need to specify "neon" to generate SIMD instructions in 32-bit mode
+#------------------------------------------------------------------------------
+if env['PROC'] == 'scorpion':
+  env.Append(CCFLAGS = " -mfpu=neon ")
+
+#----------------------------------------------------------------------------
+# App core Objects
+#----------------------------------------------------------------------------
+sources = [
+  'app_main.c',
+  'COEMHypToTAService.c',
+]
+
+#-------------------------------------------------------------------------------
+# Add metadata to image
+#-------------------------------------------------------------------------------
+md = {
+   'appName':           'smplHyp2TAServ',
+   'privileges':        ['default',],
+   'services':          ['OEMHypToTAService'],
+   'acceptBufSize':     4096,
+   #'memoryType':       'Unprotected',
+}
+
+deploy_header_files = env.Glob('*.h')
+
+smplHyp2TAServ_units = env.SecureAppBuilder(
+  sources = sources,
+  includes = includes,
+  metadata = md,
+  image = 'smplHyp2TAServ',
+  deploy_sources = [sources , 'SConscript', deploy_header_files],
+  deploy_variants = env.GetDefaultPublicVariants()
+)
+
+env.Alias(aliases, smplHyp2TAServ_units)
+

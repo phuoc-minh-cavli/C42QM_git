@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+<NvConfigurationData carrierIndex="0" version="uim.0.0" type="1"/>
+<NvEfsItemData name="refresh_retry" id="65781" description="Refresh Retry Feature State" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" fullpathname="/nv/item_files/modem/uim/mmgsdi/refresh_retry">
+		<Member name="flags" description="Refresh Retry Feature State" comment="" sizeOf="1" type="uint32">1 </Member>
+		<Member name="retry_timer" description="Refresh retry timer" comment="" sizeOf="1" type="uint32">90000 </Member>
+		<Member name="max_queue_size" description="Refresh retry max queue size" comment="" sizeOf="1" type="uint32">4 </Member>
+		<Member name="retry_limit" description="Refresh retry max retry" comment="" sizeOf="1" type="uint32">1500 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="ens_sub_features_status_list" id="71568" description="To Enable/Disable ENS Sub Features" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="2" fullpathname="/nv/item_files/modem/uim/mmgsdi/ens_sub_features_status_list">
+		<Member name="scan_control_application_support" description="To Enable/Disable ENS Sub Features" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="nw_selection_menu_control_application_support" description="Nw Selection Menu Control Application Support" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="acting_hplmn_rescan_feature_support" description="Acting HPLMN Rescan Feature Support" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="rat_balancing_support" description="RAT Balancing Support" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="ReservedBytes" description="Bytes reserved for future versions" comment="" sizeOf="1" type="uint64">0 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="ens_slot_enabled" id="73534" description="Status of ENS feature per slot" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" fullpathname="/nv/item_files/modem/uim/mmgsdi/ens_slot_enabled">
+		<Member name="ens_slot_enabled" description="Status of ENS feature per slot" comment="" sizeOf="1" type="uint8">1 </Member>
+	</NvEfsItemData>
+	<NvEfsItemData name="nv_pdown_uim_consecutive_techproblems" id="70358" description="Power down control in case of technical problemcount" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" fullpathname="/nv/item_files/modem/uim/uimdrv/nv_pdown_uim_consecutive_techproblems">
+		<Member name="pdown_on_consecutive_techprob" description="To decide power down on consecutive techical problems" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="cnt_of_consecutive_techprob" description="Power down control in case of technical problemcount" comment="" sizeOf="1" type="uint8">3 </Member>
+	</NvEfsItemData>
+	<NvEfsFile name="slot_features_status_list" id="73764" description="To pick first gsma entry match in SE13 table lookup if there are more than one GSMA entries with same MCC-MNC" comment="" category="UIM" subscription_mask="0x07" mcfgAttributes="0x19" mcfgVariant="4" targetPath="/nv/item_files/modem/uim/mmgsdi/slot_features_status_list" buildPath="modem_proc/uim/config/efs_files/att/slot_features_status_list"/>
+	</NvData>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<msmjtagids:MsmJtagIds version="1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:msmjtagids="uri:MsmJtagIds" xsi:schemaLocation="
+uri:MsmJtagIds ../schema/msm_jtag_id.xsd
+">
+
+     <msmjtagids:jtag_id_list id="9635">
+                                <msmjtagids:jtag_id name="9635">0x009210E1</msmjtagids:jtag_id>
+                </msmjtagids:jtag_id_list>
+                <msmjtagids:jtag_id_list id="9x35">
+                                <msmjtagids:jtag_id_existsing_list idref="9635"/>
+                </msmjtagids:jtag_id_list>
+                <msmjtagids:jtag_id_list id="9645">
+                                <msmjtagids:jtag_id name="9645">0x009210E1</msmjtagids:jtag_id>
+                </msmjtagids:jtag_id_list>    
+                <msmjtagids:jtag_id_list id="9x45">
+                                <msmjtagids:jtag_id_existsing_list idref="9645"/>
+                </msmjtagids:jtag_id_list>  
+</msmjtagids:MsmJtagIds>
+

@@ -1,0 +1,80 @@
+<!--
+==============================================================================
+
+  @file msmhwioplat_memsection.xml
+  @brief Auto-generated L4 HWIO memsection XML file.
+
+  ============================================================================
+
+  Copyright (c) 2019 Qualcomm Technologies Incorporated.
+  All Rights Reserved.
+  Qualcomm Confidential and Proprietary
+
+  Export of this technology or software is regulated by the U.S. Government.
+  Diversion contrary to U.S. law prohibited.
+
+  All ideas, data and information contained in or disclosed by
+  this document are confidential and proprietary information of
+  Qualcomm Technologies Incorporated and all rights therein are expressly reserved.
+  By accepting this material the recipient agrees that this material
+  and the information contained therein are held in confidence and in
+  trust and will not be used, copied, reproduced in whole or in part,
+  nor its contents revealed in any manner to others without the express
+  written permission of Qualcomm Technologies Incorporated.
+  ============================================================================
+
+  $Header: $
+  $DateTime: $
+  $Author: $
+
+==============================================================================
+-->
+
+  <memsection name="AMSS_PCNOC_0_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00023000" size="0x1000" phys_addr="0x00023000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_1_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00024000" size="0x1000" phys_addr="0x00024000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_2_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00025000" size="0x1000" phys_addr="0x00025000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_3_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00026000" size="0x1000" phys_addr="0x00026000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_5_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00028000" size="0x1000" phys_addr="0x00028000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_6_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00029000" size="0x1000" phys_addr="0x00029000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_7_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0002a000" size="0x1000" phys_addr="0x0002a000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_XPU_CFG_PCNOC_CFG_MPU1132_4_M19L12_AHB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0002e000" size="0x1000" phys_addr="0x0002e000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_BIMC_MPU_MPU1132_32_M31L10_AHB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00031000" size="0x2000" phys_addr="0x00031000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_XPU_CFG_RPM_CFG_MPU1132_2_M21L12_AHB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00033000" size="0x1000" phys_addr="0x00033000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_RBCPR_WRAPPER_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00048000" size="0x1000" phys_addr="0x00048000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_OCIMEM_WRAPPER_CSR_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00050000" size="0x4000" phys_addr="0x00050000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_RPM_SS_MSG_RAM_START_ADDRESS_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00060000" size="0x3000" phys_addr="0x00060000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_USB2_PHY_CM_DWC_USB2_SW_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0006c000" size="0x1000" phys_addr="0x0006c000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_MPU_BOOT_IMEM_CFG_MPU1132A_4_M31L12_AHB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00088000" size="0x1000" phys_addr="0x00088000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_MPU_MSS_NAV_CE_CFG_MPU1132A_10_M31L12_AXI_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0008a000" size="0x1000" phys_addr="0x0008a000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_MSS_NAV_CE_CFG_VMIDMT_SMR_4_SSD3_SID3_MA8_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0008c000" size="0x1000" phys_addr="0x0008c000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_MPU_MSS_Q6_CFG_MPU1132A_20_M31L12_AXI_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0008e000" size="0x1000" phys_addr="0x0008e000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_MSS_Q6_CFG_VMIDMT_SMR_4_SSD3_SID3_MA8_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00090000" size="0x1000" phys_addr="0x00090000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_SNOC_MPU_MPU1132_32_M31L10_AHB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00092000" size="0x2000" phys_addr="0x00092000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_PCNOC_SNOC_1_CFG_VMIDMT_SMR_128_SSD7_SID7_MA128_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00094000" size="0x1000" phys_addr="0x00094000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_PCNOC_SNOC_2_CFG_VMIDMT_SMR_128_SSD7_SID7_MA128_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00096000" size="0x1000" phys_addr="0x00096000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_PCNOC_SNOC_3_CFG_VMIDMT_SMR_128_SSD7_SID7_MA128_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00098000" size="0x1000" phys_addr="0x00098000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_VMIDMT_PCNOC_SNOC_4_CFG_VMIDMT_SMR_128_SSD7_SID7_MA128_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0009a000" size="0x1000" phys_addr="0x0009a000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_SECURITY_CONTROL_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x000a0000" size="0x10000" phys_addr="0x000a0000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_QC_DCC_TWIZY_2KB2LL_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x000b0000" size="0x10000" phys_addr="0x000b0000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PDM_PERPH_WEB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x000c0000" size="0x14000" phys_addr="0x000c0000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PRNG_PRNG_TOP_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x000e0000" size="0x10000" phys_addr="0x000e0000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_RPM_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00200000" size="0x100000" phys_addr="0x00200000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_BIMC_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00400000" size="0x80000" phys_addr="0x00400000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_MPM2_MPM_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x004a0000" size="0x10000" phys_addr="0x004a0000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PC_NOC_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00500000" size="0x18000" phys_addr="0x00500000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_CRYPTO0_CRYPTO_TOP_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x00700000" size="0x40000" phys_addr="0x00700000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_TLMM_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x01000000" size="0x400000" phys_addr="0x01000000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_CLK_CTL_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x01800000" size="0x100000" phys_addr="0x01800000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_CORE_TOP_CSR_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x01900000" size="0x100000" phys_addr="0x01900000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_USB20S_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x01a00000" size="0x200000" phys_addr="0x01a00000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PMIC_ARB_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x02000000" size="0x1c00000" phys_addr="0x02000000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_MSS_TOP_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x04000000" size="0x800000" phys_addr="0x04000000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_QDSS_SOC_DBG_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x06000000" size="0x1000000" phys_addr="0x06000000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_ULTAUDIO_CORE_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x07700000" size="0x20000" phys_addr="0x07700000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_BLSP1_BLSP_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x07880000" size="0x39000" phys_addr="0x07880000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PKA_WRAPPER_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x07900000" size="0x72000" phys_addr="0x07900000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_QPIC_QPIC_XPU2_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x07980000" size="0x40000" phys_addr="0x07980000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_A7SS_L2_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x08000000" size="0x40000" phys_addr="0x08000000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_PCNOC_4_BUS_TIMEOUT_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x08801000" size="0x1000" phys_addr="0x08801000" cache_policy="device" zero="false" />
+  <memsection name="AMSS_A7SS_BASE" direct="false" attach="rw" physpool="physical_hwio" virtpool="virtual_hwio" virt_addr="0x0b000000" size="0x200000" phys_addr="0x0b000000" cache_policy="device" zero="false" />
+

@@ -1,0 +1,103 @@
+#===============================================================================
+#
+# RIL APSS TX
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 by QUALCOMM Technologies, Inc. All Rights Reserved.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/ril.tx/1.1/psm/server/build/psmd.scons#1 $
+#  $DateTime: 2018/08/19 22:39:13 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 8/8/16   srafeeqh Baseline
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('DMS', area='api')
+env.RequirePublicApi('SSCTL', area='api')
+env.RequirePublicApi('PSM_CLIENT', area='ril')
+
+RIL_RESTRICTED_APIS = [
+	'PSM_COMMON',
+    'RIL_UTIL_COMMON',
+	'RIL_UTIL_LIST',
+	'RIL_UTIL_SYNC',
+	'RIL_UTIL_MEMORY',
+	'RIL_UTIL_CONFIG',
+	'RIL_UTIL_BIT',
+	'RIL_PORT',
+	'PSM_CORE',
+	'PSM_CLIENT'
+    ]
+	
+env.RequireRestrictedApi(RIL_RESTRICTED_APIS)	
+	
+SRCPATH = '${BUILD_ROOT}/ril/psm/server/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+
+PSMD_SOURCES = [
+	'${BUILDPATH}/psmd.c',
+	'${BUILDPATH}/psm_core.c',
+	'${BUILDPATH}/psm_list.c',
+	'${BUILDPATH}/psm_qmi.c',
+	'${BUILDPATH}/psm_rtc.c',
+]
+
+env.AddLibrary(['APPS_PROC'], ('${BUILDPATH}/psmd'), PSMD_SOURCES)
+
+if 'USES_RCINIT' in env:
+	RCINIT_IMG = ['APPS_PROC']
+	env.AddRCInitTask(
+	   RCINIT_IMG,
+		 {
+			'sequence_group'            : 'RCINIT_GROUP_1',              # required
+			'thread_name'               : 'psmd',                        # required
+			'stack_size_bytes'          : '8192',                        # required
+			'thread_entry'              : 'psmd_task_entry',             # opt
+			'priority_amss_order'       : 'PSMD_PRI_ORDER',
+			'cpu_affinity'              : 'REX_ANY_SMT_MASK',
+			'thread_type'               : 'RCINIT_TASK_QURTTASK',        # required
+			'dependencies'              : ['qmi_fw','qmi']
+		 }
+	)
+
+if 'USES_RCINIT' in env:
+	RCINIT_IMG = ['APPS_PROC']
+	env.AddRCInitTask(
+	   RCINIT_IMG,
+		 {
+			'sequence_group'            : 'RCINIT_GROUP_1',              # required
+			'thread_name'               : 'psm_event_task',              # required
+			'stack_size_bytes'          : '8192',                        # required
+			'thread_entry'              : 'psm_event_task_entry',        # opt
+			'priority_amss_order'       : 'PSMD_PRI_ORDER',
+			'cpu_affinity'              : 'REX_ANY_SMT_MASK',
+			'thread_type'               : 'RCINIT_TASK_QURTTASK',        # required
+			'dependencies'              : ['psmd']
+		 }
+	)	
+	
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()

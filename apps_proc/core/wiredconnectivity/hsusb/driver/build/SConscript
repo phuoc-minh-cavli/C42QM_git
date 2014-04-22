@@ -1,0 +1,220 @@
+#===============================================================================
+#
+# HSUSB Driver Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2009-2009 by QUALCOMM, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/hsusb/driver/rel/2h09/build/SConscript#10 $
+#  $DateTime: 2011/09/01 05:08:16 $
+#  $Author: smalichi $
+#  $Change: 1910711 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#
+#===============================================================================
+Import('env')
+
+if 'USES_AWARE' not in env:
+    HEADER_FILES = env.FindFiles(['hsu_al_auth.h'],
+  '${BUILD_ROOT}/core/api/wiredconnectivity/hsusb')
+    SOURCE_FILES = env.FindFiles(['hsu_al_auth.c'], 
+  '${BUILD_ROOT}/core/wiredconnectivity/hsusb/driver/src')
+    env.CleanPack(['CORE_APPS'], SOURCE_FILES)
+    env.CleanPack(['CORE_APPS'], HEADER_FILES)
+
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Defines
+#-------------------------------------------------------------------------------
+# Additional defines
+env.Append(CPPDEFINES = ['FEATURE_HS_USB_HAL'])
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/wiredconnectivity/hsusb/driver/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DSM',
+   'BREW',
+   'CS',
+   'MODEM_API',
+   'MODEM_MMODE',
+   'MODEM_1X',
+   'MODEM_DATA',
+   'MODEM_HDR',
+   'MODEM_PMIC',
+   'MODEM_SERVICES',
+   'MODEM_RF',
+   'MODEM_NAS',
+   'MODEM_UIM',
+   'WCONNECT',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'BOOT',
+   'DAL',
+   'DEBUGTOOLS',
+   'HAL',
+   'HWENGINES',
+   'MEMORY',
+   'MPROC',
+   'POWER',
+   'SERVICES',
+   'STORAGE',
+   'SYSTEMDRIVERS',
+   'WIREDCONNECTIVITY',
+   'BUSES',
+   'DEBUGTRACE',
+   'PRODUCTS_DSR',
+   'QAPI',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishPrivateApi('WIREDCONNECTIVITY_HSUSB_DRIVER', [
+   "${INC_ROOT}/core/wiredconnectivity/hsusb/driver/src/core_config",
+])
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+QAPI_DEST_IMAGES = [
+  'CORE_APPS',                # Domain(REX + TN)
+]
+
+QAPI_SOURCES = [
+    '${BUILDPATH}/adapt_layers/qapi_usb.c',
+]
+
+HSUSB_DRIVER_SOURCES = [
+   '${BUILDPATH}/adapt_layers/hsu_al_ecm.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_mem.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_ser.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_ser_base.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_ser_acm.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_ser_obex.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_sio_reg.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_dsm_utils.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_task.c',
+   '${BUILDPATH}/adapt_layers/hsu_cdc_fd_api.c',
+   '${BUILDPATH}/adapt_layers/hsu_al_bam_utils.c',
+   '${BUILDPATH}/common/hsu_bam_sm.c',
+   '${BUILDPATH}/common/hsu_no_ecm_bam_sm.c',
+   '${BUILDPATH}/common/hsu_conf_sel_comp_utils.c',
+   '${BUILDPATH}/common/hsu_phy_utils.c',
+   '${BUILDPATH}/common/hsu_log.c',
+   '${BUILDPATH}/common/hsu_timer.c',
+   '${BUILDPATH}/common/hsu_conf_sel_nv.c', 
+   '${BUILDPATH}/common/hsu_hal_helper.c',
+   '${BUILDPATH}/common/hsu_conf_sel_rdm.c',
+   '${BUILDPATH}/common/hsu_config_selector.c',
+   '${BUILDPATH}/common/hsu_lpm_gpio.c',
+   '${BUILDPATH}/common/hsu_bus_mode_notifier.c',
+   '${BUILDPATH}/common/hsu_vendor_specific.c',
+   '${BUILDPATH}/common/hsu_conf_sel_core_config.c',
+   '${BUILDPATH}/common/hsu_conf_sel_stack_utils.c', 
+   '${BUILDPATH}/common/hsu_event_notifier.c',
+   '${BUILDPATH}/common/hsu_vregmgr_npa.c',
+   #'${BUILDPATH}/common/hsu_lpm_femto.c',
+   '${BUILDPATH}/common/hsu_boot_dload.c',
+   '${BUILDPATH}/common/hsu_modem_proc_services.c',
+   '${BUILDPATH}/common/${MSM_ID}/hsu_clkmgr.c',
+   '${BUILDPATH}/common/${MSM_ID}/hsu_platform.c',
+   '${BUILDPATH}/common/${MSM_ID}/hsu_lpm_snps.c',
+   '${BUILDPATH}/common/${MSM_ID}/hsu_mdm_apis.c',
+   #'${BUILDPATH}/common/rdevmap_wrapper.c',  #This is add for now, until they fix the rex.h in rdevmap
+   '${BUILDPATH}/core_config/hsu_core_config.c',
+   '${BUILDPATH}/core_config/${HAL_PLATFORM}/hsu_core_config_target.c',
+   '${BUILDPATH}/hsu_diag/hsu_health_diag.c',
+   '${BUILDPATH}/os_abstract/rex/hsu_os_abstract_bus.c',
+   '${BUILDPATH}/os_abstract/rex/hsu_os_abstract_stdlib.c',
+   '${BUILDPATH}/os_abstract/rex/hsu_os_abstract_sync.c',
+   '${BUILDPATH}/os_abstract/rex/hsu_os_abstract_main.c',
+   '${BUILDPATH}/os_abstract/rex/hsu_os_abstract_mem.c',
+   '${BUILDPATH}/os_abstract/hsu_qurt_util.c',
+   #Not required for core.tx.6.0(2.0)
+   #'${BUILDPATH}/adapt_layers/hsu_al_auth.c'
+]
+
+hsu_driver_obj = env.Object(HSUSB_DRIVER_SOURCES)
+hsu_driver_lib = env.Library('${BUILDPATH}/hsu_driver', hsu_driver_obj)
+
+env.AddLibrary(QAPI_DEST_IMAGES,'${BUILDPATH}/qapi', QAPI_SOURCES)
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+# usb scons have not been updated from tech team remove AMSS from list
+
+if env.has_key('USES_HSU'):
+   env.AddLibsToImage(['APPS_IMAGE', 'CBSP_APPS_IMAGE'], hsu_driver_lib)  
+
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitTask(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                  # define TMC_RCINIT_INIT_SIO_INIT
+        {
+            'sequence_group'             : 'RCINIT_GROUP_1',                 # required
+            'thread_name'                : 'hsu_al_task',                    # required
+            'thread_entry'               : 'hsu_al_task_main',               # opt     
+            'stack_size_bytes'           : '4096',
+            'priority_amss_order'        : 'HSU_AL_PRI_ORDER',
+            'cpu_affinity'               : 'REX_ANY_SMT_MASK',
+        }
+    )
+	
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitTask(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                  # define TMC_RCINIT_INIT_SIO_INIT
+        {
+            'sequence_group'             : 'RCINIT_GROUP_2',                 # required
+            'thread_name'                : 'HS_USB_0',                    # required
+            'thread_entry'               : 'RCINIT_NULL',               # opt     
+            'stack_size_bytes'           : '8192',
+            'priority_amss_order'        : 'HSUSB0_PRI_ORDER',
+        }
+    )
+	
+	
+if 'USES_RCINIT' in env:
+    RCINIT_IMG = ['CORE_MODEM', 'CORE_QDSP6_SW', 'APPS_IMAGE', 'CBSP_APPS_IMAGE']
+    env.AddRCInitFunc(           # Code Fragment in TMC: NO
+    RCINIT_IMG,                  # define TMC_RCINIT_INIT_SIO_INIT
+        {
+            'sequence_group'             : 'RCINIT_GROUP_2',                 # required
+            'init_name'                  : 'hsusb',                          # required
+            'init_function'              : 'hsu_config_selector_init',       # required
+            'dependencies'               : ['dsm','hsu_al_task','tracer_simple','bam_drv']
+        }
+    )
+
+env.LoadSoftwareUnits()

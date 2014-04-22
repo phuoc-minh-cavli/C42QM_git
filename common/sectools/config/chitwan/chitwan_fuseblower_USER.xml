@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+===============================================================================
+
+  Copyright (c) 2013-2017 Qualcomm Technologies, Inc.
+  All Rights Reserved.
+  Confidential and Proprietary - Qualcomm Technologies, Inc.
+
+===============================================================================
+-->
+
+<tns:fuseblower xmlns:tns="http://www.qualcomm.com/fuseblower"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.qualcomm.com/fuseblower ../xsd/fuseblower_user.xsd">
+
+    <metadata>
+        <chipset>chitwan</chipset>
+        <version>1.0</version>
+    </metadata>
+
+    <secdat>
+        <file_info>default dat file</file_info>
+        <file_version>2</file_version>
+        <fuse_version>1</fuse_version>
+    </secdat>
+
+    <!-- IMPORTANT: do not remove below elf entry - it is needed to generate sec.elf file -->
+    <elf>
+        <elf_class>32</elf_class> <!--Elf: 32 or 64-->
+        <phys_addr>0x8FDFD000</phys_addr> <!--chitwan - sec.elf Physical Address-->
+    </elf>
+        <!--
+        Default chitwan_fuseblower_USER.xml assumes that OEM_PK_HASH is blown in fuse for apps, mba and modem
+        (SEC_BOOT1_PK_Hash_in_Fuse SEC_BOOT2_PK_Hash_in_Fuse, SEC_BOOT3_PK_Hash_in_Fuse are set to true). So,
+        OEM public key hash below needs to be set below for root_cert_hash0. If OEM_PK_HASH is not blown in fuse
+        for apps, mba and modem (that is, read from bootrom) set SEC_BOOT1_PK_Hash_in_Fuse, SEC_BOOT2_PK_Hash_in_Fuse,
+        SEC_BOOT3_PK_Hash_in_Fuse to false and set ignore="true" below for root_cert_hash0.
+         -->
+
+    <module id="SECURITY_CONTROL_CORE">
+        <entry ignore="false">
+            <description>SHA384 hash of the OEM root certificate(s)</description>
+            <name>root_cert_hash0</name>
+            <value>000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</value>
+        </entry>
+        <entry ignore="true">
+            <description>SOEM root certificate(s). SHA384 hash will be automatically computed</description>
+            <name>root_cert_sha384_hash0_file</name>
+            <value>./../../resources/data_prov_assets/Signing/Local/qti_presigned_certs-secp384r1/qpsa_rootca.cer</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                For boot configuration 1 (Apps): If this bit is 'false' use the internal ROM hash index and
+                OEM_SECURE_BOOT1_ROM_PK_HASH_IDX[3:0] for the root certificate hash. If this bit is 'true' use the value
+                stored in OEM_PK_HASH for the root certificate hash.
+            </description>
+            <name>SEC_BOOT1_PK_Hash_in_Fuse</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If PK_HASH_IN_FUSE = 'false'; this value selects which root certificate hash to use from the ROM table.
+            </description>
+            <name>SEC_BOOT1_rom_pk_hash_index</name>
+            <value>0</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If this bit is 'true' then the unique device serial number is required in the authentication of code for
+                boot configuration 1.
+            </description>
+            <name>SEC_BOOT1_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Blow this bit to enable secure boot for Modem. When this bit is 'true'; enables authentication for any
+                code that references secure boot configuration 1.
+            </description>
+            <name>OEM_SECURE_BOOT1_auth_en</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                For boot configuration 2 (MBA):If this bit is 'false' use the internal ROM hash index and
+                OEM_SECURE_BOOT1_ROM_PK_HASH_IDX[3:0] for the root certificate hash. If this bit is 'true' use the value
+                stored in OEM_PK_HASH for the root certificate hash.
+            </description>
+            <name>SEC_BOOT2_PK_Hash_in_Fuse</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If PK_HASH_IN_FUSE = 'false'; this value selects which root certificate hash to use from the ROM table.
+            </description>
+            <name>SEC_BOOT2_rom_pk_hash_index</name>
+            <value>0</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If this bit is 'true' then the unique device serial number is required in the authentication of code for
+                boot configuration 2.
+            </description>
+            <name>SEC_BOOT2_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Blow this bit to enable secure boot for Modem. When this bit is 'true'; enables authentication for any
+                code that references secure boot configuration 2.
+            </description>
+            <name>OEM_SECURE_BOOT2_auth_en</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                For boot configuration 3 (Modem): If this bit is 'false' use the internal ROM hash index and
+                OEM_SECURE_BOOT1_ROM_PK_HASH_IDX[3:0] for the root certificate hash. If this bit is 'true' use the value
+                stored in OEM_PK_HASH for the root certificate hash.
+            </description>
+            <name>SEC_BOOT3_PK_Hash_in_Fuse</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If PK_HASH_IN_FUSE = 'false'; this value selects which root certificate hash to use from the ROM table.
+            </description>
+            <name>SEC_BOOT3_rom_pk_hash_index</name>
+            <value>0</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If this bit is 'true' then the unique device serial number is required in the authentication of code for
+                boot configuration 3.
+            </description>
+            <name>SEC_BOOT3_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Blow this bit to enable secure boot for Modem. When this bit is 'true'; enables authentication for any
+                code that references secure boot configuration 3.
+            </description>
+            <name>OEM_SECURE_BOOT3_auth_en</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM hardware ID</description>
+            <name>oem_hw_id</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM product ID</description>
+            <name>oem_product_id</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM periph_pid</description>
+            <name>oem_periph_pid</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>The OEM periph_vid</description>
+            <name>oem_periph_vid</name>
+            <value>0x0000</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Used to configure the number of root certificates hashed into OEM_PK_HASH (Max - 4)
+            </description>
+            <name>mrc_cert_count</name>
+            <value>1</value>
+        </entry>
+        <entry ignore="false">
+            <description>If 'true', disable APPS debug</description>
+            <name>apps_debug_disabled</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Blow this bit for secure solution. Disables the APPS global non-invasive (trace and performance
+                monitoring) debug capabilities. Can be overridden with OVERRIDE registers
+            </description>
+            <name>apps_niden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Prevents the Watch Dog from being disabled by the GPIO, 'true': ignore GPIO, 'false': use GPIO
+            </description>
+            <name>watchdog_enable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If 'true', all anti_rollback features are enabled.
+                . boot anti_rollback feature
+                . tzapps anti_rollback feature
+                . pilsubsys anti_rollback feature
+                . msa anti_rollback feature
+                If 'false', all anti_rollback features are disabled.
+            </description>
+            <name>anti_rollback_feature_enable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If 'true', random data will be blown to OEM Spare Region 1.
+                If 'false', no random data will be blown to OEM Spare Region 1.
+            </description>
+            <name>oem_spare_random1</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If 'true', random data will be blown to OEM Spare Region 2.
+                If false, no random data will be blown to OEM Spare Region 2.
+            </description>
+            <name>oem_spare_random2</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If 'true', random data will be blown to OEM Spare Region 3.
+                If 'false', no random data will be blown to OEM Spare Region 3.
+            </description>
+            <name>oem_spare_random3</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If 'true', disables writing of anti-rollback version values to fuses (not recommended).
+                If 'false', enables writing to anti-rollback version values to fuses.
+            </description>
+            <name>anti_rollback_write_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                OEM Optional. Disables emergency download via removable SD and/or USB downloader in Apps PBL error
+                handler.
+            </description>
+            <name>e_dload_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                OEM optional. BOOT ROM must support USB enumeration timeout. Timeout applies to both enumeration
+                for FLCB (fast low current boot) and USB download mode. If USB is not enumerated within time (90
+                seconds); quit USB enumeration If USB suspend or disconnected after enumeration; start timer
+                again.
+            </description>
+            <name>enum_timeout</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                OEM optional. If FORCE_DLOAD_DISABLE is 'false'; device goes to download mode if an error occurs very
+                early in XBL1. If FORCE_DLOAD_DISABLE is set to 'true'; device goes into cold boot if an error occurs
+                very early in XBL1.
+            </description>
+            <name>force_dload_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                OEM optional. If this bit is 'false': FORCE_USB_BOOT GPIO when high during boot up; forces boot from
+                USB. If this bit is 'true': it disables this feature and FORCE_USB_BOOT GPIO works as a standard GPIO.
+            </description>
+            <name>force_usb_boot_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                These fuses are used by boot code to specify which device has priority to be booted from. The
+                mapping is as follows:
+                0x0:DEFAULT (Default (NAND-> USB))
+                0x1: PCIE (PCIE)
+                0x2: USB (USB)
+                0x3: EMMC_USB
+            </description>
+            <name>fast_boot</name>
+            <value>0x0</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                PCIE Early Initialization in PBL Enabled. Set to 'true' if SDX55 or SA515M is PCIe device that connects
+                to a x86 Host. Use only if a PCIe hosts exists and is required for error recovery in PBL. This will
+                result in increase in boot time when PCIe is the boot device.
+            </description>
+            <name>pcie_early_init_en</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                It is recommended not to blow this fuse. This fuse disables the ability to blow any more fuses through
+                software. If desired to be blown; this should be blown at the end. Redundant with write permission
+                fuses.
+            </description>
+            <name>sw_fuse_prog_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Used for controlling logging mechanism in PBL. 'true' To limit the information collected in PBL logs.
+            </description>
+            <name>pbl_log_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Disables type-C functionality during PBL. PBL communication/enumeration happens over USB0_SS only.
+                USB1_SS cannot be used.
+            </description>
+            <name>pbl_usb_type_c_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>This fuse permanently disables root of trust transfer.</description>
+            <name>disable_rot_transfer</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                If set; PBL checks that signature covers a serial number that matches that read from fuses. This is for
+                secure boot authentication.
+            </description>
+            <name>sw_rot_use_serial_num</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Used to disable USB SS enumeration during Boot.</description>
+            <name>usb_ss_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>Disables Hash computation/verification of individual ELF segments in PBL</description>
+            <name>apps_hash_integrity_check_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                This fuse is used to disable x509 ou field parsing. For now only disabling of crash dump OU field is
+                done.
+            </description>
+            <name>debug_disable_in_rom</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Debug Policy is bypassed when this bit is 'true'. Debug Policy provides a means to re-enable debug
+                capabilities under OEM-specified selectable conditions.
+            </description>
+            <name>debug_policy_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                This fuse permanently disables all debug of the chip. It is not recommended to blow this bit. No RMAs
+                are possible after this fuse is blown.
+            </description>
+            <name>all_debug_disable</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Enable/disable NAND transfer parameters. Enabling('true') this will increase throughput to 5.5Mbps for
+                NAND boot device. Ensure NAND can support this data rate. If 'false', throughput will be 4Mbps which is
+                the default.
+            </description>
+            <name>nand_xfer_param</name>
+            <value>false</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared QSEE Secure Non-invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_qsee_spniden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared MSS Invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_mss_dbgen_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared MSS Non-invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_mss_niden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared CP Invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the corresponding
+                QC fuse.
+            </description>
+            <name>shared_cp_dbgen_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared CP Non-invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_cp_niden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared NS Non-invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_ns_dbgen_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared NS Non-invasive Debug Disable bucket. This OEM controlled fuse can be overridden by the
+                corresponding QC fuse.
+            </description>
+            <name>shared_ns_niden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Blow this bit for secure solution. Disables the APPS global invasive (JTAG and monitor mode) debug
+                capabilities. Can be overridden by OVERRIDE registers.
+            </description>
+            <name>apps_debug_disabled</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                Shared Misc Debug Disable bucket. This OEM controlled fuse can be overridden by the corresponding QC
+                fuse.
+            </description>
+            <name>shared_misc_debug_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>Shared QSEE Spiden Disable</description>
+            <name>shared_qsee_spiden_disable</name>
+            <value>true</value>
+        </entry>
+        <entry ignore="false">
+            <description>
+                When this bit is 'false' and signed image type is RSA => RSA OPERATION
+                When this bit is 'false' and signed image type is ECC => ECC OPERATION
+                When this bit is 'true' and signed image type is RSA => Error
+                When this bit is 'true' and signed image type is ECC => ECC OPERATION
+            </description>
+            <name>disable_rsa</name>
+            <value>false</value>
+        </entry>
+    </module>
+</tns:fuseblower>

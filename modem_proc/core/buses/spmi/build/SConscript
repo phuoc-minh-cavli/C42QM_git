@@ -1,0 +1,16 @@
+#===============================================================================
+# SPMI Libs
+#
+# GENERAL DESCRIPTION
+#    SPMI Build Script
+#
+# Copyright (c) 2013 by Qualcomm Technologies Incorporated. All Rights Reserved.
+#-------------------------------------------------------------------------------
+#  $Header: //components/rel/core.mpss/3.10/buses/spmi/build/SConscript#2 $
+#  $DateTime: 2018/09/07 03:22:57 $
+#  $Change: 17066400 $
+#===============================================================================
+Import('env')
+
+env.LoadSoftwareUnits(dir_patterns='../bear/build')
+

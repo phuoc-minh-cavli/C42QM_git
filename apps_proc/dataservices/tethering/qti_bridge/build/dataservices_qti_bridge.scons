@@ -1,0 +1,123 @@
+#===============================================================================
+#
+# Data Services QTI BRIDGE.API
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016, 2021 Qualcomm Technologies, Inc.
+# All Rights Reserved.
+# Confidential and Proprietary - Qualcomm Technologies, Inc.
+#
+#-------------------------------------------------------------------------------
+#                      EDIT HISTORY FOR FILE
+#
+#  $Header: //components/rel/dataservices.tx/6.0/tethering/qti_bridge/build/dataservices_qti_bridge.scons#4 $
+#  $DateTime: 2021/04/14 05:32:40 $
+#                      
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#  
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 08/24/2016  sr     Baseline
+#===============================================================================
+Import('env')
+
+if 'USES_QTI_BRIDGE' not in env:
+	Return()
+
+#Changes for MOB
+if 'USES_MOB' in env:
+	env.RequirePublicApi('STUB')
+	env.RequirePublicApi('DPM', area='qmimsgs')
+	env.RequirePublicApi('WDA', area='qmimsgs')
+	env.RequirePublicApi('WDS', area='qmimsgs')
+	env.RequirePublicApi('AT', area='qmimsgs')
+	
+env.RequirePublicApi('KERNEL', area='core')
+env.RequirePublicApi('SERVICES', area='core')
+env.RequirePublicApi('DEBUGTOOLS', area='core')
+env.RequirePublicApi('SYSTEMDRIVERS', area='core')
+env.RequirePublicApi('HWENGINES', area='core')
+env.RequirePublicApi('DAL', area='core')
+env.RequirePublicApi('MEMORY', area='core')
+env.RequirePublicApi('POWER', area='core')
+env.RequirePublicApi('MPROC', area='core')
+env.RequirePublicApi('STORAGE', area='core')
+env.RequirePublicApi('BUSES', area='core')
+env.RequirePublicApi('WIREDCONNECTIVITY', area='core')
+env.RequirePublicApi('DPM', area='API')
+env.RequirePublicApi('WDA', area='API')
+env.RequirePublicApi('WDS', area='API')
+env.RequirePublicApi('AT', area='API')
+env.RequirePublicApi('ATFWD_EXT')
+env.RequirePublicApi('QAPI')
+env.RequireRestrictedApi('NETMGR')
+env.RequirePublicApi(['UTILS'], area='dataservices')
+env.RequirePublicApi('NICHESTACK_PORT')
+
+
+env.PublishPrivateApi('QTI_BRIDGE', [
+   "${INC_ROOT}/dataservices/tethering/qti_bridge/inc", 
+   ], auto_require=True)
+
+
+
+SRCPATH = '${BUILD_ROOT}/dataservices/tethering/qti_bridge/src'
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+QTI_BRIDGE_SOURCES = [
+	'${BUILDPATH}/qti_bridge.c',
+	'${BUILDPATH}/qti_bridge_cmdq.c',
+	'${BUILDPATH}/qti_bridge_modem.c',
+	'${BUILDPATH}/qti_bridge_peripheral.c',
+	'${BUILDPATH}/qti_bridge_sio.c',
+	'${BUILDPATH}/qti_bridge_logical.c',
+	'${BUILDPATH}/qti_bridge_ds_mux.c',
+	'${BUILDPATH}/ds_mux.c',
+	'${BUILDPATH}/ds_mux_api.c',
+	'${BUILDPATH}/ds_mux_io.c',
+	'${BUILDPATH}/ds_mux_logical.c',
+	'${BUILDPATH}/ds_mux_phys.c',
+	'${BUILDPATH}/ds_mux_platform.c',
+	'${BUILDPATH}/ds_mux_stubs.c',
+	'${BUILDPATH}/ds_mux_svc.c',
+	'${BUILDPATH}/ds_mux_task.c',
+	'${BUILDPATH}/ds_mux_taski.c',
+	'${BUILDPATH}/ds_mux_utils.c',
+	'${BUILDPATH}/ds_mux_logging.c'
+]
+
+IMAGES = ['APPS_PROC','MOB_DATASERVICES']
+env.AddLibrary(IMAGES, ('${BUILDPATH}/tethering/qti_bridge'), QTI_BRIDGE_SOURCES)
+#-------------------------------------------------------------------------------
+# Load the rest of the software units
+#-------------------------------------------------------------------------------
+env.LoadSoftwareUnits()
+
+#-------------------------------------------------------------------------------
+# RCINIT Task and Init Fields and Initialization
+#-------------------------------------------------------------------------------
+RCINIT_INIT_QTI_BRIDGE_TASK_INIT = {
+  'sequence_group'             : 'RCINIT_GROUP_3',           # required
+  'init_name'                  : 'qti_bridge',               # required
+  'init_function'              : 'qti_bridge_task_init',           # required
+  'dependencies'               : ['smd']
+}
+
+RCINIT_INIT_QTI_BRIDGE_TASK = {
+  'sequence_group'             : 'RCINIT_GROUP_3',          # required
+  'thread_name'                : 'qti_bridge_task',         # required
+  'thread_entry'               : 'qti_bridge_task_entry',           
+  'stack_size_bytes'           : '8192',
+  'priority_amss_order'        : 'QTI_BRIDGE_PRI_ORDER',
+}
+
+if 'USES_RCINIT' in env:
+  RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
+  env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_BRIDGE_TASK_INIT )
+  env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QTI_BRIDGE_TASK )
+  
+if 'USES_MOB' not in env:
+	env.Append(CCFLAGS = "--diag_error=warning")

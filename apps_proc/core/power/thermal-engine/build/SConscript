@@ -1,0 +1,145 @@
+#===============================================================================
+#
+# Thermal-Engine Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2013-16 QUALCOMM Technologies Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/core.tx/6.0/power/thermal-engine/build/SConscript#1 $
+#  $DateTime: 2020/01/30 22:49:35 $
+#  $Author: pwbldsvc $
+#  $Change: 22400605 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 1/10/13   clm     Initial version.
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/power/thermal-engine/src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+#------------------------------------------------------------------------------
+# Add extension flags
+#------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# External depends within CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'HAL',
+   'HWENGINES',
+   'POWER',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'DEBUGTOOLS',
+   'STORAGE',
+   'MPROC',
+   # needs to be last also contains wrong comdef.h
+   'KERNEL',
+]
+
+env.RequirePublicApi([
+  'TMD','TS','COMMON',
+  ], area='API')
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+env.PublishProtectedApi('CORE_API_KERNEL', [
+  "${INC_ROOT}/core/api/kernel/qurt",
+  ])
+
+env.RequireProtectedApi(['CORE_API_KERNEL'])
+env.RequireProtectedApi(['POWER_UTILS'])
+
+env.PublishProtectedApi('THERMAL_INC', [
+  "${INC_ROOT}/core/power/thermal-engine/inc",
+  ])
+
+env.RequireProtectedApi(['THERMAL_INC'])
+
+if 'USES_THERMAL' in env:
+    if 'USES_RCINIT' in env:
+        RCINIT_IMG = ['APPS_IMAGE', 'CBSP_APPS_IMAGE']
+        env.AddRCInitTask(
+           RCINIT_IMG,
+             {
+                'sequence_group'            : 'RCINIT_GROUP_1',              # required
+                'thread_name'               : 'thermal',                     # required
+                'stack_size_bytes'          : '8192',                        # required
+                'priority_amss_order'       : 'SHARED_FOREGROUND_PRI_ORDER', # required
+                #'stack_name'               : 'thermal_stack',               # opt
+                'thread_entry'              : 'thermal_task',                # opt
+                'tcb_name'                  : 'thermal_tcb',                 # opt
+                'cpu_affinity'              : 'REX_ANY_SMT_MASK',
+             })
+
+#-------------------------------------------------------------------------------
+# Target-specific setup
+#-------------------------------------------------------------------------------
+if env['MSM_ID'] in ['9x06']:
+   env['THERMAL_TARGET'] = '9x06'
+if env['MSM_ID'] in ['9205']:
+   env['THERMAL_TARGET'] = '9205'
+#if env['MiSM_ID'] in ['9x25','9x35','9x45', '9x55','9x65']:
+#   env['THERMAL_TARGET'] = '9x25'
+#else env['MSM_ID'] in ['9x06']:
+#   env['THERMAL_TARGET'] = '9x06'
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+if 'USES_THERMAL' in env:
+    THERMAL_APPS_SOURCES = [
+        '${BUILDPATH}/therm_log.c',
+        '${BUILDPATH}/thermal_monitor.c',
+        '${BUILDPATH}/thermal_monitor-data.c',
+        '${BUILDPATH}/thermal_util.c',
+        '${BUILDPATH}/thermal_config.c',
+        '${BUILDPATH}/os/tx/therm_os.c',
+        '${BUILDPATH}/devices/devices.c',
+        '${BUILDPATH}/devices/devices_actions.c',
+        '${BUILDPATH}/devices/devices_manager.c',
+        '${BUILDPATH}/devices/devices-qmi.c',
+        '${BUILDPATH}/sensors/sensors_manager.c',
+        '${BUILDPATH}/sensors/sensors-${THERMAL_TARGET}.c',
+        '${BUILDPATH}/sensors/sensors-tsens.c',
+		'${BUILDPATH}/sensors/sensors-adc.c'
+     ]
+
+if 'USES_THERMAL' in env:
+    env.Append(CCFLAGS = " --c99")
+    thermal_apps_obj = env.Object(THERMAL_APPS_SOURCES)
+    thermal_apps_lib = env.Library('${BUILDPATH}/thermal_apps', thermal_apps_obj)
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+if 'USES_THERMAL' in env:
+    env.AddLibsToImage(['APPS_IMAGE','CBSP_APPS_IMAGE'],[thermal_apps_lib])
+

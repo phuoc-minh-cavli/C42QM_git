@@ -1,0 +1,98 @@
+#===============================================================================
+#
+# TMS_DLOAD Libs
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2012-2012 by Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //source/qcom/qct/core/pkg/apps/mdm/dev/markg.markg_9x15_apps_101211/apps_proc/core/debugtools/err/build/err.scons#1 $
+#  $DateTime: 2011/10/12 10:45:26 $
+#  $Author: coresvc $
+#  $Change: 1978284 $
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+# 101012     mcg     Initial release
+#
+#===============================================================================
+Import('env')
+env = env.Clone()
+
+#-------------------------------------------------------------------------------
+# Source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "${BUILD_ROOT}/core/debugtools/internal/tms_dload/src"
+
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.Append(CPPDEFINES = ["TMS_DLOAD_MAGIC1=0xE47B337D"])
+env.Append(CPPDEFINES = ["TMS_DLOAD_MAGIC2=0xCE14091A"])
+
+
+
+#-------------------------------------------------------------------------------
+# External depends outside CoreBSP
+#-------------------------------------------------------------------------------
+env.RequireExternalApi([
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'KERNEL',
+   'SECUREMSM',
+])
+
+#-------------------------------------------------------------------------------
+# Internal depends within CoreBSP
+#-------------------------------------------------------------------------------
+CBSP_API = [
+   'DAL',
+   'DEBUGTOOLS',
+   'SERVICES',
+   'SYSTEMDRIVERS',
+   'PRODUCTS_SCM',
+   'KERNEL',
+   'SECUREMSM',
+]
+
+env.RequirePublicApi(CBSP_API)
+env.RequireRestrictedApi(CBSP_API)
+
+#-------------------------------------------------------------------------------
+# Sources, libraries
+#-------------------------------------------------------------------------------
+
+TMS_DLOAD_SOURCES =  [
+   '${BUILDPATH}/tms_dload.c',
+]
+
+
+#-------------------------------------------------------------------------------
+# Add Libraries to image
+#-------------------------------------------------------------------------------
+
+env.AddLibrary(['CORE_APPS'], 
+    '${BUILDPATH}/tms_dload', TMS_DLOAD_SOURCES)
+
+if 'USES_RCINIT' in env:
+ env.AddRCInitFunc(           # Code Fragment in TMC: NO
+   ['CORE_APPS'],                 # define TMC_RCINIT_INIT_ERR_STORE_INFO_TO_FLASH
+   {
+    'sequence_group'             : 'RCINIT_GROUP_0',                         # required
+    'init_name'                  : 'Dloadwritemagic',                        # required
+    'init_function'              : 'tms_dload_write_magic_numbers',          # required
+    'dependencies'               : ['scm',],
+   })
+
+

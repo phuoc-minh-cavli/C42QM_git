@@ -1,0 +1,142 @@
+#===============================================================================
+#
+# NB1 PLT Scons
+#
+# GENERAL DESCRIPTION
+#    build script
+#
+# Copyright (c) 2016 Qualcomm Technologies, Incorporated.
+# All Rights Reserved.
+# QUALCOMM Proprietary/GTDR
+#
+#-------------------------------------------------------------------------------
+#
+#  $Header: //components/rel/nb1.mpss/2.2/PLT/build/nb1_plt.scons#1 $
+#
+#                      EDIT HISTORY FOR FILE
+#
+#  This section contains comments describing changes made to the module.
+#  Notice that changes are listed in reverse chronological order.
+#
+# when       who     what, where, why
+# --------   ---     ---------------------------------------------------------
+#===============================================================================
+Import('env')
+
+env = env.Clone()
+
+from glob import glob
+from os.path import join, basename, abspath
+
+# Load the PLT Script tool
+env.LoadToolScript('nb1_plt_builder', toolpath = [env.subst('${NB1_ROOT}/PLT/build')])
+
+#-------------------------------------------------------------------------------
+# Setup source PATH
+#-------------------------------------------------------------------------------
+SRCPATH = "../src"
+
+env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
+
+env.PublishPrivateApi('PLT', ['${INC_ROOT}/nb1/PLT/src'])
+
+#-------------------------------------------------------------------------------
+# Necessary Public and Restricted API's
+#-------------------------------------------------------------------------------
+env.RequirePublicApi([
+    'HWENGINES',
+    'DEBUGTOOLS',
+    'SERVICES',
+    'SYSTEMDRIVERS',
+    'DAL',
+    'POWER',
+    'BUSES',
+    'MPROC',
+    'KERNEL',                             # needs to be last
+    ], area='core')
+
+
+
+env.RequirePublicApi(['UTILS'])
+
+env.RequirePublicApi(['FW_NB'], area='FW_NB')
+env.RequirePublicApi(['NB1'])
+
+
+env.RequireRestrictedApi(['UTILS'])
+env.RequireProtectedApi(['UTILS'])
+
+# Need to get access to NB1 protected headers
+env.RequireProtectedApi([
+    'NB1',
+    ])
+
+env.RequireExternalApi('BREW')
+
+#-------------------------------------------------------------------------------
+# Generate the library and add to an image
+#-------------------------------------------------------------------------------
+# Add our UMID file
+if 'USES_MSGR' in env:
+   env.AddUMID('${BUILDPATH}/nb1_plt.umid', ['../inc/nb1_plt_msg.h'])
+
+# Run the PLT Script tool
+if env.PathExists('../../../fw/nb/build'):
+    fw_nb_path = '../../../fw/nb/build'
+elif env.PathExists('../../../fw_nb/build'):
+    fw_nb_path = '../../../fw_nb/build'
+elif env.PathExists('../../../fw/fw_nb/build'):
+    fw_nb_path = '../../../fw/fw_nb/build'
+else:
+    fw_nb_path = '../../../fw/api/build'
+
+# Run the PLT Script tool
+if env.PathExists('../../../fw/nb/build'):
+    fw_nb1_path = '../../../fw/nb/build'
+elif env.PathExists('../../../fw_nb/build'):
+    fw_nb1_path = '../../../fw_nb/build'
+elif env.PathExists('../../../fw/fw_nb/build'):
+    fw_nb1_path = '../../../fw/fw_nb/build'
+else:
+    fw_nb1_path = '../../../fw/api/build'
+
+
+header_input = SRCPATH + '/nb1_plt_autogen_pack_unpack.h'
+autogen_src  = '${BUILDPATH}/nb1_plt_autogen_pack_unpack.foo'
+# Reference from modem/nb1/PLT/build directory
+xml_files    = ['../../build/$BUILDPATH/nb1.umid',
+                '../../ML1/l1_common/build/$BUILDPATH/nb1_ml1_l1_common.umid',
+				#'../../ML1/afc/build/$BUILDPATH/nb1_ml1_afc.umid',
+				'../../ML1/bplmn/build/$BUILDPATH/nb1_ml1_bplmn.umid',
+				'../../ML1/dlm/build/$BUILDPATH/nb1_ml1_dlm.umid',
+				'../../ML1/gm/build/$BUILDPATH/nb1_ml1_gm.umid',
+				'../../ML1/manager/build/$BUILDPATH/nb1_ml1_manager.umid',
+				'../../ML1/rfmgr/build/$BUILDPATH/nb1_ml1_rfmgr.umid',
+				'../../ML1/schdlr/build/$BUILDPATH/nb1_ml1_schdlr.umid',
+				'../../ML1/search/build/$BUILDPATH/nb1_ml1_search.umid',
+				'../../ML1/sleepmgr/build/$BUILDPATH/nb1_ml1_sleepmgr.umid',
+				'../../ML1/ulm/build/$BUILDPATH/nb1_ml1_ulm.umid',
+                fw_nb_path + '/$BUILDPATH/fw_nb.umid',
+                '$BUILDPATH/nb1_plt.umid',
+                #'../../../hdr/build/$BUILDPATH/hdr.umid'
+                fw_nb1_path + '/$BUILDPATH/fw_nb.umid',
+               ]
+
+env.Depends(autogen_src, env.subst('${NB1_ROOT}/PLT/src/nb1_plt_parser.py'))
+env.Depends(autogen_src, env.subst('${NB1_ROOT}/PLT/build/tools/plt_common_util.py'))
+env.Depends(autogen_src, env.subst('${NB1_ROOT}/PLT/build/tools/plt_common_util_asia.py'))
+
+# Call the NB1PLT generator
+env.NB1PLT(source = [header_input] + xml_files,
+           target = autogen_src)
+
+# Add the autogen build path to the compilation path
+env.Append(CPPPATH = env.subst('${NB1_ROOT}/PLT/build/$BUILDPATH'))
+
+# Construct the list of source files by looking for *.c
+NB1_PLT_SOURCES  = ['${BUILDPATH}/' + basename(fname)
+                    for fname in glob(join(env.subst(SRCPATH), '*.c'))]
+
+# Compile the NB1 PLT source and create a library (ship source)
+env.AddBinaryLibrary(['MODEM_MODEM'], '${BUILDPATH}/nb1_plt', NB1_PLT_SOURCES)
+

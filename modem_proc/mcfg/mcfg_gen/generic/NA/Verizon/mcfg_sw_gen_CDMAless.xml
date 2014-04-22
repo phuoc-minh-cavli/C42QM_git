@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NvData McfgXmlVersion="2.0">
+	<NvConfigurationData carrierIndex="1" version="0x09010120" type="1"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="mcfg.0.0" mcfgAttributes="0x09" buildPath="modem_proc/mcfg/mcfg_gen/groups/mcfg/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="data.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataiot/datacfg/xml/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="ims_master.xml" description="" comment="" category="MCFG" version="ims.0.0" mcfgAttributes="0x09" buildPath="modem_proc/dataimsiot/Config/NA/VZW/CDMALESS/ims_master.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="mmcp.0.0" mcfgAttributes="0x09" buildPath="modem_proc/mmcp/config/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="lte.0.0" mcfgAttributes="0x09" buildPath="modem_proc/lte/configs/configs_xml/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="gps.0.0" mcfgAttributes="0x09" buildPath="modem_proc/gps/gnss_tools/config/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="uim.0.0" mcfgAttributes="0x09" buildPath="modem_proc/uim/config/groups/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<GroupFile name="mcfg_sw_gen_CDMAless.xml" description="" comment="" category="MCFG" version="geran.0.0" mcfgAttributes="0x09" buildPath="modem_proc/geran/configs/config_xml/NA/Verizon/mcfg_sw_gen_CDMAless.xml"/>
+	<NvTrlRecord name="MCFG TRL record" description="Configuration Framework Data" comment="" category="MCFG" mcfgAttributes="0x00">
+		<Member name="MCFG_trl_struct_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="MCFG_trl_struct_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">2 </Member>
+		<Member name="MCFG_trl_struct_version" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint16">256 </Member>
+		<Member name="MCFG_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">1 </Member>
+		<Member name="MCFG_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">4 </Member>
+		<Member name="MCFG_version" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint32">151060768 </Member>
+		<Member name="Configuration_Name_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">3 </Member>
+		<Member name="Configuration_Name_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">16 </Member>
+		<Member name="Configuration_Name" description="Value for Trailer Record TLV" comment="" sizeOf="16" type="string">CDMAless-Verizon</Member>
+		<Member name="IIN_List_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">4 </Member>
+		<Member name="IIN_List_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">18 </Member>
+		<Member name="IIN_Flag" description="Value for Trailer Record TLV" comment="IIN_Flag = 0: IINs compared to SIM during autoselection / IIN_Flag = 1: Configuration used as fallback during autoselection" sizeOf="1" type="uint8">0 </Member>
+		<Member name="IIN_List_Count" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint8">4 </Member>
+		<Member name="IIN_List" description="Value for Trailer Record TLV" comment="" sizeOf="4" type="uint32">891480 891004 891005 891012 </Member>
+		<Member name="QC_version_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">5 </Member>
+		<Member name="QC_version_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">4 </Member>
+		<Member name="QC_version" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint32">151060768 </Member>
+		<Member name="MCC_MNC_List_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">6 </Member>
+		<Member name="MCC_MNC_List_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">22 </Member>
+		<Member name="MCC_MNC_Flag" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint8">0 </Member>
+		<Member name="MCC_MNC_List_Count" description="Value for Trailer Record TLV" comment="" sizeOf="1" type="uint8">5 </Member>
+		<Member name="MCC_MNC_List" description="Value for Trailer Record TLV" comment="" sizeOf="10" type="uint16">310 590 310 890 311 480 311 270 312 770 </Member>
+		<Member name="MCFG_capability_type" description="Type ID for Trailer Record TLV" comment="" sizeOf="1" type="uint8">7 </Member>
+		<Member name="MCFG_capability_len" description="Length for Trailer Record TLV" comment="" sizeOf="1" type="uint16">4 </Member>
+		<Member name="MCFG_capability" description="Value for Trailer Record TLV" comment="(BitX=LO/HI): bit0(Applicable to HW mbn only)=SS/DS  bit1=OpenMarket/Subsidized  bit2=NonVoLTE/VoLTE  bit3:  commerical/lab  bits4-31=reserved" sizeOf="1" type="uint32">4 </Member>
+	</NvTrlRecord>
+</NvData>

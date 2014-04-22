@@ -1,0 +1,67 @@
+<device id="/tlmm/cdp001">
+  <props name="blsp_uart_tx[1]" type="TLMMGpioIdType">{0, 1}</props>
+  <props name="blsp_uart_rx[1]" type="TLMMGpioIdType">{1, 1}</props>
+  <props name="blsp_uart_cts_n[1]" type="TLMMGpioIdType">{2, 1}</props>
+  <props name="blsp_uart_rfr_n[1]" type="TLMMGpioIdType">{3, 1}</props>
+  <props name="pres_int" type="TLMMGpioIdType">{4, 0}</props>
+  <props name="cdc_buck_en" type="TLMMGpioIdType">{5, 0}</props>
+  <props name="blsp_i2c_sda[2]" type="TLMMGpioIdType">{6, 3}</props>
+  <props name="blsp_i2c_scl[2]" type="TLMMGpioIdType">{7, 3}</props>
+  <props name="disp_ldo_en" type="TLMMGpioIdType">{8, 0}</props>
+  <!--     GPIO[9] NOT USED ON THIS PLATFORM -->
+  <!--     GPIO[10] NOT USED ON THIS PLATFORM -->
+  <!--     GPIO[11] NOT USED ON THIS PLATFORM -->
+  <props name="blsp_spi_mosi[4]" type="TLMMGpioIdType">{12, 1}</props>
+  <props name="blsp_spi_miso[4]" type="TLMMGpioIdType">{13, 1}</props>
+  <props name="blsp_spi_cs_n[4]" type="TLMMGpioIdType">{14, 1}</props>
+  <props name="blsp_spi_clk[4]" type="TLMMGpioIdType">{15, 1}</props>
+  <props name="uim1_data" type="TLMMGpioIdType">{16, 1}</props>
+  <props name="uim1_clk" type="TLMMGpioIdType">{17, 1}</props>
+  <props name="uim1_reset" type="TLMMGpioIdType">{18, 1}</props>
+  <props name="uim1_present" type="TLMMGpioIdType">{19, 1}</props>
+  <props name="ext_bob_3v3_en" type="TLMMGpioIdType">{20, 0}</props>
+  <props name="pri_mi2s_ws_a" type="TLMMGpioIdType">{21, 1}</props>
+  <props name="pri_mi2s_data0_a" type="TLMMGpioIdType">{22, 1}</props>
+  <props name="pri_mi2s_data1_a" type="TLMMGpioIdType">{23, 1}</props>
+  <props name="pri_mi2s_sck_a" type="TLMMGpioIdType">{24, 1}</props>
+  <props name="pri_mi2s_mclk_a" type="TLMMGpioIdType">{25, 1}</props>
+  <props name="accel_gyro_int" type="TLMMGpioIdType">{26, 0}</props>
+  <props name="als_prox_int" type="TLMMGpioIdType">{27, 0}</props>
+  <props name="rcm_marker_1" type="TLMMGpioIdType">{28, 0}</props>
+  <props name="ext_usb_pwr_en" type="TLMMGpioIdType">{29, 0}</props>
+  <props name="char_int" type="TLMMGpioIdType">{30, 0}</props>
+  <!--< props name ="ebi2_a_d[0]" type="TLMMGpioIdType">{31, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[1]" type="TLMMGpioIdType">{32, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[2]" type="TLMMGpioIdType">{33, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[3]" type="TLMMGpioIdType">{34, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[4]" type="TLMMGpioIdType">{35, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[5]" type="TLMMGpioIdType">{36, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[6]" type="TLMMGpioIdType">{37, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_a_d[7]" type="TLMMGpioIdType">{38, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <props name="ebi2_ale_n" type="TLMMGpioIdType">{39, 3}</props>
+  <!--< props name ="ebi2_oe_n" type="TLMMGpioIdType">{40, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_cle_n" type="TLMMGpioIdType">{41, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <!--< props name ="ebi2_we_n" type="TLMMGpioIdType">{42, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <props name="ebi2_nand_cs_n" type="TLMMGpioIdType">{43, 6}</props>
+  <!--< props name ="ebi2_busy_n" type="TLMMGpioIdType">{44, <func>}</props> SPECIAL PURPOSE, NOT SELECTABLE-->
+  <props name="ebi2_lcd_cs_n" type="TLMMGpioIdType">{45, 1}</props>
+  <props name="ebi2_lcd_te" type="TLMMGpioIdType">{46, 1}</props>
+  <props name="ebi2_lcd_reset_n" type="TLMMGpioIdType">{47, 1}</props>
+  <props name="codec_en" type="TLMMGpioIdType">{48, 0}</props>
+  <props name="codec_int" type="TLMMGpioIdType">{49, 0}</props>
+  <props name="backlight_en" type="TLMMGpioIdType">{50, 0}</props>
+  <props name="ebi2_a_d_8" type="TLMMGpioIdType">{51, 1}</props>
+  <props name="pwm_2_mira" type="TLMMGpioIdType">{52, 1}</props>
+  <props name="rffe1_clk" type="TLMMGpioIdType">{53, 1}</props>
+  <props name="rffe1_data" type="TLMMGpioIdType">{54, 1}</props>
+  <props name="rffe2_clk" type="TLMMGpioIdType">{55, 1}</props>
+  <props name="rffe2_data" type="TLMMGpioIdType">{56, 1}</props>
+  <props name="grfc[0]" type="TLMMGpioIdType">{57, 1}</props>
+  <props name="rffe3_clk" type="TLMMGpioIdType">{57, 2}</props>
+  <props name="grfc[1]" type="TLMMGpioIdType">{58, 1}</props>
+  <props name="rffe3_data" type="TLMMGpioIdType">{58, 2}</props>
+  <props name="grfc[2]" type="TLMMGpioIdType">{59, 1}</props>
+  <props name="grfc[3]" type="TLMMGpioIdType">{60, 1}</props>
+  <props name="grfc[4]" type="TLMMGpioIdType">{61, 1}</props>
+  <props name="grfc[5]" type="TLMMGpioIdType">{62, 1}</props>
+</device>
