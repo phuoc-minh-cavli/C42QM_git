@@ -24,7 +24,7 @@
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 # 03/07/13   unni     Bfamily - common code merge restructuring
-# 09/24/12   unni     Removed from build 
+# 09/24/12   unni     Removed from build
 #                     -${BUILDPATH}/common/src/csd_dev_manager_lb.c
 #                     -${BUILDPATH}/target/src/csd_dev_tgt_codec_adie.c
 #
@@ -36,10 +36,11 @@ env = env.Clone()
 # Convert warnings to errors in all csd device module
 #-------------------------------------------------------------------------------
 
-env.Append(CFLAGS = "--diag_error=warning ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 #-------------------------------------------------------------------------------
-# Source PATH     
+# Source PATH
 #-------------------------------------------------------------------------------
 SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd/dev"
 
@@ -92,7 +93,7 @@ env.RequireRestrictedApi('ADIECODECDB')
 env.RequireExternalApi('MODEM_API')
 
 
-# csd_dev.lib 
+# csd_dev.lib
 
 #-------------------------------------------------------------------------------
 # Sources

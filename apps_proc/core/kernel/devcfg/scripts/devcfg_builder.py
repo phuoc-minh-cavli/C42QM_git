@@ -37,20 +37,20 @@ import unicodedata, re
 #---------------------------------------------------------------------------
 #   DevcfgFeatureSet =  {
 #                            ImageCfgXML        : <path/to/image_cfg.xml>
-#                            devcfgXMLTagList   : [8998_XML, 8996_XML, 8998_PLATFORM_CDP_XML,...]   
+#                            devcfgXMLTagList   : [8998_XML, 8996_XML, 8998_PLATFORM_CDP_XML,...]
 #                            targetImg          : <mpss/tz/hyp/oem/adsp>
 #                        }
 #
 class Config:
-        
+
     def __init__(self, env, **kwargs):
         self.DevcfgFeatureSet = kwargs                          #Set to 'true' for multi-cfg implementation
         self.parseImageCfgXML(env)
-        
+
     def parseImageCfgXML(self,env):
-        
+
         image_cfg_dom               = xml.dom.minidom.parse(self.getFeature('ImageCfgXML'))
-        
+
         #Get handle to the tags
         targetImg                   = image_cfg_dom.getElementsByTagName("target_img")
         devcfgTrgtBldTag            = image_cfg_dom.getElementsByTagName("devcfg_target_build_tag")
@@ -67,7 +67,7 @@ class Config:
         propsMemoryOptimise         = image_cfg_dom.getElementsByTagName("props_memory_optimisation")
         structSize                  = image_cfg_dom.getElementsByTagName("size_of_struct")
         hwVersionSpecificProps      = image_cfg_dom.getElementsByTagName("hw_version_specific_props")
-        
+
         #Extract and validate tag data
 
         #Identify Target Image
@@ -75,14 +75,14 @@ class Config:
             targetImgStr = re.sub('\s','',targetImg[0].firstChild.data.encode("ascii")).lower()
         except:
             assert(0), "ERROR : <target_img> tag missing in {}".format(self.getFeature('ImageCfgXML'))
-        
+
         #Identify target image DevCfg build tag
         try:
             devcfgTrgtBldTagStr = re.sub('\s','',devcfgTrgtBldTag[0].firstChild.data.encode("ascii"))
             devcfgTrgtBldTagStr    = devcfgTrgtBldTagStr.upper()
         except:
             assert(0), "ERROR : <devcfg_target_build_tag> tag missing in {}".format(self.getFeature('ImageCfgXML'))
-        
+
         #DAL_CONFIG_TARGET_ID value
         try:
             dalConfigTgtIdVal = re.sub('\s','',dalConfigTgtId[0].firstChild.data.encode("ascii")).lower()
@@ -90,7 +90,7 @@ class Config:
             assert('x' not in env.get('MSM_ID')), "ERROR: <dal_config_target_id> tag missing in {} file".format(self.getFeature('ImageCfgXML'))
             dalConfigTgtIdVal = '0x${MSM_ID}'
         assert('x' not in dalConfigTgtIdVal[2:]), "<dal_config_target_id> value in file {} cannot have an 'x' in it".format(self.getFeature('ImageCfgXML'))
-        
+
         #Devcfg xml tag list (SOC tags)
         if len(devcfgXmlSingleConfigs):
             devcfgXMLTagList = re.sub('\s','',devcfgXmlSingleConfigs[0].firstChild.data.encode("ascii")).split(',')
@@ -106,7 +106,7 @@ class Config:
         else:
             devcfgPlatformXMLTagList = []
             platformCfgFlag           = 'false'
-        
+
         #OEM Parameters
         try:
             usesOEMConfig = re.sub('\s','',usesOEMConfig[0].firstChild.data.encode("ascii")).lower()
@@ -117,15 +117,15 @@ class Config:
         except:
             usesOEMConfig = 'false'
             print "WARNING: <usesOEMConfig> tag not provided in file : {}. Defaulting to \'false\'".format(self.getFeature('ImageCfgXML'))
-        
+
         #SocHwVersion Dictionary
         assert (len(socHwVersion) > 0), "<soc_hw_version> tag missing in {} file".format(self.getFeature('ImageCfgXML'))
         socHwVersionNumber = re.sub('\s','',socHwVersion[0].firstChild.data.encode("ascii")).split(',')
         socHwVersionDict = {}
         for element in socHwVersionNumber :
-            socHwVersionDict.setdefault(element.split(':')[0],[]).append(element.split(':')[1])         
-        tcsrSsocHwVersionAddrVal = re.sub('\s','',tcsrSsocHwVersionAddr[0].firstChild.data.encode("ascii"))  
-        
+            socHwVersionDict.setdefault(element.split(':')[0],[]).append(element.split(':')[1])
+        tcsrSsocHwVersionAddrVal = re.sub('\s','',tcsrSsocHwVersionAddr[0].firstChild.data.encode("ascii"))
+
         #tcsr Physical to Virtual mapping flag (1:1 or not)
         try:
             tcsrOneToOneMappingFlag = re.sub('\s','',tcsrMapping[0].firstChild.data.encode("ascii")).lower()
@@ -137,21 +137,21 @@ class Config:
         except:
             multiCfgFlag = 'true'
             print "WARNING: <multiCfg> tag not provided in file : {}. Defaulting to \'true\'".format(self.getFeature('ImageCfgXML'))
-         
+
         #Memory OPtimisation Flag
         try:
             propsMemoryOptimise_flag = re.sub('\s','',propsMemoryOptimise[0].firstChild.data.encode("ascii")).lower()
         except:
             propsMemoryOptimise_flag = 'false'
             print "WARNING: <props_memory_optimisation> tag not provided in file : {}. Defaulting to \'false\'".format(self.getFeature('ImageCfgXML'))
-        
+
         #Struct Size Flag
         try:
             structSize_flag = re.sub('\s','',structSize[0].firstChild.data.encode("ascii")).lower()
         except:
             structSize_flag = 'false'
             print "WARNING: <size_of_struct> tag not provided in file {}. Defaulting to \'false\'".format(self.getFeature('ImageCfgXML'))
-        
+
         #Hardware version specific props Flag
         try:
             hwVersionSpecificProps_flag = re.sub('\s','',hwVersionSpecificProps[0].firstChild.data.encode("ascii")).lower()
@@ -160,9 +160,9 @@ class Config:
             print "WARNING: <hw_version_specific_props> tag not provided in file : {}. Defaulting to \'false\'".format(self.getFeature('ImageCfgXML'))
 
         #Initialise Feature set
-        self.setFeature('targetImg',targetImgStr)              
-        self.setFeature('devcfgImgBuildTag', devcfgTrgtBldTagStr)        
-        self.setFeature('dalConfigTargetId', dalConfigTgtIdVal)    
+        self.setFeature('targetImg',targetImgStr)
+        self.setFeature('devcfgImgBuildTag', devcfgTrgtBldTagStr)
+        self.setFeature('dalConfigTargetId', dalConfigTgtIdVal)
         self.setFeature('devcfgXMLTagList',devcfgXMLTagList)
         self.setFeature('devcfgPlatformXMLTagList',devcfgPlatformXMLTagList)
         self.setFeature('platformCfg',platformCfgFlag)
@@ -175,14 +175,14 @@ class Config:
         self.setFeature('propsMemoryOptimise',propsMemoryOptimise_flag)
         self.setFeature('structSize',structSize_flag)
         self.setFeature('hwVersionSpecificProps',hwVersionSpecificProps_flag)
-        
-        
+
+
     def usesFeature(self, feature):
         return self.getFeature(feature)
-        
+
     def getFeature(self, feature):
         return self.DevcfgFeatureSet.get(feature,None)
-        
+
     def setFeature(self, feature, value):
         self.DevcfgFeatureSet.update({feature:value})
 
@@ -194,46 +194,46 @@ def exists(env):
 
 def generate(env):
     """
-    Generate function for devcfg builder. 
+    Generate function for devcfg builder.
     Sets up the action, scanner and builder function to be called by clients to
     pass xml, devId details to the builder.
     """
     rootenv = env.get('IMAGE_ENV')
-    
+
     #Allow clients to use DeviceConfig
     rootenv.Replace(USES_DEVCFG = True)
-    
+
     #Set the macros DEVCFG_SCRIPTS and DEVCFG_ROOT
     rootenv.Replace(DEVCFG_SCRIPTS = os.path.dirname(os.path.realpath(__file__)))
     rootenv.Replace(DEVCFG_ROOT = os.path.dirname(rootenv.get('DEVCFG_SCRIPTS')))
-    
+
     #Install AddDevcfgInfo API to the rootenv. Allows clients to pass XML/C config
     rootenv.AddMethod(add_devcfg_info, "AddDevCfgInfo")
     #Returns the actual number of tags used by clients in a multi-cfg setting
     rootenv.AddMethod(get_devcfg_currently_used_tags, "GetDevcfgRelevantTags")
-    
+
     #---------------------------------------------------------------------------
     # Create the DEVCFG object and assign to the rootenv
     #---------------------------------------------------------------------------
-    
+
     image_config_xml = env.subst("${IMAGE_CONFIG_XML}")
     if not os.path.isfile(image_config_xml):
         raise ValueError("ERROR : image_cfg.xml not found !")
         exit()
-    
+
     config = Config(rootenv, ImageCfgXML = image_config_xml)
     rootenv.Replace(DEVCFG = config)
-    
+
     #OEM Image Specific macros
     target_img = rootenv.get('DEVCFG').getFeature('targetImg')
-    
+
     if 'DAL_DEVCFG_OEM_QSEE_IMG' in env.get('BUILD_TAGS'):
         rootenv.get('DEVCFG').setFeature('devcfgImgBuildTag','DAL_DEVCFG_OEM_QSEE_IMG')
         rootenv.get('DEVCFG').setFeature('targetImg','oem_tz')
     elif 'DAL_DEVCFG_OEM_HYP_IMG' in env.get('BUILD_TAGS'):
         rootenv.get('DEVCFG').setFeature('devcfgImgBuildTag','DAL_DEVCFG_OEM_HYP_IMG')
         rootenv.get('DEVCFG').setFeature('targetImg','oem_hyp')
-    
+
     env.Append(CPPDEFINES = ["DEVCFG_TARGET_" + (env.get('DEVCFG').getFeature('targetImg')).upper()])
     if env.get('DEVCFG').getFeature('tcsrPhyToVirSame') == 'true':
         env.Append(CPPDEFINES = ["TCSR_ADDR_PHS_SAME_AS_VIR"])
@@ -243,26 +243,26 @@ def generate(env):
         env.Append(CPPDEFINES = ["DEVCFG_MULTIPLATFORM_ENABLED"])
     if env.get('DEVCFG').getFeature('oemCfg') == 'true':
         env.Append(CPPDEFINES = ["DEVCFG_OEM_ENABLED"])
-        
+
     env.Append(CPPDEFINES = ["DAL_CONFIG_TARGET_ID="+env.get('DEVCFG').getFeature('dalConfigTargetId')])
     env.Replace(DAL_CONFIG_TARGET_ID = env.get('DEVCFG').getFeature('dalConfigTargetId'))
-    
+
     # Create the preprocess tag list to be used in devcfg_builder.py
     devcfg_xml_dict = {}
     for xml_tag in env.get('DEVCFG').getFeature('devcfgXMLTagList'):
         devcfg_xml_dict[xml_tag] = 'pp_' + xml_tag
     rootenv.Replace(DEVCFG_XML_DICT = devcfg_xml_dict)
-    
+
 
     rootenv[DEVCFG_ENV_DESCRIPTOR] = {}
     rootenv[DEVCFG_CURRENT_USED_TAGS] = []
-    
+
     #Install all builders
     devcfg_img_header_file_auto_generate(env)
     devcfg_xml_auto_generate(env)
     devcfg_c_auto_generate(env)
     devcfg_c_struct_generate(env)
-    
+
     return
 
 def devcfg_img_header_file_auto_generate(env):
@@ -272,15 +272,15 @@ def devcfg_img_header_file_auto_generate(env):
 #===============================================================================
 # DEV CFG STRUCT FILE Install Rules
 #===============================================================================
-def devcfg_c_struct_generate(env):  
+def devcfg_c_struct_generate(env):
     # load builder into environment
     env.Append(BUILDERS = {'QualifyStructNames' : Builder(action=devcfg_qualify_struct_name_builder)})
-    
+
 #===============================================================================
 # DEV CFG STRUCT FILE Install Rules
 #===============================================================================
 def devcfg_c_auto_generate(env):
-    
+
     # load builder into enviroment
     devcfg_c_bld = env.Builder(action = devcfg_c_builder, action_source=None)
     env.Append(BUILDERS = {'GenerateCFile' : devcfg_c_bld})
@@ -289,9 +289,9 @@ def devcfg_c_auto_generate(env):
 # DEV CFG XML build rules
 #===============================================================================
 def devcfg_xml_auto_generate(env):
-    
+
     # load builder into enviroment
-    # Set action_source to None as there are no sources passed into the action function. 
+    # Set action_source to None as there are no sources passed into the action function.
     # If this isn't set explicitly, then build command with verbose=2 fails.
     devcfg_target_scan = env.Scanner(devcfg_target_scan_func, name='DevCfgTargetScanner')
     devcfg_bld = env.Builder(action = devcfg_xml_builder, action_source=None,
@@ -299,7 +299,7 @@ def devcfg_xml_auto_generate(env):
                              #suffix = '.xml'
                              )
     env.Append(BUILDERS = {'DevcfgBuilder' : devcfg_bld})
-    
+
     return
 
 def devcfg_img_header_file_builder(target, source, env):
@@ -309,9 +309,9 @@ def devcfg_img_header_file_builder(target, source, env):
     fp.write('#define devcfg_target_soc_info devcfg_target_soc_info_'+image_name+'\n')
     fp.close()
     return
-    
-def devcfg_c_builder(target, source, env):    
-    xml_tag = env['XML_TAG'] 
+
+def devcfg_c_builder(target, source, env):
+    xml_tag = env['XML_TAG']
     c_output_file = str(target[0])
     c_input_file = str(source[0])
     dir_name,file_name = os.path.split(c_output_file)
@@ -325,32 +325,32 @@ def devcfg_c_builder(target, source, env):
       file_dest_fp.write('#include "' + '..' + file.replace('\\','/').split(env['BUILDPATH'].replace('\\','/') +'/'+xml_tag)[1] + '"\n')
     file_dest_fp.write(file_src_fp.read())
     file_src_fp.close()
-    file_dest_fp.close()     
-    return 
-    
+    file_dest_fp.close()
+    return
+
 def devcfg_target_scan_func(node, env, path):
     """
-    Scanner adds the include paths to dal config environment which will 
+    Scanner adds the include paths to dal config environment which will
     be used to compile autogenerated c files while rebuilding. This gets
     called from the dal config scons environment.
     """
-    
+
     rootenv     = env.get('IMAGE_ENV')
     image_tag  = env['IMAGE_TAG']
     pp_xml_tag  = 'pp_' + env['XML_TAG']
     cc_xml_tag  = 'cc_' + env['XML_TAG']
-    
+
     pp_xml_file_node_list = rootenv.get('DEVCFG_INFO_COLLECTOR', {}).get(image_tag,{}).get(pp_xml_tag,[])
     cc_obj_file_node_list = rootenv.get('DEVCFG_INFO_COLLECTOR', {}).get(image_tag,{}).get(cc_xml_tag,[])
     for pp_xml_file_node in pp_xml_file_node_list:
         env.Depends(node, pp_xml_file_node)
     for cc_obj_file_node in cc_obj_file_node_list:
         env.Depends(node, cc_obj_file_node)
-    
-       
+
+
     #Instead of returning any nodes just add the PP XMLs and C Obj FILE as deps
     #Before building master xml, define rules to build preprocess and structure header
-    
+
     return []
 
 def get_devcfg_currently_used_tags(env, targets, thread_input_dict):
@@ -358,8 +358,8 @@ def get_devcfg_currently_used_tags(env, targets, thread_input_dict):
     return rootenv[DEVCFG_CURRENT_USED_TAGS]
 
 def devcfg_qualify_struct_name_emitter(target, source, env):
-    return (target, source)    
-    
+    return (target, source)
+
 def devcfg_qualify_struct_name_builder(target,source,env):
     dir_name,file_name = os.path.split(str(target[0]))
     dir_name = env.RealPath(dir_name)
@@ -367,14 +367,14 @@ def devcfg_qualify_struct_name_builder(target,source,env):
        os.makedirs(dir_name)
     fp = open(str(target[0]),"w")
     suffix = env['SUFFIX']
-    xmlfile_fullpath = str(source[0])  
+    xmlfile_fullpath = str(source[0])
     struct_name_list = extract_c_struct_variable_from_xml(xmlfile_fullpath)
     for struct in struct_name_list:
         fp.write('#define '+struct+' '+struct+'_'+suffix+'\n')
     fp.close()
-    return 
+    return
 
-               
+
 def extract_c_struct_variable_from_xml(xml_file):
     unique_struct_list = []
     temp_line = ""
@@ -400,9 +400,9 @@ def extract_c_struct_variable_from_xml(xml_file):
                 struct_name = find(temp_line)
                 if (struct_name != None) and (struct_name not in unique_struct_list):
                     unique_struct_list.append(struct_name)
-        
+
     return unique_struct_list
-  
+
 def find(xml_node):
     temp_line = ""
     line_parts = xml_node.split('>',1)
@@ -419,40 +419,40 @@ def resolve_platform_all_tag(env,thread_input_dict,tag_list):
            plat_key = key
            plat_value = value
            soc = key.split('_')[0]
-    if plat_key is not 'NULL' and soc is not 'NULL':    
+    if plat_key is not 'NULL' and soc is not 'NULL':
         plat_tag_list = []
         for tags in tag_list:
           #find all platform tags for that soc
           if 'PLATFORM' in tags and soc in tags:
-             plat_tag_list.append(tags) 
+             plat_tag_list.append(tags)
         for plat in plat_tag_list:
-          thread_input_dict[plat] = plat_value 
-        del thread_input_dict[plat_key]   
-    return thread_input_dict  
-    
+          thread_input_dict[plat] = plat_value
+        del thread_input_dict[plat_key]
+    return thread_input_dict
+
 def resolve_soc_all_tag(env,thread_input_dict,tag_list):
     key = 'NULL'
     if thread_input_dict.has_key('SOC_XML'):
        key = 'SOC_XML'
     elif thread_input_dict.has_key('soc_xml'):
-       key = 'soc_xml'   
+       key = 'soc_xml'
     elif thread_input_dict.has_key('devcfg_xml'):
         key = 'devcfg_xml'
-        
-    if key is not 'NULL':   
+
+    if key is not 'NULL':
        soc_list = []
        for tags in tag_list:
           if 'PLATFORM' not in tags:
-             soc_list.append(tags)        
+             soc_list.append(tags)
        cfglist = thread_input_dict[key]
        if(type(cfglist) is not list):
           cfglist = [cfglist]
        for soc in soc_list:
           thread_input_dict[soc] = cfglist
-       del thread_input_dict[key]     
-    return thread_input_dict  
+       del thread_input_dict[key]
+    return thread_input_dict
 
-def find_file_name_list(env,thread_input_dict,each_xml_tag,ext):  
+def find_file_name_list(env,thread_input_dict,each_xml_tag,ext):
     file_list = []
     for file in  thread_input_dict[each_xml_tag]:
          fullpath = env.RealPath(str(file))
@@ -469,7 +469,7 @@ def check_and_ignore_xml_file_duplicates(env,rootenv,xml_file_list,each_xml_tag,
         if ((os.path.basename(xml_file) + '.i') in exisiting_pp_xml_file_list):
             env.PrintWarning("Duplicate Device Configuration Input XML File Specified " + xml_file)
             xml_file_list.remove(xml_file)
-    return xml_file_list 
+    return xml_file_list
 
 def add_devcfg_info(env, targets, thread_input_dict):
     """
@@ -483,42 +483,42 @@ def add_devcfg_info(env, targets, thread_input_dict):
     env.Replace(PPASM = "${PYTHONCMD} ${PPASM_FILE}")
     env.Replace(CCPPCLCOM =   "$PPASM -f $SOURCES -o $TARGET")
     env.Replace(ARMCC_PREPROCESS_CMD = "-E")
-    
+
     rootenv = env.get('IMAGE_ENV')
-    
+
     #If this target doesn't use devcfg, bail out
     if env.GetUsesFlag('USES_DEVCFG') is False:
-        return    
-    
+        return
+
     if type(targets) is not list:
        targets = [targets]
-       
+
     #Is the Config passed to this API relevant to this image ?
     if not len(set(targets) & set(env.get('BUILD_TAGS'))):
         return
-    
+
     tag_list        = env.get('DEVCFG').getFeature('devcfgXMLTagList')
     devcfg_target   = env.get('DEVCFG').getFeature('targetImg')
     tag_dicts       = env.get('DEVCFG_XML_DICT')
-    
+
     if tag_list is None:
         err_str = 'DEVCFG_XML_TAGS are not found. Check build\ms\image_cfg.xml to make sure tags have been added'
         err_str += 'Also, check tbc_core_devcfg.py to make sure these are being generated\n'
         devcfg_error(env, err_str)
-        
-    #resolve any soc_all tag    
+
+    #resolve any soc_all tag
     thread_input_dict = resolve_soc_all_tag(env,thread_input_dict,tag_list)
 
     for target_image in targets:
         if target_image not in env.get('BUILD_TAGS'):
             continue
-        for each_xml_tag in tag_list:     
+        for each_xml_tag in tag_list:
             pp_xml_tag = 'pp_'+each_xml_tag
             # Dictionary to hold dal device id and device config xml locations
-            if each_xml_tag in thread_input_dict:            
+            if each_xml_tag in thread_input_dict:
                 xml_file_list = find_file_name_list(env,thread_input_dict,each_xml_tag,'.xml')
-                xml_file_list = check_and_ignore_xml_file_duplicates(env,rootenv,xml_file_list,each_xml_tag,target_image)            
-                sources_c_file_gen_builder = []            
+                xml_file_list = check_and_ignore_xml_file_duplicates(env,rootenv,xml_file_list,each_xml_tag,target_image)
+                sources_c_file_gen_builder = []
                 for file in xml_file_list:
                    #Obtain the parent directory name of the file
                    path, xml_fname = os.path.split(file)
@@ -534,7 +534,7 @@ def add_devcfg_info(env, targets, thread_input_dict):
                    str_tag = each_xml_tag.replace('xml','')+ devcfg_target
                    devcfg_struct_qual = env.QualifyStructNames(devcfg_struct_qual_name,pp_xml_cl,SUFFIX=str_tag)
                    sources_c_file_gen_builder.append(devcfg_struct_qual)
-                
+
                 c_file_list = find_file_name_list(env,thread_input_dict,each_xml_tag,'.c')
                 cc_xml_tag = pp_xml_tag.replace('pp','cc')
                 for file in c_file_list:
@@ -549,19 +549,19 @@ def add_devcfg_info(env, targets, thread_input_dict):
                     file_prefix = each_xml_tag.replace('xml','devcfg')
                     sources_c_file_gen_builder.insert(0,pp_cfile_cl)
                     output_c_file = env.GenerateCFile(build_path + '/' + dir_name + '/' + file_prefix +'_'+c_fname,sources_c_file_gen_builder,XML_TAG=each_xml_tag,IMAGE_TAG=target_image)
-                    if '--diag_suppress=177' not in env.get('CFLAGS'):
-                        env.get('CFLAGS').append('--diag_suppress=177')
+                    # if '--diag_suppress=177' not in env.get('CFLAGS'):
+                    #     env.get('CFLAGS').append('--diag_suppress=177')
                     output_obj_node = env.AddObject(target_image , output_c_file[0])
                     rootenv['DEVCFG_INFO_COLLECTOR'].setdefault(target_image,{}).setdefault(cc_xml_tag,[]).append(output_obj_node[0])
-                    sources_c_file_gen_builder.pop(0)              
-                
-        
+                    sources_c_file_gen_builder.pop(0)
+
+
             if each_xml_tag not in rootenv[DEVCFG_CURRENT_USED_TAGS]:
                 rootenv[DEVCFG_CURRENT_USED_TAGS].append(each_xml_tag)
                 rootenv.Replace(DEVCFG_ENV_USED_XML_TAGS = rootenv[DEVCFG_CURRENT_USED_TAGS])
 
     return
-    
+
 
 def devcfg_xml_builder(target, source, env):
     """
@@ -570,24 +570,24 @@ def devcfg_xml_builder(target, source, env):
     The master xml file will be the #includes of all the xml files passed by the clients.
     target[0] will have the master xml location & name.
     """
-    
+
     if env.GetUsesFlag('USES_DEVCFG') is False:
         return None
-        
+
     # Creation of master dal xml file
     xml_filepathname    = env.RealPath(str(target[0]))
-    env_filepathname    = env.RealPath(str(target[1]))    
-    xml_tag             = env.get('XML_TAG','')   
-    image_tag           = env.get('IMAGE_TAG','DAL_DEVCFG_IMG') 
+    env_filepathname    = env.RealPath(str(target[1]))
+    xml_tag             = env.get('XML_TAG','')
+    image_tag           = env.get('IMAGE_TAG','DAL_DEVCFG_IMG')
     update_env          = env.get('UPDATE_ENV','True')
     rootenv             = env.get('IMAGE_ENV')
 
     if image_tag not in env.get('BUILD_TAGS'):
         errStr = 'Could not create DevCfg Master XML file for Image tag : {}'.format(image_tag)
         devcfg_error(env, errStr)
-    
+
     moduleNameStr = '<module name="devcfg">\n'
-    
+
     # Create the master xml file and open for writing
     try:
         devcfg_xml_file = open(xml_filepathname, 'w')
@@ -595,18 +595,18 @@ def devcfg_xml_builder(target, source, env):
     except IOError:
         errStr = 'Could not create DevCfg Master XML file' + filepathname
         devcfg_error(env, errStr)
-    
-    
+
+
     HeaderList = []
     HeaderPath = []
-    
+
     # Add the include files and the xml header tags
     devcfg_xml_file.write('#include "DALPropDef.h"\n')
     devcfg_xml_file.write('#include "DALDeviceId.h"\n')
     devcfg_xml_file.write('<?xml version="1.0"?>\n')
     devcfg_xml_file.write('<dal>\n')
     devcfg_xml_file.write(moduleNameStr)
-    
+
     # Write all the pp xml files in the Master_xml file
     if image_tag in rootenv.get('DEVCFG_INFO_COLLECTOR').keys():
         config_files_dict = rootenv.get('DEVCFG_INFO_COLLECTOR').get(image_tag)
@@ -636,21 +636,21 @@ def devcfg_xml_builder(target, source, env):
                 pp_xml_file_fp.close()
                 devcfg_xml_file.write(each_xml_file.get_contents())
                 devcfg_xml_file.write('\n')
-    
+
 
     # Write the closing tags
     devcfg_xml_file.write('</module>' + '\n')
-    devcfg_xml_file.write('</dal>\n') 
-   
+    devcfg_xml_file.write('</dal>\n')
+
     # Close the Master XML file
     devcfg_xml_file.close()
     devcfg_env_file.close()
     #Store Header Paths extracted to environment
     if(update_env == True) :
        env.get('CPPPATH').extend(HeaderPath)
-    
+
     return
-    
+
 
 def devcfg_error(env, errStr, Info=None):
     """
@@ -669,6 +669,6 @@ def get_devcfg_xml_tags(env):
     devcfg_xml_tag_list  = env.get('DEVCFG').getFeature('devcfgXMLTagList')
     devcfg_soc_tag_dict  = env.get('DEVCFG').getFeature('socHwVersion')
     tcsr_hw_version_addr  = env.get('DEVCFG').getFeature('tcsrSsocHwVersionAddr')
-   
-  
+
+
     return devcfg_xml_tag_list, devcfg_soc_tag_dict, tcsr_hw_version_addr

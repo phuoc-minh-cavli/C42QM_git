@@ -31,6 +31,6 @@ Import('env')
 # Convert warnings to errors in all hardware engines components
 #-------------------------------------------------------------------------------
 
-env.Append(CFLAGS = "--diag_error=warning ")
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 env.LoadSoftwareUnits()

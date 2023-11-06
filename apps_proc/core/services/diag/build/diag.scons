@@ -25,12 +25,12 @@
 # 01/10/19   kdey    Porting of Qsockets
 # 04/10/17   gn      DIAG QAPI file name change to qapi_diag.c
 # 02/24/17   gn      Changes to support DIAG QAPIs with DAM framework
-# 07/20/16   nk      Changes Needed for ThreadX support 
+# 07/20/16   nk      Changes Needed for ThreadX support
 # 11/25/14   ph      Mainlined the feature DIAG_CONSUMER_API.
-# 10/09/14   rs      Updated scons api's. 
+# 10/09/14   rs      Updated scons api's.
 # 02/26/14   sa      Updated to support Data Compression
-# 01/07/14   xy      Added fusion DCI feature 
-# 09/20/13   tbg     Added support for Diag over STM 
+# 01/07/14   xy      Added fusion DCI feature
+# 09/20/13   tbg     Added support for Diag over STM
 # 10/01/13   xy      Removed rbq.c
 #===============================================================================
 Import('env')
@@ -50,7 +50,7 @@ env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
 # Diag Defines
 #-------------------------------------------------------------------------------
 env.Append(CPPDEFINES=['MSG_BT_SSID_DFLT=MSG_SSID_DIAG'])
-env.Append(CPPDEFINES=["DIAG_MAX_REQ_LEN_RSP_SEND"]) 
+env.Append(CPPDEFINES=["DIAG_MAX_REQ_LEN_RSP_SEND"])
 env.Append(CPPDEFINES=["FEATURE_DIAG_FWD_HDLC"])
 env.Append(CPPDEFINES=["DIAG_SOCKET_SUPPORT"])
 #Feature for listener support
@@ -62,13 +62,13 @@ env.Append(CPPDEFINES=["DIAG_SOCKET_SUPPORT"])
 
 if 'USES_QDSS_SWE' in env:
   env.Append(CPPDEFINES=["DIAG_QDSS_SUPPORT"])
-  
+
 # Set this flag to True to compile in Diag over STM support
 # If False, diag_stm.c file will not be compiled and the feature will be disabled
 diag_stm_support=False
 
 if diag_stm_support==True:
-   env.Append(CPPDEFINES=["FEATURE_DIAG_STM"]) 
+   env.Append(CPPDEFINES=["FEATURE_DIAG_STM"])
 
 diag_flash_logging_support = False
 if "USES_ENABLE_DIAG_FLASH_LOGGING" in env:
@@ -76,7 +76,7 @@ if "USES_ENABLE_DIAG_FLASH_LOGGING" in env:
 
 if diag_flash_logging_support==True:
    env.Append(CPPDEFINES=["DIAG_FLASH_LOGGING_SUPPORT"])
-   
+
 #-------------------------------------------------------------------------------
 # External depends within CoreBSP
 #-------------------------------------------------------------------------------
@@ -137,16 +137,16 @@ CBSP_API = [
    'SYSTEMDRIVERS',
    'WIREDCONNECTIVITY',
    # needs to be last also contains wrong comdef.h
-   'KERNEL',   
+   'KERNEL',
 ]
 
 env.RequirePublicApi(MODEM_API, 'modem')
 
-#For qsocket.h header file 
+#For qsocket.h header file
 env.RequirePublicApi([
   'COMMON',
   ], area='API')
-  
+
 env.RequirePublicApi(CBSP_API)
 env.RequireRestrictedApi(CBSP_API)
 
@@ -183,7 +183,7 @@ else:
       '${BUILDPATH}/DCM/rtos/src/diagdiag.c',
       '${BUILDPATH}/DCM/rtos/src/paramsdiag.c',
       '${BUILDPATH}/diag_mask_tbl/src/msg_arrays_i.c',
-      '${BUILDPATH}/diag_mask_tbl/src/log_arrays_i.c', 
+      '${BUILDPATH}/diag_mask_tbl/src/log_arrays_i.c',
       '${BUILDPATH}/DCM/common/src/diag.c',
       '${BUILDPATH}/DCM/common/src/diagbuf.c',
       '${BUILDPATH}/DCM/common/src/diagreset.c',
@@ -213,23 +213,23 @@ else:
          '${BUILDPATH}/DCM/common/src/diagcompressed_buffer.c',
          '${BUILDPATH}/DCM/common/src/diag_compress.c',
       ]
-      
+
    if env.has_key('USES_DIAG_NV_SUPPORT'):
       DIAG_SOURCES += [
          '${BUILDPATH}/DCM/rtos/src/diagnv.c',
       ]
-      
+
    if diag_stm_support==True:
       DIAG_SOURCES += [
          '${BUILDPATH}/DCM/common/src/diag_stm.c'
    ]
-   
+
    if diag_flash_logging_support==True:
       DIAG_SOURCES += [
           '${BUILDPATH}/DCM/common/src/diag_flash_logging.c'
       ]
-   
-      
+
+
 #-------------------------------------------------------------------------------
 
 if 'USES_RCINIT' in env:
@@ -252,17 +252,17 @@ if 'USES_RCINIT' in env:
 # Add Libraries to image
 #-------------------------------------------------------------------------------
 env.AddLibrary([
-	'MODEM_IMAGE', 'CBSP_MODEM_IMAGE', 
+	'MODEM_IMAGE', 'CBSP_MODEM_IMAGE',
 	'APPS_IMAGE', 'CBSP_APPS_IMAGE',
-	'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE', 
-	'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE', 
+	'QDSP6_SW_IMAGE', 'CBSP_QDSP6_SW_IMAGE',
+	'SINGLE_IMAGE', 'CBSP_SINGLE_IMAGE',
 	'WCN_IMAGE'],
 	'${BUILDPATH}/diag',
 	DIAG_SOURCES)
 #-------------------------------------------------------------------------------
 # Convert warnings to errors in all system drivers components
 #-------------------------------------------------------------------------------
-env.Append(CFLAGS = "--diag_error=warning ")
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 #-------------------------------------------------------------------------------
 # Define QDSS events
@@ -272,4 +272,4 @@ if 'USES_QDSS_SWE' in env:
    events = [['DIAG_SWE_RX_READY', 'Diag ready for Rx', 'T']]
    env.AddSWEInfo(QDSS_IMG, events)
 
-   
+

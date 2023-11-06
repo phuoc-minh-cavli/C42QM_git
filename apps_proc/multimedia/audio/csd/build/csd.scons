@@ -32,7 +32,8 @@ Import('env')
 # Convert warnings to errors in all csd modules
 #-------------------------------------------------------------------------------
 
-env.Append(CFLAGS = "--diag_error=warning ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 env.LoadSoftwareUnits()
 

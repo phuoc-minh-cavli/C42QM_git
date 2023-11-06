@@ -14,10 +14,10 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/tethering/qti/build/dataservices_qti.scons#3 $
 #  $DateTime: 2021/04/14 05:32:40 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 # 3/28/12   sdt     Baseline
@@ -54,12 +54,12 @@ env.RequirePublicApi('QAPI')
 env.RequirePublicApi('NICHESTACK_PORT')
 env.RequirePublicApi(['UTILS'], area='dataservices')
 env.RequirePublicApi('QCMAP')
-env.RequirePublicApi('QCMAP_EXT') 
+env.RequirePublicApi('QCMAP_EXT')
 
 
 
 env.PublishPrivateApi('QTI', [
-   "${INC_ROOT}/dataservices/tethering/qti/inc", 
+   "${INC_ROOT}/dataservices/tethering/qti/inc",
    ], auto_require=True)
 
 
@@ -73,11 +73,11 @@ QTI_SOURCES = [
 	'${BUILDPATH}/qti_rmnet_dpm.c',
 	'${BUILDPATH}/qti_cmdq.c',
 	'${BUILDPATH}/qti_rmnet_modem.c',
-	'${BUILDPATH}/qti_rmnet_qmi.c'	
+	'${BUILDPATH}/qti_rmnet_qmi.c'
 ]
 
 QTI_SHIP = [
-	'${BUILDPATH}/qti_qcmap.c'	
+	'${BUILDPATH}/qti_qcmap.c'
 ]
 
 IMAGES = ['APPS_PROC','MOB_DATASERVICES']
@@ -103,7 +103,7 @@ RCINIT_INIT_QTI_TASK_INIT = {
 RCINIT_INIT_QTI_TASK = {
   'sequence_group'             : 'RCINIT_GROUP_2',          # required
   'thread_name'                : 'qti_task',                 # required
-  'thread_entry'               : 'qti_task_entry',           
+  'thread_entry'               : 'qti_task_entry',
   'stack_size_bytes'           : '8192',
   'priority_amss_order'        : 'QTI_PRI_ORDER'
 }
@@ -112,6 +112,7 @@ if 'USES_RCINIT' in env:
   RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
   env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_TASK_INIT )
   env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QTI_TASK )
-  
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = "--diag_error=warning")
+
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = "--diag_error=warning")

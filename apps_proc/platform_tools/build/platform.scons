@@ -31,7 +31,7 @@ CLEAN_SDK_SOURCES = env.FindFiles("*", "${BUILD_ROOT}/platform_tools/features")
 env.CleanPack(['APPS_IMAGES','CBSP_APPS_IMAGE'],CLEAN_SDK_SOURCES)
 
 #
-#BUILD_ROOT    = apps_proc 
+#BUILD_ROOT    = apps_proc
 #BUILD_MS_ROOT = apps_proc/build/ms
 TARGET_FILES = [
 	'${BUILD_ROOT}/build/ms/target.builds',
@@ -48,9 +48,10 @@ TARGET_FILES = [
 # Convert warnings to errors in all CoreBSP code
 #-------------------------------------------------------------------------------
 
-if 'USES_ARM' in env:
-	env.Append(CFLAGS = "--diag_error=warning ")
-else:
-    "do nothing"
+# Fix ARMTOOLS License
+# if 'USES_ARM' in env:
+# 	env.Append(CFLAGS = "--diag_error=warning ")
+# else:
+#     "do nothing"
 
 env.LoadSoftwareUnits()

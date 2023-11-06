@@ -19,7 +19,9 @@ if env['CHIPSET'] in ['mdm9205','kuno']:
 
 if 'USES_MOB' not in env:
 	env.Append(CFLAGS = " --c99 ")
-	env.Append(CCFLAGS = " --diag_suppress=66 ")
+
+# Fix ARMTOOLS License
+# env.Append(CCFLAGS = " --diag_suppress=66 ")
 
 env.Append(CFLAGS = ['-DLWM2M_CLIENT_MODE','-DLWM2M_SERVER_OBJECT', '-DLWM2M_LITTLE_ENDIAN'])
 SRCPATH = '${BUILD_ROOT}/dataservices/netservice/net'
@@ -69,7 +71,7 @@ env.RequirePublicApi([
          'SHARKSSL',
          'MISC_NETSERVICES',
          ])
- 
+
 env.RequirePublicApi('QCLI_DEMO', area='dataservices')
 env.RequirePrivateApi(['DATASERVICES_NET'])
 env.RequirePublicApi(['QAPI'])
@@ -179,44 +181,44 @@ TX_SOURCES_SSL_EXT  = [
                           '${BUILDPATH}/ipstack/port/iprcv_ext.c',
 						  '${BUILDPATH}/qapi_ssl/qapi_netbuf_ext.c',
                       ]
-					  
+
 TX_SOURCES_SSL_EXT_SOURCE = [
                                '${BUILDPATH}/qapi_ssl/qapi_ssl_ext.c',
-                               '${BUILDPATH}/qapi_ssl/qapi_ssl_cert_ext.c',       
+                               '${BUILDPATH}/qapi_ssl/qapi_ssl_cert_ext.c',
                              ]
-							 
+
 TX_SOURCES_LWM2M_INTERNAL = [
-						'${BUILDPATH}/qapi/qapi_lwm2m.c', 
+						'${BUILDPATH}/qapi/qapi_lwm2m.c',
                       ]
-					  
+
 TX_SOURCES_LWM2M_EXT = [
-						'${BUILDPATH}/qapi_stub/qapi_lwm2m_ext.c', 
-                      ]					  
-					  
+						'${BUILDPATH}/qapi_stub/qapi_lwm2m_ext.c',
+                      ]
+
 TX_SOURCES_COAP_INTERNAL = [
-						'${BUILDPATH}/qapi/qapi_coap.c', 
+						'${BUILDPATH}/qapi/qapi_coap.c',
                       ]
-					  
+
 TX_SOURCES_COAP_EXT = [
-						'${BUILDPATH}/qapi_stub/qapi_coap_ext.c', 
-                      ]	
-					  
+						'${BUILDPATH}/qapi_stub/qapi_coap_ext.c',
+                      ]
+
 TX_SOURCES_MQTT_INTERNAL = [
-						'${BUILDPATH}/qapi/qapi_mqtt.c', 
+						'${BUILDPATH}/qapi/qapi_mqtt.c',
                       ]
-					  
+
 TX_SOURCES_MQTT_EXT = [
-						'${BUILDPATH}/qapi_stub/qapi_mqtt_ext.c', 
+						'${BUILDPATH}/qapi_stub/qapi_mqtt_ext.c',
                       ]
-					  
+
 TX_SOURCES_HTTP_INTERNAL = [
-						'${BUILDPATH}/qapi/qapi_httpc.c', 
+						'${BUILDPATH}/qapi/qapi_httpc.c',
                       ]
-					  
+
 TX_SOURCES_HTTP_EXT = [
-						'${BUILDPATH}/qapi_stub/qapi_httpc_ext.c', 
+						'${BUILDPATH}/qapi_stub/qapi_httpc_ext.c',
                       ]
-					  
+
 TX_SOURCES = [
                 ROM_SOURCES,
                 RAM_SOURCES,
@@ -259,7 +261,7 @@ if 'USES_ENABLE_HTTPC' in env:
 	env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/net_http'), TX_SOURCES_HTTP_INTERNAL)
 else:
 	env.AddLibrary(IMAGES, ('${BUILDPATH}/http_qapi_stub'), TX_SOURCES_HTTP_EXT)
-	
+
 env.LoadSoftwareUnits()
 
 # Treat compiler warnings as errors!

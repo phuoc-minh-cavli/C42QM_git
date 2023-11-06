@@ -14,10 +14,10 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/mobileap/qcmap/build/qcmap.scons#3 $
 #  $DateTime: 2021/09/24 01:00:32 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 
@@ -102,7 +102,7 @@ RCINIT_INIT_QCMAP_TASK_INIT = {
 RCINIT_INIT_QCMAP_TASK = {
   'sequence_group'             : 'RCINIT_GROUP_2',          # required
   'thread_name'                : 'qcmap_task',                 # required
-  'thread_entry'               : 'qcmap_task_entry',           
+  'thread_entry'               : 'qcmap_task_entry',
   'stack_size_bytes'           : '16384',
   'priority_amss_order'        : '60'
 }
@@ -111,6 +111,7 @@ if 'USES_RCINIT' in env:
   RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
   env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QCMAP_TASK_INIT )
   env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QCMAP_TASK )
-  
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = "--diag_error=warning")
+
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = "--diag_error=warning")

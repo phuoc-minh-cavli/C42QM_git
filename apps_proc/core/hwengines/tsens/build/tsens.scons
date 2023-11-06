@@ -36,7 +36,9 @@ env = env.Clone()
 if env['MSM_ID'] not in ['9205']:
    Return();
 
-env.Append(CFLAGS = "--diag_error=warning --c99")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_error=warning --c99")
+env.Append(CFLAGS = "--c99")
 
 #-------------------------------------------------------------------------------
 # Defines
@@ -54,7 +56,7 @@ if env['MSM_ID'] in TSENS_V1_HW:
       "${INC_ROOT}/core/hwengines/tsens/dal/v1",
       "${INC_ROOT}/core/hwengines/tsens/diag/protected",
       "${INC_ROOT}/core/hwengines/tsens/hal/common",
-      "${INC_ROOT}/core/hwengines/tsens/qapi/src",      
+      "${INC_ROOT}/core/hwengines/tsens/qapi/src",
    ])
 else:
    env.PublishPrivateApi('HWENGINES_TSENS', [
@@ -78,7 +80,7 @@ CBSP_API = [
    'DAL',
    'BUSES',
    'HWENGINES',
-   'KERNEL',   
+   'KERNEL',
    'SERVICES',
    'SYSTEMDRIVERS',
    'POWER',

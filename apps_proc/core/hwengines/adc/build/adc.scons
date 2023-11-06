@@ -17,7 +17,9 @@ env = env.Clone()
 if env['MSM_ID'] not in ['9205']:
    Return();
 
-env.Append(CFLAGS = "--diag_error=warning --c99")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_error=warning --c99")
+env.Append(CFLAGS = "--c99")
 
 #-------------------------------------------------------------------------------
 # Publish Private APIs
@@ -78,7 +80,7 @@ if ADC_DIAG_SUPPORT in ['YES']:
       "FEATURE_ADC_DIAG"
    ])
 
-#Below may be redandent 
+#Below may be redandent
 if ADC_QAPI_SUPPORT in ['YES']:
    env.Append(CPPDEFINES = [
       "FEATURE_QAPI_SUPPORT", "QAPI_USE_ADC"
@@ -162,7 +164,7 @@ ADC_CONFIG_FILE_XML = '${BUILD_ROOT}/core/hwengines/adc/config/${MSM_ID}/adc_pro
 
 if env['MSM_ID'] in ['9205']:
    DEVCFG_IMG = ['DAL_DEVCFG_IMG']
-   env.AddDevCfgInfo(DEVCFG_IMG, 
+   env.AddDevCfgInfo(DEVCFG_IMG,
    {
       'devcfg_xml'    : ['${BUILD_ROOT}/core/hwengines/adc/config/${MSM_ID}/adc_props.xml',
                          '${BUILDPATH}/config/${MSM_ID}/AdcBsp.c',

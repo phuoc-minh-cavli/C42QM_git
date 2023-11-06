@@ -14,10 +14,10 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/tethering/qti_bridge/build/dataservices_qti_bridge.scons#4 $
 #  $DateTime: 2021/04/14 05:32:40 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 # 08/24/2016  sr     Baseline
@@ -34,7 +34,7 @@ if 'USES_MOB' in env:
 	env.RequirePublicApi('WDA', area='qmimsgs')
 	env.RequirePublicApi('WDS', area='qmimsgs')
 	env.RequirePublicApi('AT', area='qmimsgs')
-	
+
 env.RequirePublicApi('KERNEL', area='core')
 env.RequirePublicApi('SERVICES', area='core')
 env.RequirePublicApi('DEBUGTOOLS', area='core')
@@ -59,7 +59,7 @@ env.RequirePublicApi('NICHESTACK_PORT')
 
 
 env.PublishPrivateApi('QTI_BRIDGE', [
-   "${INC_ROOT}/dataservices/tethering/qti_bridge/inc", 
+   "${INC_ROOT}/dataservices/tethering/qti_bridge/inc",
    ], auto_require=True)
 
 
@@ -109,7 +109,7 @@ RCINIT_INIT_QTI_BRIDGE_TASK_INIT = {
 RCINIT_INIT_QTI_BRIDGE_TASK = {
   'sequence_group'             : 'RCINIT_GROUP_3',          # required
   'thread_name'                : 'qti_bridge_task',         # required
-  'thread_entry'               : 'qti_bridge_task_entry',           
+  'thread_entry'               : 'qti_bridge_task_entry',
   'stack_size_bytes'           : '8192',
   'priority_amss_order'        : 'QTI_BRIDGE_PRI_ORDER',
 }
@@ -118,6 +118,7 @@ if 'USES_RCINIT' in env:
   RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE']
   env.AddRCInitFunc( RCINIT_IMG, RCINIT_INIT_QTI_BRIDGE_TASK_INIT )
   env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_QTI_BRIDGE_TASK )
-  
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = "--diag_error=warning")
+
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = "--diag_error=warning")

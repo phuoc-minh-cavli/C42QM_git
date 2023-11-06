@@ -13,10 +13,10 @@
 #
 #  $Header: //components/rel/qmimsgs.tx/1.0/build/qmimsgs_apss_tn.scons#1 $
 #  $DateTime: 2022/04/29 03:42:53 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 # 07/23/13   pm      Convert warnings to errors
@@ -27,15 +27,17 @@ Import('env')
 env.Replace(QMIMSGS_ROOT = '${INC_ROOT}/api')
 
 #-------------------------------------------------------------------------------
-# Convert warnings to errors 
+# Convert warnings to errors
 #-------------------------------------------------------------------------------
-if 'USES_ARM' in env:
-    env.Append(CFLAGS = "--diag_error=warning ")
-    env.Append(CFLAGS = "--diag_error=77")
-    env.Append(CFLAGS = "--diag_error=117")
-    env.Append(CFLAGS = "--diag_error=940")
-else:
-    "do nothing"
+
+# Fix ARMTOOLS License
+# if 'USES_ARM' in env:
+#     env.Append(CFLAGS = "--diag_error=warning ")
+#     env.Append(CFLAGS = "--diag_error=77")
+#     env.Append(CFLAGS = "--diag_error=117")
+#     env.Append(CFLAGS = "--diag_error=940")
+# else:
+#     "do nothing"
 
 #-------------------------------------------------------------------------------
 # Load the rest of the software units

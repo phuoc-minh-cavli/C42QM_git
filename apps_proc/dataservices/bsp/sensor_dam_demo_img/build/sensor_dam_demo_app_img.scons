@@ -54,8 +54,9 @@ if not env.CheckAlias():
 # Suppress non-critical ARM license error to warning
 # C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
 #-----------------------------------------------------------------------------------
-if 'USES_MOB' not in env:
-	env.Append(CFLAGS = "--diag_suppress=9931 ")
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CFLAGS = "--diag_suppress=9931 ")
 #---------------------------------------------------------------------------
 # Load in CBSP uses and path variables
 #---------------------------------------------------------------------------
@@ -76,7 +77,7 @@ env.LoadToolScript('apps_defs', toolpath = ["${BUILD_ROOT}/tools/build/scons/scr
 env.Replace(LINKFLAGS = " --elf --ro 0x43000000 --first txm_module_preamble.o \
 				 --entry=_txm_module_thread_shell_entry --datacompressor off --map --symbols --list \
 			 ${TARGET.base}.map $LFLAGS")
-				 
+
 env.Append(CCFLAGS = " --arm_only --apcs=/interwork ")
 env.Append(ASMFLAGS = " --arm_only --apcs=/interwork ")
 
@@ -101,7 +102,7 @@ image_libs.extend(['$BUILD_ROOT/core/services/time_qapi/build/timer_dam_lib.lib'
 
 #load Sensor module libraries build rules.
 modules_path = env.RealPath('${BUILD_ROOT}/dataservices/sensor')
-if env.PathExists(modules_path): 
+if env.PathExists(modules_path):
    au_items = env.LoadAreaSoftwareUnits('dataservices' , ["sensor"])
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
@@ -121,10 +122,10 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
    # CBSP Image section
    #=========================================================================
 
-   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # make our clone so we won't mess the lib rules, it shoun't because they
    # should of clone, but just to be on the safe side.
    env = env.Clone()
-   
+
    #-------------------------------------------------------------------------
    # Internal depends within CoreBSP
    #-------------------------------------------------------------------------
@@ -133,7 +134,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'BUSES',
       'DAL',
       'DEBUGTOOLS',
-      'HAL',      
+      'HAL',
       'HWENGINES',
       'IODEVICES',
       'MPROC',
@@ -143,7 +144,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'STORAGE',
       'SYSTEMDRIVERS',
       'WIREDCONNECTIVITY',
-      'PRODUCTS', 
+      'PRODUCTS',
       # needs to be last also contains wrong comdef.h
       'KERNEL',
    ]
@@ -157,7 +158,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
 if 'IMAGE_BUILD_LINK' in env:
    # actually doing link, reset image_units
    image_units = []
-   
+
    #-------------------------------------------------------------------------
    # Build env QCOREIMG
    #-------------------------------------------------------------------------
@@ -165,7 +166,7 @@ if 'IMAGE_BUILD_LINK' in env:
       image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM= sh_libs_dynsyms_fname)
    else:
       image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
-   
+
 if 'IMAGE_BUILD_POST_LINK' in env:
    # #-------------------------------------------------------------------------
    # # Build env mbn files
@@ -175,7 +176,7 @@ if 'IMAGE_BUILD_POST_LINK' in env:
   #----------------------------------------------------------------------------
   # Sectools signing
   #----------------------------------------------------------------------------
-#   if "USES_SEC_POLICY_DEFAULT_SIGN" in env: 
+#   if "USES_SEC_POLICY_DEFAULT_SIGN" in env:
 #    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/apps.mbn', target_mbn)
 #
 #    sectools_signed_mbn = env.SectoolBuilder(
@@ -183,10 +184,10 @@ if 'IMAGE_BUILD_POST_LINK' in env:
 #         source=target_mbn,
 #         sign_id="apps",
 #         msmid = env['MSM_ID'],
-#         sectools_install_base_dir = '${MBN_ROOT}', 
-#         install_file_name = "apps.mbn")    
+#         sectools_install_base_dir = '${MBN_ROOT}',
+#         install_file_name = "apps.mbn")
 
-    
+
 #    install_target_mbn = env.InstallAs('${MBN_ROOT}/unsigned/sensor_dam.mbn', target_mbn)
 #   else:
    install_target_mbn = env.InstallAs('${MBN_ROOT}/sensor_dam_demo.mbn', target_mbn)

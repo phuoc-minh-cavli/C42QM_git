@@ -12,7 +12,7 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/sensor/build/sensor.scons#2 $
 #  $DateTime: 2020/04/13 23:04:46 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
 #===============================================================================
@@ -50,7 +50,7 @@ env.RequirePublicApi('WDS', area='API')
 env.RequirePublicApi(['DSS_NET'],area='dataservices')
 env.RequirePublicApi(['QAPI'])
 env.RequirePublicApi(['PSM_CLIENT'], area="ril")
-env.RequirePublicApi(['QCMAP'], area='dataservices') 
+env.RequirePublicApi(['QCMAP'], area='dataservices')
 env.RequireRestrictedApi(['QCLI_DEMO'])
 env.RequirePublicApi('QCMAP_EXT')
 env.RequirePublicApi('ATFWD_EXT')
@@ -76,7 +76,7 @@ env.RequirePublicApi([
 env.PublishPrivateApi('SENSOR_DAM_DEMO_H', [
         "${BUILD_ROOT}/dataservices/sensor/src/demo",
    ])
-	
+
 SRCPATH = '${BUILD_ROOT}/dataservices/sensor/src'
 env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
 
@@ -85,14 +85,14 @@ if 'USES_ARM' in env:
 	'${BUILDPATH}/txm_module_preamble.S',
     '${BUILDPATH}/demo/test_app_module.c',
 	'${BUILDPATH}/demo/test_main_module.c',
-    '${BUILDPATH}/demo/test_utils.c',	
+    '${BUILDPATH}/demo/test_utils.c',
 ]
 else:
 	SENSOR_DEMO_SOURCES = [
 	'${BUILDPATH}/txm_module_preamble_llvm.S',
     '${BUILDPATH}/demo/test_app_module.c',
 	'${BUILDPATH}/demo/test_main_module.c',
-    '${BUILDPATH}/demo/test_utils.c',	
+    '${BUILDPATH}/demo/test_utils.c',
 ]
 env.AddObject(['SENSOR_DEMO'], SENSOR_DEMO_SOURCES)
 #-------------------------------------------------------------------------------
@@ -100,7 +100,8 @@ env.AddObject(['SENSOR_DEMO'], SENSOR_DEMO_SOURCES)
 #-------------------------------------------------------------------------------
 env.LoadSoftwareUnits()
 
-if 'USES_ARM' in env:
-	env.Append(CCFLAGS = "--diag_error=warning")
-else:
-	"do nothing"
+# Fix ARMTOOLS License
+# if 'USES_ARM' in env:
+# 	env.Append(CCFLAGS = "--diag_error=warning")
+# else:
+# 	"do nothing"

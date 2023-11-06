@@ -15,7 +15,9 @@ Import('env')
 
 env = env.Clone()
 if 'USES_ARM' in env:
-	env.Append(CFLAGS = "--diag_suppress=9931 --arm_only")
+    # Fix ARMTOOLS License
+	# env.Append(CFLAGS = "--diag_suppress=9931 --arm_only")
+	env.Append(CFLAGS = "--arm_only")
 else:
     env.Append(CFLAGS = "-marm")
 

@@ -13,5 +13,8 @@
 
 Import('env')
 
-env.Append(CFLAGS = "--diag_suppress=9931 --arm_only ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_suppress=9931 --arm_only ")
+env.Append(CFLAGS = " --arm_only ")
+
 env.LoadSoftwareUnits()

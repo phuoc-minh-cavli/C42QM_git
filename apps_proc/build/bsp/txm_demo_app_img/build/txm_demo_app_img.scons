@@ -56,7 +56,8 @@ if not env.CheckAlias():
 # Suppress non-critical ARM license error to warning
 # C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
 #-----------------------------------------------------------------------------------
-env.Append(CFLAGS = "--diag_suppress=9931 ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_suppress=9931 ")
 #---------------------------------------------------------------------------
 # Load in CBSP uses and path variables
 #---------------------------------------------------------------------------
@@ -105,15 +106,15 @@ image_objs.extend(au_items['OBJS'])
 image_libs.extend(['$BUILD_ROOT/core/kernel/rtos/threadx/txm_module_lib/build/txm_lib.lib'])
 image_libs.extend(['${BUILD_ROOT}/core/mproc/qmi/build/qcci_dam_lib.lib'])
 image_libs.extend(['${BUILD_ROOT}/core/mproc/qmi/build/IDL_DAM_LIB.lib'])
-image_libs.extend(['$BUILD_ROOT/core/services/time_qapi/build/timer_dam_lib.lib'])   
+image_libs.extend(['$BUILD_ROOT/core/services/time_qapi/build/timer_dam_lib.lib'])
 image_libs.extend(['$BUILD_ROOT/core/services/diag/build/diag_dam_lib.lib'])
 
-   
+
 
 
 #load TXM DEMO APP.
 modules_path = env.RealPath('${BUILD_ROOT}/core/kernel/rtos/threadx/txm_demo_app')
-if env.PathExists(modules_path): 
+if env.PathExists(modules_path):
    au_items = env.LoadAreaSoftwareUnits('core' , ["kernel/rtos/threadx/txm_demo_app"])
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
@@ -121,19 +122,19 @@ else:
     "doesn't exist"
 
 modules_path = env.RealPath('${BUILD_ROOT}/testframework/etf/diag_client_tx')
-if env.PathExists(modules_path): 
+if env.PathExists(modules_path):
    #au_items = env.LoadAreaSoftwareUnits('testframework' , ["testframework_dam"])
    au_items = env.LoadAreaSoftwareUnits('testframework' , ["etf/diag_client_tx"])
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
 else:
-    "doesn't exist" 
-    
-#load apttest    
+    "doesn't exist"
+
+#load apttest
 modules_path = env.RealPath('${BUILD_ROOT}/core/apttests/apttests_tx')
 
 modules_path = env.RealPath('${BUILD_ROOT}/etf_tx')
-if env.PathExists(modules_path): 
+if env.PathExists(modules_path):
     if 'USES_CBSP_TFW' in env:
         au_items = env.LoadAreaSoftwareUnits('etf_tx')
         image_libs.extend(au_items['LIBS'])
@@ -151,10 +152,10 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
    # CBSP Image section
    #=========================================================================
 
-   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # make our clone so we won't mess the lib rules, it shoun't because they
    # should of clone, but just to be on the safe side.
    env = env.Clone()
-   
+
    #-------------------------------------------------------------------------
    # Internal depends within CoreBSP
    #-------------------------------------------------------------------------
@@ -163,7 +164,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'BUSES',
       'DAL',
       'DEBUGTOOLS',
-      'HAL',      
+      'HAL',
       'HWENGINES',
       'IODEVICES',
       'MPROC',
@@ -173,7 +174,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'STORAGE',
       'SYSTEMDRIVERS',
       'WIREDCONNECTIVITY',
-      'PRODUCTS', 
+      'PRODUCTS',
       # needs to be last also contains wrong comdef.h
       'KERNEL',
    ]
@@ -187,7 +188,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
 if 'IMAGE_BUILD_LINK' in env:
    # actually doing link, reset image_units
    image_units = []
-   
+
    #-------------------------------------------------------------------------
    # Build env QCOREIMG
    #-------------------------------------------------------------------------
@@ -195,7 +196,7 @@ if 'IMAGE_BUILD_LINK' in env:
       image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs, SHARED_LIBS_DYNSYM= sh_libs_dynsyms_fname)
    else:
       image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
-   
+
 
    # #-------------------------------------------------------------------------
    # # Build env mbn files
@@ -207,7 +208,7 @@ image_name = 'txm_module'
 target_images = []
 #import pdb;pdb.set_trace()
 env.LoadToolScript('sectools_builder', toolpath = ['${BUILD_ROOT}/sectools'])
-env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen']) 
+env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen'])
 soc_hw_version = "0x20130100"
 soc_vers = "0x2013"
 config_xml = '${BUILD_ROOT}/sectools/config/integration/secimage_eccv3.xml'

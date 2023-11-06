@@ -30,6 +30,7 @@ Import('env')
 #-------------------------------------------------------------------------------
 # Convert all warnings to errors in entire audio module
 #-------------------------------------------------------------------------------
-env.Append(CFLAGS = " --diag_error=warning ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = " --diag_error=warning ")
 
 env.LoadSoftwareUnits()

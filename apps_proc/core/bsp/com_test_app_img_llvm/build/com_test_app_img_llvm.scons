@@ -55,8 +55,9 @@ if not env.CheckAlias():
 # Suppress non-critical ARM license error to warning
 # C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
 #-----------------------------------------------------------------------------------
-if 'USES_ARM' in env:
-    env.Append(CFLAGS = "--diag_suppress=9931 ")
+# Fix ARMTOOLS License
+# if 'USES_ARM' in env:
+#     env.Append(CFLAGS = "--diag_suppress=9931 ")
 #---------------------------------------------------------------------------
 # Load in CBSP uses and path variables
 #---------------------------------------------------------------------------

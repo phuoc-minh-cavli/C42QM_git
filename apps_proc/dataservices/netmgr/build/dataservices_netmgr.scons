@@ -12,10 +12,10 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/netmgr/build/dataservices_netmgr.scons#8 $
 #  $DateTime: 2021/06/15 00:57:11 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 # when       who     what, where, why
 # --------   ---     ---------------------------------------------------------
 # 3/28/12   sdt     Baseline
@@ -83,7 +83,7 @@ NETMGR_SOURCES = [
   '${BUILDPATH}/netmgr_qmi_wds.c',
   '${BUILDPATH}/netmgr_qmi_wda.c',
   '${BUILDPATH}/netmgr_qmi_dfs.c',
-  '${BUILDPATH}/netmgr_qmi_nipd.c', 
+  '${BUILDPATH}/netmgr_qmi_nipd.c',
   '${BUILDPATH}/netmgr_qmi_dins.c',
   '${BUILDPATH}/netmgr_dins.c',
   '${BUILDPATH}/netmgr_sm.c',
@@ -100,7 +100,7 @@ NETMGR_SOURCES = [
 
 IMAGES = ['DATA_TN', 'APPS_PROC','MOB_DATASERVICES']
 env.AddBinaryLibrary(IMAGES, ('${BUILDPATH}/netmgr'), NETMGR_SOURCES)
-	
+
 #-------------------------------------------------------------------------------
 # Load the rest of the software units
 #-------------------------------------------------------------------------------
@@ -112,7 +112,7 @@ env.LoadSoftwareUnits()
 RCINIT_INIT_NETMGR_TASK = {
   'sequence_group'             : 'RCINIT_GROUP_3',          # required
   'thread_name'                : 'netmgr_dss',              # required
-  'thread_entry'               : 'netmgr_main',           
+  'thread_entry'               : 'netmgr_main',
   'stack_size_bytes'           : '8192',
   'priority_amss_order'        : 'NETMGR_CMDQ_PRI_ORDER'
 }
@@ -120,6 +120,7 @@ RCINIT_INIT_NETMGR_TASK = {
 if 'USES_RCINIT' in env:
   RCINIT_IMG = ['CBSP_APPS_IMAGE', 'APPS_IMAGE','MOB_DATASERVICES']
   env.AddRCInitTask( RCINIT_IMG, RCINIT_INIT_NETMGR_TASK )
-  
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = "--diag_error=warning")
+
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = "--diag_error=warning")

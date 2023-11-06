@@ -22,8 +22,9 @@ if 'USES_MOB' not in env:
 #env.Append(CFLAGS = " --DWARF3 ")
 
 #env.Append(CFLAGS = " --diag_suppress==66 ")
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = " --diag_suppress=66 ")
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = " --diag_suppress=66 ")
 
 
 #------------------------------------------------------------------
@@ -76,7 +77,7 @@ CRYPTO_UTILS_SRC = [
         '${BUILDPATH}/common/utils/utils.c',
     ]
 
-CRYPTO_CURVE_SRC = [ 
+CRYPTO_CURVE_SRC = [
         '${BUILDPATH}/curve25519/c25519.c',
         '${BUILDPATH}/curve25519/c25519_sw.c',
     ]

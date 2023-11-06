@@ -18,9 +18,10 @@ env = env.Clone()
 SRCPATH = '${BUILD_ROOT}/dataservices/netservice/security/picotls'
 env.VariantDir('${BUILDPATH}', SRCPATH, duplicate=0)
 
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = " --diag_suppress=66 ")
-	env.Append(CCFLAGS = " --diag_suppress=550 ")
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = " --diag_suppress=66 ")
+# 	env.Append(CCFLAGS = " --diag_suppress=550 ")
 
 
 #------------------------------------------------------------------
@@ -67,7 +68,7 @@ PICOTLS_SOURCES = [ '${BUILDPATH}/src/picotls.c',
                 '${BUILDPATH}/src/sharkssl_hal_cipher.c',
                 '${BUILDPATH}/src/sharkssl_hal_keyexchange.c',
                 ]
-    
+
 # The following objects are to be placed in XIP
 
 DATASERVICES_SOURCES = [

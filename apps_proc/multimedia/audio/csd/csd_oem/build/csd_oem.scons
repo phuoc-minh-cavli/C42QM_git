@@ -13,7 +13,7 @@
 #
 #  $Header: $
 #  $DateTime: $
-#  
+#
 #
 #                      EDIT HISTORY FOR FILE
 #
@@ -34,10 +34,11 @@ env.LoadSoftwareUnits()
 # Convert warnings to errors in all csd device module
 #-------------------------------------------------------------------------------
 
-env.Append(CFLAGS = "--diag_error=warning ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 #-------------------------------------------------------------------------------
-# Source PATH     
+# Source PATH
 #-------------------------------------------------------------------------------
 SRCPATH = "${BUILD_ROOT}/multimedia/audio/csd/csd_oem"
 

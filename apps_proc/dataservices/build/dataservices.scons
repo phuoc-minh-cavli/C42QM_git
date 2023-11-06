@@ -12,10 +12,10 @@
 #
 #  $Header: //components/rel/dataservices.tx/6.0/build/dataservices.scons#5 $
 #  $DateTime: 2021/06/22 06:37:50 $
-#                      
+#
 #  This section contains comments describing changes made to the module.
 #  Notice that changes are listed in reverse chronological order.
-#  
+#
 #===============================================================================
 import os
 
@@ -29,14 +29,14 @@ if 'USES_DATAFLAGS_DISABLE' not in env:
 
 if 'USES_ENABLE_COAP' in env:
 	env.Append(CFLAGS = ['-DENABLE_COAP'])
-		
+
 #-------------------------------------------------------------------------------
 # Enable LwM2M only if CoAP is enabled
 # Disable the flag to remove LwM2M from build.
 #-------------------------------------------------------------------------------
 if 'USES_ENABLE_COAP' in env:
 	env.Replace(USES_ENABLE_LWM2M = True)
-	
+
 #-------------------------------------------------------------------------------
 # Disable the flag to remove MQTT from build.
 #-------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ if 'USES_DATAFLAGS_DISABLE' not in env:
 
 if 'USES_ENABLE_MQTT' in env:
 	env.Append(CFLAGS = ['-DMQTT_ENABLE'])
-	
+
 #-------------------------------------------------------------------------------
 # Disable the flag to remove HTTPC from build.
 #-------------------------------------------------------------------------------
@@ -56,15 +56,15 @@ if 'USES_DATAFLAGS_DISABLE' not in env:
 
 if 'USES_ENABLE_HTTPC' in env:
 	env.Append(CFLAGS = ['-DHTTPC_ENABLE'])
-	
-	
+
+
 env.AddUsesFlags('USES_ENABLE_SSL_NETLIB')
 
 #env.AddUsesFlags('USES_MINI_QCLI')
 
 if 'USES_MINI_QCLI' in env:
 	env.Append(CFLAGS = ['-DMINI_QCLI'])
-	
+
 #-------------------------------------------------------------------------------
 # Disable the flag for Apps Packet logging in external build
 #-------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ if 'USES_EXT_BUILD_FLAVORS' not in env:
 #-------------------------------------------------------------------------------
 # Disable the flag to remove QTI from build.
 #-------------------------------------------------------------------------------
-	
+
 env.AddUsesFlags('USES_QTI')
 
 if 'USES_QTI' in env:
@@ -90,7 +90,7 @@ env.AddUsesFlags('USES_QTI_BRIDGE')
 
 if 'USES_QTI_BRIDGE' in env:
 	env.Append(CFLAGS = ['-DQTI_BRIDGE_ENABLE'])
-	
+
 #-------------------------------------------------------------------------------
 # Disable the flag to remove MOBILE_AP from build.
 #-------------------------------------------------------------------------------
@@ -99,11 +99,11 @@ env.AddUsesFlags('USES_ECM')
 
 if 'USES_ECM' in env:
 	env.Append(CFLAGS = ['-DECM_ENABLE'])
-	
-	
+
+
 if env['CHIPSET'] in ['mdm9205']:
 	env.Append(CFLAGS = ['-DCHILTEPIN_UART_PORT'])
-	
+
 
 if 'USES_ENABLE_LWM2M' in env and 'USES_MINI_QCLI' not in env:
 	env.Append(CFLAGS = ['-DLWM2M_ENABLE'])
@@ -133,22 +133,23 @@ if 'USES_TRACKER_APP' in env:
 
 
 #-------------------------------------------------------------------------------
-# Enable the flag to enable Ulog logging 
+# Enable the flag to enable Ulog logging
 #-------------------------------------------------------------------------------
-	
+
 #env.Replace(USES_ENABLE_ULOG = True)
 
 if 'USES_ENABLE_ULOG' in env:
 	env.Append(CFLAGS = ['-DTX_DATA_ENABLE_ULOG'])
-	
+
 #-------------------------------------------------------------------------------
-# Enabling the CFLAG to make dataservices compiler warning free 
+# Enabling the CFLAG to make dataservices compiler warning free
 #-------------------------------------------------------------------------------
 
-if 'USES_ARM' in env:
-	env.Append(CFLAGS = "--diag_error=warning")
-else:
-    "do nothing"
+# Fix ARMTOOLS License
+# if 'USES_ARM' in env:
+# 	env.Append(CFLAGS = "--diag_error=warning")
+# else:
+#     "do nothing"
 
 if 'USES_MOB' in env:
 	env.Append(CPPDEFINES = ["MOB_TX","FEATURE_SSL_TA_KEYMASTER"])

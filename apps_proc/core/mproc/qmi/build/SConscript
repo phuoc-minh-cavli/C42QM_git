@@ -89,11 +89,11 @@ CBSP_API = [
 #-------------------------------------------------------------------------------
 # Convert warnings to errors
 #-------------------------------------------------------------------------------
-if 'ARMTOOLS' in env:
-   env.Append(CFLAGS = "--diag_error=warning ")
-   env.Append(CFLAGS = "--diag_error=77")
-   env.Append(CFLAGS = "--diag_error=117")
-   env.Append(CFLAGS = "--diag_error=940")
+# if 'ARMTOOLS' in env:
+#    env.Append(CFLAGS = "--diag_error=warning ")
+#    env.Append(CFLAGS = "--diag_error=77")
+#    env.Append(CFLAGS = "--diag_error=117")
+#    env.Append(CFLAGS = "--diag_error=940")
 
 if 'HEXAGON_TOOLS' in env:
    env.Append(CFLAGS = "-Werror ")
@@ -108,7 +108,7 @@ if env.has_key('WCN_IMAGE'):
 
 # QMUX for TN targets. QMUX owned by MBIM
 if 'USES_QCCI_QBI_QMUX' in env:
-   env.RequirePublicApi('QMI_QMUX', area='mbim') 
+   env.RequirePublicApi('QMI_QMUX', area='mbim')
    env.Append(CPPDEFINES=['FEATURE_QMUX_HANDLE'])
    env.Append(CPPDEFINES=['FEATURE_QCCI_QBI_QMUX'])
 
@@ -136,11 +136,11 @@ env['QMI_MB_ENABLED'] = 'yes'
 #mark no for specific targets
 if env['MSM_ID'] in ['9x06','9205']:
    env['QMI_MB_ENABLED'] = 'no'
-   
+
 # ThreadX based QuRT OS
 if env.has_key('CBSP_APPS_IMAGE') and env['MSM_ID'] in ['9x06']:
    env.Append(CPPDEFINES=['QMI_OS_QURT_THREADX'])
-   
+
 #-------------------------------------------------------------------------------
 # Sources, libraries
 #-------------------------------------------------------------------------------
@@ -162,16 +162,16 @@ if 'USES_QCCI_QMUX_XPORT' in env or 'USES_QCCI_QBI_QMUX' in env:
 
 QMI_QSAP_SERVICE_SOURCES  =  [
    '${BUILDPATH}/qsap/qmi_sap_common.c',
-   '${BUILDPATH}/qsap/qmi_sap_service.c', 
-] 
+   '${BUILDPATH}/qsap/qmi_sap_service.c',
+]
 
 QMI_QSAP_CLIENT_SOURCES  =  [
-   '${BUILDPATH}/qsap/qmi_sap_client.c', 
-] 
+   '${BUILDPATH}/qsap/qmi_sap_client.c',
+]
 
 QMI_QSAP_FILTER_SOURCES = [
    '${BUILDPATH}/qsap/qmi_sap_filter_common.c',
-   '${BUILDPATH}/qsap/qmi_sap_filter_xport_sio.c', 
+   '${BUILDPATH}/qsap/qmi_sap_filter_xport_sio.c',
 ]
 
 QMI_PING_CLIENT_SOURCES = [
@@ -216,7 +216,7 @@ if 'USES_QMI_SYSCALL_ENABLE' in env:
 else:
   QMI_ENCDEC_SHIM_SOURCES  =  [
   '${BUILDPATH}/encdec/qmi_idl_shim_kernel_stubs.c',
-]   
+]
 
 QMI_SI_SOURCES = [
   '${BUILDPATH}/qmi_si/qmi_si_database.c',
@@ -320,8 +320,8 @@ if 'USES_RCINIT' in env:
         'dependencies'               : ['diag','qmi',]
        })
    if 'USES_QCCI_QMUX_XPORT' in env:
-      env.AddRCInitFunc(           
-       ALL_ROOT_RCINIT_IMG,                 
+      env.AddRCInitFunc(
+       ALL_ROOT_RCINIT_IMG,
        {
         'sequence_group'             : 'RCINIT_GROUP_5',                   # required
         'init_name'                  : 'qmi_qmux_fw',                      # required
@@ -339,7 +339,7 @@ if 'USES_RCINIT' in env:
 
 
 #-------------------------------------------------------------------------------
-# Register dynamic threads with RCInit 
+# Register dynamic threads with RCInit
 
 if 'USES_RCINIT' in env and 'USES_CENTRALIZED_THREAD_PRIORITY' in env:
   env.Append(CPPDEFINES=['QMI_RCINIT_CENTRALIZED_THREAD_PRIORITY'])

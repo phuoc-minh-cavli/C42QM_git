@@ -62,7 +62,7 @@ CBSP_API = [
    'DSM',
 
    # needs to be last also contains wrong comdef.h
-   'KERNEL',   
+   'KERNEL',
 ]
 
 env.RequirePublicApi(CBSP_API)
@@ -71,11 +71,11 @@ env.RequireRestrictedApi(CBSP_API)
 #-------------------------------------------------------------------------------
 # Convert warnings to errors
 #-------------------------------------------------------------------------------
-if 'ARMTOOLS' in env:
-   env.Append(CFLAGS = "--diag_error=warning ")
-   env.Append(CFLAGS = "--diag_error=77")
-   env.Append(CFLAGS = "--diag_error=117")
-   env.Append(CFLAGS = "--diag_error=940")
+# if 'ARMTOOLS' in env:
+#    env.Append(CFLAGS = "--diag_error=warning ")
+#    env.Append(CFLAGS = "--diag_error=77")
+#    env.Append(CFLAGS = "--diag_error=117")
+#    env.Append(CFLAGS = "--diag_error=940")
 
 if 'HEXAGON_TOOLS' in env:
    env.Append(CFLAGS = "-Werror ")

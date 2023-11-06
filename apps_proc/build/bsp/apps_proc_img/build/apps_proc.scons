@@ -77,7 +77,8 @@ if not env.CheckAlias():
 # Suppress non-critical ARM license error to warning
 # C9931W: Your license for Compiler (feature compiler_pro) will expire in 30 days
 #-----------------------------------------------------------------------------------
-env.Append(CFLAGS = "--diag_suppress=9931 ")
+# Fix ARMTOOLS License
+# env.Append(CFLAGS = "--diag_suppress=9931 ")
 #---------------------------------------------------------------------------
 # Load in CBSP uses and path variables
 #---------------------------------------------------------------------------
@@ -114,7 +115,7 @@ if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
    env.Append(LINKCOM = " --override_visibility --base_platform --no_remove ")
    env.Append(SHCCFLAGS = "--no_hide_all")
    env.Append(SHLINKFLAGS = " --shared" + " --fpic" + " --pagesize 0x1000 --arm_linux --no_scanlib" )
-   
+
 env.Append(LINKFLAGS = " --entry=SBL_Entry")
 
 env.Append(LINKFLAGS = " --feedback=linkerfeedback")
@@ -131,7 +132,7 @@ if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
 #---------------------------------------------------------------------------
 
 
-if ('USES_DISABLE_AUDIO_DATA' not in env): 
+if ('USES_DISABLE_AUDIO_DATA' not in env):
 
   # load Build Test libs/objs build rules.
   au_items = env.LoadAreaSoftwareUnits('build')
@@ -153,15 +154,15 @@ if ('USES_DISABLE_AUDIO_DATA' not in env):
   if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
     apps_proc_img_shlibs.extend(au_items['SHARED_LIBS'])
 
-  # load API libs/objs build rules. 
-  au_items = env.LoadAreaSoftwareUnits('api') 
-  image_libs.extend(au_items['LIBS']) 
-  image_objs.extend(au_items['OBJS']) 
+  # load API libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('api')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
 
   data_iot_sdk_path = env.RealPath('${BUILD_ROOT}/data_iot_sdk')
   if env.PathExists(data_iot_sdk_path):
-   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk') 
-   image_libs.extend(au_items['LIBS']) 
+   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk')
+   image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
 
   # load cta libs/objs build rules.
@@ -169,7 +170,7 @@ if ('USES_DISABLE_AUDIO_DATA' not in env):
   if env.PathExists(mbim_path):
    au_items = env.LoadAreaSoftwareUnits('mbim')
    image_libs.extend(au_items['LIBS'])
-   image_objs.extend(au_items['OBJS'])  
+   image_objs.extend(au_items['OBJS'])
 
   #load Stride libs/objs build rules
   thirdparty_path = env.RealPath('${BUILD_ROOT}/stride')
@@ -177,13 +178,13 @@ if ('USES_DISABLE_AUDIO_DATA' not in env):
     au_items = env.LoadAreaSoftwareUnits('stride')
     image_libs.extend(au_items['LIBS'])
     image_objs.extend(au_items['OBJS'])
-   
+
     fotatools_path = env.RealPath('${BUILD_ROOT}/fotatools')
     if env.PathExists(fotatools_path):
        if 'USES_FOTA' in env:
            au_items = env.LoadAreaSoftwareUnits('fotatools')
            image_libs.extend(au_items['LIBS'])
-           image_objs.extend(au_items['OBJS'])  
+           image_objs.extend(au_items['OBJS'])
   # load Multimedia libs/objs build rules. DISABLE multimedia for SPI-NOR
 
   if env['BUILD_ID'] in ['ACIHAAAAA', 'ACIHAAAZA']:
@@ -201,30 +202,30 @@ if ('USES_DISABLE_AUDIO_DATA' not in env):
    au_items = env.LoadAreaSoftwareUnits('dataservices')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-  
+
   #load cta libs/objs build rules.
   cta_path = env.RealPath('${BUILD_ROOT}/cta')
   if env.PathExists(cta_path):
    au_items = env.LoadAreaSoftwareUnits('cta')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-  
+
   #load datafta libs/objs build rules.
   datafta_path = env.RealPath('${BUILD_ROOT}/datafta')
   if env.PathExists(datafta_path):
    au_items = env.LoadAreaSoftwareUnits('datafta')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-  
+
    #load etf libs/objs build rules.
   testframework_path = env.RealPath('${BUILD_ROOT}/testframework')
   if env.PathExists(testframework_path):
    au_items = env.LoadAreaSoftwareUnits('testframework')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-   
+
   modules_path = env.RealPath('${BUILD_ROOT}/etf_tx')
-  if env.PathExists(modules_path): 
+  if env.PathExists(modules_path):
     au_items = env.LoadAreaSoftwareUnits('etf_tx')
     image_libs.extend(au_items['LIBS'])
     image_objs.extend(au_items['OBJS'])
@@ -234,25 +235,25 @@ if ('USES_DISABLE_AUDIO_DATA' not in env):
   if env.PathExists(ril_path):
    au_items = env.LoadAreaSoftwareUnits('ril')
    image_libs.extend(au_items['LIBS'])
-   image_objs.extend(au_items['OBJS']) 
-   
-   
+   image_objs.extend(au_items['OBJS'])
+
+
    kingfisher_path = env.RealPath('${BUILD_ROOT}/kingfisherhost')
    if env.PathExists(kingfisher_path):
        if 'USES_KINGFISHER' in env:
            au_items = env.LoadAreaSoftwareUnits('kingfisherhost')
            image_libs.extend(au_items['LIBS'])
            image_objs.extend(au_items['OBJS'])
-		   
+
   #load platformtools BSP libs/objs build rules.
   platformtools_path = env.RealPath('${BUILD_ROOT}/platform_tools')
   if env.PathExists(platformtools_path):
    au_items = env.LoadAreaSoftwareUnits('platform_tools')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-   
-elif ('USES_DISABLE_AUDIO_DATA' in env): 
- 
+
+elif ('USES_DISABLE_AUDIO_DATA' in env):
+
 
   # load Build Test libs/objs build rules.
   # load Build Test libs/objs build rules.
@@ -275,17 +276,17 @@ elif ('USES_DISABLE_AUDIO_DATA' in env):
   if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
     apps_proc_img_shlibs.extend(au_items['SHARED_LIBS'])
 
-  # load API libs/objs build rules. 
-  au_items = env.LoadAreaSoftwareUnits('api') 
-  image_libs.extend(au_items['LIBS']) 
-  image_objs.extend(au_items['OBJS']) 
+  # load API libs/objs build rules.
+  au_items = env.LoadAreaSoftwareUnits('api')
+  image_libs.extend(au_items['LIBS'])
+  image_objs.extend(au_items['OBJS'])
 
   # load cta libs/objs build rules.
   mbim_path = env.RealPath('${BUILD_ROOT}/mbim')
   if env.PathExists(mbim_path):
    au_items = env.LoadAreaSoftwareUnits('mbim')
    image_libs.extend(au_items['LIBS'])
-   image_objs.extend(au_items['OBJS'])  
+   image_objs.extend(au_items['OBJS'])
 
   #load Stride libs/objs build rules
   thirdparty_path = env.RealPath('${BUILD_ROOT}/stride')
@@ -300,7 +301,7 @@ elif ('USES_DISABLE_AUDIO_DATA' in env):
    au_items = env.LoadAreaSoftwareUnits('dataservices')
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-  
+
   #load cta libs/objs build rules.
   cta_path = env.RealPath('${BUILD_ROOT}/cta')
   if env.PathExists(cta_path):
@@ -317,24 +318,24 @@ elif ('USES_DISABLE_AUDIO_DATA' in env):
 
   data_iot_sdk_path = env.RealPath('${BUILD_ROOT}/data_iot_sdk')
   if env.PathExists(data_iot_sdk_path):
-   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk') 
-   image_libs.extend(au_items['LIBS']) 
+   au_items = env.LoadAreaSoftwareUnits('data_iot_sdk')
+   image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
-   
+
   #load ril libs/objs build rules.
   ril_path = env.RealPath('${BUILD_ROOT}/ril')
   if env.PathExists(ril_path):
    au_items = env.LoadAreaSoftwareUnits('ril')
    image_libs.extend(au_items['LIBS'])
-   image_objs.extend(au_items['OBJS']) 
-   
+   image_objs.extend(au_items['OBJS'])
+
    #load etf libs/objs build rules.
    kingfisher_path = env.RealPath('${BUILD_ROOT}/kingfisherhost')
    if env.PathExists(kingfisher_path):
        if 'USES_KINGFISHER' in env:
            au_items = env.LoadAreaSoftwareUnits('kingfisherhost')
            image_libs.extend(au_items['LIBS'])
-           image_objs.extend(au_items['OBJS'])   
+           image_objs.extend(au_items['OBJS'])
 
   testframework_path = env.RealPath('${BUILD_ROOT}/testframework')
   if env.PathExists(testframework_path):
@@ -342,13 +343,13 @@ elif ('USES_DISABLE_AUDIO_DATA' in env):
    image_libs.extend(au_items['LIBS'])
    image_objs.extend(au_items['OBJS'])
 
-  
+
    fotatools_path = env.RealPath('${BUILD_ROOT}/fotatools')
    if env.PathExists(fotatools_path):
        if 'USES_FOTA' in env:
            au_items = env.LoadAreaSoftwareUnits('fotatools')
            image_libs.extend(au_items['LIBS'])
-           image_objs.extend(au_items['OBJS']) 
+           image_objs.extend(au_items['OBJS'])
 
   platformtools_path = env.RealPath('${BUILD_ROOT}/platform_tools')
   if env.PathExists(platformtools_path):
@@ -371,7 +372,7 @@ if env.has_key('USES_FEATURE_DYNAMIC_LOADING'):
          [sh_libs_dynsyms_fname, sh_libs_externs_fname], apps_proc_img_shlibs)
 
    pad_file_list = env.AddDynamicPadFiles(["${SHORT_BUILDPATH}/dummy_dynamic_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_symbol_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_string_padding.c", "${SHORT_BUILDPATH}/dummy_dynamic_hash_padding.c"], ["${SHORT_BUILDPATH}/APPS_PROC_shared_libs_dynsyms_ext.lst"])
-   env.Depends(pad_file_list, sh_libs_dynsyms_fname)      
+   env.Depends(pad_file_list, sh_libs_dynsyms_fname)
    pad_file_list_o  = env.AddObject(build_tags, pad_file_list)
    image_objs.append(pad_file_list_o)
 
@@ -389,10 +390,10 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
    # CBSP Image section
    #=========================================================================
 
-   # make our clone so we won't mess the lib rules, it shoun't because they 
+   # make our clone so we won't mess the lib rules, it shoun't because they
    # should of clone, but just to be on the safe side.
    env = env.Clone()
-   
+
    #-------------------------------------------------------------------------
    # Internal depends within CoreBSP
    #-------------------------------------------------------------------------
@@ -401,7 +402,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'BUSES',
       'DAL',
       'DEBUGTOOLS',
-      'HAL',      
+      'HAL',
       'HWENGINES',
       'IODEVICES',
       'MPROC',
@@ -411,7 +412,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
       'STORAGE',
       'SYSTEMDRIVERS',
       'WIREDCONNECTIVITY',
-      'PRODUCTS', 
+      'PRODUCTS',
       # needs to be last also contains wrong comdef.h
       'KERNEL',
    ]
@@ -427,13 +428,13 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
    TCXO_SHUTDOWN_RELOC_LC="0"
 
    if env.has_key('USES_L4_3X') or env.has_key('USES_THREADX'):
-      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}", 
+      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}",
          "${BUILD_MS_ROOT}/quartz_cfg.xml", AMSS_RELOC_LC=AMSS_RELOC_LC)
    else:
-      quartz_machine_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_machine_${TARGET_NAME}", 
+      quartz_machine_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_machine_${TARGET_NAME}",
          "${BUILD_MS_ROOT}/quartz_cfg_machine.xml")
-         
-      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}", 
+
+      quartz_xml = env.QuartzXMLBuilder("${SHORT_BUILDPATH}/quartz_cfg_${TARGET_NAME}",
          ["${BUILD_MS_ROOT}/quartz_cfg.xml", quartz_machine_xml],
          AMSS_RELOC_LC=AMSS_RELOC_LC)
 
@@ -445,19 +446,19 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
          "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_DDROnly_rom.scl"
       ])
    else:
-      l4_scl_hdr_file = env.L4SclHeaderBuilder("${SHORT_BUILDPATH}/cust_l4_scl_${TARGET_NAME}", 
+      l4_scl_hdr_file = env.L4SclHeaderBuilder("${SHORT_BUILDPATH}/cust_l4_scl_${TARGET_NAME}",
          quartz_xml)
 
       # "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_rom.scl"
       # "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_SMIOnly_rom.scl"
       # "${BUILD_MS_ROOT}/7600A_L4_${TARGET_IMAGE}_rom.scl"
       target_scl = env.SclBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}", [
-         "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_DDROnly_rom.scl", 
+         "${BUILD_MS_ROOT}/${BUILD_ASIC}_L4_${TARGET_IMAGE}_DDROnly_rom.scl",
          l4_scl_hdr_file
       ])
 
    image_units += target_scl
-   
+
    #----------------------------------------------------------------------------
    # Sources, libraries
    #----------------------------------------------------------------------------
@@ -465,7 +466,7 @@ if 'IMAGE_BUILD_LOCAL_FILES' in env:
 if 'IMAGE_BUILD_LINK' in env:
    # actually doing link, reset image_units
    image_units = []
-   
+
    #-------------------------------------------------------------------------
    # Build env QCOREIMG
    #-------------------------------------------------------------------------
@@ -474,7 +475,7 @@ if 'IMAGE_BUILD_LINK' in env:
    else:
       image_elf = env.AddProgram("${SHORT_BUILDPATH}/${TARGET_NAME}", source=image_objs, LIBS=image_libs)
    env.Depends(image_elf, target_scl)
-   
+
 if 'IMAGE_BUILD_POST_LINK' in env:
    #-------------------------------------------------------------------------
    # Install ELF, reloc files
@@ -483,7 +484,7 @@ if 'IMAGE_BUILD_POST_LINK' in env:
    qshrink20_elf = env.Qshrink20(
          "${SHORT_BUILDPATH}/${TARGET_NAME}_qsr2.elf",
          [image_elf, "${BUILD_ROOT}/build/myps/qshrink/msg_hash.txt"])
-   
+
    #-------------------------------------------------------------------------
    #Generate Memory Analysis
    #-------------------------------------------------------------------------
@@ -497,12 +498,12 @@ if 'IMAGE_BUILD_POST_LINK' in env:
    image_units.append(memanalyzer_out)
 
    #-------------------------------------------------------------------------
-   # Modify elf flags to update attributes for shared segments, 
+   # Modify elf flags to update attributes for shared segments,
    # DL segments, etc.
    #-------------------------------------------------------------------------
-   #target_elf = env.ModifyElfFlagsBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}_modifyelf", 
+   #target_elf = env.ModifyElfFlagsBuilder("${SHORT_BUILDPATH}/${TARGET_NAME}_modifyelf",
     #  [qshrink20_elf, target_scl])
-   
+
    # #-------------------------------------------------------------------------
    # # Build env mbn files
    # #-------------------------------------------------------------------------
@@ -516,7 +517,7 @@ if 'IMAGE_BUILD_POST_LINK' in env:
   #----------------------------------------------------------------------------
    if env['MSM_ID'] in ['9205']:
     env.LoadToolScript('sectools_builder', toolpath = ['${BUILD_ROOT}/sectools'])
-    env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen']) 
+    env.Tool('mbn_tools', toolpath = ['${BUILD_ROOT}/sectools/sectools/features/isc/parsegen'])
     soc_hw_version = "0x20130100"
     soc_vers = "0x2013"
     config_xml = '${BUILD_ROOT}/sectools/config/integration/secimage_eccv3.xml'
@@ -529,7 +530,7 @@ if 'IMAGE_BUILD_POST_LINK' in env:
 	config=config_xml,
 	sectools_install_base_dir = install_root,
 	install_file_name = image_name + '.mbn')
-    target_images.extend([sectools_mn_signed_mbn])   
+    target_images.extend([sectools_mn_signed_mbn])
    else:
        install_target_mbn = env.InstallAs('${MBN_ROOT}/apps.mbn', target_mbn)
 
@@ -547,7 +548,7 @@ if 'IMAGE_BUILD_POST_LINK' in env:
    install_target_elf = env.InstallAs(
       "${BUILD_MS_ROOT}/M${TARGET_FAMILY}${BUILD_ID}${BUILD_VER}.elf", image_elf)
 
-      
+
    #=========================================================================
    # Define targets needed QCOREIMG
    #

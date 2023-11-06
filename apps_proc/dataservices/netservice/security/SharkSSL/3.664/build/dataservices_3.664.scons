@@ -14,9 +14,10 @@
 Import('env')
 
 env = env.Clone()
-if 'USES_MOB' not in env:
-	env.Append(CCFLAGS = " --diag_suppress=66 ")
-	env.Append(CCFLAGS = " --diag_suppress=550 ")
+# Fix ARMTOOLS License
+# if 'USES_MOB' not in env:
+# 	env.Append(CCFLAGS = " --diag_suppress=66 ")
+# 	env.Append(CCFLAGS = " --diag_suppress=550 ")
 
 #env.Append(CCFLAGS = ' -DHAS_PKA')
 #env.Append(CPPDEFINES = 'HAS_PKA')
@@ -97,7 +98,7 @@ ROM_SOURCES = [ '${BUILDPATH}/src/SharkSSL.c',
                 '${BUILDPATH}/src/SharkSslCryptoLib.c',
                 '${BUILDPATH}/src/SharkSslEx.c',
                 '${BUILDPATH}/src/util/SharkSslSCMgr.c',
-                '${BUILDPATH}/src/util/SplayTree.c',                    
+                '${BUILDPATH}/src/util/SplayTree.c',
                 '${BUILDPATH}/DTLS/src/SharkSslCon_DTLS.c',
                 ]
 
@@ -109,7 +110,7 @@ RAM_SOURCES = [ '${BUILDPATH}/src/SharkSslCert.c',
                 '${BUILDPATH}/src/SharkSslPublicHwAccelerated.c',
                 '${BUILDPATH}/DTLS/src/SharkSslCon_DTLS_hs.c',
                 ]
-    
+
 # The following objects are to be placed in XIP
 
 DATASERVICES_SOURCES = [
