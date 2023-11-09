@@ -1,15 +1,15 @@
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 328 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
-# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 1
-# 18 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/lpasshwio/inc/typedef_drivers.h" 1
-# 38 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/lpasshwio/inc/typedef_drivers.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
+# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 1
+# 18 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/lpasshwio/inc/typedef_drivers.h" 1
+# 38 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/lpasshwio/inc/typedef_drivers.h"
 typedef signed char int8;
 
 
@@ -51,12 +51,12 @@ typedef unsigned long long int uint64;
 
 
 typedef unsigned char boolean;
-# 19 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h" 1
-# 24 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_consts.h" 1
-# 25 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h" 2
-# 35 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
+# 19 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h" 1
+# 24 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_consts.h" 1
+# 25 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h" 2
+# 35 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
 typedef unsigned int qurt_addr_t;
 typedef unsigned int qurt_paddr_t;
 
@@ -67,7 +67,7 @@ typedef unsigned int qurt_mem_fs_region_t;
 typedef unsigned int qurt_mem_pool_t;
 typedef unsigned int qurt_size_t;
 typedef unsigned long long qurt_mmu_entry_t;
-# 96 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
+# 96 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
 typedef enum {
         QURT_MEM_MAPPING_VIRTUAL=0,
 
@@ -151,7 +151,7 @@ struct qurt_pgattr {
    unsigned pga_value;
 };
 typedef struct qurt_pgattr qurt_pgattr_t;
-# 195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
+# 195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/kernel/qurt/qurt_types.h"
 typedef struct {
 
     qurt_mem_mapping_t mapping_type;
@@ -229,13 +229,13 @@ static inline int qurt_mmu_entry_cmp_by_vaddr (const void *a, const void *b)
    return ( (int)(((unsigned long long)*(const qurt_mmu_entry_t *)a >> 32) & 0xFFFFF) -
             (int)(((unsigned long long)*(const qurt_mmu_entry_t *)b >> 32) & 0xFFFFF) );
 }
-# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 1
-# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h" 1
-# 90 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h"
+# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 1
+# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h" 1
+# 90 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h"
 typedef int ADSPResult;
-# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 2
+# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 2
 # 1 "/pkg/qct/software/hexagon/releases/tools/8.3.03/Tools/bin/../target/hexagon/include/stdint.h" 1 3 4
 
 
@@ -325,8 +325,8 @@ typedef _ULonglong uint_fast64_t;
 
 typedef _Longlong intmax_t;
 typedef _ULonglong uintmax_t;
-# 30 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 2
-# 41 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h"
+# 30 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h" 2
+# 41 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/avtimer/inc/avtimer_hal_devcfg_defs.h"
 typedef enum
 {
    AVTIMER_HW_INSTANCE_INDEX_INVALID = -1,
@@ -356,8 +356,8 @@ typedef struct
   uint32_t offset_addr;
   avtimer_hw_mode mode;
 }avtimer_instance_info_t;
-# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
-# 110 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h"
+# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h" 2
+# 110 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/inc/lpasshwio_devcfg.h"
 enum
 {
   TIMESTAMP_LATCH_TYPE_SOFTWARE = 0,
@@ -663,13 +663,13 @@ typedef struct {
 
 
 } lpm_prop_struct_t;
-# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h" 1
-# 121 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h" 1
+# 121 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef unsigned char byte;
-# 131 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 131 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef unsigned long int bool32;
-# 146 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 146 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum {
     MMPM_STATUS_SUCCESS,
     MMPM_STATUS_FAILED,
@@ -697,7 +697,7 @@ typedef enum {
 
 
 typedef MmpmStatusType MMPM_STATUS;
-# 195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum {
     MMPM_CORE_ID_NONE = 0,
 
@@ -806,7 +806,7 @@ typedef struct {
     uint32 reqTag;
     MMPM_STATUS result;
 }MmpmCompletionCallbackDataType;
-# 353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum{
     MMPM_CORE_INSTANCE_NONE,
     MMPM_CORE_INSTANCE_0,
@@ -817,7 +817,7 @@ typedef enum{
 
 
 } MmpmCoreInstanceIdType;
-# 375 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 375 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     uint32 rev;
 
@@ -857,7 +857,7 @@ typedef struct {
 
 
 } MmpmRegParamType;
-# 424 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 424 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum {
     MMPM_RSC_ID_NONE = 0,
 
@@ -1274,7 +1274,7 @@ typedef enum {
     MMPM_CLK_ID_AUDIOIF_FORCE32BITS = 0x7FFFFFFF
 
 } MmpmClkIdAudioIfType;
-# 849 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 849 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum {
     MMPM_CLK_ID_LPASS_NONE = 0,
 
@@ -1964,7 +1964,7 @@ typedef enum {
      MMPM_PMIC_CONFIG_SET_MUX_CTRL,
 
 } MmpmPmicGpioConfigType;
-# 1548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     MmpmPmicGpioConfigType configId;
 
@@ -2055,14 +2055,14 @@ typedef struct {
     uint32 adspFloorClock;
 
 } MmpmMppsReqType;
-# 1648 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1648 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     uint32 numOfClk;
 
     MmpmCoreClkIdType *pClkIdArray;
 
 } MmpmClkIdArrayParamType;
-# 1738 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1738 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef union {
 
     uint32 vregMilliVolt;
@@ -2130,7 +2130,7 @@ typedef union {
 
 
     uint32 mips;
-# 1815 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1815 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
     MmpmResetReqType *pResetReq;
 
 
@@ -2164,9 +2164,9 @@ typedef union {
 
 
     MmpmMemPowerReqParamType *pMemPowerState;
-# 1856 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1856 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
     MmpmClkIdArrayParamType *pRelClkIdArray;
-# 1866 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1866 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
     MmpmCoreClkIdType gateClkId;
 
 
@@ -2175,7 +2175,7 @@ typedef union {
 
 
 }MmpmRscParamStructType;
-# 1882 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1882 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     MmpmRscIdType rscId;
 
@@ -2185,7 +2185,7 @@ typedef struct {
     MmpmRscParamStructType rscParam;
 
 } MmpmRscParamType;
-# 1903 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1903 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum{
      MMPM_API_TYPE_NONE,
      MMPM_API_TYPE_SYNC,
@@ -2221,7 +2221,7 @@ typedef struct {
 
 
 } MmpmRscExtParamType;
-# 1948 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 1948 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum {
     MMPM_INFO_ID_NONE,
 
@@ -2303,7 +2303,7 @@ typedef struct {
     uint32 clkFreqHz;
 
 } MmpmInfoClkType;
-# 2040 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2040 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     uint32 clkId;
 
@@ -2335,7 +2335,7 @@ typedef struct
 
 
 } MmpmInfoBwExtType;
-# 2106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     uint32 masterMeasureArray[7];
 
@@ -2399,7 +2399,7 @@ typedef struct {
     MmpmPmicGpioStatusType gpioSts;
 
 } MmpmPmicGpioInfoType;
-# 2193 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2193 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef struct {
     uint32 clientId;
 
@@ -2546,7 +2546,7 @@ typedef union {
 
 typedef struct {
     MmpmInfoIdType infoId;
-# 2353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
     MmpmCoreIdType coreId;
 
 
@@ -2562,7 +2562,7 @@ typedef struct {
 
 
 } MmpmInfoDataType;
-# 2376 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2376 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 typedef enum{
     MMPM_PARAM_ID_NONE = 0,
 
@@ -2664,7 +2664,7 @@ typedef struct{
 
 
     void* pParamConfig;
-# 2489 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2489 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 } MmpmParameterConfigType;
 
 
@@ -2689,63 +2689,63 @@ typedef struct{
 
 
 } MmpmOcmemMapType;
-# 2544 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2544 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 uint32 MMPM_Init(char * cmd_line);
-# 2578 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2578 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 uint32 MMPM_Register_Ext(MmpmRegParamType *pRegParam);
-# 2603 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2603 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Deregister_Ext(uint32 clientId);
-# 2653 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2653 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Request(uint32 clientId,
                              MmpmRscParamType *pMmpmRscParam);
-# 2686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Release(uint32 clientId,
                              MmpmRscParamType *pMmpmRscParam);
-# 2724 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2724 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Pause(uint32 clientId,
                            MmpmRscParamType *pMmpmRscParam);
-# 2753 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2753 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Resume(uint32 clientId,
                             MmpmRscParamType *pMmpmRscParam);
-# 2812 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2812 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Request_Ext(uint32 clientId,
                                  MmpmRscExtParamType *pRscExtParam);
-# 2845 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2845 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Release_Ext(uint32 clientId,
                                  MmpmRscExtParamType *pRscExtParam);
-# 2881 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2881 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Pause_Ext(uint32 clientId,
                                MmpmRscExtParamType *pRscExtParam);
-# 2917 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2917 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_Resume_Ext(uint32 clientId,
                                 MmpmRscExtParamType *pRscExtParam);
-# 2948 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2948 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_GetInfo(MmpmInfoDataType *pInfoData);
-# 2976 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/api/power/mmpm.h"
+# 2976 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/api/power/mmpm.h"
 MMPM_STATUS MMPM_SetParameter(uint32 clientId, MmpmParameterConfigType *pParamConfig);
-# 22 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 1
-# 42 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_version.h" 1
-# 43 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 1
-# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
-# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 22 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 1
+# 42 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_version.h" 1
+# 43 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 1
+# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
+# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 # 1 "/pkg/qct/software/hexagon/releases/tools/8.3.03/Tools/bin/../target/hexagon/include/stdint.h" 1 3 4
-# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
-# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
+# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 typedef char char_t;
 typedef unsigned char bool_t;
-# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
-# 42 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h"
+# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
+# 42 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h"
 typedef struct afe_mod_enable_param_t afe_mod_enable_param_t;
 
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 47 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 47 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
 struct afe_mod_enable_param_t
 {
   uint16_t enable;
@@ -2759,20 +2759,20 @@ struct afe_mod_enable_param_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 60 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 60 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/afe_common.h" 2
 ;
-# 44 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 1
-# 67 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
+# 44 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 1
+# 67 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
 typedef struct afe_hw_mad_cfg_param_v1_t afe_hw_mad_cfg_param_v1_t;
 
 
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 73 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 73 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
 struct afe_hw_mad_cfg_param_v1_t
 {
   uint32_t hw_mad_minor_version;
@@ -2806,10 +2806,10 @@ struct afe_hw_mad_cfg_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
 ;
-# 132 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
+# 132 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
 typedef struct afe_hw_mad_ctrl_param_v1_t afe_hw_mad_ctrl_param_v1_t;
 
 
@@ -2817,8 +2817,8 @@ typedef struct afe_hw_mad_ctrl_param_v1_t afe_hw_mad_ctrl_param_v1_t;
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 139 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 139 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
 struct afe_hw_mad_ctrl_param_v1_t
 {
   uint32_t minor_version;
@@ -2829,7 +2829,7 @@ struct afe_hw_mad_ctrl_param_v1_t
 
 
   uint16_t mad_type;
-# 173 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
+# 173 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h"
   uint16_t mad_enable;
 
 
@@ -2838,16 +2838,16 @@ struct afe_hw_mad_ctrl_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 181 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 181 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/hw_mad.h" 2
 ;
-# 45 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 851 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 45 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 851 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_loopback_gain_per_path_param_t afe_loopback_gain_per_path_param_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 854 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 854 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -2867,10 +2867,10 @@ struct afe_loopback_gain_per_path_param_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 873 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 873 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 905 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 905 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef enum afe_loopback_routing_mode_t
 {
     LB_MODE_DEFAULT = 1,
@@ -2896,8 +2896,8 @@ typedef enum afe_loopback_routing_mode_t
 typedef struct afe_loopback_cfg_v1_t afe_loopback_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 930 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 930 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -2919,7 +2919,7 @@ struct afe_loopback_cfg_v1_t
 
 
     uint16_t routing_mode;
-# 959 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 959 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t enable;
 
 
@@ -2931,8 +2931,8 @@ struct afe_loopback_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 970 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 970 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -2941,8 +2941,8 @@ struct afe_loopback_cfg_v1_t
 typedef struct afe_loopback_cfg_v2_t afe_loopback_cfg_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 978 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 978 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -2964,7 +2964,7 @@ struct afe_loopback_cfg_v2_t
 
 
     uint16_t routing_mode;
-# 1007 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1007 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t enable;
 
 
@@ -2976,18 +2976,18 @@ struct afe_loopback_cfg_v2_t
 
 
     uint32_t rate_matching_enable;
-# 1028 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1028 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1030 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1030 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1083 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1083 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_remote_lpass_core_hw_vote_request afe_cmd_remote_lpass_core_hw_vote_request;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1086 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1086 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3008,15 +3008,15 @@ struct afe_cmd_remote_lpass_core_hw_vote_request
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1106 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1136 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1136 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_rsp_remote_lpass_core_hw_vote_request afe_cmd_rsp_remote_lpass_core_hw_vote_request;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1139 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1139 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3030,15 +3030,15 @@ struct afe_cmd_rsp_remote_lpass_core_hw_vote_request
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1152 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1152 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1177 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1177 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_remote_lpass_core_hw_devote_request afe_cmd_remote_lpass_core_hw_devote_request;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1180 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1180 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3059,15 +3059,15 @@ struct afe_cmd_remote_lpass_core_hw_devote_request
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1200 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1200 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1232 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1232 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_service_cmd_register_rt_port_driver_t afe_service_cmd_register_rt_port_driver_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1235 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1235 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3087,15 +3087,15 @@ struct afe_service_cmd_register_rt_port_driver_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1254 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1254 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1279 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1279 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_service_cmd_unregister_rt_port_driver_t afe_service_cmd_unregister_rt_port_driver_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1282 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1282 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3115,15 +3115,15 @@ struct afe_service_cmd_unregister_rt_port_driver_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1370 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1370 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_event_rt_proxy_port_status_t afe_event_rt_proxy_port_status_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1373 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1373 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3148,15 +3148,15 @@ struct afe_event_rt_proxy_port_status_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1397 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1397 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1436 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1436 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_data_cmd_rt_proxy_port_write_v2_t afe_port_data_cmd_rt_proxy_port_write_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1439 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1439 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3192,18 +3192,18 @@ struct afe_port_data_cmd_rt_proxy_port_write_v2_t
 
 
     uint32_t available_bytes;
-# 1482 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1482 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1484 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1484 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1526 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1526 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_data_cmd_rt_proxy_port_read_v2_t afe_port_data_cmd_rt_proxy_port_read_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1529 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1529 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3241,18 +3241,18 @@ struct afe_port_data_cmd_rt_proxy_port_read_v2_t
 
 
     uint32_t available_bytes;
-# 1574 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1574 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1576 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1576 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 1807 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1807 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_i2s_cfg_t afe_param_id_i2s_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 1810 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 1810 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3272,7 +3272,7 @@ struct afe_param_id_i2s_cfg_t
 
 
     uint16_t channel_mode;
-# 1841 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1841 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t mono_stereo;
 
 
@@ -3289,22 +3289,22 @@ struct afe_param_id_i2s_cfg_t
 
 
     uint32_t sample_rate;
-# 1890 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1890 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t data_format;
-# 1902 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1902 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t reserved;
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 1906 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 1906 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2036 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2036 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_pcm_cfg_t afe_param_id_pcm_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2039 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2039 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3333,9 +3333,9 @@ struct afe_param_id_pcm_cfg_t
 
 
     uint16_t frame_setting;
-# 2077 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2077 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t quant_type;
-# 2088 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2088 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t ctrl_data_out_enable;
 
 
@@ -3348,7 +3348,7 @@ struct afe_param_id_pcm_cfg_t
 
 
     uint32_t sample_rate;
-# 2109 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2109 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t bit_width;
 
 
@@ -3360,18 +3360,18 @@ struct afe_param_id_pcm_cfg_t
 
 
     uint16_t slot_number_mapping[4];
-# 2133 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2133 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2135 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2135 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2194 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2194 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_tdm_cfg_t afe_param_id_tdm_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2197 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2197 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3391,7 +3391,7 @@ struct afe_param_id_tdm_cfg_t
 
 
     uint32_t sample_rate;
-# 2234 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2234 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t bit_width;
 
 
@@ -3458,18 +3458,18 @@ struct afe_param_id_tdm_cfg_t
 
 
     uint32_t slot_mask;
-# 2310 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2310 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2312 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2312 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2335 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2335 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_hdmi_multi_chan_audio_cfg_t afe_param_id_hdmi_multi_chan_audio_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2338 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2338 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3484,7 +3484,7 @@ struct afe_param_id_hdmi_multi_chan_audio_cfg_t
 
 
     uint16_t data_type;
-# 2360 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2360 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t channel_allocation;
 
 
@@ -3494,7 +3494,7 @@ struct afe_param_id_hdmi_multi_chan_audio_cfg_t
 
 
     uint32_t sample_rate;
-# 2385 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2385 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t bit_width;
 
 
@@ -3504,15 +3504,15 @@ struct afe_param_id_hdmi_multi_chan_audio_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2394 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2394 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2422 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2422 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_usb_audio_cfg_v1_t afe_param_id_usb_audio_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2425 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2425 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3527,7 +3527,7 @@ struct afe_param_id_usb_audio_cfg_v1_t
 
 
     uint32_t sample_rate;
-# 2458 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2458 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t bit_width;
 
 
@@ -3547,15 +3547,15 @@ struct afe_param_id_usb_audio_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2477 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2477 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2501 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2501 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_usb_audio_dev_params_v1_t afe_param_id_usb_audio_dev_params_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2504 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2504 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3574,15 +3574,15 @@ struct afe_param_id_usb_audio_dev_params_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2522 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2522 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2546 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2546 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_usb_audio_dev_lpcm_fmt_v1_t afe_param_id_usb_audio_dev_lpcm_fmt_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2549 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2549 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3597,18 +3597,18 @@ struct afe_param_id_usb_audio_dev_lpcm_fmt_v1_t
 
 
   uint32_t media_format;
-# 2574 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2574 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2576 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2576 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2595 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2595 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_spdif_audio_cfg_t afe_param_id_spdif_audio_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2598 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2598 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3623,7 +3623,7 @@ struct afe_param_id_spdif_audio_cfg_t
 
 
    uint32_t sample_rate;
-# 2624 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2624 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t data_format;
 
 
@@ -3645,15 +3645,15 @@ struct afe_param_id_spdif_audio_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2645 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2645 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_chstatus_cfg_t afe_param_id_chstatus_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2689 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2689 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3687,15 +3687,15 @@ struct afe_param_id_chstatus_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2722 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2722 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2751 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2751 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_hdmi_input_cfg_t afe_param_id_hdmi_input_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2754 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2754 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3718,7 +3718,7 @@ struct afe_param_id_hdmi_input_cfg_t
 
 
    uint32_t sample_rate;
-# 2786 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2786 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t bit_width;
 
 
@@ -3728,15 +3728,15 @@ struct afe_param_id_hdmi_input_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2795 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2795 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2823 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2823 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_internal_bt_fm_cfg_t afe_param_id_internal_bt_fm_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2826 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2826 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3771,15 +3771,15 @@ struct afe_param_id_internal_bt_fm_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 2860 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 2860 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 2916 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2916 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_slimbus_cfg_t afe_param_id_slimbus_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 2919 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 2919 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3807,7 +3807,7 @@ struct afe_param_id_slimbus_cfg_t
 
 
     uint16_t data_format;
-# 2958 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2958 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t num_channels;
 
 
@@ -3821,18 +3821,18 @@ struct afe_param_id_slimbus_cfg_t
 
 
     uint32_t sample_rate;
-# 2999 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 2999 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3001 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3001 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3025 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3025 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_rt_proxy_port_cfg_t afe_param_id_rt_proxy_port_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3028 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3028 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3852,7 +3852,7 @@ struct afe_param_id_rt_proxy_port_cfg_t
 
 
     uint16_t interleaved;
-# 3056 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3056 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t frame_size;
 
 
@@ -3862,13 +3862,13 @@ struct afe_param_id_rt_proxy_port_cfg_t
 
 
     uint16_t jitter_allowance;
-# 3074 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3074 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t low_water_mark;
-# 3087 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3087 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t high_water_mark;
-# 3100 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3100 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t sample_rate;
-# 3118 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3118 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t num_channels;
 
 
@@ -3878,15 +3878,15 @@ struct afe_param_id_rt_proxy_port_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3127 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3127 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3182 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3182 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_pseudo_port_cfg_t afe_param_id_pseudo_port_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3185 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3185 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3922,18 +3922,18 @@ struct afe_param_id_pseudo_port_cfg_t
 
 
     uint32_t sample_rate;
-# 3236 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3236 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3238 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3238 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3277 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3277 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_ahb_clock_cfg_t afe_param_id_ahb_clock_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3280 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3280 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3955,15 +3955,15 @@ struct afe_param_id_ahb_clock_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3327 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3327 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_lpass_core_shared_clk_cfg_t afe_param_id_lpass_core_shared_clk_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3330 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3330 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -3985,15 +3985,15 @@ struct afe_param_id_lpass_core_shared_clk_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3351 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3351 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3371 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3371 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_device_hw_delay_t afe_param_id_device_hw_delay_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3374 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3374 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4013,15 +4013,15 @@ struct afe_param_id_device_hw_delay_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3393 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3393 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3418 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3418 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_device_start_t afe_port_cmd_device_start_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3421 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3421 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4041,15 +4041,15 @@ struct afe_port_cmd_device_start_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3440 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3440 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3487 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3487 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_devices_restart_t afe_port_cmd_devices_restart_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3490 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3490 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4058,7 +4058,7 @@ typedef struct afe_port_cmd_devices_restart_t afe_port_cmd_devices_restart_t;
 struct afe_port_cmd_devices_restart_t
 {
     uint16_t rx_port_id;
-# 3507 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3507 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t tx_port_id;
 
 
@@ -4076,15 +4076,15 @@ struct afe_port_cmd_devices_restart_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3524 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3524 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_device_stop_t afe_port_cmd_device_stop_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3551 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3551 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4104,37 +4104,37 @@ struct afe_port_cmd_device_stop_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3570 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3570 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3602 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3602 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_service_cmd_shared_mem_map_regions_t afe_service_cmd_shared_mem_map_regions_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3605 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 3614 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3605 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 3614 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_service_cmd_shared_mem_map_regions_t
 {
     uint16_t mem_pool_id;
-# 3629 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3629 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t num_regions;
 
 
 
 
     uint32_t property_flag;
-# 3656 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3656 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3658 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3658 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3662 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3662 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4148,7 +4148,7 @@ struct afe_service_shared_map_region_payload_t
 
 
     uint32_t shm_addr_msw;
-# 3686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3686 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t mem_size_bytes;
 
 
@@ -4159,15 +4159,15 @@ struct afe_service_shared_map_region_payload_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3696 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3696 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3722 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3722 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_service_cmdrsp_shared_mem_map_regions_t afe_service_cmdrsp_shared_mem_map_regions_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3725 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3725 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4177,18 +4177,18 @@ typedef struct afe_service_cmdrsp_shared_mem_map_regions_t afe_service_cmdrsp_sh
 struct afe_service_cmdrsp_shared_mem_map_regions_t
 {
     uint32_t mem_map_handle;
-# 3746 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3746 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3748 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3748 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3774 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3774 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_service_cmd_shared_mem_unmap_regions_t afe_service_cmd_shared_mem_unmap_regions_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3777 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3777 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4199,19 +4199,19 @@ typedef struct afe_service_cmd_shared_mem_unmap_regions_t afe_service_cmd_shared
 struct afe_service_cmd_shared_mem_unmap_regions_t
 {
     uint32_t mem_map_handle;
-# 3796 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3796 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3798 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3798 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3843 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3843 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_param_data_v2_t afe_port_param_data_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3846 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 3855 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3846 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 3855 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_port_param_data_v2_t
 {
    uint32_t module_id;
@@ -4234,8 +4234,8 @@ struct afe_port_param_data_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3877 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3877 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -4243,8 +4243,8 @@ struct afe_port_param_data_v2_t
 typedef struct afe_port_cmd_set_param_v2_t afe_port_cmd_set_param_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3884 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3884 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4274,20 +4274,20 @@ struct afe_port_cmd_set_param_v2_t
 
 
    uint32_t payload_address_msw;
-# 3924 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3924 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t mem_map_handle;
-# 3940 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3940 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 3942 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 3942 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 3981 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 3981 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_set_param_v3_t afe_port_cmd_set_param_v3_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 3984 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 3984 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4313,15 +4313,15 @@ struct afe_port_cmd_set_param_v3_t
 
 
    uint32_t payload_address_msw;
-# 4020 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4020 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t mem_map_handle;
-# 4036 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4036 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t payload_size;
-# 4045 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4045 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4047 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4047 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -4329,9 +4329,9 @@ struct afe_port_cmd_set_param_v3_t
 typedef struct afe_port_param_data_v3_t afe_port_param_data_v3_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4054 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 4063 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4054 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 4063 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_port_param_data_v3_t
 {
    uint32_t module_id;
@@ -4358,15 +4358,15 @@ struct afe_port_param_data_v3_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4089 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4089 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4125 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4125 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_get_param_v2_t afe_port_cmd_get_param_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4128 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4128 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4396,9 +4396,9 @@ struct afe_port_cmd_get_param_v2_t
 
 
     uint32_t payload_address_msw;
-# 4168 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4168 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t mem_map_handle;
-# 4184 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4184 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t module_id;
 
 
@@ -4410,16 +4410,16 @@ struct afe_port_cmd_get_param_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4195 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4239 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4239 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmdrsp_get_param_v2_t afe_port_cmdrsp_get_param_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4242 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 4252 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4242 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 4252 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_port_cmdrsp_get_param_v2_t
 {
     uint32_t status;
@@ -4430,15 +4430,15 @@ struct afe_port_cmdrsp_get_param_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4262 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4262 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4298 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4298 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_get_param_v3_t afe_port_cmd_get_param_v3_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4301 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4464,9 +4464,9 @@ struct afe_port_cmd_get_param_v3_t
 
 
     uint32_t payload_address_msw;
-# 4337 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4337 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t mem_map_handle;
-# 4353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4353 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t module_id;
 
 
@@ -4493,16 +4493,16 @@ struct afe_port_cmd_get_param_v3_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4379 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4379 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4418 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4418 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmdrsp_get_param_v3_t afe_port_cmdrsp_get_param_v3_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4421 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 4430 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4421 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 4430 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_port_cmdrsp_get_param_v3_t
 {
     uint32_t status;
@@ -4513,8 +4513,8 @@ struct afe_port_cmdrsp_get_param_v3_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4440 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4440 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -4523,8 +4523,8 @@ struct afe_port_cmdrsp_get_param_v3_t
 typedef struct afe_algo_log_header_t afe_algo_log_header_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4448 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4448 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4554,15 +4554,15 @@ struct afe_algo_log_header_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4477 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4477 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4521 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4521 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_svc_param_data_t afe_svc_param_data_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4524 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4524 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4592,8 +4592,8 @@ struct afe_svc_param_data_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4553 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4553 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -4601,8 +4601,8 @@ struct afe_svc_param_data_t
 typedef struct afe_svc_cmd_set_param_t afe_svc_cmd_set_param_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4560 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4560 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4624,20 +4624,20 @@ struct afe_svc_cmd_set_param_t
 
 
    uint32_t payload_address_msw;
-# 4591 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4591 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t mem_map_handle;
-# 4606 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4606 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4608 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4608 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4643 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4643 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_svc_cmd_set_param_v2_t afe_svc_cmd_set_param_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4646 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4646 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4652,9 +4652,9 @@ struct afe_svc_cmd_set_param_v2_t
 
 
    uint32_t payload_address_msw;
-# 4670 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4670 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t mem_map_handle;
-# 4682 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4682 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t payload_size;
 
 
@@ -4665,8 +4665,8 @@ struct afe_svc_cmd_set_param_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4692 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4692 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -4674,8 +4674,8 @@ struct afe_svc_cmd_set_param_v2_t
 typedef struct afe_svc_param_data_v2_t afe_svc_param_data_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4699 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4699 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4709,15 +4709,15 @@ struct afe_svc_param_data_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4732 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4732 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 4755 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4755 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_slimbus_slave_port_cfg_param_v1_t afe_slimbus_slave_port_cfg_param_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 4758 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 4758 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4732,7 +4732,7 @@ struct afe_slimbus_slave_port_cfg_param_v1_t
 
 
     uint16_t slimbus_dev_id;
-# 4781 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 4781 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t slave_dev_pgd_la;
 
 
@@ -4768,15 +4768,15 @@ struct afe_slimbus_slave_port_cfg_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 4816 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 4816 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5092 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5092 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_clock_set_t afe_param_id_clock_set_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5095 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5095 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4790,14 +4790,14 @@ struct afe_param_id_clock_set_t
 
 
     uint32_t clk_id;
-# 5130 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5130 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t clk_freq_in_hz;
 
 
 
 
     uint16_t clk_attri;
-# 5145 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5145 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t clk_root;
 
 
@@ -4806,18 +4806,18 @@ struct afe_param_id_clock_set_t
 
 
     uint32_t enable;
-# 5161 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5161 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5163 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5163 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5199 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5199 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_slimbus_slave_cfg_param_v1_t afe_cdc_slimbus_slave_cfg_param_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5202 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5202 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4856,15 +4856,15 @@ struct afe_cdc_slimbus_slave_cfg_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5240 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5240 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5602 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5602 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_reg_cfg_param_v1_t afe_cdc_reg_cfg_param_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5605 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5605 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4885,7 +4885,7 @@ struct afe_cdc_reg_cfg_param_v1_t
 
 
     uint32_t reg_field_type;
-# 5634 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5634 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t reg_field_bit_mask;
 
 
@@ -4903,16 +4903,16 @@ struct afe_cdc_reg_cfg_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5651 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5651 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_cdc_reg_cfg_param_v2_t afe_cdc_reg_cfg_param_v2_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5657 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5657 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4932,7 +4932,7 @@ struct afe_cdc_reg_cfg_param_v2_t
 
 
     uint32_t reg_field_type;
-# 5685 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5685 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t reg_field_bit_mask;
 
 
@@ -4950,15 +4950,15 @@ struct afe_cdc_reg_cfg_param_v2_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5702 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5702 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5721 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5721 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_reg_slimbus_cfg_param_v1_t afe_cdc_reg_slimbus_cfg_param_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5724 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5724 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -4978,15 +4978,15 @@ struct afe_cdc_reg_slimbus_cfg_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5743 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5743 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5789 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5789 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_aanc_version_param_v1_t afe_cdc_aanc_version_param_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5792 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5792 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5008,15 +5008,15 @@ struct afe_cdc_aanc_version_param_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5813 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5813 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5838 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5838 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_clip_bank_sel_cfg_v1_t afe_clip_bank_sel_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5841 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5841 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5044,15 +5044,15 @@ struct afe_clip_bank_sel_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5868 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5868 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5916 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5916 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_reg_page_cfg_t afe_cdc_reg_page_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5919 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5919 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5074,18 +5074,18 @@ struct afe_cdc_reg_page_cfg_t
 
 
     uint32_t proc_id;
-# 5953 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5953 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 5955 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 5955 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 5974 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 5974 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cdc_pwr_cntl_cfg_v1_t afe_cdc_pwr_cntl_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 5977 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 5977 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5110,15 +5110,15 @@ struct afe_cdc_pwr_cntl_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6001 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6001 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6076 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6076 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_lpaif_clk_cfg_t afe_param_id_lpaif_clk_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6079 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6079 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5153,22 +5153,22 @@ struct afe_param_id_lpaif_clk_cfg_t
 
 
     uint16_t clk_root;
-# 6124 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6124 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t clk_set_mode;
-# 6133 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6133 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t reserved;
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6137 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6137 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6176 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6176 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_spdif_clk_cfg_t afe_param_id_spdif_clk_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6179 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6179 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5196,15 +5196,15 @@ struct afe_param_id_spdif_clk_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6206 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6206 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6259 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6259 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_internal_digital_cdc_clk_cfg_t afe_param_id_internal_digital_cdc_clk_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6262 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6262 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5222,20 +5222,20 @@ struct afe_param_id_internal_digital_cdc_clk_cfg_t
 
 
     uint16_t clk_root;
-# 6289 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6289 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t reserved;
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6293 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6293 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6357 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6357 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_custom_event_t afe_port_custom_event_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6360 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6360 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5268,15 +5268,15 @@ struct afe_port_custom_event_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6392 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6392 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6444 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6444 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_fbsp_feedback_path_cfg_v1_t afe_fbsp_feedback_path_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6447 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6447 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5305,18 +5305,18 @@ struct afe_fbsp_feedback_path_cfg_v1_t
 
 
    int32_t chan_info[4];
-# 6491 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6491 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6493 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6493 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6545 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6545 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_group_device_i2s_cfg_v1_t afe_param_id_group_device_i2s_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6548 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5331,13 +5331,13 @@ struct afe_param_id_group_device_i2s_cfg_v1_t
 
 
     uint16_t group_id;
-# 6570 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6570 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t channel_mode;
-# 6583 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6583 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t sample_rate;
-# 6595 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6595 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t port_id[8];
-# 6628 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6628 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t bit_width;
 
 
@@ -5347,15 +5347,15 @@ struct afe_param_id_group_device_i2s_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6637 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6637 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6665 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6665 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_group_device_tdm_cfg_t afe_param_id_group_device_tdm_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6668 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6668 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5370,19 +5370,19 @@ struct afe_param_id_group_device_tdm_cfg_t
 
 
    uint16_t group_id;
-# 6694 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6694 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t reserved;
 
 
     uint16_t port_id[8];
-# 6784 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6784 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t num_channels;
 
 
 
 
     uint32_t sample_rate;
-# 6799 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6799 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t bit_width;
 
 
@@ -5402,18 +5402,18 @@ struct afe_param_id_group_device_tdm_cfg_t
 
 
     uint32_t slot_mask;
-# 6827 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6827 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6829 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6829 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6846 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6846 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_group_device_enable_t afe_param_id_group_device_enable_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6849 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6849 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5423,7 +5423,7 @@ typedef struct afe_param_id_group_device_enable_t afe_param_id_group_device_enab
 struct afe_param_id_group_device_enable_t
 {
    uint16_t group_id;
-# 6875 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6875 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t enable;
 
 
@@ -5432,15 +5432,15 @@ struct afe_param_id_group_device_enable_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6883 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6883 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 6954 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 6954 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_add_topologies_t afe_cmd_add_topologies_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6957 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6957 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5464,16 +5464,16 @@ struct afe_cmd_add_topologies_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 6980 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 6980 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_module_info_t afe_module_info_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 6986 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 6986 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5490,7 +5490,7 @@ struct afe_module_info_t
 
 
    uint32_t use_lpm;
-# 7011 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7011 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint8_t init_params[16];
 
 
@@ -5500,17 +5500,17 @@ struct afe_module_info_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7020 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7020 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_topology_definition_t afe_topology_definition_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7026 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 7035 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7026 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 7035 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_topology_definition_t
 {
    uint32_t topology_id;
@@ -5532,16 +5532,16 @@ struct afe_topology_definition_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7056 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7056 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_custom_topologies_t afe_custom_topologies_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7062 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7062 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5556,15 +5556,15 @@ struct afe_custom_topologies_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7076 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7076 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7100 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7100 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_topo_id_v1_t afe_topo_id_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7103 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7103 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5583,15 +5583,15 @@ struct afe_topo_id_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7121 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7121 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7165 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7165 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_port_lat_mode_cfg_t afe_param_id_port_lat_mode_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7168 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7168 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5611,15 +5611,15 @@ struct afe_param_id_port_lat_mode_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7187 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7187 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7233 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7233 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_sw_duty_cycle_cfg_v1_t afe_param_id_sw_duty_cycle_cfg_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7236 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7236 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5641,14 +5641,14 @@ struct afe_param_id_sw_duty_cycle_cfg_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7257 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7257 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7293 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7293 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_group_device_hdmi_multistream_cfg_t afe_param_id_group_device_hdmi_multistream_cfg_t;
-# 7328 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7329 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 7328 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7329 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5668,22 +5668,22 @@ struct afe_param_id_group_device_hdmi_multistream_cfg_t
 
 
     uint16_t port_id[8];
-# 7359 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7359 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t stream_id[8];
-# 7372 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7372 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint16_t action_id;
-# 7381 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7381 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7383 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7383 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7404 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7404 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cont_buf_latency_stats_v1_t afe_cont_buf_latency_stats_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7407 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7407 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5723,15 +5723,15 @@ struct afe_cont_buf_latency_stats_v1_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7446 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7446 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7483 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7483 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_dev_timing_stats_t afe_param_id_dev_timing_stats_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7486 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7486 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5759,11 +5759,11 @@ struct afe_param_id_dev_timing_stats_t
 
 
     uint32_t resync_flag;
-# 7527 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7527 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     int32_t acc_drift_value;
-# 7536 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7536 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t ref_timer_abs_ts_lsw;
-# 7545 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7545 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint32_t ref_timer_abs_ts_msw;
 
 
@@ -5774,15 +5774,15 @@ struct afe_param_id_dev_timing_stats_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7555 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7555 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7625 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7625 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_media_type_v1_t afe_port_media_type_v1_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7628 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7628 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5797,7 +5797,7 @@ struct afe_port_media_type_v1_t
 
 
     uint32_t sample_rate;
-# 7661 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7661 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t bit_width;
 
 
@@ -5809,20 +5809,20 @@ struct afe_port_media_type_v1_t
 
 
     uint16_t data_format;
-# 7681 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7681 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t reserved;
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7685 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7685 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7736 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7736 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_slot_mapping_cfg_t afe_param_id_slot_mapping_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7739 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7739 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5855,18 +5855,18 @@ struct afe_param_id_slot_mapping_cfg_t
 
 
     uint16_t offset[0x8];
-# 7785 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7785 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7787 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7787 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7824 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7824 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_param_id_custom_tdm_header_cfg_t afe_param_id_custom_tdm_header_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7827 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7827 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5893,20 +5893,20 @@ struct afe_param_id_custom_tdm_header_cfg_t
 
 
     uint16_t header_type;
-# 7861 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7861 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
     uint16_t num_frame_repeat;
-# 7887 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7887 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7889 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7889 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 7941 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 7941 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_request_lpass_resources afe_cmd_request_lpass_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7944 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7944 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 struct afe_cmd_request_lpass_resources
@@ -5917,8 +5917,8 @@ struct afe_cmd_request_lpass_resources
 
 };
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7954 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7954 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
@@ -5928,8 +5928,8 @@ struct afe_cmd_request_lpass_resources
 typedef struct afe_cmd_request_lpass_dma_resources afe_cmd_request_lpass_dma_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 7963 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 7963 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -5961,38 +5961,38 @@ struct afe_cmd_request_lpass_dma_resources
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 7994 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 7994 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 8058 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 8058 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmdrsp_request_lpass_resources afe_cmdrsp_request_lpass_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8061 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8061 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 struct afe_cmdrsp_request_lpass_resources
 {
    uint32_t status;
-# 8075 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 8075 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
    uint32_t resource_id;
 
 
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8081 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8081 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_cmdrsp_request_lpass_dma_resources afe_cmdrsp_request_lpass_dma_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8087 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
-# 8098 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8087 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 8098 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 struct afe_cmdrsp_request_lpass_dma_resources
 {
    uint8_t dma_type;
@@ -6014,15 +6014,15 @@ struct afe_cmdrsp_request_lpass_dma_resources
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8119 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8119 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 8186 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 8186 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_cmd_release_lpass_resources afe_cmd_release_lpass_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8189 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8189 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 struct afe_cmd_release_lpass_resources
@@ -6034,16 +6034,16 @@ struct afe_cmd_release_lpass_resources
 }
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8200 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8200 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 typedef struct afe_cmd_release_lpass_dma_resources afe_cmd_release_lpass_dma_resources;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8206 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8206 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -6072,15 +6072,15 @@ struct afe_cmd_release_lpass_dma_resources
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8234 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8234 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 8246 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
+# 8246 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h"
 typedef struct afe_port_cmd_mod_evt_cfg_t afe_port_cmd_mod_evt_cfg_t;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8249 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8249 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -6102,8 +6102,8 @@ struct afe_port_cmd_mod_evt_cfg_t
 
 }
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8270 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8270 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 ;
@@ -6115,8 +6115,8 @@ struct afe_port_cmd_mod_evt_cfg_t
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8281 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8281 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -6147,16 +6147,16 @@ typedef struct afe_port_cmd_mod_evt_cfg_payload_t
 } afe_port_cmd_mod_evt_cfg_payload_t ;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8311 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8311 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
 
 
 
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
-# 8317 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_begin_pack.h" 1
+# 8317 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 
 
 
@@ -6191,10 +6191,10 @@ typedef struct afe_port_mod_event_header_t
 } afe_port_mod_event_header_t ;
 
 
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
-# 8351 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_end_pack.h" 1
+# 8351 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/afe/inc/adsp_afe_service_commands.h" 2
 ;
-# 23 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
+# 23 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/afe/drivers/hw/devcfg/config/lpasshwio_devcfg_9607.c" 2
 
 
 HwdLpassPropertyType lpass_prop =

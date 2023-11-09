@@ -22,10 +22,11 @@ Copyright (c) 1999 - 2023 by Qualcomm Technologies, Incorporated.  All Rights Re
 This section contains comments describing changes made to this file.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/rfa.mpss/3.10/rf/common/rf/mc/src/rfm.c#6 $
+$Header: //components/rel/rfa.mpss/3.10/rf/common/rf/mc/src/rfm.c#7 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 06/06/22   gk      Add QDSS under debug NV
 03/01/21   gk      B87/B88 addition
@@ -1901,7 +1902,7 @@ sys_lte_band_mask_e_type rfm_get_lte_band_mask ( void )
     }
   } 
 
-  /* Loop to set supported LTE bands 1 to 60 */ 
+  /* Loop to set supported LTE bands 1 to 61 */ 
   for (loop_idx = 0; loop_idx < 50; loop_idx++)
   {
     if ((band_mask >> loop_idx) & 1)
@@ -1910,7 +1911,7 @@ sys_lte_band_mask_e_type rfm_get_lte_band_mask ( void )
     }
   } /* end of loop for idx 0 to 59 */
 
-  for (loop_idx = 50; loop_idx <= 60; loop_idx++)
+  for (loop_idx = 50; loop_idx <= 61; loop_idx++)
   {
     if ((band_mask >> loop_idx) & 1)
     {
@@ -1927,11 +1928,16 @@ sys_lte_band_mask_e_type rfm_get_lte_band_mask ( void )
      {
         SYS_LTE_BAND_MASK_ADD_BAND(&rfm_lte_band_mask, loop_idx + 14);
      }
+#ifdef FEATURE_NBIOT_NTN
 	 else if(loop_idx == 60)
 	 {
 	    SYS_LTE_BAND_MASK_ADD_BAND(&rfm_lte_band_mask, 255);
 	 }
-	 
+	 else if(loop_idx == 61)
+	 {
+	    SYS_LTE_BAND_MASK_ADD_BAND(&rfm_lte_band_mask, 254);
+	 }
+#endif
     }
   } /* end of loop for idx 0 to 59 */
 

@@ -23,7 +23,7 @@ Copyright (c) 2012 - 2023 by Qualcomm Technologies, Inc.  All Rights Reserved.
 
                       EDIT HISTORY FOR FILE
 
-$Header: //components/rel/rfnv.mpss/1.0/api/rfnv_item_types.h#272 $
+$Header: //components/rel/rfnv.mpss/1.0/api/rfnv_item_types.h#277 $
 
 
 when       who     what, where, why
@@ -482,6 +482,9 @@ extern "C" {
 
 #define RFNV_ASDIV_IMBALANCE_OFFSET_SIZE  16
 
+#define RFNV_TXAGC_CTRL_STRUCT_SIZE_V4 4
+#define RFNV_AUDIO_MAX_PA_STATE 6
+
 enum{
   /* 0-99 is reserved for legacy data types, will be added later */
   RFNV_DATA_TYPE_ID_CAL_CHANS                        = 100,
@@ -911,6 +914,34 @@ enum{
   RFNV_DATA_TYPE_ID_ET_DPD_V5                                   = 591, /* tx_ep_dpd_v5_nv_type */
   RFNV_DATA_TYPE_ASDIV_IMBALANCE_ADJ                            = 592, /* rfnv_asdiv_imbalance_data_t */
   RFNV_DATA_TYPE_TXAGC_CONTROL_V4                               = 593, /* rfnv_txagc_control_static_data_t_v4 */
+  RFNV_DATA_TYPE_TX_DAPT_ENABLE                                 = 594, /* rfnv_tx_dapt_enable_t */
+  /* KA NV Items*/
+  RFNV_DATA_TYPE_TX_CAL_LINEARIZER                              = 595,/* rfnv_tx_lin_data_t */
+  RFNV_DATA_TYPE_CAL_THERM_ADC                                  = 596,/* rfnv_cal_therm_adc_data_t */
+  RFNV_DATA_TYPE_CLIPPER_TYPE                                   = 597,/* rfnv_tx_clipper_type_data_t */
+  RFNV_DATA_TYPE_TXAGC_MIN_MAX_POWER_LIMIT_CONTROL              = 598,/* rfnv_tx_min_max_pwr_lmt_ctrl_data_t */
+  RFNV_DATA_TYPE_TXAGC_CONTROL_PA_SWP                           = 599,/* rfnv_tx_agc_ctrl_pa_swp_data_t */
+  RFNV_DATA_TYPE_POUT_FREQ_TEMP_COMP                            = 600,/* rfnv_pout_freq_temp_comp_data_t */
+  RFNV_DATA_TYPE_VBATT_POUT_COMP                                = 601,/* rfnv_vbatt_pout_comp_data_t */
+  RFNV_DATA_TYPE_RX_GAIN_CAL_OFFSET                             = 602,/* rfnv_rx_gain_cal_offset_data_t */
+  RFNV_DATA_TYPE_RX_LNA_SWITCH_POINT                            = 603,/* rfnv_rx_lna_swp_data_t */
+  RFNV_DATA_TYPE_RX_SPUR                                        = 604,/* rfnv_rx_spur_data_t */
+  RFNV_DATA_TYPE_GSM_NBJDET_THRESOLD                            = 605,/* rfnv_gsm_nbjdet_threshold_data_t */
+  RFNV_DATA_TYPE_GSM_MULTISLOT_MAX_TX_PWR                       = 606,/* rfnv_gsm_multislot_max_tx_pwr_data_t */
+  RFNV_DATA_TYPE_GSM_TX_TIMING_OFFSET                           = 607,/* rfnv_gsm_tx_timing_data_t */
+  RFNV_DATA_TYPE_GSM_TX_GTR_THRESHOLDS                          = 608,/* rfnv_gsm_tx_gtr_thresold_data_t */
+  RFNV_DATA_TYPE_GSM_POLAR_RAMP_PROFILE                         = 609,/* rfnv_gsm_polar_ramp_profile_data_t */
+  RFNV_DATA_TYPE_GSM_POWER_LEVELS                               = 610,/* rfnv_gsm_power_levels_data_t */
+  RFNV_DATA_TYPE_GSM_ENH_APT_CONTROL                            = 611,/* rfnv_gsm_enh_apt_ctrl_data_t */
+  RFNV_DATA_TYPE_GSM_TEMP_VS_MAX_PWR_CTRL                       = 612,/* rfnv_gsm_temp_vs_maxpwr_data_t */
+  RFNV_DATA_TYPE_GSM_LINEAR_TX_GAIN_PARAM                       = 613,/* rfnv_gsm_linear_tx_gain_param_data_t */
+  RFNV_DATA_TYPE_GSM_VBATT_POUT_TEMP_COMP                       = 614,/* rfnv_gsm_vbatt_pout_temp_comp_data_t */
+  RFNV_DATA_TYPE_GSM_PA_ICQ_ENABLE                              = 615,/* rfnv_gsm_pa_icq_data_t */
+  RFNV_DATA_TYPE_GSM_POUT_TEMP_COMP                             = 616,/* rfnv_gsm_pout_temp_comp_data_t */
+  RFNV_DATA_TYPE_LTE_GNSS_BLANKING_TYPE                         = 617,/* rfnv_lte_gnss_blanking_data_t */
+  RFNV_DATA_TYPE_THERM_ADC                                      = 618,/* rfnv_therm_adc_bin_data_t */
+  RFNV_DATA_TYPE_NLIC_HARMONIC_PARAM_ENHANCED_V6                = 619,/* ENDC/NRCA NLIC Char datatype*/
+  RFNV_DATA_TYPE_ATUNER_EXTENDED_ACTIVE_DETUNE_SETTINGS         = 620,
   RFNV_DATA_TYPE_LEGACY_MAX                                     = 3999
   /* This enum can go up to 4000 at which point it starts to
      overlap with type ids from other rfnv_item_types files */
@@ -4533,10 +4564,8 @@ typedef PACK(struct)
   /*LTE Modulation type  1->QPSK/2->16QAM/4->256QAM etc*/
   uint8 modulation_idx;
 
-  /*! NV Container Index for each Tx path for a given LTE band */
   uint8 nv_container_index;
 
-  /*!Carrier config : 0 - Single Carrier, 1 - Dual Carrier */
   uint8 carrier_config;
 
   /*! Aggregated channel bandwidth mask for mpr backoff region */
@@ -4554,7 +4583,7 @@ typedef PACK(struct)
 
   /*! TxAGC Control structure */
   /*! 0 - data (default), 1 - voice, 2&3 reserved */
-  rfnv_txagc_control_t_v3 txagc_ctrl[4];
+  rfnv_txagc_control_t_v3 txagc_ctrl[RFNV_TXAGC_CTRL_STRUCT_SIZE_V4];
 
 } rfnv_txagc_control_static_data_t_v4;
 
@@ -6145,6 +6174,13 @@ typedef PACK(struct)
 {
   uint16 s_factor;
 } rfnv_tx_sapt_info_t;
+
+/* RFNV_DATA_TYPE_TX_DAPT_ENABLE 594 */
+typedef PACK(struct)
+{
+  uint8 enable_dapt;
+} rfnv_tx_dapt_enable_t;
+
 
 /* 543 RFNV_DATA_TYPE_ANTENNA_DETUNE_LIST */
 typedef enum {

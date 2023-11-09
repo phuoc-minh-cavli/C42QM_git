@@ -24,8 +24,8 @@ Qualcomm Confidential and Proprietary
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/inc/ds_3gpp_rmsm_ati.h#1 $ 
-  $DateTime: 2020/03/17 08:03:16 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/inc/ds_3gpp_rmsm_ati.h#2 $ 
+  $DateTime: 2023/08/03 09:33:47 $ $Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---   ----------------------------------------------------------
@@ -328,6 +328,30 @@ SIDE EFFECTS
 ds_3gpp_rmsm_at_instance_type ds_3gpp_rmsm_ati_get_inst_num_from_profile
 (
   uint32 profile_number
+);
+
+/*===========================================================================
+FUNCTION   DS_3GPP_RMSM_ATI_GET_PROFILE_LIST
+
+DESCRIPTION
+  This function returns list of active profiles 
+  
+NOTE: THIS IS A RESTRICTED FUNCTION AND IS INTENDED TO BE USED BY 
+DSUMTS_AT MODULES ONLY
+
+RETURN VALUE
+
+
+DEPENDENCIES
+  ds_3gpp_ati_init_all_instances() should have been called first.
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+
+void ds_3gpp_rmsm_ati_get_profile_list
+(
+  ds_prim_profile_list_type*  profile_list_info_ptr
 );
 
 /*===========================================================================

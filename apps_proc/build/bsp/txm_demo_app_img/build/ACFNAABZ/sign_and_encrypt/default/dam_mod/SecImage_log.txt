@@ -1,5 +1,6 @@
 Upscaling MBN header v3 to MBN header v6
 Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACFNAABZ\txm_module_app.mbn
+WARNING: Retrying signing because R or S value of ECDSA signature was of unsupported length.
 Signed & Encrypted image is stored at Z:\b\apps_proc\build\bsp\txm_demo_app_img\build\ACFNAABZ\sign_and_encrypt\default\dam_mod\txm_module_app.mbn
 OEM signed image with ECDSA
 Image Z:\b\apps_proc\build\bsp\txm_demo_app_img\build\ACFNAABZ\sign_and_encrypt\default\dam_mod\txm_module_app.mbn signature is valid

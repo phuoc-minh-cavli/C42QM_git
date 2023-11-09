@@ -1,9 +1,10 @@
 Upscaling MBN header v3 to MBN header v6
-Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACENAAKZ\qcli_dam_demo_module.mbn
-Signed image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_demo_module.mbn
+Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACENAAKZ\qcli_dam_lwm2m_demo_module.mbn
+WARNING: Retrying signing because R or S value of ECDSA signature was of unsupported length.
+Signed image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn
 OEM signed image with ECDSA
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_demo_module.mbn signature is valid
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_demo_module.mbn is not encrypted
+Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn signature is valid
+Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACENAAKZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn is not encrypted
 
 Base Properties: 
 | Integrity Check             | True  |
@@ -27,7 +28,7 @@ Header:
 | Type                       | EXEC (Executable file)         |
 | Machine                    | Advanced RISC Machines ARM     |
 | Version                    | 0x1                            |
-| Entry address              | 0x41042c14                     |
+| Entry address              | 0x4102cdcc                     |
 | Program headers offset     | 0x00000034                     |
 | Section headers offset     | 0x00000000                     |
 | Flags                      | 0x05000002                     |
@@ -41,14 +42,14 @@ Header:
 Program Headers: 
 | Num | Type | Offset | VirtAddr | PhysAddr | FileSize | MemSize | Flags | Align |
 |-----|------|--------|----------|----------|----------|---------|-------|-------|
-|  1  | LOAD | 0x3000 |0x41000000|0x41000000| 0x530ac  | 0xc062c |  RWE  | 0x8   |
+|  1  | LOAD | 0x3000 |0x41000000|0x41000000| 0x37c54  | 0x7f558 |  RWE  | 0x8   |
 
 Hash Segment Properties: 
 | Header Size     | 168B  |
 | Hash Algorithm  | sha384|
 
 Header: 
-| cert_chain_ptr              | 0x410c1088  |
+| cert_chain_ptr              | 0x41080088  |
 | cert_chain_size             | 0x00001800  |
 | cert_chain_size_qti         | 0x00000000  |
 | code_size                   | 0x00000090  |
@@ -60,7 +61,7 @@ Header:
 | metadata_minor_version_qti  | 0x00000000  |
 | metadata_size               | 0x00000078  |
 | metadata_size_qti           | 0x00000000  |
-| sig_ptr                     | 0x410c1088  |
+| sig_ptr                     | 0x41080088  |
 | sig_size                    | 0x00000068  |
 | sig_size_qti                | 0x00000000  |
 | version                     | 0x00000006  |
@@ -81,8 +82,5 @@ Metadata:
 | sw_id                        | 0x00000030  |
 | uie_key_switch_enable        | 0x00000000  |
 | use_serial_number_in_signing | 0x00000000  |
-
-
-ng | 0x00000000  |
 
 

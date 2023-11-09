@@ -15,12 +15,14 @@
 
 
 extern uint8_t qca4004_initilized;
+extern qurt_signal_t 	qca4004_daemon_event;
+extern uint8_t qca4004_daemon_status;
 /*-------------------------------------------------------------------------
  * Static & global Variable Declarations
  *-----------------------------------------------------------------------*/
 static qapi_UART_Port_Id_e g_port_id = QAPI_UART_PORT_002_E;
 
-static QCA4004_UART_Ctx_t 	QCA4004_UART_Ctx_D;
+QCA4004_UART_Ctx_t 	QCA4004_UART_Ctx_D;
 static char send_buf[QCA4004_TX_BUFFER_SIZE];
 
 
@@ -146,28 +148,30 @@ void qca4004_thread(void *Param)
 	/* Loop waiting for received data. */
 	while(true)
 	{
-	   /* Wait for data to be received. */
-	   while((length = QCA4004_RX_BUFFER_SIZE - QCA4004_UART_Ctx_D.bufferFree) == 0)
-	   { 
-		   qurt_signal_wait(&(QCA4004_UART_Ctx_D.event), QCA4004_RECEIVE_EVENT_MASK, QURT_SIGNAL_ATTR_WAIT_ANY);
-           qurt_signal_clear(&(QCA4004_UART_Ctx_D.event), QCA4004_RECEIVE_EVENT_MASK); 
-	   }
+		/* Wait for data to be received. */
+		qurt_signal_wait(&(QCA4004_UART_Ctx_D.event), QCA4004_RECEIVE_EVENT_MASK | QCA4004_DAEMON_EVENT_MASK, QURT_SIGNAL_ATTR_WAIT_ANY | QURT_SIGNAL_ATTR_CLEAR_MASK);
+		//qurt_signal_clear(&(QCA4004_UART_Ctx_D.event), QCA4004_RECEIVE_EVENT_MASK); 
+		
+		if(qca4004_daemon_status == 0)
+			break;
+			
+		if((length = QCA4004_RX_BUFFER_SIZE - QCA4004_UART_Ctx_D.bufferFree) == 0)
+			continue;
 	   	   
-	   /* Send the next buffer's data to QCLI for processing. */
-	   QCA4004_Process_Input_Data(length, &(QCA4004_UART_Ctx_D.buffer[0]));
+		/* Send the next buffer's data to QCLI for processing. */
+		QCA4004_Process_Input_Data(length, &(QCA4004_UART_Ctx_D.buffer[0]));
 	
-	   qapi_UART_Receive(QCA4004_UART_Ctx_D.uartHandle, 
+		qapi_UART_Receive(QCA4004_UART_Ctx_D.uartHandle, 
 	   					(char *)&(QCA4004_UART_Ctx_D.buffer[0]), 
 	   					QCA4004_RX_BUFFER_SIZE, 
 	   					(void*)1);
 	   
-	   QCA4004_ENTER_CRITICAL();
-	   QCA4004_UART_Ctx_D.bufferFree += length;
-	   QCA4004_EXIT_CRITICAL();
-	   if(qca4004_initilized == 0)
-	   		break;
+		QCA4004_ENTER_CRITICAL();
+		QCA4004_UART_Ctx_D.bufferFree += length;
+		QCA4004_EXIT_CRITICAL();
 	}
-	
+	/* notify function qca4004_daemon_destroy that this thread finished */
+	qurt_signal_set(&qca4004_daemon_event,0x1);
 	qurt_thread_stop();
 }
 
@@ -219,4 +223,36 @@ uint8_t qca4004_send_command(uint32_t length, const char *buffer)
 	return 0;
 }
 
+
+uint8_t qca4004_send_at_command(uint32_t length, const char *buffer)
+{
+	/* \nATM=()\n*/
+	char *buf = &send_buf[0];
+	if(length > QCA4004_TX_BUFFER_SIZE - 6)
+	{
+		return 1;
+	}
+
+	memset(buf, 0, QCA4004_TX_BUFFER_SIZE);
+	*buf++ = DELIMITER_COMMAND_CHARACTER;
+
+	memcpy(buf, buffer, length);
+	buf += length;
+
+	*buf++ = DELIMITER_COMMAND_CHARACTER;
+
+	length += 2;
+	if(QAPI_OK != qapi_UART_Transmit(QCA4004_UART_Ctx_D.uartHandle, send_buf, length, (void*)send_buf))
+		return 1;
+
+	return 0;
+}
+
+uint8_t qca4004_send_buf_direct(uint32_t length, char *buffer)
+{
+	if(QAPI_OK != qapi_UART_Transmit(QCA4004_UART_Ctx_D.uartHandle, buffer, length, (void*)buffer))
+		return 1;
+
+	return 0;
+}
 

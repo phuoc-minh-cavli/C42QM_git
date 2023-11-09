@@ -36,14 +36,14 @@
   Qualcomm Technologies Proprietary and Confidential.
 
 
-  $Header: //components/rel/qmimsgs.tx/1.0/psm/api/power_save_mode_service_v01.h#12 $
+  $Header: //components/rel/qmimsgs.tx/1.0/psm/api/power_save_mode_service_v01.h#13 $
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 /*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
  *THIS IS AN AUTO GENERATED FILE. DO NOT ALTER IN ANY WAY
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 
 /* This file was generated with Tool version 6.14.9 
-   It was generated on: Fri Jun 23 2023 (Spin 0)
+   It was generated on: Thu Aug 24 2023 (Spin 0)
    From IDL File: power_save_mode_service_v01.idl */
 
 /** @defgroup psm_qmi_consts Constant values defined in the IDL */
@@ -69,7 +69,7 @@ extern "C" {
 /** Major Version Number of the IDL used to generate this file */
 #define PSM_V01_IDL_MAJOR_VERS 0x01
 /** Revision Number of the IDL used to generate this file */
-#define PSM_V01_IDL_MINOR_VERS 0x11
+#define PSM_V01_IDL_MINOR_VERS 0x12
 /** Major Version Number of the qmi_idl_compiler used to generate this file */
 #define PSM_V01_IDL_TOOL_VERS 0x06
 /** Maximum Defined Message ID */
@@ -126,6 +126,7 @@ typedef enum {
   PSM_SENSOR_TYPE_ACCEL_V01 = 11, /**<  Accelerometer sensor information \n  */
   PSM_SENSOR_TYPE_MCD_V01 = 12, /**<  Sensor information about motion change detection\n  */
   PSM_SENSOR_TYPE_SHOCK_DETECT_V01 = 13, /**<  Sensor information about shock detection\n  */
+  PSM_SENSOR_TYPE_THEFT_DETECT_V01 = 14, /**<  Sensor information about theft detection\n  */
   PSM_SENSOR_TYPE_ALL_V01 = 255, /**<  Sensor information about multiple sensors   */
   PSM_SENSOR_TYPE_ID_MAX_ENUM_VAL_V01 = 2147483647 /**< To force a 32 bit signed enum.  Do not change or use*/
 }psm_sensor_type_id_v01;
@@ -241,6 +242,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors   */
 
   uint32_t sensor_policy_len;  /**< Must be set to # of elements in sensor_policy */
@@ -280,6 +282,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors   */
 
   uint32_t sensor_policy_len;  /**< Must be set to # of elements in sensor_policy */
@@ -332,7 +335,8 @@ typedef uint16_t psm_sensor_id_mask_v01;
 #define PSM_MASK_SENSOR_ID_FALL_DETECT_V01 ((psm_sensor_id_mask_v01)0x0100) /**<  Fall detection \n */
 #define PSM_MASK_SENSOR_ID_TILT_DETECT_V01 ((psm_sensor_id_mask_v01)0x0200) /**<  Tilt detection \n  */
 #define PSM_MASK_SENSOR_ID_MCD_V01 ((psm_sensor_id_mask_v01)0x0400) /**<  Motion change detector \n */
-#define PSM_MASK_SENSOR_ID_SHOCK_DETECT_V01 ((psm_sensor_id_mask_v01)0x0800) /**<  Shock detection */
+#define PSM_MASK_SENSOR_ID_SHOCK_DETECT_V01 ((psm_sensor_id_mask_v01)0x0800) /**<  Shock detection \n */
+#define PSM_MASK_SENSOR_ID_THEFT_DETECT_V01 ((psm_sensor_id_mask_v01)0x1000) /**<  Theft detection */
 /** @addtogroup psm_qmi_enums
     @{
   */
@@ -454,6 +458,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  */
 
   uint32_t sample_list_len;  /**< Must be set to # of elements in sample_list */
@@ -911,6 +916,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 
@@ -1128,6 +1134,34 @@ typedef struct {
   float shock_detection_threshold;
   /**<   Threshold for shock detection. 
   */
+
+  /* Optional */
+  /*  Theft Detect Scale Factor */
+  uint8_t theft_detect_scale_factor_valid;  /**< Must be set to true if theft_detect_scale_factor is being passed */
+  float theft_detect_scale_factor;
+  /**<   Scale the baseline raw ADC and compute the threshold for theft.
+  */
+
+  /* Optional */
+  /*  Theft Detect Offset */
+  uint8_t theft_detect_offset_valid;  /**< Must be set to true if theft_detect_offset is being passed */
+  uint16_t theft_detect_offset;
+  /**<   Offset to add to the baseline in very low light conditions.
+  */
+
+  /* Optional */
+  /*  Theft Detect Brightness Threshold */
+  uint8_t theft_detect_brightness_threshold_valid;  /**< Must be set to true if theft_detect_brightness_threshold is being passed */
+  uint64_t theft_detect_brightness_threshold;
+  /**<   Declares that the environment is too bright.
+  */
+
+  /* Optional */
+  /*  Theft Detect HW Poll Time */
+  uint8_t theft_detect_hw_poll_time_valid;  /**< Must be set to true if theft_detect_hw_poll_time is being passed */
+  uint8_t theft_detect_hw_poll_time;
+  /**<   ALS hardware sensors polling time for theft detection.  
+  */
 }psm_set_sensor_configuration_ext_req_msg_v01;  /* Message */
 /**
     @}
@@ -1176,6 +1210,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 }psm_get_sensor_configuration_req_msg_v01;  /* Message */
@@ -1372,6 +1407,34 @@ typedef struct {
   float shock_detection_threshold;
   /**<   Threshold for shock detection. 
   */
+
+  /* Optional */
+  /*  Theft Detect Scale Factor */
+  uint8_t theft_detect_scale_factor_valid;  /**< Must be set to true if theft_detect_scale_factor is being passed */
+  float theft_detect_scale_factor;
+  /**<   Scale the baseline raw ADC and compute the threshold for theft.
+  */
+
+  /* Optional */
+  /*  Theft Detect Offset */
+  uint8_t theft_detect_offset_valid;  /**< Must be set to true if theft_detect_offset is being passed */
+  uint16_t theft_detect_offset;
+  /**<   Offset to add to the baseline in very low light conditions.
+  */
+
+  /* Optional */
+  /*  Theft Detect Brightness Threshold */
+  uint8_t theft_detect_brightness_threshold_valid;  /**< Must be set to true if theft_detect_brightness_threshold is being passed */
+  uint64_t theft_detect_brightness_threshold;
+  /**<   Declares that the environment is too bright.
+  */
+
+  /* Optional */
+  /*  Theft Detect HW Poll Time */
+  uint8_t theft_detect_hw_poll_time_valid;  /**< Must be set to true if theft_detect_hw_poll_time is being passed */
+  uint8_t theft_detect_hw_poll_time;
+  /**<   ALS hardware sensors polling time for theft detection.  
+  */
 }psm_get_sensor_configuration_resp_msg_v01;  /* Message */
 /**
     @}
@@ -1398,7 +1461,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection
  */
 
   /* Optional */
@@ -1494,6 +1558,29 @@ typedef struct {
   /*  High Shock Duration Timestamp */
   uint8_t high_shock_data_timestamp_valid;  /**< Must be set to true if high_shock_data_timestamp is being passed */
   uint64_t high_shock_data_timestamp;
+
+  /* Optional */
+  /*  Theft Detect Type  */
+  uint8_t theft_detect_type_valid;  /**< Must be set to true if theft_detect_type is being passed */
+  uint8_t theft_detect_type;
+  /**<   Values: \n
+       - 1 -- Too bright \n
+       - 2 -- Theft detected
+  */
+
+  /* Optional */
+  /*  Theft Detect Timestamp */
+  uint8_t theft_detect_timestamp_valid;  /**< Must be set to true if theft_detect_timestamp is being passed */
+  uint64_t theft_detect_timestamp;
+  /**<   Timestamp when theft is detected.
+  */
+
+  /* Optional */
+  /*  Theft Detect Lux Value  */
+  uint8_t theft_detect_lux_value_valid;  /**< Must be set to true if theft_detect_lux_value is being passed */
+  float theft_detect_lux_value;
+  /**<   Lux value of ALS sensor when theft is detected.
+   */
 }psm_get_sensor_data_resp_msg_v01;  /* Message */
 /**
     @}
@@ -1569,7 +1656,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection
  */
 
   /* Optional */
@@ -1588,7 +1676,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection*/
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection*/
 
   /* Optional */
   /*  Sensor Fail Cond Met Mask */
@@ -1606,7 +1695,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection*/
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection*/
 
   /* Optional */
   /*  Data Ready  */
@@ -1643,7 +1733,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection
  */
 
   /* Optional */
@@ -1662,7 +1753,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection
  */
 
   /* Optional */
@@ -1681,7 +1773,8 @@ typedef struct {
       - PSM_MASK_SENSOR_ID_FALL_DETECT (0x0100) --  Fall detection \n
       - PSM_MASK_SENSOR_ID_TILT_DETECT (0x0200) --  Tilt detection \n 
       - PSM_MASK_SENSOR_ID_MCD (0x0400) --  Motion change detector \n
-      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection
+      - PSM_MASK_SENSOR_ID_SHOCK_DETECT (0x0800) --  Shock detection \n
+      - PSM_MASK_SENSOR_ID_THEFT_DETECT (0x1000) --  Theft detection
  */
 
   /* Optional */
@@ -1765,6 +1858,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 
@@ -1850,6 +1944,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 
@@ -1917,6 +2012,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 
@@ -1995,6 +2091,7 @@ typedef struct {
       - PSM_SENSOR_TYPE_ACCEL (11) --  Accelerometer sensor information \n 
       - PSM_SENSOR_TYPE_MCD (12) --  Sensor information about motion change detection\n 
       - PSM_SENSOR_TYPE_SHOCK_DETECT (13) --  Sensor information about shock detection\n 
+      - PSM_SENSOR_TYPE_THEFT_DETECT (14) --  Sensor information about theft detection\n 
       - PSM_SENSOR_TYPE_ALL (255) --  Sensor information about multiple sensors  
  */
 }psm_get_sns_serial_number_req_msg_v01;  /* Message */

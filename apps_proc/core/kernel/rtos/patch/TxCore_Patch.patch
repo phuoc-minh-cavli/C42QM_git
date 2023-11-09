@@ -1,6 +1,6 @@
 diff -au --ignore-file-name-case orig/demo_threadx.c modified/demo_threadx.c
---- orig/demo_threadx.c	2023-07-24 00:58:07.627982100 -0700
-+++ modified/demo_threadx.c	2023-07-24 00:58:07.628983000 -0700
+--- orig/demo_threadx.c	2023-11-06 03:51:44.476649600 -0800
++++ modified/demo_threadx.c	2023-11-06 03:51:44.477653200 -0800
 @@ -2,12 +2,12 @@
     threads of different priorities, using a message queue, semaphore, mutex, event flags group, 
     byte pool, and block pool.  */
@@ -59,8 +59,8 @@ diff -au --ignore-file-name-case orig/demo_threadx.c modified/demo_threadx.c
      /* Put system definition stuff in here, e.g. thread creates and other assorted
         create information.  */
 diff -au --ignore-file-name-case orig/tx_api.h modified/tx_api.h
---- orig/tx_api.h	2023-07-24 00:58:07.783130200 -0700
-+++ modified/tx_api.h	2023-07-24 00:58:07.783130200 -0700
+--- orig/tx_api.h	2023-11-06 03:51:44.586041800 -0800
++++ modified/tx_api.h	2023-11-06 03:51:44.586041800 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -126,8 +126,8 @@ diff -au --ignore-file-name-case orig/tx_api.h modified/tx_api.h
  /* Define the block memory pool structure utilized by the application.  */
  
 diff -au --ignore-file-name-case orig/tx_block_pool_info_get.c modified/tx_block_pool_info_get.c
---- orig/tx_block_pool_info_get.c	2023-07-24 00:58:07.628983000 -0700
-+++ modified/tx_block_pool_info_get.c	2023-07-24 00:58:07.629983900 -0700
+--- orig/tx_block_pool_info_get.c	2023-11-06 03:51:44.477653200 -0800
++++ modified/tx_block_pool_info_get.c	2023-11-06 03:51:44.478656800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -157,8 +157,8 @@ diff -au --ignore-file-name-case orig/tx_block_pool_info_get.c modified/tx_block
  /**************************************************************************/ 
  UINT  _tx_block_pool_info_get(TX_BLOCK_POOL *pool_ptr, CHAR **name, ULONG *available_blocks, 
 diff -au --ignore-file-name-case orig/tx_block_pool_initialize.c modified/tx_block_pool_initialize.c
---- orig/tx_block_pool_initialize.c	2023-07-24 00:58:07.629983900 -0700
-+++ modified/tx_block_pool_initialize.c	2023-07-24 00:58:07.630985100 -0700
+--- orig/tx_block_pool_initialize.c	2023-11-06 03:51:44.478656800 -0800
++++ modified/tx_block_pool_initialize.c	2023-11-06 03:51:44.478656800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -188,8 +188,8 @@ diff -au --ignore-file-name-case orig/tx_block_pool_initialize.c modified/tx_blo
  /**************************************************************************/ 
  VOID  _tx_block_pool_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_block_pool_performance_info_get.c modified/tx_block_pool_performance_info_get.c
---- orig/tx_block_pool_performance_info_get.c	2023-07-24 00:58:07.630985100 -0700
-+++ modified/tx_block_pool_performance_info_get.c	2023-07-24 00:58:07.631986000 -0700
+--- orig/tx_block_pool_performance_info_get.c	2023-11-06 03:51:44.479660400 -0800
++++ modified/tx_block_pool_performance_info_get.c	2023-11-06 03:51:44.479660400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -219,8 +219,8 @@ diff -au --ignore-file-name-case orig/tx_block_pool_performance_info_get.c modif
  /**************************************************************************/ 
  UINT  _tx_block_pool_performance_info_get(TX_BLOCK_POOL *pool_ptr, ULONG *allocates, ULONG *releases,
 diff -au --ignore-file-name-case orig/tx_block_pool_performance_system_info_get.c modified/tx_block_pool_performance_system_info_get.c
---- orig/tx_block_pool_performance_system_info_get.c	2023-07-24 00:58:07.631986000 -0700
-+++ modified/tx_block_pool_performance_system_info_get.c	2023-07-24 00:58:07.632986800 -0700
+--- orig/tx_block_pool_performance_system_info_get.c	2023-11-06 03:51:44.479660400 -0800
++++ modified/tx_block_pool_performance_system_info_get.c	2023-11-06 03:51:44.480664000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -250,8 +250,8 @@ diff -au --ignore-file-name-case orig/tx_block_pool_performance_system_info_get.
  /**************************************************************************/ 
  UINT  _tx_block_pool_performance_system_info_get(ULONG *allocates, ULONG *releases, ULONG *suspensions, ULONG *timeouts)
 diff -au --ignore-file-name-case orig/tx_block_pool_prioritize.c modified/tx_block_pool_prioritize.c
---- orig/tx_block_pool_prioritize.c	2023-07-24 00:58:07.633988100 -0700
-+++ modified/tx_block_pool_prioritize.c	2023-07-24 00:58:07.633988100 -0700
+--- orig/tx_block_pool_prioritize.c	2023-11-06 03:51:44.480664000 -0800
++++ modified/tx_block_pool_prioritize.c	2023-11-06 03:51:44.481667600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -281,8 +281,8 @@ diff -au --ignore-file-name-case orig/tx_block_pool_prioritize.c modified/tx_blo
  /**************************************************************************/ 
  UINT  _tx_block_pool_prioritize(TX_BLOCK_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/tx_byte_pool_info_get.c modified/tx_byte_pool_info_get.c
---- orig/tx_byte_pool_info_get.c	2023-07-24 00:58:07.634988900 -0700
-+++ modified/tx_byte_pool_info_get.c	2023-07-24 00:58:07.634988900 -0700
+--- orig/tx_byte_pool_info_get.c	2023-11-06 03:51:44.481667600 -0800
++++ modified/tx_byte_pool_info_get.c	2023-11-06 03:51:44.481667600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -312,8 +312,8 @@ diff -au --ignore-file-name-case orig/tx_byte_pool_info_get.c modified/tx_byte_p
  /**************************************************************************/ 
  UINT  _tx_byte_pool_info_get(TX_BYTE_POOL *pool_ptr, CHAR **name, ULONG *available_bytes, 
 diff -au --ignore-file-name-case orig/tx_byte_pool_initialize.c modified/tx_byte_pool_initialize.c
---- orig/tx_byte_pool_initialize.c	2023-07-24 00:58:07.635989800 -0700
-+++ modified/tx_byte_pool_initialize.c	2023-07-24 00:58:07.635989800 -0700
+--- orig/tx_byte_pool_initialize.c	2023-11-06 03:51:44.482671200 -0800
++++ modified/tx_byte_pool_initialize.c	2023-11-06 03:51:44.482671200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -343,8 +343,8 @@ diff -au --ignore-file-name-case orig/tx_byte_pool_initialize.c modified/tx_byte
  /**************************************************************************/ 
  VOID  _tx_byte_pool_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_byte_pool_performance_info_get.c modified/tx_byte_pool_performance_info_get.c
---- orig/tx_byte_pool_performance_info_get.c	2023-07-24 00:58:07.636990600 -0700
-+++ modified/tx_byte_pool_performance_info_get.c	2023-07-24 00:58:07.636990600 -0700
+--- orig/tx_byte_pool_performance_info_get.c	2023-11-06 03:51:44.482671200 -0800
++++ modified/tx_byte_pool_performance_info_get.c	2023-11-06 03:51:44.483674800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -374,8 +374,8 @@ diff -au --ignore-file-name-case orig/tx_byte_pool_performance_info_get.c modifi
  /**************************************************************************/ 
  UINT  _tx_byte_pool_performance_info_get(TX_BYTE_POOL *pool_ptr, ULONG *allocates, ULONG *releases,
 diff -au --ignore-file-name-case orig/tx_byte_pool_performance_system_info_get.c modified/tx_byte_pool_performance_system_info_get.c
---- orig/tx_byte_pool_performance_system_info_get.c	2023-07-24 00:58:07.637991900 -0700
-+++ modified/tx_byte_pool_performance_system_info_get.c	2023-07-24 00:58:07.637991900 -0700
+--- orig/tx_byte_pool_performance_system_info_get.c	2023-11-06 03:51:44.483674800 -0800
++++ modified/tx_byte_pool_performance_system_info_get.c	2023-11-06 03:51:44.483674800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -405,8 +405,8 @@ diff -au --ignore-file-name-case orig/tx_byte_pool_performance_system_info_get.c
  /**************************************************************************/ 
  UINT  _tx_byte_pool_performance_system_info_get(ULONG *allocates, ULONG *releases,
 diff -au --ignore-file-name-case orig/tx_byte_pool_prioritize.c modified/tx_byte_pool_prioritize.c
---- orig/tx_byte_pool_prioritize.c	2023-07-24 00:58:07.638992700 -0700
-+++ modified/tx_byte_pool_prioritize.c	2023-07-24 00:58:07.638992700 -0700
+--- orig/tx_byte_pool_prioritize.c	2023-11-06 03:51:44.484678400 -0800
++++ modified/tx_byte_pool_prioritize.c	2023-11-06 03:51:44.484678400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -436,8 +436,8 @@ diff -au --ignore-file-name-case orig/tx_byte_pool_prioritize.c modified/tx_byte
  /**************************************************************************/ 
  UINT  _tx_byte_pool_prioritize(TX_BYTE_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/tx_event_flags_create.c modified/tx_event_flags_create.c
---- orig/tx_event_flags_create.c	2023-07-24 00:58:07.639993600 -0700
-+++ modified/tx_event_flags_create.c	2023-07-24 00:58:07.639993600 -0700
+--- orig/tx_event_flags_create.c	2023-11-06 03:51:44.485682000 -0800
++++ modified/tx_event_flags_create.c	2023-11-06 03:51:44.485682000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -467,8 +467,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_create.c modified/tx_event_
  /**************************************************************************/ 
  UINT  _tx_event_flags_create(TX_EVENT_FLAGS_GROUP *group_ptr, CHAR *name_ptr)
 diff -au --ignore-file-name-case orig/tx_event_flags_get.c modified/tx_event_flags_get.c
---- orig/tx_event_flags_get.c	2023-07-24 00:58:07.640994500 -0700
-+++ modified/tx_event_flags_get.c	2023-07-24 00:58:07.640994500 -0700
+--- orig/tx_event_flags_get.c	2023-11-06 03:51:44.485682000 -0800
++++ modified/tx_event_flags_get.c	2023-11-06 03:51:44.486685600 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -515,8 +515,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_get.c modified/tx_event_fla
                  /* Restore interrupts.  */
                  TX_RESTORE
 diff -au --ignore-file-name-case orig/tx_event_flags_info_get.c modified/tx_event_flags_info_get.c
---- orig/tx_event_flags_info_get.c	2023-07-24 00:58:07.641995700 -0700
-+++ modified/tx_event_flags_info_get.c	2023-07-24 00:58:07.641995700 -0700
+--- orig/tx_event_flags_info_get.c	2023-11-06 03:51:44.486685600 -0800
++++ modified/tx_event_flags_info_get.c	2023-11-06 03:51:44.486685600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -546,8 +546,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_info_get.c modified/tx_even
  /**************************************************************************/ 
  UINT  _tx_event_flags_info_get(TX_EVENT_FLAGS_GROUP *group_ptr, CHAR **name, ULONG *current_flags, 
 diff -au --ignore-file-name-case orig/tx_event_flags_initialize.c modified/tx_event_flags_initialize.c
---- orig/tx_event_flags_initialize.c	2023-07-24 00:58:07.642996500 -0700
-+++ modified/tx_event_flags_initialize.c	2023-07-24 00:58:07.642996500 -0700
+--- orig/tx_event_flags_initialize.c	2023-11-06 03:51:44.487689200 -0800
++++ modified/tx_event_flags_initialize.c	2023-11-06 03:51:44.487689200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -577,8 +577,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_initialize.c modified/tx_ev
  /**************************************************************************/ 
  VOID  _tx_event_flags_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_event_flags_performance_info_get.c modified/tx_event_flags_performance_info_get.c
---- orig/tx_event_flags_performance_info_get.c	2023-07-24 00:58:07.643997400 -0700
-+++ modified/tx_event_flags_performance_info_get.c	2023-07-24 00:58:07.643997400 -0700
+--- orig/tx_event_flags_performance_info_get.c	2023-11-06 03:51:44.487689200 -0800
++++ modified/tx_event_flags_performance_info_get.c	2023-11-06 03:51:44.488692800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -608,8 +608,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_performance_info_get.c modi
  /**************************************************************************/ 
  UINT  _tx_event_flags_performance_info_get(TX_EVENT_FLAGS_GROUP *group_ptr, ULONG *sets, ULONG *gets,
 diff -au --ignore-file-name-case orig/tx_event_flags_performance_system_info_get.c modified/tx_event_flags_performance_system_info_get.c
---- orig/tx_event_flags_performance_system_info_get.c	2023-07-24 00:58:07.644998300 -0700
-+++ modified/tx_event_flags_performance_system_info_get.c	2023-07-24 00:58:07.644998300 -0700
+--- orig/tx_event_flags_performance_system_info_get.c	2023-11-06 03:51:44.488692800 -0800
++++ modified/tx_event_flags_performance_system_info_get.c	2023-11-06 03:51:44.488692800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -639,8 +639,8 @@ diff -au --ignore-file-name-case orig/tx_event_flags_performance_system_info_get
  /**************************************************************************/ 
  UINT  _tx_event_flags_performance_system_info_get(ULONG *sets, ULONG *gets, ULONG *suspensions, ULONG *timeouts)
 diff -au --ignore-file-name-case orig/tx_initialize_high_level.c modified/tx_initialize_high_level.c
---- orig/tx_initialize_high_level.c	2023-07-24 00:58:07.645999500 -0700
-+++ modified/tx_initialize_high_level.c	2023-07-24 00:58:07.645999500 -0700
+--- orig/tx_initialize_high_level.c	2023-11-06 03:51:44.489696400 -0800
++++ modified/tx_initialize_high_level.c	2023-11-06 03:51:44.489696400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -670,8 +670,8 @@ diff -au --ignore-file-name-case orig/tx_initialize_high_level.c modified/tx_ini
  /**************************************************************************/ 
  VOID    _tx_initialize_high_level(VOID)
 diff -au --ignore-file-name-case orig/tx_initialize_kernel_setup.c modified/tx_initialize_kernel_setup.c
---- orig/tx_initialize_kernel_setup.c	2023-07-24 00:58:07.647000400 -0700
-+++ modified/tx_initialize_kernel_setup.c	2023-07-24 00:58:07.647000400 -0700
+--- orig/tx_initialize_kernel_setup.c	2023-11-06 03:51:44.489696400 -0800
++++ modified/tx_initialize_kernel_setup.c	2023-11-06 03:51:44.490700000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -701,8 +701,8 @@ diff -au --ignore-file-name-case orig/tx_initialize_kernel_setup.c modified/tx_i
  /**************************************************************************/ 
  VOID  _tx_initialize_kernel_setup(VOID)
 diff -au --ignore-file-name-case orig/tx_initialize_low_level.s modified/tx_initialize_low_level.S
---- orig/tx_initialize_low_level.s	2023-07-24 00:58:07.648001200 -0700
-+++ modified/tx_initialize_low_level.S	2023-07-24 00:58:07.648001200 -0700
+--- orig/tx_initialize_low_level.s	2023-11-06 03:51:44.490700000 -0800
++++ modified/tx_initialize_low_level.S	2023-11-06 03:51:44.491703600 -0800
 @@ -30,6 +30,10 @@
  ;/**   Initialize                                                          */
  ;/**                                                                       */
@@ -1136,8 +1136,8 @@ diff -au --ignore-file-name-case orig/tx_initialize_low_level.s modified/tx_init
  ;    /* Reference build options and version ID to ensure they come in.  */
  ;
 diff -au --ignore-file-name-case orig/tx_mutex_create.c modified/tx_mutex_create.c
---- orig/tx_mutex_create.c	2023-07-24 00:58:07.649002500 -0700
-+++ modified/tx_mutex_create.c	2023-07-24 00:58:07.649002500 -0700
+--- orig/tx_mutex_create.c	2023-11-06 03:51:44.491703600 -0800
++++ modified/tx_mutex_create.c	2023-11-06 03:51:44.491703600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1167,8 +1167,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_create.c modified/tx_mutex_create
  /**************************************************************************/ 
  UINT  _tx_mutex_create(TX_MUTEX *mutex_ptr, CHAR *name_ptr, UINT inherit)
 diff -au --ignore-file-name-case orig/tx_mutex_get.c modified/tx_mutex_get.c
---- orig/tx_mutex_get.c	2023-07-24 00:58:07.650003300 -0700
-+++ modified/tx_mutex_get.c	2023-07-24 00:58:07.650003300 -0700
+--- orig/tx_mutex_get.c	2023-11-06 03:51:44.492707200 -0800
++++ modified/tx_mutex_get.c	2023-11-06 03:51:44.492707200 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -1211,8 +1211,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_get.c modified/tx_mutex_get.c
                  /* Temporarily disable preemption.  */
                  _tx_thread_preempt_disable++;
 diff -au --ignore-file-name-case orig/tx_mutex_info_get.c modified/tx_mutex_info_get.c
---- orig/tx_mutex_info_get.c	2023-07-24 00:58:07.651004200 -0700
-+++ modified/tx_mutex_info_get.c	2023-07-24 00:58:07.651004200 -0700
+--- orig/tx_mutex_info_get.c	2023-11-06 03:51:44.492707200 -0800
++++ modified/tx_mutex_info_get.c	2023-11-06 03:51:44.493710800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1242,8 +1242,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_info_get.c modified/tx_mutex_info
  /**************************************************************************/ 
  UINT  _tx_mutex_info_get(TX_MUTEX *mutex_ptr, CHAR **name, ULONG *count, TX_THREAD **owner,
 diff -au --ignore-file-name-case orig/tx_mutex_initialize.c modified/tx_mutex_initialize.c
---- orig/tx_mutex_initialize.c	2023-07-24 00:58:07.652005000 -0700
-+++ modified/tx_mutex_initialize.c	2023-07-24 00:58:07.652005000 -0700
+--- orig/tx_mutex_initialize.c	2023-11-06 03:51:44.493710800 -0800
++++ modified/tx_mutex_initialize.c	2023-11-06 03:51:44.493710800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1273,8 +1273,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_initialize.c modified/tx_mutex_in
  /**************************************************************************/ 
  VOID  _tx_mutex_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_mutex_performance_info_get.c modified/tx_mutex_performance_info_get.c
---- orig/tx_mutex_performance_info_get.c	2023-07-24 00:58:07.653005900 -0700
-+++ modified/tx_mutex_performance_info_get.c	2023-07-24 00:58:07.653005900 -0700
+--- orig/tx_mutex_performance_info_get.c	2023-11-06 03:51:44.494714400 -0800
++++ modified/tx_mutex_performance_info_get.c	2023-11-06 03:51:44.494714400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1304,8 +1304,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_performance_info_get.c modified/t
  /**************************************************************************/ 
  UINT  _tx_mutex_performance_info_get(TX_MUTEX *mutex_ptr, ULONG *puts, ULONG *gets,
 diff -au --ignore-file-name-case orig/tx_mutex_performance_system_info_get.c modified/tx_mutex_performance_system_info_get.c
---- orig/tx_mutex_performance_system_info_get.c	2023-07-24 00:58:07.654006800 -0700
-+++ modified/tx_mutex_performance_system_info_get.c	2023-07-24 00:58:07.655008400 -0700
+--- orig/tx_mutex_performance_system_info_get.c	2023-11-06 03:51:44.494714400 -0800
++++ modified/tx_mutex_performance_system_info_get.c	2023-11-06 03:51:44.495718000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1335,8 +1335,8 @@ diff -au --ignore-file-name-case orig/tx_mutex_performance_system_info_get.c mod
  /**************************************************************************/ 
  UINT  _tx_mutex_performance_system_info_get(ULONG *puts, ULONG *gets, ULONG *suspensions, 
 diff -au --ignore-file-name-case orig/tx_port.h modified/tx_port.h
---- orig/tx_port.h	2023-07-24 00:58:07.784131100 -0700
-+++ modified/tx_port.h	2023-07-24 00:58:07.784131100 -0700
+--- orig/tx_port.h	2023-11-06 03:51:44.586041800 -0800
++++ modified/tx_port.h	2023-11-06 03:51:44.587045400 -0800
 @@ -109,11 +109,34 @@
  typedef unsigned short                          USHORT;
  
@@ -1460,8 +1460,8 @@ diff -au --ignore-file-name-case orig/tx_port.h modified/tx_port.h
  #define TX_INTERRUPT_SAVE_AREA                  register unsigned int interrupt_save_disabled;
  
 diff -au --ignore-file-name-case orig/tx_queue_flush.c modified/tx_queue_flush.c
---- orig/tx_queue_flush.c	2023-07-24 00:58:07.656008900 -0700
-+++ modified/tx_queue_flush.c	2023-07-24 00:58:07.656008900 -0700
+--- orig/tx_queue_flush.c	2023-11-06 03:51:44.495718000 -0800
++++ modified/tx_queue_flush.c	2023-11-06 03:51:44.496721600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1491,8 +1491,8 @@ diff -au --ignore-file-name-case orig/tx_queue_flush.c modified/tx_queue_flush.c
  /**************************************************************************/ 
  UINT  _tx_queue_flush(TX_QUEUE *queue_ptr)
 diff -au --ignore-file-name-case orig/tx_queue_info_get.c modified/tx_queue_info_get.c
---- orig/tx_queue_info_get.c	2023-07-24 00:58:07.657009700 -0700
-+++ modified/tx_queue_info_get.c	2023-07-24 00:58:07.657009700 -0700
+--- orig/tx_queue_info_get.c	2023-11-06 03:51:44.496721600 -0800
++++ modified/tx_queue_info_get.c	2023-11-06 03:51:44.496721600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1522,8 +1522,8 @@ diff -au --ignore-file-name-case orig/tx_queue_info_get.c modified/tx_queue_info
  /**************************************************************************/ 
  UINT  _tx_queue_info_get(TX_QUEUE *queue_ptr, CHAR **name, ULONG *enqueued, ULONG *available_storage,
 diff -au --ignore-file-name-case orig/tx_queue_initialize.c modified/tx_queue_initialize.c
---- orig/tx_queue_initialize.c	2023-07-24 00:58:07.658010600 -0700
-+++ modified/tx_queue_initialize.c	2023-07-24 00:58:07.658010600 -0700
+--- orig/tx_queue_initialize.c	2023-11-06 03:51:44.497725200 -0800
++++ modified/tx_queue_initialize.c	2023-11-06 03:51:44.497725200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1553,8 +1553,8 @@ diff -au --ignore-file-name-case orig/tx_queue_initialize.c modified/tx_queue_in
  /**************************************************************************/ 
  VOID  _tx_queue_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_queue_performance_info_get.c modified/tx_queue_performance_info_get.c
---- orig/tx_queue_performance_info_get.c	2023-07-24 00:58:07.659011800 -0700
-+++ modified/tx_queue_performance_info_get.c	2023-07-24 00:58:07.659011800 -0700
+--- orig/tx_queue_performance_info_get.c	2023-11-06 03:51:44.497725200 -0800
++++ modified/tx_queue_performance_info_get.c	2023-11-06 03:51:44.498728800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1584,8 +1584,8 @@ diff -au --ignore-file-name-case orig/tx_queue_performance_info_get.c modified/t
  /**************************************************************************/ 
  UINT  _tx_queue_performance_info_get(TX_QUEUE *queue_ptr, ULONG *messages_sent, ULONG *messages_received,
 diff -au --ignore-file-name-case orig/tx_queue_performance_system_info_get.c modified/tx_queue_performance_system_info_get.c
---- orig/tx_queue_performance_system_info_get.c	2023-07-24 00:58:07.660012700 -0700
-+++ modified/tx_queue_performance_system_info_get.c	2023-07-24 00:58:07.660012700 -0700
+--- orig/tx_queue_performance_system_info_get.c	2023-11-06 03:51:44.498728800 -0800
++++ modified/tx_queue_performance_system_info_get.c	2023-11-06 03:51:44.499732400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1615,8 +1615,8 @@ diff -au --ignore-file-name-case orig/tx_queue_performance_system_info_get.c mod
  /**************************************************************************/ 
  UINT  _tx_queue_performance_system_info_get(ULONG *messages_sent, ULONG *messages_received,
 diff -au --ignore-file-name-case orig/tx_queue_prioritize.c modified/tx_queue_prioritize.c
---- orig/tx_queue_prioritize.c	2023-07-24 00:58:07.661013500 -0700
-+++ modified/tx_queue_prioritize.c	2023-07-24 00:58:07.661013500 -0700
+--- orig/tx_queue_prioritize.c	2023-11-06 03:51:44.499732400 -0800
++++ modified/tx_queue_prioritize.c	2023-11-06 03:51:44.499732400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1646,8 +1646,8 @@ diff -au --ignore-file-name-case orig/tx_queue_prioritize.c modified/tx_queue_pr
  /**************************************************************************/ 
  UINT  _tx_queue_prioritize(TX_QUEUE *queue_ptr)
 diff -au --ignore-file-name-case orig/tx_queue_receive.c modified/tx_queue_receive.c
---- orig/tx_queue_receive.c	2023-07-24 00:58:07.662014400 -0700
-+++ modified/tx_queue_receive.c	2023-07-24 00:58:07.662014400 -0700
+--- orig/tx_queue_receive.c	2023-11-06 03:51:44.500736000 -0800
++++ modified/tx_queue_receive.c	2023-11-06 03:51:44.500736000 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -1691,8 +1691,8 @@ diff -au --ignore-file-name-case orig/tx_queue_receive.c modified/tx_queue_recei
              _tx_thread_preempt_disable++;
  
 diff -au --ignore-file-name-case orig/tx_queue_send.c modified/tx_queue_send.c
---- orig/tx_queue_send.c	2023-07-24 00:58:07.663015600 -0700
-+++ modified/tx_queue_send.c	2023-07-24 00:58:07.663015600 -0700
+--- orig/tx_queue_send.c	2023-11-06 03:51:44.500736000 -0800
++++ modified/tx_queue_send.c	2023-11-06 03:51:44.501739600 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -1740,8 +1740,8 @@ diff -au --ignore-file-name-case orig/tx_queue_send.c modified/tx_queue_send.c
              /* Restore interrupts.  */
              TX_RESTORE
 diff -au --ignore-file-name-case orig/tx_semaphore_ceiling_put.c modified/tx_semaphore_ceiling_put.c
---- orig/tx_semaphore_ceiling_put.c	2023-07-24 00:58:07.664016500 -0700
-+++ modified/tx_semaphore_ceiling_put.c	2023-07-24 00:58:07.665017300 -0700
+--- orig/tx_semaphore_ceiling_put.c	2023-11-06 03:51:44.501739600 -0800
++++ modified/tx_semaphore_ceiling_put.c	2023-11-06 03:51:44.501739600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1771,8 +1771,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_ceiling_put.c modified/tx_sem
  /**************************************************************************/ 
  UINT  _tx_semaphore_ceiling_put(TX_SEMAPHORE *semaphore_ptr, ULONG ceiling)
 diff -au --ignore-file-name-case orig/tx_semaphore_create.c modified/tx_semaphore_create.c
---- orig/tx_semaphore_create.c	2023-07-24 00:58:07.665017300 -0700
-+++ modified/tx_semaphore_create.c	2023-07-24 00:58:07.666018600 -0700
+--- orig/tx_semaphore_create.c	2023-11-06 03:51:44.502743200 -0800
++++ modified/tx_semaphore_create.c	2023-11-06 03:51:44.502743200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1802,8 +1802,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_create.c modified/tx_semaphor
  /**************************************************************************/ 
  UINT  _tx_semaphore_create(TX_SEMAPHORE *semaphore_ptr, CHAR *name_ptr, ULONG initial_count)
 diff -au --ignore-file-name-case orig/tx_semaphore_get.c modified/tx_semaphore_get.c
---- orig/tx_semaphore_get.c	2023-07-24 00:58:07.666018600 -0700
-+++ modified/tx_semaphore_get.c	2023-07-24 00:58:07.667019400 -0700
+--- orig/tx_semaphore_get.c	2023-11-06 03:51:44.502743200 -0800
++++ modified/tx_semaphore_get.c	2023-11-06 03:51:44.503746800 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -1851,8 +1851,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_get.c modified/tx_semaphore_g
              /* Restore interrupts.  */
              TX_RESTORE
 diff -au --ignore-file-name-case orig/tx_semaphore_info_get.c modified/tx_semaphore_info_get.c
---- orig/tx_semaphore_info_get.c	2023-07-24 00:58:07.667019400 -0700
-+++ modified/tx_semaphore_info_get.c	2023-07-24 00:58:07.668020300 -0700
+--- orig/tx_semaphore_info_get.c	2023-11-06 03:51:44.503746800 -0800
++++ modified/tx_semaphore_info_get.c	2023-11-06 03:51:44.504750400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1882,8 +1882,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_info_get.c modified/tx_semaph
  /**************************************************************************/ 
  UINT  _tx_semaphore_info_get(TX_SEMAPHORE *semaphore_ptr, CHAR **name, ULONG *current_value, 
 diff -au --ignore-file-name-case orig/tx_semaphore_initialize.c modified/tx_semaphore_initialize.c
---- orig/tx_semaphore_initialize.c	2023-07-24 00:58:07.668020300 -0700
-+++ modified/tx_semaphore_initialize.c	2023-07-24 00:58:07.669021200 -0700
+--- orig/tx_semaphore_initialize.c	2023-11-06 03:51:44.504750400 -0800
++++ modified/tx_semaphore_initialize.c	2023-11-06 03:51:44.504750400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1913,8 +1913,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_initialize.c modified/tx_sema
  /**************************************************************************/ 
  VOID  _tx_semaphore_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_semaphore_performance_info_get.c modified/tx_semaphore_performance_info_get.c
---- orig/tx_semaphore_performance_info_get.c	2023-07-24 00:58:07.669021200 -0700
-+++ modified/tx_semaphore_performance_info_get.c	2023-07-24 00:58:07.670022400 -0700
+--- orig/tx_semaphore_performance_info_get.c	2023-11-06 03:51:44.505754000 -0800
++++ modified/tx_semaphore_performance_info_get.c	2023-11-06 03:51:44.505754000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1944,8 +1944,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_performance_info_get.c modifi
  /**************************************************************************/ 
  UINT  _tx_semaphore_performance_info_get(TX_SEMAPHORE *semaphore_ptr, ULONG *puts, ULONG *gets,
 diff -au --ignore-file-name-case orig/tx_semaphore_performance_system_info_get.c modified/tx_semaphore_performance_system_info_get.c
---- orig/tx_semaphore_performance_system_info_get.c	2023-07-24 00:58:07.670022400 -0700
-+++ modified/tx_semaphore_performance_system_info_get.c	2023-07-24 00:58:07.671023300 -0700
+--- orig/tx_semaphore_performance_system_info_get.c	2023-11-06 03:51:44.505754000 -0800
++++ modified/tx_semaphore_performance_system_info_get.c	2023-11-06 03:51:44.506757600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1975,8 +1975,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_performance_system_info_get.c
  /**************************************************************************/ 
  UINT  _tx_semaphore_performance_system_info_get(ULONG *puts, ULONG *gets, ULONG *suspensions, ULONG *timeouts)
 diff -au --ignore-file-name-case orig/tx_semaphore_prioritize.c modified/tx_semaphore_prioritize.c
---- orig/tx_semaphore_prioritize.c	2023-07-24 00:58:07.671023300 -0700
-+++ modified/tx_semaphore_prioritize.c	2023-07-24 00:58:07.672024100 -0700
+--- orig/tx_semaphore_prioritize.c	2023-11-06 03:51:44.506757600 -0800
++++ modified/tx_semaphore_prioritize.c	2023-11-06 03:51:44.506757600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2006,8 +2006,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_prioritize.c modified/tx_sema
  /**************************************************************************/ 
  UINT  _tx_semaphore_prioritize(TX_SEMAPHORE *semaphore_ptr)
 diff -au --ignore-file-name-case orig/tx_semaphore_put.c modified/tx_semaphore_put.c
---- orig/tx_semaphore_put.c	2023-07-24 00:58:07.672024100 -0700
-+++ modified/tx_semaphore_put.c	2023-07-24 00:58:07.673025000 -0700
+--- orig/tx_semaphore_put.c	2023-11-06 03:51:44.507761200 -0800
++++ modified/tx_semaphore_put.c	2023-11-06 03:51:44.507761200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2037,8 +2037,8 @@ diff -au --ignore-file-name-case orig/tx_semaphore_put.c modified/tx_semaphore_p
  /**************************************************************************/ 
  UINT  _tx_semaphore_put(TX_SEMAPHORE *semaphore_ptr)
 diff -au --ignore-file-name-case orig/tx_thread_context_restore.s modified/tx_thread_context_restore.S
---- orig/tx_thread_context_restore.s	2023-07-24 00:58:07.673025000 -0700
-+++ modified/tx_thread_context_restore.S	2023-07-24 00:58:07.674026200 -0700
+--- orig/tx_thread_context_restore.s	2023-11-06 03:51:44.507761200 -0800
++++ modified/tx_thread_context_restore.S	2023-11-06 03:51:44.508764800 -0800
 @@ -41,18 +41,10 @@
  ;#include "tx_api.h"
  ;#include "tx_thread.h"
@@ -2160,8 +2160,8 @@ diff -au --ignore-file-name-case orig/tx_thread_context_restore.s modified/tx_th
  ;
      END
 diff -au --ignore-file-name-case orig/tx_thread_context_save.s modified/tx_thread_context_save.S
---- orig/tx_thread_context_save.s	2023-07-24 00:58:07.674026200 -0700
-+++ modified/tx_thread_context_save.S	2023-07-24 00:58:07.675040000 -0700
+--- orig/tx_thread_context_save.s	2023-11-06 03:51:44.508764800 -0800
++++ modified/tx_thread_context_save.S	2023-11-06 03:51:44.509768400 -0800
 @@ -45,9 +45,9 @@
      IMPORT      _tx_thread_system_state
      IMPORT      _tx_thread_current_ptr
@@ -2238,8 +2238,8 @@ diff -au --ignore-file-name-case orig/tx_thread_context_save.s modified/tx_threa
      ADD     sp, sp, #16                         ; Recover saved registers
      B       __tx_irq_processing_return          ; Continue IRQ processing  
 diff -au --ignore-file-name-case orig/tx_thread_create.c modified/tx_thread_create.c
---- orig/tx_thread_create.c	2023-07-24 00:58:07.675040000 -0700
-+++ modified/tx_thread_create.c	2023-07-24 00:58:07.676027900 -0700
+--- orig/tx_thread_create.c	2023-11-06 03:51:44.509768400 -0800
++++ modified/tx_thread_create.c	2023-11-06 03:51:44.509768400 -0800
 @@ -216,7 +216,16 @@
      thread_ptr -> tx_thread_new_time_slice =    time_slice;
      thread_ptr -> tx_thread_inherit_priority =  ((UINT) TX_MAX_PRIORITIES);
@@ -2259,8 +2259,8 @@ diff -au --ignore-file-name-case orig/tx_thread_create.c modified/tx_thread_crea
      temp_ptr =  (TX_UCHAR_POINTER_ADD(temp_ptr, (stack_size - ((ULONG) 1))));
      thread_ptr -> tx_thread_stack_end =         TX_UCHAR_TO_VOID_POINTER_CONVERT(temp_ptr);
 diff -au --ignore-file-name-case orig/tx_thread_fiq_context_save.s modified/tx_thread_fiq_context_save.S
---- orig/tx_thread_fiq_context_save.s	2023-07-24 00:58:07.677028800 -0700
-+++ modified/tx_thread_fiq_context_save.S	2023-07-24 00:58:07.677028800 -0700
+--- orig/tx_thread_fiq_context_save.s	2023-11-06 03:51:44.510772000 -0800
++++ modified/tx_thread_fiq_context_save.S	2023-11-06 03:51:44.510772000 -0800
 @@ -45,9 +45,9 @@
      IMPORT      _tx_thread_system_state
      IMPORT      _tx_thread_current_ptr
@@ -2325,8 +2325,8 @@ diff -au --ignore-file-name-case orig/tx_thread_fiq_context_save.s modified/tx_t
  ;    /* Not much to do here, save the current SPSR and LR for possible
  ;       use in IRQ interrupted in idle system conditions, and return to 
 diff -au --ignore-file-name-case orig/tx_thread_fiq_nesting_end.s modified/tx_thread_fiq_nesting_end.S
---- orig/tx_thread_fiq_nesting_end.s	2023-07-24 00:58:07.678030000 -0700
-+++ modified/tx_thread_fiq_nesting_end.S	2023-07-24 00:58:07.678030000 -0700
+--- orig/tx_thread_fiq_nesting_end.s	2023-11-06 03:51:44.510772000 -0800
++++ modified/tx_thread_fiq_nesting_end.S	2023-11-06 03:51:44.511775600 -0800
 @@ -40,16 +40,11 @@
  ;
  ;#include "tx_api.h"
@@ -2349,8 +2349,8 @@ diff -au --ignore-file-name-case orig/tx_thread_fiq_nesting_end.s modified/tx_th
          AREA ||.text||, CODE, READONLY
  ;/**************************************************************************/ 
 diff -au --ignore-file-name-case orig/tx_thread_fiq_nesting_start.s modified/tx_thread_fiq_nesting_start.S
---- orig/tx_thread_fiq_nesting_start.s	2023-07-24 00:58:07.679030900 -0700
-+++ modified/tx_thread_fiq_nesting_start.S	2023-07-24 00:58:07.679030900 -0700
+--- orig/tx_thread_fiq_nesting_start.s	2023-11-06 03:51:44.511775600 -0800
++++ modified/tx_thread_fiq_nesting_start.S	2023-11-06 03:51:44.512779200 -0800
 @@ -40,11 +40,14 @@
  ;
  ;#include "tx_api.h"
@@ -2370,8 +2370,8 @@ diff -au --ignore-file-name-case orig/tx_thread_fiq_nesting_start.s modified/tx_
  ;
          AREA ||.text||, CODE, READONLY
 diff -au --ignore-file-name-case orig/tx_thread_identify.c modified/tx_thread_identify.c
---- orig/tx_thread_identify.c	2023-07-24 00:58:07.680031700 -0700
-+++ modified/tx_thread_identify.c	2023-07-24 00:58:07.680031700 -0700
+--- orig/tx_thread_identify.c	2023-11-06 03:51:44.512779200 -0800
++++ modified/tx_thread_identify.c	2023-11-06 03:51:44.512779200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2409,8 +2409,8 @@ diff -au --ignore-file-name-case orig/tx_thread_identify.c modified/tx_thread_id
      TX_TRACE_IN_LINE_INSERT(TX_TRACE_THREAD_IDENTIFY, 0, 0, 0, 0, TX_TRACE_THREAD_EVENTS)
  #endif
 diff -au --ignore-file-name-case orig/tx_thread_info_get.c modified/tx_thread_info_get.c
---- orig/tx_thread_info_get.c	2023-07-24 00:58:07.681033000 -0700
-+++ modified/tx_thread_info_get.c	2023-07-24 00:58:07.681033000 -0700
+--- orig/tx_thread_info_get.c	2023-11-06 03:51:44.513782800 -0800
++++ modified/tx_thread_info_get.c	2023-11-06 03:51:44.513782800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2440,8 +2440,8 @@ diff -au --ignore-file-name-case orig/tx_thread_info_get.c modified/tx_thread_in
  /**************************************************************************/ 
  UINT  _tx_thread_info_get(TX_THREAD *thread_ptr, CHAR **name, UINT *state, ULONG *run_count, 
 diff -au --ignore-file-name-case orig/tx_thread_initialize.c modified/tx_thread_initialize.c
---- orig/tx_thread_initialize.c	2023-07-24 00:58:07.682033800 -0700
-+++ modified/tx_thread_initialize.c	2023-07-24 00:58:07.682033800 -0700
+--- orig/tx_thread_initialize.c	2023-11-06 03:51:44.513782800 -0800
++++ modified/tx_thread_initialize.c	2023-11-06 03:51:44.514786400 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -2466,8 +2466,8 @@ diff -au --ignore-file-name-case orig/tx_thread_initialize.c modified/tx_thread_
  /* Define the head pointer of the created thread list.  */
  
 diff -au --ignore-file-name-case orig/tx_thread_interrupt_control.s modified/tx_thread_interrupt_control.S
---- orig/tx_thread_interrupt_control.s	2023-07-24 00:58:07.683034700 -0700
-+++ modified/tx_thread_interrupt_control.S	2023-07-24 00:58:07.683034700 -0700
+--- orig/tx_thread_interrupt_control.s	2023-11-06 03:51:44.514786400 -0800
++++ modified/tx_thread_interrupt_control.S	2023-11-06 03:51:44.514786400 -0800
 @@ -39,14 +39,11 @@
  ;
  ;#include "tx_api.h"
@@ -2487,8 +2487,8 @@ diff -au --ignore-file-name-case orig/tx_thread_interrupt_control.s modified/tx_
          AREA ||.text||, CODE, READONLY
  ;/**************************************************************************/ 
 diff -au --ignore-file-name-case orig/tx_thread_interrupt_disable.s modified/tx_thread_interrupt_disable.S
---- orig/tx_thread_interrupt_disable.s	2023-07-24 00:58:07.684035600 -0700
-+++ modified/tx_thread_interrupt_disable.S	2023-07-24 00:58:07.684035600 -0700
+--- orig/tx_thread_interrupt_disable.s	2023-11-06 03:51:44.515790000 -0800
++++ modified/tx_thread_interrupt_disable.S	2023-11-06 03:51:44.515790000 -0800
 @@ -94,11 +94,11 @@
  ;
  ;    /* Mask interrupts.  */
@@ -2505,8 +2505,8 @@ diff -au --ignore-file-name-case orig/tx_thread_interrupt_disable.s modified/tx_
      IF  {INTER} = {TRUE}
      BX      lr                                  ; Return to caller
 diff -au --ignore-file-name-case orig/tx_thread_irq_nesting_end.s modified/tx_thread_irq_nesting_end.S
---- orig/tx_thread_irq_nesting_end.s	2023-07-24 00:58:07.685036800 -0700
-+++ modified/tx_thread_irq_nesting_end.S	2023-07-24 00:58:07.685036800 -0700
+--- orig/tx_thread_irq_nesting_end.s	2023-11-06 03:51:44.515790000 -0800
++++ modified/tx_thread_irq_nesting_end.S	2023-11-06 03:51:44.516793600 -0800
 @@ -40,15 +40,17 @@
  ;
  ;#include "tx_api.h"
@@ -2533,8 +2533,8 @@ diff -au --ignore-file-name-case orig/tx_thread_irq_nesting_end.s modified/tx_th
  ;
          AREA ||.text||, CODE, READONLY
 diff -au --ignore-file-name-case orig/tx_thread_irq_nesting_start.s modified/tx_thread_irq_nesting_start.S
---- orig/tx_thread_irq_nesting_start.s	2023-07-24 00:58:07.686037700 -0700
-+++ modified/tx_thread_irq_nesting_start.S	2023-07-24 00:58:07.686037700 -0700
+--- orig/tx_thread_irq_nesting_start.s	2023-11-06 03:51:44.516793600 -0800
++++ modified/tx_thread_irq_nesting_start.S	2023-11-06 03:51:44.517797200 -0800
 @@ -40,11 +40,14 @@
  ;
  ;#include "tx_api.h"
@@ -2554,8 +2554,8 @@ diff -au --ignore-file-name-case orig/tx_thread_irq_nesting_start.s modified/tx_
  ;
          AREA ||.text||, CODE, READONLY
 diff -au --ignore-file-name-case orig/tx_thread_performance_info_get.c modified/tx_thread_performance_info_get.c
---- orig/tx_thread_performance_info_get.c	2023-07-24 00:58:07.687038500 -0700
-+++ modified/tx_thread_performance_info_get.c	2023-07-24 00:58:07.687038500 -0700
+--- orig/tx_thread_performance_info_get.c	2023-11-06 03:51:44.517797200 -0800
++++ modified/tx_thread_performance_info_get.c	2023-11-06 03:51:44.517797200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2585,8 +2585,8 @@ diff -au --ignore-file-name-case orig/tx_thread_performance_info_get.c modified/
  /**************************************************************************/ 
  UINT  _tx_thread_performance_info_get(TX_THREAD *thread_ptr, ULONG *resumptions, ULONG *suspensions, 
 diff -au --ignore-file-name-case orig/tx_thread_performance_system_info_get.c modified/tx_thread_performance_system_info_get.c
---- orig/tx_thread_performance_system_info_get.c	2023-07-24 00:58:07.688039400 -0700
-+++ modified/tx_thread_performance_system_info_get.c	2023-07-24 00:58:07.688039400 -0700
+--- orig/tx_thread_performance_system_info_get.c	2023-11-06 03:51:44.518800800 -0800
++++ modified/tx_thread_performance_system_info_get.c	2023-11-06 03:51:44.518800800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2616,8 +2616,8 @@ diff -au --ignore-file-name-case orig/tx_thread_performance_system_info_get.c mo
  /**************************************************************************/ 
  UINT  _tx_thread_performance_system_info_get(ULONG *resumptions, ULONG *suspensions,
 diff -au --ignore-file-name-case orig/tx_thread_preemption_change.c modified/tx_thread_preemption_change.c
---- orig/tx_thread_preemption_change.c	2023-07-24 00:58:07.689040600 -0700
-+++ modified/tx_thread_preemption_change.c	2023-07-24 00:58:07.689040600 -0700
+--- orig/tx_thread_preemption_change.c	2023-11-06 03:51:44.518800800 -0800
++++ modified/tx_thread_preemption_change.c	2023-11-06 03:51:44.519804400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2647,8 +2647,8 @@ diff -au --ignore-file-name-case orig/tx_thread_preemption_change.c modified/tx_
  /**************************************************************************/ 
  UINT  _tx_thread_preemption_change(TX_THREAD *thread_ptr, UINT new_threshold, UINT *old_threshold)
 diff -au --ignore-file-name-case orig/tx_thread_priority_change.c modified/tx_thread_priority_change.c
---- orig/tx_thread_priority_change.c	2023-07-24 00:58:07.690049800 -0700
-+++ modified/tx_thread_priority_change.c	2023-07-24 00:58:07.690049800 -0700
+--- orig/tx_thread_priority_change.c	2023-11-06 03:51:44.519804400 -0800
++++ modified/tx_thread_priority_change.c	2023-11-06 03:51:44.520807900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2678,8 +2678,8 @@ diff -au --ignore-file-name-case orig/tx_thread_priority_change.c modified/tx_th
  /**************************************************************************/ 
  UINT  _tx_thread_priority_change(TX_THREAD *thread_ptr, UINT new_priority, UINT *old_priority)
 diff -au --ignore-file-name-case orig/tx_thread_relinquish.c modified/tx_thread_relinquish.c
---- orig/tx_thread_relinquish.c	2023-07-24 00:58:07.691042300 -0700
-+++ modified/tx_thread_relinquish.c	2023-07-24 00:58:07.691042300 -0700
+--- orig/tx_thread_relinquish.c	2023-11-06 03:51:44.520807900 -0800
++++ modified/tx_thread_relinquish.c	2023-11-06 03:51:44.520807900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -2709,8 +2709,8 @@ diff -au --ignore-file-name-case orig/tx_thread_relinquish.c modified/tx_thread_
  /**************************************************************************/ 
  VOID  _tx_thread_relinquish(VOID)
 diff -au --ignore-file-name-case orig/tx_thread_schedule.s modified/tx_thread_schedule.S
---- orig/tx_thread_schedule.s	2023-07-24 00:58:07.692043200 -0700
-+++ modified/tx_thread_schedule.S	2023-07-24 00:58:07.692043200 -0700
+--- orig/tx_thread_schedule.s	2023-11-06 03:51:44.521811500 -0800
++++ modified/tx_thread_schedule.S	2023-11-06 03:51:44.521811500 -0800
 @@ -1,6 +1,6 @@
  ;/**************************************************************************/ 
  ;/*                                                                        */ 
@@ -3189,8 +3189,8 @@ diff -au --ignore-file-name-case orig/tx_thread_schedule.s modified/tx_thread_sc
      END
  
 diff -au --ignore-file-name-case orig/tx_thread_shell_entry.c modified/tx_thread_shell_entry.c
---- orig/tx_thread_shell_entry.c	2023-07-24 00:58:07.693044100 -0700
-+++ modified/tx_thread_shell_entry.c	2023-07-24 00:58:07.693044100 -0700
+--- orig/tx_thread_shell_entry.c	2023-11-06 03:51:44.521811500 -0800
++++ modified/tx_thread_shell_entry.c	2023-11-06 03:51:44.522815100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3220,8 +3220,8 @@ diff -au --ignore-file-name-case orig/tx_thread_shell_entry.c modified/tx_thread
  /**************************************************************************/ 
  VOID  _tx_thread_shell_entry(VOID)
 diff -au --ignore-file-name-case orig/tx_thread_sleep.c modified/tx_thread_sleep.c
---- orig/tx_thread_sleep.c	2023-07-24 00:58:07.694044900 -0700
-+++ modified/tx_thread_sleep.c	2023-07-24 00:58:07.694044900 -0700
+--- orig/tx_thread_sleep.c	2023-11-06 03:51:44.522815100 -0800
++++ modified/tx_thread_sleep.c	2023-11-06 03:51:44.522815100 -0800
 @@ -21,6 +21,10 @@
  /*                                                                        */
  /**************************************************************************/
@@ -3264,8 +3264,8 @@ diff -au --ignore-file-name-case orig/tx_thread_sleep.c modified/tx_thread_sleep
              /* Temporarily disable preemption.  */
              _tx_thread_preempt_disable++;
 diff -au --ignore-file-name-case orig/tx_thread_stack_build.s modified/tx_thread_stack_build.S
---- orig/tx_thread_stack_build.s	2023-07-24 00:58:07.695046100 -0700
-+++ modified/tx_thread_stack_build.S	2023-07-24 00:58:07.695046100 -0700
+--- orig/tx_thread_stack_build.s	2023-11-06 03:51:44.523818700 -0800
++++ modified/tx_thread_stack_build.S	2023-11-06 03:51:44.523818700 -0800
 @@ -43,11 +43,14 @@
  ;
  ;
@@ -3297,8 +3297,8 @@ diff -au --ignore-file-name-case orig/tx_thread_stack_build.s modified/tx_thread
      AND     r1, r1, #1                          ; Determine if the entry function is in Thumb mode
      CMP     r1, #1                              ; Is the Thumb-bit set?
 diff -au --ignore-file-name-case orig/tx_thread_stack_error_handler.c modified/tx_thread_stack_error_handler.c
---- orig/tx_thread_stack_error_handler.c	2023-07-24 00:58:07.696047000 -0700
-+++ modified/tx_thread_stack_error_handler.c	2023-07-24 00:58:07.696047000 -0700
+--- orig/tx_thread_stack_error_handler.c	2023-11-06 03:51:44.524822300 -0800
++++ modified/tx_thread_stack_error_handler.c	2023-11-06 03:51:44.524822300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3328,8 +3328,8 @@ diff -au --ignore-file-name-case orig/tx_thread_stack_error_handler.c modified/t
  /**************************************************************************/ 
  VOID  _tx_thread_stack_error_handler(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/tx_thread_stack_error_notify.c modified/tx_thread_stack_error_notify.c
---- orig/tx_thread_stack_error_notify.c	2023-07-24 00:58:07.697048200 -0700
-+++ modified/tx_thread_stack_error_notify.c	2023-07-24 00:58:07.697048200 -0700
+--- orig/tx_thread_stack_error_notify.c	2023-11-06 03:51:44.524822300 -0800
++++ modified/tx_thread_stack_error_notify.c	2023-11-06 03:51:44.525825900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3359,8 +3359,8 @@ diff -au --ignore-file-name-case orig/tx_thread_stack_error_notify.c modified/tx
  /**************************************************************************/ 
  UINT  _tx_thread_stack_error_notify(VOID (*stack_error_handler)(TX_THREAD *thread_ptr))
 diff -au --ignore-file-name-case orig/tx_thread_system_preempt_check.c modified/tx_thread_system_preempt_check.c
---- orig/tx_thread_system_preempt_check.c	2023-07-24 00:58:07.698049100 -0700
-+++ modified/tx_thread_system_preempt_check.c	2023-07-24 00:58:07.698049100 -0700
+--- orig/tx_thread_system_preempt_check.c	2023-11-06 03:51:44.525825900 -0800
++++ modified/tx_thread_system_preempt_check.c	2023-11-06 03:51:44.525825900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3390,8 +3390,8 @@ diff -au --ignore-file-name-case orig/tx_thread_system_preempt_check.c modified/
  /**************************************************************************/ 
  VOID  _tx_thread_system_preempt_check(VOID)
 diff -au --ignore-file-name-case orig/tx_thread_system_return.s modified/tx_thread_system_return.S
---- orig/tx_thread_system_return.s	2023-07-24 00:58:07.699050000 -0700
-+++ modified/tx_thread_system_return.S	2023-07-24 00:58:07.699050000 -0700
+--- orig/tx_thread_system_return.s	2023-11-06 03:51:44.526829500 -0800
++++ modified/tx_thread_system_return.S	2023-11-06 03:51:44.526829500 -0800
 @@ -45,9 +45,9 @@
      IMPORT      _tx_thread_current_ptr
      IMPORT      _tx_timer_time_slice
@@ -3442,8 +3442,8 @@ diff -au --ignore-file-name-case orig/tx_thread_system_return.s modified/tx_thre
      LDR     r1, [r2, #0]                        ; Pickup current time slice
  ;
 diff -au --ignore-file-name-case orig/tx_thread_terminate.c modified/tx_thread_terminate.c
---- orig/tx_thread_terminate.c	2023-07-24 00:58:07.700050800 -0700
-+++ modified/tx_thread_terminate.c	2023-07-24 00:58:07.700050800 -0700
+--- orig/tx_thread_terminate.c	2023-11-06 03:51:44.526829500 -0800
++++ modified/tx_thread_terminate.c	2023-11-06 03:51:44.527833100 -0800
 @@ -42,6 +42,9 @@
  #include "tx_thread.h"
  #include "tx_timer.h"
@@ -3474,8 +3474,8 @@ diff -au --ignore-file-name-case orig/tx_thread_terminate.c modified/tx_thread_t
          _tx_thread_preempt_disable--;
  
 diff -au --ignore-file-name-case orig/tx_thread_time_slice.c modified/tx_thread_time_slice.c
---- orig/tx_thread_time_slice.c	2023-07-24 00:58:07.701051700 -0700
-+++ modified/tx_thread_time_slice.c	2023-07-24 00:58:07.701051700 -0700
+--- orig/tx_thread_time_slice.c	2023-11-06 03:51:44.527833100 -0800
++++ modified/tx_thread_time_slice.c	2023-11-06 03:51:44.527833100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3505,8 +3505,8 @@ diff -au --ignore-file-name-case orig/tx_thread_time_slice.c modified/tx_thread_
  /**************************************************************************/ 
  VOID  _tx_thread_time_slice(VOID)
 diff -au --ignore-file-name-case orig/tx_thread_time_slice_change.c modified/tx_thread_time_slice_change.c
---- orig/tx_thread_time_slice_change.c	2023-07-24 00:58:07.702052500 -0700
-+++ modified/tx_thread_time_slice_change.c	2023-07-24 00:58:07.702052500 -0700
+--- orig/tx_thread_time_slice_change.c	2023-11-06 03:51:44.528836700 -0800
++++ modified/tx_thread_time_slice_change.c	2023-11-06 03:51:44.528836700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3536,8 +3536,8 @@ diff -au --ignore-file-name-case orig/tx_thread_time_slice_change.c modified/tx_
  /**************************************************************************/ 
  UINT  _tx_thread_time_slice_change(TX_THREAD *thread_ptr, ULONG new_time_slice, ULONG *old_time_slice)
 diff -au --ignore-file-name-case orig/tx_thread_vectored_context_save.s modified/tx_thread_vectored_context_save.S
---- orig/tx_thread_vectored_context_save.s	2023-07-24 00:58:07.703053800 -0700
-+++ modified/tx_thread_vectored_context_save.S	2023-07-24 00:58:07.703053800 -0700
+--- orig/tx_thread_vectored_context_save.s	2023-11-06 03:51:44.529840300 -0800
++++ modified/tx_thread_vectored_context_save.S	2023-11-06 03:51:44.529840300 -0800
 @@ -44,9 +44,9 @@
  ;
      IMPORT      _tx_thread_system_state
@@ -3623,8 +3623,8 @@ diff -au --ignore-file-name-case orig/tx_thread_vectored_context_save.s modified
      END
  
 diff -au --ignore-file-name-case orig/tx_time_get.c modified/tx_time_get.c
---- orig/tx_time_get.c	2023-07-24 00:58:07.704054600 -0700
-+++ modified/tx_time_get.c	2023-07-24 00:58:07.705055500 -0700
+--- orig/tx_time_get.c	2023-11-06 03:51:44.529840300 -0800
++++ modified/tx_time_get.c	2023-11-06 03:51:44.530843900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3654,8 +3654,8 @@ diff -au --ignore-file-name-case orig/tx_time_get.c modified/tx_time_get.c
  /**************************************************************************/ 
  ULONG  _tx_time_get(VOID)
 diff -au --ignore-file-name-case orig/tx_time_set.c modified/tx_time_set.c
---- orig/tx_time_set.c	2023-07-24 00:58:07.706056700 -0700
-+++ modified/tx_time_set.c	2023-07-24 00:58:07.707057600 -0700
+--- orig/tx_time_set.c	2023-11-06 03:51:44.530843900 -0800
++++ modified/tx_time_set.c	2023-11-06 03:51:44.531847500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3685,8 +3685,8 @@ diff -au --ignore-file-name-case orig/tx_time_set.c modified/tx_time_set.c
  /**************************************************************************/ 
  VOID  _tx_time_set(ULONG new_time)
 diff -au --ignore-file-name-case orig/tx_timer_change.c modified/tx_timer_change.c
---- orig/tx_timer_change.c	2023-07-24 00:58:07.707057600 -0700
-+++ modified/tx_timer_change.c	2023-07-24 00:58:07.708058500 -0700
+--- orig/tx_timer_change.c	2023-11-06 03:51:44.531847500 -0800
++++ modified/tx_timer_change.c	2023-11-06 03:51:44.531847500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3716,8 +3716,8 @@ diff -au --ignore-file-name-case orig/tx_timer_change.c modified/tx_timer_change
  /**************************************************************************/ 
  UINT  _tx_timer_change(TX_TIMER *timer_ptr, ULONG initial_ticks, ULONG reschedule_ticks)
 diff -au --ignore-file-name-case orig/tx_timer_expiration_process.c modified/tx_timer_expiration_process.c
---- orig/tx_timer_expiration_process.c	2023-07-24 00:58:07.708058500 -0700
-+++ modified/tx_timer_expiration_process.c	2023-07-24 00:58:07.709059300 -0700
+--- orig/tx_timer_expiration_process.c	2023-11-06 03:51:44.532851100 -0800
++++ modified/tx_timer_expiration_process.c	2023-11-06 03:51:44.532851100 -0800
 @@ -363,7 +363,10 @@
                          timeout_param =     current_timer -> tx_timer_internal_timeout_param;
  
@@ -3731,8 +3731,8 @@ diff -au --ignore-file-name-case orig/tx_timer_expiration_process.c modified/tx_
                          /* Determine if the timer should be reactivated.  */
                          if (current_timer -> tx_timer_internal_remaining_ticks != ((ULONG) 0))
 diff -au --ignore-file-name-case orig/tx_timer_info_get.c modified/tx_timer_info_get.c
---- orig/tx_timer_info_get.c	2023-07-24 00:58:07.709059300 -0700
-+++ modified/tx_timer_info_get.c	2023-07-24 00:58:07.710060200 -0700
+--- orig/tx_timer_info_get.c	2023-11-06 03:51:44.532851100 -0800
++++ modified/tx_timer_info_get.c	2023-11-06 03:51:44.533854700 -0800
 @@ -270,7 +270,7 @@
      if (reschedule_ticks != TX_NULL)
      {
@@ -3743,8 +3743,8 @@ diff -au --ignore-file-name-case orig/tx_timer_info_get.c modified/tx_timer_info
      
      /* Pickup the next created application timer.  */
 diff -au --ignore-file-name-case orig/tx_timer_interrupt.s modified/tx_timer_interrupt.S
---- orig/tx_timer_interrupt.s	2023-07-24 00:58:07.710060200 -0700
-+++ modified/tx_timer_interrupt.S	2023-07-24 00:58:07.711061400 -0700
+--- orig/tx_timer_interrupt.s	2023-11-06 03:51:44.533854700 -0800
++++ modified/tx_timer_interrupt.S	2023-11-06 03:51:44.533854700 -0800
 @@ -1,6 +1,6 @@
  ;/**************************************************************************/ 
  ;/*                                                                        */ 
@@ -3845,8 +3845,8 @@ diff -au --ignore-file-name-case orig/tx_timer_interrupt.s modified/tx_timer_int
  ;}
      END
 diff -au --ignore-file-name-case orig/tx_timer_performance_info_get.c modified/tx_timer_performance_info_get.c
---- orig/tx_timer_performance_info_get.c	2023-07-24 00:58:07.711061400 -0700
-+++ modified/tx_timer_performance_info_get.c	2023-07-24 00:58:07.712062300 -0700
+--- orig/tx_timer_performance_info_get.c	2023-11-06 03:51:44.534858300 -0800
++++ modified/tx_timer_performance_info_get.c	2023-11-06 03:51:44.534858300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3876,8 +3876,8 @@ diff -au --ignore-file-name-case orig/tx_timer_performance_info_get.c modified/t
  /**************************************************************************/ 
  UINT  _tx_timer_performance_info_get(TX_TIMER *timer_ptr, ULONG *activates, ULONG *reactivates,
 diff -au --ignore-file-name-case orig/tx_timer_performance_system_info_get.c modified/tx_timer_performance_system_info_get.c
---- orig/tx_timer_performance_system_info_get.c	2023-07-24 00:58:07.712062300 -0700
-+++ modified/tx_timer_performance_system_info_get.c	2023-07-24 00:58:07.713063100 -0700
+--- orig/tx_timer_performance_system_info_get.c	2023-11-06 03:51:44.534858300 -0800
++++ modified/tx_timer_performance_system_info_get.c	2023-11-06 03:51:44.535861900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -3907,8 +3907,8 @@ diff -au --ignore-file-name-case orig/tx_timer_performance_system_info_get.c mod
  /**************************************************************************/ 
  UINT  _tx_timer_performance_system_info_get(ULONG *activates, ULONG *reactivates,
 diff -au --ignore-file-name-case orig/tx_timer_thread_entry.c modified/tx_timer_thread_entry.c
---- orig/tx_timer_thread_entry.c	2023-07-24 00:58:07.713063100 -0700
-+++ modified/tx_timer_thread_entry.c	2023-07-24 00:58:07.714064400 -0700
+--- orig/tx_timer_thread_entry.c	2023-11-06 03:51:44.535861900 -0800
++++ modified/tx_timer_thread_entry.c	2023-11-06 03:51:44.536865500 -0800
 @@ -321,7 +321,10 @@
                      timeout_param =     current_timer -> tx_timer_internal_timeout_param;
  
@@ -3922,8 +3922,8 @@ diff -au --ignore-file-name-case orig/tx_timer_thread_entry.c modified/tx_timer_
                      /* Determine if the timer should be reactivated.  */
                      if (current_timer -> tx_timer_internal_remaining_ticks != ((ULONG) 0))
 diff -au --ignore-file-name-case orig/tx_trace.h modified/tx_trace.h
---- orig/tx_trace.h	2023-07-24 00:58:07.785131900 -0700
-+++ modified/tx_trace.h	2023-07-24 00:58:07.785131900 -0700
+--- orig/tx_trace.h	2023-11-06 03:51:44.587045400 -0800
++++ modified/tx_trace.h	2023-11-06 03:51:44.588049500 -0800
 @@ -410,8 +410,8 @@
  {
  
@@ -3997,8 +3997,8 @@ diff -au --ignore-file-name-case orig/tx_trace.h modified/tx_trace.h
  #endif
  
 diff -au --ignore-file-name-case orig/tx_trace_buffer_full_notify.c modified/tx_trace_buffer_full_notify.c
---- orig/tx_trace_buffer_full_notify.c	2023-07-24 00:58:07.714064400 -0700
-+++ modified/tx_trace_buffer_full_notify.c	2023-07-24 00:58:07.715065200 -0700
+--- orig/tx_trace_buffer_full_notify.c	2023-11-06 03:51:44.536865500 -0800
++++ modified/tx_trace_buffer_full_notify.c	2023-11-06 03:51:44.536865500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4028,8 +4028,8 @@ diff -au --ignore-file-name-case orig/tx_trace_buffer_full_notify.c modified/tx_
  /**************************************************************************/ 
  UINT  _tx_trace_buffer_full_notify(VOID (*full_buffer_callback)(VOID *buffer))
 diff -au --ignore-file-name-case orig/tx_trace_disable.c modified/tx_trace_disable.c
---- orig/tx_trace_disable.c	2023-07-24 00:58:07.715065200 -0700
-+++ modified/tx_trace_disable.c	2023-07-24 00:58:07.716066100 -0700
+--- orig/tx_trace_disable.c	2023-11-06 03:51:44.537869100 -0800
++++ modified/tx_trace_disable.c	2023-11-06 03:51:44.537869100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4059,8 +4059,8 @@ diff -au --ignore-file-name-case orig/tx_trace_disable.c modified/tx_trace_disab
  /**************************************************************************/ 
  UINT  _tx_trace_disable(VOID)
 diff -au --ignore-file-name-case orig/tx_trace_event_filter.c modified/tx_trace_event_filter.c
---- orig/tx_trace_event_filter.c	2023-07-24 00:58:07.716066100 -0700
-+++ modified/tx_trace_event_filter.c	2023-07-24 00:58:07.716066100 -0700
+--- orig/tx_trace_event_filter.c	2023-11-06 03:51:44.537869100 -0800
++++ modified/tx_trace_event_filter.c	2023-11-06 03:51:44.538872700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4090,8 +4090,8 @@ diff -au --ignore-file-name-case orig/tx_trace_event_filter.c modified/tx_trace_
  /**************************************************************************/ 
  UINT  _tx_trace_event_filter(ULONG event_filter_bits)
 diff -au --ignore-file-name-case orig/tx_trace_event_unfilter.c modified/tx_trace_event_unfilter.c
---- orig/tx_trace_event_unfilter.c	2023-07-24 00:58:07.717066900 -0700
-+++ modified/tx_trace_event_unfilter.c	2023-07-24 00:58:07.717066900 -0700
+--- orig/tx_trace_event_unfilter.c	2023-11-06 03:51:44.538872700 -0800
++++ modified/tx_trace_event_unfilter.c	2023-11-06 03:51:44.538872700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4121,8 +4121,8 @@ diff -au --ignore-file-name-case orig/tx_trace_event_unfilter.c modified/tx_trac
  /**************************************************************************/ 
  UINT  _tx_trace_event_unfilter(ULONG event_unfilter_bits)
 diff -au --ignore-file-name-case orig/tx_trace_initialize.c modified/tx_trace_initialize.c
---- orig/tx_trace_initialize.c	2023-07-24 00:58:07.718068200 -0700
-+++ modified/tx_trace_initialize.c	2023-07-24 00:58:07.718068200 -0700
+--- orig/tx_trace_initialize.c	2023-11-06 03:51:44.539876300 -0800
++++ modified/tx_trace_initialize.c	2023-11-06 03:51:44.539876300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4152,8 +4152,8 @@ diff -au --ignore-file-name-case orig/tx_trace_initialize.c modified/tx_trace_in
  /**************************************************************************/ 
  VOID  _tx_trace_initialize(VOID)
 diff -au --ignore-file-name-case orig/tx_trace_interrupt_control.c modified/tx_trace_interrupt_control.c
---- orig/tx_trace_interrupt_control.c	2023-07-24 00:58:07.719069000 -0700
-+++ modified/tx_trace_interrupt_control.c	2023-07-24 00:58:07.719069000 -0700
+--- orig/tx_trace_interrupt_control.c	2023-11-06 03:51:44.539876300 -0800
++++ modified/tx_trace_interrupt_control.c	2023-11-06 03:51:44.540880400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4183,8 +4183,8 @@ diff -au --ignore-file-name-case orig/tx_trace_interrupt_control.c modified/tx_t
  /**************************************************************************/ 
  UINT  _tx_trace_interrupt_control(UINT new_posture)
 diff -au --ignore-file-name-case orig/tx_trace_isr_enter_insert.c modified/tx_trace_isr_enter_insert.c
---- orig/tx_trace_isr_enter_insert.c	2023-07-24 00:58:07.720069900 -0700
-+++ modified/tx_trace_isr_enter_insert.c	2023-07-24 00:58:07.720069900 -0700
+--- orig/tx_trace_isr_enter_insert.c	2023-11-06 03:51:44.540880400 -0800
++++ modified/tx_trace_isr_enter_insert.c	2023-11-06 03:51:44.541883500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4214,8 +4214,8 @@ diff -au --ignore-file-name-case orig/tx_trace_isr_enter_insert.c modified/tx_tr
  /**************************************************************************/ 
  VOID  _tx_trace_isr_enter_insert(ULONG isr_id)
 diff -au --ignore-file-name-case orig/tx_trace_isr_exit_insert.c modified/tx_trace_isr_exit_insert.c
---- orig/tx_trace_isr_exit_insert.c	2023-07-24 00:58:07.721070800 -0700
-+++ modified/tx_trace_isr_exit_insert.c	2023-07-24 00:58:07.721070800 -0700
+--- orig/tx_trace_isr_exit_insert.c	2023-11-06 03:51:44.541883500 -0800
++++ modified/tx_trace_isr_exit_insert.c	2023-11-06 03:51:44.541883500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4245,8 +4245,8 @@ diff -au --ignore-file-name-case orig/tx_trace_isr_exit_insert.c modified/tx_tra
  /**************************************************************************/ 
  VOID  _tx_trace_isr_exit_insert(ULONG isr_id)
 diff -au --ignore-file-name-case orig/tx_trace_user_event_insert.c modified/tx_trace_user_event_insert.c
---- orig/tx_trace_user_event_insert.c	2023-07-24 00:58:07.722072000 -0700
-+++ modified/tx_trace_user_event_insert.c	2023-07-24 00:58:07.723072900 -0700
+--- orig/tx_trace_user_event_insert.c	2023-11-06 03:51:44.542887100 -0800
++++ modified/tx_trace_user_event_insert.c	2023-11-06 03:51:44.542887100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4276,8 +4276,8 @@ diff -au --ignore-file-name-case orig/tx_trace_user_event_insert.c modified/tx_t
  /**************************************************************************/ 
  UINT  _tx_trace_user_event_insert(ULONG event_id, ULONG info_field_1, ULONG info_field_2, ULONG info_field_3, ULONG info_field_4)
 diff -au --ignore-file-name-case orig/txe_block_allocate.c modified/txe_block_allocate.c
---- orig/txe_block_allocate.c	2023-07-24 00:58:07.723072900 -0700
-+++ modified/txe_block_allocate.c	2023-07-24 00:58:07.724073700 -0700
+--- orig/txe_block_allocate.c	2023-11-06 03:51:44.542887100 -0800
++++ modified/txe_block_allocate.c	2023-11-06 03:51:44.543890700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4307,8 +4307,8 @@ diff -au --ignore-file-name-case orig/txe_block_allocate.c modified/txe_block_al
  /**************************************************************************/ 
  UINT  _txe_block_allocate(TX_BLOCK_POOL *pool_ptr, VOID **block_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_block_pool_create.c modified/txe_block_pool_create.c
---- orig/txe_block_pool_create.c	2023-07-24 00:58:07.724073700 -0700
-+++ modified/txe_block_pool_create.c	2023-07-24 00:58:07.725075000 -0700
+--- orig/txe_block_pool_create.c	2023-11-06 03:51:44.543890700 -0800
++++ modified/txe_block_pool_create.c	2023-11-06 03:51:44.544894300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4338,8 +4338,8 @@ diff -au --ignore-file-name-case orig/txe_block_pool_create.c modified/txe_block
  /**************************************************************************/ 
  UINT  _txe_block_pool_create(TX_BLOCK_POOL *pool_ptr, CHAR *name_ptr, ULONG block_size,
 diff -au --ignore-file-name-case orig/txe_block_pool_delete.c modified/txe_block_pool_delete.c
---- orig/txe_block_pool_delete.c	2023-07-24 00:58:07.725075000 -0700
-+++ modified/txe_block_pool_delete.c	2023-07-24 00:58:07.726075800 -0700
+--- orig/txe_block_pool_delete.c	2023-11-06 03:51:44.544894300 -0800
++++ modified/txe_block_pool_delete.c	2023-11-06 03:51:44.544894300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4369,8 +4369,8 @@ diff -au --ignore-file-name-case orig/txe_block_pool_delete.c modified/txe_block
  /**************************************************************************/ 
  UINT    _txe_block_pool_delete(TX_BLOCK_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/txe_block_pool_info_get.c modified/txe_block_pool_info_get.c
---- orig/txe_block_pool_info_get.c	2023-07-24 00:58:07.726075800 -0700
-+++ modified/txe_block_pool_info_get.c	2023-07-24 00:58:07.727079700 -0700
+--- orig/txe_block_pool_info_get.c	2023-11-06 03:51:44.545897900 -0800
++++ modified/txe_block_pool_info_get.c	2023-11-06 03:51:44.545897900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4400,8 +4400,8 @@ diff -au --ignore-file-name-case orig/txe_block_pool_info_get.c modified/txe_blo
  /**************************************************************************/ 
  UINT  _txe_block_pool_info_get(TX_BLOCK_POOL *pool_ptr, CHAR **name, ULONG *available_blocks, 
 diff -au --ignore-file-name-case orig/txe_block_pool_prioritize.c modified/txe_block_pool_prioritize.c
---- orig/txe_block_pool_prioritize.c	2023-07-24 00:58:07.727079700 -0700
-+++ modified/txe_block_pool_prioritize.c	2023-07-24 00:58:07.728077500 -0700
+--- orig/txe_block_pool_prioritize.c	2023-11-06 03:51:44.545897900 -0800
++++ modified/txe_block_pool_prioritize.c	2023-11-06 03:51:44.546901500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4431,8 +4431,8 @@ diff -au --ignore-file-name-case orig/txe_block_pool_prioritize.c modified/txe_b
  /**************************************************************************/ 
  UINT  _txe_block_pool_prioritize(TX_BLOCK_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/txe_byte_allocate.c modified/txe_byte_allocate.c
---- orig/txe_byte_allocate.c	2023-07-24 00:58:07.728077500 -0700
-+++ modified/txe_byte_allocate.c	2023-07-24 00:58:07.729078400 -0700
+--- orig/txe_byte_allocate.c	2023-11-06 03:51:44.546901500 -0800
++++ modified/txe_byte_allocate.c	2023-11-06 03:51:44.546901500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4462,8 +4462,8 @@ diff -au --ignore-file-name-case orig/txe_byte_allocate.c modified/txe_byte_allo
  /**************************************************************************/ 
  UINT  _txe_byte_allocate(TX_BYTE_POOL *pool_ptr, VOID **memory_ptr, 
 diff -au --ignore-file-name-case orig/txe_byte_pool_create.c modified/txe_byte_pool_create.c
---- orig/txe_byte_pool_create.c	2023-07-24 00:58:07.729078400 -0700
-+++ modified/txe_byte_pool_create.c	2023-07-24 00:58:07.730079200 -0700
+--- orig/txe_byte_pool_create.c	2023-11-06 03:51:44.547905100 -0800
++++ modified/txe_byte_pool_create.c	2023-11-06 03:51:44.547905100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4493,8 +4493,8 @@ diff -au --ignore-file-name-case orig/txe_byte_pool_create.c modified/txe_byte_p
  /**************************************************************************/ 
  UINT  _txe_byte_pool_create(TX_BYTE_POOL *pool_ptr, CHAR *name_ptr, VOID *pool_start, ULONG pool_size, UINT pool_control_block_size)
 diff -au --ignore-file-name-case orig/txe_byte_pool_delete.c modified/txe_byte_pool_delete.c
---- orig/txe_byte_pool_delete.c	2023-07-24 00:58:07.730079200 -0700
-+++ modified/txe_byte_pool_delete.c	2023-07-24 00:58:07.730079200 -0700
+--- orig/txe_byte_pool_delete.c	2023-11-06 03:51:44.548908700 -0800
++++ modified/txe_byte_pool_delete.c	2023-11-06 03:51:44.548908700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4524,8 +4524,8 @@ diff -au --ignore-file-name-case orig/txe_byte_pool_delete.c modified/txe_byte_p
  /**************************************************************************/ 
  UINT  _txe_byte_pool_delete(TX_BYTE_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/txe_byte_pool_info_get.c modified/txe_byte_pool_info_get.c
---- orig/txe_byte_pool_info_get.c	2023-07-24 00:58:07.731080500 -0700
-+++ modified/txe_byte_pool_info_get.c	2023-07-24 00:58:07.731080500 -0700
+--- orig/txe_byte_pool_info_get.c	2023-11-06 03:51:44.548908700 -0800
++++ modified/txe_byte_pool_info_get.c	2023-11-06 03:51:44.549912300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4555,8 +4555,8 @@ diff -au --ignore-file-name-case orig/txe_byte_pool_info_get.c modified/txe_byte
  /**************************************************************************/ 
  UINT  _txe_byte_pool_info_get(TX_BYTE_POOL *pool_ptr, CHAR **name, ULONG *available_bytes, 
 diff -au --ignore-file-name-case orig/txe_byte_pool_prioritize.c modified/txe_byte_pool_prioritize.c
---- orig/txe_byte_pool_prioritize.c	2023-07-24 00:58:07.732081300 -0700
-+++ modified/txe_byte_pool_prioritize.c	2023-07-24 00:58:07.732081300 -0700
+--- orig/txe_byte_pool_prioritize.c	2023-11-06 03:51:44.549912300 -0800
++++ modified/txe_byte_pool_prioritize.c	2023-11-06 03:51:44.549912300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4586,8 +4586,8 @@ diff -au --ignore-file-name-case orig/txe_byte_pool_prioritize.c modified/txe_by
  /**************************************************************************/ 
  UINT  _txe_byte_pool_prioritize(TX_BYTE_POOL *pool_ptr)
 diff -au --ignore-file-name-case orig/txe_byte_release.c modified/txe_byte_release.c
---- orig/txe_byte_release.c	2023-07-24 00:58:07.733082200 -0700
-+++ modified/txe_byte_release.c	2023-07-24 00:58:07.733082200 -0700
+--- orig/txe_byte_release.c	2023-11-06 03:51:44.550915900 -0800
++++ modified/txe_byte_release.c	2023-11-06 03:51:44.550915900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4617,8 +4617,8 @@ diff -au --ignore-file-name-case orig/txe_byte_release.c modified/txe_byte_relea
  /**************************************************************************/ 
  UINT  _txe_byte_release(VOID *memory_ptr)
 diff -au --ignore-file-name-case orig/txe_event_flags_create.c modified/txe_event_flags_create.c
---- orig/txe_event_flags_create.c	2023-07-24 00:58:07.734083400 -0700
-+++ modified/txe_event_flags_create.c	2023-07-24 00:58:07.734083400 -0700
+--- orig/txe_event_flags_create.c	2023-11-06 03:51:44.550915900 -0800
++++ modified/txe_event_flags_create.c	2023-11-06 03:51:44.551919500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4648,8 +4648,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_create.c modified/txe_even
  /**************************************************************************/ 
  UINT  _txe_event_flags_create(TX_EVENT_FLAGS_GROUP *group_ptr, CHAR *name_ptr, UINT event_control_block_size)
 diff -au --ignore-file-name-case orig/txe_event_flags_delete.c modified/txe_event_flags_delete.c
---- orig/txe_event_flags_delete.c	2023-07-24 00:58:07.735084300 -0700
-+++ modified/txe_event_flags_delete.c	2023-07-24 00:58:07.735084300 -0700
+--- orig/txe_event_flags_delete.c	2023-11-06 03:51:44.551919500 -0800
++++ modified/txe_event_flags_delete.c	2023-11-06 03:51:44.551919500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4679,8 +4679,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_delete.c modified/txe_even
  /**************************************************************************/ 
  UINT  _txe_event_flags_delete(TX_EVENT_FLAGS_GROUP *group_ptr)
 diff -au --ignore-file-name-case orig/txe_event_flags_get.c modified/txe_event_flags_get.c
---- orig/txe_event_flags_get.c	2023-07-24 00:58:07.736085200 -0700
-+++ modified/txe_event_flags_get.c	2023-07-24 00:58:07.736085200 -0700
+--- orig/txe_event_flags_get.c	2023-11-06 03:51:44.552923100 -0800
++++ modified/txe_event_flags_get.c	2023-11-06 03:51:44.552923100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4710,8 +4710,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_get.c modified/txe_event_f
  /**************************************************************************/ 
  UINT  _txe_event_flags_get(TX_EVENT_FLAGS_GROUP *group_ptr, ULONG requested_flags,
 diff -au --ignore-file-name-case orig/txe_event_flags_info_get.c modified/txe_event_flags_info_get.c
---- orig/txe_event_flags_info_get.c	2023-07-24 00:58:07.737086000 -0700
-+++ modified/txe_event_flags_info_get.c	2023-07-24 00:58:07.737086000 -0700
+--- orig/txe_event_flags_info_get.c	2023-11-06 03:51:44.553926700 -0800
++++ modified/txe_event_flags_info_get.c	2023-11-06 03:51:44.553926700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4741,8 +4741,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_info_get.c modified/txe_ev
  /**************************************************************************/ 
  UINT  _txe_event_flags_info_get(TX_EVENT_FLAGS_GROUP *group_ptr, CHAR **name, ULONG *current_flags, 
 diff -au --ignore-file-name-case orig/txe_event_flags_set.c modified/txe_event_flags_set.c
---- orig/txe_event_flags_set.c	2023-07-24 00:58:07.738087300 -0700
-+++ modified/txe_event_flags_set.c	2023-07-24 00:58:07.739087700 -0700
+--- orig/txe_event_flags_set.c	2023-11-06 03:51:44.553926700 -0800
++++ modified/txe_event_flags_set.c	2023-11-06 03:51:44.554930300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4772,8 +4772,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_set.c modified/txe_event_f
  /**************************************************************************/ 
  UINT  _txe_event_flags_set(TX_EVENT_FLAGS_GROUP *group_ptr, ULONG flags_to_set, UINT set_option)
 diff -au --ignore-file-name-case orig/txe_event_flags_set_notify.c modified/txe_event_flags_set_notify.c
---- orig/txe_event_flags_set_notify.c	2023-07-24 00:58:07.739087700 -0700
-+++ modified/txe_event_flags_set_notify.c	2023-07-24 00:58:07.740089000 -0700
+--- orig/txe_event_flags_set_notify.c	2023-11-06 03:51:44.554930300 -0800
++++ modified/txe_event_flags_set_notify.c	2023-11-06 03:51:44.555934400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4803,8 +4803,8 @@ diff -au --ignore-file-name-case orig/txe_event_flags_set_notify.c modified/txe_
  /**************************************************************************/ 
  UINT  _txe_event_flags_set_notify(TX_EVENT_FLAGS_GROUP *group_ptr, VOID (*events_set_notify)(TX_EVENT_FLAGS_GROUP *notify_group_ptr))
 diff -au --ignore-file-name-case orig/txe_mutex_create.c modified/txe_mutex_create.c
---- orig/txe_mutex_create.c	2023-07-24 00:58:07.740089000 -0700
-+++ modified/txe_mutex_create.c	2023-07-24 00:58:07.741090200 -0700
+--- orig/txe_mutex_create.c	2023-11-06 03:51:44.555934400 -0800
++++ modified/txe_mutex_create.c	2023-11-06 03:51:44.555934400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4834,8 +4834,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_create.c modified/txe_mutex_crea
  /**************************************************************************/ 
  UINT  _txe_mutex_create(TX_MUTEX *mutex_ptr, CHAR *name_ptr, UINT inherit, UINT mutex_control_block_size)
 diff -au --ignore-file-name-case orig/txe_mutex_delete.c modified/txe_mutex_delete.c
---- orig/txe_mutex_delete.c	2023-07-24 00:58:07.741090200 -0700
-+++ modified/txe_mutex_delete.c	2023-07-24 00:58:07.742091100 -0700
+--- orig/txe_mutex_delete.c	2023-11-06 03:51:44.556937500 -0800
++++ modified/txe_mutex_delete.c	2023-11-06 03:51:44.556937500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4865,8 +4865,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_delete.c modified/txe_mutex_dele
  /**************************************************************************/ 
  UINT  _txe_mutex_delete(TX_MUTEX *mutex_ptr)
 diff -au --ignore-file-name-case orig/txe_mutex_get.c modified/txe_mutex_get.c
---- orig/txe_mutex_get.c	2023-07-24 00:58:07.742091100 -0700
-+++ modified/txe_mutex_get.c	2023-07-24 00:58:07.743091900 -0700
+--- orig/txe_mutex_get.c	2023-11-06 03:51:44.556937500 -0800
++++ modified/txe_mutex_get.c	2023-11-06 03:51:44.557941100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4896,8 +4896,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_get.c modified/txe_mutex_get.c
  /**************************************************************************/ 
  UINT  _txe_mutex_get(TX_MUTEX *mutex_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_mutex_info_get.c modified/txe_mutex_info_get.c
---- orig/txe_mutex_info_get.c	2023-07-24 00:58:07.743091900 -0700
-+++ modified/txe_mutex_info_get.c	2023-07-24 00:58:07.744092800 -0700
+--- orig/txe_mutex_info_get.c	2023-11-06 03:51:44.557941100 -0800
++++ modified/txe_mutex_info_get.c	2023-11-06 03:51:44.557941100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4927,8 +4927,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_info_get.c modified/txe_mutex_in
  /**************************************************************************/ 
  UINT  _txe_mutex_info_get(TX_MUTEX *mutex_ptr, CHAR **name, ULONG *count, TX_THREAD **owner,
 diff -au --ignore-file-name-case orig/txe_mutex_prioritize.c modified/txe_mutex_prioritize.c
---- orig/txe_mutex_prioritize.c	2023-07-24 00:58:07.744092800 -0700
-+++ modified/txe_mutex_prioritize.c	2023-07-24 00:58:07.745094000 -0700
+--- orig/txe_mutex_prioritize.c	2023-11-06 03:51:44.558944700 -0800
++++ modified/txe_mutex_prioritize.c	2023-11-06 03:51:44.558944700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4958,8 +4958,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_prioritize.c modified/txe_mutex_
  /**************************************************************************/ 
  UINT  _txe_mutex_prioritize(TX_MUTEX *mutex_ptr)
 diff -au --ignore-file-name-case orig/txe_mutex_put.c modified/txe_mutex_put.c
---- orig/txe_mutex_put.c	2023-07-24 00:58:07.745094000 -0700
-+++ modified/txe_mutex_put.c	2023-07-24 00:58:07.746094900 -0700
+--- orig/txe_mutex_put.c	2023-11-06 03:51:44.558944700 -0800
++++ modified/txe_mutex_put.c	2023-11-06 03:51:44.559948300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -4989,8 +4989,8 @@ diff -au --ignore-file-name-case orig/txe_mutex_put.c modified/txe_mutex_put.c
  /**************************************************************************/ 
  UINT  _txe_mutex_put(TX_MUTEX *mutex_ptr)
 diff -au --ignore-file-name-case orig/txe_queue_create.c modified/txe_queue_create.c
---- orig/txe_queue_create.c	2023-07-24 00:58:07.746094900 -0700
-+++ modified/txe_queue_create.c	2023-07-24 00:58:07.747095700 -0700
+--- orig/txe_queue_create.c	2023-11-06 03:51:44.559948300 -0800
++++ modified/txe_queue_create.c	2023-11-06 03:51:44.560951900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5020,8 +5020,8 @@ diff -au --ignore-file-name-case orig/txe_queue_create.c modified/txe_queue_crea
  /**************************************************************************/ 
  UINT  _txe_queue_create(TX_QUEUE *queue_ptr, CHAR *name_ptr, UINT message_size, 
 diff -au --ignore-file-name-case orig/txe_queue_delete.c modified/txe_queue_delete.c
---- orig/txe_queue_delete.c	2023-07-24 00:58:07.747095700 -0700
-+++ modified/txe_queue_delete.c	2023-07-24 00:58:07.748096600 -0700
+--- orig/txe_queue_delete.c	2023-11-06 03:51:44.560951900 -0800
++++ modified/txe_queue_delete.c	2023-11-06 03:51:44.560951900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5051,8 +5051,8 @@ diff -au --ignore-file-name-case orig/txe_queue_delete.c modified/txe_queue_dele
  /**************************************************************************/ 
  UINT  _txe_queue_delete(TX_QUEUE *queue_ptr)
 diff -au --ignore-file-name-case orig/txe_queue_flush.c modified/txe_queue_flush.c
---- orig/txe_queue_flush.c	2023-07-24 00:58:07.748096600 -0700
-+++ modified/txe_queue_flush.c	2023-07-24 00:58:07.749097500 -0700
+--- orig/txe_queue_flush.c	2023-11-06 03:51:44.561955500 -0800
++++ modified/txe_queue_flush.c	2023-11-06 03:51:44.561955500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5082,8 +5082,8 @@ diff -au --ignore-file-name-case orig/txe_queue_flush.c modified/txe_queue_flush
  /**************************************************************************/ 
  UINT  _txe_queue_flush(TX_QUEUE *queue_ptr)
 diff -au --ignore-file-name-case orig/txe_queue_front_send.c modified/txe_queue_front_send.c
---- orig/txe_queue_front_send.c	2023-07-24 00:58:07.749097500 -0700
-+++ modified/txe_queue_front_send.c	2023-07-24 00:58:07.750098700 -0700
+--- orig/txe_queue_front_send.c	2023-11-06 03:51:44.561955500 -0800
++++ modified/txe_queue_front_send.c	2023-11-06 03:51:44.562959100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5113,8 +5113,8 @@ diff -au --ignore-file-name-case orig/txe_queue_front_send.c modified/txe_queue_
  /**************************************************************************/ 
  UINT  _txe_queue_front_send(TX_QUEUE *queue_ptr, VOID *source_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_queue_info_get.c modified/txe_queue_info_get.c
---- orig/txe_queue_info_get.c	2023-07-24 00:58:07.750098700 -0700
-+++ modified/txe_queue_info_get.c	2023-07-24 00:58:07.751099600 -0700
+--- orig/txe_queue_info_get.c	2023-11-06 03:51:44.562959100 -0800
++++ modified/txe_queue_info_get.c	2023-11-06 03:51:44.562959100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5144,8 +5144,8 @@ diff -au --ignore-file-name-case orig/txe_queue_info_get.c modified/txe_queue_in
  /**************************************************************************/ 
  UINT  _txe_queue_info_get(TX_QUEUE *queue_ptr, CHAR **name, ULONG *enqueued, ULONG *available_storage,
 diff -au --ignore-file-name-case orig/txe_queue_prioritize.c modified/txe_queue_prioritize.c
---- orig/txe_queue_prioritize.c	2023-07-24 00:58:07.751099600 -0700
-+++ modified/txe_queue_prioritize.c	2023-07-24 00:58:07.752100400 -0700
+--- orig/txe_queue_prioritize.c	2023-11-06 03:51:44.563962700 -0800
++++ modified/txe_queue_prioritize.c	2023-11-06 03:51:44.563962700 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5175,8 +5175,8 @@ diff -au --ignore-file-name-case orig/txe_queue_prioritize.c modified/txe_queue_
  /**************************************************************************/ 
  UINT  _txe_queue_prioritize(TX_QUEUE *queue_ptr)
 diff -au --ignore-file-name-case orig/txe_queue_receive.c modified/txe_queue_receive.c
---- orig/txe_queue_receive.c	2023-07-24 00:58:07.752100400 -0700
-+++ modified/txe_queue_receive.c	2023-07-24 00:58:07.753101700 -0700
+--- orig/txe_queue_receive.c	2023-11-06 03:51:44.563962700 -0800
++++ modified/txe_queue_receive.c	2023-11-06 03:51:44.564966300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5206,8 +5206,8 @@ diff -au --ignore-file-name-case orig/txe_queue_receive.c modified/txe_queue_rec
  /**************************************************************************/ 
  UINT  _txe_queue_receive(TX_QUEUE *queue_ptr, VOID *destination_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_queue_send.c modified/txe_queue_send.c
---- orig/txe_queue_send.c	2023-07-24 00:58:07.753101700 -0700
-+++ modified/txe_queue_send.c	2023-07-24 00:58:07.754102500 -0700
+--- orig/txe_queue_send.c	2023-11-06 03:51:44.564966300 -0800
++++ modified/txe_queue_send.c	2023-11-06 03:51:44.565969900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5237,8 +5237,8 @@ diff -au --ignore-file-name-case orig/txe_queue_send.c modified/txe_queue_send.c
  /**************************************************************************/ 
  UINT  _txe_queue_send(TX_QUEUE *queue_ptr, VOID *source_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_queue_send_notify.c modified/txe_queue_send_notify.c
---- orig/txe_queue_send_notify.c	2023-07-24 00:58:07.755103400 -0700
-+++ modified/txe_queue_send_notify.c	2023-07-24 00:58:07.756104200 -0700
+--- orig/txe_queue_send_notify.c	2023-11-06 03:51:44.565969900 -0800
++++ modified/txe_queue_send_notify.c	2023-11-06 03:51:44.565969900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5268,8 +5268,8 @@ diff -au --ignore-file-name-case orig/txe_queue_send_notify.c modified/txe_queue
  /**************************************************************************/ 
  UINT  _txe_queue_send_notify(TX_QUEUE *queue_ptr, VOID (*queue_send_notify)(TX_QUEUE *notify_queue_ptr))
 diff -au --ignore-file-name-case orig/txe_semaphore_ceiling_put.c modified/txe_semaphore_ceiling_put.c
---- orig/txe_semaphore_ceiling_put.c	2023-07-24 00:58:07.756104200 -0700
-+++ modified/txe_semaphore_ceiling_put.c	2023-07-24 00:58:07.757105500 -0700
+--- orig/txe_semaphore_ceiling_put.c	2023-11-06 03:51:44.566973500 -0800
++++ modified/txe_semaphore_ceiling_put.c	2023-11-06 03:51:44.566973500 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5299,8 +5299,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_ceiling_put.c modified/txe_s
  /**************************************************************************/ 
  UINT  _txe_semaphore_ceiling_put(TX_SEMAPHORE *semaphore_ptr, ULONG ceiling)
 diff -au --ignore-file-name-case orig/txe_semaphore_create.c modified/txe_semaphore_create.c
---- orig/txe_semaphore_create.c	2023-07-24 00:58:07.757105500 -0700
-+++ modified/txe_semaphore_create.c	2023-07-24 00:58:07.758106000 -0700
+--- orig/txe_semaphore_create.c	2023-11-06 03:51:44.566973500 -0800
++++ modified/txe_semaphore_create.c	2023-11-06 03:51:44.567977100 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5330,8 +5330,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_create.c modified/txe_semaph
  /**************************************************************************/ 
  UINT  _txe_semaphore_create(TX_SEMAPHORE *semaphore_ptr, CHAR *name_ptr, ULONG initial_count, UINT semaphore_control_block_size)
 diff -au --ignore-file-name-case orig/txe_semaphore_delete.c modified/txe_semaphore_delete.c
---- orig/txe_semaphore_delete.c	2023-07-24 00:58:07.758106000 -0700
-+++ modified/txe_semaphore_delete.c	2023-07-24 00:58:07.759107200 -0700
+--- orig/txe_semaphore_delete.c	2023-11-06 03:51:44.567977100 -0800
++++ modified/txe_semaphore_delete.c	2023-11-06 03:51:44.568980600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5361,8 +5361,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_delete.c modified/txe_semaph
  /**************************************************************************/ 
  UINT  _txe_semaphore_delete(TX_SEMAPHORE *semaphore_ptr)
 diff -au --ignore-file-name-case orig/txe_semaphore_get.c modified/txe_semaphore_get.c
---- orig/txe_semaphore_get.c	2023-07-24 00:58:07.759107200 -0700
-+++ modified/txe_semaphore_get.c	2023-07-24 00:58:07.760108100 -0700
+--- orig/txe_semaphore_get.c	2023-11-06 03:51:44.568980600 -0800
++++ modified/txe_semaphore_get.c	2023-11-06 03:51:44.568980600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5392,8 +5392,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_get.c modified/txe_semaphore
  /**************************************************************************/ 
  UINT  _txe_semaphore_get(TX_SEMAPHORE *semaphore_ptr, ULONG wait_option)
 diff -au --ignore-file-name-case orig/txe_semaphore_info_get.c modified/txe_semaphore_info_get.c
---- orig/txe_semaphore_info_get.c	2023-07-24 00:58:07.760108100 -0700
-+++ modified/txe_semaphore_info_get.c	2023-07-24 00:58:07.761108900 -0700
+--- orig/txe_semaphore_info_get.c	2023-11-06 03:51:44.569984200 -0800
++++ modified/txe_semaphore_info_get.c	2023-11-06 03:51:44.569984200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5423,8 +5423,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_info_get.c modified/txe_sema
  /**************************************************************************/ 
  UINT  _txe_semaphore_info_get(TX_SEMAPHORE *semaphore_ptr, CHAR **name, ULONG *current_value, 
 diff -au --ignore-file-name-case orig/txe_semaphore_prioritize.c modified/txe_semaphore_prioritize.c
---- orig/txe_semaphore_prioritize.c	2023-07-24 00:58:07.761108900 -0700
-+++ modified/txe_semaphore_prioritize.c	2023-07-24 00:58:07.762109800 -0700
+--- orig/txe_semaphore_prioritize.c	2023-11-06 03:51:44.569984200 -0800
++++ modified/txe_semaphore_prioritize.c	2023-11-06 03:51:44.570987800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5454,8 +5454,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_prioritize.c modified/txe_se
  /**************************************************************************/ 
  UINT  _txe_semaphore_prioritize(TX_SEMAPHORE *semaphore_ptr)
 diff -au --ignore-file-name-case orig/txe_semaphore_put.c modified/txe_semaphore_put.c
---- orig/txe_semaphore_put.c	2023-07-24 00:58:07.762109800 -0700
-+++ modified/txe_semaphore_put.c	2023-07-24 00:58:07.763111000 -0700
+--- orig/txe_semaphore_put.c	2023-11-06 03:51:44.570987800 -0800
++++ modified/txe_semaphore_put.c	2023-11-06 03:51:44.570987800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5485,8 +5485,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_put.c modified/txe_semaphore
  /**************************************************************************/ 
  UINT  _txe_semaphore_put(TX_SEMAPHORE *semaphore_ptr)
 diff -au --ignore-file-name-case orig/txe_semaphore_put_notify.c modified/txe_semaphore_put_notify.c
---- orig/txe_semaphore_put_notify.c	2023-07-24 00:58:07.763111000 -0700
-+++ modified/txe_semaphore_put_notify.c	2023-07-24 00:58:07.764140300 -0700
+--- orig/txe_semaphore_put_notify.c	2023-11-06 03:51:44.571991400 -0800
++++ modified/txe_semaphore_put_notify.c	2023-11-06 03:51:44.571991400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5516,8 +5516,8 @@ diff -au --ignore-file-name-case orig/txe_semaphore_put_notify.c modified/txe_se
  /**************************************************************************/ 
  UINT  _txe_semaphore_put_notify(TX_SEMAPHORE *semaphore_ptr, VOID (*semaphore_put_notify)(TX_SEMAPHORE *notify_semaphore_ptr))
 diff -au --ignore-file-name-case orig/txe_thread_delete.c modified/txe_thread_delete.c
---- orig/txe_thread_delete.c	2023-07-24 00:58:07.764140300 -0700
-+++ modified/txe_thread_delete.c	2023-07-24 00:58:07.765113500 -0700
+--- orig/txe_thread_delete.c	2023-11-06 03:51:44.572995000 -0800
++++ modified/txe_thread_delete.c	2023-11-06 03:51:44.572995000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5547,8 +5547,8 @@ diff -au --ignore-file-name-case orig/txe_thread_delete.c modified/txe_thread_de
  /**************************************************************************/ 
  UINT  _txe_thread_delete(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_thread_entry_exit_notify.c modified/txe_thread_entry_exit_notify.c
---- orig/txe_thread_entry_exit_notify.c	2023-07-24 00:58:07.765113500 -0700
-+++ modified/txe_thread_entry_exit_notify.c	2023-07-24 00:58:07.766114000 -0700
+--- orig/txe_thread_entry_exit_notify.c	2023-11-06 03:51:44.572995000 -0800
++++ modified/txe_thread_entry_exit_notify.c	2023-11-06 03:51:44.573998600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5578,8 +5578,8 @@ diff -au --ignore-file-name-case orig/txe_thread_entry_exit_notify.c modified/tx
  /**************************************************************************/ 
  UINT  _txe_thread_entry_exit_notify(TX_THREAD *thread_ptr, VOID (*thread_entry_exit_notify)(TX_THREAD *notify_thread_ptr, UINT type))
 diff -au --ignore-file-name-case orig/txe_thread_info_get.c modified/txe_thread_info_get.c
---- orig/txe_thread_info_get.c	2023-07-24 00:58:07.766114000 -0700
-+++ modified/txe_thread_info_get.c	2023-07-24 00:58:07.767114800 -0700
+--- orig/txe_thread_info_get.c	2023-11-06 03:51:44.573998600 -0800
++++ modified/txe_thread_info_get.c	2023-11-06 03:51:44.573998600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5609,8 +5609,8 @@ diff -au --ignore-file-name-case orig/txe_thread_info_get.c modified/txe_thread_
  /**************************************************************************/ 
  UINT  _txe_thread_info_get(TX_THREAD *thread_ptr, CHAR **name, UINT *state, ULONG *run_count, 
 diff -au --ignore-file-name-case orig/txe_thread_preemption_change.c modified/txe_thread_preemption_change.c
---- orig/txe_thread_preemption_change.c	2023-07-24 00:58:07.767114800 -0700
-+++ modified/txe_thread_preemption_change.c	2023-07-24 00:58:07.768115700 -0700
+--- orig/txe_thread_preemption_change.c	2023-11-06 03:51:44.575002200 -0800
++++ modified/txe_thread_preemption_change.c	2023-11-06 03:51:44.575002200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5640,8 +5640,8 @@ diff -au --ignore-file-name-case orig/txe_thread_preemption_change.c modified/tx
  /**************************************************************************/ 
  UINT  _txe_thread_preemption_change(TX_THREAD *thread_ptr, UINT new_threshold, UINT *old_threshold)
 diff -au --ignore-file-name-case orig/txe_thread_priority_change.c modified/txe_thread_priority_change.c
---- orig/txe_thread_priority_change.c	2023-07-24 00:58:07.768115700 -0700
-+++ modified/txe_thread_priority_change.c	2023-07-24 00:58:07.769117000 -0700
+--- orig/txe_thread_priority_change.c	2023-11-06 03:51:44.575002200 -0800
++++ modified/txe_thread_priority_change.c	2023-11-06 03:51:44.576006300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5671,8 +5671,8 @@ diff -au --ignore-file-name-case orig/txe_thread_priority_change.c modified/txe_
  /**************************************************************************/ 
  UINT  _txe_thread_priority_change(TX_THREAD *thread_ptr, UINT new_priority, UINT *old_priority)
 diff -au --ignore-file-name-case orig/txe_thread_relinquish.c modified/txe_thread_relinquish.c
---- orig/txe_thread_relinquish.c	2023-07-24 00:58:07.769117000 -0700
-+++ modified/txe_thread_relinquish.c	2023-07-24 00:58:07.770117800 -0700
+--- orig/txe_thread_relinquish.c	2023-11-06 03:51:44.576006300 -0800
++++ modified/txe_thread_relinquish.c	2023-11-06 03:51:44.576006300 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5702,8 +5702,8 @@ diff -au --ignore-file-name-case orig/txe_thread_relinquish.c modified/txe_threa
  /**************************************************************************/ 
  VOID  _txe_thread_relinquish(VOID)
 diff -au --ignore-file-name-case orig/txe_thread_reset.c modified/txe_thread_reset.c
---- orig/txe_thread_reset.c	2023-07-24 00:58:07.770117800 -0700
-+++ modified/txe_thread_reset.c	2023-07-24 00:58:07.771119100 -0700
+--- orig/txe_thread_reset.c	2023-11-06 03:51:44.577009400 -0800
++++ modified/txe_thread_reset.c	2023-11-06 03:51:44.577009400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5733,8 +5733,8 @@ diff -au --ignore-file-name-case orig/txe_thread_reset.c modified/txe_thread_res
  /**************************************************************************/ 
  UINT  _txe_thread_reset(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_thread_resume.c modified/txe_thread_resume.c
---- orig/txe_thread_resume.c	2023-07-24 00:58:07.771119100 -0700
-+++ modified/txe_thread_resume.c	2023-07-24 00:58:07.772119500 -0700
+--- orig/txe_thread_resume.c	2023-11-06 03:51:44.578013000 -0800
++++ modified/txe_thread_resume.c	2023-11-06 03:51:44.578013000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5764,8 +5764,8 @@ diff -au --ignore-file-name-case orig/txe_thread_resume.c modified/txe_thread_re
  /**************************************************************************/ 
  UINT  _txe_thread_resume(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_thread_suspend.c modified/txe_thread_suspend.c
---- orig/txe_thread_suspend.c	2023-07-24 00:58:07.772119500 -0700
-+++ modified/txe_thread_suspend.c	2023-07-24 00:58:07.773120400 -0700
+--- orig/txe_thread_suspend.c	2023-11-06 03:51:44.578013000 -0800
++++ modified/txe_thread_suspend.c	2023-11-06 03:51:44.579016600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5795,8 +5795,8 @@ diff -au --ignore-file-name-case orig/txe_thread_suspend.c modified/txe_thread_s
  /**************************************************************************/ 
  UINT  _txe_thread_suspend(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_thread_terminate.c modified/txe_thread_terminate.c
---- orig/txe_thread_terminate.c	2023-07-24 00:58:07.773120400 -0700
-+++ modified/txe_thread_terminate.c	2023-07-24 00:58:07.774121700 -0700
+--- orig/txe_thread_terminate.c	2023-11-06 03:51:44.579016600 -0800
++++ modified/txe_thread_terminate.c	2023-11-06 03:51:44.579016600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5826,8 +5826,8 @@ diff -au --ignore-file-name-case orig/txe_thread_terminate.c modified/txe_thread
  /**************************************************************************/ 
  UINT  _txe_thread_terminate(TX_THREAD *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_thread_time_slice_change.c modified/txe_thread_time_slice_change.c
---- orig/txe_thread_time_slice_change.c	2023-07-24 00:58:07.774121700 -0700
-+++ modified/txe_thread_time_slice_change.c	2023-07-24 00:58:07.775122100 -0700
+--- orig/txe_thread_time_slice_change.c	2023-11-06 03:51:44.580020200 -0800
++++ modified/txe_thread_time_slice_change.c	2023-11-06 03:51:44.580020200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5857,8 +5857,8 @@ diff -au --ignore-file-name-case orig/txe_thread_time_slice_change.c modified/tx
  /**************************************************************************/ 
  UINT  _txe_thread_time_slice_change(TX_THREAD *thread_ptr, ULONG new_time_slice, ULONG *old_time_slice)
 diff -au --ignore-file-name-case orig/txe_thread_wait_abort.c modified/txe_thread_wait_abort.c
---- orig/txe_thread_wait_abort.c	2023-07-24 00:58:07.775122100 -0700
-+++ modified/txe_thread_wait_abort.c	2023-07-24 00:58:07.776123800 -0700
+--- orig/txe_thread_wait_abort.c	2023-11-06 03:51:44.580020200 -0800
++++ modified/txe_thread_wait_abort.c	2023-11-06 03:51:44.581023800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5888,8 +5888,8 @@ diff -au --ignore-file-name-case orig/txe_thread_wait_abort.c modified/txe_threa
  /**************************************************************************/ 
  UINT  _txe_thread_wait_abort(TX_THREAD  *thread_ptr)
 diff -au --ignore-file-name-case orig/txe_timer_activate.c modified/txe_timer_activate.c
---- orig/txe_timer_activate.c	2023-07-24 00:58:07.776123800 -0700
-+++ modified/txe_timer_activate.c	2023-07-24 00:58:07.777124600 -0700
+--- orig/txe_timer_activate.c	2023-11-06 03:51:44.581023800 -0800
++++ modified/txe_timer_activate.c	2023-11-06 03:51:44.581023800 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5919,8 +5919,8 @@ diff -au --ignore-file-name-case orig/txe_timer_activate.c modified/txe_timer_ac
  /**************************************************************************/ 
  UINT  _txe_timer_activate(TX_TIMER *timer_ptr)
 diff -au --ignore-file-name-case orig/txe_timer_change.c modified/txe_timer_change.c
---- orig/txe_timer_change.c	2023-07-24 00:58:07.777124600 -0700
-+++ modified/txe_timer_change.c	2023-07-24 00:58:07.778125500 -0700
+--- orig/txe_timer_change.c	2023-11-06 03:51:44.582027400 -0800
++++ modified/txe_timer_change.c	2023-11-06 03:51:44.582027400 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5950,8 +5950,8 @@ diff -au --ignore-file-name-case orig/txe_timer_change.c modified/txe_timer_chan
  /**************************************************************************/ 
  UINT  _txe_timer_change(TX_TIMER *timer_ptr, ULONG initial_ticks, ULONG reschedule_ticks)
 diff -au --ignore-file-name-case orig/txe_timer_create.c modified/txe_timer_create.c
---- orig/txe_timer_create.c	2023-07-24 00:58:07.778125500 -0700
-+++ modified/txe_timer_create.c	2023-07-24 00:58:07.779126400 -0700
+--- orig/txe_timer_create.c	2023-11-06 03:51:44.583031000 -0800
++++ modified/txe_timer_create.c	2023-11-06 03:51:44.583031000 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -5981,8 +5981,8 @@ diff -au --ignore-file-name-case orig/txe_timer_create.c modified/txe_timer_crea
  /**************************************************************************/ 
  UINT  _txe_timer_create(TX_TIMER *timer_ptr, CHAR *name_ptr, 
 diff -au --ignore-file-name-case orig/txe_timer_deactivate.c modified/txe_timer_deactivate.c
---- orig/txe_timer_deactivate.c	2023-07-24 00:58:07.779126400 -0700
-+++ modified/txe_timer_deactivate.c	2023-07-24 00:58:07.780127200 -0700
+--- orig/txe_timer_deactivate.c	2023-11-06 03:51:44.583031000 -0800
++++ modified/txe_timer_deactivate.c	2023-11-06 03:51:44.584034600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -6012,8 +6012,8 @@ diff -au --ignore-file-name-case orig/txe_timer_deactivate.c modified/txe_timer_
  /**************************************************************************/ 
  UINT  _txe_timer_deactivate(TX_TIMER *timer_ptr)
 diff -au --ignore-file-name-case orig/txe_timer_delete.c modified/txe_timer_delete.c
---- orig/txe_timer_delete.c	2023-07-24 00:58:07.780127200 -0700
-+++ modified/txe_timer_delete.c	2023-07-24 00:58:07.781128500 -0700
+--- orig/txe_timer_delete.c	2023-11-06 03:51:44.584034600 -0800
++++ modified/txe_timer_delete.c	2023-11-06 03:51:44.584034600 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -6043,8 +6043,8 @@ diff -au --ignore-file-name-case orig/txe_timer_delete.c modified/txe_timer_dele
  /**************************************************************************/ 
  UINT  _txe_timer_delete(TX_TIMER *timer_ptr)
 diff -au --ignore-file-name-case orig/txe_timer_info_get.c modified/txe_timer_info_get.c
---- orig/txe_timer_info_get.c	2023-07-24 00:58:07.781128500 -0700
-+++ modified/txe_timer_info_get.c	2023-07-24 00:58:07.782129300 -0700
+--- orig/txe_timer_info_get.c	2023-11-06 03:51:44.585038200 -0800
++++ modified/txe_timer_info_get.c	2023-11-06 03:51:44.585038200 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 

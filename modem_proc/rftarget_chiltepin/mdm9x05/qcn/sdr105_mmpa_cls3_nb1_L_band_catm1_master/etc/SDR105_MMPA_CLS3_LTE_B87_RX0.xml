@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NvSource>
+<!-- SDR105_MMPA_CLS3_LTE_B87_RX0.xml -->
+	<NvItemData id="29809" name="RFNV_LTE_B87_RX_STATIC_DATA_I" mapping="direct" encoding="dec">
+		<Member name="Variant_Data_Marker" sizeOf="1" type="Variant_Marker">
+			<Struct>
+				<Member name="version" sizeOf="1" type="uint16">0</Member>
+				<Member name="num_of_element" sizeOf="1" type="uint16">1</Member>
+			</Struct>
+		</Member>
+		<Member name="DataType_Header" sizeOf="1" type="uint16">438</Member>
+		<Member name="lte_rx_switch_point_container_data_type_v2" sizeOf="1" type="lte_rx_switch_point_container_data_type_v2">
+			<Struct>
+				<Member type="uint8" sizeOf="1" name="reserved">0</Member>
+				<Member type="uint8" sizeOf="1" name="switch_point_type">0</Member>
+				<Member name="switch_point_array" sizeOf="11" type="rfnv_lte_rx_switch_point_data_type">
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-716</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-756</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-566</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-606</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-476</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-516</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-416</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-456</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-356</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-396</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-296</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-336</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-236</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-276</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">-176</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">-216</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">0</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">0</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">0</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">0</Member>
+					</Struct>
+					<Struct>
+						<Member type="uint8" sizeOf="1" name="type">0</Member>
+						<Member type="int16" sizeOf="1" name="rise_or_backoff">0</Member>
+						<Member type="int16" sizeOf="1" name="fall_or_hyst">0</Member>
+					</Struct>
+				</Member>
+			</Struct>
+		</Member>
+
+	</NvItemData>
+</NvSource>

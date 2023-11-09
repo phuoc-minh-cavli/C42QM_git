@@ -24,7 +24,7 @@ Copyright (c) 2001-2013 Qualcomm Technologies, Inc.
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_plmn_list.h#5 $
+$Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_plmn_list.h#6 $
 
   when        who     what, where, why
   --------    ---     ----------------------------------------------------------
@@ -108,6 +108,8 @@ extern void rr_plc_task_start_init(void);
 extern boolean rr_plc_is_automatic_search( void );
 
 extern boolean rr_plc_search_in_foreground( void );
+
+extern boolean rr_plmn_list_srch_from_nas( void );
 
 /* function used not only in PLMN search, but also in PLMN selection */
 extern void rr_plc_construct_plmn_list(

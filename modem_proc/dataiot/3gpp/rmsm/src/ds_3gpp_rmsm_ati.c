@@ -19,8 +19,8 @@ Copyright (c) 2009 - 2020 by QUALCOMM Technologies, Incorporated.  All Rights Re
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/src/ds_3gpp_rmsm_ati.c#9 $ 
-  $DateTime: 2021/11/11 20:34:11 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/src/ds_3gpp_rmsm_ati.c#11 $ 
+  $DateTime: 2023/09/06 04:42:30 $ $Author: pwbldsvc $
 
 when(mm/dd/yy) who    what, where, why
 --------       ---   -----------------------------------------------------------
@@ -46,6 +46,8 @@ when(mm/dd/yy) who    what, where, why
 #include "ds_fwki.h"
 #include "ps_ip6_hdr.h"
 #include "ds_pdn_nv_manager.h"
+#include "ds_pdn_apn_table.h"
+
 
 
 /*= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -1312,6 +1314,65 @@ ds_pdn_mgr_instance_state_e ds_3gpp_rmsm_ati_get_um_inst_state
     return DS_INSTANCE_STATE_DOWN;
   
 }/* ds_3gpp_rmsm_ati_get_um_inst_state */
+
+/*===========================================================================
+FUNCTION   DS_3GPP_RMSM_ATI_GET_PROFILE_LIST
+
+DESCRIPTION
+  This function returns list of active profiles 
+  
+NOTE: THIS IS A RESTRICTED FUNCTION AND IS INTENDED TO BE USED BY 
+DSUMTS_AT MODULES ONLY
+
+RETURN VALUE
+
+
+DEPENDENCIES
+  ds_3gpp_ati_init_all_instances() should have been called first.
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+
+void ds_3gpp_rmsm_ati_get_profile_list
+(
+  ds_prim_profile_list_type*  profile_list_info_ptr
+)
+{
+  int outer_idx,inner_idx;
+  uint8  profile_num_list[DS_3GPP_MAX_PDN_CONTEXT] = {0};
+  
+  for (outer_idx=0; outer_idx<DS_3GPP_RMSM_AT_UM_MAX_INSTANCES; outer_idx++)
+  {
+    if (ds_3gpp_ati_pdp_state[outer_idx].in_use == TRUE)  
+    {
+      for(inner_idx = 0; inner_idx < profile_list_info_ptr->data_len; inner_idx++)
+      {
+        /* If profile already part of output list then ignore*/
+        if(ds_3gpp_ati_pdp_state[outer_idx].ds_3gpp_ati_pdp_state_type_dyn_p->profile_mask & 
+                             (1<< (profile_list_info_ptr->data_ptr[inner_idx]-1)))
+        {
+           DS_MSG1(MSG_LEGACY_HIGH,"Profile %d already part of output list..Ignore", 
+           profile_list_info_ptr->data_ptr[inner_idx]);
+          break;
+        }
+      }
+      if(inner_idx == profile_list_info_ptr->data_len)
+      {
+        /* Find the profile number corresponding to the profile_mask */
+        ds_3gpp_rmsm_ati_get_profilelist_from_prof_mask(
+            ds_3gpp_ati_pdp_state[outer_idx].ds_3gpp_ati_pdp_state_type_dyn_p->profile_mask,
+            profile_num_list);
+
+        profile_list_info_ptr->data_ptr[profile_list_info_ptr->data_len++] = profile_num_list[0];
+
+        DS_MSG2(MSG_LEGACY_HIGH,"Appending Profile: %d to the output list. O/p List prof count: %d", 
+                ds_3gpp_ati_pdp_state[outer_idx].ds_3gpp_ati_pdp_state_type_dyn_p->profile_mask,
+                profile_list_info_ptr->data_len);
+      }
+    }
+  }
+}
 
 /*===========================================================================
 FUNCTION   DS_3GPP_RMSM_ATI_GET_V4_UM_INST_STATE
@@ -3376,7 +3437,7 @@ dsat_result_enum_type ds_3gpp_rmsm_ati_process_csodcp
   /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
   /* Disallow this function if cp data is not enabled */
-  if (ds_pdn_cp_data_is_enabled() == FALSE)
+  if (ds_pdn_cp_data_is_enabled() == FALSE && !is_MOX_data)
   {
     local_err = DS_LOCAL_ERR_VAL_0;
     goto func_exit;

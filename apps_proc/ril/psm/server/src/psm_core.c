@@ -1346,6 +1346,11 @@ int psm_core_handle_server_health_check_request(psm_event_params_type *parms)
             rc = psm_list_handle_healthcheck();
             if ( rc != 0 )
             {
+#ifdef PSM_ENABLE_AWARE_CUSTOMIZATION
+                PSM_LOG_INFO("psm_core_handle_server_health_check_request: Client HC failed - recovery");
+                PSM_LOG_MSG_CRITICAL("psm_core_handle_server_health_check_request: Client HC failed - recovery");
+                sys_m_reset();
+#else
                 rc = psm_core_check_if_enter_psm_ready();
                 if ( rc != 0 )
                 {
@@ -1355,6 +1360,7 @@ int psm_core_handle_server_health_check_request(psm_event_params_type *parms)
                 {
                     ready_for_psm = TRUE;
                 }
+#endif
             }
 
             /* If ready to enter PSM mode, don't start timer again */

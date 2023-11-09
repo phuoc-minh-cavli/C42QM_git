@@ -34,10 +34,11 @@
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/rftech_lte.mpss/2.10/api/rflte_nv.h#7 $
+$Header: //components/rel/rftech_lte.mpss/2.10/api/rflte_nv.h#8 $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 06/29/22   gk      Tx max pwr limit adj v3 NV support
 01/25/22   gk      MPR NV V3 support changes
@@ -391,6 +392,7 @@ typedef enum
 #ifdef FEATURE_NBIOT_NTN 
     RFLTE_NV_B23,
     RFLTE_NV_B256,
+    RFLTE_NV_B255,
 #endif
 #ifdef FEATURE_RF_SUPPORT_BAND_87_88
     RFLTE_NV_B87,

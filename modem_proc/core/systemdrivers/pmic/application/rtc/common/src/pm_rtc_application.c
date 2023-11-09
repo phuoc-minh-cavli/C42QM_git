@@ -8,7 +8,7 @@
 *    PMIC code generation Version: 2.0.0.22
 *    This file contains code for Target specific settings and modes.
 *  
-*  &copy; Copyright 2010, 2019 Qualcomm Technologies Incorporated, All Rights Reserved
+*  Copyright (c) 2010, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
 */
 
 /*===========================================================================
@@ -18,7 +18,7 @@ EDIT HISTORY FOR MODULE
 This document is created by a code generator, therefore this section will
 not contain comments describing changes made to the module.
 
-$Header: //components/rel/core.mpss/3.10/systemdrivers/pmic/application/rtc/common/src/pm_rtc_application.c#5 $ 
+$Header: //components/rel/core.mpss/3.10/systemdrivers/pmic/application/rtc/common/src/pm_rtc_application.c#6 $ 
 
 ===========================================================================*/
 /*===========================================================================
@@ -126,6 +126,21 @@ pm_err_flag_type pmapp_rtc_alarm_set_time(pm_rtc_time_type  *time_ptr)
         
     return errFlag;
 }
+
+
+pm_err_flag_type pmapp_rtc_alarm_get_time(pm_rtc_time_type  *time_ptr, uint8 *status)
+{
+    uint8             pmic_index = 0;
+    pm_err_flag_type  errFlag = PM_ERR_FLAG__SUCCESS;
+    if ((NULL == time_ptr)  || (NULL == status))
+    {
+        return PM_ERR_FLAG__INVALID_POINTER;
+    }
+    errFlag = pm_rtc_alarm_get_ms_time (pmic_index, time_ptr, status);
+
+    return errFlag;
+}
+
 
 /*===========================================================================
 

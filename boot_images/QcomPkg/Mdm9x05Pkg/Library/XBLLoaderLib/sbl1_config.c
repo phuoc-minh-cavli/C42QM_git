@@ -7,8 +7,8 @@
  * sbl1_config_table   - Boot configuration entries for SBL1
  * load_qsee_pre_procs - SBL1 procedures run prior to QSEE loading
  *
- * Copyright (C) 2011-2019, 2022 by Qualcomm Technologies, Inc. All Rights Reserved.
- *
+ * Copyright (c) 2011-2019, 2022, 2023 Qualcomm Technologies Inc. All rights reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
  */
 
 /*==========================================================================
@@ -20,6 +20,8 @@ Notice that changes are listed in reverse chronological order.
         
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------
+08/22/23   batta   Added support to check for PMIC register bit to make the device stay in PSM with USB connected.
+07/26/23   batta   Added support to glow white led. Turning ON RGB colors will glow up white LED.
 04/29/22   batta   Added support to handle Ziggy wakeup.
 10/10/12   rrawat  Added update_imem_tiny_image_status
 09/12/19   rrawat  Added support for APPS only boot
@@ -237,8 +239,14 @@ variables and other items needed by this module.
 /* Ziggy wakeup MDM GPIO pin */
 #define ZIGGY_WAKEUP_GPIO_PIN	52
 
-/* Green LED on Aware device */
+/* Red LED GPIO pin for Aware device */
+#define AWARE_RED_LED  21
+
+/* Green LED GPIO pin for Aware device */
 #define AWARE_GREEN_LED 22
+
+/* Blue LED GPIO pin for Aware device */
+#define AWARE_BLUE_LED 23
 
 /*==========================================================================
                       DEFINE PARTITION IDs
@@ -349,13 +357,13 @@ static void sbl1_hand_control_to_devprog_ddr_or_ddi(bl_shared_data_type *bl_shar
 }
 
 /*===========================================================================
-**  Function :  sbl1_boot_enable_green_led
+**  Function :  sbl1_boot_enable_white_led
 **===========================================================================
 */
 /*!
  *
  * @brief
- *  This function turns ON Greeen LED before loading any image.
+ *  This function turns ON white LED before loading any image.
  *
  * @param[in] shared_data Pointer to shared data
  *
@@ -364,10 +372,19 @@ static void sbl1_hand_control_to_devprog_ddr_or_ddi(bl_shared_data_type *bl_shar
  *
  */
 #ifdef ZIGGY_WAKEUP
-void sbl1_boot_enable_green_led(bl_shared_data_type *bl_shared_data)
+void sbl1_boot_enable_white_led(bl_shared_data_type *bl_shared_data)
 {
     DALGpioSignalType gpio_cfg = 0;
 
+    /* Turn ON Red LED */
+    gpio_cfg = (DALGpioSignalType)DAL_GPIO_CFG_OUT(AWARE_RED_LED, 0, DAL_GPIO_OUTPUT, DAL_GPIO_PULL_DOWN,
+                            DAL_GPIO_2MA, DAL_GPIO_LOW_VALUE);
+
+    Tlmm_ConfigGpioGroup(DAL_TLMM_GPIO_ENABLE, &gpio_cfg, 1);
+
+    HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_RED_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 1);
+
+    /* Turn ON Green LED */
     gpio_cfg = (DALGpioSignalType)DAL_GPIO_CFG_OUT(AWARE_GREEN_LED, 0, DAL_GPIO_OUTPUT, DAL_GPIO_PULL_DOWN,
 							DAL_GPIO_2MA, DAL_GPIO_LOW_VALUE);
 
@@ -375,9 +392,20 @@ void sbl1_boot_enable_green_led(bl_shared_data_type *bl_shared_data)
 
     HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_GREEN_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 1);
 
+    /* Turn ON Blue LED */
+    gpio_cfg = (DALGpioSignalType)DAL_GPIO_CFG_OUT(AWARE_BLUE_LED, 0, DAL_GPIO_OUTPUT, DAL_GPIO_PULL_DOWN,
+                            DAL_GPIO_2MA, DAL_GPIO_LOW_VALUE);
+
+    Tlmm_ConfigGpioGroup(DAL_TLMM_GPIO_ENABLE, &gpio_cfg, 1);
+
+    HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_BLUE_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 1);
+
+
     busywait(100000);
 
+    HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_RED_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 0);
     HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_GREEN_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 0);
+    HAL_tlmm_WriteGpio(DAL_GPIO_CFG(AWARE_BLUE_LED, 0, HAL_TLMM_OUTPUT, HAL_TLMM_PULL_DOWN , HAL_TLMM_DRIVE_2MA), 0);
 }
 #endif
 
@@ -580,9 +608,9 @@ boot_procedure_func_type load_apdp_image_post_procs[] =
   
 #ifdef ZIGGY_WAKEUP
   /*-----------------------------------------------------------------------
-   Turn ON Green LED before loading any image.
+   Turn ON White LED before loading any image.
   -----------------------------------------------------------------------*/
-  sbl1_boot_enable_green_led,
+  sbl1_boot_enable_white_led,
   
 #endif
 
@@ -892,6 +920,12 @@ static void update_imem_tiny_image_status(bl_shared_data_type *bl_shared_data)
         break;
       } 
      #elif defined(PON1_SUPPORT) && defined(ZIGGY_WAKEUP)
+     /* Check if 3rd bit is set in SHARED_IMEM_PMIC_BASE location */
+     if((*boot_modem_load_register >> 3) & 1) {
+         BL_VERIFY((pm_err = pmapp_chg_usb_inok_disable()) == PM_ERR_FLAG__SUCCESS, (uint16)pm_err | BL_ERROR_GROUP_PMIC);
+         boot_log_message("INOK disabled");
+     }
+ 
      if((pon_reason.pon1) && (vbus_valid == FALSE) && sbl1_get_gpio_state_for_ziggy_wakeup()) {
          cancel = FALSE;
          break;

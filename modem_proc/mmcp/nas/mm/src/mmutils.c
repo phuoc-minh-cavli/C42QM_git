@@ -11,7 +11,7 @@ This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
 $PVCSPath:  L:/src/asw/MSM5200/mm/vcs/mmutils.c_v   1.26   17 Jul 2002 12:30:10   kishores  $
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmutils.c#1 $    $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmutils.c#2 $    $DateTime: 2023/10/16 03:11:57 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -13795,3 +13795,44 @@ boolean mm_check_gcf_flag_enabled()
 {
  return gmm_anite_gcf_flag;
 }
+/*=========================================================================== 
+ 
+FUNCTION  MM_GENERATE_RANDOM_KEY
+
+DESCRIPTION
+  Function to generate random numbers key of a given size.
+  Note that this function is to be used for keys whose size is a multiple
+  of 4.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+ 
+===========================================================================*/
+void mm_generate_random_key
+(
+  uint8  *key_ptr,
+  uint8  size
+)
+{
+  dword rand_value = 0;
+  uint8 i;
+
+  ASSERT((key_ptr != NULL) && (size > 0) && (size % 4 == 0));
+
+  for (i=0; i+3 < size; i = i+4)
+  {
+     rand_value = ((mm_get_random_value(RAND_MAX) << 16) | 
+                   mm_get_random_value(RAND_MAX));
+
+     key_ptr[i]   = (byte)((rand_value & 0xFF000000) >> 24);
+     key_ptr[i+1] = (byte)((rand_value & 0x00FF0000) >> 16);
+     key_ptr[i+2] = (byte)((rand_value & 0x0000FF00) >> 8);
+     key_ptr[i+3] = (byte)(rand_value  & 0x000000FF);
+  }
+} /* mm_generate_random_key */

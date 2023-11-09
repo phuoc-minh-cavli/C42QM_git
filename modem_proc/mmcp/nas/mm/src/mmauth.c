@@ -22,7 +22,7 @@ This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
 $PVCSPath:  L:/src/asw/MSM5200/mm/vcs/auth.c_v   1.17   18 Jul 2002 11:39:00   vdrapkin  $
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmauth.c#1 $ $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmauth.c#2 $ $DateTime: 2023/10/16 03:11:57 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -3796,17 +3796,17 @@ void auth_reset_cs_hfn(boolean update_to_lower_layer_req)
 
 /*Reset UMTS keys*/
   memscpy((void *)ps_hfn, 3, (void *)auth_current_hfns.ps_hfn, 3) ;
-  memset((void *)auth_cs_gprs_cipherkey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH);
+  mm_generate_random_key(&auth_cs_gprs_cipherkey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_cs_gprs_cipherkey.value_length = UMTS_SECURITY_KEY_LENGTH ;
-  memset((void *)auth_cs_gprs_integritykey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_cs_gprs_integritykey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_cs_gprs_integritykey.value_length =  UMTS_SECURITY_KEY_LENGTH;
 
   /*Reset GSM keys*/
-  memset((void *)auth_gsm_cipherkey.value_data,0x00,GSM_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_gsm_cipherkey.value_data[0], GSM_SECURITY_KEY_LENGTH);
   auth_gsm_cipherkey.value_length = GSM_SECURITY_KEY_LENGTH ;
   auth_gsm_cksn = 0x07 ;
-  memset((void *)gsm_kc_bit128.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
-  gsm_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;  
+  mm_generate_random_key(&gsm_kc_bit128.value_data[0], UMTS_SECURITY_KEY_LENGTH);
+  gsm_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;
 
   if((mm_sim_card_mode == MMGSDI_APP_USIM||mm_sim_card_mode == MMGSDI_APP_SIM) && update_to_lower_layer_req)
   {
@@ -3881,9 +3881,9 @@ void auth_reset_ps_hfn(boolean update_to_lower_layer_req)
   memscpy((void *)cs_hfn, 3,(void *)auth_current_hfns.cs_hfn, 3) ;
   memscpy((void *)ps_hfn, 3, (void *)auth_current_hfns.ps_hfn, 3) ;
 
-  memset((void *)auth_ps_gprs_cipherkey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH);
+  mm_generate_random_key(&auth_ps_gprs_cipherkey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_ps_gprs_cipherkey.value_length = UMTS_SECURITY_KEY_LENGTH ;
-  memset((void *)auth_ps_gprs_integritykey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH);
+  mm_generate_random_key(&auth_ps_gprs_integritykey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_ps_gprs_integritykey.value_length = UMTS_SECURITY_KEY_LENGTH;
 
    if((mm_sim_card_mode == MMGSDI_APP_USIM||mm_sim_card_mode == MMGSDI_APP_SIM) && update_to_lower_layer_req)
@@ -5090,40 +5090,31 @@ boolean auth_load_security_context
   
   //boolean sim_nvm_read_status = FALSE;
 
-  memset((void *)auth_gsm_cipherkey.value_data,0x00,GSM_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_gsm_cipherkey.value_data[0], GSM_SECURITY_KEY_LENGTH);
   auth_gsm_cipherkey.value_length = GSM_SECURITY_KEY_LENGTH ;
   auth_gsm_cksn = 0x07 ;
 
-  memset(
-    (void *)auth_gsm_gprs_cipherkey.value_data,0x00,GSM_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_gsm_gprs_cipherkey.value_data[0], GSM_SECURITY_KEY_LENGTH);
   auth_gsm_gprs_cipherkey.value_length = GSM_SECURITY_KEY_LENGTH ;
   auth_gsm_gprs_cksn = 0x07 ;
 
-  memset(
-    (void *)auth_cs_gprs_cipherkey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_cs_gprs_cipherkey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_cs_gprs_cipherkey.value_length = UMTS_SECURITY_KEY_LENGTH ;
-  memset(
-    (void *)auth_cs_gprs_integritykey.value_data,
-                                              0x00,UMTS_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_cs_gprs_integritykey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_cs_gprs_integritykey.value_length =  UMTS_SECURITY_KEY_LENGTH;
   auth_cs_gprs_cksn = 0x07 ;
 
-  memset(
-    (void *)auth_ps_gprs_cipherkey.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_ps_gprs_cipherkey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_ps_gprs_cipherkey.value_length = UMTS_SECURITY_KEY_LENGTH ;
-  memset(
-    (void *)auth_ps_gprs_integritykey.value_data,
-                                              0x00,UMTS_SECURITY_KEY_LENGTH) ;
+  mm_generate_random_key(&auth_ps_gprs_integritykey.value_data[0], UMTS_SECURITY_KEY_LENGTH);
   auth_ps_gprs_integritykey.value_length = UMTS_SECURITY_KEY_LENGTH ;
   auth_ps_gprs_cksn = 0x07 ;
 
-   memset(
-    (void *)gsm_kc_bit128.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
-   gsm_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;  
+  mm_generate_random_key(&gsm_kc_bit128.value_data[0], UMTS_SECURITY_KEY_LENGTH);
+  gsm_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;  
 
-  memset(
-    (void *)gsm_gprs_kc_bit128.value_data,0x00,UMTS_SECURITY_KEY_LENGTH) ;
-   gsm_gprs_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;  
+  mm_generate_random_key(&gsm_gprs_kc_bit128.value_data[0], UMTS_SECURITY_KEY_LENGTH);
+  gsm_gprs_kc_bit128.value_length = UMTS_SECURITY_KEY_LENGTH ;  
 
   /* Get current SIM/USIM file name according to SIM card mode */
 
@@ -6196,3 +6187,42 @@ void auth_deact_retx_timer
     }    
   }
 }
+
+#ifdef FEATURE_LTE
+/*===========================================================================
+
+FUNCTION    MM_INIT_LTE_AUTH_KEYS
+
+DESCRIPTION
+  This function initializes LTE standalone CK, IK keys to random values.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+void mm_init_lte_auth_keys()
+{
+#if defined(FEATURE_DUAL_SIM) && defined(FEATURE_DUAL_DATA)
+  mm_as_id_e_type as_id;
+  for (as_id = MM_AS_ID_1; as_id < (mm_as_id_e_type)MAX_NAS_STACKS; as_id++)
+#endif
+  {
+#if defined(FEATURE_DUAL_SIM) && defined(FEATURE_DUAL_DATA)
+    mm_set_as_id(as_id);
+#endif
+    mm_generate_random_key(&lte_auth_ps_gprs_integritykey.value_data[0], MAX_AUTH_DATA_LENGTH);
+    lte_auth_ps_gprs_integritykey.value_length = MAX_AUTH_DATA_LENGTH;
+    mm_generate_random_key(&lte_auth_ps_gprs_cipherkey.value_data[0], MAX_AUTH_DATA_LENGTH);
+    lte_auth_ps_gprs_cipherkey.value_length = MAX_AUTH_DATA_LENGTH;
+  }
+
+#if defined(FEATURE_DUAL_SIM) && defined(FEATURE_DUAL_DATA)
+  mm_set_as_id(MM_AS_ID_1);
+#endif
+}
+#endif

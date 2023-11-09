@@ -36,10 +36,11 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_command_id.h#318 $
+  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_command_id.h#321 $
 
 when       who     what, where, why
 --------   ---     -------------------------------------------------------------
+10/16/23   lzh     Add new ftm cmd to enable fast pin char debug and IQ captures
 05/16/23   ytak    add FTM_DO_RFFE_CMN_DEBUG_CMD
 03/13/23   ytak    add MASKED WRITE
 02/28/23   chaoxu  add extractor mode updating cmd
@@ -365,10 +366,12 @@ typedef enum
   FTM_COMMON_RFC_CMW_GET_GRFC_STATUS         = 38, /*!< 38: Get MDM or SDR GRFC Status*/
   FTM_COMMON_RFC_CMW_SET_GRFC_STATUS         = 39, /*!< 39: Get MDM or SDR GRFC Status*/
   FTM_COMMON_XPT_SNR_DBG                     = 40, /*!< 40: enable debug SNR assert condition*/
-  FTM_COMMON_XPT_DELAYCAPT_DBG               = 41, /*!< 41: enable fase delay char assert condition*/
+  FTM_COMMON_XPT_DELAYCAPT_DBG               = 41, /*!< 41: enable fast delay char assert condition*/
   FTM_COMMON_XPT_DELAY_CHAR_IQ_CAPTURE_SAVE  = 42, /*!< 42: enable capture saving for delay char in efs */
   FTM_COMMON_MCPM_RF_RESOURCE_CONTROL        = 43, /*!< 43: send MCPM REQ to bring up/down rf related resources */
   FTM_COMMON_XPT_DPD_KERNEL_INFO_OVERRIDE    = 44, /*!< 44: read and override Kernel information in xPT during tune */
+  FTM_COMMON_XPT_PIN_CHAR_IQ_CAPTURE         = 45, /*!< 45: save fast pin char IQ captures to efs */
+  FTM_COMMON_XPT_PIN_CAPT_DBG                = 46, /*!< 46: enable fast pin char assert condition */
 
   FTM_COMMON_RADIO_CMD_END         = 4095, /*!< 4095: End of Common Command */
 
@@ -709,6 +712,10 @@ typedef enum
   FTM_NR5G_RADIO_PREP_CARR_ACT_DEACT_REQ          = 32837, /*!< 32830 PREP SUB CFG REQ */
 
   FTM_NR5G_RADIO_NR_U_POPULATE_REQ                = 32838, /*!< 32837: NR-U populate REQ*/
+
+  FTM_NR5G_RADIO_RX_MEAS_BYPASS_FW_REQ            = 32839, /*!< 32837: RX_MEAS BYPASS FW REQ*/
+
+  FTM_NR5G_TOGGLE_ALT_PA_STATE                    = 32840, /*!< 32839: Toggle alt pa state flag to test dyn vcc table*/
 
   FTM_NR5G_RADIO_CMD_END = 36861, /*!< 36861 : End of NR5G cmd*/
 

@@ -10,7 +10,7 @@
       <name>common</name>
       <role>common</role>
       <chipset>MDM9205</chipset>
-      <build_id>MDM9205.TX.2.0-00133-STD.PROD-1</build_id>
+      <build_id>MDM9205.TX.2.0-00136-STD.PROD-1</build_id>
       <windows_root_path>.\</windows_root_path>
       <linux_root_path>./</linux_root_path>
       <image_dir>common</image_dir>
@@ -75,7 +75,7 @@
       <name>apps</name>
       <role>apps</role>
       <chipset>MDM9205</chipset>
-      <build_id>IOT.TX.6.0-00235-M9205ACFNAABZA-1</build_id>
+      <build_id>IOT.TX.6.0-00241-M9205ACFNAABZA-1</build_id>
       <windows_root_path cmm_root_path_var="APSS_BUILDROOT">.\</windows_root_path>
       <linux_root_path cmm_root_path_var="APSS_BUILDROOT">./</linux_root_path>
       <image_dir>apps_proc</image_dir>
@@ -103,7 +103,7 @@
       <name>cnss</name>
       <role>cnss</role>
       <chipset>MDM9205</chipset>
-      <build_id>CNSS.KF.4.2-00030-KFHW112-1</build_id>
+      <build_id>CNSS.KF.4.2-00032-KFHW112-1</build_id>
       <windows_root_path cmm_root_path_var="CNSS_BUILDROOT">.\</windows_root_path>
       <linux_root_path cmm_root_path_var="CNSS_BUILDROOT">./</linux_root_path>
       <image_dir>ioesw_proc</image_dir>
@@ -119,7 +119,7 @@
       <name>modem</name>
       <role>modem</role>
       <chipset>MDM9205</chipset>
-      <build_id>MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1</build_id>
+      <build_id>MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1</build_id>
       <physical_pool>
         <region_base>0x80000000</region_base>
         <size>0x1500000</size>
@@ -227,7 +227,7 @@
       <name>boot</name>
       <role>boot</role>
       <chipset>MDM9205</chipset>
-      <build_id>BOOT.XF.0.2-00111-MDM9x05LZB-2</build_id>
+      <build_id>BOOT.XF.0.2-00119-MDM9x05LZB-3</build_id>
       <windows_root_path cmm_root_path_var="BOOT_BUILDROOT">.\</windows_root_path>
       <linux_root_path cmm_root_path_var="BOOT_BUILDROOT">./</linux_root_path>
       <image_dir>boot_images</image_dir>

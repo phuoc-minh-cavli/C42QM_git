@@ -1,9 +1,12 @@
 Upscaling MBN header v3 to MBN header v6
-Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACFNAAFZ\qcli_dam_lwm2m_demo_moduleSignedSigned image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn
+Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACFNAAFZ\qcli_dam_demo_module.mbn
+Signed image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_demo_module.mbn
 OEM signed image with ECDSA
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn signature is valid
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn is not encrypted
+Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_demo_module.mbn signature is valid
+Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign\default\dam_mod\qcli_dam_demo_module.mbn is not encrypted
 
+Base Properties: 
+| I
 Base Properties: 
 | Integrity Check             | True  |
 | Signed                      | True  |

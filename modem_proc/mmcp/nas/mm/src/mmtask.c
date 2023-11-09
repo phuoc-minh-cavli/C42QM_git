@@ -11,7 +11,7 @@ This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
 $PVCSPath:  L:/src/asw/MSM5200/mm/vcs/mmtask.c_v   1.16   13 Jun 2002 15:25:44   jault  $
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmtask.c#1 $ $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmtask.c#2 $ $DateTime: 2023/10/16 03:11:57 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
@@ -2219,7 +2219,9 @@ void emm_initialize_ctrl_data
 #endif 
 #if defined(TEST_FRAMEWORK)
     #error code not present
-#endif // TEST_FRAMEWORK
+#else
+    mm_generate_random_key(&emm_ctrl_data_ptr->nonce_ue[0], sizeof(emm_ctrl_data_ptr->nonce_ue));
+#endif
   
     /* Init cached PDN_CONNECTIVITY_REQ message and corresponding ESM trans ID */
     emm_ctrl_data_ptr->pdn_conn_req_ptr = NULL;
@@ -2452,6 +2454,8 @@ void emm_initialize
 
   mm_as_id = MM_AS_ID_1;
   mm_sub_id = MM_AS_ID_1;
+
+  emm_initialize_sec_keys();
 
   emm_ctrl_data_ptr = emm_db_get_ctrl_data();
   emm_ctrl_data_mem_alloc(emm_ctrl_data_ptr);

@@ -36,7 +36,7 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/rffactory.mpss/1.0/intf/ftm_mode_id.h#41 $
+$Header: //components/rel/rffactory.mpss/1.0/intf/ftm_mode_id.h#43 $
 
 when       who     what, where, why
 --------   ---     -------------------------------------------------------------
@@ -227,12 +227,12 @@ typedef enum
   FTM_PHONE_MODE_LTE_B45 = 79,
   FTM_PHONE_MODE_LTE_B125 = 80,
   FTM_PHONE_MODE_LTE_B126 = 81,
-  FTM_PHONE_MODE_LTE_B127 = 82,
+  FTM_PHONE_MODE_LTE_B255 = 82,
   FTM_PHONE_MODE_LTE_B66 = 83,
   FTM_PHONE_MODE_LTE_B252 = 84,
   FTM_PHONE_MODE_LTE_B253 = 85,
   FTM_PHONE_MODE_LTE_B254 = 86,
-  FTM_PHONE_MODE_LTE_B255 = 87,
+  FTM_PHONE_MODE_LTE_B127 = 87,
   FTM_PHONE_MODE_LTE_B43 = 88,
   FTM_PHONE_MODE_LTE_B46 = 89,
   
@@ -326,6 +326,9 @@ typedef enum
   FTM_PHONE_MODE_NR5G_SUB6_N105 = 184,
   FTM_PHONE_MODE_NR5G_SUB6_N104 = 185,
   FTM_PHONE_MODE_NR5G_SUB6_N102 = 186,
+
+  FTM_PHONE_MODE_LTE_B106=187,
+
 #ifdef FEATURE_QSM
   FTM_PHONE_MODE_SDRM_B1 = 200,
   FTM_PHONE_MODE_SDRM_B2 = 201,

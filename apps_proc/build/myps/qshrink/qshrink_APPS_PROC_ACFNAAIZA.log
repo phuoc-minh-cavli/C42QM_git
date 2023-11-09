@@ -6,23 +6,23 @@ QShrink 2,3 Hash File: Z:\b\apps_proc\build\myps\qshrink\msg_hash.txt
 QDB File: Z:\b\apps_proc\build\myps\qshrink/qdbFile.qdb
 Log File: Z:\b\apps_proc\build\myps\qshrink\qshrink_APPS_PROC_ACFNAAIZA.log
 Replacement Mode
-Finished Copying ( 0.37907869591 seconds)
+Finished Copying ( 0.133393635592 seconds)
 QSHRINK4:initializeArmElfShrinkState
 QSHRINK4: before initializeWithElfHeader
 QSHRINK4FUNC: initializeWithElfHeader
-QSR_MSG_START f0000000 QSR_MSG_SIZE 00017050 QSR_MSG_END f0017050 QSR_MSG_OFFSET 00311adc
-QSR_MSG_STR_START f8000000 QSR_MSG_STR_SIZE 000d4240 QSR_MSG_STR_END f80d4240 QSR_MSG_STR_OFFSET 00328b2c
+QSR_MSG_START f0000000 QSR_MSG_SIZE 00017090 QSR_MSG_END f0017090 QSR_MSG_OFFSET 00311adc
+QSR_MSG_STR_START f8000000 QSR_MSG_STR_SIZE 000d4450 QSR_MSG_STR_END f80d4450 QSR_MSG_STR_OFFSET 00328b6c
 QSHRINK4: after initializeWithElfHeader
 QSR4 Aligned Start Address - 0xf0000000L
-QSR4 UnAligned Start Address - 0xf0017050L
-QSR4 MSG End Address - 0xf0017050L
+QSR4 UnAligned Start Address - 0xf0017090L
+QSR4 MSG End Address - 0xf0017090L
 
 QSR4 SSID-Mask combinations with more than 2k entries
 SSID : SS_MASK : COUNT : AAM Table Entry Count 
-65 : 4 : 2001 : 2 
-65 : 8 : 1817 : 2 
+65 : 4 : 2006 : 2 
+65 : 8 : 1820 : 2 
 95 : 2 : 1617 : 2 
-processQSR4MsgDescTable: qsr4_desc_table_aligned_entries 11786
+processQSR4MsgDescTable: qsr4_desc_table_aligned_entries 11794
 processQSR4MsgDescTable: qsr4_desc_table_unaligned_entries 0
 
 
@@ -5651,11 +5651,11 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 5563 - index 24 - ss_id 65 : ss_mask0x4
 5564 - index 24 - ss_id 65 : ss_mask0x4
 5565 - index 24 - ss_id 65 : ss_mask0x4
-5566 - index 25 - ss_id 65 : ss_mask0x8
-5567 - index 25 - ss_id 65 : ss_mask0x8
-5568 - index 25 - ss_id 65 : ss_mask0x8
-5569 - index 25 - ss_id 65 : ss_mask0x8
-5570 - index 25 - ss_id 65 : ss_mask0x8
+5566 - index 24 - ss_id 65 : ss_mask0x4
+5567 - index 24 - ss_id 65 : ss_mask0x4
+5568 - index 24 - ss_id 65 : ss_mask0x4
+5569 - index 24 - ss_id 65 : ss_mask0x4
+5570 - index 24 - ss_id 65 : ss_mask0x4
 5571 - index 25 - ss_id 65 : ss_mask0x8
 5572 - index 25 - ss_id 65 : ss_mask0x8
 5573 - index 25 - ss_id 65 : ss_mask0x8
@@ -7468,14 +7468,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 7380 - index 25 - ss_id 65 : ss_mask0x8
 7381 - index 25 - ss_id 65 : ss_mask0x8
 7382 - index 25 - ss_id 65 : ss_mask0x8
-7383 - index 26 - ss_id 69 : ss_mask0x1
-7384 - index 26 - ss_id 69 : ss_mask0x1
-7385 - index 26 - ss_id 69 : ss_mask0x1
-7386 - index 26 - ss_id 69 : ss_mask0x1
-7387 - index 26 - ss_id 69 : ss_mask0x1
-7388 - index 26 - ss_id 69 : ss_mask0x1
-7389 - index 26 - ss_id 69 : ss_mask0x1
-7390 - index 26 - ss_id 69 : ss_mask0x1
+7383 - index 25 - ss_id 65 : ss_mask0x8
+7384 - index 25 - ss_id 65 : ss_mask0x8
+7385 - index 25 - ss_id 65 : ss_mask0x8
+7386 - index 25 - ss_id 65 : ss_mask0x8
+7387 - index 25 - ss_id 65 : ss_mask0x8
+7388 - index 25 - ss_id 65 : ss_mask0x8
+7389 - index 25 - ss_id 65 : ss_mask0x8
+7390 - index 25 - ss_id 65 : ss_mask0x8
 7391 - index 26 - ss_id 69 : ss_mask0x1
 7392 - index 26 - ss_id 69 : ss_mask0x1
 7393 - index 26 - ss_id 69 : ss_mask0x1
@@ -7676,14 +7676,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 7588 - index 26 - ss_id 69 : ss_mask0x1
 7589 - index 26 - ss_id 69 : ss_mask0x1
 7590 - index 26 - ss_id 69 : ss_mask0x1
-7591 - index 27 - ss_id 69 : ss_mask0x2
-7592 - index 27 - ss_id 69 : ss_mask0x2
-7593 - index 27 - ss_id 69 : ss_mask0x2
-7594 - index 27 - ss_id 69 : ss_mask0x2
-7595 - index 27 - ss_id 69 : ss_mask0x2
-7596 - index 27 - ss_id 69 : ss_mask0x2
-7597 - index 27 - ss_id 69 : ss_mask0x2
-7598 - index 27 - ss_id 69 : ss_mask0x2
+7591 - index 26 - ss_id 69 : ss_mask0x1
+7592 - index 26 - ss_id 69 : ss_mask0x1
+7593 - index 26 - ss_id 69 : ss_mask0x1
+7594 - index 26 - ss_id 69 : ss_mask0x1
+7595 - index 26 - ss_id 69 : ss_mask0x1
+7596 - index 26 - ss_id 69 : ss_mask0x1
+7597 - index 26 - ss_id 69 : ss_mask0x1
+7598 - index 26 - ss_id 69 : ss_mask0x1
 7599 - index 27 - ss_id 69 : ss_mask0x2
 7600 - index 27 - ss_id 69 : ss_mask0x2
 7601 - index 27 - ss_id 69 : ss_mask0x2
@@ -7936,14 +7936,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 7848 - index 27 - ss_id 69 : ss_mask0x2
 7849 - index 27 - ss_id 69 : ss_mask0x2
 7850 - index 27 - ss_id 69 : ss_mask0x2
-7851 - index 28 - ss_id 69 : ss_mask0x4
-7852 - index 28 - ss_id 69 : ss_mask0x4
-7853 - index 28 - ss_id 69 : ss_mask0x4
-7854 - index 28 - ss_id 69 : ss_mask0x4
-7855 - index 28 - ss_id 69 : ss_mask0x4
-7856 - index 28 - ss_id 69 : ss_mask0x4
-7857 - index 28 - ss_id 69 : ss_mask0x4
-7858 - index 28 - ss_id 69 : ss_mask0x4
+7851 - index 27 - ss_id 69 : ss_mask0x2
+7852 - index 27 - ss_id 69 : ss_mask0x2
+7853 - index 27 - ss_id 69 : ss_mask0x2
+7854 - index 27 - ss_id 69 : ss_mask0x2
+7855 - index 27 - ss_id 69 : ss_mask0x2
+7856 - index 27 - ss_id 69 : ss_mask0x2
+7857 - index 27 - ss_id 69 : ss_mask0x2
+7858 - index 27 - ss_id 69 : ss_mask0x2
 7859 - index 28 - ss_id 69 : ss_mask0x4
 7860 - index 28 - ss_id 69 : ss_mask0x4
 7861 - index 28 - ss_id 69 : ss_mask0x4
@@ -8294,14 +8294,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 8206 - index 28 - ss_id 69 : ss_mask0x4
 8207 - index 28 - ss_id 69 : ss_mask0x4
 8208 - index 28 - ss_id 69 : ss_mask0x4
-8209 - index 29 - ss_id 69 : ss_mask0x8
-8210 - index 29 - ss_id 69 : ss_mask0x8
-8211 - index 29 - ss_id 69 : ss_mask0x8
-8212 - index 29 - ss_id 69 : ss_mask0x8
-8213 - index 29 - ss_id 69 : ss_mask0x8
-8214 - index 29 - ss_id 69 : ss_mask0x8
-8215 - index 29 - ss_id 69 : ss_mask0x8
-8216 - index 29 - ss_id 69 : ss_mask0x8
+8209 - index 28 - ss_id 69 : ss_mask0x4
+8210 - index 28 - ss_id 69 : ss_mask0x4
+8211 - index 28 - ss_id 69 : ss_mask0x4
+8212 - index 28 - ss_id 69 : ss_mask0x4
+8213 - index 28 - ss_id 69 : ss_mask0x4
+8214 - index 28 - ss_id 69 : ss_mask0x4
+8215 - index 28 - ss_id 69 : ss_mask0x4
+8216 - index 28 - ss_id 69 : ss_mask0x4
 8217 - index 29 - ss_id 69 : ss_mask0x8
 8218 - index 29 - ss_id 69 : ss_mask0x8
 8219 - index 29 - ss_id 69 : ss_mask0x8
@@ -9023,20 +9023,20 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 8935 - index 29 - ss_id 69 : ss_mask0x8
 8936 - index 29 - ss_id 69 : ss_mask0x8
 8937 - index 29 - ss_id 69 : ss_mask0x8
-8938 - index 30 - ss_id 69 : ss_mask0x10
-8939 - index 30 - ss_id 69 : ss_mask0x10
-8940 - index 30 - ss_id 69 : ss_mask0x10
-8941 - index 30 - ss_id 69 : ss_mask0x10
-8942 - index 30 - ss_id 69 : ss_mask0x10
-8943 - index 30 - ss_id 69 : ss_mask0x10
-8944 - index 2 - ss_id 7 : ss_mask0x4
-8945 - index 2 - ss_id 7 : ss_mask0x4
-8946 - index 2 - ss_id 7 : ss_mask0x4
-8947 - index 2 - ss_id 7 : ss_mask0x4
-8948 - index 2 - ss_id 7 : ss_mask0x4
-8949 - index 2 - ss_id 7 : ss_mask0x4
-8950 - index 2 - ss_id 7 : ss_mask0x4
-8951 - index 2 - ss_id 7 : ss_mask0x4
+8938 - index 29 - ss_id 69 : ss_mask0x8
+8939 - index 29 - ss_id 69 : ss_mask0x8
+8940 - index 29 - ss_id 69 : ss_mask0x8
+8941 - index 29 - ss_id 69 : ss_mask0x8
+8942 - index 29 - ss_id 69 : ss_mask0x8
+8943 - index 29 - ss_id 69 : ss_mask0x8
+8944 - index 29 - ss_id 69 : ss_mask0x8
+8945 - index 29 - ss_id 69 : ss_mask0x8
+8946 - index 30 - ss_id 69 : ss_mask0x10
+8947 - index 30 - ss_id 69 : ss_mask0x10
+8948 - index 30 - ss_id 69 : ss_mask0x10
+8949 - index 30 - ss_id 69 : ss_mask0x10
+8950 - index 30 - ss_id 69 : ss_mask0x10
+8951 - index 30 - ss_id 69 : ss_mask0x10
 8952 - index 2 - ss_id 7 : ss_mask0x4
 8953 - index 2 - ss_id 7 : ss_mask0x4
 8954 - index 2 - ss_id 7 : ss_mask0x4
@@ -9070,14 +9070,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 8982 - index 2 - ss_id 7 : ss_mask0x4
 8983 - index 2 - ss_id 7 : ss_mask0x4
 8984 - index 2 - ss_id 7 : ss_mask0x4
-8985 - index 3 - ss_id 7 : ss_mask0x8
-8986 - index 3 - ss_id 7 : ss_mask0x8
-8987 - index 3 - ss_id 7 : ss_mask0x8
-8988 - index 3 - ss_id 7 : ss_mask0x8
-8989 - index 3 - ss_id 7 : ss_mask0x8
-8990 - index 3 - ss_id 7 : ss_mask0x8
-8991 - index 3 - ss_id 7 : ss_mask0x8
-8992 - index 3 - ss_id 7 : ss_mask0x8
+8985 - index 2 - ss_id 7 : ss_mask0x4
+8986 - index 2 - ss_id 7 : ss_mask0x4
+8987 - index 2 - ss_id 7 : ss_mask0x4
+8988 - index 2 - ss_id 7 : ss_mask0x4
+8989 - index 2 - ss_id 7 : ss_mask0x4
+8990 - index 2 - ss_id 7 : ss_mask0x4
+8991 - index 2 - ss_id 7 : ss_mask0x4
+8992 - index 2 - ss_id 7 : ss_mask0x4
 8993 - index 3 - ss_id 7 : ss_mask0x8
 8994 - index 3 - ss_id 7 : ss_mask0x8
 8995 - index 3 - ss_id 7 : ss_mask0x8
@@ -9156,30 +9156,30 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9068 - index 3 - ss_id 7 : ss_mask0x8
 9069 - index 3 - ss_id 7 : ss_mask0x8
 9070 - index 3 - ss_id 7 : ss_mask0x8
-9071 - index 4 - ss_id 7 : ss_mask0x10
-9072 - index 4 - ss_id 7 : ss_mask0x10
-9073 - index 4 - ss_id 7 : ss_mask0x10
-9074 - index 31 - ss_id 76 : ss_mask0x1
-9075 - index 31 - ss_id 76 : ss_mask0x1
-9076 - index 31 - ss_id 76 : ss_mask0x1
-9077 - index 31 - ss_id 76 : ss_mask0x1
-9078 - index 32 - ss_id 76 : ss_mask0x2
-9079 - index 32 - ss_id 76 : ss_mask0x2
-9080 - index 32 - ss_id 76 : ss_mask0x2
-9081 - index 32 - ss_id 76 : ss_mask0x2
-9082 - index 32 - ss_id 76 : ss_mask0x2
-9083 - index 32 - ss_id 76 : ss_mask0x2
-9084 - index 32 - ss_id 76 : ss_mask0x2
-9085 - index 32 - ss_id 76 : ss_mask0x2
+9071 - index 3 - ss_id 7 : ss_mask0x8
+9072 - index 3 - ss_id 7 : ss_mask0x8
+9073 - index 3 - ss_id 7 : ss_mask0x8
+9074 - index 3 - ss_id 7 : ss_mask0x8
+9075 - index 3 - ss_id 7 : ss_mask0x8
+9076 - index 3 - ss_id 7 : ss_mask0x8
+9077 - index 3 - ss_id 7 : ss_mask0x8
+9078 - index 3 - ss_id 7 : ss_mask0x8
+9079 - index 4 - ss_id 7 : ss_mask0x10
+9080 - index 4 - ss_id 7 : ss_mask0x10
+9081 - index 4 - ss_id 7 : ss_mask0x10
+9082 - index 31 - ss_id 76 : ss_mask0x1
+9083 - index 31 - ss_id 76 : ss_mask0x1
+9084 - index 31 - ss_id 76 : ss_mask0x1
+9085 - index 31 - ss_id 76 : ss_mask0x1
 9086 - index 32 - ss_id 76 : ss_mask0x2
-9087 - index 33 - ss_id 76 : ss_mask0x4
-9088 - index 33 - ss_id 76 : ss_mask0x4
-9089 - index 33 - ss_id 76 : ss_mask0x4
-9090 - index 33 - ss_id 76 : ss_mask0x4
-9091 - index 33 - ss_id 76 : ss_mask0x4
-9092 - index 33 - ss_id 76 : ss_mask0x4
-9093 - index 33 - ss_id 76 : ss_mask0x4
-9094 - index 33 - ss_id 76 : ss_mask0x4
+9087 - index 32 - ss_id 76 : ss_mask0x2
+9088 - index 32 - ss_id 76 : ss_mask0x2
+9089 - index 32 - ss_id 76 : ss_mask0x2
+9090 - index 32 - ss_id 76 : ss_mask0x2
+9091 - index 32 - ss_id 76 : ss_mask0x2
+9092 - index 32 - ss_id 76 : ss_mask0x2
+9093 - index 32 - ss_id 76 : ss_mask0x2
+9094 - index 32 - ss_id 76 : ss_mask0x2
 9095 - index 33 - ss_id 76 : ss_mask0x4
 9096 - index 33 - ss_id 76 : ss_mask0x4
 9097 - index 33 - ss_id 76 : ss_mask0x4
@@ -9187,14 +9187,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9099 - index 33 - ss_id 76 : ss_mask0x4
 9100 - index 33 - ss_id 76 : ss_mask0x4
 9101 - index 33 - ss_id 76 : ss_mask0x4
-9102 - index 34 - ss_id 76 : ss_mask0x8
-9103 - index 34 - ss_id 76 : ss_mask0x8
-9104 - index 34 - ss_id 76 : ss_mask0x8
-9105 - index 34 - ss_id 76 : ss_mask0x8
-9106 - index 34 - ss_id 76 : ss_mask0x8
-9107 - index 34 - ss_id 76 : ss_mask0x8
-9108 - index 34 - ss_id 76 : ss_mask0x8
-9109 - index 34 - ss_id 76 : ss_mask0x8
+9102 - index 33 - ss_id 76 : ss_mask0x4
+9103 - index 33 - ss_id 76 : ss_mask0x4
+9104 - index 33 - ss_id 76 : ss_mask0x4
+9105 - index 33 - ss_id 76 : ss_mask0x4
+9106 - index 33 - ss_id 76 : ss_mask0x4
+9107 - index 33 - ss_id 76 : ss_mask0x4
+9108 - index 33 - ss_id 76 : ss_mask0x4
+9109 - index 33 - ss_id 76 : ss_mask0x4
 9110 - index 34 - ss_id 76 : ss_mask0x8
 9111 - index 34 - ss_id 76 : ss_mask0x8
 9112 - index 34 - ss_id 76 : ss_mask0x8
@@ -9241,14 +9241,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9153 - index 34 - ss_id 76 : ss_mask0x8
 9154 - index 34 - ss_id 76 : ss_mask0x8
 9155 - index 34 - ss_id 76 : ss_mask0x8
-9156 - index 35 - ss_id 76 : ss_mask0xff
-9157 - index 35 - ss_id 76 : ss_mask0xff
-9158 - index 35 - ss_id 76 : ss_mask0xff
-9159 - index 35 - ss_id 76 : ss_mask0xff
-9160 - index 35 - ss_id 76 : ss_mask0xff
-9161 - index 35 - ss_id 76 : ss_mask0xff
-9162 - index 35 - ss_id 76 : ss_mask0xff
-9163 - index 35 - ss_id 76 : ss_mask0xff
+9156 - index 34 - ss_id 76 : ss_mask0x8
+9157 - index 34 - ss_id 76 : ss_mask0x8
+9158 - index 34 - ss_id 76 : ss_mask0x8
+9159 - index 34 - ss_id 76 : ss_mask0x8
+9160 - index 34 - ss_id 76 : ss_mask0x8
+9161 - index 34 - ss_id 76 : ss_mask0x8
+9162 - index 34 - ss_id 76 : ss_mask0x8
+9163 - index 34 - ss_id 76 : ss_mask0x8
 9164 - index 35 - ss_id 76 : ss_mask0xff
 9165 - index 35 - ss_id 76 : ss_mask0xff
 9166 - index 35 - ss_id 76 : ss_mask0xff
@@ -9773,35 +9773,35 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9685 - index 35 - ss_id 76 : ss_mask0xff
 9686 - index 35 - ss_id 76 : ss_mask0xff
 9687 - index 35 - ss_id 76 : ss_mask0xff
-9688 - index 36 - ss_id 89 : ss_mask0x2
-9689 - index 36 - ss_id 89 : ss_mask0x2
-9690 - index 36 - ss_id 89 : ss_mask0x2
-9691 - index 36 - ss_id 89 : ss_mask0x2
-9692 - index 37 - ss_id 89 : ss_mask0x8
-9693 - index 37 - ss_id 89 : ss_mask0x8
-9694 - index 5 - ss_id 9 : ss_mask0x1
-9695 - index 5 - ss_id 9 : ss_mask0x1
-9696 - index 6 - ss_id 9 : ss_mask0x2
-9697 - index 6 - ss_id 9 : ss_mask0x2
-9698 - index 6 - ss_id 9 : ss_mask0x2
-9699 - index 6 - ss_id 9 : ss_mask0x2
-9700 - index 6 - ss_id 9 : ss_mask0x2
-9701 - index 6 - ss_id 9 : ss_mask0x2
-9702 - index 6 - ss_id 9 : ss_mask0x2
-9703 - index 6 - ss_id 9 : ss_mask0x2
+9688 - index 35 - ss_id 76 : ss_mask0xff
+9689 - index 35 - ss_id 76 : ss_mask0xff
+9690 - index 35 - ss_id 76 : ss_mask0xff
+9691 - index 35 - ss_id 76 : ss_mask0xff
+9692 - index 35 - ss_id 76 : ss_mask0xff
+9693 - index 35 - ss_id 76 : ss_mask0xff
+9694 - index 35 - ss_id 76 : ss_mask0xff
+9695 - index 35 - ss_id 76 : ss_mask0xff
+9696 - index 36 - ss_id 89 : ss_mask0x2
+9697 - index 36 - ss_id 89 : ss_mask0x2
+9698 - index 36 - ss_id 89 : ss_mask0x2
+9699 - index 36 - ss_id 89 : ss_mask0x2
+9700 - index 37 - ss_id 89 : ss_mask0x8
+9701 - index 37 - ss_id 89 : ss_mask0x8
+9702 - index 5 - ss_id 9 : ss_mask0x1
+9703 - index 5 - ss_id 9 : ss_mask0x1
 9704 - index 6 - ss_id 9 : ss_mask0x2
 9705 - index 6 - ss_id 9 : ss_mask0x2
 9706 - index 6 - ss_id 9 : ss_mask0x2
 9707 - index 6 - ss_id 9 : ss_mask0x2
 9708 - index 6 - ss_id 9 : ss_mask0x2
-9709 - index 7 - ss_id 9 : ss_mask0x4
-9710 - index 7 - ss_id 9 : ss_mask0x4
-9711 - index 7 - ss_id 9 : ss_mask0x4
-9712 - index 7 - ss_id 9 : ss_mask0x4
-9713 - index 7 - ss_id 9 : ss_mask0x4
-9714 - index 7 - ss_id 9 : ss_mask0x4
-9715 - index 7 - ss_id 9 : ss_mask0x4
-9716 - index 7 - ss_id 9 : ss_mask0x4
+9709 - index 6 - ss_id 9 : ss_mask0x2
+9710 - index 6 - ss_id 9 : ss_mask0x2
+9711 - index 6 - ss_id 9 : ss_mask0x2
+9712 - index 6 - ss_id 9 : ss_mask0x2
+9713 - index 6 - ss_id 9 : ss_mask0x2
+9714 - index 6 - ss_id 9 : ss_mask0x2
+9715 - index 6 - ss_id 9 : ss_mask0x2
+9716 - index 6 - ss_id 9 : ss_mask0x2
 9717 - index 7 - ss_id 9 : ss_mask0x4
 9718 - index 7 - ss_id 9 : ss_mask0x4
 9719 - index 7 - ss_id 9 : ss_mask0x4
@@ -9839,14 +9839,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9751 - index 7 - ss_id 9 : ss_mask0x4
 9752 - index 7 - ss_id 9 : ss_mask0x4
 9753 - index 7 - ss_id 9 : ss_mask0x4
-9754 - index 8 - ss_id 9 : ss_mask0x8
-9755 - index 8 - ss_id 9 : ss_mask0x8
-9756 - index 8 - ss_id 9 : ss_mask0x8
-9757 - index 8 - ss_id 9 : ss_mask0x8
-9758 - index 8 - ss_id 9 : ss_mask0x8
-9759 - index 8 - ss_id 9 : ss_mask0x8
-9760 - index 8 - ss_id 9 : ss_mask0x8
-9761 - index 8 - ss_id 9 : ss_mask0x8
+9754 - index 7 - ss_id 9 : ss_mask0x4
+9755 - index 7 - ss_id 9 : ss_mask0x4
+9756 - index 7 - ss_id 9 : ss_mask0x4
+9757 - index 7 - ss_id 9 : ss_mask0x4
+9758 - index 7 - ss_id 9 : ss_mask0x4
+9759 - index 7 - ss_id 9 : ss_mask0x4
+9760 - index 7 - ss_id 9 : ss_mask0x4
+9761 - index 7 - ss_id 9 : ss_mask0x4
 9762 - index 8 - ss_id 9 : ss_mask0x8
 9763 - index 8 - ss_id 9 : ss_mask0x8
 9764 - index 8 - ss_id 9 : ss_mask0x8
@@ -9856,14 +9856,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 9768 - index 8 - ss_id 9 : ss_mask0x8
 9769 - index 8 - ss_id 9 : ss_mask0x8
 9770 - index 8 - ss_id 9 : ss_mask0x8
-9771 - index 38 - ss_id 95 : ss_mask0x2
-9772 - index 38 - ss_id 95 : ss_mask0x2
-9773 - index 38 - ss_id 95 : ss_mask0x2
-9774 - index 38 - ss_id 95 : ss_mask0x2
-9775 - index 38 - ss_id 95 : ss_mask0x2
-9776 - index 38 - ss_id 95 : ss_mask0x2
-9777 - index 38 - ss_id 95 : ss_mask0x2
-9778 - index 38 - ss_id 95 : ss_mask0x2
+9771 - index 8 - ss_id 9 : ss_mask0x8
+9772 - index 8 - ss_id 9 : ss_mask0x8
+9773 - index 8 - ss_id 9 : ss_mask0x8
+9774 - index 8 - ss_id 9 : ss_mask0x8
+9775 - index 8 - ss_id 9 : ss_mask0x8
+9776 - index 8 - ss_id 9 : ss_mask0x8
+9777 - index 8 - ss_id 9 : ss_mask0x8
+9778 - index 8 - ss_id 9 : ss_mask0x8
 9779 - index 38 - ss_id 95 : ss_mask0x2
 9780 - index 38 - ss_id 95 : ss_mask0x2
 9781 - index 38 - ss_id 95 : ss_mask0x2
@@ -11473,14 +11473,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 11385 - index 38 - ss_id 95 : ss_mask0x2
 11386 - index 38 - ss_id 95 : ss_mask0x2
 11387 - index 38 - ss_id 95 : ss_mask0x2
-11388 - index 39 - ss_id 95 : ss_mask0x8
-11389 - index 39 - ss_id 95 : ss_mask0x8
-11390 - index 39 - ss_id 95 : ss_mask0x8
-11391 - index 39 - ss_id 95 : ss_mask0x8
-11392 - index 39 - ss_id 95 : ss_mask0x8
-11393 - index 39 - ss_id 95 : ss_mask0x8
-11394 - index 39 - ss_id 95 : ss_mask0x8
-11395 - index 39 - ss_id 95 : ss_mask0x8
+11388 - index 38 - ss_id 95 : ss_mask0x2
+11389 - index 38 - ss_id 95 : ss_mask0x2
+11390 - index 38 - ss_id 95 : ss_mask0x2
+11391 - index 38 - ss_id 95 : ss_mask0x2
+11392 - index 38 - ss_id 95 : ss_mask0x2
+11393 - index 38 - ss_id 95 : ss_mask0x2
+11394 - index 38 - ss_id 95 : ss_mask0x2
+11395 - index 38 - ss_id 95 : ss_mask0x2
 11396 - index 39 - ss_id 95 : ss_mask0x8
 11397 - index 39 - ss_id 95 : ss_mask0x8
 11398 - index 39 - ss_id 95 : ss_mask0x8
@@ -11871,30 +11871,38 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 11783 - index 39 - ss_id 95 : ss_mask0x8
 11784 - index 39 - ss_id 95 : ss_mask0x8
 11785 - index 39 - ss_id 95 : ss_mask0x8
+11786 - index 39 - ss_id 95 : ss_mask0x8
+11787 - index 39 - ss_id 95 : ss_mask0x8
+11788 - index 39 - ss_id 95 : ss_mask0x8
+11789 - index 39 - ss_id 95 : ss_mask0x8
+11790 - index 39 - ss_id 95 : ss_mask0x8
+11791 - index 39 - ss_id 95 : ss_mask0x8
+11792 - index 39 - ss_id 95 : ss_mask0x8
+11793 - index 39 - ss_id 95 : ss_mask0x8
 
 QSR4 MSG_V4_SS_Table - Total Count-53
 QSR4 MSG_V4_SS_Table - Max Count 64
-QSR4 MSG_V4_SS_AAM_Table - Total Count-11786
+QSR4 MSG_V4_SS_AAM_Table - Total Count-11794
 QSR4 MSG_V4_SS_AAM_Table - Max Count 16000
 QSR4 MSG_V4_SS_UAM_Table - Total Count-0
 QSR4 MSG_V4_SS_UAM_Table - Max Count 400
 
-QSR4AlignedEntry changed in elf_offset  0x301cd0L to  11786 
+QSR4AlignedEntry changed in elf_offset  0x301cd0L to  11794 
 QSR4UnAlignedEntry changed in elf_offset  0x3116d8L to  0 
 QSR4TableEntry changed in elf_offset  0x301cd4L to  53 
 QSR4Tbl changed in elf_offset  0x3019ccL 
 QSR4AAMTbl changed in elf_offset  0x301cd8L 
 QSR4UAMTbl changed in elf_offset  0x3116dcL 
 QSR4DBaseNameEntry changed in elf_offset 0x301bdcL to /readonly/firmware/image/qdbFile.qdb
-QSR4DBaseGuidEntry changed in elf_offset  0x301bccL to 0x1f3,0xcf61,0xbb0,0x3b7e,0x72a7,0x62a6,0x4b0d,0xd851,
+QSR4DBaseGuidEntry changed in elf_offset  0x301bccL to 0x611,0xf3,0xbfcc,0xfdc1,0x899,0xef62,0x16b9,0xdb8f,
  Linker generated IMAGE END Addr changed in elf_offset  0x2f8be8L to 0x81820000L 
 
 Update variables complete
 
 QShrink 4.0 details :
 
-Total Struct Matches:11786
+Total Struct Matches:11794
 Qshrunk 92 KB 
 Qshrink Version : 4
-Total Time: 9.42826823791
+Total Time: 5.25623567618
 Qshrink completed 

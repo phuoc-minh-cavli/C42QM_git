@@ -11,7 +11,7 @@
 #                                                                            
 # *** AUTO GENERATED FILE - DO NOT EDIT                                      
 #                                                                            
-# GENERATED: Tue May 16 23:23:17 2023 
+# GENERATED: Sun Sep 24 22:45:33 2023 
 #============================================================================
 */
-const char OEM_IMAGE_UUID_STRING_AUTO_UPDATED[]="OEM_IMAGE_UUID_STRING=Q_SENTINEL_{225CF1D2-5DEC-4A58-98B4-C997E9742C32}_20230516_2323";
+const char OEM_IMAGE_UUID_STRING_AUTO_UPDATED[]="OEM_IMAGE_UUID_STRING=Q_SENTINEL_{7008347D-CCC4-4299-B4E6-57AEAC4137EB}_20230924_2245";

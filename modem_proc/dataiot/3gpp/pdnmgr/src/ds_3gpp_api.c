@@ -12,8 +12,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_3gpp_api.c#4 $
-  $DateTime: 2023/02/07 02:18:02 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_3gpp_api.c#5 $
+  $DateTime: 2023/10/26 06:05:43 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -762,6 +762,7 @@ boolean ds3gpp_check_pending_data_for_cpsr
         cmd_ptr->hdr.cmd_id = DS_CMD_PDN_DORM_REORIG;
         data_ptr = (ds_bearer_mgr_s**)cmd_ptr->cmd_payload_ptr;
         *data_ptr = bearer_mgr_p;
+        ds_put_cmd(cmd_ptr);
         ret_val = TRUE;
       }
     }

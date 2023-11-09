@@ -1,19 +1,19 @@
-Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/SecImage_log.txt
+Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/SecImage_log.txt
 
 
-     SecImage v5.27 launched as: "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/sectools/sectools.py secimage -i /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn -g qdsp6sw -c /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/sectools/config/integration/secimage_eccv3.xml --cfg_soc_hw_version 0x20130100 --cfg_soc_vers 0x2013 --cfg_in_use_soc_hw_version enable -s -o /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign"
+     SecImage v5.27 launched as: "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/sectools/sectools.py secimage -i /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn -g qdsp6sw -c /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/sectools/config/integration/secimage_eccv3.xml --cfg_soc_hw_version 0x20130100 --cfg_soc_vers 0x2013 --cfg_in_use_soc_hw_version enable -s -o /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign"
 
-Config path is set to: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/sectools/config/integration/secimage_eccv3.xml
+Config path is set to: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/sectools/config/integration/secimage_eccv3.xml
 WARNING: OEM ID is set to 0 for sign_id "qdsp6sw"
 ------------------------------------------------------
-Processing 1/1: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn
+Processing 1/1: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn
 
 Upscaling MBN header v5 to MBN header v6
-Performing OEM sign on image: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn
-Signed image is stored at /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn
+Performing OEM sign on image: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/build/ms/bin/9205.ltenbena.prod/unsigned/qdsp6sw.mbn
+Signed image is stored at /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn
 OEM signed image with ECDSA
-Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn signature is valid
-Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn is not encrypted
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn signature is valid
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign/default/qdsp6sw/qdsp6sw.mbn is not encrypted
 
 Base Properties: 
 | Integrity Check             | True  |
@@ -57,16 +57,16 @@ Program Headers:
 |  4  | LOAD |0x03f000|0x80040000|0x80040000| 0x00f2c0 | 0x010000|  RWE  | 0x1000    |
 |  5  | LOAD |0x04f000|0x80050000|0x80050000| 0x04a30c | 0x04b000|   RE  | 0x1000    |
 |  6  | LOAD |0x09a000|0x800a0000|0x800a0000| 0x0001f8 | 0x001000|   RE  | 0x1000    |
-|  7  | LOAD |0x09b000|0x800a1000|0x800a1000| 0x05e250 | 0x05f000|   RE  | 0x1000    |
-|  8  | LOAD |0x0fa000|0x80100000|0x80100000| 0x00cd80 | 0x00d000|   RW  | 0x1000    |
-|  9  | LOAD |0x107000|0x80110000|0x80110000| 0x070430 | 0x071000|   RW  | 0x1000    |
-|  10 | LOAD |0x178000|0x80182000|0x80182000| 0x093044 | 0x094000|   RW  | 0x1000    |
-|  11 | LOAD |0x20c000|0x80216000|0x80216000| 0x000000 | 0x020000|   RW  | 0x1000    |
-|  12 | LOAD |0x20c000|0x80236000|0x80236000| 0x000000 | 0x670000|   RW  | 0x1000    |
-|  13 | LOAD |0x20c000|0x808a6000|0x808a6000| 0x005040 | 0x006000|   RW  | 0x1000    |
-|  14 | LOAD |0x212000|0x808b0000|0x808b0000| 0x568040 | 0x569000|   RW  | 0x1000    |
-|  15 | LOAD |0x77b000|0x80e20000|0x80e20000| 0x18bf40 | 0x18c000|   RW  | 0x1000    |
-|  16 | LOAD |0x907000|0x80fac000|0x80fac000| 0x010758 | 0x011000|   R   | 0x1000    |
+|  7  | LOAD |0x09b000|0x800a1000|0x800a1000| 0x05d210 | 0x05e000|   RE  | 0x1000    |
+|  8  | LOAD |0x0f9000|0x80100000|0x80100000| 0x00cd80 | 0x00d000|   RW  | 0x1000    |
+|  9  | LOAD |0x106000|0x80110000|0x80110000| 0x070610 | 0x071000|   RW  | 0x1000    |
+|  10 | LOAD |0x177000|0x80182000|0x80182000| 0x0930dc | 0x094000|   RW  | 0x1000    |
+|  11 | LOAD |0x20b000|0x80216000|0x80216000| 0x000000 | 0x020000|   RW  | 0x1000    |
+|  12 | LOAD |0x20b000|0x80236000|0x80236000| 0x000000 | 0x670000|   RW  | 0x1000    |
+|  13 | LOAD |0x20b000|0x808a6000|0x808a6000| 0x005040 | 0x006000|   RW  | 0x1000    |
+|  14 | LOAD |0x211000|0x808b0000|0x808b0000| 0x568040 | 0x569000|   RW  | 0x1000    |
+|  15 | LOAD |0x77a000|0x80e20000|0x80e20000| 0x18c0c0 | 0x18d000|   RW  | 0x1000    |
+|  16 | LOAD |0x907000|0x80fad000|0x80fad000| 0x010755 | 0x011000|   R   | 0x1000    |
 |  17 | LOAD |0x918000|0x810bf000|0x810bf000| 0x000000 | 0x001000|   RW  | 0x1000    |
 
 Hash Segment Properties: 
@@ -113,7 +113,7 @@ Metadata:
 
 SUMMARY:
 Following actions were performed: "sign, validate"
-Output is saved at: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign
+Output is saved at: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_img/build/9205.ltenbena.prod/sign
 
 | Idx | SignId | Parse | Integrity | Sign | Encrypt |              Validate              |
 |     |        |       |           |      |         | Parse | Integrity | Sign | Encrypt |

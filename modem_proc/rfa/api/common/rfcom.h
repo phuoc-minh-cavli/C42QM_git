@@ -29,10 +29,11 @@ Copyright (c) 1999 - 2021,2023 by Qualcomm Technologies, Incorporated.  All Righ
   This section contains comments describing changes made to this file.
   Notice that changes are listed in freverse chronological order.
 
-  $Header: //components/rel/rfa.mpss/3.10/api/common/rfcom.h#5 $
+  $Header: //components/rel/rfa.mpss/3.10/api/common/rfcom.h#6 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 03/01/21   gk      B87/B88 adddition
 01/21/21   gk      B8_B addition
@@ -576,6 +577,7 @@ typedef enum {
   RF_LTE_B86_BAND,
   RF_LTE_B87_BAND,
   RF_LTE_B88_BAND,
+  RF_LTE_B255_BAND,
   RF_LTE_B256_BAND,
   
   RF_BCXI_BAND, 
@@ -897,6 +899,7 @@ typedef enum
   RFCOM_BAND_LTE_B254 = 53,
 
   RFCOM_BAND_LTE_B66 = 54,
+  RFCOM_BAND_LTE_B255 = 55,
   RFCOM_BAND_LTE_B71 = 58,
   RFCOM_BAND_LTE_B71_B = 59,
   RFCOM_BAND_LTE_B72 = 61,
@@ -908,7 +911,6 @@ typedef enum
 
 
   RFCOM_BAND_LTE_B8_B,
-  RFCOM_BAND_LTE_B255,
   RFCOM_BAND_LTE_B125,
   RFCOM_NUM_LTE_BANDS,
   RFCOM_BAND_LTE_INVALID,

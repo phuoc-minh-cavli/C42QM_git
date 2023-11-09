@@ -11,8 +11,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_flow_manager.c#2 $
-  $DateTime: 2023/01/19 23:06:43 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_flow_manager.c#3 $
+  $DateTime: 2023/07/26 05:18:31 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -5662,7 +5662,7 @@ boolean ds_pdn_flow_manager_add_filter_to_tft
              inst_p->flow != NULL)
           {      
             ds_flow_set_capability(inst_p->flow->default_flow_ptr,
-                                   DS_FLOW_CAPABILITY_DATA_DISALLOWED);
+                                   DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP);
           }
         }
       }
@@ -5758,7 +5758,7 @@ boolean ds_pdn_flow_manager_add_filter_to_tft
              inst_p->flow != NULL)
           {      
             ds_flow_set_capability(inst_p->flow->default_flow_ptr,
-                                   DS_FLOW_CAPABILITY_DATA_DISALLOWED);
+                                   DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP);
           }
         }
       }
@@ -5999,7 +5999,7 @@ boolean ds_pdn_flow_manager_add_filter_to_tft
              inst_p->flow != NULL)
           {      
             ds_flow_set_capability(inst_p->flow->default_flow_ptr,
-                                   DS_FLOW_CAPABILITY_DATA_DISALLOWED);
+                                   DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP);
           }
         }
       }
@@ -6582,7 +6582,7 @@ boolean ds_pdn_flow_manager_process_delete_tft
        inst_p->flow != NULL)
     {              
       ds_flow_reset_capability(inst_p->flow->default_flow_ptr,
-                               DS_FLOW_CAPABILITY_DATA_DISALLOWED); 
+                               DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP); 
     }
   }
   

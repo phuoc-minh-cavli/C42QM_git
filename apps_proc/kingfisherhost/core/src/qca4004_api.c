@@ -12,8 +12,12 @@
 #include "qca4004_internal.h"
 #include "qca4004_gpio.h"
 #include "qca4004_uart.h"
+#include "qca4004_utils.h"
+#include "qca4004_fota.h"
 
 extern qca4004_Callback_Table_t *gQca4004CallbackTable;
+extern qurt_timer_t gTimer;
+extern qca4004_Callback_Table_t ota_cb;
 /*-------------------------------------------------------------------------
  * Static & global Variable Declarations
  *-----------------------------------------------------------------------*/
@@ -31,7 +35,7 @@ static qurt_mutex_t	gMutex;
  *-----------------------------------------------------------------------*/
 
 static QCA4004_Status_t qca4004_hal_init(void)
-{
+{		
 	if(qca4004_get_gpio_all() != 0)
 		return QCA4004_ERR_GPIO;
 
@@ -41,21 +45,18 @@ static QCA4004_Status_t qca4004_hal_init(void)
 	gRequestId = 0;
 	gPowerState = QCA4004_POWER_OFF;
 	gScanState = QCA4004_SCAN_IDLE;
-	qurt_mutex_init(&(gMutex));
 
 	return QCA4004_OK;
 }
 
 static QCA4004_Status_t qca4004_hal_deinit(void)
 {
+	if(qca4004_uart_close() != 0)
+		return QCA4004_ERR_UART;
+		
 	if(qca4004_release_gpio_all() != 0)
 		return QCA4004_ERR_GPIO;
 
-	if(qca4004_uart_close() != 0)
-		return QCA4004_ERR_UART;
-	
-	qurt_mutex_destroy(&(gMutex));
-	
 	return QCA4004_OK;
 }
 
@@ -67,21 +68,34 @@ static QCA4004_Status_t qca4004_hal_deinit(void)
 QCA4004_Status_t qca4004_init(qca4004_Callback_Table_t *pCallbackTable)
 {
 	QCA4004_Status_t status = QCA4004_OK;
-
 	if(qca4004_initilized)
 		return status;
-	
-	status = qca4004_hal_init();
-	if(status != QCA4004_OK)
-		return status;
-	
-	if(qca4004_daemon_start() != 0)
-		return QCA4004_ERR_THREAD;
+		
+	qurt_mutex_init(&(gMutex));
+	if(QCA4004_LOCK(gMutex))
+	{
+		status = qca4004_hal_init();
+		if(status != QCA4004_OK)
+			goto err;
 
-	//set_callback_table(pCallbackTable);
-	gQca4004CallbackTable = pCallbackTable;
+		if(qca4004_daemon_start() != 0)
+		{
+			status = QCA4004_ERR_THREAD;
+			goto err;
+		}
 
-	qca4004_initilized = 1;
+		//set_callback_table(pCallbackTable);
+		gQca4004CallbackTable = pCallbackTable;
+
+		qca4004_initilized = 1;
+err:
+		QCA4004_UNLOCK(gMutex);
+	}
+	else
+	{
+		status = QCA4004_ERR_LOCK;
+	}
+
 	return status;
 }
 
@@ -89,16 +103,38 @@ QCA4004_Status_t qca4004_deinit(void)
 {
 	QCA4004_Status_t status = QCA4004_OK;
 
+	if(gQca4004CallbackTable == &ota_cb)
+		return QCA4004_ERR_BUSY;
+		
 	if(qca4004_initilized == 0)
 		return status;
-	
-	status = qca4004_hal_deinit();
-	if(status != QCA4004_OK)
-		return status;
+		
+	if(QCA4004_LOCK(gMutex))
+	{
+		qca4004_daemon_destroy();
+		
+		status = qca4004_hal_deinit();
+		if(status != QCA4004_OK)
+			goto err;
 
-	gQca4004CallbackTable = NULL;
+		gQca4004CallbackTable = NULL;
 	
-	qca4004_initilized = 0;
+		qca4004_initilized = 0;
+		gRequestId = 0;
+		gPowerState = QCA4004_POWER_OFF;
+		gScanState = QCA4004_SCAN_IDLE;
+		gQca4004CallbackTable = NULL;
+		if(gTimer)
+			stop_qca4004_timer(&(gTimer));
+err:
+		QCA4004_UNLOCK(gMutex);
+	}
+	else
+	{
+		status = QCA4004_ERR_LOCK;
+	}
+	
+	qurt_mutex_destroy(&(gMutex));
 	return status;
 }
 
@@ -108,6 +144,9 @@ QCA4004_Status_t qca4004_power_state_change(
 	QCA4004_Status_t status = QCA4004_OK;
 	uint8_t value = 0;
 
+	if(state == QCA4004_POWER_OFF && gQca4004CallbackTable == &ota_cb)
+		return QCA4004_ERR_BUSY;
+		
 	QCA4004_DEBUG_LOG("qca4004_power_state_change , ");
 	if(qca4004_initilized != 1)
 	{
@@ -168,7 +207,10 @@ QCA4004_Status_t qca4004_get_AP_list(uint32_t requestId, uint32_t timeout)
 	uint32_t cmd_len = 0;
 	char *cmd_ptr = &cmd_str[0];
 
-	QCA4004_DEBUG_LOG("AP List, ");
+	if(gQca4004CallbackTable == &ota_cb)
+		return QCA4004_ERR_BUSY;
+		
+	QCA4004_DEBUG_LOG("AP List, ");		
 	if(qca4004_initilized != 1)
 	{
 		return QCA4004_ERR_NOT_INIT;
@@ -231,4 +273,69 @@ QCA4004_Status_t qca4004_get_AP_list(uint32_t requestId, uint32_t timeout)
 
 }
 
+extern uint32_t fw_version;
+extern uint32_t power_on_cnt;
+QCA4004_Status_t qca4004_get_fw_version(uint32_t *ver)
+{
+	if(ver == NULL)
+		return QCA4004_ERR_INVALID_PARAM;
+		
+	if(power_on_cnt == 0)
+		return QCA4004_ERR_GENERAL;
+	
+	*ver = fw_version;
+	return QCA4004_OK;
+}
 
+QCA4004_Status_t qca4004_fota_start(char *filePath, int32_t flag, uint32_t *version)
+{
+	QCA4004_Status_t ret = QCA4004_OK;
+	uint8_t init = qca4004_initilized;
+	QCA4004_Power_State_t power_state = gPowerState;
+	qca4004_Callback_Table_t *cb = gQca4004CallbackTable;
+	int i = 0;
+	
+	if(gPowerState == QCA4004_POWER_SUSPEND || gScanState == QCA4004_SCAN_PENDING)
+		return QCA4004_ERR_BUSY;
+		
+	if(init == 0) {
+		ret = qca4004_init(&ota_cb);
+		if(ret != QCA4004_OK)
+			return ret;
+	}
+	else
+		gQca4004CallbackTable = &ota_cb;
+		
+	
+	if(power_state == QCA4004_POWER_OFF) {
+		qca4004_power_state_change(0, QCA4004_POWER_ON);
+		for(i = 0;i < 500;i++) 
+		{
+			qurt_thread_sleep_ext(QURT_TIMER_NEXT_EXPIRY);
+			if(gPowerState == QCA4004_POWER_ON) 
+				break;
+		}
+		if(i >= 500) {
+			ret = QCA4004_ERR_GENERAL;
+			goto error;
+		}
+	}
+		
+	if(fw_version == 0) {
+		ret = QCA4004_ERR_GENERAL;
+		goto error;
+	}
+	
+	ret = qca4004_fota_start_internal(filePath, flag, version);
+	
+	
+error:
+	gQca4004CallbackTable = cb;
+	if(power_state == QCA4004_POWER_OFF)
+		qca4004_power_state_change(0, QCA4004_POWER_OFF);
+	qurt_thread_sleep_ext(2*QURT_TIMER_NEXT_EXPIRY);
+	
+	if(init == 0)
+		qca4004_deinit();
+	return ret;
+}

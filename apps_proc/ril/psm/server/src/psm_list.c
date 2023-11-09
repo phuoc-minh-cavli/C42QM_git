@@ -700,12 +700,11 @@ int psm_list_get_psm_time(uint32 *time_in_psm_mode, int *nw_access)
             rc = -1;
             PSM_LOG_INFO("psm_list_get_psm_time: Adjusted psm time is negative");
         }
-
-        if(!optimal_interval)
+        if(optimal_interval != NULL)
         {
             free(optimal_interval);
         }
-        if(!interval_group)
+        if(interval_group != NULL)
         {
             free(interval_group->intervals);
             free(interval_group);

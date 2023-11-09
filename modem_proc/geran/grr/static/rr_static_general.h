@@ -414,6 +414,7 @@ typedef struct
   rr_plmn_white_list_t             negative_c1_white_list;
   uint8                            pscan_results_reuse_time_secs;
   boolean                          plmn_search_freq_pruning_enabled;
+  boolean                          enable_si3_only;
 #ifdef FEATURE_LTE
   rr_efs_x2g_fast_si_acq_info_t    x2g_fast_si_acq_info;
 #endif

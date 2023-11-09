@@ -18,7 +18,7 @@ Qualcomm Confidential and Proprietary
                             EDIT HISTORY FOR FILE
 
   $Header:  
-  $DateTime: 2023/01/11 22:11:46 $ 
+  $DateTime: 2023/07/26 03:31:24 $ 
 
 when        who    what, where, why 
 --------    ---    ----------------------------------------------------------
@@ -809,7 +809,7 @@ void rmnet_sm_process_cmd
   SIDE EFFECTS
     None
 ============================================================*/
-static boolean rmnet_sm_is_valid
+boolean rmnet_sm_is_valid
 (
   rmnet_smi_info_type     *info
 )

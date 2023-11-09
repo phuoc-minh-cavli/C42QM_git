@@ -32,19 +32,19 @@
 
 */
 /*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
-  Copyright (c) 2012-2019,2022 Qualcomm Technologies, Inc.
+  Copyright (c) 2012-2019,2022-2023 Qualcomm Technologies, Inc.
   All rights reserved.
   Confidential and Proprietary - Qualcomm Technologies, Inc.
 
 
-  $Header: //components/rel/qmimsgs.tx/1.0/time/api/time_service_v01.h#2 $
+  $Header: //components/rel/qmimsgs.tx/1.0/time/api/time_service_v01.h#4 $
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 /*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
  *THIS IS AN AUTO GENERATED FILE. DO NOT ALTER IN ANY WAY
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 
 /* This file was generated with Tool version 6.14.9 
-   It was generated on: Tue Sep  6 2022 (Spin 0)
+   It was generated on: Mon Oct 30 2023 (Spin 0)
    From IDL File: time_service_v01.idl */
 
 /** @defgroup time_qmi_consts Constant values defined in the IDL */
@@ -70,7 +70,7 @@ extern "C" {
 /** Major Version Number of the IDL used to generate this file */
 #define TIME_V01_IDL_MAJOR_VERS 0x01
 /** Revision Number of the IDL used to generate this file */
-#define TIME_V01_IDL_MINOR_VERS 0x09
+#define TIME_V01_IDL_MINOR_VERS 0x0B
 /** Major Version Number of the qmi_idl_compiler used to generate this file */
 #define TIME_V01_IDL_TOOL_VERS 0x06
 /** Maximum Defined Message ID */
@@ -409,6 +409,12 @@ typedef struct {
   uint8_t at_timetick_valid;  /**< Must be set to true if at_timetick is being passed */
   uint64_t at_timetick;
   /**<   Timetick containing at what qtimer timetick generic_offset/fulltime was calculated*/
+
+  /* Optional */
+  /*  Delta Value */
+  uint8_t delta_ms_valid;  /**< Must be set to true if delta_ms is being passed */
+  int64_t delta_ms;
+  /**<   delta_ms = new_time- old_time, calculated in milliseconds when time update happens*/
 }time_get_genoff_offset_resp_msg_v01;  /* Message */
 /**
     @}
@@ -672,6 +678,12 @@ typedef struct {
   uint8_t at_timetick_valid;  /**< Must be set to true if at_timetick is being passed */
   uint64_t at_timetick;
   /**<   Timetick containing at what qtimer timetick generic_offset/fulltime was calculated*/
+
+  /* Optional */
+  /*  Delta Value */
+  uint8_t delta_ms_valid;  /**< Must be set to true if delta_ms is being passed */
+  int64_t delta_ms;
+  /**<   delta_ms = new_time- old_time, calculated in milliseconds when time update happens*/
 }time_update_indication_message_v01;  /* Message */
 /**
     @}

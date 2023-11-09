@@ -43,8 +43,8 @@ NOTICE_TYPE ver_date[] = __DATE__;
 NOTICE_TYPE ver_time[] = __TIME__;
 NOTICE_TYPE ver_dir[]  = BUILD_TARGET BUILD_VER;
 
-NOTICE_TYPE rel_date[] = "Jul 27 2023";
-NOTICE_TYPE rel_time[] = "14:00:00";
+NOTICE_TYPE rel_date[] = "Nov 01 2023";
+NOTICE_TYPE rel_time[] = "21:00:00";
 
 NOTICE_TYPE copyright[] =
  "Copyright (c) 1992,1993,1994,1995,1996,1997,1998,1999,2000,"
@@ -65,7 +65,7 @@ NOTICE_TYPE authors[] = "Authors: QCT";
 ** CANNOT BE USED TO POPULATE THIS SYMBOL
 */
 
-NOTICE_TYPE mob_sw_rev[] = "MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1";
+NOTICE_TYPE mob_sw_rev[] = "MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1";
 
 #if !defined(FEATURE_MODEM_PROVIDES_MOBILE_CAI_CONSTANTS)
 

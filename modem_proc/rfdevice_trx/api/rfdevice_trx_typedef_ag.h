@@ -5,7 +5,7 @@
 
   Generated at:    0
   Generated using: AutoGenerate.pl
-  Generated from:  v50.92 of the hubble spreadsheet
+  Generated from:  v60 of the hubble spreadsheet
 */
 
 /*!
@@ -39,8 +39,8 @@
   nor its contents revealed in any manner to others without the express
   written permission of QUALCOMM Technologies Incorporated.
 
-  $Header: //components/rel/rfdevice_trx.mpss/1.20/api/rfdevice_trx_typedef_ag.h#8 $
-  $DateTime: 2023/02/13 02:58:55 $
+  $Header: //components/rel/rfdevice_trx.mpss/1.20/api/rfdevice_trx_typedef_ag.h#9 $
+  $DateTime: 2023/10/17 23:12:43 $
   $Author: mplcsds1 $
 =============================================================================*/
 

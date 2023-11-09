@@ -1,10 +1,10 @@
 <config>
   <image_tree>
     <name>BOOT.XF.0.2</name>
-    <build_id>BOOT.XF.0.2-00111-MDM9x05LZB-2</build_id>
+    <build_id>BOOT.XF.0.2-00119-MDM9x05LZB-3</build_id>
     <branch_point_revision/>
-    <revision>00111</revision>
-    <spin>2</spin>
+    <revision>00119</revision>
+    <spin>3</spin>
     <client>MDM9x05LZB</client>
   </image_tree>
 </config>

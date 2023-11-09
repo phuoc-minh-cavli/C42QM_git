@@ -27,7 +27,7 @@
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_utility.c#1 $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_utility.c#2 $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
@@ -3569,9 +3569,7 @@ void emm_reset_ctrl_data
   }
 
   /* Reset nonce ue */
-  memset((void *)emm_ctrl_data_ptr->nonce_ue, 
-         0x0, 
-         sizeof(emm_ctrl_data_ptr->nonce_ue));
+  mm_generate_random_key(&emm_ctrl_data_ptr->nonce_ue[0], sizeof(emm_ctrl_data_ptr->nonce_ue));
 
   emm_ctrl_data_ptr->mt_detach_info.type = INVALID_MT_DETACH_TYPE;
   emm_ctrl_data_ptr->mt_detach_info.emm_cause = LTE_NAS_NO_FAILURE;

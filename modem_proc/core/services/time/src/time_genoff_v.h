@@ -49,7 +49,7 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
   6) time_genoff_post_init
 =============================================================================*/
 /*=============================================================================
-  Copyright (c) 2009-2017,2022 Qualcomm Technologies, Inc.
+  Copyright (c) 2009-2017,2022-2023 Qualcomm Technologies, Inc.
   All Rights Reserved.
   Confidential and Proprietary - Qualcomm Technologies, Inc.
 =============================================================================*/
@@ -62,7 +62,7 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/core.mpss/3.10/services/time/src/time_genoff_v.h#2 $
+$Header: //components/rel/core.mpss/3.10/services/time/src/time_genoff_v.h#3 $
 
 when       who     what, where, why
 --------   ---     ------------------------------------------------------------
@@ -140,6 +140,9 @@ when       who     what, where, why
 /* Constant for encoding / decoding the bases index */
 #define TIME_GENOFF_ENCODE_CONST 0x0000C3C3
 
+/* Maximum type 2_ex callBack functions that can be registered */
+#define TIME_GENOFF_MAX_CB_CNT                8
+
 /* Time genoff structure for maintaining efs file items */
 typedef struct 
 {
@@ -164,6 +167,17 @@ typedef struct time_genoff_struct_state
   uint8 time_genoff_state_set;
   uint8 time_genoff_state_deinit;
 } time_genoff_state_type ;
+
+
+typedef struct qtime_delta_type
+{
+  /* Qtimer timetick when we receive time update */
+  timetick_type                          qtimeVal;                        
+
+  /* delta in milliseconds, where delta= new_time - old_time */
+  int64                                  delta_ms;
+
+} qtime_delta;
 
 
 /** Time generic offset structure 
@@ -206,12 +220,18 @@ typedef struct time_genoff_ext_struct
 
   /* Attach Callback of type2 for set offset */
   time_genoff_t2_cb_type          cb_func[MAX_CB_FUNC];
+  
+  /* Attach Callback of type2_ex for set offset */
+  time_genoff_t2_cb_type_ex       cb_func_t2_ex[TIME_GENOFF_MAX_CB_CNT];
 
   /* Bases that have registered for callback */
   struct time_genoff_ext_struct*  registered_genoff[MAX_CB_FUNC];
 
   /* Currently, Number of Call Back Attached */
   uint8                           number_of_cb_func;
+  
+  /* Currently, Number of Type2_ex Call Back functions Attached */
+  uint8                           number_of_t2_ex_cb_func;
 
   /* Specification for persistent storage */
   time_genoff_per_storage_type    per_storage_spec;

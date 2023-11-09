@@ -9,14 +9,14 @@ GENERAL DESCRIPTION
   Qualcomm Technologies Proprietary and Confidential.
 
 
-  $Header: //components/rel/qmimsgs.tx/1.0/psm/src/power_save_mode_service_v01.c#12 $
+  $Header: //components/rel/qmimsgs.tx/1.0/psm/src/power_save_mode_service_v01.c#13 $
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 /*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
  *THIS IS AN AUTO GENERATED FILE. DO NOT ALTER IN ANY WAY
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 
 /* This file was generated with Tool version 6.14.9 
-   It was generated on: Fri Jun 23 2023 (Spin 0)
+   It was generated on: Thu Aug 24 2023 (Spin 0)
    From IDL File: power_save_mode_service_v01.idl */
 
 #include "stdint.h"
@@ -495,10 +495,30 @@ static const uint8_t psm_set_sensor_configuration_ext_req_msg_data_v01[] = {
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
   QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, smd_sld_win_s_sz),
 
-  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold_valid)),
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold_valid)),
   0x2A,
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
-  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold)
+  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, shock_detection_threshold),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_scale_factor) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_scale_factor_valid)),
+  0x2B,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_scale_factor),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_offset) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_offset_valid)),
+  0x2C,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_2_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_offset),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_brightness_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_brightness_threshold_valid)),
+  0x2D,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_8_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_brightness_threshold),
+
+  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_hw_poll_time) - QMI_IDL_OFFSET16RELATIVE(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_hw_poll_time_valid)),
+  0x2E,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_1_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_set_sensor_configuration_ext_req_msg_v01, theft_detect_hw_poll_time)
 };
 
 static const uint8_t psm_set_sensor_configuration_ext_resp_msg_data_v01[] = {
@@ -665,10 +685,30 @@ static const uint8_t psm_get_sensor_configuration_resp_msg_data_v01[] = {
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
   QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, smd_sld_win_s_sz),
 
-  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold_valid)),
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold_valid)),
   0x2A,
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
-  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold)
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, shock_detection_threshold),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_scale_factor) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_scale_factor_valid)),
+  0x2B,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, theft_detect_scale_factor),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_offset) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_offset_valid)),
+  0x2C,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_2_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, theft_detect_offset),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_brightness_threshold) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_brightness_threshold_valid)),
+  0x2D,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_8_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, theft_detect_brightness_threshold),
+
+  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_hw_poll_time) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_configuration_resp_msg_v01, theft_detect_hw_poll_time_valid)),
+  0x2E,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_1_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_configuration_resp_msg_v01, theft_detect_hw_poll_time)
 };
 
 static const uint8_t psm_get_sensor_data_req_msg_data_v01[] = {
@@ -754,10 +794,25 @@ static const uint8_t psm_get_sensor_data_resp_msg_data_v01[] = {
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_8_BYTE,
   QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, free_fall_data_timestamp),
 
-  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp_valid)),
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp_valid)),
   0x1C,
    QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_8_BYTE,
-  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp)
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, high_shock_data_timestamp),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_type) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_type_valid)),
+  0x1D,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_1_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, theft_detect_type),
+
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_timestamp) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_timestamp_valid)),
+  0x1E,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_8_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, theft_detect_timestamp),
+
+  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_lux_value) - QMI_IDL_OFFSET16RELATIVE(psm_get_sensor_data_resp_msg_v01, theft_detect_lux_value_valid)),
+  0x1F,
+   QMI_IDL_FLAGS_OFFSET_IS_16 | QMI_IDL_GENERIC_4_BYTE,
+  QMI_IDL_OFFSET16ARRAY(psm_get_sensor_data_resp_msg_v01, theft_detect_lux_value)
 };
 
 /*
@@ -1059,7 +1114,7 @@ static const qmi_idl_service_message_table_entry psm_service_command_messages_v0
   {QMI_PSM_GET_SENSOR_DATA_REQ_V01, QMI_IDL_TYPE16(0, 18), 9},
   {QMI_PSM_RESET_SENSOR_CONFIG_DATA_REQ_V01, QMI_IDL_TYPE16(0, 20), 0},
   {QMI_PSM_GET_LAST_SENSOR_POLICY_MET_INFO_REQ_V01, QMI_IDL_TYPE16(0, 22), 0},
-  {QMI_PSM_SET_SENSOR_CONFIGURATION_EXT_REQ_V01, QMI_IDL_TYPE16(0, 14), 2018},
+  {QMI_PSM_SET_SENSOR_CONFIGURATION_EXT_REQ_V01, QMI_IDL_TYPE16(0, 14), 2045},
   {QMI_PSM_GET_SENSOR_CONFIGURATION_REQ_V01, QMI_IDL_TYPE16(0, 16), 7},
   {QMI_PSM_GET_FMD_SNS_SAMPLE_REQ_V01, QMI_IDL_TYPE16(0, 25), 0},
   {QMI_PSM_PHY_SNS_TEST_REQ_V01, QMI_IDL_TYPE16(0, 27), 14},
@@ -1076,11 +1131,11 @@ static const qmi_idl_service_message_table_entry psm_service_response_messages_v
   {QMI_PSM_SET_CFG_PARAMS_RESP_V01, QMI_IDL_TYPE16(0, 10), 7},
   {QMI_PSM_GET_CAPABILITY_RESP_V01, QMI_IDL_TYPE16(0, 8), 14},
   {QMI_PSM_SET_SENSOR_CONFIGURATION_RESP_V01, QMI_IDL_TYPE16(0, 13), 7},
-  {QMI_PSM_GET_SENSOR_DATA_RESP_V01, QMI_IDL_TYPE16(0, 19), 12612},
+  {QMI_PSM_GET_SENSOR_DATA_RESP_V01, QMI_IDL_TYPE16(0, 19), 12634},
   {QMI_PSM_RESET_SENSOR_CONFIG_DATA_RESP_V01, QMI_IDL_TYPE16(0, 21), 7},
   {QMI_PSM_GET_LAST_SENSOR_POLICY_MET_INFO_RESP_V01, QMI_IDL_TYPE16(0, 23), 26},
   {QMI_PSM_SET_SENSOR_CONFIGURATION_EXT_RESP_V01, QMI_IDL_TYPE16(0, 15), 101},
-  {QMI_PSM_GET_SENSOR_CONFIGURATION_RESP_V01, QMI_IDL_TYPE16(0, 17), 440},
+  {QMI_PSM_GET_SENSOR_CONFIGURATION_RESP_V01, QMI_IDL_TYPE16(0, 17), 467},
   {QMI_PSM_GET_FMD_SNS_SAMPLE_RESP_V01, QMI_IDL_TYPE16(0, 26), 7},
   {QMI_PSM_PHY_SNS_TEST_RESP_V01, QMI_IDL_TYPE16(0, 28), 7},
   {QMI_PSM_PHY_SNS_TEST_GET_DATA_RESP_V01, QMI_IDL_TYPE16(0, 31), 7},
@@ -1102,13 +1157,13 @@ struct qmi_idl_service_object psm_qmi_idl_service_object_v01 = {
   0x06,
   0x01,
   0x53,
-  12612,
+  12634,
   { sizeof(psm_service_command_messages_v01)/sizeof(qmi_idl_service_message_table_entry),
     sizeof(psm_service_response_messages_v01)/sizeof(qmi_idl_service_message_table_entry),
     sizeof(psm_service_indication_messages_v01)/sizeof(qmi_idl_service_message_table_entry) },
   { psm_service_command_messages_v01, psm_service_response_messages_v01, psm_service_indication_messages_v01},
   &psm_qmi_idl_type_table_object_v01,
-  0x11,
+  0x12,
   NULL
 };
 

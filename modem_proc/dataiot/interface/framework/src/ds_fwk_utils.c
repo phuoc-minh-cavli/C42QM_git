@@ -17,8 +17,8 @@
 
   Please notice that the changes are listed in reverse chronological order.
 
-  $Header: //components/rel/dataiot.mpss/2.0/interface/framework/src/ds_fwk_utils.c#19 $
-  $DateTime: 2023/01/23 07:54:55 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/framework/src/ds_fwk_utils.c#20 $
+  $DateTime: 2023/07/28 00:11:41 $$Author: pwbldsvc $
 
   when            who what, where, why
   ---------- --- ------------------------------------------------------------
@@ -463,16 +463,26 @@ boolean ds_fwk_get_data_flow_ex
                                      DS_IPFLTR_SUBSET_ID_DEFAULT,
                                      pkt_info);
    *flow_ptr = ds_flow_ptr;
+   
+    DS_MSG1(MSG_LEGACY_HIGH,"Pkt matched with flow 0x%x",*flow_ptr);
     if( ds_flow_ptr != NULL && 
         ds_fwk_is_flow_enabled_ex(ds_flow_ptr,is_mox_data_pkt) == TRUE )
     {
-      DS_MSG1(MSG_LEGACY_HIGH,"Pkt matched with dedicated flow 0x%x",ds_flow_ptr);
+   
       return TRUE;
     }
   }
   if(ds_fwk_get_default_bearer_flow_ex(ds_fwk_inst_ptr,ip_type,
                                        flow_ptr,is_mox_data_pkt))
   {  
+    if(*flow_ptr != NULL)
+    {
+      if(ds_flow_get_capability(*flow_ptr, DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP))
+      {
+        //Drop packet since the capability is set 
+         return FALSE;
+      }
+    }
     DS_MSG1(MSG_LEGACY_HIGH,"Pkt matched with dedicated flow 0x%x",*flow_ptr);
     return TRUE;
   }

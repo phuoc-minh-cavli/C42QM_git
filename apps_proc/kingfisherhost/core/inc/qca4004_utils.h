@@ -69,5 +69,12 @@ uint32_t qca4004_atoux(char s[]);
 */
 int qca4004_strncmpi(char *str1, char *str2, int length);
 
+/**
+   @brief This function for the general byte order swapping
+
+   @param[in]   x is the value of type uint32_t which to be swap.
+   @return      the value of type uint32_t which to be swap to.
+*/
+uint32_t qca4004_swap32(uint32_t x);
 #endif
 

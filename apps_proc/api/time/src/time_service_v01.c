@@ -5,19 +5,19 @@
 GENERAL DESCRIPTION
   This is the file which defines the time service Data structures.
 
-  Copyright (c) 2012-2019,2022 Qualcomm Technologies, Inc.
+  Copyright (c) 2012-2019,2022-2023 Qualcomm Technologies, Inc.
   All rights reserved.
   Confidential and Proprietary - Qualcomm Technologies, Inc.
 
 
-  $Header: //components/rel/qmimsgs.tx/1.0/time/src/time_service_v01.c#2 $
+  $Header: //components/rel/qmimsgs.tx/1.0/time/src/time_service_v01.c#4 $
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 /*====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*
  *THIS IS AN AUTO GENERATED FILE. DO NOT ALTER IN ANY WAY
  *====*====*====*====*====*====*====*====*====*====*====*====*====*====*====*/
 
 /* This file was generated with Tool version 6.14.9 
-   It was generated on: Tue Sep  6 2022 (Spin 0)
+   It was generated on: Mon Oct 30 2023 (Spin 0)
    From IDL File: time_service_v01.idl */
 
 #include "stdint.h"
@@ -70,10 +70,15 @@ static const uint8_t time_get_genoff_offset_resp_msg_data_v01[] = {
    QMI_IDL_GENERIC_8_BYTE,
   QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, fulltime),
 
-  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick) - QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick_valid)),
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick) - QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick_valid)),
   0x11,
    QMI_IDL_GENERIC_8_BYTE,
-  QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick)
+  QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, at_timetick),
+
+  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, delta_ms) - QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, delta_ms_valid)),
+  0x12,
+   QMI_IDL_GENERIC_8_BYTE,
+  QMI_IDL_OFFSET8(time_get_genoff_offset_resp_msg_v01, delta_ms)
 };
 
 static const uint8_t time_set_leap_sec_req_msg_data_v01[] = {
@@ -146,10 +151,15 @@ static const uint8_t time_update_indication_message_data_v01[] = {
    QMI_IDL_GENERIC_8_BYTE,
   QMI_IDL_OFFSET8(time_update_indication_message_v01, fulltime),
 
-  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick) - QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick_valid)),
+  QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick) - QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick_valid)),
   0x11,
    QMI_IDL_GENERIC_8_BYTE,
-  QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick)
+  QMI_IDL_OFFSET8(time_update_indication_message_v01, at_timetick),
+
+  QMI_IDL_TLV_FLAGS_LAST_TLV | QMI_IDL_TLV_FLAGS_OPTIONAL | (QMI_IDL_OFFSET8(time_update_indication_message_v01, delta_ms) - QMI_IDL_OFFSET8(time_update_indication_message_v01, delta_ms_valid)),
+  0x12,
+   QMI_IDL_GENERIC_8_BYTE,
+  QMI_IDL_OFFSET8(time_update_indication_message_v01, delta_ms)
 };
 
 static const uint8_t qmi_time_qtimer_delta_from_hlos_apps_req_data_v01[] = {
@@ -236,7 +246,7 @@ static const qmi_idl_service_message_table_entry time_service_response_messages_
   {QMI_TIME_GET_SUPPORTED_MSGS_RESP_V01, QMI_IDL_TYPE16(1, 1), 8204},
   {QMI_TIME_GET_SUPPORTED_FIELDS_RESP_V01, QMI_IDL_TYPE16(1, 3), 115},
   {QMI_TIME_GENOFF_SET_RESP_V01, QMI_IDL_TYPE16(0, 1), 7},
-  {QMI_TIME_GENOFF_GET_RESP_V01, QMI_IDL_TYPE16(0, 3), 47},
+  {QMI_TIME_GENOFF_GET_RESP_V01, QMI_IDL_TYPE16(0, 3), 58},
   {QMI_TIME_TURN_OFF_IND_RESP_V01, QMI_IDL_TYPE16(0, 9), 7},
   {QMI_TIME_TURN_ON_IND_RESP_V01, QMI_IDL_TYPE16(0, 11), 7},
   {QMI_TIME_LEAP_SEC_SET_RESP_V01, QMI_IDL_TYPE16(0, 5), 7},
@@ -245,27 +255,27 @@ static const qmi_idl_service_message_table_entry time_service_response_messages_
 };
 
 static const qmi_idl_service_message_table_entry time_service_indication_messages_v01[] = {
-  {QMI_TIME_ATS_RTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_TOD_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_USER_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_SECURE_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_DRM_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_USER_UTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_USER_TZ_DL_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_GPS_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_1X_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_HDR_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_WCDMA_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_BREW_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_MFLO_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_3GPP_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_UTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_LTE_HR_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_LTE_HR_GPS_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_WLAN_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
-  {QMI_TIME_ATS_5G_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40},
+  {QMI_TIME_ATS_RTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_TOD_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_USER_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_SECURE_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_DRM_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_USER_UTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_USER_TZ_DL_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_GPS_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_1X_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_HDR_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_WCDMA_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_BREW_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_MFLO_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_3GPP_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_UTC_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_LTE_HR_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_LTE_HR_GPS_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_WLAN_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
+  {QMI_TIME_ATS_5G_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51},
   {QMI_TIME_REMOTE_QTIMER_TIMESTAMP_DELTA_IND_V01, QMI_IDL_TYPE16(0, 15), 11},
-  {QMI_TIME_ATS_PSM_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 40}
+  {QMI_TIME_ATS_PSM_UPDATE_IND_V01, QMI_IDL_TYPE16(0, 12), 51}
 };
 
 /*Service Object*/
@@ -279,7 +289,7 @@ struct qmi_idl_service_object time_qmi_idl_service_object_v01 = {
     sizeof(time_service_indication_messages_v01)/sizeof(qmi_idl_service_message_table_entry) },
   { time_service_command_messages_v01, time_service_response_messages_v01, time_service_indication_messages_v01},
   &time_qmi_idl_type_table_object_v01,
-  0x09,
+  0x0B,
   NULL
 };
 

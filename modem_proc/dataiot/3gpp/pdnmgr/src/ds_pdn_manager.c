@@ -11,8 +11,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_manager.c#44 $
-  $DateTime: 2023/07/13 23:13:32 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_manager.c#46 $
+  $DateTime: 2023/10/26 09:42:03 $$Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -76,6 +76,10 @@ when        who    what, where, why
 #include "ds_pdn_clat_hdlr.h"
 #include "ds_crit_sect.h"
 #include "lte_mac.h"
+
+#ifdef FEATURE_FAST_DORMANCY
+#include "ds_fast_dormancy.h"
+#endif /* FEATURE_FAST_DORMANCY */
 
 #ifdef FEATURE_MODE_TLB
 #include "ds_eps_tlb.h"
@@ -180,6 +184,11 @@ void ds_pdn_mgr_init
   ds_pdn_ccmi_register_with_cfcm_events();
   ds_3gpp_rab_reestab_sm_hdlr_init();
   ds_pdn_mgr_register_mem_event_callbacks();
+
+#ifdef FEATURE_FAST_DORMANCY
+  ds_fast_dormancy_init();
+#endif /* FEATURE_FAST_DORMANCY */
+
 #ifdef FEATURE_NBIOT_NTN
    ds_pdn_read_ntn_info_from_efs();
  #endif /* FEATURE_NBIOT_NTN */
@@ -7406,7 +7415,19 @@ void ds_pdn_mgr_instance_up_ind
   ds_fwk_notify_events( pdn_mgr_p->fw_index,
                      ds_pdn_mgr_convert_pdn_inst_to_fw_ip_type(inst_p->type),
                      PDN_UP_EV,
-                     event_info);                                              
+                     event_info);
+
+#ifdef FEATURE_FAST_DORMANCY
+  /* --------------------------------------------------------
+    On Instance Up Ind, if L2 RAI feature not supported
+    cache the UM Iface stats and start/restart the Inactivity timer 
+  ---------------------------------------------------------*/
+  if (FALSE == ds_fast_dormancy_get_l2_rai_capability())
+  {
+	ds_fast_dormancy_reset_interval_count_and_update_instance_stats();
+	ds_fast_dormancy_start_timer();
+  }
+#endif /* FEATURE_FAST_DORMANCY */				 
   
   return;
 }
@@ -8105,6 +8126,17 @@ void ds_pdn_mgr_inst_down_hdlr
       break;
   }
 
+#ifdef FEATURE_FAST_DORMANCY
+  /* If none of the PDNs are up, stop the timer */
+  if (!ds_pdn_mgr_is_any_pdn_up())
+  {
+    if (ds_fast_dormancy_is_timer_running())
+    {
+      ds_fast_dormancy_stop_timer();
+    }
+  }
+#endif /* FEATURE_FAST_DORMANCY */
+        
   ds_pdn_mgr_bring_down_bearer(pdn_mgr_p, inst_type);
   return;
 }/* ds_pdn_mgr_inst_down_hdlr */
@@ -10195,6 +10227,16 @@ void ds_pdn_mgr_handle_v6_inst_down
   {
     ds_pdn_mgr_cleanup_pdn(pdn_mgr_p, DS_PDN_INSTANCE_MAX);
   }
+  
+  /*--------------------------------------------------------------------
+	Added PSM ready indication to handle the below scenario
+	1. When PDN bring up on going while PSM ready req triggered by CM 
+	   And NW accepted with CC52. PSM ready inidcaiton has to send for V4 
+	2. When RS RA failure happens
+        3. Where call failure post PSM ready req.
+  -------------------------------------------------------------------*/
+	
+  ds_pdn_psm_ready_ind();
 }
 
 /*===========================================================================

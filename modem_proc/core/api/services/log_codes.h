@@ -48,7 +48,7 @@ Qualcomm Confidential and Proprietary
 
                              Edit History
 
-$Header: //components/rel/core.mpss/3.10/api/services/log_codes.h#6 $
+$Header: //components/rel/core.mpss/3.10/api/services/log_codes.h#7 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -3320,7 +3320,7 @@ when       who     what, where, why
 #define LOG_EAP_REQUEST_RESPONSE_DATA_PROTOCOL_C              ((0xCF0) + LOG_1X_BASE_C)
 #define LOG_IPA_UL_SDAP_HDR_INFO_C                            ((0xCF1) + LOG_1X_BASE_C)
 /* The last defined DMSS log code */
-#define LOG_1X_LAST_C                                        ((0xCF1) + LOG_1X_BASE_C)
+#define LOG_1X_LAST_C                                        ((0xFFF) + LOG_1X_BASE_C)
 
 /* This is only here for old (pre equipment ID update) logging code */
 #define LOG_LAST_C                                          ( LOG_1X_LAST_C & 0xFFF )

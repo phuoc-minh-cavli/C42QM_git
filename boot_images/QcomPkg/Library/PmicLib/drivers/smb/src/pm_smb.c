@@ -3,7 +3,7 @@
 *  \brief  pm_smb.c
 *  \details Implementation file for SMB resourece type.
 *
-*  &copy; Copyright 2018, 2019 QUALCOMM Technologies Incorporated, All Rights Reserved
+*  Copyright (c) 2018, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved
 */
 
 /*===========================================================================
@@ -65,7 +65,7 @@ static boolean  pm_sbl_i2c_smb_init_flag = FALSE;
 
 //#define SMB_STATUS_REG8_REG 0x3E
 #define USBIN_STATUS_MASK 0x04
-
+#define SMB_CHARGING_SYSOK_OPTIONS      0X07
 
 #define SMB_IRQ_B_REG        0x39
 #define BATT_MISS_STATUS       BIT(5)
@@ -472,3 +472,16 @@ pm_err_flag_type i2c_smb_read(uint8 slaveAddress, uint8 offset, uint8 *data)
   return err_flag;
 }
 
+pm_err_flag_type pm_smb_sysok_option(uint8 option)
+{
+  pm_err_flag_type  err_flag	= PM_ERR_FLAG__SUCCESS;
+
+  if(option > 3)
+    return PM_ERR_FLAG__INVALID;
+
+  err_flag = i2c_smb_write_mask(SMB_I2C_SLAVE_ADDR,SMB_CHARGING_SYSOK_OPTIONS,0x03,option);
+  if(PM_ERR_FLAG__SUCCESS != err_flag)
+    return PM_ERR_FLAG__I2C_OPT_ERR;
+
+  return err_flag;
+}

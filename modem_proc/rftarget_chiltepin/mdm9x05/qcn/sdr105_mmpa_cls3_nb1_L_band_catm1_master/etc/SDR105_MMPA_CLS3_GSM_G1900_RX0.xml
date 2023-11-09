@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<NvSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!---->
+  <NvItemData id="24999" name="RFNV_GSM_C0_GSM1900_LNA_SWPT_I" subscriptionid="0" variableSize="false" index="0" compressed="false">
+    <Member type="GSM_RX_LNA_SWPT_TYPE" name="gsm_rx_lna_swpt" sizeOf="1">
+      <Struct>
+        <Member type="int8" name="max_gainrange_1" sizeOf="1">-16</Member>
+        <Member type="int8" name="min_gainrange_2" sizeOf="1">-26</Member>
+        <Member type="int8" name="max_gainrange_2" sizeOf="1">-10</Member>
+        <Member type="int8" name="min_gainrange_3" sizeOf="1">-24</Member>
+        <Member type="int8" name="max_gainrange_3" sizeOf="1">-11</Member>
+        <Member type="int8" name="min_gainrange_4" sizeOf="1">-23</Member>
+        <Member type="int8" name="max_gainrange_4" sizeOf="1">-10</Member>
+        <Member type="int8" name="min_gainrange_5" sizeOf="1">-22</Member>
+      </Struct>
+    </Member>
+  </NvItemData>
+  <NvItemData id="27985" name="RFNV_GSM_C0_GSM1900_HL_RX_LNA_SWPT_I" subscriptionid="0" variableSize="false" index="0" compressed="false">
+    <Member type="GSM_RX_LNA_SWPT_TYPE" name="gsm_rx_lna_swpt" sizeOf="1">
+      <Struct>
+        <Member type="int8" name="max_gainrange_1" sizeOf="1">-16</Member>
+        <Member type="int8" name="min_gainrange_2" sizeOf="1">-26</Member>
+        <Member type="int8" name="max_gainrange_2" sizeOf="1">-10</Member>
+        <Member type="int8" name="min_gainrange_3" sizeOf="1">-24</Member>
+        <Member type="int8" name="max_gainrange_3" sizeOf="1">-11</Member>
+        <Member type="int8" name="min_gainrange_4" sizeOf="1">-23</Member>
+        <Member type="int8" name="max_gainrange_4" sizeOf="1">-10</Member>
+        <Member type="int8" name="min_gainrange_5" sizeOf="1">-22</Member>
+      </Struct>
+    </Member>
+  </NvItemData>
+  <NvItemData id="28001" name="RFNV_GSM_C0_GSM1900_LNA_ENH_SWPT_I" subscriptionid="0" variableSize="false" index="0" compressed="false">
+    <Member type="GSM_RX_LNA_SWPT_TYPE" name="gsm_rx_lna_enh_swpt" sizeOf="1">
+      <Struct>
+        <Member type="int8" name="max_gainrange_1" sizeOf="1">-67</Member>
+        <Member type="int8" name="min_gainrange_2" sizeOf="1">-67</Member>
+        <Member type="int8" name="max_gainrange_2" sizeOf="1">127</Member>
+        <Member type="int8" name="min_gainrange_3" sizeOf="1">127</Member>
+        <Member type="int8" name="max_gainrange_3" sizeOf="1">127</Member>
+        <Member type="int8" name="min_gainrange_4" sizeOf="1">127</Member>
+        <Member type="int8" name="max_gainrange_4" sizeOf="1">127</Member>
+        <Member type="int8" name="min_gainrange_5" sizeOf="1">127</Member>
+      </Struct>
+    </Member>
+  </NvItemData>
+  <file_history>
+    <owner />
+  </file_history>
+</NvSource>

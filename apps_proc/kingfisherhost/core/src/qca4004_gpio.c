@@ -100,7 +100,7 @@ static qapi_Status_t qca4004_config_release_gpio(uint32_t pin,qapi_GPIO_ID_t gpi
 	tlmm_config.pull = QAPI_GPIO_PULL_UP_E;
 	tlmm_config.drive = QAPI_GPIO_10MA_E; 
 
-	//status = qapi_TLMM_Drive_Gpio(gpio_id, pin, QAPI_GPIO_LOW_VALUE_E);
+	status = qapi_TLMM_Drive_Gpio(gpio_id, pin, QAPI_GPIO_LOW_VALUE_E);
 	if(status == QAPI_OK)
 		status = qapi_TLMM_Release_Gpio_ID(&tlmm_config, gpio_id);
 	

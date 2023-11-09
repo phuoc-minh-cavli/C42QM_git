@@ -1155,6 +1155,11 @@ psm_error_type_e psm_client_optimal_interval
                                     opt_interval->start.psm_duration_in_secs,
                                     opt_interval->end.psm_duration_in_secs,
                                     opt_interval->psm_wakeup_type); 
+        if (optimal_interval != NULL)
+        {
+            free(optimal_interval);
+            optimal_interval = NULL;
+        }
     }while(FALSE);
 
     PSM_LOG_FUNC_RETURN_WITH_RET(result);

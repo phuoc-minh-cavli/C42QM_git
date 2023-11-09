@@ -13,7 +13,7 @@ Qualcomm Confidential and Proprietary
 /*====================== =====================================================
 
                             EDIT HISTORY FOR FILE
-  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/src/rmnet_data_ul_opt_a2.c#11 $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/src/rmnet_data_ul_opt_a2.c#12 $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------

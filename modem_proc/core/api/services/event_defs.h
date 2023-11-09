@@ -38,7 +38,7 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
                           Edit History
 
-$Header: //components/rel/core.mpss/3.10/api/services/event_defs.h#8 $
+$Header: //components/rel/core.mpss/3.10/api/services/event_defs.h#9 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -2932,7 +2932,7 @@ typedef enum
   EVENT_LTE_RRC_PLMN_SEARCH_START_V2                                             = 0xD3F, /* 3391 */
   EVENT_LTE_RRC_PLMN_SEARCH_STOP_V2                                              = 0xD40, /* 3392 */
   
-  EVENT_LAST_ID    = 0xD40,
+  EVENT_LAST_ID    = 0xFFF,
 
 
   EVENT_MAX_ID     = 0x0FFF

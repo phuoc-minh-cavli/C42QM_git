@@ -44,10 +44,11 @@ is regulated by the U.S. Government. Diversion contrary to U.S. law prohibited.
 /*===========================================================================
                         EDIT HISTORY FOR MODULE
 
-$Header: //components/rel/uim.mpss/3.3.1/mmgsdi/src/mmgsdilib.c#2 $$ $DateTime: 2023/06/21 11:32:16 $
+$Header: //components/rel/uim.mpss/3.3.1/mmgsdi/src/mmgsdilib.c#3 $$ $DateTime: 2023/08/01 04:55:31 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
+07/31/23   tq	   return if mmgsdi_generic_data_ptr is null
 05/23/23   tq	   Modem base IMSI switch
 07/14/20   tq      Sync QMI UIM with proper slot status upon task start up
 06/13/19   bcho    Rel 12 refresh enforcement policy support
@@ -3841,6 +3842,7 @@ void mmgsdi_switch_imsi_tn_ntn
   if(switch_to_network < MMGSDI_IMSI_SWITCH_NW_UNKNOWN || switch_to_network > MMGSDI_IMSI_SWITCH_NW_NTN || !mmgsdi_generic_data_ptr)
   {
     UIM_MSG_ERR_1("mmgsdi_switch_imsi_tn_ntn switched_network 0x%x", switch_to_network);
+    return;
   }
 
   /* As per NAS, At this point, Device wont be in full service but exact service status will be unknown*/

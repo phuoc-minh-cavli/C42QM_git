@@ -1,9 +1,8 @@
 Upscaling MBN header v3 to MBN header v6
-Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACFNAAFZ\qcli_dam_lwm2m_demo_moduleSignedSigned & Encrypted image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn
-OEM signed image with ECDSA
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn signature is valid
-Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn is encrypted
-
+Performing OEM sign on image: Z:\b\apps_proc\build\ms\bin\ACFNAAFZ\qcli_dam_lwm2m_demo_moduleSignedSigned & Encrypted image is stored at Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_OEM signed iOEM signed image Image Z:\b\aImage Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_module.mbn signature is valid
+Image Z:\b\apps_proc\dataservices\bsp\qcli_dam_demo_img\build\ACFNAAFZ\sign_and_encrypt\default\dam_mod\qcli_dam_lwm2m_demo_m
+Base Properties: 
+| I
 Base Properties: 
 | Integrity Check             | True  |
 | Signed                      | True  |

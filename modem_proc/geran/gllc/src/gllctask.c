@@ -35,7 +35,7 @@
 ***  This section contains comments describing changes made to the module.
 ***  Notice that changes are listed in reverse chronological order.
 ***
-*** $Header: //components/rel/geran.mpss/5.2.0/gllc/src/gllctask.c#14 $
+*** $Header: //components/rel/geran.mpss/5.2.0/gllc/src/gllctask.c#15 $
 ***
 *** when       who     what, where, why
 *** --------   ---     ------------------------------------------------------
@@ -852,7 +852,7 @@ void geran_gllc_init()
   llc_log_init();
 
   /* --------------------------------------------------------------------- */
-  (void) gllc_read_psm_info();
+  //(void) gllc_read_psm_info();
 
   /* Set GLLC_resume signal so that pending messages could be processed */
   (void)rex_set_sigs(geran_tcb_read(GERAN_TASK_ID_GLLC_1), GLLC_DYN_RESUME_SIG);

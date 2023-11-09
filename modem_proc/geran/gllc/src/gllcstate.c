@@ -78,7 +78,7 @@
 ***  This section contains comments describing changes made to the module.
 ***  Notice that changes are listed in reverse chronological order.
 ***
-*** $Header: //components/rel/geran.mpss/5.2.0/gllc/src/gllcstate.c#6 $
+*** $Header: //components/rel/geran.mpss/5.2.0/gllc/src/gllcstate.c#7 $
 ***
 *** when       who     what, where, why
 *** --------   ---     ------------------------------------------------------
@@ -2051,7 +2051,7 @@ void gllc_llme_process_resume_req_mes
 
       gllc_llme_send_grr_resume_req_mes();
 
-      if (resume_req_mes->psm_restore)
+      if (resume_req_mes->psm_restore && (gllc_psm_info.lle_info[GLLC_LL_SAPI_1_GMM].l2_info_valid))
       {
         gllc_restore_l2_psm_info(GLLC_LL_SAPI_1_GMM);
       }

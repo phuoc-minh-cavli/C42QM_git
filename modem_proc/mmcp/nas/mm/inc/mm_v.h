@@ -6439,7 +6439,30 @@ extern void mm_partial_search_allowed_set
 extern ULogHandle mm_get_ulog_handle();
 
 /*===========================================================================
+FUNCTION  MM_GENERATE_RANDOM_KEY
 
+DESCRIPTION
+  Function to generate random numbers key of a given size.
+  Note that this function is to be used for keys whose size is a multiple
+  of 4.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+ 
+===========================================================================*/
+void mm_generate_random_key
+(
+  uint8  *key_ptr,
+  uint8  size
+);
+
+/*===========================================================================
 FUNCTION  MM_EPLMN_LIST_EQUIVALENT_PLMN()
 
 DESCRIPTION
@@ -6455,8 +6478,6 @@ SIDE EFFECTS
   None
 
 ===========================================================================*/
-
-
 extern boolean mm_eplmn_list_equivalent_plmn(sys_plmn_id_s_type plmn);
 
 extern boolean mm_check_gcf_flag_enabled

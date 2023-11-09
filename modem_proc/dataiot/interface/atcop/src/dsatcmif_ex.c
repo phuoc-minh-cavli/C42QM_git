@@ -46,7 +46,7 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/dataiot.mpss/2.0/interface/atcop/src/dsatcmif_ex.c#10 $ $DateTime: 2023/05/16 04:05:59 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/atcop/src/dsatcmif_ex.c#11 $ $DateTime: 2023/08/09 05:51:58 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -191,6 +191,8 @@ cm_client_id_type dsatcm_client_id;
 LOCAL dsm_watermark_type  dsat_cm_msg_wm;
 LOCAL q_type              dsat_cm_msg_q;
 LOCAL boolean             dsat_cm_msg_wm_full;
+LOCAL boolean             dsat_cm_msg_wm_inited = FALSE;
+
 #ifdef IMAGE_QDSP6_PROC
 rex_crit_sect_type dsat_cm_wm_crit_sect;
 #endif /* IMAGE_QDSP6_PROC*/
@@ -1244,10 +1246,17 @@ LOCAL void cmif_ss_event_cb_func
       /* Post message to CM watermark */
       dsm_item_ptr = dsat_dsm_create_packet(msg_ptr, sizeof(dsat_cm_msg_s_type), TRUE);
       if (NULL != dsm_item_ptr)
+      {    
+        DS_AT_MSG1_ERROR("CM SS w message queue inited - dropping event: %d", dsat_cm_msg_wm_inited);
+        if(dsat_cm_msg_wm_inited == TRUE )
       {
         /* Add to queue and raise subtask signal */
         dsm_enqueue(&dsat_cm_msg_wm, &dsm_item_ptr);
-
+        }
+		else
+        {
+          dsm_free_packet( &dsm_item_ptr );		  
+        }
         if ( rssi_enqueue )
         {
           /* Flag one RSSI event in queue */
@@ -3201,8 +3210,7 @@ LOCAL void cmif_setup_msg_watermarks( void )
   dsat_cm_msg_wm.hiwater_func_ptr      = cmif_cm_msg_wm_hiwater_cb;
   dsat_cm_msg_wm.non_empty_func_ptr    = cmif_cm_msg_wm_non_empty_cb;
   /*lint -restore suppress error 64*/
-
-
+  dsat_cm_msg_wm_inited = TRUE;
 } /* cmif_setup_msg_watermarks */
 
 #if 0

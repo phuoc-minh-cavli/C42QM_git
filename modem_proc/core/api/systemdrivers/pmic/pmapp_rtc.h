@@ -2,7 +2,7 @@
 #define PMAPP_RTC_H
 
 /**
- * Copyright (c) 2013-2014 Qualcomm Technologies Incorporated.
+ * Copyright (c) 2013-2014, 2023 Qualcomm Technologies, Inc. All rights reserved.
  * All Rights Reserved.
  * Qualcomm Confidential and Proprietary
  *
@@ -42,7 +42,7 @@
 This section contains comments describing changes made to this file.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/core.mpss/3.10/api/systemdrivers/pmic/pmapp_rtc.h#2 $
+$Header: //components/rel/core.mpss/3.10/api/systemdrivers/pmic/pmapp_rtc.h#3 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -129,6 +129,28 @@ pm_err_flag_type pmapp_rtc_get_time(pm_rtc_time_type  *time_ptr) ;
  */
 pm_err_flag_type pmapp_rtc_alarm_set_time(pm_rtc_time_type  *time_ptr);
 
+/**
+ * @name pmapp_rtc_alarm_get_time
+ *
+ * @brief This function gibes the alarm time in second and milliseconds, also provide RTC alarm module status.
+ *		  Milliseonds support should be there in PMIC. 
+ *
+  *
+ * @param [out] time_ptr Current RTC time in Second and Milliseonds
+ *
+ *@param [out] status Current RTC alarm module status
+ *								
+ *
+ * @return  pm_err_flag_type
+ *          PM_ERR_FLAG__SUCCESS = SUCCESS.
+ *          PM_ERR_FLAG__FEATURE_NOT_SUPPORTED = Feature not available.
+ *
+ * @remarks pm_device_init() will be called in SPMI is not in init state.
+ *
+ * @warning Interrupts are locked for the duration of this function.
+ *
+ */
+pm_err_flag_type pmapp_rtc_alarm_get_time(pm_rtc_time_type  *time_ptr, uint8 *status);
 
 /*===========================================================================
 

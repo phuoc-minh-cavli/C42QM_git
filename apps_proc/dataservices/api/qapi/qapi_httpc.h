@@ -1,6 +1,6 @@
 /*===========================================================================
 
-  Copyright (c) 2017-2021 Qualcomm Technologies, Inc. and/or its subsidiaries.
+  Copyright (c) 2017-2023 Qualcomm Technologies, Inc. and/or its subsidiaries.
   All rights reserved
   Confidential - Qualcomm Technologies, Inc. - May Contain Trade Secrets
 
@@ -37,7 +37,7 @@ when       who     what, where, why
 ===========================================================================*/
 
 /*
-!! IMPORTANT NOTE: "DATA SERVICES" VERSION CATEGORY. 
+!! IMPORTANT NOTE: "DATA SERVICES" VERSION CATEGORY.ï¿½
 */
 
 /**
@@ -79,6 +79,7 @@ when       who     what, where, why
 #define  TXM_QAPI_HTTPC_PROXY_CONNECT              TXM_QAPI_NET_HTTP_BASE + 13
 #define  TXM_QAPI_HTTPC_CONFIG                     TXM_QAPI_NET_HTTP_BASE + 14
 #define  TXM_QAPI_HTTPC_EXT_CONFIG                 TXM_QAPI_NET_HTTP_BASE + 15
+#define  TXM_QAPI_HTTPC_GET_EXT_CONFIG             TXM_QAPI_NET_HTTP_BASE + 16
 
 
 
@@ -145,6 +146,14 @@ typedef enum
    QAPI_NET_HTTPC_EXTENDED_CONFIG_BIND_ADDRESS,
    /**< Extended config option -- send data on a specific interface */
 } qapi_Net_HTTPc_Extended_Config_Options_e;
+
+
+/** HTTP Get extended configuration options. */
+typedef enum {
+  QAPI_NET_HTTP_GET_EXTENDED_CONFIG_LAST_ERR_CODE = 1,		/**< Enable getting last error for HTTP. */
+  QAPI_NET_HTTP_GET_EXTENDED_CONFIG_MAX = 128,				/**< Maximum value of extended configurations. */
+}qapi_Net_HTTPc_Get_Extended_Config_Options_t;
+
 
 /**
  *  HTTP response data returned by qapi_HTTPc_CB_t().
@@ -285,6 +294,8 @@ static __inline void qapi_httpc_cb_uspace_dispatcher(UINT cb_id,
 #define qapi_Net_HTTPc_Configure(a,b)                      ((qapi_Status_t) (_txm_module_system_call12)(TXM_QAPI_HTTPC_CONFIG, (ULONG) a, (ULONG) b, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0))
 #define qapi_Net_HTTPc_Extended_Config_Options(a,b,c,d)    ((qapi_Status_t) (_txm_module_system_call12)(TXM_QAPI_HTTPC_EXT_CONFIG, (ULONG) a, (ULONG) b, (ULONG) c, (ULONG) d, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0))
 #define qapi_Net_HTTPc_Proxy_Connect(a,b,c,d)              ((qapi_Status_t) (_txm_module_system_call12)(TXM_QAPI_HTTPC_PROXY_CONNECT, (ULONG) a, (ULONG) b, (ULONG) c, (ULONG) d, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0))
+#define qapi_Net_HTTPc_Get_Extended_Config_Options(a,b,c,d)  ((qapi_Status_t) (_txm_module_system_call12)(TXM_QAPI_HTTPC_GET_EXT_CONFIG, (ULONG) a, (ULONG) b, (ULONG) c, (ULONG) d, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0, (ULONG) 0))
+
 
 /*
  * Macro that Passes Byte Pool Pointer for HTTP Client 
@@ -558,6 +569,24 @@ qapi_Status_t qapi_Net_HTTPc_Extended_Config_Options(qapi_Net_HTTPc_handle_t han
                                                      qapi_Net_HTTPc_Extended_Config_Options_e option,
                                                      void *option_value ,
                                                      uint32_t option_size);
+
+/** @} */
+
+/**
+ *  Get Extended configuration options for HTTP client session based on the application requirement.
+ *
+ * @param[in]  handle         Handle to the HTTP client session.
+ * @param[in]  option         HTTP client Get extended configuration option. 
+ * @param[out] option_value   HTTP client Get extended configuration option info.
+ * @param[in]  option_size    HTTP client Get extended configuration option size. 
+ *
+ * @return On success, 0 is returned. Other value on error.
+ */
+
+qapi_Status_t qapi_Net_HTTPc_Get_Extended_Config_Options(qapi_Net_HTTPc_handle_t handle,
+                                                qapi_Net_HTTPc_Get_Extended_Config_Options_t ext_option,
+                                                void* val, uint32_t val_len);
+                                      
 
 /** @} */
 

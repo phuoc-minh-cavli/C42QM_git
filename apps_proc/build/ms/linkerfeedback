@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5050106: Last Updated: Mon Jul 24 00:08:43 2023
+;#<FEEDBACK># ARM Linker, 5050106: Last Updated: Mon Nov 06 03:19:29 2023
 ;VERSION 0.2
 ;FILE AdcScalingUtil.o
 ;FILE CLpr.o
@@ -2588,15 +2588,36 @@ query_timer_sleep_qapi_id <= USED 0
 ;FILE qapi_version.o
 ;FILE qapi_version_txm.o
 ;FILE qca4004.o
+qca4004_daemon_destroy <= USED 0
 ;FILE qca4004_api.o
 qca4004_deinit <= USED 0
+qca4004_fota_start <= USED 0
+qca4004_get_fw_version <= USED 0
+;FILE qca4004_fota.o
+qca4004_deinit_fota_ctx <= USED 0
+qca4004_fota_data_transmit <= USED 0
+qca4004_fota_img_file_stat <= USED 0
+qca4004_fota_select_partition <= USED 0
+qca4004_fota_start_internal <= USED 0
+qca4004_fota_verify_image <= USED 0
+qca4004_img_header_check <= USED 0
+qca4004_init_fota_ctx <= USED 0
+qca4004_send_block <= USED 0
 ;FILE qca4004_gpio.o
 qca4004_release_gpio_all <= USED 0
 ;FILE qca4004_iface.o
+;FILE qca4004_security.o
+qca4004_crc16_calc <= USED 0
+qca4004_md5_final <= USED 0
+qca4004_md5_init <= USED 0
+qca4004_md5_update <= USED 0
 ;FILE qca4004_uart.o
+qca4004_send_at_command <= USED 0
+qca4004_send_buf_direct <= USED 0
 qca4004_uart_close <= USED 0
 qca4004_write <= USED 0
 ;FILE qca4004_utils.o
+qca4004_swap32 <= USED 0
 ;FILE qcbor_decode.o
 QCBORDecode_Finish <= USED 0
 ;FILE qcbor_encode.o

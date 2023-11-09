@@ -127,4 +127,11 @@ int qca4004_strncmpi(char *str1, char *str2, int length)
     return (temp_str1 - temp_str2);
 }
 
+uint32_t qca4004_swap32(uint32_t x)
+{
+    return (x>>24) |
+        ((x<<8) & 0x00FF0000) |
+        ((x>>8) & 0x0000FF00) |
+        (x<<24);
+}
 

@@ -10,8 +10,8 @@
                 All Rights Reserved.
                 Qualcomm Confidential and Proprietary
 */
-/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_nv.h#4 $ */
-/* $DateTime: 2019/03/18 00:27:08 $$Author: pwbldsvc $ */
+/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_nv.h#5 $ */
+/* $DateTime: 2023/09/29 01:38:57 $$Author: pwbldsvc $ */
 
 /*----------------------------------------------------------------------------
  * Include Files
@@ -284,6 +284,13 @@ extern rex_timer_cnt_type rr_nv_get_pscan_results_reuse_time_millisecs(void);
  * \return TRUE if enabled, FALSE otherwise
  */
 extern boolean rr_nv_get_plmn_search_freq_pruning_enabled(void);
+
+/*!
+ * \brief Returns the value of the enable_si3_only.
+ * 
+ * \return TRUE if enabled, FALSE otherwise
+ */
+extern boolean rr_nv_get_enable_si3_only(void);
 
 #ifdef FEATURE_SGLTE
 #ifdef FEATURE_SGLTE_G2X_CONN_MODE_RESEL

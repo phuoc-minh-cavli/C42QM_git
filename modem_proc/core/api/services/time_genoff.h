@@ -20,7 +20,7 @@ NOTE: The @brief description and any detailed descriptions above do not appear
 =============================================================================*/
 
 /*=============================================================================
-  Copyright (c) 2009-2017,2022 Qualcomm Technologies, Inc.
+  Copyright (c) 2009-2017,2022-2023 Qualcomm Technologies, Inc.
   All Rights Reserved.
   Confidential and Proprietary - Qualcomm Technologies, Inc.
 =============================================================================*/
@@ -49,7 +49,7 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/core.mpss/3.10/api/services/time_genoff.h#2 $
+$Header: //components/rel/core.mpss/3.10/api/services/time_genoff.h#3 $
 
 when       who     what, where, why
 --------   ---     ------------------------------------------------------------
@@ -72,6 +72,7 @@ when       who     what, where, why
 #include "comdef.h"
 #include "time_types.h"
 #include "time_osal.h"
+#include "timetick.h"
 
 /*=============================================================================
 
@@ -162,6 +163,7 @@ ATS_MALLOC_FAIL,
 ATS_PRIVATE_BASE_EXISTS,
 ATS_QDI_COPY_FAILED,
 ATS_FAILURE,
+ATS_CALLBACK_COUNT_EXCEEDED
 } 
 ats_error_type;
 
@@ -204,6 +206,15 @@ typedef void (*time_genoff_t2_cb_type)
   int64      data
 );
 
+/* Time Generic Offset 'type 2 ex' callback function */
+typedef void (*time_genoff_t2_cb_type_ex)
+(
+  /* Qtimer timetick when we receive time update */
+  timetick_type   timetick,
+  
+  /* data to pass to this callback function(delta in milliseconds, where delta= new_time - old_time) */
+  int64      delta_ms
+);
 
 /*-----------------------------------------------------------------------------
   Generic offset information
@@ -488,7 +499,39 @@ uint32 time_genoff_get_sys_time_in_sec_with_lp_sec
 (
   void
 );
+
 #endif
 /** @} */ /* end_addtogroup time_genoff */
+
+/*=============================================================================
+
+FUNCTION TIME_GENOFF_REGISTER_CB_EX
+
+DESCRIPTION
+  Registers the callback with "time genoff framework". This callback will be called whenever there is a "time" update on that base.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  ats_error_type.
+
+SIDE EFFECTS
+  If callback function is doing heavy/blocking operation, then time setter task may get stuck.
+  
+NOTE
+  If you want your callback to be called at system time update, use ATS_TOD as base.
+  Please keep callback light because of aforementioned SIDE EFFECTS.
+
+=============================================================================*/
+
+ats_error_type time_genoff_register_cb_ex
+(
+  /* Base to which callback needs to attached */
+  time_bases_type  base,
+
+  /* Call back Func to be attached */
+  time_genoff_t2_cb_type_ex cb
+);
 
 #endif /* TIME_GENOFF_H */

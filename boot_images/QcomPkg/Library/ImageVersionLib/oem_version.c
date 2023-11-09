@@ -11,7 +11,7 @@
 #                                                                            
 # *** AUTO GENERATED FILE - DO NOT EDIT                                      
 #                                                                            
-# GENERATED: Tue May 16 23:23:17 2023 
+# GENERATED: Sun Sep 24 22:45:33 2023 
 #============================================================================
 */
 const char IMAGE_VARIANT_STRING_AUTO_UPDATED[]="IMAGE_VARIANT_STRING=QcomTools";

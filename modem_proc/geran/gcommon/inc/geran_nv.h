@@ -10,8 +10,8 @@
                 All Rights Reserved.
                 Qualcomm Confidential and Proprietary
 */
-/* $Header: //components/rel/geran.mpss/5.2.0/gcommon/inc/geran_nv.h#10 $ */
-/* $DateTime: 2020/09/21 12:28:06 $$Author: pwbldsvc $ */
+/* $Header: //components/rel/geran.mpss/5.2.0/gcommon/inc/geran_nv.h#11 $ */
+/* $DateTime: 2023/09/29 01:38:57 $$Author: pwbldsvc $ */
 
 /*===========================================================================
 
@@ -24,7 +24,7 @@ when       who      what, where, why
 --------   -------- ---------------------------------------------
 15/09/20   sal      CR2777109 FSK feature control using NV74417.
 14/02/17   mk       CR2004610 : FR 40251 (SeNS) - Add NV item to enable SeNS feature
-21/04/17   br       CR1041084 FR 36219: GDET – GMSK Modulation Detector
+21/04/17   br       CR1041084 FR 36219: GDET ï¿½ GMSK Modulation Detector
 14/11/18   sk       CR2341754 Geran Memopt changes
 04/10/18   kh		Geran compiler errors new features
 11/09/15   dmb      Updates for EFS usage per subscription
@@ -201,6 +201,7 @@ typedef struct
 #define GERAN_EFS_FAST_SI_ACQ_WHEN_CS_ONLY_ENABLED "/nv/item_files/modem/geran/grr/fast_si_acq_when_cs_only_enabled"
 #define GERAN_EFS_NEGATIVE_C1_WHITE_LIST "/nv/item_files/modem/geran/negative_c1_white_list"
 #define GERAN_EFS_PLMN_SEARCH_FREQ_PRUNING_ENABLED "/nv/item_files/modem/geran/plmn_search_freq_pruning_enabled"
+#define GERAN_EFS_ENABLE_SI3_ONLY "/nv/item_files/modem/geran/enable_si3_only"
 #define GERAN_EFS_G2L_BLIND_REDIR_CONTROL "/nv/item_files/modem/geran/grr/g2l_blind_redir_control"
 #define GERAN_EFS_G2L_BLIND_REDIR_AFTER_CSFB_CONTROL "/nv/item_files/modem/geran/grr/g2l_blind_redir_after_csfb_control"
 #define GERAN_EFS_G2L_BLIND_REDIR_AFTER_SRVCC_CONTROL "/nv/item_files/modem/geran/grr/g2l_blind_redir_after_srvcc_control"

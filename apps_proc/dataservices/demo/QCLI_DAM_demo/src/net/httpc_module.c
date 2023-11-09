@@ -8,7 +8,7 @@
 
 /*===========================================================================
 
-  Copyright (c) 2017 Qualcomm Technologies, Inc. All Rights Reserved
+  Copyright (c) 2017-2023 Qualcomm Technologies, Inc. All Rights Reserved
 
   Qualcomm Technologies Proprietary
 
@@ -357,6 +357,40 @@ QCLI_Command_Status_t httpc_command_handler(uint32_t Parameter_Count, QCLI_Param
 }
 
 
+QCLI_Command_Status_t get_last_error_httpc(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List, qapi_Net_HTTPc_handle_t handle)
+{
+  	int ret = QAPI_ERROR;
+  	QCLI_Command_Status_t result =  QCLI_STATUS_SUCCESS_E;
+	qapi_Net_HTTPc_Get_Extended_Config_Options_t ext_config = QAPI_NET_HTTP_GET_EXTENDED_CONFIG_LAST_ERR_CODE;
+	qapi_Net_Module_Last_Error_t error_data;
+
+	
+  	if(NULL == handle) {
+   		HTTPC_PRINTF("No available http client session\r\n");
+    	result = QCLI_STATUS_ERROR_E;
+    	goto end;
+  	}
+
+	if ((Parameter_Count >= 2) || (Parameter_List == NULL)) {
+        HTTPC_PRINTF("Httpc_last_error : Invalid Params or More than necessary Params passed\n");
+        result = QCLI_STATUS_ERROR_E;
+        goto end;
+    }
+  
+    memset(&error_data, 0, sizeof(qapi_Net_Module_Last_Error_t));
+    ret = qapi_Net_HTTPc_Get_Extended_Config_Options(handle, ext_config, (void *)&error_data, sizeof(qapi_Net_Module_Last_Error_t));
+    
+    if(ret != QAPI_OK)
+      HTTPC_PRINTF("HTTPC Get Last error Code Failed ret = %d\n", ret);
+    else
+    {
+      HTTPC_PRINTF("The Last error category is %d, Last error code is %d\n", error_data.err_cat, error_data.err_code);
+    }
+	
+end:
+  	return result;
+}
+
 QCLI_Command_Status_t 
 proc_httpc_command_handler(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List, int app_id)
 {
@@ -388,6 +422,7 @@ usage:
     HTTPC_PRINTF("httpc clearheader <client_num>\n");
     HTTPC_PRINTF("httpc setparam <client_num> <key> <value>\n");
     HTTPC_PRINTF("httpc config <client_num> <addr_type> <socket option> <socket option value> <send_chunk> <chunk_delay> <chunk_retries> <conn_cnt> <conn_interval>\n");
+    HTTPC_PRINTF("httpc lasterror <client_num>\n");
 #ifdef INCLUDE_SSLDEMO
    sslconfig_help("httpc sslconfig <client_num>\n");
 #endif
@@ -658,6 +693,23 @@ usage:
 
     if (error) 
     {
+
+      int ret = 0;
+      qapi_Net_Module_Last_Error_t  error_info;
+      error_info.err_cat = QAPI_NET_NO_MODULE_CAT;
+      error_info.err_code = 0;
+
+      ret = qapi_Net_HTTPc_Get_Extended_Config_Options(arg->client , QAPI_NET_HTTP_GET_EXTENDED_CONFIG_LAST_ERR_CODE ,  &error_info , sizeof(qapi_Net_Module_Last_Error_t));
+      
+      if(ret == QAPI_OK)
+      {
+        HTTPC_PRINTF("TX_log : get extended config success last_category = %d , last_error = %d\n" , error_info.err_cat , error_info.err_code);
+      }
+      else
+      {
+        HTTPC_PRINTF("TX_log : get extended config fail ret = %d" , ret);
+      }
+
       qapi_Net_HTTPc_Free_sess(arg->client);
 
       if (arg->sslCtx)
@@ -1283,6 +1335,16 @@ usage:
     }
   
     error = qapi_Net_HTTPc_Set_Param(arg->client, (const char *)Parameter_List[2].String_Value, (const char *)Parameter_List[3].String_Value);
+  }
+  else if(strcmp(command, "lasterror") == 0)
+  {
+    if (!arg)
+    {
+      HTTPC_PRINTF("<client num> error\n");
+      status = QCLI_STATUS_ERROR_E;
+      goto end;
+    }
+    error = get_last_error_httpc(Parameter_Count - 1, &Parameter_List[1], arg->client);
   }
   else
   {

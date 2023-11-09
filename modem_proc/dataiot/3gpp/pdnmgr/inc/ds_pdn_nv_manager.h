@@ -14,8 +14,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_nv_manager.h#5 $
-  $DateTime: 2023/06/06 06:49:26 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_nv_manager.h#6 $
+  $DateTime: 2023/09/26 01:04:13 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -30,6 +30,10 @@ when           who    what, where, why
 #include "ds_pdn_rate_ctrl_common.h"
 #include "ds_3gpp_rmsm_ip_common.h"
 #include "ds_pdn_cp_data_hdlr.h"
+
+#ifdef FEATURE_FAST_DORMANCY
+#include "ds_fast_dormancy.h"
+#endif /* FEATURE_FAST_DORMANCY */
 
 #define DS_PDN_NV_ENABLED    1
 #define DS_EFS_READ_BUFFER_SZ 128
@@ -245,6 +249,9 @@ typedef struct
   ds_pdn_rai_config_type                        rai_config;
   uint32                                        ds_3gpp_nv_efnas_read_failure_def_retry_timer;
   boolean                                       ds_gsm_rpm_enabled;
+#ifdef FEATURE_FAST_DORMANCY
+  ds_pdn_fd_timer_config                        fd_config;
+#endif /* FEATURE_FAST_DORMANCY */
 }ds_pdn_mgr_nv_info_type;
 
 
@@ -709,6 +716,29 @@ ds_pdn_rai_config_type ds_pdn_nv_manager_get_rai_info
 );
 
 #endif /* FEATURE_DATA_LTE */
+
+
+#ifdef FEATURE_FAST_DORMANCY
+/*===========================================================================
+ FUNCTION  ds_pdn_nv_manager_get_fd_info
+  
+ DESCRIPTION
+   This function gets the fast dormancy timer info from NV
+  
+ PARAMETERS
+  None
+  
+ DEPENDENCIES
+   None.
+  
+ RETURN VALUE  
+   timer value in seconds.
+  
+ SIDE EFFECTS
+  
+===========================================================================*/
+ds_pdn_fd_timer_config ds_pdn_nv_manager_get_fd_info(void);
+#endif /* FEATURE_FAST_DORMANCY */
 
 /*===========================================================================
 FUNCTION  DS_PDN_NV_MANAGER_GET_RC_INTERVAL_FACTOR

@@ -5,7 +5,7 @@
 
 /*===========================================================================
 
-  Copyright (c) 2020 Qualcomm Technologies, Inc. All Rights Reserved
+  Copyright (c) 2020-2023 Qualcomm Technologies, Inc. All Rights Reserved
 
   Qualcomm Technologies Proprietary
 
@@ -270,4 +270,22 @@ qapi_Status_t qapi_Net_HTTPc_Extended_Config_Options(qapi_Net_HTTPc_handle_t han
 {
   return QAPI_ERR_NOT_SUPPORTED;
 }
+
+/**
+ *  Get Extended configuration options for HTTP client session based on the application requirement.
+ *
+ * @param[in] handle        Handle to the HTTP client session.
+ * @param[in] option        HTTP client Get extended configuration option. 
+ * @param[out] option_value HTTP client Get extended configuration option info.
+ * @param[in] option_size   HTTP client extended configuration option size. 
+ *
+ * @return On success, 0 is returned. Other value on error.
+ */
+qapi_Status_t qapi_Net_HTTPc_Get_Extended_Config_Options(qapi_Net_HTTPc_handle_t handle,
+                                                qapi_Net_HTTPc_Get_Extended_Config_Options_t ext_option,
+                                                void* val, uint32_t val_len)
+{
+  return QAPI_ERR_NOT_SUPPORTED;
+}
+
 

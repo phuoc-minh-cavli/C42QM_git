@@ -41,6 +41,10 @@ when           who    what, where, why
 #include "lte_rlc_msg.h"
 #include "emm_ext_msg.h"
 #include "lte_rrc_ext_msg.h"
+#ifdef FEATURE_FAST_DORMANCY
+#include "lte_as.h"
+#include "nb1_as.h"
+#endif /* FEATURE_FAST_DORMANCY */
 #endif
 
 #ifdef FEATURE_DSAT_ATCOP_VEND
@@ -171,6 +175,10 @@ static dsmsgrrcv_msg_map_t dsmsgrrcv_msg_map_arr[] = {
   { LTE_RRC_DEACTIVATE_REQ, NULL},
   { LTE_RRC_UE_CAP_INFO_IND, NULL},
   { LTE_RRC_CELL_DEPRIOR_STATUS_IND, NULL},
+#ifdef FEATURE_FAST_DORMANCY
+  { LTE_MAC_RAI_INDI, NULL },
+  { NB1_MAC_RAI_INDI, NULL },
+#endif /* FEATURE_FAST_DORMANCY */
 #endif /* FEATURE_DATA_LTE */
 
   { MM_CM_PSM_GET_CFG_PARAMS_RSP, NULL },

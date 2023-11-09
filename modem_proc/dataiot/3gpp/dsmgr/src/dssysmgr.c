@@ -18,8 +18,8 @@
 /*===========================================================================
   EDIT HISTORY FOR MODULE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/dsmgr/src/dssysmgr.c#10 $
-  $DateTime: 2023/06/05 04:10:23 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/dsmgr/src/dssysmgr.c#11 $
+  $DateTime: 2023/08/31 05:56:17 $$Author: pwbldsvc $
 
   when             who what, where,  why
   ---------- --- ------------------------------------------------------------
@@ -1051,7 +1051,8 @@ boolean dsysmgr_check_ss_event_processing_required
      (ss_event_info_ptr->sys_mode != dssysmgr_cached_ss_info_ptr->sys_mode) ||
      (ss_event_info_ptr->srv_status != dssysmgr_cached_ss_info_ptr->srv_status) ||
      (ss_event_info_ptr->srv_domain != dssysmgr_cached_ss_info_ptr->srv_domain) ||
-     (ss_event_info_ptr->effective_srv_domain != dssysmgr_cached_ss_info_ptr->effective_srv_domain) )
+     (ss_event_info_ptr->effective_srv_domain != dssysmgr_cached_ss_info_ptr->effective_srv_domain) ||
+	 (ss_event_info_ptr->div_duplex != dssysmgr_cached_ss_info_ptr->div_duplex))
   {
     return TRUE;
   }

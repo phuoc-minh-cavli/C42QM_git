@@ -6,8 +6,8 @@
                 All Rights Reserved.
                 Qualcomm Confidential and Proprietary
 */
-/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_nv.c#5 $ */
-/* $DateTime: 2019/03/18 00:27:08 $$Author: pwbldsvc $ */
+/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_nv.c#6 $ */
+/* $DateTime: 2023/09/29 01:38:57 $$Author: pwbldsvc $ */
 
 /*----------------------------------------------------------------------------
  * Include Files
@@ -474,6 +474,38 @@ static void rr_read_carrier_specific_efs_nv_items(void)
     {
       MSG_GERAN_HIGH_0("PLMN search freq pruning is DISABLED");
       efs_data_ptr->plmn_search_freq_pruning_enabled = FALSE;
+    }
+  }
+
+  // Read /nv/item_files/modem/geran/enable_si3_only
+  {
+    int8 efs_val;
+
+    if (geran_efs_read_per_sub(
+          GERAN_EFS_ENABLE_SI3_ONLY,
+          &efs_val,
+          sizeof(efs_val)) < 0)
+    {
+      MSG_GERAN_HIGH_0("EFS-NV enable_si3_only not present");
+      efs_val = -1;
+    }
+
+    // Sanity-check the result is 0 or 1
+    if ((efs_val != 0) && (efs_val != 1))
+    {
+      efs_val = 0;  // Default is DISABLED for this EFS-NV item
+    }
+
+    // Update the module store
+    if (efs_val == 1)
+    {
+      MSG_GERAN_HIGH_0("SI3 only is ENABLED");
+      efs_data_ptr->enable_si3_only = TRUE;
+    }
+    else
+    {
+      MSG_GERAN_HIGH_0("SI3 only is DISABLED");
+      efs_data_ptr->enable_si3_only = FALSE;
     }
   }
 
@@ -1572,6 +1604,24 @@ boolean rr_nv_get_plmn_search_freq_pruning_enabled(void)
   }
 
   return rr_nv_get_efs_data_ptr()->plmn_search_freq_pruning_enabled;
+}
+
+/*!
+ * \brief Returns the value of the enable_si3_only. 
+ *        Note: Feature is disabled for a Type Approval SIM. 
+ * 
+ * 
+ * \return TRUE if enabled, FALSE otherwise
+ */
+boolean rr_nv_get_enable_si3_only(void)
+{
+  // Feature is disabled for a Type Approval SIM
+  if (rr_get_nv_anite_gcf_flag())
+  {
+    return FALSE;
+  }
+
+  return rr_nv_get_efs_data_ptr()->enable_si3_only;
 }
 
 /*!

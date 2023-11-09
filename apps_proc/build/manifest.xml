@@ -1,9 +1,9 @@
 <config>
   <image_tree>
     <name>IOT.TX.6.0</name>
-    <build_id>IOT.TX.6.0-00235-M9205ACFNAABZA-1</build_id>
+    <build_id>IOT.TX.6.0-00241-M9205ACFNAABZA-1</build_id>
     <branch_point_revision/>
-    <revision>00235</revision>
+    <revision>00241</revision>
     <spin>1</spin>
     <client>M9205ACFNAABZA</client>
   </image_tree>

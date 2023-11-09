@@ -16,7 +16,7 @@ Copyright (c) 2002-2014 Qualcomm Technologies, Inc.
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_plmn_list.c#16 $
+$Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_plmn_list.c#17 $
 
 when        who     what, where, why
 --------    ---     ---------------------------------------------------------
@@ -2075,6 +2075,32 @@ boolean rr_plc_search_in_foreground( )
     default:
     {
       return TRUE;
+    }
+  }
+}
+
+/**
+ * Function: returns TRUE if PLMN search is in foreground/background
+ *
+ * @Params:  N/A
+ */
+boolean rr_plmn_list_srch_from_nas( )
+{
+  // Obtain a pointer to the module data
+  rr_plc_data_t *rr_plc_data_ptr = rr_plc_get_data_ptr();
+  //RR_NULL_CHECK_FATAL(rr_plc_data_ptr);
+
+  switch (rr_plc_data_ptr->search_type)
+  {
+    case RR_PLC_BACKGROUND_SEARCH:
+    case RR_PLC_FOREGROUND_SEARCH:
+    {
+      return TRUE;
+    }
+
+    default:
+    {
+      return FALSE;
     }
   }
 }

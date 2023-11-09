@@ -34,7 +34,9 @@
 #define QCA4004_ERR_POWER_STATE					(8)	  /**< Wrong power state		*/
 #define QCA4004_ERR_LOCK						(9)	  /**< Operation lock			*/
 #define QCA4004_ERR_TIMER						(10)  /**< Operation timer			*/
-
+#define QCA4004_ERR_MEMORY_ALLOC 				(11)  /**< Memory allocation fail	*/
+#define QCA4004_ERR_EFS_FILE					(12)  /**< EFS file operation fail	*/
+#define QCA4004_ERR_FOTA_VER 					(13)  /**< FOTA version check fail	*/
 /** @} */ /* end_namegroup */
 	
 
@@ -156,7 +158,7 @@ QCA4004_Status_t qca4004_init(qca4004_Callback_Table_t* pCallbackTable);
   0 -- The operation was successful. \n
   1 -- The operation was fail. \n
 */
-//QCA4004_Status_t qca4004_Deinit();
+QCA4004_Status_t qca4004_deinit(void);
 
 /**
 * @brief change the power state of the QCA4004.
@@ -184,5 +186,34 @@ QCA4004_Status_t qca4004_power_state_change(uint32_t requestId,const QCA4004_Pow
 */
 QCA4004_Status_t qca4004_get_AP_list(uint32_t requestId, uint32_t timeout);
 
+/**
+* @brief Get QCA4004 Firmware version .
+
+  @param[out] ver  store the QCA4004 firmware version if success \n
+
+  @return
+  QCA4004_OK 				-- The operation was successful. \n
+  QCA4004_ERR_INVALID_PARAM -- The parameter is empty. \n
+  QCA4004_ERR_GENERAL		-- The Firmware not update once, need power on QCA4004. \n
+*/
+QCA4004_Status_t qca4004_get_fw_version(uint32_t *ver);
+
+/**
+* @brief trigger QCA4004 firmware upgrade with the image file stored in MDM9205 EFS.
+
+  @param[in] filePath  	the path of QCA4004 image file which to upgrade. \n
+						use the default path if NULL. \n
+  @param[in] flag  	the control flag for firmware upgrade. \n
+						QCA4004_FOTA_IMG_CHECK,0x0001: execute image file check in the begin. \n
+						QCA4004_FOTA_AUTO_RESET,0x0002: QCA4004 execute auto reset after upgrade complete. \n
+						QCA4004_FOTA_VERSION_CHECK,0x0004: execute firmware version check. \n
+  @param[inout] version the version which will upgrade. \n
+						store the updated firmware version if QCA4004_FOTA_AUTO_RESET.\n
+  
+  @return
+  QCA4004_OK 				-- The operation was successful. \n
+  other						-- The operation was fail. \n
+*/
+QCA4004_Status_t qca4004_fota_start(char *filePath, int32_t flag, uint32_t *version);
 #endif
 

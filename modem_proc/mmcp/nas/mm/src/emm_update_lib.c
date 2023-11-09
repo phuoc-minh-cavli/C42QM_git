@@ -26,7 +26,7 @@
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_update_lib.c#1 $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_update_lib.c#3 $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
@@ -4352,8 +4352,19 @@ void emm_timer_t3410_expire
   emm_failure_cause.cause_type = LTE_NAS_IRAT_T3410_EXPIRY;
 
   emm_remove_release_client(emm_attach_release_indication);
-  emm_rrc_abort_connection(emm_ctrl_data_ptr, FALSE,LTE_RRC_CONN_ABORT_CAUSE_NORMAL) ;
-  emm_start_attach_recovery(emm_ctrl_data_ptr, emm_failure_cause) ;
+  if(EMM_GET_CONNECTION_STATE() == EMM_RELEASING_RRC_CONNECTION_STATE)
+  {
+
+    emm_failure_cause.cause_type = LTE_NAS_IRAT_LOWER_LAYER_FAILURE;
+    emm_process_unsent_messages(CONN_CNF_LTE_RRC_CONN_EST_FAILURE,
+                                    emm_failure_cause, 
+                                    emm_ctrl_data_ptr);
+  }
+  else
+  {
+    emm_rrc_abort_connection(emm_ctrl_data_ptr, FALSE,LTE_RRC_CONN_ABORT_CAUSE_NORMAL) ;
+    emm_start_attach_recovery(emm_ctrl_data_ptr, emm_failure_cause) ;
+  }
 
 } /* end of emm_timer_t3410_expire() */
 
@@ -7448,16 +7459,26 @@ void emm_timer_t3430_expire
 #ifndef FEATURE_NAS_DISABLE_VOICE
   emm_csfb_failure_cause_type csfb_failure_cause;
 #endif
-   
+  emm_failure_type        emm_failure_cause;
+  memset((void *)&emm_failure_cause,0,sizeof(emm_failure_type));
 
   emm_send_diag_event(EVENT_NAS_TAU, (nas_event_end_result)PROC_END, (nas_event_end_reason)PROC_END_TIME_OUT, (lte_nas_emm_cause_type)LTE_NAS_CAUSE_NONE);
   is_nas_emm_attach_tau_timeout = TRUE;
 
   emm_remove_release_client(emm_tau_request_release_indication);
+  if(EMM_GET_CONNECTION_STATE() == EMM_RELEASING_RRC_CONNECTION_STATE)
+  {
+    emm_failure_cause.cause_type = LTE_NAS_IRAT_LOWER_LAYER_FAILURE;
+    emm_process_unsent_messages(CONN_CNF_LTE_RRC_CONN_EST_FAILURE,
+                                    emm_failure_cause, 
+                                    emm_ctrl_data_ptr);
 
-  emm_rrc_abort_connection(emm_ctrl_data_ptr, FALSE,LTE_RRC_CONN_ABORT_CAUSE_NORMAL) ;
-
-  emm_start_tau_recovery_procedure(emm_ctrl_data_ptr) ;
+  }
+  else
+  {
+    emm_rrc_abort_connection(emm_ctrl_data_ptr, FALSE,LTE_RRC_CONN_ABORT_CAUSE_NORMAL) ;
+    emm_start_tau_recovery_procedure(emm_ctrl_data_ptr) ;
+  }
 #if defined(FEATURE_LTE_TO_1X) || defined(FEATURE_NAS_GW)
 #ifndef FEATURE_NAS_DISABLE_VOICE
   if(((emm_ctrl_data_ptr->esr_type_in_progress == NAS_EMM_1X_CSFB_BUFFERED) ||
@@ -10249,9 +10270,7 @@ void emm_process_tau_accept
 
     /* NONCE UE is no longer needed after getting TAU ACCEPT. 
        Reset nonce ue in EMM data base */
-    memset((void *)emm_ctrl_data_ptr->nonce_ue, 
-           0x0, 
-           sizeof(emm_ctrl_data_ptr->nonce_ue));
+    mm_generate_random_key(&emm_ctrl_data_ptr->nonce_ue[0], sizeof(emm_ctrl_data_ptr->nonce_ue));
 
     if(emm_ctrl_data_ptr->ongoing_detach_procedure == TRUE)
     {

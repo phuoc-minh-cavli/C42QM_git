@@ -130,6 +130,7 @@ typedef uint32_t httpc_hdl_t;
 /* HTTP client configuration */
 typedef qapi_Net_HTTPc_Config_t HTTPc_CFG;
 typedef qapi_Net_HTTPc_Extended_Config_Options_e HTTPc_EXT_CFG_OPTION;
+typedef qapi_Net_HTTPc_Get_Extended_Config_Options_t HTTPc_EXT_GET_CFG_OPTION;
 
 /* HTTP client response */
 typedef struct http_rsp_cont
@@ -241,6 +242,8 @@ typedef struct httpclient_sess_s
   http_client_cb_t    http_client_cb;
   void               *cb_arg;
   HTTP_RSP_CONT      *http_rsp_cont;
+  int                 last_error;
+  qapi_Net_Error_Category_t module_cat;
 }httpclient_sess;
 
 /* HTTP client context */
@@ -374,6 +377,21 @@ extern int32_t http_client_configure(httpclient_sess *sess, HTTPc_CFG *cfg);
  * @return On success, 0 is returned. Other value on error.
  */
 extern int32_t http_client_extended_configure(httpclient_sess *sess, HTTPc_EXT_CFG_OPTION option, void *option_value, uint32_t option_size);
+
+/**
+ * @brief Get Extended HTTP client session configuration  
+ *
+ * @details Additional HTTP client session configuration information to be fetched. 
+ *
+ * @param[in]  handle        Handle to the HTTP client session.
+ * @param[in]  option        HTTP Get client extended configuration option. 
+ * @param[out] option_value  HTTP Get client extended configuration option info.
+ * @param[in]  option_size   HTTP Get client extended configuration option size. 
+ *
+ * @return On success, 0 is returned. Other value on error.
+ */
+
+extern int32_t http_client_get_extended_configure(httpclient_sess *sess, HTTPc_EXT_GET_CFG_OPTION option, void *option_value, uint32_t option_size);
 
 /**
  * @brief Configure HTTP client SSL session 

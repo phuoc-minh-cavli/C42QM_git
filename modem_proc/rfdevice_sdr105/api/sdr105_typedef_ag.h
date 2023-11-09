@@ -5,7 +5,7 @@
 
   Generated at:    0
   Generated using: AutoGenerate.pl
-  Generated from:  v50.92 of the hubble spreadsheet
+  Generated from:  v60 of the hubble spreadsheet
 */
 
 /*!
@@ -41,8 +41,8 @@ The enumerations in this file are exposed to RF card factory to enable configura
   nor its contents revealed in any manner to others without the express
   written permission of QUALCOMM Technologies Incorporated.
 
-  $Header: //components/rel/rfdevice_sdr105.mpss/1.10/api/sdr105_typedef_ag.h#8 $
-  $DateTime: 2023/02/13 02:57:37 $
+  $Header: //components/rel/rfdevice_sdr105.mpss/1.10/api/sdr105_typedef_ag.h#9 $
+  $DateTime: 2023/10/17 23:12:52 $
   $Author: mplcsds1 $
 =============================================================================*/
 
@@ -84,6 +84,7 @@ typedef enum
   SDR105_LTE_BAND1_MB_LNA_IN,
   SDR105_LTE_BAND20_LB_LNA_IN,
   SDR105_LTE_BAND23_MB_LNA_IN,
+  SDR105_LTE_BAND255_GNSS_IN,
   SDR105_LTE_BAND256_MB_LNA_IN,
   SDR105_LTE_BAND25_MB_LNA_IN,
   SDR105_LTE_BAND26_LB_LNA_IN,
@@ -128,6 +129,8 @@ typedef enum
   SDR105_LTE_BAND20_TX_LB2_GSM,
   SDR105_LTE_BAND23_TX_MB1_LTE,
   SDR105_LTE_BAND23_TX_MB2_GSM,
+  SDR105_LTE_BAND255_TX_MB1_LTE,
+  SDR105_LTE_BAND255_TX_MB2_GSM,
   SDR105_LTE_BAND256_TX_MB1_LTE,
   SDR105_LTE_BAND256_TX_MB2_GSM,
   SDR105_LTE_BAND25_TX_MB1_LTE,

@@ -30,10 +30,11 @@
 This section contains comments describing changes made to this file.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rfc_mmw_antenna_module_info.h#18 $
+$Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rfc_mmw_antenna_module_info.h#21 $
 
 when       who     what, where, why
 --------   ---     ------------------------------------------------------------- 
+08/24/23   asn     Add QTM567_PC5_* modules
 02/15/23   asn     Add QTM567_*_V1 modules
 02/03/23   asn     Add QTM565_*_V2 modules
 11/30/22   asn     Add QTM565_2 modules
@@ -159,6 +160,10 @@ typedef enum
   RFC_ANT_MODULE_QTM565_2_V2_HB,
   RFC_ANT_MODULE_QTM567_V1_LB,
   RFC_ANT_MODULE_QTM567_V1_HB,
+  RFC_ANT_MODULE_QTM567_LB,
+  RFC_ANT_MODULE_QTM567_HB,
+  RFC_ANT_MODULE_QTM567_PC5_LB,
+  RFC_ANT_MODULE_QTM567_PC5_HB,
   RFC_ANT_MODULE_ENUM_MAX, /* end point for enum list */
   RFC_ANT_MODULE_INVALID = 0xFF
 } rfc_ant_module_device_enum_type;

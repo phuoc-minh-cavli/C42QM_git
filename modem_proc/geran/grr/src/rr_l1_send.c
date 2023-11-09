@@ -7,8 +7,8 @@
                 All Rights Reserved.
                 Qualcomm Confidential and Proprietary
 ============================================================================*/
-/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_l1_send.c#8 $ */
-/* $DateTime: 2020/05/05 01:09:40 $ */
+/* $Header: //components/rel/geran.mpss/5.2.0/grr/src/rr_l1_send.c#9 $ */
+/* $DateTime: 2023/09/29 01:38:57 $ */
 
 /*----------------------------------------------------------------------------
  * Include Files
@@ -65,6 +65,7 @@
 #include "rr_irat_overlap_detect.h"
 #endif
 #include "geran_grr_dyn_api.h"
+#include "rr_plmn_list.h"
 /*----------------------------------------------------------------------------
  * Preprocessor Definitions and Constants
  *--------------------------------------------------------------------------*/
@@ -689,7 +690,14 @@ void rr_send_mph_decode_bcch_list_req(
   mph_decode_bcch_list_req.retry_with_reset = rr_cell_selection_get_decode_bcch_retry_status();
 
 #ifdef FEATURE_GERAN_CS_SUPPORT
-  mph_decode_bcch_list_req.si3_only = si3_only;
+  if (rr_nv_get_enable_si3_only() && rr_plmn_list_srch_from_nas())
+  {
+    mph_decode_bcch_list_req.si3_only = TRUE;
+  }
+  else
+  {
+    mph_decode_bcch_list_req.si3_only = si3_only;
+  }
 #else  /* FEATURE_GERAN_CS_SUPPORT */
   /* CS support is not present. So, we need to always read SI3 to check if cell supports GPRS or not. */
   mph_decode_bcch_list_req.si3_only = TRUE;

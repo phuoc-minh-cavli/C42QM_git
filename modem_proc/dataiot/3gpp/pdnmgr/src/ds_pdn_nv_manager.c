@@ -11,8 +11,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_nv_manager.c#8 $
-  $DateTime: 2023/06/06 06:49:26 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_pdn_nv_manager.c#9 $
+  $DateTime: 2023/09/26 01:04:13 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -1518,6 +1518,49 @@ void ds_pdn_nv_manager_read_rai_config
   return;
 }/* ds_pdn_nv_manager_read_rai_config */
 
+
+#ifdef FEATURE_FAST_DORMANCY
+/*========================================================================
+FUNCTION  ds_pdn_nv_manager_read_fd_config
+ 
+DESCRIPTION
+  This function reads Fast dormancy NV
+ 
+PARAMETERS
+ None
+ 
+DEPENDENCIES
+  None.
+ 
+RETURN VALUE  
+ 
+ 
+SIDE EFFECTS
+ 
+===========================================================================*/
+void ds_pdn_nv_manager_read_fd_config
+(
+  void
+)
+{
+  char item_path[] = "/nv/item_files/modem/data/3gpp/fd_config";
+
+  if(ds_pdn_nv_manager_read_efs_nv(item_path,
+  	                               &ds_pdn_nv_info.fd_config,
+                                   sizeof(ds_pdn_fd_timer_config))
+                                   != NV_DONE_S)
+  {
+    DS_MSG0(MSG_LEGACY_HIGH,"Failed to read FD config, setting default"
+		                    " values");
+	
+    ds_pdn_nv_info.fd_config.tn_timer  = DS_FAST_DORMANCY_DEFAULT_TIMER_VALUE_TN;
+	ds_pdn_nv_info.fd_config.ntn_timer = DS_FAST_DORMANCY_DEFAULT_TIMER_VALUE_NTN;
+  }
+
+   return;
+}/* ds_pdn_nv_manager_read_fd_config */
+#endif /* FEATURE_FAST_DORMANCY */
+
 /*===========================================================================
 FUNCTION  ds_pdn_nv_manager_get_rai_info
 
@@ -1544,6 +1587,34 @@ ds_pdn_rai_config_type ds_pdn_nv_manager_get_rai_info
   return ds_pdn_nv_info.rai_config;
 }/* ds_pdn_nv_manager_get_rai_info */
 
+
+#ifdef FEATURE_FAST_DORMANCY
+/*===========================================================================
+ FUNCTION  ds_pdn_nv_manager_get_fd_info
+  
+ DESCRIPTION
+   This function gets the fast dormancy timer info from NV
+  
+ PARAMETERS
+  None
+  
+ DEPENDENCIES
+   None.
+  
+ RETURN VALUE  
+   timer value in seconds.
+  
+ SIDE EFFECTS
+  
+===========================================================================*/
+ds_pdn_fd_timer_config ds_pdn_nv_manager_get_fd_info
+(
+  void
+)
+{
+  return ds_pdn_nv_info.fd_config;
+}/* ds_pdn_nv_manager_get_fd_info */
+#endif /* FEATURE_FAST_DORMANCY */
 #endif /* FEATURE_DATA_LTE */
 
 /*===========================================================================
@@ -5151,7 +5222,8 @@ int32 ds_pdn_nv_manager_init_efs_data_config()
 /nv/item_files/modem/data/3gpp/ps/efnas_failure_def_retry_timer_per_rat\n\
 /nv/item_files/modem/data/3gpp/ps/rand_backoff_throt\n\
 /nv/item_files/modem/data/3gpp/rai_config\n\
-/nv/item_files/modem/data/3gpp/gsm_rpm_enabled\n";
+/nv/item_files/modem/data/3gpp/gsm_rpm_enabled\n\
+/nv/item_files/modem/data/3gpp/fd_config\n";
 /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
   /*-------------------------------------------------------------------------
@@ -5363,6 +5435,9 @@ void ds_pdn_nv_manager_init()
   ds_pdn_nv_manager_read_rand_backoff_throt();
   ds_pdn_nv_manager_read_iot_rpm_enabled();
   ds_pdn_nv_manager_read_rai_config();
+#ifdef FEATURE_FAST_DORMANCY
+  ds_pdn_nv_manager_read_fd_config();
+#endif /* FEATURE_FAST_DORMANCY */
 ds_pdn_nv_manager_read_efnas_failure_def_retry_timer();
   ds3g_mmgsdi_read_refresh_vote_ok_nv();
 

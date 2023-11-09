@@ -3,7 +3,7 @@
    All Rights Reserved.
    Confidential and Proprietary - Qualcomm Technologies, Inc.
 
-   $Header: //components/rel/avs.mpss/8.0.c12/vsd/test/src/vs_testclient.c#1 $
+   $Header: //components/rel/avs.mpss/8.0.c12/vsd/test/src/vs_testclient.c#2 $
    $Author: pwbldsvc $
 */
 
@@ -2078,7 +2078,15 @@ VS_EXTERNAL int32_t vs_test_call(
    case VS_ITEST_CMD_LOOPBACK_STOP:
    case VS_ITEST_CMD_LOOPBACK_SET_VOC_PROPERTY:
      /* Queue the command for testclient thread. */
-     rc = vs_test_prepare_and_dispatch_cmd_packet( NULL, cmd_id, params, size );
+     if (vs_test_is_initialized)
+     {
+         rc = vs_test_prepare_and_dispatch_cmd_packet( NULL, cmd_id, params, size );
+     }
+     else
+     {
+         MSG_1( MSG_SSID_DFLT, MSG_LEGACY_ERROR,
+            "vs_test_call() - cmd_id (0x%08X) issued before test is initialized",cmd_id );
+     }
      break;
 
    case DRV_CMDID_DEINIT:

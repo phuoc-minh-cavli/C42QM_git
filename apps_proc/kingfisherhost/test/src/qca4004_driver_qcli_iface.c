@@ -192,14 +192,108 @@ static QCLI_Command_Status_t powerOnOff(uint32_t Parameter_Count, QCLI_Parameter
 		return result;
 	}
   } 
-  
-  qca4004_get_gpio_all();
+  if(value == 1)
+    qca4004_get_gpio_all();
   qca4004_set_gpio_all((uint8_t)value);
-  qca4004_release_gpio_all();
+  if(value == 0)
+    qca4004_release_gpio_all();
   
   return result;
 }
 
+/*****************************************************************************
+ *          
+ * qca4004 driver de-init test
+ *****************************************************************************/
+QCLI_Command_Status_t driverDeInit(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List)
+{
+  QCLI_Command_Status_t result =  QCLI_STATUS_SUCCESS_E;
+
+  result = (QCLI_Command_Status_t) qca4004_deinit();
+  QCA4004_LOG_QCLI("driver de-init ret=%d\n",result);
+  
+  return result;
+}
+
+extern uint8_t qca4004_send_at_command(uint32_t length, const char *buffer);
+QCLI_Command_Status_t testAtCmd(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List)
+{
+  QCLI_Command_Status_t result =  QCLI_STATUS_SUCCESS_E;
+  uint32_t length;
+  char *atcmd;
+  if(Parameter_Count < 1)
+	return result;
+  atcmd = (char*)Parameter_List[0].String_Value;
+  result = (QCLI_Command_Status_t) qca4004_send_at_command(strlen(atcmd),atcmd);
+
+  QCA4004_LOG_QCLI("test at command ret=%d\n",result);
+  
+  return result;
+}
+/*****************************************************************************
+ *
+ * qca4004 fota test
+ *****************************************************************************/
+//extern int qca4004_fota_start(char *filePath, int32_t flag, uint32_t *version);
+QCLI_Command_Status_t Fota_UintTest(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List)
+{
+    QCLI_Command_Status_t result = QCLI_STATUS_SUCCESS_E;
+	char *filePath = NULL;
+	int32_t flag = 0;
+	uint32_t ver = 0;
+	uint32_t flash_size = 0;
+	
+	if(Parameter_Count > 0 && Parameter_List[0].Integer_Is_Valid) {
+		flash_size = Parameter_List[0].Integer_Value;
+		if(flash_size < 4) {
+			QCA4004_LOG_QCLI("FOTA only support flash size big than 4 Mbits\n");
+			return QCLI_STATUS_ERROR_E;
+		}
+	}
+	else {
+		QCA4004_LOG_QCLI("Please set the flash size (Mbits)\n");
+		return QCLI_STATUS_ERROR_E;
+	}
+	
+	if(Parameter_Count > 1 && Parameter_List[1].Integer_Is_Valid)
+		flag = Parameter_List[1].Integer_Value;
+	if(Parameter_Count > 2 && Parameter_List[2].Integer_Is_Valid)
+		ver = Parameter_List[2].Integer_Value;
+	if(Parameter_Count > 3) 
+		filePath = (char*)Parameter_List[3].String_Value;
+    result = (QCLI_Command_Status_t)qca4004_fota_start(filePath, flag, &ver);
+	
+	QCA4004_LOG_QCLI("Fota UintTest ret=%d\n",result);
+	QCA4004_LOG_QCLI("updated firmware version=%d.%d.%d.%d\n",
+			(ver&0xF0000000)>>28,
+            (ver&0x0F000000)>>24,
+            (ver&0x00FF0000)>>16,
+            (ver&0x0000FFFF));
+
+    return result;
+}
+
+/*****************************************************************************
+ *
+ * qca4004 get current fw version which is running in HW
+ *****************************************************************************/
+QCLI_Command_Status_t get_fw_version(uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List)
+{
+	uint32_t ver;
+	if(QCA4004_OK == qca4004_get_fw_version(&ver)) {
+		QCA4004_LOG_QCLI("qca4004 firmware version=%d.%d.%d.%d\n",
+			(ver&0xF0000000)>>28,
+            (ver&0x0F000000)>>24,
+            (ver&0x00FF0000)>>16,
+            (ver&0x0000FFFF));
+	
+		return QCLI_STATUS_SUCCESS_E;
+	}
+	else {
+		QCA4004_LOG_QCLI("Please confirm you have power on QCA4004 once to get the firmware version\n");
+	}
+	return QCLI_STATUS_ERROR_E;
+}
 static QCLI_Command_Status_t QCA4004_Driver_print_cmd_info(
         uint32_t Parameter_Count, QCLI_Parameter_t *Parameter_List);
 
@@ -211,8 +305,11 @@ const QCLI_Command_t qca4004_driver_cmd_list[] =
     {powerStateChange, false, "powerStateChange", "<state>", "change the power state of QCA4004", NULL},
     {getAPList, false, "getAPList", "<timeout>", "get AP list from QCA4004", NULL},
     {powerOnOff, false, "powerOnOff", "<value>", "powerOnOff", NULL},
-		
-    {QCA4004_Driver_print_cmd_info, false, "qca4004help", "qca4004help",
+	{driverDeInit, false, "driverDeInit", "driverDeInit", "qca4004 driver de-init test", NULL},
+	{testAtCmd, false, "testAtCmd", "testAtCmd", "qca4004 at command test", NULL},
+	{Fota_UintTest, false, "Fota_UintTest", "<flash size> <flag> <version> <filename>", "fota uint test", NULL},
+    {get_fw_version, false, "get_fw_version", "get_fw_version", "get qca4004 firmware version", NULL},
+	{QCA4004_Driver_print_cmd_info, false, "qca4004help", "qca4004help",
             "Print info about all qca4004 dirver commands", NULL},
 };
 

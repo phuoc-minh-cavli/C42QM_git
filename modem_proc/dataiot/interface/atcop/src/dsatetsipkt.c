@@ -108,10 +108,11 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
   Notice that changes are listed in reverse chronological order.
 
   $PVCSPath:  L:/src/asw/MSM5200/data/vcs/dsatetsipkt.c_v   1.7   12 Jul 2002 10:05:36   randrew  $  
-  $Header: //components/rel/dataiot.mpss/2.0/interface/atcop/src/dsatetsipkt.c#10 $   $DateTime: 2023/04/06 01:33:10 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/atcop/src/dsatetsipkt.c#12 $   $DateTime: 2023/08/24 22:45:20 $ $Author: pwbldsvc $
   
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
+08/18/23   gk      Fixing Memory leak issue
 04/05/23   ks      Fixing the DS task stack corruption caused by cm_ph_info_s_type
                    structure. Made the local variable dynamic.
 03/02/21   ks      Made changes to properly update PSM URC values when "Name only" 
@@ -3034,15 +3035,6 @@ dsat_result_enum_type dsatetsipkt_exec_csodcp_cmd
         goto bail;
       }
 
-      /* Allocate DSM item for data payload */
-      if ( NULL == ( tx_data = dsm_new_buffer(DSM_DS_LARGE_ITEM_POOL)))
-      {
-        /* dsm allocation failed for tx data */
-        result = DSAT_ERROR;
-        local_error = 9;
-        goto bail;
-      }
-
       tx_data_dptr = &tx_data;
 
       if ( cp_data_len != dsm_pushdown_packed( tx_data_dptr,
@@ -3299,15 +3291,15 @@ dsat_result_enum_type dsatetsipkt_crtdcp_done_handler
   {
     DS_AT_MSG0_ERROR("Unable to allocate memory for CP DATA");
     dsm_free_buffer(res_buff_ptr);
+    dsm_free_packet(&(crtdcp_info_ptr->data_frame));
     return DSAT_ASYNC_EVENT;
   }
   
   memset(cp_data, 0, cp_data_len);
 
-  if ( cp_data_len != dsm_pullup_tail ( &(crtdcp_info_ptr->data_frame), cp_data, cp_data_len) ||
-       !(temp_buff = (char*) dsat_alloc_memory( TEMP_BUFF_SIZE, FALSE)) )
+  if ( cp_data_len != dsm_pullup_tail ( &(crtdcp_info_ptr->data_frame), cp_data, cp_data_len) )
   {
-    DS_AT_MSG0_ERROR("Unable to pull dsm buffer or unable to allocate memory");
+    DS_AT_MSG0_ERROR("Unable to pull dsm buffer");
     dsm_free_buffer(res_buff_ptr);
     dsm_free_packet(&(crtdcp_info_ptr->data_frame));
     return DSAT_ASYNC_EVENT;

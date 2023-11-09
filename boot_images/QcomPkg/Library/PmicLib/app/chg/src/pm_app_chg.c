@@ -3,7 +3,7 @@
 *  \brief  pm_app_chg.c
 *  \wraper to get the charger details 
 *    
-*  \n &copy; Copyright (c)2016-2018, 2019  by QUALCOMM Technologies Incorporated, All Rights Reserved
+*  Copyright (c) 2016-2018, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved
 */
 
 /*===========================================================================
@@ -325,3 +325,21 @@ pm_err_flag_type pmapp_chg_usb_get_usb_connector_type(pmapp_chg_usb_connector_ty
   return err_flag;
 }
 
+pm_err_flag_type pmapp_chg_usb_inok_disable()
+{
+  pm_err_flag_type err_flag = PM_ERR_FLAG__SUCCESS;
+  boolean smbI2CChargerExist = FALSE;
+  uint8 option = 1;
+  
+  err_flag = pm_smb_get_charger_exist_status(&smbI2CChargerExist);
+  if((PM_ERR_FLAG__SUCCESS == err_flag) && (smbI2CChargerExist == TRUE))
+  {
+    err_flag = pm_smb_sysok_option(option);
+  }
+  else
+  {
+    err_flag = PM_ERR_FLAG__FEATURE_NOT_SUPPORTED;
+  }
+
+  return err_flag;
+}

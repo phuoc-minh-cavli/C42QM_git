@@ -14,8 +14,8 @@ Qualcomm Confidential and Proprietary
 
                             EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/src/rmnet_data_ul_legacy.c#1 $
-  $Author: pwbldsvc $ $DateTime: 2020/03/17 08:03:16 $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/src/rmnet_data_ul_legacy.c#2 $
+  $Author: pwbldsvc $ $DateTime: 2023/07/26 03:31:24 $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -33,6 +33,7 @@ when        who    what, where, why
 #include "ps_metai_info.h"
 #include "data_msg.h"
 #include "rmnet_data_ul_legacy.h"
+#include "ds_fwk.h"
 
 dsm_watermark_type     rmnet_data_ul_legacy_wm;
 
@@ -136,28 +137,43 @@ boolean rmnet_data_ul_legacyi_sig_hdlr
   /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Validate Rm and get it's IP family
   -------------------------------------------------------------------------*/
-   info = (rmnet_smi_info_type *)(legacy_rx_pkt->app_ptr);
+
+    info = (rmnet_smi_info_type *)(legacy_rx_pkt->app_ptr);
   
+    if(rmnet_sm_is_valid(info) == FALSE)
+    {
+       DS_MSG1(MSG_LEGACY_ERROR,"RMNET state is in INVALID its freed %x",info );
+       dsm_free_packet(&legacy_rx_pkt);
+       return FALSE;
+    }
+        
     if(RMNET_META_SM_NULL_STATE == info->meta_sm.state)
-	{
-	  DS_MSG0(MSG_LEGACY_ERROR,"RMNET state is in RMNET_META_SM_NULL_STATE" );
-	  return TRUE;
-	}
+    {
+      DS_MSG0(MSG_LEGACY_ERROR,"RMNET state is in RMNET_META_SM_NULL_STATE" );
+      dsm_free_packet(&legacy_rx_pkt);
+      return FALSE;
+    }
 
    fwk_inst = (ds_fwk_s_type *)legacy_rx_pkt->app_field;
-   if(fwk_inst ==NULL)
+   if(fwk_inst == NULL)
    {
       DS_MSG0(MSG_LEGACY_ERROR,"FWK instance is NULL" );
-	  return TRUE;
-	}
-
-   ip_ver = rmnet_get_addr_family(info);
-   if(ip_ver == NON_IP_ADDR)
-   {
-     DS_MSG0(MSG_LEGACY_ERROR,"Non -ip data recieved in the legacy watermark");
-	 return TRUE;
-   }
-
+      dsm_free_packet(&legacy_rx_pkt);
+      return FALSE;
+    }
+    ip_ver = rmnet_get_addr_family(info);
+    if(ip_ver == NON_IP_ADDR)
+    {
+      DS_MSG0(MSG_LEGACY_ERROR,"Non -ip data recieved in the legacy watermark");
+      dsm_free_packet(&legacy_rx_pkt);
+      return FALSE;
+    }
+    if(ds_fwk_inst_is_valid(fwk_inst,ip_ver) == FALSE)
+    {
+      DS_MSG2(MSG_LEGACY_ERROR,"Fwk state is in INVALID its freed %x ip %d",fwk_inst,ip_ver );
+      dsm_free_packet(&legacy_rx_pkt);
+      return FALSE;
+    }
   /*-------------------------------------------------------------------------
     Fetch DPM RM using app_field of DSM item and cache the needed info in
     local variables

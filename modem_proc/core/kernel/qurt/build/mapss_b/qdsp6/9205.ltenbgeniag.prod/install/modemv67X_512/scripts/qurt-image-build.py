@@ -2781,6 +2781,6 @@ if __name__ == '__main__':
     run_script(QurtElfPatch().main)
 
 # Signatures of the files that this depends on
-# df95cfea7f7213272a0c81d88cce6d91 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/basefile.py
-# 840ddad5f700e28e26186c3a6ad48758 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/elf_info_patch.py
-# 997b71770902dfa65472b7937fdc4cd9 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/qurt.py
+# df95cfea7f7213272a0c81d88cce6d91 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/basefile.py
+# 840ddad5f700e28e26186c3a6ad48758 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/elf_info_patch.py
+# 997b71770902dfa65472b7937fdc4cd9 /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/kernel/qurt/build/mapss_b/qdsp6/9205.ltenbgeniag.prod/install/modemv67X_512/scripts/lib/qurt.py

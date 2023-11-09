@@ -1,15 +1,15 @@
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 328 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c" 2
-# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 1
-# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
-# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c" 2
+# 20 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 1
+# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
+# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 # 1 "/pkg/qct/software/hexagon/releases/tools/8.3.03/Tools/bin/../target/hexagon/include/stdint.h" 1 3 4
 
 
@@ -99,17 +99,17 @@ typedef _ULonglong uint_fast64_t;
 
 typedef _Longlong intmax_t;
 typedef _ULonglong uintmax_t;
-# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
-# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
+# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 typedef char char_t;
 typedef unsigned char bool_t;
-# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h" 1
-# 90 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h"
+# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h" 1
+# 90 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/avcs/inc/adsp_error_codes.h"
 typedef int ADSPResult;
-# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/elite_thrd_prio_dev_cfg.h" 1
-# 36 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/elite_thrd_prio_dev_cfg.h"
+# 28 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/elite_thrd_prio_dev_cfg.h" 1
+# 36 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/elite_thrd_prio_dev_cfg.h"
 typedef enum elite_thrd_prio_id_t
 {
   ELITETHREAD_STAT_AFE_PORT_MANAGER_PRIO_ID = 0,
@@ -180,13 +180,13 @@ typedef struct elite_thrd_prio_prop_struct_t
   elite_thrd_prio_struct_t *thrd_prio_ptr;
 
 } elite_thrd_prio_prop_struct_t;
-# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
-# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
+# 29 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h" 2
+# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
 ADSPResult elite_thrd_prio_init(void);
-# 61 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
+# 61 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/inc/elite_thrd_prio.h"
 uint32_t elite_get_thrd_prio(elite_thrd_prio_id_t thrd_prio_id);
-# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c" 2
-# 86 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
+# 21 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c" 2
+# 86 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/elite_devcfg_8909.c"
 static elite_thrd_prio_struct_t thrd_priorities[] =
 {
     {ELITETHREAD_STAT_AFE_PORT_MANAGER_PRIO_ID, (255 - 78)},

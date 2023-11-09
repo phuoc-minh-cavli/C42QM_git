@@ -5,7 +5,7 @@
  *  \brief This file contains functions and variable declarations to support 
  *   the pon driver module.
  *
- *  \n &copy; Copyright (c) 2012-2017, 2019 by Qualcomm Technologies Inc.  All Rights Reserved.
+ *  Copyright (c) 2012-2017, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
  */
 
 /*===========================================================================
@@ -128,6 +128,13 @@ typedef enum {
   PM_PON_IRQ_INVALID
 }pm_pon_irq_type;
   
+  
+typedef struct
+{
+  uint8 pon_data[9];
+  uint8 AON_data[4];
+  uint8 pmic_version[3];
+}pm_pon_debug_type;
 /*===========================================================================
                         FUNCTION PROTOTYPE
 ===========================================================================*/
@@ -313,4 +320,22 @@ pm_pon_irq_set_trigger(uint8 pmic_device_index, pm_pon_irq_type irq, pm_irq_trig
 pm_err_flag_type 
 pm_pon_irq_status(uint8 pmic_device_index, pm_pon_irq_type irq, pm_irq_status_type type, boolean *status);
 
+/**
+ * @brief This function for debug PON reason 
+ * 
+ * @param[in] pmic_device_index. Primary PMIC: 0 Secondary PMIC: 1
+ * @param[out] ptr_debug_data:  
+ *                PMIC version details type structpointer. holds pon reason, AON register and PMIC version details.
+ *
+ *
+ * @return  pm_err_flag_type 
+ *          PM_ERR_FLAG__FEATURE_NOT_SUPPORTED = Feature not available on this
+ *          version of the PMIC.
+ *          PM_ERR_FLAG__PAR1_OUT_OF_RANGE = Device Index out of
+ *          range.
+ *          PM_ERR_FLAG__SUCCESS = SUCCESS.
+ *
+ */
+pm_err_flag_type 
+pm_pon_reason_debug(uint8 pmic_device_index, pm_pon_debug_type *ptr_debug_data);
 #endif // __PM_PON_H__

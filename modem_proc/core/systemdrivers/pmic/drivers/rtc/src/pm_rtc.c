@@ -8,7 +8,7 @@
 *    PMIC code generation Version: 2.0.0.22
 *    This file contains code for Target specific settings and modes.
 *
-*  &copy; Copyright 2010, 2019 Qualcomm Technologies Incorporated, All Rights Reserved
+*  Copyright (c) 2010, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
 */
 
 /*===========================================================================
@@ -18,7 +18,7 @@ EDIT HISTORY FOR MODULE
 This document is created by a code generator, therefore this section will
 not contain comments describing changes made to the module.
 
-$Header: //components/rel/core.mpss/3.10/systemdrivers/pmic/drivers/rtc/src/pm_rtc.c#5 $
+$Header: //components/rel/core.mpss/3.10/systemdrivers/pmic/drivers/rtc/src/pm_rtc.c#6 $
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
 04/10/12   hs      Changed the type for internalResourceIndex from int to uint8.
@@ -191,6 +191,47 @@ pm_err_flag_type pm_rtc_alarm_set_ms_time(uint8 pmic_chip, pm_rtc_time_type  *ti
         pm_comm_write_byte(slave_id ,0xa46 ,rtc_sec_val[2],0 );
         pm_comm_write_byte(slave_id ,0xa47 ,rtc_sec_val[3],0 );
  
+    }
+
+    return errFlag;
+}
+
+pm_err_flag_type pm_rtc_alarm_get_ms_time(uint8 pmic_chip, pm_rtc_time_type  *time_ptr, uint8 *status)
+{
+    pm_err_flag_type  errFlag = PM_ERR_FLAG__SUCCESS;
+    uint32            slave_id = 0;
+    pm_register_data_type   rtc_sec_val[RTC_TIME_SEC_SIZE];
+    pm_register_data_type   rtc_msec_val[RTC_TIME_MSEC_SIZE];
+    pm_register_address_type reg_data0 = rtc_reg.base_address + rtc_reg.alrm_data0;
+    pm_register_address_type reg_msec_data0 = rtc_reg.base_address + rtc_reg.alrm_msec_data0;
+
+    if ((NULL == time_ptr) || (NULL == status))
+    {
+        errFlag |=  PM_ERR_FLAG__INVALID_POINTER;
+    }
+
+    else
+    {
+        errFlag |= pm_comm_read_byte(slave_id, 0x6108, status, 0);
+        // Read the second registers
+        errFlag |= pm_comm_read_byte_array(slave_id, 
+                                           reg_data0, RTC_TIME_SEC_SIZE, 
+                                           rtc_sec_val, 0);
+        
+        //Read the millisecond registers
+        errFlag |= pm_comm_read_byte_array(slave_id, 
+                                           reg_msec_data0, RTC_TIME_MSEC_SIZE, 
+                                           rtc_msec_val, 0);
+        
+        //Converting the byte array into the 32-BIT SEC field
+        time_ptr->sec = pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL3_SHIFT, rtc_sec_val[3]);
+        time_ptr->sec += pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL2_SHIFT, rtc_sec_val[2]);
+        time_ptr->sec += pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL1_SHIFT, rtc_sec_val[1]);
+        time_ptr->sec += pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL0_SHIFT, rtc_sec_val[0]);
+        
+        //Converting the byte array into the 32-BIT SEC field
+        time_ptr->msec = pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL1_SHIFT, rtc_msec_val[1]);
+        time_ptr->msec += pm_rtc_counter_val_to_time_32_bits(PM_RTC_VAL0_SHIFT, rtc_msec_val[0]);
     }
 
     return errFlag;

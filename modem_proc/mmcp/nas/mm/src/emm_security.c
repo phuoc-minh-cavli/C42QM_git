@@ -27,7 +27,7 @@
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_security.c#2 $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_security.c#4 $
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
 04/25/14   gps     Removed refrence for header file "gsdi_exp.h"
@@ -2334,15 +2334,15 @@ void emm_invalidate_nas_security_params( emm_ctrl_data_type *emm_ctrl_data_ptr)
 
   context_ptr->nasKSI.keyset_id = NO_KEY_AVAIALABLE;
 
-  memset(context_ptr->nas_kasme, 0xFF, sizeof(context_ptr->nas_kasme));
+  mm_generate_random_key(&context_ptr->nas_kasme[0], sizeof(context_ptr->nas_kasme));
 
   memset(context_ptr->nas_ul_cnt,0xFF, sizeof(context_ptr->nas_ul_cnt));
 
   memset(context_ptr->nas_dl_cnt, 0xFF, sizeof(context_ptr->nas_dl_cnt));
 
-  memset(context_ptr->nas_int_key, 0xFF, sizeof(context_ptr->nas_int_key));
+  mm_generate_random_key(&context_ptr->nas_int_key[0], sizeof(context_ptr->nas_int_key));
 
-  memset(context_ptr->nas_enc_key, 0xFF, sizeof(context_ptr->nas_enc_key));
+  mm_generate_random_key(&context_ptr->nas_enc_key[0], sizeof(context_ptr->nas_enc_key));
 
   /* update the EF EPS NSC in USIM */
 
@@ -2701,13 +2701,11 @@ void emm_process_security_mode_cmd(lte_nas_emm_security_mode_command *emm_securi
   }
 
   // Check the UE security capabilities
-  if((memcmp( (void *)&emm_ctrl_data_ptr->ue_security_capability,
-              (void *)&emm_security_mode_cmd->ue_security_capability, 
-              sizeof (lte_nas_emm_ue_security_type) ) != 0 ) || 
-               ((emm_security_mode_cmd->nonce_ue_exists) && 
-               (memcmp((void *)&emm_ctrl_data_ptr->nonce_ue[0],
-              (void *)&emm_security_mode_cmd->nonce_ue[0], sizeof(emm_ctrl_data_ptr->nonce_ue) )!= 0)  ) )
+if(memcmp( (void *)&emm_ctrl_data_ptr->ue_security_capability,
 
+              (void *)&emm_security_mode_cmd->ue_security_capability, 
+
+              sizeof (lte_nas_emm_ue_security_type) ) != 0 )
   {
 #ifdef FEATURE_LTE_REL9
     if(emm_ctrl_data_ptr->emm_3gpp_spec_ver >= LTE_3GPP_REL9)
@@ -2742,6 +2740,16 @@ void emm_process_security_mode_cmd(lte_nas_emm_security_mode_command *emm_securi
     }
  #endif
   }
+
+  if( (emm_security_mode_cmd->nonce_ue_exists) && 
+      (memcmp( (void *)&emm_ctrl_data_ptr->nonce_ue[0],
+               (void *)&emm_security_mode_cmd->nonce_ue[0], sizeof(emm_ctrl_data_ptr->nonce_ue) )!= 0)  )
+  {
+    MSG_HIGH_DS_0(MM_SUB, "SMC Nonce mismatch. Sending SMC reject");
+    emm_send_security_mode_reject(LTE_NAS_SECURITY_MODE_REJ_UNSPECIFIED, emm_ctrl_data_ptr);
+    return;
+  }
+
   // check if IMEI SV is requested by the MME
   if(( emm_security_mode_cmd->imiesv_req_exists) && (emm_security_mode_cmd->imiesv_req == IMIESV_REQUESTED))
   {
@@ -2856,7 +2864,6 @@ void emm_process_security_mode_cmd(lte_nas_emm_security_mode_command *emm_securi
           current_ctxt->context_state = CONTEXT_STATE_NON_CURRENT;
         }
 
-        memset(context_info->nas_kasme, 0xFF, sizeof(context_info->nas_kasme));
         /* set the context state as current */
         context_info->context_state = CONTEXT_STATE_CURRENT;
         context_info->context_type = CONTEXT_TYPE_FULL_NATIVE_EPS;
@@ -3517,10 +3524,10 @@ SIDE EFFECTS
    memset(nas_invalid_kasme, 0xFF, sizeof(nas_invalid_kasme));
 
    /* Rel 9: No integrity check for SMC when Emergency Services requested, becasue there is no KASME, and hence no CK/IK */
-   if ((emm_ctrl_data_ptr->emc_srv_status != LTE_NAS_EMC_SRV_NONE) && 
-         (memcmp(context_info->nas_kasme,nas_invalid_kasme, sizeof(nas_invalid_kasme)) == 0))
+   if ((dummy_ctxt == TRUE) &&
+       (emm_ctrl_data_ptr->emc_srv_status != LTE_NAS_EMC_SRV_NONE))
    {
-     MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: KASME is 0xFF, do not perform Integrity check ");
+     MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: Dummy KASME, do not perform Integrity check ");
      return TRUE;
    }
 #endif
@@ -3625,14 +3632,19 @@ void emm_cancel_security_mode(emm_ctrl_data_type *emm_ctrl_data_ptr)
   {
 
     context_ptr->nasKSI.keyset_id = NO_KEY_AVAIALABLE;
+
+    context_ptr->in_use = FALSE;
+    mm_generate_random_key(&context_ptr->nas_kasme[0], sizeof(context_ptr->nas_kasme));
+
     /* cannot reset the kasme since it comes in authentication request */
     memset((void *)context_ptr->nas_ul_cnt,0xFF, MAX_NAS_COUNT_IN_BYTES);
 
     memset((void *)context_ptr->nas_dl_cnt, 0xFF, MAX_NAS_COUNT_IN_BYTES);
 
-    memset((void *)context_ptr->nas_int_key, 0xFF, MAX_NAS_KEY_LENGTH_IN_BYTES);
+    mm_generate_random_key(&context_ptr->nas_int_key[0], sizeof(context_ptr->nas_int_key));
 
-    memset((void *)context_ptr->nas_enc_key, 0xFF, MAX_NAS_KEY_LENGTH_IN_BYTES);
+    mm_generate_random_key(&context_ptr->nas_enc_key[0], sizeof(context_ptr->nas_enc_key));
+
   }
 }
 
@@ -4089,12 +4101,10 @@ SIDE EFFECTS
   memset(nas_invalid_kasme, 0xFF, sizeof(nas_invalid_kasme));
 
   /* Rel 9: Cannot compute INT key, since there is no KASME generated for SMC with emergency services */
-  if ((emm_ctrl_data_ptr->emc_srv_status != LTE_NAS_EMC_SRV_NONE) && 
-      (memcmp(context_ptr->nas_kasme,nas_invalid_kasme, sizeof(nas_invalid_kasme)) == 0))
+  if (dummy_ctxt == TRUE)
   {
-    MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: KASME is 0xFF, do not compute INT KEY, set it to 0xFF ");
-    /* Do not compute INT and ENC keys, KASME is set to 0xFF */
-    memset(context_ptr->nas_int_key, 0xFF, sizeof(context_ptr->nas_int_key));
+    MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: Dummy KASME, do not compute INT KEY");
+
     return TRUE;
   }
 #endif
@@ -4222,12 +4232,10 @@ SIDE EFFECTS
   memset(nas_invalid_kasme, 0xFF, sizeof(nas_invalid_kasme));
 
   /* Rel 9: Cannot compute INT key, since there is no KASME generated for SMC with emergency services */
-  if ((emm_ctrl_data_ptr->emc_srv_status != LTE_NAS_EMC_SRV_NONE) && 
-      (memcmp(context_ptr->nas_kasme,nas_invalid_kasme, sizeof(nas_invalid_kasme)) == 0))
+  if (dummy_ctxt == TRUE)
   {
-    MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: KASME is 0xFF, do not compute ENC KEY, set it to 0xFF ");
-    /* Do not compute INT and ENC keys, KASME is set to 0xFF */
-    memset(context_ptr->nas_enc_key, 0xFF, sizeof(context_ptr->nas_enc_key));
+
+    MSG_HIGH_DS_0(MM_SUB, "=EMM= Rel 9: emergency services: Dummy KASME, do not compute ENC KEY");
     return TRUE;
   }
 #endif
@@ -4311,15 +4319,15 @@ void emm_reset_security_info (emm_security_context_info *context_info)
 
   context_info->nasKSI.keyset_id = NO_KEY_AVAIALABLE;
 
-  memset((void *)&context_info->nas_kasme[0], 0xFF, sizeof(context_info->nas_kasme));
+  mm_generate_random_key(&context_info->nas_kasme[0], sizeof(context_info->nas_kasme));
 
   memset((void *)&context_info->nas_ul_cnt[0],0xFF, sizeof(context_info->nas_ul_cnt));
 
   memset((void *)&context_info->nas_dl_cnt[0], 0xFF, sizeof(context_info->nas_dl_cnt));
 
-  memset((void *)&context_info->nas_int_key[0], 0xFF, sizeof(context_info->nas_int_key));
+  mm_generate_random_key(&context_info->nas_int_key[0], sizeof(context_info->nas_int_key));
 
-  memset((void *)&context_info->nas_enc_key[0], 0xFF, sizeof(context_info->nas_enc_key));
+  mm_generate_random_key(&context_info->nas_enc_key[0], sizeof(context_info->nas_enc_key));
 
   context_info->in_use = FALSE;
 
@@ -6563,13 +6571,17 @@ SIDE EFFECTS
 ===========================================================================*/
 void emm_invalidate_srvcc_ck_ik(void)
 {
-  /* Set SRVCC CK IK to invalid (0xFF) values.
+  /* Set SRVCC CK IK to invalid (random) values.
      Valid values will be populated when NAS receives
      RRC_NAS_UMTS_KEY_IND/RRC_NAS_GSM_KEY_IND during L2W PS HO */
   MSG_HIGH_DS_0(MM_SUB, "=EMM= Invalidating SRVCC CK & IK");
-  memset((void*)&emm_srvcc_ck_key_value.value_data[0], 0xFF, MAX_AUTH_DATA_LENGTH);
+
+  mm_generate_random_key(&emm_srvcc_ck_key_value.value_data[0], MAX_AUTH_DATA_LENGTH);
+
   emm_srvcc_ck_key_value.value_length = UMTS_SECURITY_KEY_LENGTH;
-  memset((void*)&emm_srvcc_ik_key_value.value_data[0], 0xFF, MAX_AUTH_DATA_LENGTH);
+
+  mm_generate_random_key(&emm_srvcc_ik_key_value.value_data[0], MAX_AUTH_DATA_LENGTH);
+
   emm_srvcc_ik_key_value.value_length = UMTS_SECURITY_KEY_LENGTH;
 }
 
@@ -6877,4 +6889,41 @@ void emm_reset_replay_message
 
 #endif
 
+
+/*===========================================================================
+FUNCTION EMM_INITIALIZE_SEC_KEYS
+
+DESCRIPTION
+  Sets random values for IRAT related security keys in LTE.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+void emm_initialize_sec_keys()
+{
+#if defined FEATURE_DUAL_SIM
+  mm_as_id_e_type as_id;
+  for (as_id = MM_AS_ID_1; as_id < (mm_as_id_e_type)MAX_NAS_STACKS; as_id++)
+#endif
+  {
+#if defined FEATURE_DUAL_SIM
+    mm_set_as_id(as_id);
+#endif
+    mm_generate_random_key((uint8 *)&emm_ck_key_value[0], MAX_AUTH_DATA_LENGTH);
+    mm_generate_random_key((uint8 *)&emm_ik_key_value[0], MAX_AUTH_DATA_LENGTH);
+    mm_generate_random_key(&emm_srvcc_ck_key_value.value_data[0], MAX_AUTH_DATA_LENGTH);
+    emm_srvcc_ck_key_value.value_length = UMTS_SECURITY_KEY_LENGTH;
+    mm_generate_random_key(&emm_srvcc_ik_key_value.value_data[0], MAX_AUTH_DATA_LENGTH);
+    emm_srvcc_ik_key_value.value_length = UMTS_SECURITY_KEY_LENGTH;
+  }
+#if defined FEATURE_DUAL_SIM
+  mm_set_as_id(MM_AS_ID_1);
+#endif
+}
 #endif // FEATURE_LTE

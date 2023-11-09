@@ -11,7 +11,7 @@
  *
  * @note        
  *
- *              Copyright 2015, 2022 QUALCOMM Technologies Incorporated.
+ *              Copyright 2015, 2022, 2023 QUALCOMM Technologies Incorporated.
  *              All Rights Reserved.
  *              Qualcomm Confidential and Proprietary
  * 
@@ -472,6 +472,17 @@ boolean qusb_ldr_utils_fedl_check(void)
   //qusb_dci_enable_usb2_ldo(FALSE);
 
 #endif
+  // Put PHY in PowerDown mode for Twizy
+  Clock_InitUSB();
+
+  out_byte (HWIO_USB2_PHY_USB_PHY_HS_PHY_CTRL2_ADDR, 0x80);
+
+  out_byte (HWIO_USB2_PHY_USB_PHY_HS_PHY_CTRL_COMMON0_ADDR, 0x88);
+
+  out_byte (HWIO_USB2_PHY_USB_PHY_PWRDOWN_CTRL_ADDR, 0x00);
+  
+  Clock_DisableUSB();
+  
   return FALSE;
 }
 

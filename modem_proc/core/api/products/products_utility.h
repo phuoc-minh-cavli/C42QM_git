@@ -26,6 +26,7 @@ Copyright (c) 2002 - 2015,2019 by Qualcomm Technologies, Incorporated.  All Righ
 
 when       who     		what, where, why
 --------   ---     		----------------------------------------------------------
+08/12/23   hsathu       ADDED Abrupt shutdown API in SOI
 05/06/18   ahemanth     ADDED modem_flow_check function and ENUM 
 ===========================================================================*/
 
@@ -62,5 +63,18 @@ typedef enum bitCheck {
  * =====================================================================  */
 
 flowType get_modem_boot_mode (void);
+
+
+/**
+ *
+ * @brief sys_shutdown_abrupt_pshold
+ *
+ * Power Offs the chip by programming pmic chip directly from Modem.
+ * This works in Modem pageOnly mode case and doesnt interact with Apps.
+ * This is not graceful shutdown and recommended only if no clients register
+ * with RCINIT shutdown callbacks
+*/
+void sys_shutdown_abrupt_pshold(void);
+
 
 #endif

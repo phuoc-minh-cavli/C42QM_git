@@ -1,6 +1,6 @@
 diff -au --ignore-file-name-case orig/txm_block_allocate.c modified/txm_block_allocate.c
---- orig/txm_block_allocate.c	2023-07-24 00:57:00.063440600 -0700
-+++ modified/txm_block_allocate.c	2023-07-24 00:57:00.063440600 -0700
+--- orig/txm_block_allocate.c	2023-11-06 03:50:51.068826900 -0800
++++ modified/txm_block_allocate.c	2023-11-06 03:50:51.069830500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -38,8 +38,8 @@ diff -au --ignore-file-name-case orig/txm_block_allocate.c modified/txm_block_al
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_create.c modified/txm_block_pool_create.c
---- orig/txm_block_pool_create.c	2023-07-24 00:57:00.064453600 -0700
-+++ modified/txm_block_pool_create.c	2023-07-24 00:57:00.065444600 -0700
+--- orig/txm_block_pool_create.c	2023-11-06 03:50:51.069830500 -0800
++++ modified/txm_block_pool_create.c	2023-11-06 03:50:51.069830500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -77,8 +77,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_create.c modified/txm_block
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_delete.c modified/txm_block_pool_delete.c
---- orig/txm_block_pool_delete.c	2023-07-24 00:57:00.065444600 -0700
-+++ modified/txm_block_pool_delete.c	2023-07-24 00:57:00.066445500 -0700
+--- orig/txm_block_pool_delete.c	2023-11-06 03:50:51.070834100 -0800
++++ modified/txm_block_pool_delete.c	2023-11-06 03:50:51.070834100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -116,8 +116,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_delete.c modified/txm_block
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_info_get.c modified/txm_block_pool_info_get.c
---- orig/txm_block_pool_info_get.c	2023-07-24 00:57:00.066445500 -0700
-+++ modified/txm_block_pool_info_get.c	2023-07-24 00:57:00.067450500 -0700
+--- orig/txm_block_pool_info_get.c	2023-11-06 03:50:51.071837700 -0800
++++ modified/txm_block_pool_info_get.c	2023-11-06 03:50:51.071837700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -155,8 +155,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_info_get.c modified/txm_blo
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_performance_info_get.c modified/txm_block_pool_performance_info_get.c
---- orig/txm_block_pool_performance_info_get.c	2023-07-24 00:57:00.068445300 -0700
-+++ modified/txm_block_pool_performance_info_get.c	2023-07-24 00:57:00.068445300 -0700
+--- orig/txm_block_pool_performance_info_get.c	2023-11-06 03:50:51.071837700 -0800
++++ modified/txm_block_pool_performance_info_get.c	2023-11-06 03:50:51.072841300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -194,8 +194,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_performance_info_get.c modi
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_performance_system_info_get.c modified/txm_block_pool_performance_system_info_get.c
---- orig/txm_block_pool_performance_system_info_get.c	2023-07-24 00:57:00.069448400 -0700
-+++ modified/txm_block_pool_performance_system_info_get.c	2023-07-24 00:57:00.069448400 -0700
+--- orig/txm_block_pool_performance_system_info_get.c	2023-11-06 03:50:51.072841300 -0800
++++ modified/txm_block_pool_performance_system_info_get.c	2023-11-06 03:50:51.073845000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -233,8 +233,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_performance_system_info_get
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_pool_prioritize.c modified/txm_block_pool_prioritize.c
---- orig/txm_block_pool_prioritize.c	2023-07-24 00:57:00.070447400 -0700
-+++ modified/txm_block_pool_prioritize.c	2023-07-24 00:57:00.071450100 -0700
+--- orig/txm_block_pool_prioritize.c	2023-11-06 03:50:51.073845000 -0800
++++ modified/txm_block_pool_prioritize.c	2023-11-06 03:50:51.073845000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -272,8 +272,8 @@ diff -au --ignore-file-name-case orig/txm_block_pool_prioritize.c modified/txm_b
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_block_release.c modified/txm_block_release.c
---- orig/txm_block_release.c	2023-07-24 00:57:00.071450100 -0700
-+++ modified/txm_block_release.c	2023-07-24 00:57:00.072452100 -0700
+--- orig/txm_block_release.c	2023-11-06 03:50:51.074848600 -0800
++++ modified/txm_block_release.c	2023-11-06 03:50:51.074848600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -311,8 +311,8 @@ diff -au --ignore-file-name-case orig/txm_block_release.c modified/txm_block_rel
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_allocate.c modified/txm_byte_allocate.c
---- orig/txm_byte_allocate.c	2023-07-24 00:57:00.072452100 -0700
-+++ modified/txm_byte_allocate.c	2023-07-24 00:57:00.073450000 -0700
+--- orig/txm_byte_allocate.c	2023-11-06 03:50:51.075852200 -0800
++++ modified/txm_byte_allocate.c	2023-11-06 03:50:51.075852200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -350,8 +350,8 @@ diff -au --ignore-file-name-case orig/txm_byte_allocate.c modified/txm_byte_allo
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_create.c modified/txm_byte_pool_create.c
---- orig/txm_byte_pool_create.c	2023-07-24 00:57:00.074453100 -0700
-+++ modified/txm_byte_pool_create.c	2023-07-24 00:57:00.075452100 -0700
+--- orig/txm_byte_pool_create.c	2023-11-06 03:50:51.075852200 -0800
++++ modified/txm_byte_pool_create.c	2023-11-06 03:50:51.076855800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -389,8 +389,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_create.c modified/txm_byte_p
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_delete.c modified/txm_byte_pool_delete.c
---- orig/txm_byte_pool_delete.c	2023-07-24 00:57:00.075452100 -0700
-+++ modified/txm_byte_pool_delete.c	2023-07-24 00:57:00.076455200 -0700
+--- orig/txm_byte_pool_delete.c	2023-11-06 03:50:51.076855800 -0800
++++ modified/txm_byte_pool_delete.c	2023-11-06 03:50:51.077859400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -428,8 +428,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_delete.c modified/txm_byte_p
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_info_get.c modified/txm_byte_pool_info_get.c
---- orig/txm_byte_pool_info_get.c	2023-07-24 00:57:00.076455200 -0700
-+++ modified/txm_byte_pool_info_get.c	2023-07-24 00:57:00.077455700 -0700
+--- orig/txm_byte_pool_info_get.c	2023-11-06 03:50:51.077859400 -0800
++++ modified/txm_byte_pool_info_get.c	2023-11-06 03:50:51.078863100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -467,8 +467,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_info_get.c modified/txm_byte
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_performance_info_get.c modified/txm_byte_pool_performance_info_get.c
---- orig/txm_byte_pool_performance_info_get.c	2023-07-24 00:57:00.078457300 -0700
-+++ modified/txm_byte_pool_performance_info_get.c	2023-07-24 00:57:00.078457300 -0700
+--- orig/txm_byte_pool_performance_info_get.c	2023-11-06 03:50:51.078863100 -0800
++++ modified/txm_byte_pool_performance_info_get.c	2023-11-06 03:50:51.078863100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -506,8 +506,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_performance_info_get.c modif
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_performance_system_info_get.c modified/txm_byte_pool_performance_system_info_get.c
---- orig/txm_byte_pool_performance_system_info_get.c	2023-07-24 00:57:00.079468800 -0700
-+++ modified/txm_byte_pool_performance_system_info_get.c	2023-07-24 00:57:00.080464300 -0700
+--- orig/txm_byte_pool_performance_system_info_get.c	2023-11-06 03:50:51.079866700 -0800
++++ modified/txm_byte_pool_performance_system_info_get.c	2023-11-06 03:50:51.079866700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -545,8 +545,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_performance_system_info_get.
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_pool_prioritize.c modified/txm_byte_pool_prioritize.c
---- orig/txm_byte_pool_prioritize.c	2023-07-24 00:57:00.080464300 -0700
-+++ modified/txm_byte_pool_prioritize.c	2023-07-24 00:57:00.081465600 -0700
+--- orig/txm_byte_pool_prioritize.c	2023-11-06 03:50:51.080870300 -0800
++++ modified/txm_byte_pool_prioritize.c	2023-11-06 03:50:51.080870300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -584,8 +584,8 @@ diff -au --ignore-file-name-case orig/txm_byte_pool_prioritize.c modified/txm_by
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_byte_release.c modified/txm_byte_release.c
---- orig/txm_byte_release.c	2023-07-24 00:57:00.081465600 -0700
-+++ modified/txm_byte_release.c	2023-07-24 00:57:00.082458800 -0700
+--- orig/txm_byte_release.c	2023-11-06 03:50:51.080870300 -0800
++++ modified/txm_byte_release.c	2023-11-06 03:50:51.081873900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -623,8 +623,8 @@ diff -au --ignore-file-name-case orig/txm_byte_release.c modified/txm_byte_relea
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_create.c modified/txm_event_flags_create.c
---- orig/txm_event_flags_create.c	2023-07-24 00:57:00.082458800 -0700
-+++ modified/txm_event_flags_create.c	2023-07-24 00:57:00.083460100 -0700
+--- orig/txm_event_flags_create.c	2023-11-06 03:50:51.081873900 -0800
++++ modified/txm_event_flags_create.c	2023-11-06 03:50:51.082877500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -662,8 +662,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_create.c modified/txm_even
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_delete.c modified/txm_event_flags_delete.c
---- orig/txm_event_flags_delete.c	2023-07-24 00:57:00.084473800 -0700
-+++ modified/txm_event_flags_delete.c	2023-07-24 00:57:00.084473800 -0700
+--- orig/txm_event_flags_delete.c	2023-11-06 03:50:51.082877500 -0800
++++ modified/txm_event_flags_delete.c	2023-11-06 03:50:51.082877500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -701,8 +701,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_delete.c modified/txm_even
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_get.c modified/txm_event_flags_get.c
---- orig/txm_event_flags_get.c	2023-07-24 00:57:00.085463700 -0700
-+++ modified/txm_event_flags_get.c	2023-07-24 00:57:00.086464500 -0700
+--- orig/txm_event_flags_get.c	2023-11-06 03:50:51.083881100 -0800
++++ modified/txm_event_flags_get.c	2023-11-06 03:50:51.083881100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -740,8 +740,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_get.c modified/txm_event_f
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_info_get.c modified/txm_event_flags_info_get.c
---- orig/txm_event_flags_info_get.c	2023-07-24 00:57:00.086464500 -0700
-+++ modified/txm_event_flags_info_get.c	2023-07-24 00:57:00.087465400 -0700
+--- orig/txm_event_flags_info_get.c	2023-11-06 03:50:51.083881100 -0800
++++ modified/txm_event_flags_info_get.c	2023-11-06 03:50:51.084884800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -779,8 +779,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_info_get.c modified/txm_ev
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_performance_info_get.c modified/txm_event_flags_performance_info_get.c
---- orig/txm_event_flags_performance_info_get.c	2023-07-24 00:57:00.087465400 -0700
-+++ modified/txm_event_flags_performance_info_get.c	2023-07-24 00:57:00.088466300 -0700
+--- orig/txm_event_flags_performance_info_get.c	2023-11-06 03:50:51.084884800 -0800
++++ modified/txm_event_flags_performance_info_get.c	2023-11-06 03:50:51.085888400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -818,8 +818,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_performance_info_get.c mod
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_performance_system_info_get.c modified/txm_event_flags_performance_system_info_get.c
---- orig/txm_event_flags_performance_system_info_get.c	2023-07-24 00:57:00.088466300 -0700
-+++ modified/txm_event_flags_performance_system_info_get.c	2023-07-24 00:57:00.089467500 -0700
+--- orig/txm_event_flags_performance_system_info_get.c	2023-11-06 03:50:51.085888400 -0800
++++ modified/txm_event_flags_performance_system_info_get.c	2023-11-06 03:50:51.086892000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -857,8 +857,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_performance_system_info_ge
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_set.c modified/txm_event_flags_set.c
---- orig/txm_event_flags_set.c	2023-07-24 00:57:00.090468400 -0700
-+++ modified/txm_event_flags_set.c	2023-07-24 00:57:00.090468400 -0700
+--- orig/txm_event_flags_set.c	2023-11-06 03:50:51.086892000 -0800
++++ modified/txm_event_flags_set.c	2023-11-06 03:50:51.086892000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -896,8 +896,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_set.c modified/txm_event_f
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_event_flags_set_notify.c modified/txm_event_flags_set_notify.c
---- orig/txm_event_flags_set_notify.c	2023-07-24 00:57:00.091469200 -0700
-+++ modified/txm_event_flags_set_notify.c	2023-07-24 00:57:00.091469200 -0700
+--- orig/txm_event_flags_set_notify.c	2023-11-06 03:50:51.087895600 -0800
++++ modified/txm_event_flags_set_notify.c	2023-11-06 03:50:51.087895600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -935,8 +935,8 @@ diff -au --ignore-file-name-case orig/txm_event_flags_set_notify.c modified/txm_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_module.h modified/txm_module.h
---- orig/txm_module.h	2023-07-24 00:57:00.185559100 -0700
-+++ modified/txm_module.h	2023-07-24 00:57:00.186559900 -0700
+--- orig/txm_module.h	2023-11-06 03:50:51.149116200 -0800
++++ modified/txm_module.h	2023-11-06 03:50:51.149116200 -0800
 @@ -21,6 +21,15 @@
  /*                                                                        */
  /**************************************************************************/
@@ -1220,8 +1220,8 @@ diff -au --ignore-file-name-case orig/txm_module.h modified/txm_module.h
  ALIGN_TYPE  _txm_module_manager_user_mode_entry(ULONG kernel_request, ALIGN_TYPE param_1, ALIGN_TYPE param_2, ALIGN_TYPE param_3);
  UINT  _txm_module_manager_maximum_module_priority_set(TXM_MODULE_INSTANCE *module_instance, UINT priority);
 diff -au --ignore-file-name-case orig/txm_module_application_request.c modified/txm_module_application_request.c
---- orig/txm_module_application_request.c	2023-07-24 00:57:00.092468200 -0700
-+++ modified/txm_module_application_request.c	2023-07-24 00:57:00.093471300 -0700
+--- orig/txm_module_application_request.c	2023-11-06 03:50:51.088899200 -0800
++++ modified/txm_module_application_request.c	2023-11-06 03:50:51.088899200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -1279,8 +1279,8 @@ diff -au --ignore-file-name-case orig/txm_module_application_request.c modified/
  
  UINT   return_value;
 diff -au --ignore-file-name-case orig/txm_module_callback_request_thread_entry.c modified/txm_module_callback_request_thread_entry.c
---- orig/txm_module_callback_request_thread_entry.c	2023-07-24 00:57:00.094472600 -0700
-+++ modified/txm_module_callback_request_thread_entry.c	2023-07-24 00:57:00.094472600 -0700
+--- orig/txm_module_callback_request_thread_entry.c	2023-11-06 03:50:51.088899200 -0800
++++ modified/txm_module_callback_request_thread_entry.c	2023-11-06 03:50:51.089902800 -0800
 @@ -21,6 +21,20 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -1441,8 +1441,8 @@ diff -au --ignore-file-name-case orig/txm_module_callback_request_thread_entry.c
      }
  }
 diff -au --ignore-file-name-case orig/txm_module_manager_alignment_adjust.c modified/txm_module_manager_alignment_adjust.c
---- orig/txm_module_manager_alignment_adjust.c	2023-07-24 00:57:00.039421500 -0700
-+++ modified/txm_module_manager_alignment_adjust.c	2023-07-24 00:57:00.040420900 -0700
+--- orig/txm_module_manager_alignment_adjust.c	2023-11-06 03:50:51.054776200 -0800
++++ modified/txm_module_manager_alignment_adjust.c	2023-11-06 03:50:51.055779900 -0800
 @@ -1,6 +1,6 @@
  /**************************************************************************/ 
  /*                                                                        */ 
@@ -1461,8 +1461,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_alignment_adjust.c modi
      /* Return all the information to the caller.  */
      *code_size =        ((local_code_size + TXM_MODULE_MEMORY_ALIGNMENT - 1)/TXM_MODULE_MEMORY_ALIGNMENT) * TXM_MODULE_MEMORY_ALIGNMENT;
 diff -au --ignore-file-name-case orig/txm_module_manager_application_request.c modified/txm_module_manager_application_request.c
---- orig/txm_module_manager_application_request.c	2023-07-24 00:57:00.041419800 -0700
-+++ modified/txm_module_manager_application_request.c	2023-07-24 00:57:00.041419800 -0700
+--- orig/txm_module_manager_application_request.c	2023-11-06 03:50:51.055779900 -0800
++++ modified/txm_module_manager_application_request.c	2023-11-06 03:50:51.056783500 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -1556,8 +1556,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_application_request.c m
  }
 -
 diff -au --ignore-file-name-case orig/txm_module_manager_callback_handlers.c modified/txm_module_manager_callback_handlers.c
---- orig/txm_module_manager_callback_handlers.c	2023-07-24 00:57:00.042422600 -0700
-+++ modified/txm_module_manager_callback_handlers.c	2023-07-24 00:57:00.043423800 -0700
+--- orig/txm_module_manager_callback_handlers.c	2023-11-06 03:50:51.056783500 -0800
++++ modified/txm_module_manager_callback_handlers.c	2023-11-06 03:50:51.057787100 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -4245,8 +4245,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_callback_handlers.c mod
  #endif
  #endif
 diff -au --ignore-file-name-case orig/txm_module_manager_callback_request.c modified/txm_module_manager_callback_request.c
---- orig/txm_module_manager_callback_request.c	2023-07-24 00:57:00.043423800 -0700
-+++ modified/txm_module_manager_callback_request.c	2023-07-24 00:57:00.044424300 -0700
+--- orig/txm_module_manager_callback_request.c	2023-11-06 03:50:51.057787100 -0800
++++ modified/txm_module_manager_callback_request.c	2023-11-06 03:50:51.057787100 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -4370,8 +4370,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_callback_request.c modi
          _txm_module_manager_callback_total_count++;
      }
 diff -au --ignore-file-name-case orig/txm_module_manager_dispatch.h modified/txm_module_manager_dispatch.h
---- orig/txm_module_manager_dispatch.h	2023-07-24 00:57:00.045425200 -0700
-+++ modified/txm_module_manager_dispatch.h	2023-07-24 00:57:00.046424900 -0700
+--- orig/txm_module_manager_dispatch.h	2023-11-06 03:50:51.058790700 -0800
++++ modified/txm_module_manager_dispatch.h	2023-11-06 03:50:51.058790700 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -4505,8 +4505,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_dispatch.h modified/txm
          expiration_function = _txm_module_manager_timer_notify_trampoline;
      }
 diff -au --ignore-file-name-case orig/txm_module_manager_file_load.c modified/txm_module_manager_file_load.c
---- orig/txm_module_manager_file_load.c	2023-07-24 00:57:00.046424900 -0700
-+++ modified/txm_module_manager_file_load.c	2023-07-24 00:57:00.047424600 -0700
+--- orig/txm_module_manager_file_load.c	2023-11-06 03:50:51.059794300 -0800
++++ modified/txm_module_manager_file_load.c	2023-11-06 03:50:51.059794300 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -4936,8 +4936,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_file_load.c modified/tx
  
      /* Return success.  */
 diff -au --ignore-file-name-case orig/txm_module_manager_internal_load.c modified/txm_module_manager_internal_load.c
---- orig/txm_module_manager_internal_load.c	2023-07-24 00:57:00.048428500 -0700
-+++ modified/txm_module_manager_internal_load.c	2023-07-24 00:57:00.048428500 -0700
+--- orig/txm_module_manager_internal_load.c	2023-11-06 03:50:51.059794300 -0800
++++ modified/txm_module_manager_internal_load.c	2023-11-06 03:50:51.060797900 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -5267,8 +5267,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_internal_load.c modifie
      TX_RESTORE
  
 diff -au --ignore-file-name-case orig/txm_module_manager_kernel_dispatch.c modified/txm_module_manager_kernel_dispatch.c
---- orig/txm_module_manager_kernel_dispatch.c	2023-07-24 00:57:00.049437700 -0700
-+++ modified/txm_module_manager_kernel_dispatch.c	2023-07-24 00:57:00.049437700 -0700
+--- orig/txm_module_manager_kernel_dispatch.c	2023-11-06 03:50:51.060797900 -0800
++++ modified/txm_module_manager_kernel_dispatch.c	2023-11-06 03:50:51.061801600 -0800
 @@ -21,7 +21,6 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5307,8 +5307,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_kernel_dispatch.c modif
      /* Sanity-check for a valid module instance.  */
      if (module_instance == TX_NULL)
 diff -au --ignore-file-name-case orig/txm_module_manager_memory_load.c modified/txm_module_manager_memory_load.c
---- orig/txm_module_manager_memory_load.c	2023-07-24 00:57:00.050428300 -0700
-+++ modified/txm_module_manager_memory_load.c	2023-07-24 00:57:00.051429200 -0700
+--- orig/txm_module_manager_memory_load.c	2023-11-06 03:50:51.061801600 -0800
++++ modified/txm_module_manager_memory_load.c	2023-11-06 03:50:51.061801600 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5437,8 +5437,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_memory_load.c modified/
      if (status != TX_SUCCESS)
      {
 diff -au --ignore-file-name-case orig/txm_module_manager_object_allocate.c modified/txm_module_manager_object_allocate.c
---- orig/txm_module_manager_object_allocate.c	2023-07-24 00:57:00.051429200 -0700
-+++ modified/txm_module_manager_object_allocate.c	2023-07-24 00:57:00.052430000 -0700
+--- orig/txm_module_manager_object_allocate.c	2023-11-06 03:50:51.062805200 -0800
++++ modified/txm_module_manager_object_allocate.c	2023-11-06 03:50:51.062805200 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5472,8 +5472,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_object_allocate.c modif
              if (module_instance -> txm_module_instance_object_list_count++ == 0)
              {
 diff -au --ignore-file-name-case orig/txm_module_manager_object_deallocate.c modified/txm_module_manager_object_deallocate.c
---- orig/txm_module_manager_object_deallocate.c	2023-07-24 00:57:00.053431300 -0700
-+++ modified/txm_module_manager_object_deallocate.c	2023-07-24 00:57:00.053431300 -0700
+--- orig/txm_module_manager_object_deallocate.c	2023-11-06 03:50:51.062805200 -0800
++++ modified/txm_module_manager_object_deallocate.c	2023-11-06 03:50:51.063808800 -0800
 @@ -21,7 +21,6 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5483,8 +5483,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_object_deallocate.c mod
  /**************************************************************************/
  /**                                                                       */
 diff -au --ignore-file-name-case orig/txm_module_manager_start.c modified/txm_module_manager_start.c
---- orig/txm_module_manager_start.c	2023-07-24 00:57:00.054439300 -0700
-+++ modified/txm_module_manager_start.c	2023-07-24 00:57:00.055434900 -0700
+--- orig/txm_module_manager_start.c	2023-11-06 03:50:51.063808800 -0800
++++ modified/txm_module_manager_start.c	2023-11-06 03:50:51.063808800 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -5656,8 +5656,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_start.c modified/txm_mo
      _tx_mutex_put(&_txm_module_manager_mutex);
  
 diff -au --ignore-file-name-case orig/txm_module_manager_stop.c modified/txm_module_manager_stop.c
---- orig/txm_module_manager_stop.c	2023-07-24 00:57:00.055434900 -0700
-+++ modified/txm_module_manager_stop.c	2023-07-24 00:57:00.056434200 -0700
+--- orig/txm_module_manager_stop.c	2023-11-06 03:50:51.064812400 -0800
++++ modified/txm_module_manager_stop.c	2023-11-06 03:50:51.064812400 -0800
 @@ -21,6 +21,28 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5825,8 +5825,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_stop.c modified/txm_mod
      _tx_thread_system_preempt_check();
  
 diff -au --ignore-file-name-case orig/txm_module_manager_thread_create.c modified/txm_module_manager_thread_create.c
---- orig/txm_module_manager_thread_create.c	2023-07-24 00:57:00.057434700 -0700
-+++ modified/txm_module_manager_thread_create.c	2023-07-24 00:57:00.058435900 -0700
+--- orig/txm_module_manager_thread_create.c	2023-11-06 03:50:51.065816000 -0800
++++ modified/txm_module_manager_thread_create.c	2023-11-06 03:50:51.065816000 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */
  /**************************************************************************/
@@ -5908,8 +5908,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_thread_create.c modifie
      /* Register thread in the thread array structure.  */
      TX_EL_THREAD_REGISTER(thread_ptr)
 diff -au --ignore-file-name-case orig/txm_module_manager_thread_stack_build.s modified/txm_module_manager_thread_stack_build.s
---- orig/txm_module_manager_thread_stack_build.s	2023-07-24 00:57:00.058435900 -0700
-+++ modified/txm_module_manager_thread_stack_build.s	2023-07-24 00:57:00.059438700 -0700
+--- orig/txm_module_manager_thread_stack_build.s	2023-11-06 03:50:51.065816000 -0800
++++ modified/txm_module_manager_thread_stack_build.s	2023-11-06 03:50:51.066819600 -0800
 @@ -1,6 +1,6 @@
  ;/**************************************************************************/ 
  ;/*                                                                        */ 
@@ -5919,8 +5919,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_thread_stack_build.s mo
  ;/*  This software is copyrighted by and is the sole property of Express   */ 
  ;/*  Logic, Inc.  All rights, title, ownership, or other interests         */ 
 diff -au --ignore-file-name-case orig/txm_module_manager_timer_notify_trampoline.c modified/txm_module_manager_timer_notify_trampoline.c
---- orig/txm_module_manager_timer_notify_trampoline.c	2023-07-24 00:57:00.059438700 -0700
-+++ modified/txm_module_manager_timer_notify_trampoline.c	2023-07-24 00:57:00.060437700 -0700
+--- orig/txm_module_manager_timer_notify_trampoline.c	2023-11-06 03:50:51.066819600 -0800
++++ modified/txm_module_manager_timer_notify_trampoline.c	2023-11-06 03:50:51.066819600 -0800
 @@ -21,6 +21,28 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -5959,8 +5959,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_timer_notify_trampoline
 +}  
 + 
 diff -au --ignore-file-name-case orig/txm_module_manager_unload.c modified/txm_module_manager_unload.c
---- orig/txm_module_manager_unload.c	2023-07-24 00:57:00.060437700 -0700
-+++ modified/txm_module_manager_unload.c	2023-07-24 00:57:00.061440800 -0700
+--- orig/txm_module_manager_unload.c	2023-11-06 03:50:51.067823300 -0800
++++ modified/txm_module_manager_unload.c	2023-11-06 03:50:51.067823300 -0800
 @@ -58,7 +58,7 @@
  /*                                                                        */ 
  /*  INPUT                                                                 */ 
@@ -5998,8 +5998,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_unload.c modified/txm_m
      _tx_byte_release(memory_ptr);
  
 diff -au --ignore-file-name-case orig/txm_module_manager_util.c modified/txm_module_manager_util.c
---- orig/txm_module_manager_util.c	2023-07-24 00:57:00.062439800 -0700
-+++ modified/txm_module_manager_util.c	2023-07-24 00:57:00.062439800 -0700
+--- orig/txm_module_manager_util.c	2023-11-06 03:50:51.068826900 -0800
++++ modified/txm_module_manager_util.c	2023-11-06 03:50:51.068826900 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -6024,8 +6024,8 @@ diff -au --ignore-file-name-case orig/txm_module_manager_util.c modified/txm_mod
      code_size =  module_preamble -> txm_module_preamble_code_size;
  
 diff -au --ignore-file-name-case orig/txm_module_object_allocate.c modified/txm_module_object_allocate.c
---- orig/txm_module_object_allocate.c	2023-07-24 00:57:00.095473000 -0700
-+++ modified/txm_module_object_allocate.c	2023-07-24 00:57:00.095473000 -0700
+--- orig/txm_module_object_allocate.c	2023-11-06 03:50:51.089902800 -0800
++++ modified/txm_module_object_allocate.c	2023-11-06 03:50:51.090906500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6063,8 +6063,8 @@ diff -au --ignore-file-name-case orig/txm_module_object_allocate.c modified/txm_
  
  /**************************************************************************/
 diff -au --ignore-file-name-case orig/txm_module_object_deallocate.c modified/txm_module_object_deallocate.c
---- orig/txm_module_object_deallocate.c	2023-07-24 00:57:00.096482600 -0700
-+++ modified/txm_module_object_deallocate.c	2023-07-24 00:57:00.097475900 -0700
+--- orig/txm_module_object_deallocate.c	2023-11-06 03:50:51.090906500 -0800
++++ modified/txm_module_object_deallocate.c	2023-11-06 03:50:51.090906500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6102,8 +6102,8 @@ diff -au --ignore-file-name-case orig/txm_module_object_deallocate.c modified/tx
  
  /**************************************************************************/
 diff -au --ignore-file-name-case orig/txm_module_object_pointer_get.c modified/txm_module_object_pointer_get.c
---- orig/txm_module_object_pointer_get.c	2023-07-24 00:57:00.097475900 -0700
-+++ modified/txm_module_object_pointer_get.c	2023-07-24 00:57:00.098474100 -0700
+--- orig/txm_module_object_pointer_get.c	2023-11-06 03:50:51.091910100 -0800
++++ modified/txm_module_object_pointer_get.c	2023-11-06 03:50:51.091910100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6141,8 +6141,8 @@ diff -au --ignore-file-name-case orig/txm_module_object_pointer_get.c modified/t
  
  /**************************************************************************/
 diff -au --ignore-file-name-case orig/txm_module_object_pointer_get_extended.c modified/txm_module_object_pointer_get_extended.c
---- orig/txm_module_object_pointer_get_extended.c	2023-07-24 00:57:00.098474100 -0700
-+++ modified/txm_module_object_pointer_get_extended.c	2023-07-24 00:57:00.099475000 -0700
+--- orig/txm_module_object_pointer_get_extended.c	2023-11-06 03:50:51.092913700 -0800
++++ modified/txm_module_object_pointer_get_extended.c	2023-11-06 03:50:51.092913700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6180,8 +6180,8 @@ diff -au --ignore-file-name-case orig/txm_module_object_pointer_get_extended.c m
  
  /**************************************************************************/
 diff -au --ignore-file-name-case orig/txm_module_port.h modified/txm_module_port.h
---- orig/txm_module_port.h	2023-07-24 00:57:00.186559900 -0700
-+++ modified/txm_module_port.h	2023-07-24 00:57:00.187568000 -0700
+--- orig/txm_module_port.h	2023-11-06 03:50:51.150119900 -0800
++++ modified/txm_module_port.h	2023-11-06 03:50:51.150119900 -0800
 @@ -1,6 +1,6 @@
 -/**************************************************************************/ 
 +/**************************************************************************/
@@ -6684,8 +6684,8 @@ diff -au --ignore-file-name-case orig/txm_module_port.h modified/txm_module_port
  #endif
  
 diff -au --ignore-file-name-case orig/txm_module_thread_shell_entry.c modified/txm_module_thread_shell_entry.c
---- orig/txm_module_thread_shell_entry.c	2023-07-24 00:57:00.099475000 -0700
-+++ modified/txm_module_thread_shell_entry.c	2023-07-24 00:57:00.100475800 -0700
+--- orig/txm_module_thread_shell_entry.c	2023-11-06 03:50:51.092913700 -0800
++++ modified/txm_module_thread_shell_entry.c	2023-11-06 03:50:51.093917300 -0800
 @@ -21,6 +21,14 @@
  /*                                                                        */ 
  /**************************************************************************/ 
@@ -6728,8 +6728,8 @@ diff -au --ignore-file-name-case orig/txm_module_thread_shell_entry.c modified/t
          /* Save the entry info pointer, for later use.  */
          _txm_module_entry_info =  thread_info;
 diff -au --ignore-file-name-case orig/txm_module_thread_system_suspend.c modified/txm_module_thread_system_suspend.c
---- orig/txm_module_thread_system_suspend.c	2023-07-24 00:57:00.101479700 -0700
-+++ modified/txm_module_thread_system_suspend.c	2023-07-24 00:57:00.101479700 -0700
+--- orig/txm_module_thread_system_suspend.c	2023-11-06 03:50:51.093917300 -0800
++++ modified/txm_module_thread_system_suspend.c	2023-11-06 03:50:51.094920900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6767,8 +6767,8 @@ diff -au --ignore-file-name-case orig/txm_module_thread_system_suspend.c modifie
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_create.c modified/txm_mutex_create.c
---- orig/txm_mutex_create.c	2023-07-24 00:57:00.102479800 -0700
-+++ modified/txm_mutex_create.c	2023-07-24 00:57:00.102479800 -0700
+--- orig/txm_mutex_create.c	2023-11-06 03:50:51.094920900 -0800
++++ modified/txm_mutex_create.c	2023-11-06 03:50:51.094920900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6806,8 +6806,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_create.c modified/txm_mutex_crea
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_delete.c modified/txm_mutex_delete.c
---- orig/txm_mutex_delete.c	2023-07-24 00:57:00.103480700 -0700
-+++ modified/txm_mutex_delete.c	2023-07-24 00:57:00.104479600 -0700
+--- orig/txm_mutex_delete.c	2023-11-06 03:50:51.095924500 -0800
++++ modified/txm_mutex_delete.c	2023-11-06 03:50:51.095924500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6845,8 +6845,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_delete.c modified/txm_mutex_dele
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_get.c modified/txm_mutex_get.c
---- orig/txm_mutex_get.c	2023-07-24 00:57:00.105482800 -0700
-+++ modified/txm_mutex_get.c	2023-07-24 00:57:00.106481700 -0700
+--- orig/txm_mutex_get.c	2023-11-06 03:50:51.096928200 -0800
++++ modified/txm_mutex_get.c	2023-11-06 03:50:51.096928200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6884,8 +6884,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_get.c modified/txm_mutex_get.c
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_info_get.c modified/txm_mutex_info_get.c
---- orig/txm_mutex_info_get.c	2023-07-24 00:57:00.107484900 -0700
-+++ modified/txm_mutex_info_get.c	2023-07-24 00:57:00.107484900 -0700
+--- orig/txm_mutex_info_get.c	2023-11-06 03:50:51.096928200 -0800
++++ modified/txm_mutex_info_get.c	2023-11-06 03:50:51.097931800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6923,8 +6923,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_info_get.c modified/txm_mutex_in
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_performance_info_get.c modified/txm_mutex_performance_info_get.c
---- orig/txm_mutex_performance_info_get.c	2023-07-24 00:57:00.108485700 -0700
-+++ modified/txm_mutex_performance_info_get.c	2023-07-24 00:57:00.108485700 -0700
+--- orig/txm_mutex_performance_info_get.c	2023-11-06 03:50:51.097931800 -0800
++++ modified/txm_mutex_performance_info_get.c	2023-11-06 03:50:51.098935400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -6962,8 +6962,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_performance_info_get.c modified/
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_performance_system_info_get.c modified/txm_mutex_performance_system_info_get.c
---- orig/txm_mutex_performance_system_info_get.c	2023-07-24 00:57:00.109497600 -0700
-+++ modified/txm_mutex_performance_system_info_get.c	2023-07-24 00:57:00.110485500 -0700
+--- orig/txm_mutex_performance_system_info_get.c	2023-11-06 03:50:51.098935400 -0800
++++ modified/txm_mutex_performance_system_info_get.c	2023-11-06 03:50:51.098935400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7001,8 +7001,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_performance_system_info_get.c mo
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_prioritize.c modified/txm_mutex_prioritize.c
---- orig/txm_mutex_prioritize.c	2023-07-24 00:57:00.110485500 -0700
-+++ modified/txm_mutex_prioritize.c	2023-07-24 00:57:00.111486800 -0700
+--- orig/txm_mutex_prioritize.c	2023-11-06 03:50:51.099939000 -0800
++++ modified/txm_mutex_prioritize.c	2023-11-06 03:50:51.099939000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7040,8 +7040,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_prioritize.c modified/txm_mutex_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_mutex_put.c modified/txm_mutex_put.c
---- orig/txm_mutex_put.c	2023-07-24 00:57:00.111486800 -0700
-+++ modified/txm_mutex_put.c	2023-07-24 00:57:00.112494100 -0700
+--- orig/txm_mutex_put.c	2023-11-06 03:50:51.100942600 -0800
++++ modified/txm_mutex_put.c	2023-11-06 03:50:51.100942600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7079,8 +7079,8 @@ diff -au --ignore-file-name-case orig/txm_mutex_put.c modified/txm_mutex_put.c
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_create.c modified/txm_queue_create.c
---- orig/txm_queue_create.c	2023-07-24 00:57:00.113488100 -0700
-+++ modified/txm_queue_create.c	2023-07-24 00:57:00.113488100 -0700
+--- orig/txm_queue_create.c	2023-11-06 03:50:51.100942600 -0800
++++ modified/txm_queue_create.c	2023-11-06 03:50:51.101946200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7118,8 +7118,8 @@ diff -au --ignore-file-name-case orig/txm_queue_create.c modified/txm_queue_crea
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_delete.c modified/txm_queue_delete.c
---- orig/txm_queue_delete.c	2023-07-24 00:57:00.114491300 -0700
-+++ modified/txm_queue_delete.c	2023-07-24 00:57:00.115492100 -0700
+--- orig/txm_queue_delete.c	2023-11-06 03:50:51.101946200 -0800
++++ modified/txm_queue_delete.c	2023-11-06 03:50:51.102949900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7157,8 +7157,8 @@ diff -au --ignore-file-name-case orig/txm_queue_delete.c modified/txm_queue_dele
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_flush.c modified/txm_queue_flush.c
---- orig/txm_queue_flush.c	2023-07-24 00:57:00.115492100 -0700
-+++ modified/txm_queue_flush.c	2023-07-24 00:57:00.116493000 -0700
+--- orig/txm_queue_flush.c	2023-11-06 03:50:51.102949900 -0800
++++ modified/txm_queue_flush.c	2023-11-06 03:50:51.102949900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7196,8 +7196,8 @@ diff -au --ignore-file-name-case orig/txm_queue_flush.c modified/txm_queue_flush
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_front_send.c modified/txm_queue_front_send.c
---- orig/txm_queue_front_send.c	2023-07-24 00:57:00.116493000 -0700
-+++ modified/txm_queue_front_send.c	2023-07-24 00:57:00.117494200 -0700
+--- orig/txm_queue_front_send.c	2023-11-06 03:50:51.103953500 -0800
++++ modified/txm_queue_front_send.c	2023-11-06 03:50:51.103953500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7235,8 +7235,8 @@ diff -au --ignore-file-name-case orig/txm_queue_front_send.c modified/txm_queue_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_info_get.c modified/txm_queue_info_get.c
---- orig/txm_queue_info_get.c	2023-07-24 00:57:00.117494200 -0700
-+++ modified/txm_queue_info_get.c	2023-07-24 00:57:00.118505700 -0700
+--- orig/txm_queue_info_get.c	2023-11-06 03:50:51.104957100 -0800
++++ modified/txm_queue_info_get.c	2023-11-06 03:50:51.104957100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7274,8 +7274,8 @@ diff -au --ignore-file-name-case orig/txm_queue_info_get.c modified/txm_queue_in
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_performance_info_get.c modified/txm_queue_performance_info_get.c
---- orig/txm_queue_performance_info_get.c	2023-07-24 00:57:00.119494000 -0700
-+++ modified/txm_queue_performance_info_get.c	2023-07-24 00:57:00.119494000 -0700
+--- orig/txm_queue_performance_info_get.c	2023-11-06 03:50:51.104957100 -0800
++++ modified/txm_queue_performance_info_get.c	2023-11-06 03:50:51.105960700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7313,8 +7313,8 @@ diff -au --ignore-file-name-case orig/txm_queue_performance_info_get.c modified/
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_performance_system_info_get.c modified/txm_queue_performance_system_info_get.c
---- orig/txm_queue_performance_system_info_get.c	2023-07-24 00:57:00.120497200 -0700
-+++ modified/txm_queue_performance_system_info_get.c	2023-07-24 00:57:00.120497200 -0700
+--- orig/txm_queue_performance_system_info_get.c	2023-11-06 03:50:51.105960700 -0800
++++ modified/txm_queue_performance_system_info_get.c	2023-11-06 03:50:51.106964300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7352,8 +7352,8 @@ diff -au --ignore-file-name-case orig/txm_queue_performance_system_info_get.c mo
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_prioritize.c modified/txm_queue_prioritize.c
---- orig/txm_queue_prioritize.c	2023-07-24 00:57:00.121495800 -0700
-+++ modified/txm_queue_prioritize.c	2023-07-24 00:57:00.122497000 -0700
+--- orig/txm_queue_prioritize.c	2023-11-06 03:50:51.106964300 -0800
++++ modified/txm_queue_prioritize.c	2023-11-06 03:50:51.106964300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7391,8 +7391,8 @@ diff -au --ignore-file-name-case orig/txm_queue_prioritize.c modified/txm_queue_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_receive.c modified/txm_queue_receive.c
---- orig/txm_queue_receive.c	2023-07-24 00:57:00.122497000 -0700
-+++ modified/txm_queue_receive.c	2023-07-24 00:57:00.123497800 -0700
+--- orig/txm_queue_receive.c	2023-11-06 03:50:51.107967900 -0800
++++ modified/txm_queue_receive.c	2023-11-06 03:50:51.107967900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7430,8 +7430,8 @@ diff -au --ignore-file-name-case orig/txm_queue_receive.c modified/txm_queue_rec
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_send.c modified/txm_queue_send.c
---- orig/txm_queue_send.c	2023-07-24 00:57:00.123497800 -0700
-+++ modified/txm_queue_send.c	2023-07-24 00:57:00.124498700 -0700
+--- orig/txm_queue_send.c	2023-11-06 03:50:51.108971600 -0800
++++ modified/txm_queue_send.c	2023-11-06 03:50:51.108971600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7469,8 +7469,8 @@ diff -au --ignore-file-name-case orig/txm_queue_send.c modified/txm_queue_send.c
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_queue_send_notify.c modified/txm_queue_send_notify.c
---- orig/txm_queue_send_notify.c	2023-07-24 00:57:00.125499600 -0700
-+++ modified/txm_queue_send_notify.c	2023-07-24 00:57:00.125499600 -0700
+--- orig/txm_queue_send_notify.c	2023-11-06 03:50:51.108971600 -0800
++++ modified/txm_queue_send_notify.c	2023-11-06 03:50:51.109975200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7508,8 +7508,8 @@ diff -au --ignore-file-name-case orig/txm_queue_send_notify.c modified/txm_queue
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_ceiling_put.c modified/txm_semaphore_ceiling_put.c
---- orig/txm_semaphore_ceiling_put.c	2023-07-24 00:57:00.126502700 -0700
-+++ modified/txm_semaphore_ceiling_put.c	2023-07-24 00:57:00.126502700 -0700
+--- orig/txm_semaphore_ceiling_put.c	2023-11-06 03:50:51.109975200 -0800
++++ modified/txm_semaphore_ceiling_put.c	2023-11-06 03:50:51.110978800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7547,8 +7547,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_ceiling_put.c modified/txm_s
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_create.c modified/txm_semaphore_create.c
---- orig/txm_semaphore_create.c	2023-07-24 00:57:00.127503600 -0700
-+++ modified/txm_semaphore_create.c	2023-07-24 00:57:00.127503600 -0700
+--- orig/txm_semaphore_create.c	2023-11-06 03:50:51.110978800 -0800
++++ modified/txm_semaphore_create.c	2023-11-06 03:50:51.110978800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7586,8 +7586,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_create.c modified/txm_semaph
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_delete.c modified/txm_semaphore_delete.c
---- orig/txm_semaphore_delete.c	2023-07-24 00:57:00.128504400 -0700
-+++ modified/txm_semaphore_delete.c	2023-07-24 00:57:00.129503800 -0700
+--- orig/txm_semaphore_delete.c	2023-11-06 03:50:51.111982400 -0800
++++ modified/txm_semaphore_delete.c	2023-11-06 03:50:51.111982400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7625,8 +7625,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_delete.c modified/txm_semaph
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_get.c modified/txm_semaphore_get.c
---- orig/txm_semaphore_get.c	2023-07-24 00:57:00.129503800 -0700
-+++ modified/txm_semaphore_get.c	2023-07-24 00:57:00.130506500 -0700
+--- orig/txm_semaphore_get.c	2023-11-06 03:50:51.112986000 -0800
++++ modified/txm_semaphore_get.c	2023-11-06 03:50:51.112986000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7664,8 +7664,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_get.c modified/txm_semaphore
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_info_get.c modified/txm_semaphore_info_get.c
---- orig/txm_semaphore_info_get.c	2023-07-24 00:57:00.130506500 -0700
-+++ modified/txm_semaphore_info_get.c	2023-07-24 00:57:00.131505500 -0700
+--- orig/txm_semaphore_info_get.c	2023-11-06 03:50:51.112986000 -0800
++++ modified/txm_semaphore_info_get.c	2023-11-06 03:50:51.113989600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7703,8 +7703,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_info_get.c modified/txm_sema
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_performance_info_get.c modified/txm_semaphore_performance_info_get.c
---- orig/txm_semaphore_performance_info_get.c	2023-07-24 00:57:00.132508600 -0700
-+++ modified/txm_semaphore_performance_info_get.c	2023-07-24 00:57:00.132508600 -0700
+--- orig/txm_semaphore_performance_info_get.c	2023-11-06 03:50:51.113989600 -0800
++++ modified/txm_semaphore_performance_info_get.c	2023-11-06 03:50:51.114993300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7742,8 +7742,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_performance_info_get.c modif
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_performance_system_info_get.c modified/txm_semaphore_performance_system_info_get.c
---- orig/txm_semaphore_performance_system_info_get.c	2023-07-24 00:57:00.133507600 -0700
-+++ modified/txm_semaphore_performance_system_info_get.c	2023-07-24 00:57:00.134510000 -0700
+--- orig/txm_semaphore_performance_system_info_get.c	2023-11-06 03:50:51.114993300 -0800
++++ modified/txm_semaphore_performance_system_info_get.c	2023-11-06 03:50:51.115996900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7781,8 +7781,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_performance_system_info_get.
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_prioritize.c modified/txm_semaphore_prioritize.c
---- orig/txm_semaphore_prioritize.c	2023-07-24 00:57:00.134510000 -0700
-+++ modified/txm_semaphore_prioritize.c	2023-07-24 00:57:00.135509300 -0700
+--- orig/txm_semaphore_prioritize.c	2023-11-06 03:50:51.115996900 -0800
++++ modified/txm_semaphore_prioritize.c	2023-11-06 03:50:51.115996900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7820,8 +7820,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_prioritize.c modified/txm_se
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_put.c modified/txm_semaphore_put.c
---- orig/txm_semaphore_put.c	2023-07-24 00:57:00.136510200 -0700
-+++ modified/txm_semaphore_put.c	2023-07-24 00:57:00.136510200 -0700
+--- orig/txm_semaphore_put.c	2023-11-06 03:50:51.117000500 -0800
++++ modified/txm_semaphore_put.c	2023-11-06 03:50:51.117000500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7859,8 +7859,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_put.c modified/txm_semaphore
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_semaphore_put_notify.c modified/txm_semaphore_put_notify.c
---- orig/txm_semaphore_put_notify.c	2023-07-24 00:57:00.137511000 -0700
-+++ modified/txm_semaphore_put_notify.c	2023-07-24 00:57:00.137511000 -0700
+--- orig/txm_semaphore_put_notify.c	2023-11-06 03:50:51.118004100 -0800
++++ modified/txm_semaphore_put_notify.c	2023-11-06 03:50:51.118004100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7898,8 +7898,8 @@ diff -au --ignore-file-name-case orig/txm_semaphore_put_notify.c modified/txm_se
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_create.c modified/txm_thread_create.c
---- orig/txm_thread_create.c	2023-07-24 00:57:00.138521400 -0700
-+++ modified/txm_thread_create.c	2023-07-24 00:57:00.139515400 -0700
+--- orig/txm_thread_create.c	2023-11-06 03:50:51.118004100 -0800
++++ modified/txm_thread_create.c	2023-11-06 03:50:51.119007700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7937,8 +7937,8 @@ diff -au --ignore-file-name-case orig/txm_thread_create.c modified/txm_thread_cr
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_delete.c modified/txm_thread_delete.c
---- orig/txm_thread_delete.c	2023-07-24 00:57:00.139515400 -0700
-+++ modified/txm_thread_delete.c	2023-07-24 00:57:00.140515900 -0700
+--- orig/txm_thread_delete.c	2023-11-06 03:50:51.119007700 -0800
++++ modified/txm_thread_delete.c	2023-11-06 03:50:51.120011300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -7976,8 +7976,8 @@ diff -au --ignore-file-name-case orig/txm_thread_delete.c modified/txm_thread_de
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_entry_exit_notify.c modified/txm_thread_entry_exit_notify.c
---- orig/txm_thread_entry_exit_notify.c	2023-07-24 00:57:00.141517100 -0700
-+++ modified/txm_thread_entry_exit_notify.c	2023-07-24 00:57:00.141517100 -0700
+--- orig/txm_thread_entry_exit_notify.c	2023-11-06 03:50:51.120011300 -0800
++++ modified/txm_thread_entry_exit_notify.c	2023-11-06 03:50:51.120011300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8015,8 +8015,8 @@ diff -au --ignore-file-name-case orig/txm_thread_entry_exit_notify.c modified/tx
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_identify.c modified/txm_thread_identify.c
---- orig/txm_thread_identify.c	2023-07-24 00:57:00.142518300 -0700
-+++ modified/txm_thread_identify.c	2023-07-24 00:57:00.142518300 -0700
+--- orig/txm_thread_identify.c	2023-11-06 03:50:51.121015000 -0800
++++ modified/txm_thread_identify.c	2023-11-06 03:50:51.121015000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8054,8 +8054,8 @@ diff -au --ignore-file-name-case orig/txm_thread_identify.c modified/txm_thread_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_info_get.c modified/txm_thread_info_get.c
---- orig/txm_thread_info_get.c	2023-07-24 00:57:00.143518800 -0700
-+++ modified/txm_thread_info_get.c	2023-07-24 00:57:00.143518800 -0700
+--- orig/txm_thread_info_get.c	2023-11-06 03:50:51.122018600 -0800
++++ modified/txm_thread_info_get.c	2023-11-06 03:50:51.122018600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8093,8 +8093,8 @@ diff -au --ignore-file-name-case orig/txm_thread_info_get.c modified/txm_thread_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_interrupt_control.c modified/txm_thread_interrupt_control.c
---- orig/txm_thread_interrupt_control.c	2023-07-24 00:57:00.144519700 -0700
-+++ modified/txm_thread_interrupt_control.c	2023-07-24 00:57:00.145526600 -0700
+--- orig/txm_thread_interrupt_control.c	2023-11-06 03:50:51.122018600 -0800
++++ modified/txm_thread_interrupt_control.c	2023-11-06 03:50:51.123022200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8132,8 +8132,8 @@ diff -au --ignore-file-name-case orig/txm_thread_interrupt_control.c modified/tx
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_performance_info_get.c modified/txm_thread_performance_info_get.c
---- orig/txm_thread_performance_info_get.c	2023-07-24 00:57:00.145526600 -0700
-+++ modified/txm_thread_performance_info_get.c	2023-07-24 00:57:00.146519900 -0700
+--- orig/txm_thread_performance_info_get.c	2023-11-06 03:50:51.123022200 -0800
++++ modified/txm_thread_performance_info_get.c	2023-11-06 03:50:51.124025800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8171,8 +8171,8 @@ diff -au --ignore-file-name-case orig/txm_thread_performance_info_get.c modified
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_performance_system_info_get.c modified/txm_thread_performance_system_info_get.c
---- orig/txm_thread_performance_system_info_get.c	2023-07-24 00:57:00.146519900 -0700
-+++ modified/txm_thread_performance_system_info_get.c	2023-07-24 00:57:00.147520700 -0700
+--- orig/txm_thread_performance_system_info_get.c	2023-11-06 03:50:51.124025800 -0800
++++ modified/txm_thread_performance_system_info_get.c	2023-11-06 03:50:51.124025800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8210,8 +8210,8 @@ diff -au --ignore-file-name-case orig/txm_thread_performance_system_info_get.c m
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_preemption_change.c modified/txm_thread_preemption_change.c
---- orig/txm_thread_preemption_change.c	2023-07-24 00:57:00.148521600 -0700
-+++ modified/txm_thread_preemption_change.c	2023-07-24 00:57:00.148521600 -0700
+--- orig/txm_thread_preemption_change.c	2023-11-06 03:50:51.125029400 -0800
++++ modified/txm_thread_preemption_change.c	2023-11-06 03:50:51.125029400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8249,8 +8249,8 @@ diff -au --ignore-file-name-case orig/txm_thread_preemption_change.c modified/tx
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_priority_change.c modified/txm_thread_priority_change.c
---- orig/txm_thread_priority_change.c	2023-07-24 00:57:00.149522800 -0700
-+++ modified/txm_thread_priority_change.c	2023-07-24 00:57:00.149522800 -0700
+--- orig/txm_thread_priority_change.c	2023-11-06 03:50:51.126033100 -0800
++++ modified/txm_thread_priority_change.c	2023-11-06 03:50:51.126033100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8288,8 +8288,8 @@ diff -au --ignore-file-name-case orig/txm_thread_priority_change.c modified/txm_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_relinquish.c modified/txm_thread_relinquish.c
---- orig/txm_thread_relinquish.c	2023-07-24 00:57:00.150526400 -0700
-+++ modified/txm_thread_relinquish.c	2023-07-24 00:57:00.151526100 -0700
+--- orig/txm_thread_relinquish.c	2023-11-06 03:50:51.126033100 -0800
++++ modified/txm_thread_relinquish.c	2023-11-06 03:50:51.127036700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8327,8 +8327,8 @@ diff -au --ignore-file-name-case orig/txm_thread_relinquish.c modified/txm_threa
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_reset.c modified/txm_thread_reset.c
---- orig/txm_thread_reset.c	2023-07-24 00:57:00.151526100 -0700
-+++ modified/txm_thread_reset.c	2023-07-24 00:57:00.152528400 -0700
+--- orig/txm_thread_reset.c	2023-11-06 03:50:51.127036700 -0800
++++ modified/txm_thread_reset.c	2023-11-06 03:50:51.128040300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8366,8 +8366,8 @@ diff -au --ignore-file-name-case orig/txm_thread_reset.c modified/txm_thread_res
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_resume.c modified/txm_thread_resume.c
---- orig/txm_thread_resume.c	2023-07-24 00:57:00.153528200 -0700
-+++ modified/txm_thread_resume.c	2023-07-24 00:57:00.153528200 -0700
+--- orig/txm_thread_resume.c	2023-11-06 03:50:51.128040300 -0800
++++ modified/txm_thread_resume.c	2023-11-06 03:50:51.129044400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8405,8 +8405,8 @@ diff -au --ignore-file-name-case orig/txm_thread_resume.c modified/txm_thread_re
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_sleep.c modified/txm_thread_sleep.c
---- orig/txm_thread_sleep.c	2023-07-24 00:57:00.154529400 -0700
-+++ modified/txm_thread_sleep.c	2023-07-24 00:57:00.155528700 -0700
+--- orig/txm_thread_sleep.c	2023-11-06 03:50:51.129044400 -0800
++++ modified/txm_thread_sleep.c	2023-11-06 03:50:51.129044400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8444,8 +8444,8 @@ diff -au --ignore-file-name-case orig/txm_thread_sleep.c modified/txm_thread_sle
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_stack_error_notify.c modified/txm_thread_stack_error_notify.c
---- orig/txm_thread_stack_error_notify.c	2023-07-24 00:57:00.156529200 -0700
-+++ modified/txm_thread_stack_error_notify.c	2023-07-24 00:57:00.157532400 -0700
+--- orig/txm_thread_stack_error_notify.c	2023-11-06 03:50:51.130047500 -0800
++++ modified/txm_thread_stack_error_notify.c	2023-11-06 03:50:51.130047500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8483,8 +8483,8 @@ diff -au --ignore-file-name-case orig/txm_thread_stack_error_notify.c modified/t
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_suspend.c modified/txm_thread_suspend.c
---- orig/txm_thread_suspend.c	2023-07-24 00:57:00.157532400 -0700
-+++ modified/txm_thread_suspend.c	2023-07-24 00:57:00.158532100 -0700
+--- orig/txm_thread_suspend.c	2023-11-06 03:50:51.131051100 -0800
++++ modified/txm_thread_suspend.c	2023-11-06 03:50:51.131051100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8522,8 +8522,8 @@ diff -au --ignore-file-name-case orig/txm_thread_suspend.c modified/txm_thread_s
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_terminate.c modified/txm_thread_terminate.c
---- orig/txm_thread_terminate.c	2023-07-24 00:57:00.158532100 -0700
-+++ modified/txm_thread_terminate.c	2023-07-24 00:57:00.159532200 -0700
+--- orig/txm_thread_terminate.c	2023-11-06 03:50:51.131051100 -0800
++++ modified/txm_thread_terminate.c	2023-11-06 03:50:51.132054800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8561,8 +8561,8 @@ diff -au --ignore-file-name-case orig/txm_thread_terminate.c modified/txm_thread
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_time_slice_change.c modified/txm_thread_time_slice_change.c
---- orig/txm_thread_time_slice_change.c	2023-07-24 00:57:00.160533000 -0700
-+++ modified/txm_thread_time_slice_change.c	2023-07-24 00:57:00.160533000 -0700
+--- orig/txm_thread_time_slice_change.c	2023-11-06 03:50:51.132054800 -0800
++++ modified/txm_thread_time_slice_change.c	2023-11-06 03:50:51.133058400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8600,8 +8600,8 @@ diff -au --ignore-file-name-case orig/txm_thread_time_slice_change.c modified/tx
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_thread_wait_abort.c modified/txm_thread_wait_abort.c
---- orig/txm_thread_wait_abort.c	2023-07-24 00:57:00.161533900 -0700
-+++ modified/txm_thread_wait_abort.c	2023-07-24 00:57:00.161533900 -0700
+--- orig/txm_thread_wait_abort.c	2023-11-06 03:50:51.133058400 -0800
++++ modified/txm_thread_wait_abort.c	2023-11-06 03:50:51.133058400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8639,8 +8639,8 @@ diff -au --ignore-file-name-case orig/txm_thread_wait_abort.c modified/txm_threa
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_time_get.c modified/txm_time_get.c
---- orig/txm_time_get.c	2023-07-24 00:57:00.162535100 -0700
-+++ modified/txm_time_get.c	2023-07-24 00:57:00.163537900 -0700
+--- orig/txm_time_get.c	2023-11-06 03:50:51.134062000 -0800
++++ modified/txm_time_get.c	2023-11-06 03:50:51.134062000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8678,8 +8678,8 @@ diff -au --ignore-file-name-case orig/txm_time_get.c modified/txm_time_get.c
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_time_set.c modified/txm_time_set.c
---- orig/txm_time_set.c	2023-07-24 00:57:00.163537900 -0700
-+++ modified/txm_time_set.c	2023-07-24 00:57:00.164536900 -0700
+--- orig/txm_time_set.c	2023-11-06 03:50:51.134062000 -0800
++++ modified/txm_time_set.c	2023-11-06 03:50:51.135065600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8717,8 +8717,8 @@ diff -au --ignore-file-name-case orig/txm_time_set.c modified/txm_time_set.c
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_activate.c modified/txm_timer_activate.c
---- orig/txm_timer_activate.c	2023-07-24 00:57:00.164536900 -0700
-+++ modified/txm_timer_activate.c	2023-07-24 00:57:00.165537700 -0700
+--- orig/txm_timer_activate.c	2023-11-06 03:50:51.135065600 -0800
++++ modified/txm_timer_activate.c	2023-11-06 03:50:51.136069200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8756,8 +8756,8 @@ diff -au --ignore-file-name-case orig/txm_timer_activate.c modified/txm_timer_ac
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_change.c modified/txm_timer_change.c
---- orig/txm_timer_change.c	2023-07-24 00:57:00.165537700 -0700
-+++ modified/txm_timer_change.c	2023-07-24 00:57:00.166538600 -0700
+--- orig/txm_timer_change.c	2023-11-06 03:50:51.136069200 -0800
++++ modified/txm_timer_change.c	2023-11-06 03:50:51.136069200 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8795,8 +8795,8 @@ diff -au --ignore-file-name-case orig/txm_timer_change.c modified/txm_timer_chan
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_create.c modified/txm_timer_create.c
---- orig/txm_timer_create.c	2023-07-24 00:57:00.166538600 -0700
-+++ modified/txm_timer_create.c	2023-07-24 00:57:00.167552300 -0700
+--- orig/txm_timer_create.c	2023-11-06 03:50:51.137072800 -0800
++++ modified/txm_timer_create.c	2023-11-06 03:50:51.137072800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8834,8 +8834,8 @@ diff -au --ignore-file-name-case orig/txm_timer_create.c modified/txm_timer_crea
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_deactivate.c modified/txm_timer_deactivate.c
---- orig/txm_timer_deactivate.c	2023-07-24 00:57:00.168543000 -0700
-+++ modified/txm_timer_deactivate.c	2023-07-24 00:57:00.168543000 -0700
+--- orig/txm_timer_deactivate.c	2023-11-06 03:50:51.138076500 -0800
++++ modified/txm_timer_deactivate.c	2023-11-06 03:50:51.138076500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8873,8 +8873,8 @@ diff -au --ignore-file-name-case orig/txm_timer_deactivate.c modified/txm_timer_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_delete.c modified/txm_timer_delete.c
---- orig/txm_timer_delete.c	2023-07-24 00:57:00.169541900 -0700
-+++ modified/txm_timer_delete.c	2023-07-24 00:57:00.170544700 -0700
+--- orig/txm_timer_delete.c	2023-11-06 03:50:51.138076500 -0800
++++ modified/txm_timer_delete.c	2023-11-06 03:50:51.139080100 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8912,8 +8912,8 @@ diff -au --ignore-file-name-case orig/txm_timer_delete.c modified/txm_timer_dele
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_info_get.c modified/txm_timer_info_get.c
---- orig/txm_timer_info_get.c	2023-07-24 00:57:00.170544700 -0700
-+++ modified/txm_timer_info_get.c	2023-07-24 00:57:00.171545500 -0700
+--- orig/txm_timer_info_get.c	2023-11-06 03:50:51.139080100 -0800
++++ modified/txm_timer_info_get.c	2023-11-06 03:50:51.140083700 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8951,8 +8951,8 @@ diff -au --ignore-file-name-case orig/txm_timer_info_get.c modified/txm_timer_in
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_performance_info_get.c modified/txm_timer_performance_info_get.c
---- orig/txm_timer_performance_info_get.c	2023-07-24 00:57:00.171545500 -0700
-+++ modified/txm_timer_performance_info_get.c	2023-07-24 00:57:00.172558500 -0700
+--- orig/txm_timer_performance_info_get.c	2023-11-06 03:50:51.140083700 -0800
++++ modified/txm_timer_performance_info_get.c	2023-11-06 03:50:51.141087300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -8990,8 +8990,8 @@ diff -au --ignore-file-name-case orig/txm_timer_performance_info_get.c modified/
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_timer_performance_system_info_get.c modified/txm_timer_performance_system_info_get.c
---- orig/txm_timer_performance_system_info_get.c	2023-07-24 00:57:00.173545700 -0700
-+++ modified/txm_timer_performance_system_info_get.c	2023-07-24 00:57:00.173545700 -0700
+--- orig/txm_timer_performance_system_info_get.c	2023-11-06 03:50:51.141087300 -0800
++++ modified/txm_timer_performance_system_info_get.c	2023-11-06 03:50:51.141087300 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9029,8 +9029,8 @@ diff -au --ignore-file-name-case orig/txm_timer_performance_system_info_get.c mo
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_buffer_full_notify.c modified/txm_trace_buffer_full_notify.c
---- orig/txm_trace_buffer_full_notify.c	2023-07-24 00:57:00.174548500 -0700
-+++ modified/txm_trace_buffer_full_notify.c	2023-07-24 00:57:00.175549300 -0700
+--- orig/txm_trace_buffer_full_notify.c	2023-11-06 03:50:51.142090900 -0800
++++ modified/txm_trace_buffer_full_notify.c	2023-11-06 03:50:51.142090900 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9068,8 +9068,8 @@ diff -au --ignore-file-name-case orig/txm_trace_buffer_full_notify.c modified/tx
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_disable.c modified/txm_trace_disable.c
---- orig/txm_trace_disable.c	2023-07-24 00:57:00.175549300 -0700
-+++ modified/txm_trace_disable.c	2023-07-24 00:57:00.176708000 -0700
+--- orig/txm_trace_disable.c	2023-11-06 03:50:51.143094500 -0800
++++ modified/txm_trace_disable.c	2023-11-06 03:50:51.143094500 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9107,8 +9107,8 @@ diff -au --ignore-file-name-case orig/txm_trace_disable.c modified/txm_trace_dis
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_enable.c modified/txm_trace_enable.c
---- orig/txm_trace_enable.c	2023-07-24 00:57:00.177549200 -0700
-+++ modified/txm_trace_enable.c	2023-07-24 00:57:00.177549200 -0700
+--- orig/txm_trace_enable.c	2023-11-06 03:50:51.143094500 -0800
++++ modified/txm_trace_enable.c	2023-11-06 03:50:51.144098600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9146,8 +9146,8 @@ diff -au --ignore-file-name-case orig/txm_trace_enable.c modified/txm_trace_enab
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_event_filter.c modified/txm_trace_event_filter.c
---- orig/txm_trace_event_filter.c	2023-07-24 00:57:00.178550400 -0700
-+++ modified/txm_trace_event_filter.c	2023-07-24 00:57:00.178550400 -0700
+--- orig/txm_trace_event_filter.c	2023-11-06 03:50:51.144098600 -0800
++++ modified/txm_trace_event_filter.c	2023-11-06 03:50:51.145101800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9185,8 +9185,8 @@ diff -au --ignore-file-name-case orig/txm_trace_event_filter.c modified/txm_trac
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_event_unfilter.c modified/txm_trace_event_unfilter.c
---- orig/txm_trace_event_unfilter.c	2023-07-24 00:57:00.179562600 -0700
-+++ modified/txm_trace_event_unfilter.c	2023-07-24 00:57:00.180554000 -0700
+--- orig/txm_trace_event_unfilter.c	2023-11-06 03:50:51.145101800 -0800
++++ modified/txm_trace_event_unfilter.c	2023-11-06 03:50:51.145101800 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9224,8 +9224,8 @@ diff -au --ignore-file-name-case orig/txm_trace_event_unfilter.c modified/txm_tr
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_interrupt_control.c modified/txm_trace_interrupt_control.c
---- orig/txm_trace_interrupt_control.c	2023-07-24 00:57:00.180554000 -0700
-+++ modified/txm_trace_interrupt_control.c	2023-07-24 00:57:00.181555300 -0700
+--- orig/txm_trace_interrupt_control.c	2023-11-06 03:50:51.146105400 -0800
++++ modified/txm_trace_interrupt_control.c	2023-11-06 03:50:51.146105400 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9263,8 +9263,8 @@ diff -au --ignore-file-name-case orig/txm_trace_interrupt_control.c modified/txm
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_isr_enter_insert.c modified/txm_trace_isr_enter_insert.c
---- orig/txm_trace_isr_enter_insert.c	2023-07-24 00:57:00.181555300 -0700
-+++ modified/txm_trace_isr_enter_insert.c	2023-07-24 00:57:00.182554200 -0700
+--- orig/txm_trace_isr_enter_insert.c	2023-11-06 03:50:51.146105400 -0800
++++ modified/txm_trace_isr_enter_insert.c	2023-11-06 03:50:51.147109000 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9302,8 +9302,8 @@ diff -au --ignore-file-name-case orig/txm_trace_isr_enter_insert.c modified/txm_
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_isr_exit_insert.c modified/txm_trace_isr_exit_insert.c
---- orig/txm_trace_isr_exit_insert.c	2023-07-24 00:57:00.183557000 -0700
-+++ modified/txm_trace_isr_exit_insert.c	2023-07-24 00:57:00.183557000 -0700
+--- orig/txm_trace_isr_exit_insert.c	2023-11-06 03:50:51.147109000 -0800
++++ modified/txm_trace_isr_exit_insert.c	2023-11-06 03:50:51.148112600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/
@@ -9341,8 +9341,8 @@ diff -au --ignore-file-name-case orig/txm_trace_isr_exit_insert.c modified/txm_t
  
  /**************************************************************************/ 
 diff -au --ignore-file-name-case orig/txm_trace_user_event_insert.c modified/txm_trace_user_event_insert.c
---- orig/txm_trace_user_event_insert.c	2023-07-24 00:57:00.184557800 -0700
-+++ modified/txm_trace_user_event_insert.c	2023-07-24 00:57:00.184557800 -0700
+--- orig/txm_trace_user_event_insert.c	2023-11-06 03:50:51.148112600 -0800
++++ modified/txm_trace_user_event_insert.c	2023-11-06 03:50:51.148112600 -0800
 @@ -21,6 +21,24 @@
  /*                                                                        */
  /**************************************************************************/

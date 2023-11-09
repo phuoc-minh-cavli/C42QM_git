@@ -228,6 +228,10 @@ int psm_qmi_handle_indication(psm_event_params_type *parms)
         }
         event       = parms->event_id;
         qmi_cb_data = (qmi_ind_callback_type*)parms->data;
+        if (qmi_cb_data == NULL)
+        {
+            break;
+        }
         srv_index   = (int)qmi_cb_data->cb_data;
 
         PSM_LOG_INFO2("psm_qmi_handle_indication: event - %d srv_index - %d", event, srv_index);
@@ -249,6 +253,7 @@ int psm_qmi_handle_indication(psm_event_params_type *parms)
     if ( qmi_cb_data && qmi_cb_data->data_buf )
     {
         free(qmi_cb_data->data_buf);
+        qmi_cb_data->data_buf = NULL;
     }
 
     PSM_LOG_FUNC_RETURN("psm_qmi_handle_indication: function return");

@@ -1,9 +1,9 @@
 <config>
   <image_tree>
     <name>MPSS.CT.2.0</name>
-    <build_id>MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1</build_id>
+    <build_id>MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1</build_id>
     <branch_point_revision>None</branch_point_revision>
-    <revision>00388</revision>
+    <revision>00396</revision>
     <spin>1</spin>
     <client>9205_LTENBGE_PACK</client>
   </image_tree>

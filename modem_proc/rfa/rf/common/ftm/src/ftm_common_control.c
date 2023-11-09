@@ -11,7 +11,7 @@
 
 /*==============================================================================
 
-  Copyright (c) 2010 - 2021 Qualcomm Technologies Incorporated. All Rights Reserved
+  Copyright (c) 2010 - 2023 Qualcomm Technologies Incorporated. All Rights Reserved
 
   Qualcomm Proprietary
 
@@ -36,10 +36,11 @@
   This section contains comments describing changes made to this file.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rfa.mpss/3.10/rf/common/ftm/src/ftm_common_control.c#5 $
+  $Header: //components/rel/rfa.mpss/3.10/rf/common/ftm/src/ftm_common_control.c#6 $
 
 when       who     what, where, why
 --------   ---     -------------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 01/21/21   gk      B87/B88 addition
 01/21/21   gk      B8_B addition
 12/04/19   mp      NBIOT Band86 changes
@@ -671,7 +672,7 @@ rf_tech_band_info tech_band_lookup[FTM_PHONE_MODE_MAX] =
 	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/ 
 	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/ 
 	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/
-	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/ 
+	{FTM_RF_TECH_LTE, RFCOM_BAND_LTE_B255}, /*Padding*/ /*FTM_PHONE_MODE_LTE_B255=82, LTE, B255*/
     {FTM_RF_TECH_LTE, RFCOM_BAND_LTE_B66},    /*FTM_PHONE_MODE_LTE_B66=83, LTE, B66*/        
 	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/ 
 	{FTM_RF_TECH_UNKNOWN, RFM_CDMA_MAX_BAND}, /*Padding*/ 	
@@ -3552,6 +3553,7 @@ ftm_common_resolve_rf_mode
   case FTM_PHONE_MODE_LTE_B86:  
   case FTM_PHONE_MODE_LTE_B87:  
   case FTM_PHONE_MODE_LTE_B88:
+  case FTM_PHONE_MODE_LTE_B255:
   case FTM_PHONE_MODE_LTE_B256:
     rf_mode = RFM_LTE_MODE; /* LTE Mode */
     break;   

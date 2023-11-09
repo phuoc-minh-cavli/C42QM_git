@@ -1,2 +1,2 @@
-Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.ltee.prod/non-reloc/Sectools_Builder_qdsp6sw_log.txt
+Logging to /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_pageonly_img/build/9205.ltee.prod/non-reloc/Sectools_Builder_qdsp6sw_log.txt
 Sectools Builder config was provided using deprecated api

@@ -1,6 +1,6 @@
 diff -au --ignore-file-name-case ../../ExpressLogic/tx_DAM_demo_app/demo_threadx_module.c ../../threadx/txm_demo_app/src/demo_threadx_module.c
---- ../../ExpressLogic/tx_DAM_demo_app/demo_threadx_module.c	2023-07-23 23:36:32.146964900 -0700
-+++ ../../threadx/txm_demo_app/src/demo_threadx_module.c	2023-07-23 23:36:33.039815400 -0700
+--- ../../ExpressLogic/tx_DAM_demo_app/demo_threadx_module.c	2023-11-06 02:53:21.351006900 -0800
++++ ../../threadx/txm_demo_app/src/demo_threadx_module.c	2023-11-06 02:53:22.198976400 -0800
 @@ -1,16 +1,64 @@
 +/*======================================================================
 +                        demo_threadx_module.c 
@@ -616,8 +616,8 @@ diff -au --ignore-file-name-case ../../ExpressLogic/tx_DAM_demo_app/demo_threadx
 +		tx_thread_sleep(timeout);
 +}
 diff -au --ignore-file-name-case ../../ExpressLogic/tx_DAM_demo_app/txm_module_preamble.s ../../threadx/txm_demo_app/src/txm_module_preamble.S
---- ../../ExpressLogic/tx_DAM_demo_app/txm_module_preamble.s	2023-07-23 23:36:32.205021200 -0700
-+++ ../../threadx/txm_demo_app/src/txm_module_preamble.S	2023-07-23 23:36:33.039815400 -0700
+--- ../../ExpressLogic/tx_DAM_demo_app/txm_module_preamble.s	2023-11-06 02:53:21.352010400 -0800
++++ ../../threadx/txm_demo_app/src/txm_module_preamble.S	2023-11-06 02:53:22.199980000 -0800
 @@ -1,5 +1,5 @@
 -    AREA  Init, CODE, READONLY
 -

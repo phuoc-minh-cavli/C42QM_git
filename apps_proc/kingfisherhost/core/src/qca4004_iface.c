@@ -11,17 +11,19 @@
 #include "qca4004.h"
 #include "qca4004_utils.h"
 #include "qca4004_internal.h"
-
+#include "qca4004_fota.h"
 
 /*-------------------------------------------------------------------------
  * Static & global Variable Declarations
  *-----------------------------------------------------------------------*/
  
+extern void process_ota(uint8_t* rsp, uint16_t rsp_len);
 /* response Engine */
 AT_RSP_ENTRY at_rsps[] = {
     /* RSP              	LEN                      	 process_rsp*/   
     { "MAC=",           sizeof("MAC=")-1,        process_mac},
 	{ "APS=",           sizeof("APS=")-1,        process_aps},
+	{ "OTA=",           sizeof("OTA=")-1,        process_ota},
 	{ NULL,             0,                       NULL}
 };
 
@@ -63,12 +65,32 @@ int8_t find_rsp_idx(uint8_t* rsp, uint16_t len)
  *----------------------------------------------------------------------
  */
 
+extern QCA4004_FOTA_Ctx_t *qca4004_fota_ctxt_p;
+
 void QCA4004_Process_Input_Data(uint32_t length, uint8_t *buffer)
 {
 	uint16_t data_len = 0;
 	int8_t rsp_idx = -1;
 	uint8_t *buf;
 	
+	if(qca4004_fota_ctxt_p != NULL && qca4004_fota_ctxt_p->fota_state == QCA4004_FOTA_STATE_H2T_DATA)
+	{
+		uint32_t i = 0;
+		for(;i<length;i++)
+		{
+			if(buffer[i] == QCA4004_FOTA_ACK)
+			{
+				qca4004_fota_ctxt_p->retValue = 1;
+				qurt_signal_set(&(qca4004_fota_ctxt_p->signal), 0x01);
+			}
+			else if(buffer[i] == QCA4004_FOTA_NAK)
+			{
+				qca4004_fota_ctxt_p->retValue = 0;
+				qurt_signal_set(&(qca4004_fota_ctxt_p->signal), 0x01);
+			}
+		}
+		return;
+	}
 	#if 0
 	uint32_t i = 0;
 	for(;i<length;i++)

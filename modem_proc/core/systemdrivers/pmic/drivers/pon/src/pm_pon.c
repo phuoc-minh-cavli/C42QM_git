@@ -5,7 +5,7 @@
 *  \n This header file contains class implementation of the PON
 *  \n peripheral APIs
 *  \n
-*  \n &copy; Copyright 2012-2019 QUALCOMM Technologies Incorporated, All Rights Reserved
+*   Copyright (c) 2012-2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
 */
 /*===================================================================
 			        EDIT HISTORY FOR MODULE
@@ -492,6 +492,43 @@ pm_pon_irq_status(uint8 pmic_device_index, pm_pon_irq_type irq, pm_irq_status_ty
 
   *status = data ? TRUE : FALSE;
     
+  return err_flag;
+}
+
+pm_err_flag_type 
+pm_pon_reason_debug(uint8 pmic_device_index, pm_pon_debug_type *ptr_debug_data)
+{
+  pm_err_flag_type err_flag = PM_ERR_FLAG__SUCCESS;
+  uint32 slave_id = 0;
+  if (ptr_debug_data == NULL)
+  {
+    return PM_ERR_FLAG__INVALID_POINTER;
+  }
+  err_flag = pm_get_slave_id(pmic_device_index, 0, &slave_id);
+
+  if (err_flag != PM_ERR_FLAG__SUCCESS)
+  {
+    return PM_ERR_FLAG__PAR1_OUT_OF_RANGE;
+  }
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C0, &ptr_debug_data->pon_data[0], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C2, &ptr_debug_data->pon_data[1], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C4, &ptr_debug_data->pon_data[2], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C5, &ptr_debug_data->pon_data[3], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C7, &ptr_debug_data->pon_data[4], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C8, &ptr_debug_data->pon_data[5], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8C9, &ptr_debug_data->pon_data[6], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8CA, &ptr_debug_data->pon_data[7], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x8CB, &ptr_debug_data->pon_data[8], 0);
+  
+  err_flag |= pm_comm_read_byte(slave_id, 0xa40, &ptr_debug_data->AON_data[0], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0xa41, &ptr_debug_data->AON_data[1], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0xa46, &ptr_debug_data->AON_data[2], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0xa47, &ptr_debug_data->AON_data[3], 0);
+  
+  err_flag |= pm_comm_read_byte(slave_id, 0x103, &ptr_debug_data->pmic_version[0], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x160, &ptr_debug_data->pmic_version[1], 0);
+  err_flag |= pm_comm_read_byte(slave_id, 0x161, &ptr_debug_data->pmic_version[2], 0);
+  
   return err_flag;
 }
 

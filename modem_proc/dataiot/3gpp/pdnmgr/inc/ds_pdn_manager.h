@@ -14,8 +14,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_manager.h#15 $
-  $DateTime: 2023/05/09 03:51:31 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_manager.h#16 $
+  $DateTime: 2023/09/26 01:04:13 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -3292,6 +3292,29 @@ SIDE EFFECTS  None
 ===========================================================================*/
 void ds_pdn_mgr_register_mem_event_callbacks( void );
 
+
+/*===========================================================================
+FUNCTION DS_PDN_MGR_GET_PDN_FROM_FWK_INDEX
+
+DESCRIPTION
+  This function is used to get to the PDN pointer corresponding to FWK index.
+
+PARAMETERS
+  FWK index.
+  
+DEPENDENCIES
+  None.
+
+RETURN VALUE
+  Pointer to the PDN context.
+   
+SIDE EFFECTS
+  None
+===========================================================================*/
+ds_pdn_mgr_s* ds_pdn_mgr_get_pdn_from_fwk_index
+(
+  ds_fwk_index_type fwk_index
+);
 
 #ifdef FEATURE_GPS_WWAN_PRIORITY_SEARCH
 /*===========================================================================

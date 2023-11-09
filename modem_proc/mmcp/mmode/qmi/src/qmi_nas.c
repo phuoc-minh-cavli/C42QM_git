@@ -25,7 +25,7 @@ Qualcomm Confidential and Proprietary.
 
                       EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/mmcp.mpss/6.1.10/mmode/qmi/src/qmi_nas.c#1 $ $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+  $Header: //components/rel/mmcp.mpss/6.1.10/mmode/qmi/src/qmi_nas.c#2 $ $DateTime: 2023/09/08 07:19:13 $ $Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -42038,6 +42038,13 @@ void qmi_nas_set_edrx_params_resp()
   qmi_mmode_qcsi_transaction_type          *cmd_buf_p=qmi_nasi_global.set_edrx_req_buf_p;
   /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
   qmi_nasi_global.set_edrx_req_buf_p = NULL;
+
+  if(cmd_buf_p == NULL)
+  {
+    QM_MSG_ERROR("Cant find client for QMI_NAS_SET_EDRX_PARAMS_RESP ");
+    return;
+  }
+
   retval = qmi_svc_put_result_tlv(&response, result, errval);
   if (FALSE == retval)
   {

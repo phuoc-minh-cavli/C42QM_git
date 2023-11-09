@@ -4,7 +4,7 @@
 
   ---------------------------------------------------------------------------
 
-  Copyright (c) 2016-2018, 2020-2022 Qualcomm Technologies, Inc.
+  Copyright (c) 2016-2018, 2020-2023 Qualcomm Technologies, Inc.
   All Rights Reserved.
   Confidential and Proprietary - Qualcomm Technologies, Inc.
   ---------------------------------------------------------------------------
@@ -32,6 +32,8 @@ qapi_Coap_Status_t blockwise_rx_handler(qapi_Coap_Session_Hdl_t          hdl, co
 bool is_bl_session_match(coap_block_session_info_t * block_info , qapi_Coap_Packet_t * dl_pkt)
 {
    bool ret = false;
+   char *dl_pkt_uri_path = NULL;
+   int dl_pkt_uri_path_len = 0;
    
    if(block_info == NULL || dl_pkt == NULL)
      return ret;
@@ -55,6 +57,17 @@ bool is_bl_session_match(coap_block_session_info_t * block_info , qapi_Coap_Pack
             return true;
       }
    }
+
+   dl_pkt_uri_path_len = coap_get_header_uri_path((void * )dl_pkt, (char **)&dl_pkt_uri_path);
+   if(block_info->uri_path_str_len == (uint16_t)dl_pkt_uri_path_len)
+   {
+     if(memcmp(block_info->uri_path_str, dl_pkt_uri_path, dl_pkt_uri_path_len) == 0)
+     {
+       ret = true;
+     }
+   }
+   if(dl_pkt_uri_path)
+     free(dl_pkt_uri_path);
    return ret;
 }
 
@@ -99,6 +112,7 @@ qapi_Status_t session_handleBlockwise(client_context_t * contextP, qapi_Coap_Pac
    qapi_Status_t ret_status = QAPI_ERROR;
    bool final_pkt = false;
    coap_block_session_info_t * block_info = NULL;
+   int dl_pkt_uri_path_len = 0;
 
    if(contextP == NULL ||dl_block_param ==NULL || dl_pkt == NULL)
    {
@@ -134,12 +148,11 @@ qapi_Status_t session_handleBlockwise(client_context_t * contextP, qapi_Coap_Pac
           return QAPI_INTERNAL_SERVER_ERROR_5_00;
        }
        coap_init_message((void *)(block_info->master_pkt), COAP_TYPE_ACK, QAPI_CONTINUE_2_31 ,dl_pkt->mid);
-       if(dl_pkt->token_len)
-    {
-          coap_set_header_token(block_info->master_pkt, dl_pkt->token, dl_pkt->token_len);
-          block_info->token_len          = dl_pkt->token_len;
-          COAP_MEMCPY(block_info->token, COAP_TOKEN_LEN, dl_pkt->token , block_info->token_len);
-       }
+       dl_pkt_uri_path_len = coap_get_header_uri_path((void * )dl_pkt, (char **)&(block_info->uri_path_str));
+       if(dl_pkt_uri_path_len < 1)
+         block_info->uri_path_str_len = 0;
+       else
+         block_info->uri_path_str_len = (uint16_t)dl_pkt_uri_path_len;
        contextP->bl_info_param[DL_REQ] = block_info;
        block_info->first_bl_time = time_get_secs() ;
        block_info->tv_expiry_time     = contextP->blockwise_max_age;
@@ -150,16 +163,28 @@ qapi_Status_t session_handleBlockwise(client_context_t * contextP, qapi_Coap_Pac
       }
      if((ret_status = blockwise_rx_handler((qapi_Coap_Session_Hdl_t)contextP->cid, block_info , dl_pkt , dl_block_param)) == QAPI_NO_ERROR)
      {
-        if(dl_block_param->more == 0)
-        {
-           ds_iot_ulog_high("Block: received final packet");
-           final_pkt = true;
-    }
-    else
-    {
-           coap_set_header_block1((void *)block_info->master_pkt, dl_block_param->num, dl_block_param->more, dl_block_param->size);
-           if(dl_block_param->num == 0)coap_set_option((coap_packet_ext_t *)block_info->master_pkt, COAP_OPTION_BLOCK1, NULL);
-    }
+       if(dl_block_param->more == 0)
+       {
+         ds_iot_ulog_high("Block: received final packet");
+         final_pkt = true;
+       }
+       else
+       {
+         if(dl_pkt->token_len)
+         {
+           coap_set_header_token(block_info->master_pkt, dl_pkt->token, dl_pkt->token_len);
+           block_info->token_len          = dl_pkt->token_len;
+           COAP_MEMCPY(block_info->token, COAP_TOKEN_LEN, dl_pkt->token , block_info->token_len);
+         }
+         else
+         {
+           block_info->master_pkt->token_len = 0;
+           memset(block_info->master_pkt->token, 0, sizeof(block_info->master_pkt->token));
+           UNSET_OPTION(block_info->master_pkt, COAP_OPTION_TOKEN);
+         }
+         coap_set_header_block1((void *)block_info->master_pkt, dl_block_param->num, dl_block_param->more, dl_block_param->size);
+         if(dl_block_param->num == 0)coap_set_option((coap_packet_ext_t *)block_info->master_pkt, COAP_OPTION_BLOCK1, NULL);
+       }
      }
    }
    if(ret_status == QAPI_NO_ERROR && final_pkt == false)
@@ -473,6 +498,12 @@ void clean_block_info(client_context_t * ctxt, coap_block_session_info_t **block
    {
      free(block_info->complete_payload);
      block_info->complete_payload = NULL;
+   }
+   if(block_info->uri_path_str)
+   {
+     free(block_info->uri_path_str);
+     block_info->uri_path_str = NULL;
+     block_info->uri_path_str_len = 0;
    }
 
    if(ctxt->bl_info_param[DL_REQ] == block_info)

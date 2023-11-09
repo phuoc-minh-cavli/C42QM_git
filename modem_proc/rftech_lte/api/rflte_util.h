@@ -21,6 +21,7 @@ $Header:
   
 When       who     what, where, why 
 -------------------------------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 05/26/21   gk      Band mask update for newer bands for QAT3516
 04/09/21   gk      NAD band(B8_B) FTM,NS Support
@@ -143,6 +144,9 @@ extern "C" {
 /*!> For FDD Bands  B8_B */
 #define RFLTE_UTIL_FDD_DL_UL_EARFCN_OFFSET_B8_B  18060
 
+/*!> For FDD Bands  B255 */
+#define RFLTE_UTIL_FDD_DL_UL_EARFCN_OFFSET_B255  32768
+
 /*!> For FDD Bands  B256 */
 #define RFLTE_UTIL_FDD_DL_UL_EARFCN_OFFSET_B256  32768
 /*----------------------------------------------------------------------------*/
@@ -218,6 +222,7 @@ typedef enum
 #define LTE_B40_DL_LOW_FREQ         2300000
 #define LTE_B41_DL_LOW_FREQ	    2496000
 #define LTE_B42_DL_LOW_FREQ	    3400000
+#define LTE_B255_DL_LOW_FREQ        1525000
 #define LTE_B256_DL_LOW_FREQ         2170000
 
 
@@ -259,6 +264,7 @@ typedef enum
 #define LTE_B40_DL_HIGH_FREQ        2400000
 #define LTE_B41_DL_HIGH_FREQ	    2690000
 #define LTE_B42_DL_HIGH_FREQ	    3600000
+#define LTE_B255_DL_HIGH_FREQ	    1559000
 #define LTE_B256_DL_HIGH_FREQ	    2200000
 
 /*MINIMUM DL CHANNEL NUMBER FOR EACH BAND*/
@@ -298,6 +304,7 @@ typedef enum
 #define LTE_B40_DL_MIN_CHAN         38650
 #define LTE_B41_DL_MIN_CHAN         39650
 #define LTE_B42_DL_MIN_CHAN         41590
+#define LTE_B255_DL_MIN_CHAN        228736
 #define LTE_B256_DL_MIN_CHAN         229076
 
 
@@ -338,6 +345,7 @@ typedef enum
 #define LTE_B40_DL_MAX_CHAN         39649
 #define LTE_B41_DL_MAX_CHAN	    41589
 #define LTE_B42_DL_MAX_CHAN	    43589
+#define LTE_B255_DL_MAX_CHAN	    229075
 #define LTE_B256_DL_MAX_CHAN	    229375
 
 
@@ -378,6 +386,7 @@ typedef enum
 #define LTE_B40_UL_LOW_FREQ         2300000
 #define LTE_B41_UL_LOW_FREQ         2496000
 #define LTE_B42_UL_LOW_FREQ         3400000
+#define LTE_B255_UL_LOW_FREQ        1626500
 #define LTE_B256_UL_LOW_FREQ        1980000
 
 
@@ -418,6 +427,7 @@ typedef enum
 #define LTE_B41_UL_HIGH_FREQ        2690000
 #define LTE_B42_UL_HIGH_FREQ        3600000
 #define LTE_B42_UL_HIGH_FREQ        2010000
+#define LTE_B255_UL_HIGH_FREQ       1660500
 
 
 /*MINIMUM UL CHANNEL NUMBER FOR EACH BAND*/
@@ -456,6 +466,7 @@ typedef enum
 #define LTE_B40_UL_MIN_CHAN         38650
 #define LTE_B41_UL_MIN_CHAN         39650
 #define LTE_B42_UL_MIN_CHAN         41590
+#define LTE_B255_UL_MIN_CHAN        261504
 #define LTE_B256_UL_MIN_CHAN        261844
 
 
@@ -495,6 +506,7 @@ typedef enum
 #define LTE_B40_UL_MAX_CHAN         39649
 #define LTE_B41_UL_MAX_CHAN         41589
 #define LTE_B42_UL_MAX_CHAN         43589
+#define LTE_B255_UL_MAX_CHAN        261843
 #define LTE_B256_UL_MAX_CHAN        262143
 
 
@@ -562,6 +574,7 @@ typedef enum
 #define LTE_B73_MASK_IDX  53
 #define LTE_B85_MASK_IDX  54
 #define LTE_B86_MASK_IDX  55
+#define LTE_B255_MASK_IDX 61
 #define LTE_B256_MASK_IDX 60
 
 
@@ -617,6 +630,7 @@ typedef enum
 #define LTE_B73_MASK  ((uint64)SYS_BM_64BIT(LTE_B73_MASK_IDX))
 #define LTE_B85_MASK  ((uint64)SYS_BM_64BIT(LTE_B85_MASK_IDX))
 #define LTE_B86_MASK  ((uint64)SYS_BM_64BIT(LTE_B86_MASK_IDX))
+#define LTE_B255_MASK  ((uint64)SYS_BM_64BIT(LTE_B255_MASK_IDX))
 #define LTE_B256_MASK  ((uint64)SYS_BM_64BIT(LTE_B256_MASK_IDX))
 
 

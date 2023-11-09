@@ -16,8 +16,8 @@ Copyright (c) 2018 by Qualcomm Technologies, Incorporated.  All Rights Reserved.
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/src/ds_3gpp_rmsm_atif.c#1 $ 
-  $DateTime: 2020/03/17 08:03:16 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/rmsm/src/ds_3gpp_rmsm_atif.c#2 $ 
+  $DateTime: 2023/08/03 09:33:47 $ $Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---   ----------------------------------------------------------
@@ -317,6 +317,7 @@ void ds_3gpp_rmsm_atif_get_all_active_prim_profiles
   }
   
   ds_pdn_mgr_get_all_pdn_context_profiles(profile_list_info_ptr);
+  ds_3gpp_rmsm_ati_get_profile_list(profile_list_info_ptr);
 
 }/* ds_3gpp_rmsm_atif_get_all_active_pdn_profiles */
 

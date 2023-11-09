@@ -258,6 +258,7 @@ void transaction_free(coap_transaction_t * transacP)
     if (transacP->buffer)
     {
       free(transacP->buffer);
+      transacP->buffer = NULL;
     }
 
     free(transacP);
@@ -588,8 +589,35 @@ int transaction_send(void * context,coap_transaction_t * transacP)
 
 	               if(transaction)
                    {
+                      coap_block_session_info_t * bl_info = get_block_info_from_pkt(contextP , transaction->message);
                       contextP->transactionList = contextP->transactionList->next;
-                      transaction->sessionH = NULL;   
+                      transaction->sessionH = NULL;
+					  if(transaction->message != NULL)
+					  {
+					     qapi_Coap_Packet_t *messageP = transaction->message;
+					     coap_free_header(messageP, umem);
+					     if(umem)
+					     {
+					       if(messageP->payload)
+         				   {
+             				  tx_byte_release(messageP->payload);
+					       }
+          	               tx_byte_release(messageP);
+					     }
+						 else
+						 {
+						   if(messageP->payload)
+                           {
+                              free(messageP->payload);
+                           }
+                           free(messageP);
+						 }
+					  }
+					  if(bl_info)
+					  {
+                         clean_block_info(contextP, &bl_info);
+					     bl_info = NULL;
+					  }
                       transaction_free(transaction);
                       transaction = NULL;
 		           }
@@ -682,6 +710,14 @@ void transaction_step(client_context_t * contextP,
     if (transacP->retrans_time <= currentTime)
     {
       removed = transaction_send(contextP, transacP);
+    }
+
+    if(removed == __QAPI_ERROR(QAPI_MOD_NETWORKING, QAPI_NET_COAP_DTLS_RESUMPTION_FAILED_IN_COAP_SEND))
+    {
+        /* stopping further processing of transactions if removed == 105,
+           because all the transactions has already been freed in transaction_send().
+        */
+        break;
     }
 
     if (0 == removed)

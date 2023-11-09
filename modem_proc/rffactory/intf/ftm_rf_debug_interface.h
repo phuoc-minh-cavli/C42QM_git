@@ -33,7 +33,7 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rf_debug_interface.h#89 $
+  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rf_debug_interface.h#91 $
 
 when       who     what, where, why
 --------   ---     -----------------------------------------------------------------------------------------------------
@@ -536,6 +536,8 @@ typedef enum
   FTM_RF_DEBUG_RADIO_CFG_PROP_WAVEFORM_IMMEDIATE_TRIGGER  = 36,      /*!< 36 : GNB Waveform Immediate Trigger Flag */
 
   FTM_RF_DEBUG_RADIO_CFG_PROP_VPA_MAX_MV  = 37,      /*!< 37 : Vpa Mav mV */ 
+  
+  FTM_RF_DEBUG_RADIO_CFG_PROP_ANT_ISO_TUNE_TYPE = 38,      /*< 38 FTM_RF_DEBUG_RADIO_CFG_PROP_ANT_ISO_TUNE_TYPE*/
 
   FTM_RF_DEBUG_RADIO_CFG_PROP_NUM                  /*!< Max : Defines maximum number of properties */
 
@@ -1298,6 +1300,7 @@ typedef enum
   FTM_RF_DEBUG_ADC_AND_DAC_V2_CAL = 5,      /*!< 5 : ADC and DAC V2 Cal */
   FTM_RF_DEBUG_ADC_AND_DAC_AND_QET_CAL = 6,      /*!< 8 : ADC and DAC and QET Cal */
   FTM_RF_DEBUG_DAC_AND_ADC_VCM_CAL             = 7,      /*FBRx ADC VCM Cal*/
+  FTM_RF_DEBUG_ADC_AND_DAC_AND_QET_CAL_V2 = 8,      /*!< 8 : ADC and DAC and QET Cal V2: Disable ADC blob data*/
   FTM_RF_DEBUG_DEVICE_CAL_MAX         /*!< Max */
 } ftm_rf_debug_device_cal_type;
 

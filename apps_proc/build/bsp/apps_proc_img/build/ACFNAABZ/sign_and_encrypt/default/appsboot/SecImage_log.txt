@@ -27,7 +27,7 @@ Header:
 | Type                       | EXEC (Executable file)         |
 | Machine                    | Advanced RISC Machines ARM     |
 | Version                    | 0x1                            |
-| Entry address              | 0x81524750                     |
+| Entry address              | 0x81524c80                     |
 | Program headers offset     | 0x00000034                     |
 | Section headers offset     | 0x00000000                     |
 | Flags                      | 0x05000002                     |
@@ -41,11 +41,11 @@ Header:
 Program Headers: 
 | Num | Type | Offset | VirtAddr | PhysAddr | FileSize | MemSize | Flags | Align |
 |-----|------|--------|----------|----------|----------|---------|-------|-------|
-|  1  | LOAD |0x003000|0x812c0000|0x812c0000| 0x2e2958 | 0x2e2958|   RE  | 0x1000|
-|  2  | LOAD |0x2e5958|0x815a2958|0x815a2958| 0x0016a8 | 0x0016a8|   R   | 0x1000|
+|  1  | LOAD |0x003000|0x812c0000|0x812c0000| 0x2e2a00 | 0x2e2a00|   RE  | 0x1000|
+|  2  | LOAD |0x2e5a00|0x815a2a00|0x815a2a00| 0x001600 | 0x001600|   R   | 0x1000|
 |  3  | LOAD |0x2e7000|0x815a4000|0x815a4000| 0x000000 | 0x000000|   R   | 0x4   |
 |  4  | LOAD |0x2e7000|0x815a4000|0x815a4000| 0x029a08 | 0x276000|   RW  | 0x4000|
-|  5  | LOAD |0x3fbb30|0xf80d40f8|0xf80d40f8| 0x000000 | 0x000000|   R   | 0x4   |
+|  5  | LOAD |0x3fbd80|0xf80d4308|0xf80d4308| 0x000000 | 0x000000|   R   | 0x4   |
 
 Hash Segment Properties: 
 | Header Size     | 168B  |

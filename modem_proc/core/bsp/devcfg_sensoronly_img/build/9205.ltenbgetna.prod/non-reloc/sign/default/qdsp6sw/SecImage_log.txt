@@ -1,9 +1,9 @@
 Upscaling MBN header v5 to MBN header v6
-Performing OEM sign on image: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/build/ms/bin/9205.ltenbgetna.prod/non-reloc/unsigned/qdsp6sw_3.mbn
-Signed image is stored at /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn
+Performing OEM sign on image: /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/build/ms/bin/9205.ltenbgetna.prod/non-reloc/unsigned/qdsp6sw_3.mbn
+Signed image is stored at /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn
 OEM signed image with ECDSA
-Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn signature is valid
-Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn is not encrypted
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn signature is valid
+Image /local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/core/bsp/devcfg_sensoronly_img/build/9205.ltenbgetna.prod/non-reloc/sign/default/qdsp6sw/qdsp6sw_3.mbn is not encrypted
 
 Base Properties: 
 | Integrity Check             | True  |
@@ -43,15 +43,15 @@ Program Headers:
 |-----|------|--------|----------|----------|----------|---------|-------|-------|
 |  1  | LOAD |0x003000|0x80000000|0x80000000| 0x01d54  | 0x002000|   RE  | 0x1000|
 |  2  | LOAD |0x005000|0x80010000|0x80010000| 0x0b488  | 0x00c000|  RWE  | 0x1000|
-|  3  | LOAD |0x011000|0x80020000|0x80020000| 0x81610  | 0x082000|   RE  | 0x1000|
+|  3  | LOAD |0x011000|0x80020000|0x80020000| 0x818d0  | 0x082000|   RE  | 0x1000|
 |  4  | LOAD |0x093000|0x800c0000|0x800c0000| 0x00000  | 0x001000|   RW  | 0x1000|
-|  5  | LOAD |0x093000|0x800d0000|0x800d0000| 0x1a4b9  | 0x01b000|   RW  | 0x1000|
+|  5  | LOAD |0x093000|0x800d0000|0x800d0000| 0x1a649  | 0x01b000|   RW  | 0x1000|
 |  6  | LOAD |0x0ae000|0x800ec000|0x800ec000| 0x44598  | 0x045000|   RW  | 0x1000|
 |  7  | LOAD |0x0f3000|0x80131000|0x80131000| 0x00000  | 0x5c2000|   RW  | 0x1000|
 |  8  | LOAD |0x0f3000|0x806f3000|0x806f3000| 0x01840  | 0x002000|   RW  | 0x1000|
-|  9  | LOAD |0x0f5000|0x80700000|0x80700000| 0xe4040  | 0x0e5000|   RW  | 0x1000|
-|  10 | LOAD |0x1da000|0x807e5000|0x807e5000| 0x0236d  | 0x003000|   R   | 0x1000|
-|  11 | LOAD |0x1dd000|0x80cff000|0x80cff000| 0x00000  | 0x001000|   RW  | 0x1000|
+|  9  | LOAD |0x0f5000|0x80700000|0x80700000| 0xe8040  | 0x0e9000|   RW  | 0x1000|
+|  10 | LOAD |0x1de000|0x807e9000|0x807e9000| 0x02368  | 0x003000|   R   | 0x1000|
+|  11 | LOAD |0x1e1000|0x80cff000|0x80cff000| 0x00000  | 0x001000|   RW  | 0x1000|
 
 Hash Segment Properties: 
 | Header Size     | 168B  |

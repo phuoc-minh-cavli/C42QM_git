@@ -17,8 +17,8 @@ Copyright (c) 2005-2013 by Qualcomm Technologies, Incorporated.  All Rights Rese
 
                       EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/inc/ds_qmap.h#1 $
-  $DateTime: 2020/03/17 08:03:16 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/inc/ds_qmap.h#2 $
+  $DateTime: 2023/07/28 00:11:41 $ $Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -300,6 +300,8 @@ void ds_qmap_process_cmd
 (
   void * cmd_ptr
 );
+
+
 
 #endif /* _DS_QMAP_H */
 

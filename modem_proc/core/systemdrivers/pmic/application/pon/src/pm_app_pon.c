@@ -2,15 +2,15 @@
 *  
 *  \brief Implementation file for PON APP level APIs.
 *    
-*  &copy; Copyright 2019 QUALCOMM Technologies Incorporated, All Rights Reserved
+*  Copyright (c) 2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
 */
 /*===================================================================
 EDIT HISTORY FOR MODULE
  This section contains comments describing changes made to this file.
   Notice that changes are listed in reverse chronological order.
 
-$Date: 2019/12/27 $ 
-$Change: 21991403 $
+$Date: 2023/09/13 $ 
+$Change: 49273354 $
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
 01/25/19   abh     Added file for Tiny Modem image in Twizy
@@ -45,6 +45,7 @@ static pm_misc_register_info_type misc_reg =
 };
 
 #define PM_MISC_SLAVE_ID 0
+#define PM_PON_SLAVE_ID  0
 extern boolean bPMICStub;
 static pmapp_pon_isr_data isr_data;
 /*===========================================================================
@@ -260,4 +261,16 @@ static void* pon_isr(void* me, uint32 intrMask)
   isr_data->cb(status);
 
   return NULL;
+}
+
+
+pm_err_flag_type pmapp_pon_reason_debug(pm_pon_debug_type *debug_data)
+{
+  pm_err_flag_type err_flag = PM_ERR_FLAG__SUCCESS;
+  if (debug_data == NULL)
+  {
+    return PM_ERR_FLAG__INVALID_POINTER;
+  }
+  err_flag = pm_pon_reason_debug(PM_PON_SLAVE_ID,debug_data);
+  return err_flag;
 }

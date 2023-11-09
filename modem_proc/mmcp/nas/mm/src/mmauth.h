@@ -21,7 +21,7 @@ This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
 $PVCSPath:  L:/src/asw/MSM5200/mm/vcs/auth.h_v   1.7   16 Jul 2002 14:44:28   vdrapkin  $
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmauth.h#1 $ $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmauth.h#2 $ $DateTime: 2023/10/16 03:11:57 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -1136,32 +1136,23 @@ extern void auth_deact_retx_timer
   timer_id_T   timer_id
 );
 
+#ifdef FEATURE_LTE
+/*===========================================================================
+
+FUNCTION    MM_INIT_LTE_AUTH_KEYS
+
+DESCRIPTION
+  This function initializes LTE standalone CK, IK keys to random values.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+extern void mm_init_lte_auth_keys();
+#endif
 #endif /* #ifndef AUTH_H */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

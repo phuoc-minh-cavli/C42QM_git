@@ -290,6 +290,12 @@ void lwm2m_process_pkt(void)
       ds_iot_ulog_err("LwM2M clean up in progress.");
       if(pkt_ptr)
       {
+         lwm2m_pkt_id_e id = pkt_ptr->cmd_hdr.cmd_id;
+         if((LWM2M_PROFILE_PROCESSING <= id && id <= LWM2M_EXT_APPLICATION_CB)
+		 	|| (id == LWM2M_EVENT_CB)) 
+	     {
+	       lwm2m_free(pkt_ptr->cmd_data.clientData);
+	     }
          lwm2m_free(pkt_ptr);
          pkt_ptr = NULL;
       }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<!-- $Header: //components/rel/rfnv.mpss/1.0/etc/NvDefinition.xml#472 $ -->
+	<!-- $Header: //components/rel/rfnv.mpss/1.0/etc/NvDefinition.xml#477 $ -->
 	<!-- WARNING: This file only contains Cellular RF related NV item definitions -->
 <NvDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="RFA_NvDefinition_Schema.xsd">
 	<DataType name="uint8">
@@ -2146,6 +2146,9 @@
 	<DataType name="nlic_intpwr_lut_list_v2">
 		<Member type="uint8" name="intpwr_lut_tbl" sizeOf="4"/>
 	</DataType>
+	<DataType name="nlic_intpwr_lut_list_v3">
+		<Member type="uint8" name="intpwr_lut_tbl" sizeOf="8"/>
+	</DataType>
 	<DataType name="nlic_intpwr_slope">
 		<Member type="uint8" name="intpwr_slope_tbl" sizeOf="1"/>
 	</DataType>
@@ -3540,7 +3543,28 @@
 		<Member type="nlic_intpwr_slope" name="intpwr_slope" sizeOf="1"/>
 		<Member type="uint8" name="nlic_delay_descr" sizeOf="1"/>
 		<Member type="nlic_delay_data_type_v2" name="nlic_delay" sizeOf="36"/>
-	</DataType>		
+	</DataType>	
+		<DataType name="RFNV_DATA_TYPE_NLIC_HARMONIC_PARAM_ENHANCED_V6" typeid="619">
+		<Member type="uint8" name="technology_1" sizeOf="1"/>
+		<Member type="uint8" name="technology_2" sizeOf="1"/>
+		<Member type="uint8" name="technology_3" sizeOf="1"/>
+		<Member type="uint8" name="ul_band_1" sizeOf="1"/>
+		<Member type="uint8" name="ul_band_2" sizeOf="1"/>
+		<Member type="uint8" name="dl_band_1" sizeOf="1"/>
+		<Member type="uint8" name="dl_band_2" sizeOf="1"/>
+		<Member type="uint8" name="dl_band_3" sizeOf="1"/>
+		<Member type="uint8" name="victim_carrier_index" sizeOf="1"/>
+		<Member type="uint8" name="interference_type" sizeOf="1"/>
+		<Member type="uint8" name="priority" sizeOf="1"/>
+		<Member type="uint8" name="asdiv_tx_index" sizeOf="1"/>
+		<Member type="uint8" name="enable_nlic" sizeOf="1"/>
+		<Member type="uint8" name="antenna_sel" sizeOf="1"/>
+		<Member type="nlic_kernel_type_list_v2" name="kernel_sel" sizeOf="1"/>
+		<Member type="nlic_intpwr_lut_list_v3" name="intpwr_lut" sizeOf="1"/>
+		<Member type="nlic_intpwr_slope" name="intpwr_slope" sizeOf="1"/>
+		<Member type="uint8" name="nlic_delay_descr" sizeOf="1"/>
+		<Member type="nlic_delay_data_type_v2" name="nlic_delay" sizeOf="49"/>
+	</DataType>	
 	<DataType name="RFNV_DATA_NLIC_IMD_PARAM_ENHANCED_TYPE" typeid="299">
 		<Member type="uint8" name="tx1_band" sizeOf="1"/>
 		<Member type="uint8" name="tx2_band" sizeOf="1"/>
@@ -3829,6 +3853,13 @@
 	<DataType name="RFNV_DATA_TYPE_ATUNER_GENERAL_SETTINGS" typeid="451">
 		<Member type="ATUNER_GENERAL_SETTINGS_TYPE" sizeOf="1" name="algorithm_settings"/>
 		<Member type="ATUNER_ACTIVE_DETUNE_TECH_BANDS_TYPE" sizeOf="1" name="active_detune_list"/>
+	</DataType>
+	<DataType name="ATUNER_EXTENDED_ACTIVE_DETUNE_TECH_BANDS_TYPE">
+		<Member type="uint8" name="number_of_valid_entries" sizeOf="1"/>
+		<Member type="ATUNER_TECH_BAND_LIST_TYPE" name="active_detune_list" sizeOf="48"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_ATUNER_EXTENDED_ACTIVE_DETUNE_SETTINGS" typeid="620">
+		<Member type="ATUNER_EXTENDED_ACTIVE_DETUNE_TECH_BANDS_TYPE" sizeOf="1" name="active_detune_list"/>
 	</DataType>
 	<DataType name="ATUNER_QMI_TO_AOL_MAPPING_TYPE">
 		<Member type="uint8" name="mapping" sizeOf="64"/>
@@ -4427,6 +4458,153 @@
 		<Member type="VOLTERRA_ET_DETROUGH_TYPE_V2" sizeOf="1" name="detrough"/>
 		<Member type="uint16" name="pa_vmin" sizeOf="1"/>
 		<Member type="uint16" name="pa_vmax" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_TX_DAPT_ENABLE" typeid="594">
+		<Member type="uint8" name="enable_dapt" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_TX_CAL_LINEARIZER" typeid="595">
+		<Member type="uint8" name="pa_state" sizeOf="1"/>
+		<Member type="uint32" name="tx_freq_kHz" sizeOf="1"/>
+		<Member type="uint32" name="upper_bound_freq_kHz" sizeOf="1"/>
+		<Member type="uint8" name="rgi_start" sizeOf="1"/>
+		<Member type="uint8" name="rgi_stop" sizeOf="1"/>
+		<Member type="uint8" name="rgi_step" sizeOf="1"/>
+		<Member type="uint16" name="smps_bias" sizeOf="1"/>
+		<Member type="uint16" name="icq" sizeOf="1"/>
+		<Member type="int16" name="pwr_dB10" sizeOf="32"/>
+		<Member type="uint8" name="num_freq" sizeOf="1"/>
+		<Member type="uint32" name="freq_comp_list_kHz" sizeOf="3"/>
+		<Member type="int8" name="freq_comp_offset_dB10" sizeOf="3"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_CAL_THERM_ADC" typeid="596">
+		<Member type="uint16" name="cal_therm_adc" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_CLIPPER_TYPE" typeid="597">
+		<Member type="uint8" name="clipper_type" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_TXAGC_MIN_MAX_POWER_LIMIT_CONTROL" typeid="598">
+		<Member type="int16" name="min_pwr_limit" sizeOf="1"/>
+		<Member type="int16" name="max_pwr_limit" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_TXAGC_CONTROL_PA_SWP" typeid="599">
+		<Member type="uint8" name="num_pa_state" sizeOf="1"/>
+		<Member type="uint8" name="pa_range_map" sizeOf="1"/>
+		<Member type="int16" name="pa_hysteresis_us" sizeOf="1"/>
+		<Member type="int8" name="pa_fall_swp" sizeOf="3"/>
+		<Member type="int8" name="pa_rise_swp" sizeOf="3"/>
+	</DataType>
+	<DataType name="pout_offset_freq_type">
+		<Member type="int8" sizeOf="8" name="freq"/>
+	</DataType>
+	<DataType name="pout_offset_temp_freq_type">
+		<Member type="pout_offset_freq_type" sizeOf="8" name="temp"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_POUT_FREQ_TEMP_COMP" typeid="600">
+		<Member type="int16" name="min_bw_kHz" sizeOf="1"/>
+		<Member type="int16" name="max_bw_kHz" sizeOf="1"/>
+		<Member type="uint8" name="num_freq" sizeOf="1"/>
+		<Member type="uint32" name="freq_list_kHz" sizeOf="8"/>
+		<Member type="pout_offset_temp_freq_type" name="pout_offset_dB10" sizeOf="1"/>
+	</DataType>
+		<DataType name="RFNV_DATA_TYPE_VBATT_POUT_COMP" typeid="601">
+		<Member type="uint8" name="vbatt" sizeOf="1"/>
+		<Member type="int8" name="pout_offset_dB10" sizeOf="8"/>
+	</DataType>
+	<DataType name="gain_offset_freq_comp_list">
+		<Member type="int16" name="freq" sizeOf="6"/>
+	</DataType>
+	<DataType name="gain_offset_vs_gain_state_vs_freq">
+		<Member type="gain_offset_freq_comp_list" name="gain_states" sizeOf="6"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_RX_GAIN_CAL_OFFSET" typeid="602">
+		<Member type="uint8" name="num_freq" sizeOf="1"/>
+		<Member type="uint32" name="freq_list_kHz" sizeOf="1"/>
+		<Member type="gain_offset_vs_gain_state_vs_freq" name="gain_offset" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_RX_LNA_SWITCH_POINT" typeid="603">
+		<Member type="uint8" name="swp_mode_type" sizeOf="1"/>
+		<Member type="int16" name="lna_rise_or_backoff" sizeOf="1"/>
+		<Member type="int16" name="lna_fall_or_hyst" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_RX_SPUR" typeid="604">
+		<Member type="uint32" name="spur_freq_Hz" sizeOf="1"/>
+		<Member type="uint8" name="notch_depth" sizeOf="1"/>
+		<Member type="int16" name="spur_thresh" sizeOf="1"/>
+		<Member type="uint8" name="hysteresis" sizeOf="1"/>
+	</DataType>
+	<DataType name="nb_jdet_thresholds_type">
+		<Member type="uint32" name="nbjdet_thr_g0" sizeOf="1"/>
+		<Member type="uint32" name="nbjdet_thr_g1" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_NBJDET_THRESOLD" typeid="605">
+		<Member type="uint8" name="num_entry" sizeOf="1"/>
+		<Member type="nb_jdet_thresholds_type" name="thresholds" sizeOf="2"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_MULTISLOT_MAX_TX_PWR" typeid="606">
+		<Member type="int16" name="multislot_tx_pwr" sizeOf="5"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_TX_TIMING_OFFSET" typeid="607">
+		<Member type="int16" sizeOf="1" name="tx_burst_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="pa_en_start_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="pa_en_stop_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="pa_start_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="pa_stop_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="ant_timing_start_offset_adj"/>
+		<Member type="int16" sizeOf="1" name="ant_timing_stop_offset_adj"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_TX_GTR_THRESHOLDS" typeid="608">
+		<Member type="int8" name="enable" sizeOf="1"/>
+		<Member type="int16" name="rise_thresh" sizeOf="1"/>
+		<Member type="int16" name="fall_thresh" sizeOf="1"/>
+		<Member type="int16" name="adv_time" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_POLAR_RAMP_PROFILE" typeid="609">
+		<Member type="uint16" name="ramp_up" sizeOf="30"/>
+		<Member type="uint16" name="ramp_down" sizeOf="30"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_POWER_LEVELS" typeid="610">
+		<Member type="int16" name="gsm_pwr_levels" sizeOf="16"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_ENH_APT_CONTROL" typeid="611">
+		<Member type="uint8" name="pcl_threshold_val" sizeOf="1"/>
+		<Member type="uint16" name="vbatt_threshold_low_pwr" sizeOf="1"/>
+		<Member type="uint16" name="vbatt_threshold_high_pwr" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_TEMP_VS_MAX_PWR_CTRL" typeid="612">
+		<Member type="uint8" name="num_valid_entries" sizeOf="1"/>
+		<Member type="int16" name="max_pwr_temp" sizeOf="8"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_LINEAR_TX_GAIN_PARAM" typeid="613">
+		<Member type="uint16" name="linear_tx_gain_val" sizeOf="1"/>
+	</DataType>
+	<DataType name="gsm_vbatt_comp">
+		<Member type="int16" name="vbatt_comp_dB10" sizeOf="1"/>
+		<Member type="int16" name="vbatt_comp_pa_range_dB10" sizeOf="4"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_VBATT_POUT_TEMP_COMP" typeid="614">
+		<Member type="uint16" name="vbatt_lvls" sizeOf="1"/>
+		<Member type="gsm_vbatt_comp" name="vbatt_comp_val_low" sizeOf="1"/>
+		<Member type="gsm_vbatt_comp" name="vbatt_comp_val_high" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_PA_ICQ_ENABLE" typeid="615">
+		<Member type="uint8" name="enable" sizeOf="1"/>
+		<Member type="uint32" name="icq" sizeOf="32"/>
+	</DataType>
+	<DataType name="gsm_pout_comp_pcls_type">
+		<Member type="int16" name="pcl_idx" sizeOf="16"/>
+	</DataType>
+	<DataType name="gsm_pout_temp_comp_type">
+		<Member type="gsm_pout_comp_pcls_type" name="temp" sizeOf="8"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_GSM_POUT_TEMP_COMP" typeid="616">
+		<Member type="gsm_pout_temp_comp_type" name="pout_comp_offset" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_LTE_GNSS_BLANKING_TYPE" typeid="617">
+		<Member type="uint16" name="bands" sizeOf="5"/>
+		<Member type="uint8" name="gnss_l1_l5_blanking_type" sizeOf="1"/>
+	</DataType>
+	<DataType name="RFNV_DATA_TYPE_THERM_ADC" typeid="618">
+		<Member type="uint16" name="therm_bins" sizeOf="8"/>
 	</DataType>
 	<NvItem id="10" name="NV_PREF_MODE_I" permission="readwrite" maxIndex="1">
 		<Member type="uint8" sizeOf="1" name="nam"/>
@@ -62125,7 +62303,13 @@ NvItem id="21173" name="RFNV_BC15_APT_CHAR_TBL_PA_RANGE_LIST"
     <NvItem id="29874" name="RFNV_LTE_B256_TX_LIMIT_VS_TEMP_I" permission="read_write" tech="lte" category="tx" container="0" band="256">
         <Member type="int8" sizeOf="8" name="hdet_comp_vs_temp"/>
     </NvItem>
-	<NvItem id="29875" name="RFNV_LTE_B23_NB_TX_MULTI_LIN_V3_DATA_I" permission="read_write" compressed="true" variableSize="true" variantType="true">
+    <NvItem id="29875" name="RFNV_LTE_B23_NB_TX_MULTI_LIN_V3_DATA_I" permission="read_write" compressed="true" variableSize="true" variantType="true">
         <Member type="Variant_Marker" sizeOf="1" name="Variant_Data_Marker"/> 
-    </NvItem>	
+    </NvItem>
+    <NvItem id="29876" name="RFNV_LTE_B53_TX_STATIC_DATA_I" permission="read_write" compressed="true" variableSize="true" variantType="true">
+        <Member type="Variant_Marker" sizeOf="1" name="Variant_Data_Marker"/>
+    </NvItem>
+    <NvItem id="29877" name="RFNV_LTE_B70_TX_STATIC_DATA_I" permission="read_write" compressed="true" variableSize="true" variantType="true">
+        <Member type="Variant_Marker" sizeOf="1" name="Variant_Data_Marker"/>
+    </NvItem>
 </NvDefinition>

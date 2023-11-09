@@ -13,7 +13,7 @@
 #include "qca4004_internal.h"
 #include "qca4004_uart.h"
 #include "qca4004_gpio.h"
-
+#include "qca4004_fota.h"
 /*-------------------------------------------------------------------------
  * Macros
  *-----------------------------------------------------------------------*/
@@ -24,15 +24,15 @@
  * Static & global Variable Declarations
  *-----------------------------------------------------------------------*/
 qca4004_Callback_Table_t *gQca4004CallbackTable = NULL;
-static qurt_timer_t gTimer = (qurt_timer_t)0;
+qurt_timer_t gTimer = (qurt_timer_t)0;
 	
-static uint32_t power_on_timeout = 3000;
+static uint32_t power_on_timeout = 5000;
 static uint32_t power_off_timeout = 20;
 
 extern uint32_t	gRequestId;
 extern QCA4004_Power_State_t	gPowerState;
 extern QCA4004_Scan_State_t	gScanState;
-
+extern QCA4004_UART_Ctx_t 	QCA4004_UART_Ctx_D;
 
 /*-------------------------------------------------------------------------
  * Local Function Definitions
@@ -139,21 +139,31 @@ void set_callback_table(qca4004_Callback_Table_t *pCallbackTable)
 }
 #endif
 
+static int scan_after_poweron = 0;
+uint32_t fw_version = 0;
+uint32_t power_on_cnt = 0;
+extern QCA4004_FOTA_Ctx_t *qca4004_fota_ctxt_p;
 void process_mac(uint8_t* rsp, uint16_t rsp_len)
 {
 	uint8_t mac[QCA4004_MAC_ADDR_LEN];
 	
-	if(rsp_len == QCA4004_MAC_ADDR_LEN)
+	if(rsp_len == (QCA4004_MAC_ADDR_LEN+sizeof(uint32_t)))
 	{
-		stop_qca4004_timer(&(gTimer));
-		gPowerState = QCA4004_POWER_ON;
-		
-		memcpy(&(mac[0]), rsp, QCA4004_MAC_ADDR_LEN);
-		
-		if(gQca4004CallbackTable && gQca4004CallbackTable->powerStateCb)
-    	{
-			gQca4004CallbackTable->powerStateCb(
-				gRequestId, QCA4004_ERROR_SUCCESS, gPowerState, &(mac[0]));
+		memcpy(&fw_version, rsp+QCA4004_MAC_ADDR_LEN, sizeof(uint32_t));
+	}
+	
+	if(qca4004_fota_ctxt_p != NULL && qca4004_fota_ctxt_p->fota_state == QCA4004_FOTA_STATE_H2T_COMPLETE 
+		&& (qca4004_fota_ctxt_p->flag &QCA4004_FOTA_AUTO_RESET))
+	{
+		qurt_signal_set(&(qca4004_fota_ctxt_p->signalc), 0x01);
+	}
+	
+	if(rsp_len == QCA4004_MAC_ADDR_LEN || rsp_len == (QCA4004_MAC_ADDR_LEN+sizeof(uint32_t)))
+	{
+		power_on_cnt++;
+		if(qca4004_send_scan_req(0xffffffff) == 0)
+		{
+			scan_after_poweron = 1;
 		}
 	}
 	
@@ -199,6 +209,19 @@ void process_aps(uint8_t* rsp, uint16_t rsp_len)
 
 	if(rsp_len == numAps * sizeof(QCA4004_Bss_Scan_Info))
 	{
+		if(scan_after_poweron == 1)
+		{
+			stop_qca4004_timer(&(gTimer));
+			gPowerState = QCA4004_POWER_ON;
+			scan_after_poweron = 0;
+			if(gQca4004CallbackTable && gQca4004CallbackTable->powerStateCb)
+			{
+				gQca4004CallbackTable->powerStateCb(
+					gRequestId, QCA4004_ERROR_SUCCESS, gPowerState, &(mac[0]));
+			}
+			return;
+		}
+		
 		stop_qca4004_timer(&(gTimer));
 		
 		info = (QCA4004_Bss_Scan_Info *)rsp;
@@ -226,6 +249,8 @@ void process_aps(uint8_t* rsp, uint16_t rsp_len)
 /**
    @brief This function is the main entry point for the daemon of qca4004 driver .
 */
+qurt_signal_t 	qca4004_daemon_event;
+uint8_t qca4004_daemon_status = 0;
 uint8_t qca4004_daemon_start(void)
 {
 	qurt_thread_attr_t Thread_Attribte;
@@ -235,15 +260,60 @@ uint8_t qca4004_daemon_start(void)
 	qurt_thread_sleep_ext(2*QURT_TIMER_NEXT_EXPIRY);
 
 	/* Start the daemon thread. */
+	qurt_signal_init(&qca4004_daemon_event);
+	qca4004_daemon_status = 1;
     qurt_thread_attr_init(&Thread_Attribte);
     qurt_thread_attr_set_name(&Thread_Attribte, "QCA4004 Thread");
     qurt_thread_attr_set_priority(&Thread_Attribte, 152);
     qurt_thread_attr_set_stack_size(&Thread_Attribte, QCA4004_STACK_SIZE);
     if(QURT_EOK != qurt_thread_create(&Thread_Handle, &Thread_Attribte, qca4004_thread, NULL))
     {
+		qca4004_daemon_status = 0;
+		qurt_signal_destroy(&qca4004_daemon_event);
     	return 1;//TO DO
     }
 	
 	return 0;
 }
 
+/**
+   @brief This function will destroy the daemon of qca4004 driver .
+*/
+void qca4004_daemon_destroy(void)
+{
+	/* Change the driver status and signal the event to qca4004_thread	*/ 
+	qca4004_daemon_status = 0;
+    qurt_signal_set(&(QCA4004_UART_Ctx_D.event), QCA4004_DAEMON_EVENT_MASK); 
+	
+	qurt_signal_wait(&qca4004_daemon_event, 0x1, QURT_SIGNAL_ATTR_WAIT_ANY | QURT_SIGNAL_ATTR_CLEAR_MASK); 
+	qurt_signal_destroy(&qca4004_daemon_event);
+	
+	return;
+}
+
+uint32_t qca4004_send_scan_req(uint32_t requestId)
+{
+	uint32_t status = 0;
+	char cmd_str[20];
+	uint32_t cmd_len = 0;
+	char *cmd_ptr = &cmd_str[0];
+
+	memset(&cmd_str[0], 0 , 20);
+
+	memcpy(cmd_ptr, COMMAND_SCAN_STRING, strlen(COMMAND_SCAN_STRING));
+	cmd_ptr += strlen(COMMAND_SCAN_STRING);
+
+	*cmd_ptr++ = ',';
+		
+	qca4004_uxtoa(requestId, cmd_ptr);
+	cmd_ptr += 8;
+		
+	*cmd_ptr++ = ',';
+
+	cmd_len = cmd_ptr - &cmd_str[0];
+	QCA4004_DEBUG_LOG("cmd len=%d, ",cmd_len);
+		
+	status = (uint32_t)qca4004_send_command(cmd_len, &cmd_str[0]); 
+
+	return status;
+}

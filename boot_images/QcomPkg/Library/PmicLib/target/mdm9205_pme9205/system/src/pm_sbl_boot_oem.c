@@ -3,7 +3,7 @@
 *  \brief This file contains PMIC device initialization function where initial PMIC
 *  \n SBL settings are configured through the PDM auto-generated code.
 *  \n
-*  \n &copy; Copyright 2015-2017, 2019 QUALCOMM Technologies Incorporated, All Rights Reserved
+*  \n Copyright (c) 2015-2017, 2023 Qualcomm Technologies, Inc. All rights reserved.
 */
 
 /*===========================================================================
@@ -106,10 +106,14 @@ pm_err_flag_type
 pm_device_post_init(void)
 {
   pm_err_flag_type err_flag = PM_ERR_FLAG__SUCCESS;
-
+#ifdef KEY_PRESS_DBNC
+  uint8                     rtc_alarm_read[4];
+#endif
   //These configurations is only used for development phones and should be commented out for production phones
   err_flag |= pm_app_pon_pshold_cfg(PM_APP_PON_CFG_WARM_RESET);
-#ifndef KEY_PRESS_DBNC
+#ifdef KEY_PRESS_DBNC
+  err_flag = pm_comm_write_byte_mask(0, PM_PON_KPDPWR_N_RESET_S2_CTL2_ADDR, PM_PON_KPDPWR_N_RESET_S2_CTL2_S2_RESET_EN_BMSK, 0x0, 0);
+#else
   err_flag |= pm_app_pon_reset_cfg( PM_APP_PON_RESET_SOURCE_KPDPWR, PM_APP_PON_CFG_WARM_RESET, 10256, 2000); //PON KPDPWR PON Reset configuration
 #endif
   err_flag |= pm_app_pon_reset_cfg( PM_APP_PON_RESET_SOURCE_RESIN_AND_KPDPWR, PM_APP_PON_CFG_DVDD_HARD_RESET, 10256, 2000); //PON RESIN_AND_KPDPWR PON Reset configuration
@@ -119,7 +123,26 @@ pm_device_post_init(void)
   /*check for valid PON keypress */
   err_flag |= pm_app_pwrkey_long_press_check(PM_PON_PWRKEY_DBNC_CHK_AT_LOADER);
 #ifdef KEY_PRESS_DBNC
-  err_flag = pm_comm_write_byte_mask(0, PM_PON_KPDPWR_N_RESET_S2_CTL2_ADDR, PM_PON_KPDPWR_N_RESET_S2_CTL2_S2_RESET_EN_BMSK, 0x0, 0);
+  err_flag |= pm_comm_read_byte(0,0xa40,&rtc_alarm_read[0],0);
+  err_flag |= pm_comm_read_byte(0,0xa41,&rtc_alarm_read[1],0);
+  err_flag |= pm_comm_read_byte(0,0xa46,&rtc_alarm_read[2],0);
+  err_flag |= pm_comm_read_byte(0,0xa47,&rtc_alarm_read[3],0);
+  if((rtc_alarm_read[0]==0)&&(rtc_alarm_read[1]==0)&&(rtc_alarm_read[2]==0)&&(rtc_alarm_read[3]==0)) //in xvdd case
+  {
+    err_flag |= pm_comm_write_byte(0,0xa40,0xFE,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa41,0xFE,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa46,0xFE,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa47,0xFE,0); //writing reset state
+  }
+  else
+  {
+
+    err_flag |= pm_comm_write_byte(0,0xa40,0xFF,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa41,0xFF,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa46,0xFF,0); //writing reset state
+    err_flag |= pm_comm_write_byte(0,0xa47,0xFF,0); //writing reset state
+  }
+  pm_log_message("Error flag %d :cleared AON reg \n\r",err_flag);
 #endif
   return err_flag;
 }

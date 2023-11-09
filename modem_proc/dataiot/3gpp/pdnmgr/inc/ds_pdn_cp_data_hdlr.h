@@ -14,8 +14,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_cp_data_hdlr.h#9 $
-  $DateTime: 2023/03/23 03:53:38 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_pdn_cp_data_hdlr.h#10 $
+  $DateTime: 2023/09/26 01:04:13 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -1781,6 +1781,34 @@ void ds_pdn_cp_data_process_cpsr_status_cmd
 uint8 ds_pdn_cp_data_get_barring_cnf_index();
 
 void ds_pdn_cp_data_set_barring_cnf_index(uint8 value);
+
+/*===========================================================================
+FUNCTION DS_PDN_CP_DATA_IS_RETRY_COUNT_REACHED_MAX
+
+DESCRIPTION
+  This function gives information on whether retry count reached max 
+  for all CP data present in the window
+
+PARAMETERS
+None
+
+RETURN VALUE
+TRUE  - Reached max
+FALSE - not reached max
+
+DEPENDENCIES
+  None
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+
+
+boolean ds_pdn_cp_data_is_retry_count_reached_max
+(
+  void
+);
+
 
 #ifdef FEATURE_NBIOT_NTN
 /*=========================================================================

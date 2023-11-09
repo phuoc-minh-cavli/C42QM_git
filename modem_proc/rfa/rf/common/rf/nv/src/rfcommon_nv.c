@@ -25,11 +25,12 @@ Copyright (c) 2009 - 2021,2023 by Qualcomm Technologies, Inc.  All Rights Reserv
 
                       EDIT HISTORY FOR FILE
 
-$Header: //components/rel/rfa.mpss/3.10/rf/common/rf/nv/src/rfcommon_nv.c#5 $
-$DateTime: 2023/02/13 02:51:23 $
+$Header: //components/rel/rfa.mpss/3.10/rf/common/rf/nv/src/rfcommon_nv.c#6 $
+$DateTime: 2023/10/17 23:12:33 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 12/02/21   gk      B87/88 PA static NV compress check
 04/24/20   mp      Clade heap changes
@@ -2094,7 +2095,10 @@ boolean rfcommon_rfnv_chk_item_compressed
 	 case RFNV_LTE_C0_B86_PA_STATIC_Z_I:
 	 case RFNV_LTE_C0_B87_PA_STATIC_Z_I:
 	 case RFNV_LTE_C0_B88_PA_STATIC_Z_I:
+#ifdef FEATURE_NBIOT_NTN
+	 case RFNV_LTE_C0_B255_PA_STATIC_Z_I:
 	 case RFNV_LTE_C0_B256_PA_STATIC_Z_I:
+#endif
 		is_rfnv_item_compressed = TRUE;
 		break;
 

@@ -11,8 +11,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_bearer_manager.c#18 $
-  $DateTime: 2023/03/23 03:53:38 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_bearer_manager.c#20 $
+  $DateTime: 2023/10/26 07:04:46 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -38,6 +38,9 @@ when           who    what, where, why
 #include "ds_eps_tlb.h"
 #endif /* FEATURE_MODE_TLB */
 #include "ds_pdn_psm_hdlr.h"
+#ifdef FEATURE_FAST_DORMANCY
+#include "ds_fast_dormancy.h"
+#endif /* FEATURE_FAST_DORMANCY */
 
 static ds_bearer_mgr_s *ds_bearer_manager[DS_3GPP_MAX_BEARER_CONTEXT] = {NULL};
 
@@ -2087,6 +2090,64 @@ uint32 ds_bearer_mgr_get_retry_timer_val
   return timer_val;
 } /* ds_3gpp_bearer_cntxt_get_retry_timer_val */
 
+
+/*===========================================================================
+FUNCTION DS_BEARER_MGR_IS_ANY_OTHER_BEARER_UP
+
+DESCRIPTION
+  This function checks if any other bearer is in UP/UP_DORMANT state.
+  
+PARAMETERS 
+  Bearer Mgr ptr
+    
+DEPENDENCIES 
+  None.
+  
+RETURN VALUE 
+  Returns TRUE if any other bearer is in UP/UP_DORMANY state.
+  FALSE - Otherwise
+   
+SIDE EFFECTS 
+  None.  
+===========================================================================*/
+boolean ds_bearer_mgr_is_any_other_bearer_up
+(
+  ds_bearer_mgr_s *bearer_mgr_p
+)
+{
+  boolean                   ret_val = FALSE;
+  ds_bearer_mgr_s           *temp_bearer_mgr_p = NULL;
+  uint8                     bearer_cntxt_index = 0;
+  ds_bearer_mgr_state_e     state = DS_BEARER_MGR_STATE_DOWN;
+  
+  /*-------------------------------------------------------------------*/
+
+  for (bearer_cntxt_index = 0; bearer_cntxt_index < DS_3GPP_MAX_BEARER_CONTEXT; 
+       bearer_cntxt_index ++)
+  {
+    temp_bearer_mgr_p = ds_bearer_mgr_get_instance_ptr(bearer_cntxt_index);
+
+	if (temp_bearer_mgr_p == bearer_mgr_p)
+	{
+	  continue;
+	}
+	else if (!ds_bearer_mgr_validate_bearer_ptr(temp_bearer_mgr_p))
+	{
+	  continue;
+	}
+		
+    state = temp_bearer_mgr_p->state;
+
+	if (state == DS_BEARER_MGR_STATE_UP)
+	{
+	  ret_val = TRUE;
+	  break;
+	}
+  }
+	   
+  return ret_val;
+}
+
 /*===========================================================================
 FUNCTION ds_bearer_mgr_rab_release_ind_hdlr
 
@@ -2220,6 +2281,18 @@ boolean ds_bearer_mgr_rab_release_ind_hdlr
     {
       ds_pdn_psm_ready_ind();
     }
+
+#ifdef FEATURE_FAST_DORMANCY
+    /* --------------------------------------------------------
+       On bearer release, stop the timer if running.
+       --------------------------------------------------------*/
+	if (ds_fast_dormancy_is_timer_running() == TRUE)
+
+	{	  
+      DS_MSG0(MSG_LEGACY_HIGH, "Inactivity timer running, stop the timer");
+	  ds_fast_dormancy_stop_timer();
+	}	
+#endif	/* FEATURE_FAST_DORMANCY */
   } /* bearer pointer is non-null*/
 
   return ret_val;

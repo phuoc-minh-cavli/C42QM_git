@@ -48,12 +48,11 @@ INITIALIZATION AND SEQUENCING REQUIREMENTS
  
 =============================================================================*/
 /*============================================================================    
-Copyright (c) 2009-2015,2022 Qualcomm Technologies, Inc.
+Copyright (c) 2009-2015,2022-2023 Qualcomm Technologies, Inc.
 All Rights Reserved.
 Confidential and Proprietary - Qualcomm Technologies, Inc.
 =============================================================================*/
 
-
 /*=============================================================================
 
                         EDIT HISTORY FOR MODULE
@@ -61,7 +60,7 @@ Confidential and Proprietary - Qualcomm Technologies, Inc.
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/core.mpss/3.10/services/time/src/time_genoff.c#2 $
+$Header: //components/rel/core.mpss/3.10/services/time/src/time_genoff.c#3 $
 
 when       who     what, where, why
 --------   ---     ------------------------------------------------------------
@@ -82,8 +81,6 @@ when       who     what, where, why
 
 =============================================================================*/
 
-
-
 /*=============================================================================
 
                            INCLUDE FILES
@@ -110,6 +107,7 @@ when       who     what, where, why
 #include "log.h"
 #include "timetick.h"
 #include "rcinit.h"
+#include "msg.h"
 
 #ifdef FEATURE_QMI_TIME_REMOTE_CLNT
 #include "time_service_v01.h"
@@ -191,6 +189,9 @@ static uint32 time_genoff_efs_reset_bases = 0;
    each bit if set will denote the respective base based
    their position */
 static uint32 time_genoff_reset_bases = 0;
+
+/*Structure that stores qtimer value and delta*/
+qtime_delta     qtime_delta_value;
 
 /*--------------------------------------------------------------------------
   Linting...
@@ -331,7 +332,6 @@ void time_genoff_init(  void  )
 } /*  time_genoff_init */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ARGS_INIT
@@ -376,7 +376,6 @@ void time_genoff_args_init
 } /*  time_genoff_args_init */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_PRE_INIT
@@ -476,7 +475,6 @@ void time_genoff_pre_init
 } /*  time_genoff_pre_init */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_CB_UPDATE_SUM_GEN_OFF
@@ -621,7 +619,6 @@ static boolean time_genoff_check_time
 
 } /*  time_genoff_check_time */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_POST_INIT
@@ -757,7 +754,7 @@ void time_genoff_post_init
             (uint32)(time_genoff->generic_offset & 0xFFFFFFFF),
             (uint32)(time_genoff->sum_generic_offset >> 32), 
             (uint32)(time_genoff->sum_generic_offset & 0xFFFFFFFF));
- 
+
   {
     time_genoff_args_struct_type    temp_genoff_args ;
      
@@ -781,11 +778,9 @@ void time_genoff_post_init
 				      jul_val.minute,
 				      jul_val.second );	  
   }
- 
 } /* time_genoff_post_init */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_IS_VALID
@@ -885,7 +880,6 @@ boolean time_genoff_get_sum_genoff_ts
 } /*  time_genoff_get_sum_genoff_ts */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_GET_GENOFF_OFFSET
@@ -914,7 +908,6 @@ int64 time_genoff_get_genoff_offset
   return genoff_ptr->generic_offset;
 } /*  time_genoff_get_genoff_offset */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ADD_BASE_SUBSYS
@@ -959,7 +952,6 @@ void time_genoff_add_base_subsys
 } /* time_genoff_add_base_subsys */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ADD_PROXY_BASE
@@ -1004,7 +996,6 @@ void time_genoff_add_proxy_base
 } /* time_genoff_add_base_subsys */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ATTACH_EXT_CB
@@ -1044,7 +1035,6 @@ ats_error_type time_genoff_attach_ext_cb
 } /* time_genoff_attach_cb */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ATTACH_CB
@@ -1116,7 +1106,88 @@ ats_error_type time_genoff_attach_cb
 
 } /* time_genoff_attach_cb */
 
-
+/*=============================================================================
+
+FUNCTION TIME_GENOFF_REGISTER_CB_EX
+
+DESCRIPTION
+  Registers the callback with "time genoff framework". This callback will be called whenever there is a "time" update on that base.
+
+DEPENDENCIES
+   
+RETURN VALUE
+  Error code of type "ats_error_type"
+
+SIDE EFFECTS
+  If callback function is doing heavy/blocking operation, then time setter task may get stuck.
+  
+NOTE
+  If you want your callback to be called at system time update, use ATS_TOD as base.
+  Please keep callback light because of aforementioned SIDE EFFECTS.
+
+=============================================================================*/
+
+ats_error_type time_genoff_register_cb_ex
+(
+  /* Base to which callback needs to attached */
+  time_bases_type  base,
+
+  /* Call back Func to be attached */
+  time_genoff_t2_cb_type_ex cb
+)
+{
+  /* Pointer to Genoff in consideration */
+  time_genoff_ptr time_genoff;
+
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+  /* Get pointer to base_cb */
+  time_genoff = time_genoff_get_pointer( base );
+
+  /*Check if the base to which callback needs to be attached is ATS_TOD*/
+  if(base != ATS_TOD)
+  {
+     MSG(MSG_SSID_ATS,MSG_LEGACY_HIGH,"Base is not ATS_TOD");
+     return ATS_FAILURE;
+  }
+
+  /*Check if the callback is NULL or not*/
+  if(cb == NULL)
+  {
+     MSG(MSG_SSID_ATS,MSG_LEGACY_HIGH,"Callback is NULL");
+     return ATS_FAILURE;
+  }
+
+  /*Check if the time base is in correct state for this operation*/
+  if( !time_genoff->state.time_genoff_state_pre_init )
+  {
+     MSG(MSG_SSID_ATS,MSG_LEGACY_HIGH,"Time base is not in correct state");
+     return ATS_FAILURE;
+  }
+
+  /* Acquire the mutex */
+  TIME_OSAL_MUTEX_LOCK(time_genoff->mutex);
+
+  if ( time_genoff->number_of_t2_ex_cb_func < TIME_GENOFF_MAX_CB_CNT)
+  {
+    /* Attach Callback */
+    time_genoff->cb_func_t2_ex[ time_genoff->number_of_t2_ex_cb_func++ ] = cb;
+  }
+  else
+  {
+    /* Release the mutex */
+    TIME_OSAL_MUTEX_UNLOCK(time_genoff->mutex);
+    /* This indicated that the attachable number of callbacks are already exhausted */
+    return ATS_CALLBACK_COUNT_EXCEEDED;
+  }
+
+  /* Release the mutex */
+  TIME_OSAL_MUTEX_UNLOCK(time_genoff->mutex);
+
+  /* Return SUCCESS for the operation */
+  return ATS_SUCCESS;  
+}
+
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SET_REMOTE_CALL_NEEDED
@@ -1159,7 +1230,6 @@ void time_genoff_set_remote_call_needed
 } /* time_genoff_set_remote_call_needed */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SET_ALLOW_REMOTE_UPDATES
@@ -1199,7 +1269,6 @@ void time_genoff_set_allow_remote_updates
 } /* time_genoff_set_allow_remote_updates */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_GET_ALLOW_REMOTE_UPDATES
@@ -1232,8 +1301,6 @@ boolean time_genoff_get_allow_remote_updates
 } /* time_genoff_get_allow_remote_updates */
 
 
-
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SET_REMOTE_GENOFF
@@ -1328,7 +1395,6 @@ void time_genoff_set_remote_genoff
 } /* time_genoff_set_remote_genoff */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_REMOTE_THROUGH_TIME_IPC
@@ -1403,8 +1469,6 @@ void time_genoff_remote_through_time_ipc(void)
 } /* time_genoff_remote_through_time_ipc */
 
 
-
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_ADD_INIT_CALL
@@ -1441,7 +1505,6 @@ void time_genoff_add_init_call
 } /* time_genoff_add_init_call */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_UPDATE_PER_STORAGE
@@ -1585,7 +1648,6 @@ static inline boolean time_genoff_decode_private_base
    }
 }
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_GET_POINTER                                 
@@ -1655,7 +1717,6 @@ time_genoff_ptr time_genoff_get_pointer
 } /* time_genoff_get_pointer */
 
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SET_GENERIC_OFFSET                               
@@ -1721,7 +1782,6 @@ void time_genoff_set_generic_offset
 
 } /* time_genoff_set_generic_offset */
 
-
 
 /*=============================================================================
 
@@ -1887,7 +1947,6 @@ void time_genoff_get_optimized_ts
      
 } /* time_genoff_get_optimized_ts */
 
-
 #if 0 /* These functions are not needed, but keeping for idea */
 /*=============================================================================
 
@@ -1987,7 +2046,6 @@ static void time_genoff_get_optimized
   
 } /* time_genoff_get_optimized */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_GET
@@ -2086,7 +2144,6 @@ static void time_genoff_get
 } /* time_genoff_get */
 #endif /* #if 0 */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_WRITE_TO_EFS
@@ -2155,7 +2212,6 @@ static void time_genoff_write_to_efs
   #endif /* FEATURE_TIME_SINGLE_MULTI_SERVER_PROC */
 } /* time_genoff_write_to_efs */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SHUTDOWN_NOTIFICATION_FN
@@ -2227,7 +2283,6 @@ for (index = 0 ; index < ATS_MAX  ; index++)
 
 } /* time_genoff_shutdown_notification_fn */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_REMOTE_OFFSET
@@ -2401,7 +2456,6 @@ static void time_genoff_send_tod_error_notification
 } /* time_genoff_send_tod_error_notification */
 #endif /* FEATURE_TIME_DEBUG */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_SET
@@ -2501,6 +2555,7 @@ static void time_genoff_set
 
   qw_equ_misaligned((void*)&new_ms,pargs->ts_val);
   qw_equ_misaligned((void*)&old_ms,old_ts_val_ms);
+  
   delta_ms = new_ms - old_ms;
 
   ATS_MSG_5("time_genoff_set: base = 0x%x, curr_ms=0x%.8x%.8x, new_ms=0x%.8x%.8x",
@@ -2806,9 +2861,6 @@ static void time_genoff_set_helper
   /* Old generic offset value */
   int64				 old_offset_ms = 0;
 
-  /* delta_ms for proxy base */
-  int64					   delta_ms;
-
   /* Iteration variable */
   uint8           iter;
 
@@ -2897,7 +2949,9 @@ static void time_genoff_set_helper
   #endif /* FEATURE_TIME_DEBUG */
 
   /* Get the delta msecs */
-  delta_ms = new_offset_ms - old_offset_ms;
+  qtime_delta_value.delta_ms = new_offset_ms - old_offset_ms;
+  /*Get the qtimer value */
+  qtime_delta_value.qtimeVal = timetick_get();
 
   /* Write offset to efs */
   time_genoff_write_to_efs( ptime_genoff, FALSE );
@@ -2907,7 +2961,7 @@ static void time_genoff_set_helper
      */
   if (ptime_genoff->bases_type < ATS_MAX)
   {
-  time_genoff_remote_offset( ptime_genoff, delta_ms );
+  time_genoff_remote_offset( ptime_genoff, qtime_delta_value.delta_ms );
   }
 
   /* Mark valid as TRUE */
@@ -2955,7 +3009,15 @@ static void time_genoff_set_helper
   for( iter = 0; iter < ptime_genoff->number_of_cb_func; iter ++)
 	{
 	  ( ptime_genoff->cb_func[iter] )( ptime_genoff->registered_genoff[iter], 
-							   delta_ms );
+							   qtime_delta_value.delta_ms );
+	}
+   
+   /* Call all the type2_ex callBack functions */
+  for( iter = 0; iter < ptime_genoff->number_of_t2_ex_cb_func; iter ++)
+	{
+      MSG_2(MSG_SSID_ATS,MSG_LEGACY_HIGH,"CallBack index: %d, Start time: 0x%x",iter,timetick_get());
+	  ( ptime_genoff->cb_func_t2_ex[iter] )( qtime_delta_value.qtimeVal, qtime_delta_value.delta_ms );
+      MSG_2(MSG_SSID_ATS,MSG_LEGACY_HIGH,"CallBack index: %d, End time: 0x%x",iter,timetick_get());
 	}
 
 } /* time_genoff_set_helper */
@@ -3007,7 +3069,6 @@ ats_error_type time_genoff_ext_add_pd_num
 
 }/* time_genoff_ext_add_pd_num */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_PRIVATE_BASE_INIT
@@ -3186,7 +3247,6 @@ ats_error_type time_genoff_private_base_init
 
 } /* time_genoff_private_base_init */
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_EXT_DEINIT
@@ -3464,7 +3524,6 @@ static void timer_inaccuracy_get( time_genoff_args_ptr pargs )
   qw_equ_misaligned( pargs->ts_val, (void*)&ptime_genoff->generic_offset );
 }
 
-
 /*=============================================================================
 
 FUNCTION TIME_GENOFF_OPR

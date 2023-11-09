@@ -43,7 +43,7 @@
 ***  This section contains comments describing changes made to the module.
 ***  Notice that changes are listed in reverse chronological order.
 ***
-*** $Header: //components/rel/geran.mpss/5.2.0/gsndcp/src/gsn_hdlr.c#7 $
+*** $Header: //components/rel/geran.mpss/5.2.0/gsndcp/src/gsn_hdlr.c#8 $
 ***
 *** when       who     what, where, why
 *** --------   ---     ------------------------------------------------------
@@ -8242,10 +8242,10 @@ void gsn_sm_prim_hdlr(   const gsmsn_mes_type * mes_ptr)
 
   case GSNSM_ENTER_PSM_IND:
 
-    MSG_GERAN_HIGH_0_G("GSN ""ME: Rcvd SNSM_ENTER_PSM_IND");
+    MSG_GERAN_HIGH_0_G("GSN ""ME: Rcvd SNSM_ENTER_PSM_IND, disbale PSM data restoration for local PSM");
 
     /* Process primitive */
-    gsn_process_snsm_enter_psm_ind(  &mes_ptr->mes.snsm_enter_psm_ind );
+    //gsn_process_snsm_enter_psm_ind(  &mes_ptr->mes.snsm_enter_psm_ind );
 
     break;
 

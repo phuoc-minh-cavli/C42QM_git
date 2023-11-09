@@ -1,15 +1,15 @@
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 328 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c" 2
-# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h" 1
-# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h"
-# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
-# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c" 2
+# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h" 1
+# 26 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h"
+# 1 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 1
+# 48 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 # 1 "/pkg/qct/software/hexagon/releases/tools/8.3.03/Tools/bin/../target/hexagon/include/stdint.h" 1 3 4
 
 
@@ -99,11 +99,11 @@ typedef _ULonglong uint_fast64_t;
 
 typedef _Longlong intmax_t;
 typedef _ULonglong uintmax_t;
-# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
-# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
+# 49 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h" 2
+# 84 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/api/mmutils/mmdefs.h"
 typedef char char_t;
 typedef unsigned char bool_t;
-# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h" 2
+# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/inc/lpa_prop.h" 2
 
 
 
@@ -116,7 +116,7 @@ typedef struct {
     uint32_t size_lpa_heap_from_ddr;
 
 } lpa_prop_struct_t;
-# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00388-9205_LTENBGE_PACK-1_20230727_073504/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c" 2
+# 27 "/local/mnt/workspace/CRMBuilds/MPSS.CT.2.0-00396-9205_LTENBGE_PACK-1_20231101_135339/b/modem_proc/audio_avs/main/elite/utils/devcfg/config/lpa_cfg_9x35.c" 2
 
 
 const lpa_prop_struct_t lpa_prop = {0};

@@ -10,15 +10,121 @@
 </div>
 </div>
 <hr />
-<p><i>Date: </i>06/27/2023</p>
-<p><i>Version: </i><b>1.0-02275</b></p>
+<p><i>Date: </i>09/21/2023</p>
+<p><i>Version: </i><b>1.0-02283</b></p>
 <p><i>Changes: </i></p>
 <ul>
 <h4><i> New Features </i></h4>
-<li CR="3531237">[Char] XPT char loop all tx paths support</li>
+<li CR="3599491">QMSL: add RxGainCalModeCtrl and SETCRXPARAM TLV2.</li>
+<li CR="3608402">[RF Cal][ComXGS6] Design supplemental path loss DB file and load path loss compensation based on ANT port</li>
+<li CR="3608406">[RF Cal][Com] Design supplemental path loss DB file and load path loss compensation based on ANT port</li>
+<li CR="3608425">[RF Cal][XG] Design supplemental path loss DB file and load path loss compensation based on ANT port</li>
+<li CR="3608434">[RF Cal][Utilities] Design supplemental path loss DB file and load path loss compensation based on ANT port</li>
+<li CR="3610092">[RFCAL XFUNC] change the short tunnel item name</li>
+<li CR="3610975">Update MultiMode_FTM_RF_SET_TUNER_PROPERTIES to support multiple antennas.</li>
+<li CR="3612961">Optimize re-cal with extend rgi list on CPS framwork function_common</li>
+<li CR="3615931">[FR92083][X-Functional]Fix error code handling issue when no error returned</li>
+<li CR="3618313">[RF Cal][ComXGS6] Compensate expected AGC per Rx path (MM type 1 & 7) and compensate FBRx power measurement results per ANT port</li>
+<li CR="3621447">[FR92083][QMSL_WWAN]Update n8 supported bandwidth list</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3598276"> N41 XPT NDT char fail with //partial_rb_delay parameter not being populated</li>
+<li CR="3597103">CPS cal report pass when the max RGI in RgiList>the max RGI in Rgi_Delta_SSS</li>
+<li CR="3608977">[SubSysCommonTests]: Use QMSL default transport mode for datalogging summary</li>
+<li CR="3612103">[X-Functional]print ACA error code for better debug</li>
+<li CR="3603579">[RFCal]Enable LOFT Cal NV missing check for multi-BWs case</li>
+<li CR="3613087">[RFCal][QMSL_INC]Enable LOFT Cal NV missing check for multi-BWs case</li>
+<li CR="3618344">[SubsysCommonTests]Fix false alarm issue that originates from uninitialized test log pointer</li>
+</ul>
+<hr />
+<p><i>Date: </i>09/05/2023</p>
+<p><i>Version: </i><b>1.0-02282</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i> Bug Fixes </i></h4>
+<li CR="3605485">Fix InitLogging when there is no GetUUTID executed</li>
+<li CR="3606682">set UUT ID to none, if get UUTID empty or not ran during Initialize logging</li>
+</ul>
+<hr />
+<p><i>Date: </i>09/01/2023</p>
+<p><i>Version: </i><b>1.0-02280</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="3586879">[RFCal Common]EIRP far field cal - add params to handle pdet limit check</li>
+<li CR="3598974">[RFCAL XFUNC] Far field phase cal Short tunnel compensation</li>
+<li CR="3602017"> Support  re-cal with extend rgi list on CPS framwork function_common</li>
+<li CR="3602021">Support re-cal with extend rgi list on CPS framwork function_xfunction component</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="3584555">[Cal_DLL]Optimization in DLL side for RFC gain setting and Rx Cal params mismatch check</li>
+<li CR="3588611">[QMSL6.1][QMSL_WWAN]Extend TxControl receive packet size</li>
+<li CR="3589654">[CPS Cal]ET calibration fail , but html log show pass in latest dll</li>
+<li CR="3593645">[Cal_DLL][SubSysCommon]Optimization in DLL side for RFC gain setting and Rx Cal params mismatch check</li>
+<li CR="3601414">FBRx Gain Cal result repository update issue for V1</li>
+<li CR="3602529">[SubsysCommonTests]Remove port switching from GetPhoneData</li>
+<li CR="3603055">[SBSY_COMMON] Fix subband description for QET screen test </li>
+</ul>
+<hr />
+<p><i>Date: </i>08/18/2023</p>
+<p><i>Version: </i><b>1.0-02278</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="3579077">[RFCal Common] S9100 optimize scpi sequence and display settings</li>
+<li CR="3579079">[RFCal Xfunc] Fix RRH port switching sequence</li>
+<li CR="3579174">[RFCal Common] move scaledisplay function out of mmw feature macro</li>
+<li CR="3581940">[RFCal XFunc]Add gnb test box index to factory</li>
+<li CR="3563809">[x-functional] update rx meas type enum</li>
+<li CR="3575363">FR89521: [xpt] automation tool for better XPT HW tuning - xPT power measurement and logging</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="3587331">DE5.0 QPB cal don't load smartest mode parameters on PA.xml</li>
+<li CR="3578294">[SubsysLTE]Add ant index column in CV2X log</li>
+<li CR="3582359">GSM FBRX CHAR fail</li>
+<li CR="3553175">Abnormal GSM Tx NV written with unconnected DA Cal</li>
+<li CR="3571214">[QMSL6.1][QMSL_Core]Fix memory curruption issue when fail to create Diag_FTM obj</li>
+<li CR="3572981">CPS Cal Framework: New Cal Domains</li>
+</ul>
+<hr />
+<p><i>Date: </i>08/03/2023</p>
+<p><i>Version: </i><b>1.0-02276</b></p>
+<p><i>Changes:</i></p>
+<ul>
+<h4><i>  New Features </i></h4>
+<li CR="3565361">[RFCal XFunc]Keysight fix for 2dB higher measurement on RFHD2</li>
+<li CR="3565372">[RFCal Common]S9100 Add OPC to all PAVT commands to make it robust</li>
+<li CR="3570758">[LTE][FTM][Estimated Sensitivity Test][LTE_Defines] Adding support to select 8 Tone DL waveform</li>
+<li CR="3555315">[FR86772] Enable MLP V2 Beam Char for CPE</li>
+<li CR="3555540">FR89521: [xpt] automation tool for better XPT HW tuning - UI changes</li>
+<li CR="3556842">[QMSL INC]change rfc max beams per antenna group to 256</li>
+<li CR="3557478">[RF Cal][CommonXGSUB6][FR 85436] DLL side: design new data type to overwrite expected AGC per Rx path </li>
+<li CR="3557493">[RF Cal][QMSL][FR 85436] DLL side: design new data type to overwrite expected AGC per Rx path </li>
+<li CR="3557542">[RF Cal][QMSL_WWAN][FR 85436] DLL side: design new data type to overwrite expected AGC per Rx path </li>
+<li CR="3561027">[RFCal XFunc] Workaround for Keysight issue with using RFHD2 port right after correction loading</li>
+<li CR="3563152">FR89521: [xpt] automation tool for better XPT HW tuning - Query Tx override params</li>
+<li CR="3530797">[x-functional] add enum for modem version</li>
+<li CR="3531237">[Char] XPT char loop all tx paths support</li>
+<li CR="3544887">[FR89957][X-Functional]Fix FTM error code string handling issue</li>
+<li CR="3544918">[FR89957][QMSL6.1][QMSL_WWAN]Add new function for supporting channel calculation with given channel range</li>
+<li CR="3551197">[FR89957]RFVFS all path tester enhancement for factory</li>
+<h4><i> Bug Fixes </i></h4>
+<li CR="3576662">Support QLIB_FTM_DA_CAL_WITH_INFO </li>
+<li CR="3574301">Support QLIB_FTM_DA_CAL_WITH_INFO </li>
+<li CR="3574313">Support QLIB_FTM_DA_CAL_WITH_INFO </li>
+<li CR="3574346">Support QLIB_FTM_DA_CAL_WITH_INFO </li>
+<li CR="3574431">Support QLIB_FTM_DA_CAL_WITH_INFO </li>
+<li CR="3565779"> RFFE Scan version 3: DLL support   </li>
+<li CR="3567991">[QMSL_WWAN]: Refine LTE combo sorting for DB query algortithm</li>
+<li CR="3569750">Add Support to Disable IDC Data on Cal Log.</li>
+<li CR="3559009">[RFCal] Fix RF Cal verification feature</li>
+<li CR="3561827">support printf type argument for write xqcn</li>
+<li CR="3528712">[RFCal][CPS] QSPR log cal node show pass but there is XPT cal failure</li>
 <li CR="3529710">[RF Cal][Common Cal]Disable FBRx cal., all pahts are common cal. but disable sweep mode and enable serial cal. do not throw exception</li>
+<li CR="3536947">[RF Cal]Rx only band disable sweep mode but enable FBRx gain cal do not throw exception</li>
 <li CR="3540035">[QMSL][Core] Fix header file description for QLIB_GetAvailablePhonesHandleIDList (no code change)</li>
+<li CR="3540039">[RFCal] Delete output parameter for final data logging.</li>
+<li CR="3540085">Fix CDMA BW 10MHz is not supported when Protobuff setting when  CDMA unconnected TX</li>
+<li CR="3543153">[utility] add support for uxm RF application driver</li>
+<li CR="3543161">[commontest] add support for uxm RF application driver</li>
+<li CR="3544959">[all combo test]met EXCEPTION_ACCESS_VIOLATION during parsing RFC xml</li>
 </ul>
 <hr />
 <p><i>Date: </i>06/13/2023</p>
@@ -49,8 +155,9 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3482210">[QMSL6.1] add function to stop QMSL logging</li>
 <li CR="3449414">[RFCAL_COMMON] S9100 Update PAVT commands to make it more robust</li>
+<li CR="3482210">[QMSL6.1] add function to stop QMSL logging</li>
+<li CR="3463610">Request to add overriding Antenna Number Scenario for a new cal framework</li>
 <li CR="3491318">[FR87286] XO Cal NV Missing Check</li>
 <li CR="3491335">[FR87286] XO Cal NV Missing Check</li>
 <li CR="3491339">[FR87286] XO Cal NV Missing Check</li>
@@ -59,7 +166,9 @@
 <li CR="3496661">[Xfunctional]MMW Rx Info: Rx offset sub banding changes</li>
 <li CR="3496665">[QMSL_inc]MMW Rx Info: Rx offset sub banding changes</li>
 <li CR="3496668">[QMSL_WWAN]MMW Rx Info: Rx offset sub banding changes</li>
+<li CR="3497268">QMSL: add ps160 on EHT tone plan</li>
 <li CR="3497778">[x-functional] add meas type 6 support for WBIQ capture</li>
+<li CR="3499941">[X-Functional] mmW MT8000 DL Heavy Scheduling Implementation</li>
 <li CR="3504541">[RFCAL_COMMON] equipment based eirp cal changes</li>
 <li CR="3504542">[QMSL_INC]  equipment based eirp cal changes</li>
 <li CR="3504547">[QMSL_WWAN] equipment based eirp cal</li>
@@ -68,21 +177,29 @@
 <h4><i> Bug Fixes </i></h4>
 <li CR="3514528">[QMSL] Fix only first path appears when RFFE parity check enabled</li>
 <li CR="3516884">[MM 1] All paths are common cal. connected  cal. meet a crash </li>
+<li CR="3518024">Check Lime check for feature technology</li>
 <li CR="3518593">Support QMSL_RT</li>
 <li CR="3518772">Check Lime check for feature technology</li>
 <li CR="3488959">All Combo check in QSPR generats invalid channels for few combos</li>
 <li CR="3491431">[QMSL] Fix only first path appears when RFFE parity check enabled</li>
 <li CR="3492785">[QMSL_InternalExtensions][FieldQuery]: clean up field query source addressing dropped packets</li>
+<li CR="3498410">Support QMSL_RT</li>
+<li CR="3500687">[RFCal][Legacy] Support SDRM for measPower and GenerateDL</li>
+<li CR="3501416">[SBSY_COMMON] Add NV availability feature</li>
 <li CR="3502370">[Utilities]RFVFS all combo tester support 8RX combos</li>
+<li CR="3504799">[RFCal][QET Screen test] skip QET screen test if no QET7100 device</li>
 <li CR="3504859">Support FTM_NVMGR_TEST NV availability</li>
+<li CR="3504863">Support FTM_NVMGR_TEST NV availability</li>
+<li CR="3504864">Support FTM_NVMGR_TEST NV availability</li>
 <li CR="3504926">[RFCAL] FBRx CAL NV Path data missing issue after Cal DB enablement</li>
 <li CR="3505432">Check Lime check for feature technology</li>
 <li CR="3506801"> [RFCAL]RFCal xml log name not match with LogFileList.txt if enable append mode   </li>
+<li CR="3512525">[DSDA_IRAT]New multimode dll parse LTE combo fail</li>
 <li CR="3513772">Support QMSL_RT</li>
 <li CR="3513774">Support QMSL_RT</li>
 </ul>
 <hr />
-<p><i>Date: </i>05/09/2023</p>
+<p><i>Date: </i>07/07/2023</p>
 <p><i>Version: </i><b>1.0-02269</b></p>
 <p><i>Changes:</i></p>
 <ul>
@@ -91,19 +208,21 @@
 <li CR="3460511">[x-functional] update Rx Meas Type</li>
 <li CR="3463339">[SUITE][Utilities][FieldQueries]:  Move Suite Async Log Collector field query message from error to debug console</li>
 <li CR="3463361">[QMSL_Internal Extensions][FieldQueries]: Move Suite Async Log Collector field query message from error to debug console</li>
+<li CR="3380643">Add a new Get Parameter function that assigns provided default if param doesn't exist in the dataset.</li>
 <li CR="3465748">[FR86042]Tool side enhancement for 8RX asdiv config</li>
 <li CR="3474343">QMSL: move RX attachMode TLV2 to only WCN7880</li>
 <li CR="3474653">QMSL: fix override module issue</li>
 <li CR="3477723">FR 87229: [Char] Phase 1:  char params validate and optimize</li>
-<li CR="3380643">Add a new Get Parameter function that assigns provided default if param doesn't exist in the dataset.</li>
 <li CR="3482224">QMSL: add groupingStopIndexOffset TLV2</li>
 <li CR="3484687">Add RFFE parity check DB</li>
 <li CR="3484693">Add RFFE parity check DB</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3452858">add multi-port support on GSM Tx temp char process</li>
 <li CR="3457540">[Tool][Common FBRx/Rx cal] Cal Refer optimization</li>
 <li CR="3458692">[RFCAL][QSM] Change the order of PA XML loading</li>
 <li CR="3459372">[RFCal]Phone crash due to incorrect params format</li>
 <li CR="3464388">gsm DA cal default limit with qsc_param</li>
+<li CR="3465529"> [RFCal][RFCommon] Fix VS2022 compiler failure</li>
 <li CR="3466782">[RFCAL] add support for new data type 591 in NV check report</li>
 <li CR="3468402">FBRx calibrated fail, but TX calibrated pass</li>
 <li CR="3470552">[RFCal]Extend RGI for Sweep0 compression monotonicity test </li>
@@ -116,11 +235,11 @@
 <li CR="3479323">RF Rx IF Droop Cal Timeout</li>
 <li CR="3480961">RFNV read optmized when ESN is not active </li>
 <li CR="3482181">[GSM Rx]Add flag in cal. node to overwrite the MM type and Support All Bands Cal in one node</li>
+<li CR="3487146">[Utility] Add Serial Number and Submitted by in Log</li>
 <li CR="3489685">[RF CAL DLL] Revert compress param name in FinalizeDataLogging</li>
 <li CR="3490473">[GSM Rx]Add flag in cal. node to overwrite the MM type and Support All Bands Cal in one node</li>
 <li CR="3490990">Support QMSL_RT</li>
 <li CR="3491029">Support QMSL_RT</li>
-<li CR="3487146">[Utility] Add Serial Number and Submitted by in Log</li>
 <li CR="3448851">Add path antenna info into Tx linearizer report</li>
 </ul>
 <hr />
@@ -132,14 +251,14 @@
 <li CR="3449406">[RFCAL_XFUNC]S9100 update the port settings</li>
 <li CR="3450394">[Utilities]Fix RRA crash issue with incorrect number of antennas</li>
 <li CR="3451510">[RF Cal]Raise RFLM reach the max number of measurements error in cal side</li>
-<li CR="3437544">[RFCal Common] Add IF TRX Device List to the cal xml parameters</li>
-<li CR="3438553">[QSPR] Improve QIA mode node switch timing</li>
 <li CR="3443191">[RFCal XFunc] equipment based phase mismatch cal: Include FSM CaldB paths</li>
 <li CR="3443627">QMSL: add RX ANI and HBS filter cal TLV2. </li>
 <li CR="3446741">[QMSL_Internal Extensions][FieldQueries]: Add Suite Layer Wrapper for CQMSL_Async_LogCollector</li>
 <li CR="3446763">[SUITE][Utilities][FieldQueries]: Add Suite Layer Wrapper for CQMSL_Async_LogCollector</li>
 <li CR="3446798">[QMSL_Internal Extensions][FieldQueries]: Add Suite Layer Wrapper for CQMSL_Async_LogCollector</li>
 <li CR="3447088">[RF Cal] BAPT Full Bias Cal support optional in AutoGen </li>
+<li CR="3437544">[RFCal Common] Add IF TRX Device List to the cal xml parameters</li>
+<li CR="3438553">[QSPR] Improve QIA mode node switch timing</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3450172">[DE.5.0][QRD][SKU2][EVT1.2][HWID1085][FTM_RFCal] RFCal multiport set ant fail when load path info from databse file</li>
 <li CR="3441210">Disabling XO Cal on W tech due to FTM freeze/unfreeze issue.</li>
@@ -156,6 +275,18 @@
 <ul>
 <h4><i>  New Features </i></h4>
 <li CR="3438219">QMSL: add genericUTFCmd for Lithium and later chips.</li>
+<li CR="3416658">[QMSL_WWAN]Added support for New MMW Rx offset query command</li>
+<li CR="3416662">[QMSL_inc]Added New MMW Rx offset query command and properties</li>
+<li CR="3416670">[SubSysCommon]Added support for New MMW Rx offset query command</li>
+<li CR="3416675">[Xfunctional]Added support for new MMW Rx offset query command</li>
+<li CR="3414255">[commontest] add test tree name to xml log</li>
+<li CR="3414602">[FR81605]RF verification support NV/BW availability check</li>
+<li CR="3414607">[FR81605]RF verification support NV/BW availability check</li>
+<li CR="3415474">Adding n48 Supported Bands and CA RRA Helper Changes  </li>
+<li CR="3373831">Better APT (BAPT) calibration DLL side changes</li>
+<li CR="3402534">[RF Cal]FR83668 Better APT (BAPT) calibration algorithm update DLL side changes</li>
+<li CR="3409986">[DE50] mmW FDRSB Cal result handler - logging issues</li>
+<li CR="3411862">FR 81779: Sub6 Tx Common LOFT Cal - CPS support</li>
 <li CR="3417103">Agilent Power Supply N6705B  Channel select change to 2</li>
 <li CR="3418005">[FR81605][QMSL6.1]Add new properties for storing Nv/Bandwidth check-up status</li>
 <li CR="3421356">eAP cal goodness checks</li>
@@ -174,20 +305,9 @@
 <li CR="3431520">[Xfunc]Remove Rx offset and NF table repository query</li>
 <li CR="3433039"> [QMSL_INC] Change the max trx devices to 32 to accommodate FSM</li>
 <li CR="3433203">[RF Cal] BAPT Cal support optional in AutoGen </li>
-<li CR="3373831">Better APT (BAPT) calibration DLL side changes</li>
-<li CR="3402534">[RF Cal]FR83668 Better APT (BAPT) calibration algorithm update DLL side changes</li>
-<li CR="3409986">[DE50] mmW FDRSB Cal result handler - logging issues</li>
-<li CR="3411862">FR 81779: Sub6 Tx Common LOFT Cal - CPS support</li>
-<li CR="3414255">[commontest] add test tree name to xml log</li>
-<li CR="3414602">[FR81605]RF verification support NV/BW availability check</li>
-<li CR="3414607">[FR81605]RF verification support NV/BW availability check</li>
-<li CR="3415474">Adding n48 Supported Bands and CA RRA Helper Changes  </li>
-<li CR="3416658">[QMSL_WWAN]Added support for New MMW Rx offset query command</li>
-<li CR="3416662">[QMSL_inc]Added New MMW Rx offset query command and properties</li>
-<li CR="3416670">[SubSysCommon]Added support for New MMW Rx offset query command</li>
-<li CR="3416675">[Xfunctional]Added support for new MMW Rx offset query command</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3439939">RFCal connected cal support common param frequency override</li>
+<li CR="3416090">Change compute fast fourier transform algorithm</li>
 <li CR="3417994">Fix RFDevice Report node data process error</li>
 <li CR="3419073">Fix a structure redefine error</li>
 <li CR="3422206">[QSC][RFCal] VISA VI_ATTR_TMO_VALUE settings during rfcal -ms/s </li>
@@ -195,7 +315,6 @@
 <li CR="3423350">[RF Cal][MM 7]Switch port support disable common cal</li>
 <li CR="3426540">IDC disable LNA GS state max limit check to fix DLL no result returned issue</li>
 <li CR="3429419">[RF Cal][MM]Multi Tx pahts with different antena numbers support equipment language empty</li>
-<li CR="3416090">Change compute fast fourier transform algorithm</li>
 </ul>
 <hr />
 <p><i>Date: </i>02/28/2023</p>
@@ -206,12 +325,12 @@
 <li CR="3410927">[QMSL_WWAN] Therm read new request , response param support</li>
 <li CR="3410970">[QMSL_Inc] Therm read new request , response param support</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3417045"> Add an option not to show LIME license error message  </li>
+<li CR="3414071">Add trigge feature for MM 1 connected cal</li>
+<li CR="3408016">update DLL code and params file to enable last DPD limit</li>
 <li CR="3416409">[SubsysRFCal]Add error code check for FTM_GET_UNIFIED_PATH_DB_INFORMATION. </li>
 <li CR="3416518">update DLL code and params file to enable last DPD limit</li>
 <li CR="3414940">Enable common cal sweep size is zero not go to access the data and clear the trigger path information for next node</li>
-<li CR="3414071">Add trigge feature for MM 1 connected cal</li>
-<li CR="3408016">update DLL code and params file to enable last DPD limit</li>
+<li CR="3417045"> Add an option not to show LIME license error message  </li>
 </ul>
 <hr />
 <p><i>Date: </i>02/22/2023</p>
@@ -220,6 +339,10 @@
 <ul>
 <h4><i>  New Features </i></h4>
 <li CR="3410734">QMSL: add RX pilot EVM TLV2</li>
+<li CR="3387196">[QMSL_Core]: JSON Log Processor Interface</li>
+<li CR="3387197">[QMSL_InternalExtensions]: JSON Log Processor Interface</li>
+<li CR="3387199">[SubSysCommonTests]: JSON Log Processor Interface</li>
+<li CR="3387200">[SUITE Utilities]: JSON Log Processor Interface</li>
 <li CR="3391600">[x-functional] include last value in SSS </li>
 <li CR="3392463">QMSL: add rxGainTblCtrl TLV2</li>
 <li CR="3393236">[QMSL_QUTS]: Enable case-specific search (sensitive/insensitive) for JSON Interface</li>
@@ -227,28 +350,26 @@
 <li CR="3402090">[QDART][QMSL6.1] Update XO Cal data processing mechanism to handle PMIC details.</li>
 <li CR="3402098">[QDART][SUITE][SubSysRfCal2] Updates XO Cal Logging mechanism to log PMIC details </li>
 <li CR="3402108">[QDART] Updates XO Cal data processing mechanism to receive to log PMIC details in Cal log XML.</li>
-<li CR="3387196">[QMSL_Core]: JSON Log Processor Interface</li>
-<li CR="3387197">[QMSL_InternalExtensions]: JSON Log Processor Interface</li>
-<li CR="3387199">[SubSysCommonTests]: JSON Log Processor Interface</li>
-<li CR="3387200">[SUITE Utilities]: JSON Log Processor Interface</li>
-<li CR="3377223">Tech Stop support for QSM</li>
 <li CR="3369956">Support for multi BW loft cal</li>
 <li CR="3365846">SWP3 power check for QSM</li>
 <li CR="3372667">Support for FBRx temp comp/PinPout char data  write to SDRM specific nv's</li>
 <li CR="3372668">Support for FBRx temp comp/PinPout char data  write to SDRM specific nv's</li>
+<li CR="3377223">Tech Stop support for QSM</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3405294">[RFCal][CommonXGSub6] Optimize the extend RGI function</li>
 <li CR="3405296">[RFCal][X-Functional] Optimize the extend RGI function</li>
+<li CR="3375259"> [QMSL] support band helper for SDRM </li>
+<li CR="3375260"> [QMSL] support band helper for SDRM </li>
+<li CR="3390516"> [SBSY RFCAL COMMON] Support SDRM PinPout Char NV</li>
+<li CR="3390517"> [SBSY RFCAL COMMON] Support SDRM PinPout Char NV</li>
 <li CR="3397614">[QSCPI] GSM combined Rx paths in one node support MM load path loass</li>
 <li CR="3400231">[RFCal]Add SetObfuscationFlag after add phone handle.</li>
+<li CR="3369616">[RFCal] Support multiple frequency SDRM FBRx cal for CMW  </li>
+<li CR="3354630">https://orbit/CR/3354630</li>
+<li CR="3362514">MM 7 Native Language supports load the rest Tx path loss table which used segment leve to swtich port</li>
 <li CR="3363350"> [RFCal][Common] Optimize the extend RGI function</li>
 <li CR="3363361">MM 7 Native Language supports load the rest Tx path loss table which used segment leve to swtich port</li>
 <li CR="3363364">MM 7 Native Language supports load the rest Tx path loss table which used segment leve to swtich port</li>
-<li CR="3369616">[RFCal] Support multiple frequency SDRM FBRx cal for CMW  </li>
-<li CR="3375259"> [QMSL] support band helper for SDRM </li>
-<li CR="3375260"> [QMSL] support band helper for SDRM </li>
-<li CR="3354630">https://orbit/CR/3354630</li>
-<li CR="3362514">MM 7 Native Language supports load the rest Tx path loss table which used segment leve to swtich port</li>
 </ul>
 <hr />
 <p><i>Date: </i>01/30/2023</p>
@@ -273,13 +394,14 @@
 <li CR="3375037">[SubSysCommon] Check station config item to determine whether to print memory usage statistics to debug log in QDARTInitializeDataLogging and QDARTFinalizeDataLogging</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3352410">[RFCal] Fix exception when "dev name" is not stored</li>
-<li CR="3341217">[RFCal] Remove incorrect test equipment command for CMW  in connected cal</li>
 <li CR="3319291">[Utility] Fix warning for VS2022</li>
+<li CR="3341217">[RFCal] Remove incorrect test equipment command for CMW  in connected cal</li>
+<li CR="3373582">Common Rx calibration missing to cal when disable common rx cal in cal. parameters with Multiplexer 1</li>
+<li CR="3375261"> [QMSL] support band helper for SDRM </li>
 <li CR="3376185">[RF Cal DLL] [QSC] Update condition to skip QSC test when common cal is enabled and Generic Tree is enabled</li>
 <li CR="3377037">APT Cal Failure - Usage of (uint8) instead of (uint16)</li>
-<li CR="3373582">Common Rx calibration missing to cal when disable common rx cal in cal. parameters with Multiplexer 1</li>
-<li CR="3388064">Fix the QSPR crash issue while finalizing Data Logging.</li>
 <li CR="3387038">Fix the QSPR crash issue while finalizing Data Logging.</li>
+<li CR="3388064">Fix the QSPR crash issue while finalizing Data Logging.</li>
 </ul>
 <hr />
 <p><i>Date: </i>01/04/2023</p>
@@ -290,28 +412,28 @@
 <li CR="3369958">Support for multi BW loft cal</li>
 <li CR="3369959">Support multi BW loft cal</li>
 <li CR="3369996">Multi BW loft cal support</li>
-<li CR="3364435">FR 81779: Tx Common LOFT Cal - add path ID offset for LOFT path info table</li>
 <li CR="3330620">QSM waveform type</li>
 <li CR="3330817">GenericSpuriousEmissionsAlg seperated setup and capture</li>
 <li CR="3332950">[CPS][XGSub6] AutoPack Sequencer updates</li>
+<li CR="3364435">FR 81779: Tx Common LOFT Cal - add path ID offset for LOFT path info table</li>
 <li CR="3362520">Multi-chan FBRx support for QSM- UE<>TE sync</li>
 <li CR="3362523">Multi-chan FBRx support for QSM- UE<>TE sync</li>
 <li CR="3360716">[CPS][XGSub6][QMSL] Exposing AutoPack CalParam and CalResult defines headers</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3368055">ASdiv char write each node data to separate xml file to speed up the char process</li>
-<li CR="3365280">[RFCAL] Disable RFC error message when 1 Rx cal path case</li>
-<li CR="3365520">QMSL:  fix OFDMA load error after moving common code to DeviceTlv2CommandSend</li>
-<li CR="3319293">[X Functional Enable treat warning as error  for VS2022 project</li>
-<li CR="3319269">[RFCAL] Fix Stackover flow when x64 RF Cal DLL</li>
-<li CR="3326071">[RF CAL DLL] GSM V5 DPD and Rx Cal sweep updates</li>
 <li CR="3329901">[RFCAL] Failure in LTE 10 to 40 MHz unconnected cal</li>
 <li CR="3330088"> [RFCAL] Add feature Enable_1_Rx_Path_Cal from stationconfig.xml   </li>
-<li CR="3348891">Fail to send Tx loft Cal param in External DLL</li>
+<li CR="3319293">[X Functional Enable treat warning as error  for VS2022 project</li>
+<li CR="3326071">[RF CAL DLL] GSM V5 DPD and Rx Cal sweep updates</li>
 <li CR="3352544">No Opcode generated since there was no RFM paths to be calibrated</li>
-<li CR="3350101">[QSC]SelectedRFDeviceOverwriteQSC- always allow to override Cal.xml based on node logic</li>
+<li CR="3365280">[RFCAL] Disable RFC error message when 1 Rx cal path case</li>
+<li CR="3365520">QMSL:  fix OFDMA load error after moving common code to DeviceTlv2CommandSend</li>
 <li CR="3359845">Under MM 1 scenario, B12_32 connected cal  and  B28AB connected Cal missing some FBRx data push.</li>
+<li CR="3348891">Fail to send Tx loft Cal param in External DLL</li>
+<li CR="3350101">[QSC]SelectedRFDeviceOverwriteQSC- always allow to override Cal.xml based on node logic</li>
 <li CR="3274817">Support Rx_Frequency_list</li>
 <li CR="3274824">Support Rx_Frequency_list</li>
+<li CR="3319269">[RFCAL] Fix Stackover flow when x64 RF Cal DLL</li>
 <li CR="3303499">[QMSL inc] Code change for C++ 17 ( change byte to uint8)</li>
 </ul>
 <hr />
@@ -320,21 +442,22 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3355939">FTM path query support for QSM </li>
-<li CR="3357132"> [RFCal] Add LIME license for QSM   </li>
 <li CR="3351930">Skipping PA device query and DL logging fix for SDRM </li>
 <li CR="3349179">FTM path query support for QSM </li>
 <li CR="3349181">FTM path query support for QSM </li>
 <li CR="3349185">FTM path query support for QSM </li>
+<li CR="3355939">FTM path query support for QSM </li>
+<li CR="3357132"> [RFCal] Add LIME license for QSM   </li>
+<li CR="3357141">Support Cal NV RFM Path check for QSM </li>
 <li CR="3347824"> QMSL: move common code to DeviceTlv2CommandSend </li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3355976">GSM RX CAL fail when enable Auto Select All Rx Path To Cal</li>
 <li CR="3350504">GSM RX CAL fail when enable Auto Select All Rx Path To Cal</li>
 <li CR="3352032">QMSL[Bluetooth] - Fix for Get EDL Build Info API</li>
-<li CR="3354255">License checked fail with RF CAL server  dll</li>
 <li CR="3349215">Multiplexer type 1/7 path loss missing  when using the native language</li>
 <li CR="3349274">Multiplexer type 1/7 path loss missing  when using the native language</li>
 <li CR="3341965">Fail to send Tx loft Cal param in External DLL</li>
+<li CR="3354255">License checked fail with RF CAL server  dll</li>
+<li CR="3355976">GSM RX CAL fail when enable Auto Select All Rx Path To Cal</li>
 </ul>
 <hr />
 <p><i>Date: </i>11/29/2022</p>
@@ -342,6 +465,7 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
+<li CR="3340403">Enabling therm ADC and updating expected AGC offset for SDRM</li>
 <li CR="3343287">[QMSL WWAN] [DE_AP] mmW FDRSB cal param/result pack unpack </li>
 <li CR="3343301">[SubSys][DE-AP] mmW FDRSB Cal sequencer and result handler</li>
 <li CR="3344333">[QMSL] FR 81779: Tx Common LOFT Cal</li>
@@ -350,11 +474,10 @@
 <li CR="3346049">[QSC] Load different cal params based on WTR version - diag query</li>
 <li CR="3346053">[QSC] Load different cal params based on WTR version - diag query</li>
 <li CR="3346061">[QSC] Load different cal params based on WTR version - diag query</li>
+<li CR="3326921">[X-Functional] Add Mini-Circuit RUDAT attenuator driver and one spectrum analyzer function.</li>
 <li CR="3341892">FBRx TE measurement for 4ms for SDRM tech
 
 </li>
-<li CR="3340403">Enabling therm ADC and updating expected AGC offset for SDRM</li>
-<li CR="3326921">[X-Functional] Add Mini-Circuit RUDAT attenuator driver and one spectrum analyzer function.</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3343212">[RFCal] Optimize XPT Enhanced delay char log </li>
 <li CR="3343217">[RFCal] Optimize XPT Enhanced delay char log </li>
@@ -423,8 +546,8 @@
 <h4><i>  New Features </i></h4>
 <li CR="3317061">[QMSL] add power mode mask in Tx power logging</li>
 <li CR="3317065">[x-functional] add power mode mask in Tx power logging</li>
-<li CR="3309149">Sub6 AutoPack updates </li>
 <li CR="3292741"> Sub6 AutoPack logging updates</li>
+<li CR="3309149">Sub6 AutoPack updates </li>
 </ul>
 <hr />
 <p><i>Date: </i>10/18/2022</p>
@@ -467,12 +590,12 @@
 <li CR="3289724">De50 RXRSB update to new data type 574</li>
 <li CR="3289787">[QMSL] Update obfuscate  method srand function seed.</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3284657">add code for support sigpath, RFM device and Ant path together </li>
 <li CR="3288080">[QMSL Core]: Address edge case write access violation</li>
 <li CR="3288395">[QMSL Core]: check on json structure size before copying data</li>
 <li CR="3288398">[QMSL Internal Extensions]: Address missing phone log packets</li>
 <li CR="3291735">[RF Cal][Multiplexer] Enable common FBRx cal without enable common Rx, caused  n41 Tx Cal no power FBRx HW Gain 65535</li>
 <li CR="3292492">[RF Cal Common] Avoid infinite loop in alg to query all GSM sigpaths</li>
+<li CR="3284657">add code for support sigpath, RFM device and Ant path together </li>
 </ul>
 <hr />
 <p><i>Date: </i>09/09/2022</p>
@@ -488,13 +611,13 @@
 <li CR="3271816">[QMSL_INC] add expected power override params for unconnected LOFT cal</li>
 <li CR="3271818">[QMSL_WWAN] add expected power override params for unconnected LOFT cal</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3285521">one sweep more than callbox capability need to separate to more than two multiple sweeps cal failure</li>
-<li CR="3283136">Add description in QMSL QUTS header file </li>
-<li CR="3284288">[Multiplexer][QSC V1 = 1000] Type 7 support for AT Modem</li>
 <li CR="3284976">[QMSL][Core] Fix intermittent no async response after disconnected phone</li>
 <li CR="3270599">[ESCV4] AUX Cal Loss Issue on CMW100 with Native CMD</li>
 <li CR="3270710">[SubsysRFCal][DLL][GSM] increase wait time to get result</li>
 <li CR="3271752">[RFCAL][CommonXGSub6] add expected power override params for unconnected LOFT cal</li>
+<li CR="3285521">one sweep more than callbox capability need to separate to more than two multiple sweeps cal failure</li>
+<li CR="3283136">Add description in QMSL QUTS header file </li>
+<li CR="3284288">[Multiplexer][QSC V1 = 1000] Type 7 support for AT Modem</li>
 </ul>
 <hr />
 <p><i>Date: </i>08/25/2022</p>
@@ -504,12 +627,12 @@
 <h4><i>  New Features </i></h4>
 <li CR="3267819">[GNB][MMW][EQU] Add PavTFreqCorrectionComplete() - xfunc</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3271768">Radiated test log name can't recognize the %TECHNOLOGIES%</li>
+<li CR="3270491">[QMSL6.1]Fix channel calculation issue on Sub6 bands</li>
 <li CR="3272105">[RF Cal]Common FBRx Cal append FRBx data issue</li>
 <li CR="3272106">[RF Cal]Changes  for common Rx enabled met RxTrigger issue</li>
 <li CR="3272569">[QMSL_Inc] Fix unnamed struct   </li>
+<li CR="3271768">Radiated test log name can't recognize the %TECHNOLOGIES%</li>
 <li CR="3275004">[X-functional]Vendor supplied - Fix port switching issue when do RX measurement</li>
-<li CR="3270491">[QMSL6.1]Fix channel calculation issue on Sub6 bands</li>
 </ul>
 <hr />
 <p><i>Date: </i>08/18/2022</p>
@@ -542,8 +665,6 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3204864">[x-functional] change detailed logging from log window to debug window</li>
-<li CR="3204868">[QMSL6.1] add NR5G MMW enum</li>
 <li CR="3211211">[commontest] clean up debug prints in RRA query</li>
 <li CR="3224776">Add Common FBRx/Rx Cal. support in NV Existing Check </li>
 <li CR="3224779">Add Common FBRx/Rx Cal. support in NV Existing Check </li>
@@ -555,12 +676,13 @@
 <li CR="3242362">[QMSL_WWAN] FR 80798: XPT Cal SWP0 break when target compression is met</li>
 <li CR="3242364">[Common] FR 80798: XPT Cal SWP0 break when target compression is met</li>
 <li CR="3242365">[CommonXGSUB6] FR 80798: XPT Cal SWP0 break when target compression is met</li>
+<li CR="3204864">[x-functional] change detailed logging from log window to debug window</li>
+<li CR="3204868">[QMSL6.1] add NR5G MMW enum</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3209591">[Kailua MTP HWID 895][RF CAL]  GSM multi-band cal using splitter-free setup </li>
-<li CR="3216659">[QMSL_Inc] Fix unnamed struct   </li>
 <li CR="3244014">Need re-compute frames after split bands ( GSM multi-band multi-port in one node scene)</li>
 <li CR="3244477">[RFCal]Fix compress function when enable xml append mode  </li>
 <li CR="3245470">[RFCal] Unconnected cal upper bound freq check</li>
+<li CR="3216659">[QMSL_Inc] Fix unnamed struct   </li>
 <li CR="3222133"> Add an option not to show LIME license error message  </li>
 <li CR="3222137"> Add an option not to show LIME license error message  </li>
 <li CR="3224064">GSM DRX_only cal open wrong port with MultiplexManager</li>
@@ -576,9 +698,10 @@
 <li CR="3240016">[RFCAL] Add xml file path output parameters for database plugin.</li>
 <li CR="3240214">[Kailua MTP HWID 895][RF CAL]  GSM multi-band cal using splitter-free setup </li>
 <li CR="3197291">[X-Functional]Reconstruct pathloss load logic to support loss table confguration separately</li>
+<li CR="3209591">[Kailua MTP HWID 895][RF CAL]  GSM multi-band cal using splitter-free setup </li>
 </ul>
 <hr />
-<p><i>Date: </i>06/03/2022</p>
+<p><i>Date: </i>08/10/2022</p>
 <p><i>Version: </i><b>1.0-02231</b></p>
 <p><i>Changes:</i></p>
 <ul>
@@ -588,13 +711,13 @@
 <li CR="3206492">FR71014 RXRSB IDC Cal feature .</li>
 <li CR="3207325">FR71014 RXRSB IDC Cal feature .</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3209696">[SBSY_COMMON] Add a new method for Lock_Unlock resource using mutex and file lock (no multiplex manager required)</li>
+<li CR="3211034">Avoid false positives during unconnected LOFT Cal</li>
+<li CR="3208842">[RFCal][QSC]Cal node show pass but no any Cal result in report</li>
 <li CR="3197406">FBRX TX remove offset power log for FC path</li>
 <li CR="3204426">[QSC]Rx paths Cal missing with <Enable_PRx_Gain>true</Enable_PRx_Gain><Enable_DRx_Gain>true</Enable_DRx_Gain> without <Enable_Rx_Gain>true</Enable_Rx_Gain></li>
 <li CR="3204469">[QSC]Rx paths Cal missing with <Enable_PRx_Gain>true</Enable_PRx_Gain><Enable_DRx_Gain>true</Enable_DRx_Gain> without <Enable_Rx_Gain>true</Enable_Rx_Gain></li>
-<li CR="3208842">[RFCal][QSC]Cal node show pass but no any Cal result in report</li>
 <li CR="3211226">[Fix] QSPR debug log, duplicate header message when error</li>
-<li CR="3209696">[SBSY_COMMON] Add a new method for Lock_Unlock resource using mutex and file lock (no multiplex manager required)</li>
-<li CR="3211034">Avoid false positives during unconnected LOFT Cal</li>
 </ul>
 <hr />
 <p><i>Date: </i>05/27/2022</p>
@@ -602,22 +725,22 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3204924">[SubSysRFCalXG] Remove Positioner Antenna Interferer Positioner tests </li>
 <li CR="3178139">Change SEM max mask areas from 8 to 12</li>
-<li CR="3192636">[RFCal]add option param to allow reload PA.xml</li>
+<li CR="3204924">[SubSysRFCalXG] Remove Positioner Antenna Interferer Positioner tests </li>
 <li CR="3181798">[New Feature][FR70289][QMSL_WWAN] Enable symbol level configuration with FW in FTM mode in QDART.  </li>
+<li CR="3192636">[RFCal]add option param to allow reload PA.xml</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="3198304">[RF Cal]Regression can not Open XML/CML file in QSPR by click the path link</li>
 <li CR="3203104">Add Chip Family name on XML when information is available on an xml log</li>
 <li CR="3203111">Add Chip Family name on XML when information is available on an xml log</li>
 <li CR="3203112">Add Chip Family name on XML when information is available on an xml log</li>
 <li CR="3203746">[RFCal]  incorrect opcode in serial Rx cal </li>
+<li CR="3126544">TX1 unconnect cal didn't report fail when only do TX0 connect cal</li>
 <li CR="3186181">Fix RFCal_FTM_CAL_START_STOP node randomly failuire because unconnected missing tear down segment</li>
 <li CR="3186464">[QMSL_Inc] Add XPT_CAL_ENABLE_CONSTRUCT_SWP0_BIAS_LIST enum</li>
 <li CR="3188550">Add XPT_CAL_ENABLE_CONSTRUCT_SWP0_BIAS_LIST for rfcal xpt build opcode</li>
 <li CR="3188560"> [SBSY_RFCAL_Common] Add XPT_CAL_ENABLE_CONSTRUCT_SWP0_BIAS_LIST for rfcal xpt build opcode</li>
 <li CR="3188561"> [SBSY_RFCAL_XGSUB6] Add XPT_CAL_ENABLE_CONSTRUCT_SWP0_BIAS_LIST for rfcal xpt build opcode</li>
-<li CR="3126544">TX1 unconnect cal didn't report fail when only do TX0 connect cal</li>
 </ul>
 <hr />
 <p><i>Date: </i>05/03/2022</p>
@@ -720,18 +843,18 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3130182">[AAPT] DLL support: logging changes to disable limit check for AAPT cal</li>
 <li CR="3123459">[AAPT] DLL support for PSAT disable</li>
 <li CR="3126100">[SubSysNR5GCore] Add support for 8Rx</li>
 <li CR="3126144">[SubSysNR5GCore] Add support for 8Rx</li>
 <li CR="3126160">[SubSysNR5GCore] Add support for 8Rx</li>
 <li CR="3126541">FR75293: [QSC]populate upper bound frequency automatically</li>
+<li CR="3130182">[AAPT] DLL support: logging changes to disable limit check for AAPT cal</li>
 <li CR="3117728">[RF CAL DLL] GSM Code Refactoring and Addition of New Test Algorithm (v5)</li>
 <li CR="3117830">[RF CAL DLL] GSM Code Refactoring and Addition of New Test Algorithm (v5)</li>
 <li CR="3117833">[RF CAL DLL] GSM Code Refactoring and Addition of New Test Algorithm (v5)</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3126574">[RF Cal][Com]Apply different Override_Tx_Power_Margin  value for different PA state</li>
 <li CR="3125896">[RF Cal]Apply different Override_Tx_Power_Margin  value for different PA state</li>
+<li CR="3126574">[RF Cal][Com]Apply different Override_Tx_Power_Margin  value for different PA state</li>
 </ul>
 <hr />
 <p><i>Date: </i>02/03/2022</p>
@@ -766,6 +889,7 @@
 <li CR="3099497">[QMSL-WWAN]Add Independent screening Qlink test.</li>
 <li CR="3099498">[QMSL-INC]Add Independent screening Qlink test.</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3091213">[RF Cal]multi-dut not enough memory to create continue dynamic space </li>
 <li CR="3094649">LTE Connect Cal Antenna_Number_Inclusion_List Don't Work When MULTIPLEXER_TYPE=7 and only one Rx path in one sweep</li>
 <li CR="3095881">Multi Tx FBRx char fix</li>
 <li CR="3098128">path specific params fixed for RX cal gain limit</li>
@@ -777,44 +901,43 @@
 <li CR="3103774">Fix RF cal write to wrong subband NV while configure wrong freq in param</li>
 <li CR="3105966">DCOC_I/Q limitation override doesn't work fine as expected.</li>
 <li CR="3107171">Disable TX power test in DL setting segments when connected cal on QTI scpi.</li>
-<li CR="3091213">[RF Cal]multi-dut not enough memory to create continue dynamic space </li>
 <li CR="3093152">[RF Cal]multi-dut not enough memory to create continue dynamic space</li>
 </ul>
 <hr />
-<p><i>Date: </i>12/14/2021</p>
+<p><i>Date: </i>01/06/2022</p>
 <p><i>Version: </i><b>1.0-02214</b></p>
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3074546">Updated messages printed by AddActivePhone and SelectActivePhone</li>
 <li CR="3086263">[FR75691][CommonXGSub6] add pre-dBc in loft unconnected cal logging</li>
 <li CR="3088969">[QMSL] Add Regroup table support</li>
 <li CR="3088994">[QMSL_Inc] Add Regroup table support</li>
+<li CR="2951772">Add support for pulse current commands to keithley 2303 power supply</li>
+<li CR="2972553">Add Pulse Current to AptBiasCharv4 test</li>
+<li CR="2972558">Add Pulse Current to AptBiasCharv4 test</li>
+<li CR="3018369">[GNB][RFCAL][XFUNC] Remove Suffix "DB" in loss setting for S9100</li>
+<li CR="3016391">[GNB][MMW][RFCAL] frequency is rounded during equipment setting for RxGain Cal</li>
+<li CR="3035643">[GNB][RFCAL] Set FFT width rule for Monitor Spectrum application of S9100</li>
 <li CR="3074388">Add support to show Path info from DB in QRCT</li>
+<li CR="3074546">Updated messages printed by AddActivePhone and SelectActivePhone</li>
 <li CR="3076898">Check Rx Cal Gain list automatically during Cal</li>
 <li CR="3076910">Check Rx Cal Gain list automatically during Cal</li>
 <li CR="3076915">Check Rx Cal Gain list automatically during Cal</li>
 <li CR="3076918">Check Rx Cal Gain list automatically during Cal</li>
 <li CR="3076921">Check Rx Cal Gain list automatically during Cal</li>
 <li CR="3076923">Check Rx Cal Gain list automatically during Cal</li>
-<li CR="3018369">[GNB][RFCAL][XFUNC] Remove Suffix "DB" in loss setting for S9100</li>
-<li CR="3016391">[GNB][MMW][RFCAL] frequency is rounded during equipment setting for RxGain Cal</li>
-<li CR="3035643">[GNB][RFCAL] Set FFT width rule for Monitor Spectrum application of S9100</li>
-<li CR="2951772">Add support for pulse current commands to keithley 2303 power supply</li>
-<li CR="2972553">Add Pulse Current to AptBiasCharv4 test</li>
-<li CR="2972558">Add Pulse Current to AptBiasCharv4 test</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3092549">FBRx char issue fix </li>
 <li CR="3081183">Support FTM_RF_DEBUG based serial cal</li>
 <li CR="3081189">Support FTM_RF_DEBUG based serial cal</li>
 <li CR="3082118">Add DCOCIQ min and max limit, optimize log format for QMine data</li>
 <li CR="3084452">XO calibration with MM type 7 switch port acording selected path</li>
 <li CR="3085415">[RF Cal]Add warning about QSCPI version lower than 1.95 that no support segment switch port</li>
 <li CR="3088193">Add NDR NV Check to avoid cal missing on writeNV node</li>
-<li CR="3076728">LOFT Cal failure on N79</li>
-<li CR="3071537">[RF_CAL] GSM RX CAL FAIL when using non-splitter set-up </li>
-<li CR="3059184">Fix RxTrigger not support MM type 7 to switch callbox port</li>
+<li CR="3092549">FBRx char issue fix </li>
 <li CR="2977376">TOMAHC frozen after attempt to run unlicensed test</li>
+<li CR="3059184">Fix RxTrigger not support MM type 7 to switch callbox port</li>
+<li CR="3071537">[RF_CAL] GSM RX CAL FAIL when using non-splitter set-up </li>
+<li CR="3076728">LOFT Cal failure on N79</li>
 </ul>
 <hr />
 <p><i>Date: </i>11/19/2021</p>
@@ -822,6 +945,11 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
+<li CR="3075749">Check hash before indeed loading rfcal input file to save test time</li>
+<li CR="3075753">Check hash before indeed loading rfcal input file to save test time</li>
+<li CR="3074442">[FR75691] add loft unconnected cal changes in data handler</li>
+<li CR="3074443">[FR75691][QMSL_INC] add loft unconnected cal result type</li>
+<li CR="3074444">[FR75691][QMSL_WWAN] parse loft unconnected cal data type</li>
 <li CR="3072452">[FR75691][Common] add loft unconnected cal</li>
 <li CR="3072455">[FR75691][CommonXGSub6] add loft unconnected cal</li>
 <li CR="3072458">[FR75691][QMSL_INC] add loft unconnected cal</li>
@@ -835,24 +963,19 @@
 <li CR="3069265">[FR75360][Common] Loft Cal support path override</li>
 <li CR="3069270">Loftcal support path overright or skip path </li>
 <li CR="3069346">[FR75360][CommonXGSub6] add the multiplex type 1 support for LOFT cal</li>
-<li CR="3074442">[FR75691] add loft unconnected cal changes in data handler</li>
-<li CR="3074443">[FR75691][QMSL_INC] add loft unconnected cal result type</li>
-<li CR="3074444">[FR75691][QMSL_WWAN] parse loft unconnected cal data type</li>
-<li CR="3075749">Check hash before indeed loading rfcal input file to save test time</li>
-<li CR="3075753">Check hash before indeed loading rfcal input file to save test time</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3077483">[5G RFCal] Fix incorrect frequency modification for Sub6 40 MHz connected cal   </li>
+<li CR="3077532"> Set correct BW value for LOFT cal</li>
+<li CR="3075760">[RF Cal] Fix GSM switch port issues for specific callbox manufacturer</li>
 <li CR="3071581">Calibration error report cable loss missing issue</li>
 <li CR="3072088">[Utilities]Update Package.txt and fix HY11 compile issue</li>
 <li CR="3073881">Fix missing Tx Connectted Cal for those use rfpath database option to query (GetUnifiedRFPath)</li>
 <li CR="3073886">With Native language, DUT2 would have connected fail</li>
 <li CR="3070604">Check property size before loop</li>
 <li CR="3071520"> Update RFCal Input description</li>
-<li CR="3077483">[5G RFCal] Fix incorrect frequency modification for Sub6 40 MHz connected cal   </li>
-<li CR="3077532"> Set correct BW value for LOFT cal</li>
-<li CR="3032874">Rx Trigger failure with QSCPI</li>
 <li CR="3066893">[RF Cal]unconnected cal split Tx path</li>
 <li CR="3066913">[RF Cal]unconnected cal split Tx path</li>
-<li CR="3075760">[RF Cal] Fix GSM switch port issues for specific callbox manufacturer</li>
+<li CR="3032874">Rx Trigger failure with QSCPI</li>
 <li CR="2782703">Processing multiple char file data from the multiple measured char files at a time </li>
 </ul>
 <hr />
@@ -861,14 +984,14 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3066945">Optimize loft cal data handler</li>
 <li CR="3062074">[RFCal] append build and exection segments for Loft cal</li>
 <li CR="3062076">[RFCal][CommonXGSub6] append build and exection segments for Loft cal </li>
 <li CR="3062077">[QMSL] add loft cal seq type and opcode payload definition</li>
 <li CR="3062078">[QMSL] add loft cal seq bld and exec packing functionality</li>
-<li CR="3063233">[SubSysCommonTests] Add support for 35,45 MHz BandWidth for Sub6</li>
+<li CR="3066945">Optimize loft cal data handler</li>
 <li CR="3065121">add implement in loft cal data handler </li>
 <li CR="3065122">[FR75360][CommonXGSub6] add implement in loft cal data handler</li>
+<li CR="3063233">[SubSysCommonTests] Add support for 35,45 MHz BandWidth for Sub6</li>
 </ul>
 <hr />
 <p><i>Date: </i>10/28/2021</p>
@@ -925,7 +1048,6 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i> Bug Fixes </i></h4>
-<li CR="3034536">DLL has some issue while processing char data (APTPout, FBRx, XPT, etc)</li>
 <li CR="3038865">Add last cal sweep check for splitsweep to avoid skip last sweep missing logging</li>
 <li CR="3041648">Support to skip RFcal for the disabled technology.</li>
 <li CR="3041649">Support to skip RFcal for the disabled technology.</li>
@@ -934,6 +1056,7 @@
 <li CR="3041984"> [RFCAL] support XPT_SWP2_GAIN_OPTION </li>
 <li CR="3041985"> [RFCAL] support XPT_SWP2_GAIN_OPTION </li>
 <li CR="3041987"> [RFCAL] support XPT_SWP2_GAIN_OPTION </li>
+<li CR="3034536">DLL has some issue while processing char data (APTPout, FBRx, XPT, etc)</li>
 </ul>
 <hr />
 <p><i>Date: </i>11/30/2021</p>
@@ -953,17 +1076,18 @@
 <li CR="2933100">'Aux Path losses not available' logging level issue</li>
 </ul>
 <hr />
-<p><i>Date: </i>08/30/2021</p>
+<p><i>Date: </i>11/30/2021</p>
 <p><i>Version: </i><b>1.0-02205</b></p>
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
+<li CR="3017757">[RFVFS][QMSL_Core]Fix log output format in SequenceEntries</li>
 <li CR="3019431">[RFVFS][QMSL_inc]Apply RF and IF PLL unlock properties only in mmW projects.</li>
 <li CR="3019449">[QMSL_WWAN]Take Beam ID in response size calculation for Rx measure .</li>
 <li CR="3020512">[RFCal] New feature for RF Cal  XPT - Disable all char/cal routines except XPT char for XPT license</li>
 <li CR="3020521">[RFCal] New feature for RF Cal XPT - Disable all char/cal routines except XPT char for XPT license</li>
-<li CR="3017757">[RFVFS][QMSL_Core]Fix log output format in SequenceEntries</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="3017438">[XPT Char] fix failure when there is no PIN char data</li>
 <li CR="3019819">[QSC] Fix 1. Some Rx Gain paths missing Cal under multiplexer type 1; 2. Skip RxPath not work</li>
 <li CR="3020187">Fix Timeout Abort behavior</li>
 <li CR="3020809">Add Phy_Ant_Array option for AsDiv</li>
@@ -971,7 +1095,6 @@
 <li CR="3020813">[SubsysCommonr] Add   Phy_Ant_Array option iin unified query</li>
 <li CR="3021508">[QSC] Fix 1. Some Rx Gain paths missing Cal under multiplexer type 1; 2. Skip RxPath not work</li>
 <li CR="3021763">[SubsysCommonr] Add   Phy_Ant_Array option iin unified query</li>
-<li CR="3017438">[XPT Char] fix failure when there is no PIN char data</li>
 <li CR="3006991">Add separate char freq list for 5MHz BW.</li>
 </ul>
 <hr />
@@ -997,10 +1120,10 @@
 <li CR="3012973">[Utility][RFCAL] Add segment duration profiling</li>
 <li CR="3012976">[Utility][RFCAL] Add segment duration profiling</li>
 <li CR="3015071">[RF CAL DLL]  short sweeps with unnecessary data segment</li>
-<li CR="2997793">SUB6 50M IQ gain loging fix and updated 20M_20M bw logic based on LTE tech across char algo</li>
-<li CR="3002953">[QMSL] Request and Response properties are not returned correctly for Check Link test</li>
-<li CR="3017034"> [RFCal] Add workaround for band specific parameter override for Denali </li>
 <li CR="3000050">[QSC] legacy rfm path information at WCDMA RFCal - Update sig path logging</li>
+<li CR="3002953">[QMSL] Request and Response properties are not returned correctly for Check Link test</li>
+<li CR="2997793">SUB6 50M IQ gain loging fix and updated 20M_20M bw logic based on LTE tech across char algo</li>
+<li CR="3017034"> [RFCal] Add workaround for band specific parameter override for Denali </li>
 </ul>
 <hr />
 <p><i>Date: </i>07/29/2021</p>
@@ -1008,12 +1131,12 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="3000158">[QMSL][CPS] Results IF droop variable(s) renaming</li>
 <li CR="2998043">[QMSL][CPS] Adding init() for FtmCalibrationResult parent structure</li>
 <li CR="2998051">[CPS] Updates to result interface and support for IF droop variable(s) renaming</li>
 <li CR="2998962">[QMSL][CPS] Removed support for NvVariant_LinTable_V2</li>
 <li CR="2985068">[QMSL] Parallel Screening support</li>
 <li CR="2991933"> [SubSysRFCal]separate band and Cal type Cal time limit  </li>
+<li CR="3000158">[QMSL][CPS] Results IF droop variable(s) renaming</li>
 <li CR="2960417">[GNB] Add MT8000 driver</li>
 <li CR="2965022">Add I/Q Capture send / receive to test equipment driver</li>
 <h4><i> Bug Fixes </i></h4>
@@ -1021,8 +1144,6 @@
 <li CR="2998637">Legacy APT Bias/pout Char regression issue </li>
 <li CR="2998740">Asdiv Char - using radio opcode v4 - set isfreqvalid flag to default true</li>
 <li CR="2989789">Validate Lowest Vcc in Sweep0 vs swp 3 </li>
-<li CR="2990022">[XO Cal] Fix enable timer</li>
-<li CR="2991029">AsdivChar multi-port support</li>
 <li CR="2991957">MultiplexerType = 1, Connected Cal. Fail by access violating address</li>
 <li CR="2993035">GetxTxRxCalPathinfo sometimes failed(1/00).</li>
 <li CR="2993651">[CalParamDeserialize] Correction to incorrect xml data parsing into unsigned char arrays</li>
@@ -1034,6 +1155,8 @@
 <li CR="2996302">[RF CAL DLL]  Missing channel Rx Cal data when Sigpath is between two sweeps</li>
 <li CR="2996962">[QMSL][CPS] Updated QLIB_Defines.h reference to relative</li>
 <li CR="2997681">[QSC] [QSCXPTCalibrationDataHandler] Linearizer Bias results unavailable while comapring with Swp0 bias results leading to memory access violation</li>
+<li CR="2990022">[XO Cal] Fix enable timer</li>
+<li CR="2991029">AsdivChar multi-port support</li>
 <li CR="2838183">[RF-CAL]request do APT VCC monotonicity check</li>
 </ul>
 <hr />
@@ -1073,10 +1196,10 @@
 <li CR="2980688">[CalParamSequencer] Adding back support for "instance" discriminator</li>
 <li CR="2980771">MultiplexerType = 1, Connected Cal. Fail by access violating address</li>
 <li CR="2972796">Add QPOET_ET Vmin and Vmax info</li>
-<li CR="2965056">[CalParamPack] Restoring select AutoPack behavior for DLL#160 release</li>
-<li CR="2965058">[CalParamDeserialize] Restoring default PDET variance params/limits for external DLLs</li>
 <li CR="2969682">[RFCal]Fixed GSM_Tx_Stuck_20s when previous GSM FBRx Cal get power fail</li>
 <li CR="2969854">[RFCal]Fixed GSM_Tx_Stuck_20s when previous GSM FBRx Cal get power fail</li>
+<li CR="2965056">[CalParamPack] Restoring select AutoPack behavior for DLL#160 release</li>
+<li CR="2965058">[CalParamDeserialize] Restoring default PDET variance params/limits for external DLLs</li>
 <li CR="2964972">[QMSL] Fix for Cal teardown defaulted to True</li>
 </ul>
 <hr />
@@ -1093,8 +1216,8 @@
 <li CR="2972506">[CalParamSequencer] RFCal updates for 6/30 spec</li>
 <li CR="2972509">[CalParamSequencer] QMSL updates for 6/30 spec</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2973114"> [SubsysRFCal][FREQ issue]fix Upper bound freq issue for LTE B511</li>
 <li CR="2971765">Fix part of XPT delay char data missing</li>
+<li CR="2973114"> [SubsysRFCal][FREQ issue]fix Upper bound freq issue for LTE B511</li>
 </ul>
 <hr />
 <p><i>Date: </i>06/17/2021</p>
@@ -1119,14 +1242,14 @@
 <h4><i>  New Features </i></h4>
 <li CR="2965902">[RFCAL][SUB6] Tx/FBRx Gain - Correct any unterminated queries on SCPI commands</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="2958226">[RfCal_DLL]: checkin fix for random green cells in xml log</li>
+<li CR="2958721">Fix ACLR delay char mess frequency data</li>
 <li CR="2962768"> Support non timer and delayed response for XO Cal v2</li>
 <li CR="2962792"> Support QLIB_RFCAL_NV_Manager_Copy_RFNV_Items_From_NV_Tool_With_NVIDLists   </li>
 <li CR="2962836">Add API to get handle value   </li>
 <li CR="2962970">disable discovery sweep parameter for XO Cal</li>
 <li CR="2964240">Multichannel cal upper bound frequency check</li>
 <li CR="2964947">[CalParamSequencer] Fix for Cal teardown defaulted to True</li>
-<li CR="2958226">[RfCal_DLL]: checkin fix for random green cells in xml log</li>
-<li CR="2958721">Fix ACLR delay char mess frequency data</li>
 </ul>
 <hr />
 <p><i>Date: </i>06/07/2021</p>
@@ -1147,8 +1270,8 @@
 <li CR="2953488">Query RF path information from DB file generated from RFPD output</li>
 <li CR="2953495">Query RF path information from DB file generated from RFPD output</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2959179">[RF DLL] FBRx Data not being written when multi sweep is enabled</li>
 <li CR="2961091">[SubsysRFCal]optimize OPC timeout code</li>
+<li CR="2959179">[RF DLL] FBRx Data not being written when multi sweep is enabled</li>
 <li CR="2952236">Option to disable 4Rx path tune in unconnected cal</li>
 <li CR="2952240">Option to disable 4Rx path tune in unconnected cal</li>
 <li CR="2955001">override GPIB command timeout for VISA</li>
@@ -1182,7 +1305,6 @@
 <li CR="2950786"> Add Ignore List to NV check  </li>
 <li CR="2951017">30K SCS requirement for minBW in upper bound frequency validation removed</li>
 <li CR="2951022">FBRX char channel change timing increased from 20000us to 60000us</li>
-<li CR="2918125">GSM FBRx Cal will crash when previous node fail</li>
 <li CR="2938318">Path specific Gain min max Rx cal params override</li>
 <li CR="2943325">remove Upper bound frequency validation for split bands</li>
 <li CR="2943812">path specific params fixed trying to access invalid index</li>
@@ -1196,6 +1318,7 @@
 <li CR="2932712">Debug Memory Leak</li>
 <li CR="2932719">Debug Memory Leak</li>
 <li CR="2932722">Debug Memory Leak</li>
+<li CR="2918125">GSM FBRx Cal will crash when previous node fail</li>
 <li CR="2922134">add XO Cal C0 limit params in QSC </li>
 </ul>
 <hr />
@@ -1207,13 +1330,13 @@
 <li CR="2922970">Optional to use RFFE data to filter parsing Cal xml data</li>
 <li CR="2922971">Optional to use RFFE data to filter parsing Cal xml data</li>
 <li CR="2925741">BandHelper getMaxMinChannel update</li>
-<li CR="2914876">Print memory use information during RF Cal.</li>
-<li CR="2904776">Optional to use RFFE data to filter parsing Cal xml data</li>
-<li CR="2911860">DE New RFCal Sweep : RfCal Common changes to support Qlib demo</li>
-<li CR="2896374">CMW100 Rx Broadcast Antenna_Number_Inclusion_List do not have Tx Antenna, Add Tx Trigger</li>
-<li CR="2896744">Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug </li>
 <li CR="2918729">QDART updates to support Pack/Unpack operations</li>
 <li CR="2918732">DE New RFCal Sweep : RfCal Common changes</li>
+<li CR="2896744">Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug </li>
+<li CR="2911860">DE New RFCal Sweep : RfCal Common changes to support Qlib demo</li>
+<li CR="2914876">Print memory use information during RF Cal.</li>
+<li CR="2896374">CMW100 Rx Broadcast Antenna_Number_Inclusion_List do not have Tx Antenna, Add Tx Trigger</li>
+<li CR="2904776">Optional to use RFFE data to filter parsing Cal xml data</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2922519">[RF CAL DLL] SUB6 Radio Setup of type Channel not sufficient for FBRx Char </li>
 <li CR="2924510">Fix N46 channel to frequency conversion</li>
@@ -1228,19 +1351,19 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2896325">[RFCAL] CMW100 Rx Broadcast Antenna_Number_Inclusion_List do not have Tx Antenna, Add Tx Trigger</li>
-<li CR="2896728">[RFCAL]Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug</li>
-<li CR="2896739">[RFCAL]Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug</li>
-<li CR="2901044">QDART updates to support Pack/Unpack operations</li>
-<li CR="2901045">DE New RFCal Sweep : RfCal Common changes</li>
-<li CR="2871417">Multiplexer_Type=7 setting with parameter <Antenna_Number_Inclusion_List></li>
-<li CR="2912068">Increase max number of FBRx RFM Paths</li>
-<li CR="2913022"> NI 5831: MMW Driver Support</li>
 <li CR="2907674">XO Cal logging updates</li>
 <li CR="2907678">XO Cal logging updates</li>
 <li CR="2910933">QDART updates to support QLib demo</li>
+<li CR="2901044">QDART updates to support Pack/Unpack operations</li>
+<li CR="2901045">DE New RFCal Sweep : RfCal Common changes</li>
+<li CR="2896728">[RFCAL]Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug</li>
+<li CR="2896739">[RFCAL]Add logging of relevant failure info in response when mmW IDC cal failure is seen for quicker debug</li>
+<li CR="2871417">Multiplexer_Type=7 setting with parameter <Antenna_Number_Inclusion_List></li>
 <li CR="2915443">Tx PDET Variance Cal - DLL changes to enable PDET Variance cal.</li>
 <li CR="2915446">Tx PDET Variance Cal - DLL changes to enable PDET Variance cal.</li>
+<li CR="2912068">Increase max number of FBRx RFM Paths</li>
+<li CR="2913022"> NI 5831: MMW Driver Support</li>
+<li CR="2896325">[RFCAL] CMW100 Rx Broadcast Antenna_Number_Inclusion_List do not have Tx Antenna, Add Tx Trigger</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2857453">count calibrated band about idc config time, measure time, per path time</li>
 <li CR="2857574">count calibrated band about idc config time, measure time, per path time</li>
@@ -1252,18 +1375,18 @@
 <li CR="2913814">Fix NO Cal TX path did FBRx Cal and add restrict condition for Add Tx Trigger</li>
 </ul>
 <hr />
-<p><i>Date: </i>04/19/2021</p>
+<p><i>Date: </i>03/16/2021</p>
 <p><i>Version: </i><b>1.0-02172</b></p>
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
 <li CR="2898189">[QMSL6.1] add support for UL mimo tx config</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="2898469">Support QUTS/PCAT compatible XQCN output</li>
 <li CR="2882552">[XG_SUB6] Support non timer for delay char sequence</li>
 <li CR="2893017">Add suite server generate tpl log support by QIA demo calibration</li>
 <li CR="2893938">Add suite server generate tpl log support by QIA demo calibration</li>
 <li CR="2895890">add n91/92/93/94 in the path list </li>
-<li CR="2898469">Support QUTS/PCAT compatible XQCN output</li>
 </ul>
 <hr />
 <p><i>Date: </i>03/08/2021</p>
@@ -1271,8 +1394,8 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2870325">[CalParamSequencer] RfCal Common changes</li>
 <li CR="2886072">MSIM UL-MIMO (2 Tx paths) Splitter-Free support</li>
+<li CR="2870325">[CalParamSequencer] RfCal Common changes</li>
 <li CR="2875790"> Adding GPIB enabled TestEquity140 F4T Controller to Temp Chamber Equipment</li>
 <li CR="2877544">QMSL is only returning 1 of 4 bytes for error code and specific error code</li>
 <li CR="2862270">Update of QMSL WWAN for Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
@@ -1281,14 +1404,14 @@
 <li CR="2889833">LogTimereport optimize-seperate IDC band into sub bands</li>
 <li CR="2889834">LogTimereport optimize_IDC handler time updating.</li>
 <li CR="2891108">QLIB_QUTS_Add_TCP_Connection</li>
-<li CR="2871688">Add sigpath number in summary log pass table</li>
 <li CR="2871844">Update sub6 rx trigger default polling time to be 300us.</li>
 <li CR="2873932">DE NLIC IMD : Fix delay values for LUT char(TX0,TX1)</li>
 <li CR="2882551">[XG_SUB6] Support non timer for delay char sequence</li>
+<li CR="2871688">Add sigpath number in summary log pass table</li>
+<li CR="2857601"> Add Ignore List to NV check  </li>
 <li CR="2856522">Fix failure in Delay char for NR5G Sub6 using CMW</li>
 <li CR="2857288">DE NLIC IMD char BU initial check-in</li>
 <li CR="2857291">DE: NLIC IMD char BU initial check-in</li>
-<li CR="2857601"> Add Ignore List to NV check  </li>
 <li CR="2847737">NLIC DE HD BU</li>
 </ul>
 <hr />
@@ -1302,10 +1425,10 @@
 <li CR="2846859">[QSCv2 RF Cal]QMSL dll Crash Issue - include checks to compute next ptr</li>
 <li CR="2864158">Fix loss interpolation double precision issue.</li>
 <li CR="2866242">[APT Char] WCDMA APT Char failed at 2nd band</li>
+<li CR="2871713">Fix multi-DUT with splitter can't get port issue</li>
 <li CR="2867532">Add RxCal 540 data type for CAL NV Report feature </li>
 <li CR="2873171">Add FTM mode check failure enum</li>
 <li CR="2873177">Add FTM mode check failure enum</li>
-<li CR="2871713">Fix multi-DUT with splitter can't get port issue</li>
 </ul>
 <hr />
 <p><i>Date: </i>02/02/2021</p>
@@ -1314,14 +1437,14 @@
 <ul>
 <h4><i>  New Features </i></h4>
 <li CR="2866454">QDART updates to support Pack/Unpack operations</li>
-<li CR="2843211">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
-<li CR="2843217">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
 <li CR="2853868"> Optimize RFCal connected Cal time on some callbox.</li>
 <li CR="2860094">DE New RFCal Sweep : RfCal Common changes</li>
 <li CR="2838423">[FR67168][subsysrfcalcom] TDD APT bias char</li>
 <li CR="2838439">Clone1_[FR67168][subsysrfcalxg] TDD APT bias char</li>
 <li CR="2839113">Added Diag_FTM_X.cpp and DiagFTMCellular_X.cpp </li>
 <li CR="2840852">Created cross-platform DiagFTMCellular_X.cpp</li>
+<li CR="2843211">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
+<li CR="2843217">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2864320">QUTS baud rate enum</li>
 </ul>
@@ -1331,20 +1454,20 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2843205">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
 <li CR="2822600">QMSL WWAN Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT) </li>
 <li CR="2846425">Switch port per segment (splitter free) - SCPI version</li>
+<li CR="2843205">Support for NAD on 900MHZ for MDM9x07 ( JO) , MDM9205 ( CT)</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="2844296">Add rffe device type </li>
+<li CR="2844297">Add rffe device type </li>
 <li CR="2842100">Fix loss interpolation double precision issue.</li>
 <li CR="2842820"> Add CAL NV Report feature   </li>
 <li CR="2828312">DE FR Harmonic char changes check-in , FTM interface</li>
 <li CR="2828347">DE: NLIC Harmonic char changes, FTM interface changes check-in</li>
 <li CR="2829439">DE: NLIC Harmonic char changes, FTM interface changes check-in</li>
 <li CR="2834151">GetPathInfo update  IDC path index algo for TXRSB</li>
-<li CR="2852137">Fix loss interpolation double precision issue.</li>
-<li CR="2844296">Add rffe device type </li>
-<li CR="2844297">Add rffe device type </li>
 <li CR="2847051">Add all band parameter</li>
+<li CR="2852137">Fix loss interpolation double precision issue.</li>
 </ul>
 <hr />
 <p><i>Date: </i>12/11/2020</p>
@@ -1377,9 +1500,9 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2797380">Add options to enable HDLC mode and Diag Over QDS</li>
 <li CR="2801160">optimize code for BW line missed in each card parmas file</li>
 <li CR="2804813"> Add CAL NV Report feature   </li>
+<li CR="2797380">Add options to enable HDLC mode and Diag Over QDS</li>
 </ul>
 <hr />
 <p><i>Date: </i>10/15/2020</p>
@@ -1419,9 +1542,9 @@
 <li CR="2765724">B53 Cal Path Info Query Single band support</li>
 <li CR="2765726">XPT Char for new Bands</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2742234">QRCT Query ALL Path fail in WCDMA B2 due to just PRX only</li>
-<li CR="2763318">[XPTChar] support 6 Tx chain for XPT char</li>
 <li CR="2767236">Picking proper frequencies from specified 10M frequency list in char xtt</li>
+<li CR="2763318">[XPTChar] support 6 Tx chain for XPT char</li>
+<li CR="2742234">QRCT Query ALL Path fail in WCDMA B2 due to just PRX only</li>
 </ul>
 <hr />
 <p><i>Date: </i>10/13/2020</p>
@@ -1449,6 +1572,8 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
+<li CR="2737546">Fix bad expected power value in GSM Tx Cal</li>
+<li CR="2742111">QUTS HDF logging qsr4 and prefix file name support</li>
 <li CR="2729386">Pin Normalization update for char across temps</li>
 <li CR="2729389">Skipping Static PinPout char post processing when char is done with V3UI</li>
 <li CR="2730409"> HDF format logging support</li>
@@ -1459,12 +1584,10 @@
 <li CR="2735865">Remove duplicated Cal when multiplexer enabled</li>
 <li CR="2745099">Fixing Dataset References in XML logging for Unconnected and IDC cal</li>
 <li CR="2747865">LTE B53 cal support</li>
-<li CR="2737546">Fix bad expected power value in GSM Tx Cal</li>
-<li CR="2742111">QUTS HDF logging qsr4 and prefix file name support</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2724789">unconnected Cal code when the Cal params node incorrect   </li>
-<li CR="2734426">IDC PATH override when no any parameter setting_tool changing</li>
 <li CR="2742177">| Pin pout char normalization algo. for NV data correction  </li>
+<li CR="2734426">IDC PATH override when no any parameter setting_tool changing</li>
+<li CR="2724789">unconnected Cal code when the Cal params node incorrect   </li>
 </ul>
 <hr />
 <p><i>Date: </i>07/10/2020</p>
@@ -1558,8 +1681,8 @@
 <li CR="2651496">FR 53154: Global Sub-bands for HI DLL changes</li>
 <li CR="2654449">Add Load Single Element Codebook and isolate for MMW</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2581791">Fix failure of XO cal</li>
 <li CR="2610928">Get Antenna Port information on FBRx and Rx cal</li>
+<li CR="2581791">Fix failure of XO cal</li>
 <li CR="2646538">Low Tx power in 50M xPT char</li>
 <li CR="2655044">[SubSysRFCal][QSC] Fix the memory leaks in RFCal DLLs</li>
 <li CR="2655054">XPT Char: Varying Freq lost across BWs</li>
@@ -1585,15 +1708,15 @@
 <li CR="2637885">Unified query get path, logging all the path by default</li>
 </ul>
 <hr />
-<p><i>Date: </i>05/07/2020</p>
+<p><i>Date: </i>03/05/2020</p>
 <p><i>Version: </i><b>1.0-02114</b></p>
 <p><i>Changes:</i></p>
 <ul>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2628954">Add FTM mode check in QSCalg</li>
-<li CR="2629202">Fix filter in project file</li>
 <li CR="2632199">Fix Radio setup discovery stuck issue </li>
 <li CR="2634903">Fix incorrect timeout calculation in IDC cal</li>
+<li CR="2628954">Add FTM mode check in QSCalg</li>
+<li CR="2629202">Fix filter in project file</li>
 <li CR="2626680">Multiple FBRx Char Tx Paths</li>
 </ul>
 <hr />
@@ -1612,10 +1735,10 @@
 <li CR="2627400">GSM Temp comp char to support processing wildcard static NV</li>
 <li CR="2628016">Add FTM mode check on FTM_START_STOP</li>
 <li CR="2628017">Move TIMEOUT keyword to subsysCommon</li>
+<li CR="2629808">Connected Cal FBRX_PUSH exception  </li>
 <li CR="2617808">Enable endc char for (lte+sub6)combo</li>
 <li CR="2625424">Fix delayed response of IDC cal failure</li>
 <li CR="2626637">Incorrect RB’s configured for 80M (and 50M) BW’s on xPT char</li>
-<li CR="2629808">Connected Cal FBRX_PUSH exception  </li>
 </ul>
 <hr />
 <p><i>Date: </i>02/04/2020</p>
@@ -1732,13 +1855,13 @@
 <li CR="2542911">Add RGI paramter to all IDC override tech function.</li>
 <li CR="2542927">Add RGI paramter to all IDC CAL function.</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2530138">MultiplexManagerConfigFile.xml does not work for XO Cal</li>
 <li CR="2532524">Add additional wait time for NV  tree generation and efs sync</li>
 <li CR="2532881">MultiplexManagerConfigFile.xml does not work for XO Cal</li>
 <li CR="2539253">Add addination check </li>
 <li CR="2542400">Fix redundant variable declaration to save heap memory</li>
 <li CR="2542402">Fix redundant variable declaration to save heap memory</li>
 <li CR="2544268">NDR Optimizations</li>
+<li CR="2530138">MultiplexManagerConfigFile.xml does not work for XO Cal</li>
 </ul>
 <hr />
 <p><i>Date: </i>09/25/2019</p>
@@ -1746,7 +1869,6 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2496494">Add power class1 MPR table and algorithm[xfunctional]</li>
 <li CR="2517934">[utilities]Change OFDM type to UL Waveform</li>
 <li CR="2517940">[X-Functional]Change OFDM type to UL Waveform</li>
 <li CR="2522959">Minor changes to support mmW RFM Device query</li>
@@ -1755,6 +1877,7 @@
 <li CR="2433800">Add Tx limit auto adjust for MPR for NR5G</li>
 <li CR="2469648">MPR for CA [Utilities]</li>
 <li CR="2469650">MPR for CA [Xfuntional]</li>
+<li CR="2496494">Add power class1 MPR table and algorithm[xfunctional]</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2530630">Internal Device Cal V2 fixed</li>
 <li CR="2531551">[HIM][SUB6]MultiplexManagerConfigFile.xml not work for Mult-Fbrx connected Cal[CMW500 pathloss table is not acitaved] </li>
@@ -1810,10 +1933,10 @@
 <h4><i> Bug Fixes </i></h4>
 <li CR="2494686">Support Non Cal Path RF Cal</li>
 <li CR="2494689">Support Non Cal Path RF Cal</li>
+<li CR="2497772">GSM Temp Char Support for CT SDR105</li>
 <li CR="2477944">Show missing rfm path node in Write_Unified_NV_To_Phone </li>
 <li CR="2477951">Support parameter timer and delayed response for RF cal</li>
 <li CR="2479705">[RFCal] Add sleep for Tx meas config</li>
-<li CR="2497772">GSM Temp Char Support for CT SDR105</li>
 </ul>
 <hr />
 <p><i>Date: </i>06/21/2019</p>
@@ -1884,9 +2007,9 @@
 <li CR="2427082">FTM_UNIFIED_CAL_PARAMS_INFO_QUERY api to get the cal params from DUT</li>
 <li CR="2427085">Get RGI List from DUT</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2428828">Reduce in cal_sweep_record</li>
 <li CR="2425671">[XPTChar][SubSysRFCalXG] To support antenna path override and Tx1 path char in V3 UI</li>
 <li CR="2425845">[XPTChar][CommonXG] To support antenna path override and Tx1 path char in V3 UI</li>
+<li CR="2428828">Reduce in cal_sweep_record</li>
 </ul>
 <hr />
 <p><i>Date: </i>03/29/2019</p>
@@ -1905,15 +2028,15 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
+<li CR="2401519">APT Bias Char V4 Optimized Execution</li>
 <li CR="2402595">[RFCal][GSMTxTempChar] Add support for tree NV post processing</li>
 <li CR="2409042">Adding QLINK Register Read/ write Functionality</li>
 <li CR="2409044">Adding QLINK Register Read/ write Functionality</li>
-<li CR="2401519">APT Bias Char V4 Optimized Execution</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="2401559">TDS_LTE pathloss issue fix. RFCal_Init_V3_TDS/LTE failed with MT8820 </li>
 <li CR="2406816">GSM “get path info” log shows wrong band on GSM900 and GSM850 log.</li>
 <li CR="2408300">Remove Tx Path when non traditional serial cal </li>
 <li CR="2408594">[Multi-Ports][CMW+CMWS][NativeCommands]Fix the issue to get native port name for CMW list connector when ant number = 2/3</li>
-<li CR="2401559">TDS_LTE pathloss issue fix. RFCal_Init_V3_TDS/LTE failed with MT8820 </li>
 </ul>
 <hr />
 <p><i>Date: </i>02/15/2019</p>
@@ -2012,7 +2135,7 @@
 <li CR="2322380">Add clear HTML window option in InitDataLogging to save memory</li>
 </ul>
 <hr />
-<p><i>Date: </i>09/21/2018</p>
+<p><i>Date: </i>09/26/2018</p>
 <p><i>Version: </i><b>1.0-02031</b></p>
 <p><i>Changes:</i></p>
 <ul>
@@ -2025,8 +2148,6 @@
 <li CR="2289871">[RFCAL Com]FR48808: VSWR measurement in calibration mode</li>
 <li CR="2291015">Support multiple Tx offset on IP2 Cal</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2318587">Fixing BW enum type mismatch in NLIC Char procedure</li>
-<li CR="2318903">Add an option to ignore minor revision of MSM HWID for RFCal_AddActivePhone node</li>
 <li CR="2268072">Remove obsolete NVID printout on rf calibration log</li>
 <li CR="2269110">Support Matrix mode calibration for Sweep Agent V2 for RF Calibration</li>
 <li CR="2273121">Support PRx only GSM calibration without DRx path info</li>
@@ -2036,6 +2157,8 @@
 <li CR="2280817">[SubSysCommonTests] add phone bootup check node</li>
 <li CR="2282123">[SubSysRFCal] add phone bootup check node</li>
 <li CR="2282125">[X-Functional] add phone bootup check node</li>
+<li CR="2318587">Fixing BW enum type mismatch in NLIC Char procedure</li>
+<li CR="2318903">Add an option to ignore minor revision of MSM HWID for RFCal_AddActivePhone node</li>
 <li CR="2286083"><this is new requirement> QRD6150 HW team need 2 char table for the same PA's 2 paths (device ID is the same one)</li>
 <li CR="2286219">[SubSysRFCalCommon][Multi-DUT] Multiplex manager changes for sweep agent V2</li>
 <li CR="2286220">[SubSysRFCalCommonXGSub6][Multi-DUT] Multiplex manager changes for sweep agent V2</li>
@@ -2070,12 +2193,12 @@
 <h4><i>  New Features </i></h4>
 <li CR="2257915">New APT Biac char algo FR 48625</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2264060">XPT Char: logging RGI and IQGain into ACLR-based delay char tables and summary tables</li>
 <li CR="2264766">Improve error message when Get Path info node was not executed or failed </li>
 <li CR="2265016">CharacterizeHarmonicLUT -> the callbox measurement is not correct due to invalid GPRF BW setting</li>
 <li CR="2265665">fix the RF Cal DLL failure when executing writing an xqcn with an incorrect folde</li>
 <li CR="2265688">fix the RF Cal DLL failure when executing writing an xqcn with an incorrect folde</li>
 <li CR="2254230">Make correct data opcode even when there is no fbrx cal data on Unconnected cal V2</li>
+<li CR="2264060">XPT Char: logging RGI and IQGain into ACLR-based delay char tables and summary tables</li>
 <li CR="2244246">Load correct APT char table for ULCA RF Calibration</li>
 </ul>
 <hr />
@@ -2084,16 +2207,16 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2228660">[X-functional_Drivers_Bojay_Positioner] : Adding motor status query</li>
-<li CR="2188993">GSM FBRx Cal use incorrect antenna path id</li>
-<li CR="2257712">[RFCAL]load multiplex-manager configured path loss using QCOM SCPI</li>
 <li CR="2250720">CMWS port name is incorrect in QSC list mode</li>
 <li CR="2251803">Fix the QSC XO calibration can't work with MultiplexManagerConfigFile solution</li>
 <li CR="2252344">Volterra kernel char related changes</li>
 <li CR="2253374">[RFCAL]QSC fails when using multiplex manager</li>
+<li CR="2264553"> Fix incorrect sweep record when Tx offset cal enabled during rf calibration</li>
+<li CR="2257712">[RFCAL]load multiplex-manager configured path loss using QCOM SCPI</li>
 <li CR="2258504">XPT Char: increase the antenna path to 64 </li>
 <li CR="2261464">XPT Char: changes to use default IQGain from XPTCalDatahandler</li>
-<li CR="2264553"> Fix incorrect sweep record when Tx offset cal enabled during rf calibration</li>
+<li CR="2188993">GSM FBRx Cal use incorrect antenna path id</li>
+<li CR="2228660">[X-functional_Drivers_Bojay_Positioner] : Adding motor status query</li>
 </ul>
 <hr />
 <p><i>Date: </i>05/28/2018</p>
@@ -2104,13 +2227,13 @@
 <li CR="2188049">[RFtools][subsysRFcal] FRBx droop char V2: special case of angle of 0, need end while loop for this case</li>
 <li CR="2207807">[RFtools][RF cal] fix LTE ULCA 40MHz tx configure of SCC1</li>
 <h4><i> Bug Fixes </i></h4>
-<li CR="2245417">Volterra kernel char v2 changes: fix int overflow issue for new kernel mask 34445344455</li>
-<li CR="2245883">Move Hostname/QSPR ver/QPST ver/QC USB ver to PC configuration section on an HTML log</li>
-<li CR="2245884">Move Hostname/QSPR ver/QPST ver/QC USB ver to PC configuration section on an HTML log</li>
 <li CR="2234662">XPTChar: to support separated delay sweep window for 40MHz</li>
 <li CR="2237962">XPT Char: remove invalid 10MHz delay data when running 40MHz only XPT char</li>
 <li CR="2238264">[IDC] Fix frequency conversion</li>
 <li CR="2243540">[SubsysRFCal]The computeFromSweep value can't be updated after insert DRX sweep for MM-DUT solution</li>
+<li CR="2245417">Volterra kernel char v2 changes: fix int overflow issue for new kernel mask 34445344455</li>
+<li CR="2245883">Move Hostname/QSPR ver/QPST ver/QC USB ver to PC configuration section on an HTML log</li>
+<li CR="2245884">Move Hostname/QSPR ver/QPST ver/QC USB ver to PC configuration section on an HTML log</li>
 </ul>
 <hr />
 <p><i>Date: </i>05/03/2018</p>
@@ -2136,23 +2259,23 @@
 <li CR="2228207">XPTChar: apply fast Pin results in ACLR based delay char</li>
 </ul>
 <hr />
-<p><i>Date: </i>04/06/2018</p>
+<p><i>Date: </i>04/10/2018</p>
 <p><i>Version: </i><b>1.0-01996</b></p>
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2204066">Changes to write Rx cal data to Tree NV for FBRx+Rx calibration</li>
-<li CR="2205183">[HE]XPT Char to support Alt path selection in V2 UI</li>
-<li CR="2205199">XPT Char: Summarize selected delay and Pin/Pout results into one table</li>
 <li CR="2210709">[SubSysRFCal] Add B49 Changes</li>
 <li CR="2210717">[SubSysCommon] Adding B49 Changes</li>
 <li CR="2215686">XPT Char: add Sig Path and RFM Device information before ACLR based delay and PinPout char result tables</li>
+<li CR="2204066">Changes to write Rx cal data to Tree NV for FBRx+Rx calibration</li>
+<li CR="2205183">[HE]XPT Char to support Alt path selection in V2 UI</li>
+<li CR="2205199">XPT Char: Summarize selected delay and Pin/Pout results into one table</li>
 <h4><i> Bug Fixes </i></h4>
+<li CR="2208662">Add namespace for RxCharOffeset V3 to avoid conflict with Unified NV manager</li>
+<li CR="2212169">Incorrect container used to check DA Cal EDGE power limit</li>
 <li CR="2204114">MultiplexManager with R&S CMW native driver issue: Port routing and path loss table incorrect </li>
 <li CR="2205224">[SubSysRFCal] Use rfm device from RFC in place of hardcoded rfm device 15 for DRx path when associated DRx isn't found</li>
 <li CR="2206665">Remove redundant RFM path for FDRSB cal</li>
-<li CR="2208662">Add namespace for RxCharOffeset V3 to avoid conflict with Unified NV manager</li>
-<li CR="2212169">Incorrect container used to check DA Cal EDGE power limit</li>
 </ul>
 <hr />
 <p><i>Date: </i>03/05/2018</p>
@@ -2173,10 +2296,10 @@
 <h4><i>  New Features </i></h4>
 <li CR="2188103">[RFCal] support individual path loss for multiplexmanager ports of CMW100 or CMWS </li>
 <li CR="2188263">RFCal to support individual path loss for multiplexmanager ports of CMW100 or CMWS </li>
-<li CR="2137790">[RFtools][subsysRFcal]  support FBRx droop char V2</li>
+<li CR="2185574">XPT Char: VDPD cal data from cmd response</li>
 <li CR="2154586">Implement *OPC for QTI SCPI List Mode SOURCE Initialization in QTI SCPI measurement manager</li>
 <li CR="2173730">XPTChar: Always change back to power waveform before teardown for TDSCDMA</li>
-<li CR="2185574">XPT Char: VDPD cal data from cmd response</li>
+<li CR="2137790">[RFtools][subsysRFcal]  support FBRx droop char V2</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2173011">Logging change: Total number of NV items on phone (both by tools and embedded side)</li>
 </ul>
@@ -2186,12 +2309,12 @@
 <p><i>Changes:</i></p>
 <ul>
 <h4><i>  New Features </i></h4>
-<li CR="2172702">XPT Char: New algorithm for fast pin estimation over temperatures</li>
-<li CR="2173525">XPT Char: move fast delay char before fast Pin Pout char</li>
 <li CR="2176689">XPTChar: EPT mode related changes in XPT Cal part and ACLR based PinPout char</li>
 <li CR="2182794">Change Drop radio function arguments to comply with SubsyscommonTest API Change</li>
 <li CR="2182795">Fix for Unconnected Cal Failures for Bands with APT only or EPT/ET only</li>
+<li CR="2173525">XPT Char: move fast delay char before fast Pin Pout char</li>
 <li CR="2164350">FR42737 - [SubSysCommon] Qlink2 FTM test requirements</li>
+<li CR="2172702">XPT Char: New algorithm for fast pin estimation over temperatures</li>
 <h4><i> Bug Fixes </i></h4>
 <li CR="2177816">RFCAL_PA_PARAM.xml cannot be loaded for XPT char if pa state != 0</li>
 </ul>

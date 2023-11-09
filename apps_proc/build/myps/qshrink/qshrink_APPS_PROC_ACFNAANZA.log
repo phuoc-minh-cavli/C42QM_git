@@ -6,22 +6,22 @@ QShrink 2,3 Hash File: Z:\b\apps_proc\build\myps\qshrink\msg_hash.txt
 QDB File: Z:\b\apps_proc\build\myps\qshrink/qdbFile.qdb
 Log File: Z:\b\apps_proc\build\myps\qshrink\qshrink_APPS_PROC_ACFNAANZA.log
 Replacement Mode
-Finished Copying ( 0.318485208321 seconds)
+Finished Copying ( 0.0416085586947 seconds)
 QSHRINK4:initializeArmElfShrinkState
 QSHRINK4: before initializeWithElfHeader
 QSHRINK4FUNC: initializeWithElfHeader
-QSR_MSG_START f0000000 QSR_MSG_SIZE 0000ceb8 QSR_MSG_END f000ceb8 QSR_MSG_OFFSET 002a4bb4
-QSR_MSG_STR_START f8000000 QSR_MSG_STR_SIZE 0006a88c QSR_MSG_STR_END f806a88c QSR_MSG_STR_OFFSET 002b1a6c
+QSR_MSG_START f0000000 QSR_MSG_SIZE 0000cef8 QSR_MSG_END f000cef8 QSR_MSG_OFFSET 002a5bb4
+QSR_MSG_STR_START f8000000 QSR_MSG_STR_SIZE 0006aa9c QSR_MSG_STR_END f806aa9c QSR_MSG_STR_OFFSET 002b2aac
 QSHRINK4: after initializeWithElfHeader
 QSR4 Aligned Start Address - 0xf0000000L
-QSR4 UnAligned Start Address - 0xf000ceb8L
-QSR4 MSG End Address - 0xf000ceb8L
+QSR4 UnAligned Start Address - 0xf000cef8L
+QSR4 MSG End Address - 0xf000cef8L
 
 QSR4 SSID-Mask combinations with more than 2k entries
 SSID : SS_MASK : COUNT : AAM Table Entry Count 
-65 : 4 : 2001 : 2 
-65 : 8 : 1817 : 2 
-processQSR4MsgDescTable: qsr4_desc_table_aligned_entries 6615
+65 : 4 : 2006 : 2 
+65 : 8 : 1820 : 2 
+processQSR4MsgDescTable: qsr4_desc_table_aligned_entries 6623
 processQSR4MsgDescTable: qsr4_desc_table_unaligned_entries 0
 
 
@@ -4657,11 +4657,11 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 4582 - index 24 - ss_id 65 : ss_mask0x4
 4583 - index 24 - ss_id 65 : ss_mask0x4
 4584 - index 24 - ss_id 65 : ss_mask0x4
-4585 - index 25 - ss_id 65 : ss_mask0x8
-4586 - index 25 - ss_id 65 : ss_mask0x8
-4587 - index 25 - ss_id 65 : ss_mask0x8
-4588 - index 25 - ss_id 65 : ss_mask0x8
-4589 - index 25 - ss_id 65 : ss_mask0x8
+4585 - index 24 - ss_id 65 : ss_mask0x4
+4586 - index 24 - ss_id 65 : ss_mask0x4
+4587 - index 24 - ss_id 65 : ss_mask0x4
+4588 - index 24 - ss_id 65 : ss_mask0x4
+4589 - index 24 - ss_id 65 : ss_mask0x4
 4590 - index 25 - ss_id 65 : ss_mask0x8
 4591 - index 25 - ss_id 65 : ss_mask0x8
 4592 - index 25 - ss_id 65 : ss_mask0x8
@@ -6474,14 +6474,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 6399 - index 25 - ss_id 65 : ss_mask0x8
 6400 - index 25 - ss_id 65 : ss_mask0x8
 6401 - index 25 - ss_id 65 : ss_mask0x8
-6402 - index 2 - ss_id 7 : ss_mask0x4
-6403 - index 2 - ss_id 7 : ss_mask0x4
-6404 - index 2 - ss_id 7 : ss_mask0x4
-6405 - index 2 - ss_id 7 : ss_mask0x4
-6406 - index 2 - ss_id 7 : ss_mask0x4
-6407 - index 2 - ss_id 7 : ss_mask0x4
-6408 - index 2 - ss_id 7 : ss_mask0x4
-6409 - index 2 - ss_id 7 : ss_mask0x4
+6402 - index 25 - ss_id 65 : ss_mask0x8
+6403 - index 25 - ss_id 65 : ss_mask0x8
+6404 - index 25 - ss_id 65 : ss_mask0x8
+6405 - index 25 - ss_id 65 : ss_mask0x8
+6406 - index 25 - ss_id 65 : ss_mask0x8
+6407 - index 25 - ss_id 65 : ss_mask0x8
+6408 - index 25 - ss_id 65 : ss_mask0x8
+6409 - index 25 - ss_id 65 : ss_mask0x8
 6410 - index 2 - ss_id 7 : ss_mask0x4
 6411 - index 2 - ss_id 7 : ss_mask0x4
 6412 - index 2 - ss_id 7 : ss_mask0x4
@@ -6515,14 +6515,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 6440 - index 2 - ss_id 7 : ss_mask0x4
 6441 - index 2 - ss_id 7 : ss_mask0x4
 6442 - index 2 - ss_id 7 : ss_mask0x4
-6443 - index 3 - ss_id 7 : ss_mask0x8
-6444 - index 3 - ss_id 7 : ss_mask0x8
-6445 - index 3 - ss_id 7 : ss_mask0x8
-6446 - index 3 - ss_id 7 : ss_mask0x8
-6447 - index 3 - ss_id 7 : ss_mask0x8
-6448 - index 3 - ss_id 7 : ss_mask0x8
-6449 - index 3 - ss_id 7 : ss_mask0x8
-6450 - index 3 - ss_id 7 : ss_mask0x8
+6443 - index 2 - ss_id 7 : ss_mask0x4
+6444 - index 2 - ss_id 7 : ss_mask0x4
+6445 - index 2 - ss_id 7 : ss_mask0x4
+6446 - index 2 - ss_id 7 : ss_mask0x4
+6447 - index 2 - ss_id 7 : ss_mask0x4
+6448 - index 2 - ss_id 7 : ss_mask0x4
+6449 - index 2 - ss_id 7 : ss_mask0x4
+6450 - index 2 - ss_id 7 : ss_mask0x4
 6451 - index 3 - ss_id 7 : ss_mask0x8
 6452 - index 3 - ss_id 7 : ss_mask0x8
 6453 - index 3 - ss_id 7 : ss_mask0x8
@@ -6601,38 +6601,38 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 6526 - index 3 - ss_id 7 : ss_mask0x8
 6527 - index 3 - ss_id 7 : ss_mask0x8
 6528 - index 3 - ss_id 7 : ss_mask0x8
-6529 - index 4 - ss_id 7 : ss_mask0x10
-6530 - index 4 - ss_id 7 : ss_mask0x10
-6531 - index 4 - ss_id 7 : ss_mask0x10
-6532 - index 26 - ss_id 89 : ss_mask0x2
-6533 - index 26 - ss_id 89 : ss_mask0x2
-6534 - index 26 - ss_id 89 : ss_mask0x2
-6535 - index 26 - ss_id 89 : ss_mask0x2
-6536 - index 27 - ss_id 89 : ss_mask0x8
-6537 - index 27 - ss_id 89 : ss_mask0x8
-6538 - index 5 - ss_id 9 : ss_mask0x1
-6539 - index 5 - ss_id 9 : ss_mask0x1
-6540 - index 6 - ss_id 9 : ss_mask0x2
-6541 - index 6 - ss_id 9 : ss_mask0x2
-6542 - index 6 - ss_id 9 : ss_mask0x2
-6543 - index 6 - ss_id 9 : ss_mask0x2
-6544 - index 6 - ss_id 9 : ss_mask0x2
-6545 - index 6 - ss_id 9 : ss_mask0x2
-6546 - index 6 - ss_id 9 : ss_mask0x2
-6547 - index 6 - ss_id 9 : ss_mask0x2
+6529 - index 3 - ss_id 7 : ss_mask0x8
+6530 - index 3 - ss_id 7 : ss_mask0x8
+6531 - index 3 - ss_id 7 : ss_mask0x8
+6532 - index 3 - ss_id 7 : ss_mask0x8
+6533 - index 3 - ss_id 7 : ss_mask0x8
+6534 - index 3 - ss_id 7 : ss_mask0x8
+6535 - index 3 - ss_id 7 : ss_mask0x8
+6536 - index 3 - ss_id 7 : ss_mask0x8
+6537 - index 4 - ss_id 7 : ss_mask0x10
+6538 - index 4 - ss_id 7 : ss_mask0x10
+6539 - index 4 - ss_id 7 : ss_mask0x10
+6540 - index 26 - ss_id 89 : ss_mask0x2
+6541 - index 26 - ss_id 89 : ss_mask0x2
+6542 - index 26 - ss_id 89 : ss_mask0x2
+6543 - index 26 - ss_id 89 : ss_mask0x2
+6544 - index 27 - ss_id 89 : ss_mask0x8
+6545 - index 27 - ss_id 89 : ss_mask0x8
+6546 - index 5 - ss_id 9 : ss_mask0x1
+6547 - index 5 - ss_id 9 : ss_mask0x1
 6548 - index 6 - ss_id 9 : ss_mask0x2
 6549 - index 6 - ss_id 9 : ss_mask0x2
 6550 - index 6 - ss_id 9 : ss_mask0x2
 6551 - index 6 - ss_id 9 : ss_mask0x2
 6552 - index 6 - ss_id 9 : ss_mask0x2
-6553 - index 7 - ss_id 9 : ss_mask0x4
-6554 - index 7 - ss_id 9 : ss_mask0x4
-6555 - index 7 - ss_id 9 : ss_mask0x4
-6556 - index 7 - ss_id 9 : ss_mask0x4
-6557 - index 7 - ss_id 9 : ss_mask0x4
-6558 - index 7 - ss_id 9 : ss_mask0x4
-6559 - index 7 - ss_id 9 : ss_mask0x4
-6560 - index 7 - ss_id 9 : ss_mask0x4
+6553 - index 6 - ss_id 9 : ss_mask0x2
+6554 - index 6 - ss_id 9 : ss_mask0x2
+6555 - index 6 - ss_id 9 : ss_mask0x2
+6556 - index 6 - ss_id 9 : ss_mask0x2
+6557 - index 6 - ss_id 9 : ss_mask0x2
+6558 - index 6 - ss_id 9 : ss_mask0x2
+6559 - index 6 - ss_id 9 : ss_mask0x2
+6560 - index 6 - ss_id 9 : ss_mask0x2
 6561 - index 7 - ss_id 9 : ss_mask0x4
 6562 - index 7 - ss_id 9 : ss_mask0x4
 6563 - index 7 - ss_id 9 : ss_mask0x4
@@ -6670,14 +6670,14 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 6595 - index 7 - ss_id 9 : ss_mask0x4
 6596 - index 7 - ss_id 9 : ss_mask0x4
 6597 - index 7 - ss_id 9 : ss_mask0x4
-6598 - index 8 - ss_id 9 : ss_mask0x8
-6599 - index 8 - ss_id 9 : ss_mask0x8
-6600 - index 8 - ss_id 9 : ss_mask0x8
-6601 - index 8 - ss_id 9 : ss_mask0x8
-6602 - index 8 - ss_id 9 : ss_mask0x8
-6603 - index 8 - ss_id 9 : ss_mask0x8
-6604 - index 8 - ss_id 9 : ss_mask0x8
-6605 - index 8 - ss_id 9 : ss_mask0x8
+6598 - index 7 - ss_id 9 : ss_mask0x4
+6599 - index 7 - ss_id 9 : ss_mask0x4
+6600 - index 7 - ss_id 9 : ss_mask0x4
+6601 - index 7 - ss_id 9 : ss_mask0x4
+6602 - index 7 - ss_id 9 : ss_mask0x4
+6603 - index 7 - ss_id 9 : ss_mask0x4
+6604 - index 7 - ss_id 9 : ss_mask0x4
+6605 - index 7 - ss_id 9 : ss_mask0x4
 6606 - index 8 - ss_id 9 : ss_mask0x8
 6607 - index 8 - ss_id 9 : ss_mask0x8
 6608 - index 8 - ss_id 9 : ss_mask0x8
@@ -6687,30 +6687,38 @@ AAM TableIndex - MSG V4 Table Index (Content) - SS_ID:MASK
 6612 - index 8 - ss_id 9 : ss_mask0x8
 6613 - index 8 - ss_id 9 : ss_mask0x8
 6614 - index 8 - ss_id 9 : ss_mask0x8
+6615 - index 8 - ss_id 9 : ss_mask0x8
+6616 - index 8 - ss_id 9 : ss_mask0x8
+6617 - index 8 - ss_id 9 : ss_mask0x8
+6618 - index 8 - ss_id 9 : ss_mask0x8
+6619 - index 8 - ss_id 9 : ss_mask0x8
+6620 - index 8 - ss_id 9 : ss_mask0x8
+6621 - index 8 - ss_id 9 : ss_mask0x8
+6622 - index 8 - ss_id 9 : ss_mask0x8
 
 QSR4 MSG_V4_SS_Table - Total Count-41
 QSR4 MSG_V4_SS_Table - Max Count 64
-QSR4 MSG_V4_SS_AAM_Table - Total Count-6615
+QSR4 MSG_V4_SS_AAM_Table - Total Count-6623
 QSR4 MSG_V4_SS_AAM_Table - Max Count 16000
 QSR4 MSG_V4_SS_UAM_Table - Total Count-0
 QSR4 MSG_V4_SS_UAM_Table - Max Count 400
 
-QSR4AlignedEntry changed in elf_offset  0x294da8L to  6615 
-QSR4UnAlignedEntry changed in elf_offset  0x2a47b0L to  0 
-QSR4TableEntry changed in elf_offset  0x294dacL to  41 
-QSR4Tbl changed in elf_offset  0x294aa4L 
-QSR4AAMTbl changed in elf_offset  0x294db0L 
-QSR4UAMTbl changed in elf_offset  0x2a47b4L 
-QSR4DBaseNameEntry changed in elf_offset 0x294cb4L to /readonly/firmware/image/qdbFile.qdb
-QSR4DBaseGuidEntry changed in elf_offset  0x294ca4L to 0x47ad,0x1642,0x5bc8,0x322c,0x3078,0x3b9c,0x2b40,0xf5ac,
- Linker generated IMAGE END Addr changed in elf_offset  0x28f8dcL to 0x81798000L 
+QSR4AlignedEntry changed in elf_offset  0x295da8L to  6623 
+QSR4UnAlignedEntry changed in elf_offset  0x2a57b0L to  0 
+QSR4TableEntry changed in elf_offset  0x295dacL to  41 
+QSR4Tbl changed in elf_offset  0x295aa4L 
+QSR4AAMTbl changed in elf_offset  0x295db0L 
+QSR4UAMTbl changed in elf_offset  0x2a57b4L 
+QSR4DBaseNameEntry changed in elf_offset 0x295cb4L to /readonly/firmware/image/qdbFile.qdb
+QSR4DBaseGuidEntry changed in elf_offset  0x295ca4L to 0x8894,0x510d,0x89e8,0x5b30,0xac80,0x410b,0x1456,0xf6a9,
+ Linker generated IMAGE END Addr changed in elf_offset  0x2908dcL to 0x81798000L 
 
 Update variables complete
 
 QShrink 4.0 details :
 
-Total Struct Matches:6615
+Total Struct Matches:6623
 Qshrunk 51 KB 
 Qshrink Version : 4
-Total Time: 7.81318411253
+Total Time: 4.97834092394
 Qshrink completed 

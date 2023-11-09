@@ -14,8 +14,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_flow.h#1 $
-  $DateTime: 2020/03/17 08:03:16 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/inc/ds_flow.h#2 $
+  $DateTime: 2023/07/26 05:18:31 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -85,6 +85,7 @@ typedef enum
   DS_FLOW_CAPABILITY_DEFAULT          = DS_FLOW_CAPABILITY_MIN,
   DS_FLOW_CAPABILITY_DELAY_SENSITIVE  = 0x1,
   DS_FLOW_CAPABILITY_DATA_DISALLOWED  = 0x2,
+  DS_FLOW_CAPABILITY_DEFAULT_DATA_DROP  = 0x4,
   DS_FLOW_CAPABILITY_MAX,
   DS_FLOW_CAPABILITY_MAX_ALLOWED      = 0x8,
   DS_FLOW_CAPABILITY_FORCE_SIGNED_32_BIT = 0x7FFFFFFF

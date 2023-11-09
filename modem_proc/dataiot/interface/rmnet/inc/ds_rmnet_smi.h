@@ -19,7 +19,7 @@ Qualcomm Confidential and Proprietary
 
                       EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/inc/ds_rmnet_smi.h#6 $ $DateTime: 2020/12/08 02:29:19 $ $Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/interface/rmnet/inc/ds_rmnet_smi.h#7 $ $DateTime: 2023/07/26 03:31:24 $ $Author: pwbldsvc $
 
 when        who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -530,6 +530,29 @@ void rmnet_sm_process_cmd
 (
   ds_command_enum_type cmd,
   void              *user_data_ptr
+);
+
+/*===========================================================================
+  FUNCTION RMNET_SM_IS_VALID()
+
+  DESCRIPTION
+    This function checks for the RmNet RmSM validity.
+
+  PARAMETERS
+    info:  Rmnet Instance.
+
+  RETURN VALUE
+    None
+
+  DEPENDENCIES
+    RM State Machine should have already been initialized
+
+  SIDE EFFECTS
+    None
+===========================================================================*/
+boolean rmnet_sm_is_valid
+(
+  rmnet_smi_info_type     *info
 );
 
 #endif /* _DS_RMNET_SMI_H */

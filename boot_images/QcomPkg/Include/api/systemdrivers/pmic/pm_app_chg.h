@@ -2,7 +2,7 @@
 #define PM_APP_CHG_H
 
 /**
- * Copyright (c) 2018 Qualcomm Technologies Incorporated.
+ * Copyright (c) 2018, 2023 Qualcomm Technologies, Inc. All rights reserved
  * All Rights Reserved.
  * Qualcomm Confidential and Proprietary
  *
@@ -41,7 +41,7 @@
 This section contains comments describing changes made to this file.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/boot.xf/0.2/QcomPkg/Include/api/systemdrivers/pmic/pm_app_chg.h#1 $
+$Header: //components/rel/boot.xf/0.2/QcomPkg/Include/api/systemdrivers/pmic/pm_app_chg.h#2 $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
@@ -152,6 +152,16 @@ pm_err_flag_type pmapp_chg_usb_get_cc_status(pmapp_chg_usb_cc_status_type *cc_st
  *
  */
 pm_err_flag_type pmapp_chg_usb_get_usb_connector_type(pmapp_chg_usb_connector_type *usb_type);
+
+/**
+ * @brief This wrapper function to disable inok disable    
+ *                 
+ * @return  pm_err_flag_type 
+ *          PM_ERR_FLAG__FEATURE_NOT_SUPPORTED = SMB is not present.
+ *          PM_ERR_FLAG__SUCCESS               = SUCCESS.
+ *
+ */
+pm_err_flag_type pmapp_chg_usb_inok_disable(void);
 
 #endif    /* PM_APP_CHG_H */
 

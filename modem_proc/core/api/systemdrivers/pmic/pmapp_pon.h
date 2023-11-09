@@ -9,7 +9,7 @@
     This file contains functions prototypes and variable/type/constant 
   declarations for the PMIC PON application
   
-Copyright (c) 2013, 2019            by Qualcomm Technologies Incorporated.  All Rights Reserved.
+Copyright (c) 2013, 2019, 2023 Qualcomm Technologies, Inc. All rights reserved.
 ===========================================================================*/
 
 /*===========================================================================
@@ -19,7 +19,7 @@ Copyright (c) 2013, 2019            by Qualcomm Technologies Incorporated.  All 
 This section contains comments describing changes made to this file.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/core.mpss/3.10/api/systemdrivers/pmic/pmapp_pon.h#1 $
+$Header: //components/rel/core.mpss/3.10/api/systemdrivers/pmic/pmapp_pon.h#2 $
 
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
@@ -28,6 +28,7 @@ when       who     what, where, why
 #include "comdef.h"
 #include "pm_err_flags.h"
 #include "DDISpmi.h"
+#include "pm_pon.h"
 
 /*===========================================================================
 
@@ -64,5 +65,22 @@ typedef struct pmapp_pon_isr_data
 
 */
 pm_err_flag_type pmapp_pon_kypd_register_cb(pmapp_pon_fn_cb cb);
+
+/**
+ * @brief This function for debug PON reason 
+ * 
+ * @param[out] debug_data:  
+ *                pm_pon_debug_type type structpointer. holds pon reason, AON register and PMIC version details.  
+ *
+ *
+ * @return  pm_err_flag_type 
+ *          PM_ERR_FLAG__FEATURE_NOT_SUPPORTED = Feature not available on this
+ *          version of the PMIC.
+ *          PM_ERR_FLAG__PAR1_OUT_OF_RANGE = Device Index out of
+ *          range.
+ *          PM_ERR_FLAG__SUCCESS = SUCCESS.
+ *
+ */
+pm_err_flag_type pmapp_pon_reason_debug(pm_pon_debug_type *debug_data);
 
 #endif /* __PMAPP_PON_H__ */

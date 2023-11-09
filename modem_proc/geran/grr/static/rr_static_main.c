@@ -35,7 +35,7 @@
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/geran.mpss/5.2.0/grr/static/rr_static_main.c#43 $
+$Header: //components/rel/geran.mpss/5.2.0/grr/static/rr_static_main.c#44 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -1242,6 +1242,7 @@ static void rr_read_messages(void)
           }
 		  else if (cmd_ptr->msg.mid_timer_expiry.timer_id == RR_DMM_RESUMPTION_TIMER && rr_timer_validate_expiry_message(RR_DMM_RESUMPTION_TIMER))
 		  {
+		    process_msg = FALSE;
 		    MSG_GERAN_HIGH_0("DMMSUSREM:: DMM_Resumption timer expired in geran_loaded state, restarting");
             rr_start_dmm_resumption_timer((rex_timer_cnt_type)rr_static_data.rem_drx_time_ms);
 		  }

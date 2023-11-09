@@ -33,7 +33,7 @@
   This section contains comments describing changes made to this file.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rfa.mpss/3.10/rf/common/ftm/src/ftm.c#4 $
+  $Header: //components/rel/rfa.mpss/3.10/rf/common/ftm/src/ftm.c#5 $
    
 when       who     what, where, why
 --------   ---     ------------------------------------------------------------- 
@@ -1207,6 +1207,7 @@ ftm_rf_technology_type ftm_phone_mode_to_rf_tech_type
 	case FTM_PHONE_MODE_LTE_B87:
 	case FTM_PHONE_MODE_LTE_B88:
     case FTM_PHONE_MODE_LTE_B8_B:
+	case FTM_PHONE_MODE_LTE_B255:
 	case FTM_PHONE_MODE_LTE_B256:
       ftm_rf_tech = FTM_RF_TECH_LTE; 
       break; 

@@ -31,7 +31,7 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rffactory.mpss/1.0/src/ftm_rf_test_interface.c#135 $
+  $Header: //components/rel/rffactory.mpss/1.0/src/ftm_rf_test_interface.c#136 $
 
 when       who     what, where, why
 --------   ---     -----------------------------------------------------------------------------------------------------
@@ -833,7 +833,11 @@ const char *tx_measure_property_names[] =
   "AUTO_PIN_STATUS",
   "ACTION_AUTO_DELAY_STATUS",
   "AUTO_DELAY_STATUS",
-  "FBRX_GAIN_STATE"
+  "FBRX_GAIN_STATE",
+  "ACTION_MEASURE_PDET_POWER",
+  "PDET_POWER_RESULTS",
+  "ACTION_IF_LOOPBACK_TEST",
+  "IF_LOOPBACK_TEST"
 };
 
 COMPILE_ASSERT( sizeof(tx_measure_property_names)/sizeof( tx_measure_property_names[0] )== FTM_TX_MEASURE_PROP_NUM);

@@ -1,11 +1,11 @@
 /**
-Copyright (c) 2015-2022 Qualcomm Technologies, Inc. and/or its subsidiaries.
+Copyright (c) 2015-2023 Qualcomm Technologies, Inc. and/or its subsidiaries.
 All rights reserved.
 Confidential - Qualcomm Technologies, Inc. - May Contain Trade Secrets
 */
 
 /*
-!! IMPORTANT NOTE: "DATA SERVICES" VERSION CATEGORY. 
+!! IMPORTANT NOTE: "DATA SERVICES" VERSION CATEGORY.
 */
 
 /** @file qapi_net_status.h
@@ -23,21 +23,22 @@ Confidential - Qualcomm Technologies, Inc. - May Contain Trade Secrets
 /** Denotes the module where an error occurred. */
   typedef enum
   {
-    QAPI_NET_NO_MODULE_CAT 		= 0,
-	QAPI_NET_SOCKET_CAT 	= 1,			 /**< Error in Socket module. */
-	QAPI_NET_SSL_CAT 		= 2,			 /**< Error in SSL module. */
-	QAPI_NET_MQTT_CAT 		= 3,			 /**< Error in MQTT module. */
-	QAPI_NET_COAP_CAT 		= 4,			 /**< Error in COAP module. */
-	QAPI_NET_MAX_CAT		=128			 /**< Maximum Value of error category. */
-	
+    QAPI_NET_NO_MODULE_CAT  = 0,
+    QAPI_NET_SOCKET_CAT     = 1,       /**< Error in Socket module. */
+    QAPI_NET_SSL_CAT        = 2,       /**< Error in SSL module. */
+    QAPI_NET_MQTT_CAT       = 3,       /**< Error in MQTT module. */
+    QAPI_NET_COAP_CAT       = 4,       /**< Error in COAP module. */
+    QAPI_NET_HTTP_CAT       = 5,       /**< Error in HTTP module. */
+    QAPI_NET_DNS_CAT        = 6,       /**< Error in DNS module. */
+    QAPI_NET_MAX_CAT        = 128      /**< Maximum Value of error category. */
   }qapi_Net_Error_Category_t;
 
 /** Structure for storing details about the last error. */  
   
   typedef struct {
   	
-	qapi_Net_Error_Category_t err_cat;		/**< Module in which the error occured. */
-	int 				   	err_code;		/**< Last error code. */
+    qapi_Net_Error_Category_t err_cat;      /**< Module in which the error occured. */
+    int                       err_code;     /**< Last error code. */
 	
   }qapi_Net_Module_Last_Error_t;
 /** @addtogroup qapi_status

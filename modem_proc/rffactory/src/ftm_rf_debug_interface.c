@@ -32,7 +32,7 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rffactory.mpss/1.0/src/ftm_rf_debug_interface.c#79 $
+  $Header: //components/rel/rffactory.mpss/1.0/src/ftm_rf_debug_interface.c#80 $
 
 when       who     what, where, why
 --------   ---     -----------------------------------------------------------------------------------------------------
@@ -113,6 +113,7 @@ const uint8 ftm_rf_debug_radio_config_prop_attrib_list[] =
   FTM_RF_DEBUG_ATTRIB_NON_CRTCL_BMSK,         /*35 : FTM_RF_DEBUG_RADIO_CFG_PROP_NR5G_MOD_TYPE*/
   FTM_RF_DEBUG_ATTRIB_NON_CRTCL_BMSK,         /*36 :FTM_RF_DEBUG_RADIO_CFG_PROP_WAVEFORM_IMMEDIATE_TRIGGER*/  
   FTM_RF_DEBUG_ATTRIB_NON_CRTCL_BMSK,         /*37 :FTM_RF_DEBUG_RADIO_CFG_PROP_VPA_MAX_MV*/  
+  FTM_RF_DEBUG_ATTRIB_NON_CRTCL_BMSK,         /*38 :FTM_RF_DEBUG_RADIO_CFG_PROP_ANT_ISO_TUNE_TYPE*/
 };
 // ensure the attribute list size is same as number of properies in property enum 
 COMPILE_ASSERT( ARR_SIZE(ftm_rf_debug_radio_config_prop_attrib_list) == FTM_RF_DEBUG_RADIO_CFG_PROP_NUM);
@@ -536,6 +537,7 @@ const char *rf_debug_radio_config_property_names[] =
   "NR5G_MOD_TYPE",       /*35:FTM_RF_DEBUG_RADIO_CFG_PROP_NR5G_MOD_TYPE*/
   "WFM_IMMED_TRIG",      /*36:FTM_RF_DEBUG_RADIO_CFG_PROP_WAVEFORM_IMMEDIATE_TRIGGER*/
   "VPA_MAX_MV",          /*37:FTM_RF_DEBUG_RADIO_CFG_PROP_VPA_MAX_MV*/
+  "ANT_ISO_TUNE_TYPE",   /*38: FTM_RF_DEBUG_RADIO_CFG_PROP_ANT_ISO_TUNE_TYPE*/
   
 };
 

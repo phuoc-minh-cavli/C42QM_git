@@ -105,6 +105,7 @@ PDNMGR_SRC_FILES = [
   '${BUILDPATH}/src/ds_pdn_tft.c',
   '${BUILDPATH}/src/ds_pdn_v6_hdlr.c',
   '${BUILDPATH}/src/ds_3gpp_rab_reestab_sm_hdlr.c',
+  '${BUILDPATH}/src/ds_fast_dormancy.c',
  ]
 
 PDNMGR_SOURCES = []

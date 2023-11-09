@@ -2,7 +2,7 @@
 #define PM_SMB_H
 
 /**
- * Copyright (c) 2018 Qualcomm Technologies Incorporated.
+ * Copyright (c) 2018, 2023 Qualcomm Technologies, Inc. All rights reserved.
  * All Rights Reserved.
  * Qualcomm Confidential and Proprietary
  *
@@ -367,5 +367,24 @@ pm_err_flag_type i2c_smb_read(uint8 slaveAddress, uint8 offset, uint8 *data);
 */
 pm_err_flag_type i2c_smb_write_mask(uint8 slaveAddress, uint8 offset, uint8 mask,  uint8 data);
 
+
+/**
+* @brief This function configure sysok option
+*
+* @details
+*
+* @param[in] option   COnfig Option
+*                     1->SYSOK operation option A
+*                     2->SYSOK operation option B
+*                     3->SYSOK operation option C
+* 
+*
+* @return  pm_err_flag_type
+*          PM_ERR_FLAG__FEATURE_NOT_SUPPORTED = Feature not available on this
+*          version of the PMIC.
+*          PM_ERR_FLAG__SUCCESS               = SUCCESS.
+*
+*/
+pm_err_flag_type pm_smb_sysok_option(uint8 option);
 #endif /*PM_SMB_H*/
 

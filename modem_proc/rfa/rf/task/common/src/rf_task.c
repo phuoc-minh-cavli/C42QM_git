@@ -20,10 +20,11 @@ Copyright(c) 2009 - 2021,2023 by Qualcomm Technologies, Incorporated. All Rights
   This section contains comments describing changes made to this file.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rfa.mpss/3.10/rf/task/common/src/rf_task.c#6 $
+  $Header: //components/rel/rfa.mpss/3.10/rf/task/common/src/rf_task.c#7 $
 
 when        who     what, where, why
 --------    ---     -----------------------------------------------------------
+10/12/23   hd      FR 91323 : NTN band support for B255
 02/08/23   tej     FR 85021 : NTN band support for B23 and B256
 03/01/21   gk      B87/B88 addition
 01/27/21   gk      NBGENIA flavour support(No CatM1)
@@ -1045,8 +1046,12 @@ sys_band_mask_type rflte_set_psm_pri_band_mask(sys_sband_lte_e_type rflte_psm_ba
   {
     lte_band_bit_mask = ((uint64)1UL<< 57);
   }  
-  #ifdef FEATURE_NBIOT_NTN 
-    else if(rflte_psm_band == SYS_SBAND_LTE_EUTRAN_BAND256)
+  #ifdef FEATURE_NBIOT_NTN
+  else if(rflte_psm_band == SYS_SBAND_LTE_EUTRAN_BAND255)
+  {
+    lte_band_bit_mask = ((uint64)1UL<< 61);
+  }
+  else if(rflte_psm_band == SYS_SBAND_LTE_EUTRAN_BAND256)
   {
     lte_band_bit_mask = ((uint64)1UL<< 60);
   }

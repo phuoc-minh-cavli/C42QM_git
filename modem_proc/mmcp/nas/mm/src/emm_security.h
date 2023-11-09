@@ -22,7 +22,7 @@ is regulated by the U.S. Government. Diversion contrary to U.S. law prohibited.
 This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_security.h#1 $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/emm_security.h#2 $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -358,6 +358,23 @@ extern void emm_reset_replay_message
 );
 #endif
 
+
+/*===========================================================================
+FUNCTION EMM_INITIALIZE_SEC_KEYS
+
+DESCRIPTION
+  Sets random values for IRAT related security keys in LTE.
+
+DEPENDENCIES
+  None
+
+RETURN VALUE
+  None
+
+SIDE EFFECTS
+  None
+===========================================================================*/
+extern void emm_initialize_sec_keys();
 #endif  // FEATURE_LTE
 
 #endif 

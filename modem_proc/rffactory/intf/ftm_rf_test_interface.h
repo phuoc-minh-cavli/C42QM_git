@@ -10,7 +10,7 @@
 
 /*======================================================================================================================
 
-  Copyright (c) 2015 - 2022 Qualcomm Technologies Incorporated. All Rights Reserved
+  Copyright (c) 2015 - 2023 Qualcomm Technologies Incorporated. All Rights Reserved
 
   Qualcomm Proprietary
 
@@ -33,7 +33,7 @@
   This section contains comments describing changes made to the module.
   Notice that changes are listed in reverse chronological order.
 
-  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rf_test_interface.h#172 $
+  $Header: //components/rel/rffactory.mpss/1.0/intf/ftm_rf_test_interface.h#173 $
 
 when       who     what, where, why
 --------   ---     -----------------------------------------------------------------------------------------------------
@@ -1992,6 +1992,14 @@ typedef enum
   FTM_TX_MEASURE_AUTO_DELAY_STATUS = 220,  /*!< 220 : Response - Auto delay status */
 
   FTM_TX_MEASURE_FBRX_GAIN_STATE = 221,  /*!< 221 : Response - FBRx Gain State */
+
+  FTM_TX_MEASURE_ACTION_MEASURE_PDET_POWER = 222,  /*!< 222 : Action - Measure PDET Power (gNB) */
+
+  FTM_TX_MEASURE_PDET_POWER_RESULTS = 223,  /*!< 223 : Response - PDET Power Results (gNB) */
+  
+  FTM_TX_MEASURE_ACTION_IF_LOOPBACK_TEST = 224, /*!< 224 : Action - mmW IF Loopback Power */
+
+  FTM_TX_MEASURE_IF_LOOPBACK_TEST = 225, /*!< 225 : Response - mmW IF Loopback Power */
 
   FTM_TX_MEASURE_PROP_NUM  /*!< Max : Defines maximum number of properties */
 

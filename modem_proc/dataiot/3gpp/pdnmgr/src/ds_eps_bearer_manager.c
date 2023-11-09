@@ -11,8 +11,8 @@ Qualcomm Confidential and Proprietary
 /*===========================================================================
   EDIT HISTORY FOR FILE
 
-  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_eps_bearer_manager.c#15 $
-  $DateTime: 2023/06/23 03:58:24 $$Author: pwbldsvc $
+  $Header: //components/rel/dataiot.mpss/2.0/3gpp/pdnmgr/src/ds_eps_bearer_manager.c#17 $
+  $DateTime: 2023/10/26 07:04:46 $$Author: pwbldsvc $
 
 when           who    what, where, why
 --------    ---    ----------------------------------------------------------
@@ -40,6 +40,10 @@ when           who    what, where, why
 #include "dssysmgr.h"
 #include "cm_gw.h"
 #include "ULogFront.h"
+
+#ifdef FEATURE_FAST_DORMANCY
+#include "ds_fast_dormancy.h"
+#endif /* FEATURE_FAST_DORMANCY */
 
 #ifdef FEATURE_MODE_TLB
 #include "ds_eps_tlb.h"
@@ -1608,6 +1612,20 @@ boolean ds_eps_bearer_mgr_rab_re_estab_ind_hdlr
   ds_eps_bearer_mgr_send_trm_priority_ind(bearer_mgr_p,
                                           LTE_TRM_PRIORITY_HIGH );
 
+#ifdef FEATURE_FAST_DORMANCY
+  /* -----------------------------------------------------------------
+    On RAB Reestab, if L2 RAI feature not supported, only when Bearer
+    state is in DORMANT REESTAB, cache the UM Iface stats and 
+    start/restart the Inactivity timer 
+  -------------------------------------------------------------------*/
+  if ((FALSE == ds_fast_dormancy_get_l2_rai_capability()) &&
+  	   (bearer_mgr_p->state == DS_BEARER_MGR_STATE_UP_DORMANT_REESTAB))
+  {
+	ds_fast_dormancy_reset_interval_count_and_update_instance_stats();
+	ds_fast_dormancy_start_timer();
+  }
+#endif /* FEATURE_FAST_DORMANCY */			 
+  
   return TRUE;
 } /* ds_eps_bearer_cntxt_call_rab_re_estab_ind_hdlr */
 

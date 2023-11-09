@@ -6,9 +6,9 @@
 #
 # Copyright (c) 2016 by Qualcomm Technologies Incorporated. All Rights Reserved.
 #-------------------------------------------------------------------------------
-#  $Header: //components/rel/kingfisherhost.tx/1.0/core/build/SConscript#2 $
-#  $DateTime: 2019/05/13 23:39:04 $
-#  $Change: 19179468 $
+#  $Header: //components/rel/kingfisherhost.tx/1.0/core/build/SConscript#3 $
+#  $DateTime: 2023/07/20 04:41:54 $
+#  $Change: 48226403 $
 #===============================================================================
 Import('env')
 env = env.Clone()
@@ -45,6 +45,8 @@ INC_DIRS = [
    '${INC_ROOT}/kingfisherhost/api/inc',
    '${INC_ROOT}/kingfisherhost/core/inc',
    '${INC_ROOT}/dataservices/demo/QCLI_demo/src/qcli',
+   '${INC_ROOT}/core/api/storage',
+   '${INC_ROOT}/core/api/services',
 ]
 
 env.PublishPrivateApi('QCA4004_DRIVER_CORE', INC_DIRS)
@@ -56,6 +58,8 @@ QCA4004_DRIVER_CORE_SOURCES =  [
    '${BUILDPATH}/qca4004_iface.c',
    '${BUILDPATH}/qca4004_utils.c',
    '${BUILDPATH}/qca4004_api.c',
+   '${BUILDPATH}/qca4004_security.c',
+   '${BUILDPATH}/qca4004_fota.c',
 ]
 
 #-------------------------------------------------------------------------------

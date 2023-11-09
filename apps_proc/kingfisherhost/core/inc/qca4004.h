@@ -12,7 +12,6 @@
  *-----------------------------------------------------------------------*/
 #include "qapi_types.h"
 
-
 /*-------------------------------------------------------------------------
  * Function Declarations and Documentation
  *-----------------------------------------------------------------------*/
@@ -25,6 +24,11 @@
     - 1 if operation failed.
 */
 uint8_t qca4004_daemon_start(void);
+
+/**
+   @brief This function will destroy the daemon of qca4004 driver .
+*/
+void qca4004_daemon_destroy(void);
 
 /**
    @brief This function will start a timer for power state change.
@@ -64,5 +68,15 @@ void process_mac(uint8_t* rsp, uint16_t rsp_len);
 */
 void process_aps(uint8_t* rsp, uint16_t rsp_len);
 
+/**
+   @brief This function will send scan request.
+
+   @param[in] requestId is the request ID. 
+   
+   @return
+    - 0 if operation successful.
+    - other if operation failed.   
+*/
+uint32_t qca4004_send_scan_req(uint32_t requestId);
 #endif
 

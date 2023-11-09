@@ -11,7 +11,7 @@ This section contains comments describing changes made to the module.
 Notice that changes are listed in reverse chronological order.
 
 $PVCSPath:  L:/src/asw/MSM5200/mm/vcs/mmglbl.c_v   1.24   17 Jul 2002 13:06:06   kishores  $
-$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmglbl.c#1 $ $DateTime: 2023/04/25 14:39:18 $ $Author: pwbldsvc $
+$Header: //components/rel/mmcp.mpss/6.1.10/nas/mm/src/mmglbl.c#2 $ $DateTime: 2023/10/16 03:11:57 $ $Author: pwbldsvc $
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
@@ -1826,6 +1826,9 @@ mm_emm_debug_buffer[i].mm_emm_message_direction = TO_MM;
    mm_ps_sig_conn_rel_after_ps_sms = 0;
    gmm_psm_local_detach_enabled = 0x01;
 
+#ifdef FEATURE_LTE
+   mm_init_lte_auth_keys();
+#endif
    
 #ifdef FEATURE_NAS_ECALL
 #ifdef FEATURE_DUAL_SIM

@@ -119,6 +119,8 @@ typedef struct _coap_block_session_info_s
    uint8_t                                  etag[COAP_ETAG_LEN];		               // Option for differentiating between representations of the same resource that vary over time.  
    uint8_t                                  token_len;                              // Length of the Token ID .
    uint8_t                                  token[COAP_TOKEN_LEN];                  // Token ID of the CoAP message .
+   uint16_t                                 uri_path_str_len;          /**< length of URI PATH.*/
+   uint8_t *                                uri_path_str;              /**< Path that specify the target resource.*/
    qapi_Coap_Content_Type_t                 content_type;               // coap content type 
    qapi_Coap_Packet_t *                     original_pkt;
    qapi_Coap_Packet_t *                     master_pkt;                // coap packet containing complete payload to be transfered , to be given to app in cb for freeing

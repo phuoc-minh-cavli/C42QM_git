@@ -2,15 +2,15 @@
 *  
 *  \brief Implementation file for KEY PRESS APP APIs.
 *    
-*  &copy; Copyright 2016 QUALCOMM Technologies Incorporated, All Rights Reserved
+*  &copy; Copyright 2023 QUALCOMM Technologies Incorporated, All Rights Reserved
 */
 /*===================================================================
 EDIT HISTORY FOR MODULE
  This section contains comments describing changes made to this file.
   Notice that changes are listed in reverse chronological order.
 
-$Date: 2018/08/01 $ 
-$Change: 16788488 $
+$Date: 2023/06/05 $ 
+$Change: 47183048 $
 when       who     what, where, why
 --------   ---     ---------------------------------------------------------- 
 
@@ -50,6 +50,9 @@ pm_app_pwrkey_long_press_check(pm_pon_pwrkey_dbnc_chk_at_type  dbnc_chk_at)
   pm_err_flag_type         err_flag = PM_ERR_FLAG__SUCCESS;
   boolean                  chk_condtions = FALSE;
   boolean                  valid_keypress = FALSE;
+#ifdef KEY_PRESS_DBNC
+  uint8                     rtc_alarm_read[4];
+#endif
   pm_pwrkey_dbnc_chk_type  *dbnc_chk = NULL;
 
   dbnc_chk = (pm_pwrkey_dbnc_chk_type *)pm_target_information_get_specific_info(PM_PROP_LONG_PWRKEY_HOLD_BOOT_TIME);
@@ -74,9 +77,29 @@ pm_app_pwrkey_long_press_check(pm_pon_pwrkey_dbnc_chk_at_type  dbnc_chk_at)
 
  /*monitor key press for dbnc_time_msec time*/
   err_flag |= pm_app_pwrkey_monitor_press(dbnc_chk->dbnc_time_msec, &valid_keypress);
+  
   if((FALSE == valid_keypress) && (PM_ERR_FLAG__SUCCESS == err_flag))
   {
     pm_log_message("Invalid pwrkey press. Shutting down! \n\r");
+
+#ifdef KEY_PRESS_DBNC
+    //reading rtc from AON spare
+	pm_comm_read_byte(0,0xa40,&rtc_alarm_read[0],0);
+	pm_comm_read_byte(0,0xa41,&rtc_alarm_read[1],0);
+	pm_comm_read_byte(0,0xa46,&rtc_alarm_read[2],0);
+	pm_comm_read_byte(0,0xa47,&rtc_alarm_read[3],0);
+	pm_comm_write_byte(0, 0x960, 0x01, 0);
+
+	if((rtc_alarm_read[0]==0)&&(rtc_alarm_read[1]==0)&&(rtc_alarm_read[2]==0)&&(rtc_alarm_read[3]==0))
+	{
+		pm_log_message("All AON registers are 0 , so this is invalid key from XVDD , dont program RTC \n\r");
+	}
+	else
+	{
+		pm_comm_write_byte_array(0,0x6140,4, rtc_alarm_read,0);
+	}
+	pm_busy_wait(200);
+#endif
     pm_device_shutdown();
   }
 

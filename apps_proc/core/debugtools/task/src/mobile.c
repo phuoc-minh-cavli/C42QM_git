@@ -22,7 +22,7 @@ Copyright (c) 1992-2010 by Qualcomm Technologies, Incorporated.  All Rights Rese
 
 when       who     what, where, why
 --------   ---     ----------------------------------------------------------
-07/23/23   scmbldsv Version IOT.TX.6.0-00235-M9205ACFNAABZA-1 External client that includes new memory map changes for IOT.TX
+11/06/23   scmbldsv Version IOT.TX.6.0-00241-M9205ACFNAABZA-1 External client that includes new memory map changes for IOT.TX
 
 ===========================================================================*/
 
@@ -48,8 +48,8 @@ NOTICE_TYPE ver_time[] = __TIME__;
 NOTICE_TYPE ver_dir[]  = BUILD_TARGET BUILD_VER;
 NOTICE_TYPE ver_asic[] = BUILD_ASIC "-" BUILD_VER "-" BUILD_TARGET;
 
-NOTICE_TYPE rel_date[] = "Jul 23 2023";
-NOTICE_TYPE rel_time[] = "23:00:00";
+NOTICE_TYPE rel_date[] = "Nov 06 2023";
+NOTICE_TYPE rel_time[] = "02:00:00";
 
 NOTICE_TYPE copyright[] =
  "Copyright (c) 1992,1993,1994,1995,1996,1997,1998,1999,2000,"
@@ -70,7 +70,7 @@ NOTICE_TYPE authors[] = "Authors: QCT";
 ** CANNOT BE USED TO POPULATE THIS SYMBOL
 */
 
-NOTICE_TYPE mob_sw_rev[] = "IOT.TX.6.0-00235-M9205ACFNAABZA-1";
+NOTICE_TYPE mob_sw_rev[] = "IOT.TX.6.0-00241-M9205ACFNAABZA-1";
 
 /* GUID
 */
