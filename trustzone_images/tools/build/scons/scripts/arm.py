@@ -869,7 +869,8 @@ else:
       env.Replace(AR = ARMBIN + "armar${EXE_EXT} --debug_symbols")
 
       # ARM SDT linker
-      env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} --diag_suppress=L6654E  --diag_suppress=L6412W ")
+      # env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} --diag_suppress=L6654E  --diag_suppress=L6412W ")
+      env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} ")
 
       # ARM SDT utility to create hex file from image
       env.Replace(HEXTOOL = ARMBIN + "fromelf${EXE_EXT}")

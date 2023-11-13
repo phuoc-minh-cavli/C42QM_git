@@ -155,6 +155,7 @@ def generate(env):
          rvct_ver = 2
       if 'RVCT4' in armtools:
          rvct_ver = 4
+      rvct_ver = 4
    else:
       env.Replace(ARMTOOLS = "RVCT2")
       env.Replace(ARM_TOOLS = "RVCT2")
@@ -197,7 +198,8 @@ def generate(env):
 
    # ARM SDT Thumb 16-bit inst. set ANSI C compiler
    if rvct_ver >= 4:
-      env.Replace(TCC = ARMBIN + "armcc${EXE_EXT} --thumb --diag_error=warning --diag_suppress=9931 ")
+      # env.Replace(TCC = ARMBIN + "armcc${EXE_EXT} --thumb --diag_error=warning --diag_suppress=9931 ")
+      env.Replace(TCC = ARMBIN + "armcc${EXE_EXT} --thumb ")
    else:
       env.Replace(TCC = ARMBIN + "tcc${EXE_EXT}")
 
@@ -211,7 +213,8 @@ def generate(env):
 
    # ARM SDT Thumb 16-bit inst. set ANSI C++ compiler
    if rvct_ver >= 4:
-      env.Replace(TCPP = ARMBIN + "armcc${EXE_EXT} --thumb  --cpp  --diag_error=warning --diag_suppress=9931 ")
+      # env.Replace(TCPP = ARMBIN + "armcc${EXE_EXT} --thumb  --cpp  --diag_error=warning --diag_suppress=9931 ")
+      env.Replace(TCPP = ARMBIN + "armcc${EXE_EXT} --thumb  --cpp ")
    else:
       env.Replace(TCPP = ARMBIN + "tcpp${EXE_EXT}")
 
@@ -232,7 +235,9 @@ def generate(env):
    env.Replace(AR = ARMBIN + "armar${EXE_EXT}")
 
    # ARM SDT linker
-   env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} --diag_error=warning --diag_suppress=9931 ")
+   # env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} --diag_error=warning --diag_suppress=9931 ")
+   env.Replace(LINK = ARMBIN + "armlink${EXE_EXT} ")
+
 
    # ARM SDT utility to create hex file from image
    env.Replace(HEXTOOL = ARMBIN + "fromelf${EXE_EXT}")

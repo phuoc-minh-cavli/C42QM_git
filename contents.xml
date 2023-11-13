@@ -20,7 +20,7 @@
 -->
 <contents>
   <product_info>
-    <product_name>MDM9205.TX.1.0</product_name>
+    <product_name>MDM9205.TX.2.0</product_name>
     <hlos_type cmm_var="HLOS_TYPE">TX</hlos_type> 
   <chipid cmm_var="CHIPID">MDM9205</chipid>
   </product_info>

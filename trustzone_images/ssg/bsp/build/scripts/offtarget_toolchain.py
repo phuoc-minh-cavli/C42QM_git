@@ -122,7 +122,9 @@ def generate(env):
 
   gcc_search_paths   = ['/pkg/qct/software/gnu/gcc/7.2.0/bin'] + search_paths
   #filter the ARM llvm path out of our search paths
-  clang_search_paths = filter(lambda x: not x.startswith('/pkg/qct/software/llvm/release/arm/'), clang_search_paths)
+  # clang_search_paths = filter(lambda x: not x.startswith('/pkg/qct/software/llvm/release/arm/'), clang_search_paths)
+  clang_search_paths = ['/pkg/qct/software/llvm/release/arm/4.0.11/bin/']
+
   if env.WhereIs('clang', path=clang_search_paths):
     env.Replace(CC        = env.WhereIs("clang",         path = clang_search_paths))
     env.Replace(CXX       = env.WhereIs("clang++",       path = clang_search_paths))

@@ -33,7 +33,7 @@ env.LoadSoftwareUnits()
 #-------------------------------------------------------------------------------
 # Convert warnings to errors in all Buses drivers
 #-------------------------------------------------------------------------------
-env.Append(CFLAGS = "--diag_error=warning ")
+# env.Append(CFLAGS = "--diag_error=warning ")
 
 #-------------------------------------------------------------------------------
 # QDSS SW Events

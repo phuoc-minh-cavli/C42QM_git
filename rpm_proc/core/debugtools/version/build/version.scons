@@ -32,9 +32,9 @@ env.VariantDir('${BUILDPATH}', "${BUILD_ROOT}/core/debugtools/version/src/", dup
 
 #env.Append(CFLAGS = "-Werror ") # GCC Warnings are Fatal
 
-env.Append(CFLAGS = "--diag_error=warning ") # ARMCC Warnings are Fatal
-env.Append(CFLAGS = "--diag_suppress=2523 ") # Exception Deprecated Inline Assembler
-env.Append(CFLAGS = "--diag_suppress=9931 ") # Exception License Manager Failure
+# env.Append(CFLAGS = "--diag_error=warning ") # ARMCC Warnings are Fatal
+# env.Append(CFLAGS = "--diag_suppress=2523 ") # Exception Deprecated Inline Assembler
+# env.Append(CFLAGS = "--diag_suppress=9931 ") # Exception License Manager Failure
 
 #-------------------------------------------------------------------------------
 # Internal depends within CoreBSP

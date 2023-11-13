@@ -2,11 +2,11 @@
 
 # Export enviroment variable
 
-export ARMLMD_LICENSE_FILE=27000@18.202.207.45
-export ARM_COMPILER_PATH=/pkg/qct/software/ARM_Compiler_5/bin
+# export ARMLMD_LICENSE_FILE=27000@18.202.207.45
+export ARM_COMPILER_PATH=/pkg/qct/software/ARM_Compiler_5.0.5/bin
 export ARMTOOLS=ARMCT5
 # export ARMTOOLS=;
-export ARMROOT=/pkg/qct/software/ARM_Compiler_5
+export ARMROOT=/pkg/qct/software/ARM_Compiler_5.0.5
 export ARMLIB=$ARMROOT/lib
 export ARMINCLUDE=$ARMROOT/include
 export ARMINC=$ARMINCLUDE
@@ -19,7 +19,7 @@ export ARMPATH=$ARM_COMPILER_PATH
 PYTHON_PATH=/usr/bin/python2.7
 MAKE_PATH=/usr/bin/make
 export LLVMTOOLS=LLVM
-export LLVMVER=4.0.17
+export LLVMVER=4.0.11
 export LLVMROOT=/pkg/qct/software/llvm/release/arm/${LLVMVER}
 export LLVMBIN=$LLVMROOT/bin
 export LLVMLIB=$LLVMROOT/lib/clang/${LLVMVER}/lib/linux

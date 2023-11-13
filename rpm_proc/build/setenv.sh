@@ -1,7 +1,6 @@
-export ARMINC=/usr/local/packages/qct/software/arm/RVDS/5.01bld94/include
-export ARMLIB=/usr/local/packages/qct/software/arm/RVDS/5.01bld94/lib
-export ARMBIN=/usr/local/packages/qct/software/arm/RVDS/5.01bld94/bin
-export ARMPATH=/usr/local/packages/qct/software/arm/RVDS/5.01bld94/bin
-export ARMINCLUDE=/usr/local/packages/qct/software/arm/RVDS/5.01bld94/include
-export ARMTOOLS=RVCT41
-export PATH=.:../tools/build/scons/SCons:/usr/local/packages/qct/software/arm/RVDS/5.01bld94/bin:$PATH
+export ARMINC=/pkg/qct/software/ARM_Compiler_5.0.5/include
+export ARMLIB=/pkg/qct/software/ARM_Compiler_5.0.5/lib
+export ARMBIN=/pkg/qct/software/ARM_Compiler_5.0.5/bin
+export ARMPATH=/pkg/qct/software/ARM_Compiler_5.0.5/bin
+export ARMINCLUDE=/pkg/qct/software/ARM_Compiler_5.0.5/include
+export ARMTOOLS=ARMCT5

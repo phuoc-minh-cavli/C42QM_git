@@ -3,11 +3,13 @@
 DIR_CHIPCODE=$PWD
 source $DIR_CHIPCODE/setenv.sh
 source $DIR_CHIPCODE/shell_print.sh
+PRODUCT_NAME=$(/bin/grep -oP '(?<=product_name>)[^<]+' $DIR_CHIPCODE/contents.xml)
 
-TARGET_PRODUCT=C42QM
+TARGET_PRODUCT=C42QM_${PRODUCT_NAME}
 # RELEASE_VERSION=v0.1
 GIT_COMMIT=$(git rev-parse --short HEAD)
 BUILD_DATE=$(date "+%Y/%m/%d-%H:%M:%S")
+BUILD_ID=$(date "+%y%m%d_%H%M%S")
 
 BIN_OUT=binaries
 
@@ -34,7 +36,7 @@ function compress_binaries()
     cd $DIR_CHIPCODE/
     if [[ -z ${RELEASE_VERSION} ]]
     then
-        zip -r ${TARGET_PRODUCT}-${GIT_COMMIT}.zip ${BIN_OUT}/
+        zip -r ${TARGET_PRODUCT}-${BUILD_ID}.zip ${BIN_OUT}/
     else
         zip -r ${TARGET_PRODUCT}-${RELEASE_VERSION}-${GIT_COMMIT}.zip ${BIN_OUT}/
     fi
@@ -47,5 +49,5 @@ function get_meta()
     compress_binaries
 }
 
-get_meta
+get_meta | tee get_meta_${BUILD_ID}.log
 
