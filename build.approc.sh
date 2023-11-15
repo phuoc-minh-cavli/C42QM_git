@@ -21,8 +21,10 @@ else
     TASK_NAME="Build"
     LOG_INF "Build app_proc ..."
     sleep 3
+    ./build.sh all BUILD_ID=${TARGET_BUILD_ID} -c
     ./build.sh all BUILD_ID=${TARGET_BUILD_ID}
-    ./build_llvm.sh llvm_dam BUILD_ID=${TARGET_LLVM_DAM}
+    ls -lh $DIR_CHIPCODE/apps_proc/build/ms/bin/ACFNAABZ/apps.mbn 
+    # ./build_llvm.sh llvm_dam BUILD_ID=${TARGET_LLVM_DAM}
 fi
 
 if [ $? -eq 0 ]; then

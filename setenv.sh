@@ -2,19 +2,26 @@
 
 # Export enviroment variable
 
-# export ARMLMD_LICENSE_FILE=27000@18.202.207.45
+if [[ "$1" == "arm5" ]]
+then
+export ARM_COMPILER_PATH=/pkg/qct/software/ARM_Compiler_5/bin
+export ARMROOT=/pkg/qct/software/ARM_Compiler_5
+else
 export ARM_COMPILER_PATH=/pkg/qct/software/ARM_Compiler_5.0.5/bin
-export ARMTOOLS=ARMCT5
-# export ARMTOOLS=;
 export ARMROOT=/pkg/qct/software/ARM_Compiler_5.0.5
+fi
+
+# export ARMLMD_LICENSE_FILE=27000@18.202.207.45
+export ARMTOOLS=ARMCT5
 export ARMLIB=$ARMROOT/lib
 export ARMINCLUDE=$ARMROOT/include
 export ARMINC=$ARMINCLUDE
 export ARMBIN=$ARMROOT/bin
-export PATH=$ARM_COMPILER_PATH:$PATH
 export ARMHOME=$ARMROOT
 export armlmd_license
 export ARMPATH=$ARM_COMPILER_PATH
+export PATH=$ARM_COMPILER_PATH:$PATH
+
 # Set up compiler path
 PYTHON_PATH=/usr/bin/python2.7
 MAKE_PATH=/usr/bin/make

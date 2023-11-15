@@ -2,7 +2,8 @@
 DIR_CHIPCODE=$PWD
 
 source $DIR_CHIPCODE/shell_print.sh
-source $DIR_CHIPCODE/setenv.sh
+source $DIR_CHIPCODE/setenv.sh arm5
+
 export TARGET_PRODUCT=$(/bin/grep -oP '(?<=product_name>)[^<]+' $DIR_CHIPCODE/contents.xml)
 reset
 

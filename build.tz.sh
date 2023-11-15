@@ -2,7 +2,7 @@
 DIR_CHIPCODE=$PWD
 
 source $DIR_CHIPCODE/shell_print.sh
-source $DIR_CHIPCODE/setenv.sh
+source $DIR_CHIPCODE/setenv.sh arm5
 
 export SECTOOLS=$(pwd)/common/sectoolsv2/ext/Linux/sectools
 export SCONS_OVERRIDE_NUM_JOBS=$(nproc)
