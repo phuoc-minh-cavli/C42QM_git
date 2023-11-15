@@ -42,10 +42,21 @@ function compress_binaries()
     fi
 }
 
+function check_mbn()
+{
+    cp $DIR_CHIPCODE
+    for file in $(ls binaries/ | grep .mbn)
+    do
+        echo $file 
+        ./common/sectools/sectools.py secimage -i binaries/$file -p 9205 -a | tee -a binaries/secimage_output
+    done
+}
+
 function get_meta()
 {
     do_build
     create_md5sum
+    check_mbn
     compress_binaries
 }
 
