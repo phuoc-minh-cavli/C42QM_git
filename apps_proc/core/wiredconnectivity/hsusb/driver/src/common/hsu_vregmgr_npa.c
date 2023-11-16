@@ -435,6 +435,7 @@ void hsu_vregmgr_pmic_vbus_register(void)
   {
     case HSU_PLATFORM_VIRTIO:
     case HSU_PLATFORM_RUMI:
+    case HSU_PLATFORM_STANDALONE:
     {
       static hsu_timer_handle_type bootup_delay_connect_tmr_hnd = NULL;
 
