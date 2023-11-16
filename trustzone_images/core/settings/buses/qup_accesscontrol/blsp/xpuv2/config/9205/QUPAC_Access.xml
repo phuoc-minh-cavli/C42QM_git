@@ -54,7 +54,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   2, 3, end                 </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_MSS_MSA                </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     11                        </props>
    </device>   
@@ -67,7 +67,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   0, 1, 2, 3, end       </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     11                        </props>
    </device>   
@@ -80,7 +80,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   6, 7, end               </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     12                        </props>
    </device>   
@@ -91,7 +91,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   10, 11, end               </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     13                        </props>
    </device>
@@ -102,7 +102,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     1                      </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   14, 15, end            </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   15, end                    </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_MSS_MSA             </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE             </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                      </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     14                     </props>
    </device>
@@ -117,7 +117,7 @@
 	  //if in case this DEBUG UART is used by any secured subsystem like MODEM or TZ then we need to assign Secure RG groups to protect the GPIOs, like if DEBUG UART is used for tiny modem
 	    boot other than the default HLOS boot then we need a secure RG group to protect the GPIOS for MODEM subsystem.
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   13, end                   </props>
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     7                         </props>
    </device>
@@ -132,7 +132,7 @@
 	  //if in case this DEBUG UART is used by any secured subsystem like MODEM or TZ then we need to assign Secure RG groups to protect the GPIOs, like if DEBUG UART is used for tiny modem
 	    boot other than the default HLOS boot then we need a secure RG group to protect the GPIOS for MODEM subsystem.
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   13, end                   </props>
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     7                         </props>
    </device>
@@ -145,7 +145,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   4, 5, 6, 7, end               </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     8                         </props>
    </device>
@@ -156,7 +156,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   8, 9, 10, 11, end               </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     9                         </props>
    </device>
@@ -167,7 +167,7 @@
       <props name="IS_GPIO_PROTECTED"   type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="GPIO_NUMBERS"        type=DALPROP_ATTR_TYPE_BYTE_SEQ>   12, 13, 14, 15, end        </props> 
       <props name="GPIO_RG_INDEX"       type=DALPROP_ATTR_TYPE_BYTE_SEQ>   end                       </props> 
-      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_HLOS                   </props>
+      <props name="SUBSYSTEM_ID"        type=DALPROP_ATTR_TYPE_UINT32>     AC_NONE                   </props>
       <props name="IS_PERSISTENT"       type=DALPROP_ATTR_TYPE_UINT32>     0                         </props>
       <props name="CORE_RG_INDEX"       type=DALPROP_ATTR_TYPE_UINT32>     10                        </props>
    </device>
